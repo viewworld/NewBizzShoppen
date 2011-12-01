@@ -1,4 +1,4 @@
-@m18 @general_deals
+@m18 @general_deals @nontestable @$_remove
 Feature: General deals
 
   @_done
@@ -16,11 +16,13 @@ Feature: General deals
     And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "max_auto_buy:1|header:super|description:super|hidden_description:super|start_date:2011-01-01|company_name:Asd|published:1|deal_admin_email:agent@nbs.com"
     Then I am not sign in
+    Given I am on the homepage
+    And I visit domain http://fairdeals.dk
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
-    And I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     Then I confirm a js popup on the next step
@@ -54,11 +56,13 @@ Feature: General deals
     And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "max_auto_buy:0|header:super|description:super|hidden_description:super|start_date:2011-01-01|company_name:Asd|published:1|deal_admin_email:agent@nbs.com"
     Then I am not sign in
+    Given I am on the homepage
+    And I visit domain http://fairdeals.dk
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
-    And I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     Then I confirm a js popup on the next step
@@ -75,11 +79,13 @@ Feature: General deals
     And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "max_auto_buy:1|header:super|description:super|hidden_description:super|start_date:2011-01-01|company_name:Asd|published:1|deal_admin_email:agent@nbs.com"
     Then I am not sign in
+     Given I am on the homepage
+    And I visit domain http://fairdeals.dk
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
-    And I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     Then I confirm a js popup on the next step
@@ -96,11 +102,13 @@ Feature: General deals
     And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "max_auto_buy:1|header:super|description:super|hidden_description:super|start_date:2011-01-01|company_name:Asd|published:1|deal_admin_email:agent@nbs.com"
     Then I am not sign in
+    Given I am on the homepage
+    And I visit domain http://fairdeals.dk
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
-    And I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     Then I confirm a js popup on the next step
@@ -114,7 +122,7 @@ Feature: General deals
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
     And user with email "purchase_manager202@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager202@nbs.com with password supersecret
-    And I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     Then I confirm a js popup on the next step
@@ -173,11 +181,13 @@ Feature: General deals
     And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "max_auto_buy:1|header:super|description:super|hidden_description:super|start_date:2011-01-01|company_name:Asd|published:1|deal_admin_email:agent@nbs.com"
     Then I am not sign in
+    Given I am on the homepage
+    And I visit domain http://fairdeals.dk
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
-    And I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     Then I confirm a js popup on the next step
@@ -187,6 +197,7 @@ Feature: General deals
     And I press translated "member.leads.show.view.ok_confirmation"
     Then I am not sign in
     And I am on the homepage
+    And I visit domain http://localhost
     And I sign in as buyer@nbs.com with password secret
     Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     And I click hidden link by url regex "/suppliers\/deals\/\d+\/edit/"
@@ -197,6 +208,7 @@ Feature: General deals
   Scenario: When  deal price is NOT empty and deal discounted price is empty then display Saving 100% but do not display price
     Given a deal named "Abc group deal #1" exists within category "Electronics deals"
     And a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:120,discounted_price:0,social_media_description:quo vadis"
+    Given I am on the homepage
     Given I visit domain http://fairdeals.dk
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Electronics deals"
@@ -221,3 +233,53 @@ Feature: General deals
     Then I should see CSS path "span#cke_deal_hidden_description_editor"
     And I should see CSS path "span#cke_deal_fine_print_editor"
     And I should see CSS path "span#cke_deal_company_description_editor"
+
+  #8328
+  @m22 @requested @selenium @_done @_tested @ao
+  Scenario: I can enter "Featured description" for each deal (rich text + images)
+    Given I am not sign in
+    And I make sure current locale is "da"
+    Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
+    And user "buyer@nbs.com" has deal maker role enabled
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
+    And I am on the homepage
+    And I sign in as buyer@nbs.com with password secret
+    And I follow translated "layout.main_menu.lead_supplier.my_deals"
+    And I click hidden link by url regex "/suppliers\/deals\/\d+\/edit/"
+    And I wait 1 second
+    Then I should see CSS path "span#cke_deal_featured_description_editor"
+
+  #8328
+  @m22 @requested @selenium @_done @_tested @ao
+  Scenario: I can enter "Short featured description" for each deal (plain text)
+    Given I am not sign in
+    And I make sure current locale is "da"
+    Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
+    And user "buyer@nbs.com" has deal maker role enabled
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
+    And I am on the homepage
+    And I sign in as buyer@nbs.com with password secret
+    And I follow translated "layout.main_menu.lead_supplier.my_deals"
+    And I click hidden link by url regex "/suppliers\/deals\/\d+\/edit/"
+    And I wait 1 second
+    Then I should see CSS path "textarea#deal_short_featured_description"
+
+  #8329
+  @m22 @requested @selenium @non_testable @_done @ao
+  Scenario: I can upload images in every rich text editor
+
+
+  @m24 @requested @auto_buy_max @tgn
+  Scenario: As a supplier I have to buy all the leads that are generated by my deals
+
+  @m24 @requested @auto_buy_max @tgn
+  Scenario: When auto buy max is enabled and the max number of deals has been generated then the deal should be disabled until the next 4 weeks.
+
+  @m24 @requested @auto_buy_max @tgn
+  Scenario: When deal is disabled because of auto buy max is reached then it should be stated on the deal edit page for suppliers, deal makers and admin
+
+  @m24 @requested @auto_buy_max @tgn
+  Scenario: Deals that reached the auto buy max limit are not shown under fairdeals.dk browse deals page
+
+  @m24 @requested @auto_buy_max @tgn
+  Scenario: Deals with auto buy max are monitored in order to warrant 4 weeks period of inactivity

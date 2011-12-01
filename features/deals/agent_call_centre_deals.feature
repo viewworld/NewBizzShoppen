@@ -1,4 +1,4 @@
-@m16 @requested @agent_deals @_deals @$_call_centre @$_agent
+@m16 @requested @agent_deals @_deals @$_call_centre @$_agent @nontestable @$_remove @faircalls
 Feature: Deals from Call Centre/Agent perspective
 
   Background:
@@ -7,6 +7,7 @@ Feature: Deals from Call Centre/Agent perspective
     Then user "translator_call_centre@nbs.com" has deal maker role enabled
     Then user "translator_call_centre_agent@nbs.com" has deal maker role enabled
     Given I am on the homepage
+    And I visit domain http://faircalls.eu
 
   @_done @_tested
   Scenario: I can see "My Deals" to the right of "My Leads" tab
@@ -93,6 +94,8 @@ Feature: Deals from Call Centre/Agent perspective
   @selenium @_done @_tested
   Scenario: I can create new deal and certify (enter future sales manager's email)
     # call centre
+    Given I am on the homepage
+    Given I visit domain http://faircalls.eu
     And I sign in as translator_call_centre@nbs.com with password secret
     Then I follow translated "layout.main_menu.call_centre.deals"
     Then I follow translated "deals.common.listing.view.new_deal"
@@ -106,13 +109,6 @@ Feature: Deals from Call Centre/Agent perspective
     Then I follow translated "call_centre_agent.deals.new.view.certify"
     Then I certify deal with translation "call_centre_agent.deals.new.view.create_button"
     Then I follow translated logout link for translator_call_centre_agent@nbs.com
-    # admin
-    And I sign in as admin@nbs.com with password secret
-    Then I follow translated "layout.main_menu.admin.deals"
-    Then I follow translated "deals.common.listing.view.new_deal"
-    Then I follow translated "administration.deals.new.view.certify"
-    Then I certify deal with translation "administration.deals.new.view.create_button"
-    Then I follow translated logout link for admin@nbs.com
     # agent
     And I sign in as agent@nbs.com with password secret
     Then I follow translated "layout.main_menu.agent.deals"
@@ -120,6 +116,15 @@ Feature: Deals from Call Centre/Agent perspective
     Then I follow translated "agent.deals.new.view.certify"
     Then I certify deal with translation "agent.deals.new.view.create_button"
     Then I follow translated logout link for agent@nbs.com
+    # admin
+    Given I am on the homepage
+    Given I visit domain http://localhost
+    And I sign in as admin@nbs.com with password secret
+    Then I follow translated "layout.main_menu.admin.deals"
+    Then I follow translated "deals.common.listing.view.new_deal"
+    Then I follow translated "administration.deals.new.view.certify"
+    Then I certify deal with translation "administration.deals.new.view.create_button"
+    Then I follow translated logout link for admin@nbs.com
     # certification by buyer
     Then I have user with email ned@stark.com and role supplier
     Then user "ned@stark.com" is confirmed

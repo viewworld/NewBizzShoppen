@@ -9,7 +9,6 @@ class User::Agent < ::User
   has_and_belongs_to_many :campaigns, :join_table => "campaigns_users", :foreign_key => "user_id"
   has_many :contacts, :foreign_key => :agent_id, :order => "leads.position ASC"
   has_many :deals, :as => :creator
-  validate :check_address
 
   before_create :set_default_certification_level
 

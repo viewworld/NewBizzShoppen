@@ -133,6 +133,7 @@ Scenario: I should be able to click "Add to cart button" that will redirect me t
   And I fill in "user_supplier_password_confirmation" with "secret"
   And I fill in "user_supplier_address_attributes_address_line_1" with "Ferterds"
   And I fill in "user_supplier_address_attributes_address_line_2" with "Boston"
+  And I fill in "user_supplier_address_attributes_address_line_3" with "Boston"
   And I fill in "user_supplier_address_attributes_zip_code" with "12421S"
   And I choose "user_supplier_subscription_plan_id"
   And I select "Denmark" from "user_supplier_address_attributes_country_id"

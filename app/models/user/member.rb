@@ -10,17 +10,6 @@ class User::Member < ::User
 
   validates_presence_of :company_name, :phone
 
-  validate :check_address_city
-
-  private
-
-  def check_address_city
-    if address and address.address_line_3.blank?
-      return address.errors.add(:address_line_3, :blank)
-    end
-    true
-  end
-
   public
 
   def can_publish_leads?
@@ -44,6 +33,10 @@ class User::Member < ::User
 
   def comment_threads
     Comment.with_leads_created_by(self)
+  end
+
+  def site
+    :fairdeals
   end
 
 ########################################################################################################################

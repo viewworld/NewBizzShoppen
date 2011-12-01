@@ -1,8 +1,9 @@
-@m18 @create_buttons
+@m18 @create_buttons @faircalls
 Feature: Agent dealmaker
   Background:
     Then user "agent@nbs.com" has deal maker role enabled
     And I am on the homepage
+    And I visit domain http://faircalls.eu
     And I sign in as agent@nbs.com with password secret
     And I follow translated "layout.main_menu.shared.deal_maker_users"
 
@@ -32,6 +33,7 @@ Feature: Agent dealmaker
     And I fill in "user_first_name" with "Anna"
     And I fill in "user_last_name" with "Lee"
     And I fill in "user_address_attributes_address_line_1" with "Vlodivostok"
+    And I fill in "user_address_attributes_address_line_3" with "Vlodivostok"
     And I fill in "user_address_attributes_zip_code" with "22-222"
     And I fill in "user_screen_name" with "Anna Lee"
     And I fill in "user_email" with "annalee@nbs.com"
@@ -111,6 +113,7 @@ Feature: Agent dealmaker
     And I fill in "user_first_name" with "Anna"
     And I fill in "user_last_name" with "Lee"
     And I fill in "user_address_attributes_address_line_1" with "Vlodivostok"
+    And I fill in "user_address_attributes_address_line_3" with "Vlodivostok"
     And I fill in "user_address_attributes_zip_code" with "22-222"
     And I fill in "user_screen_name" with "Anna Lee2"
     And I fill in "user_email" with "annalee@nbs.com"
@@ -155,6 +158,7 @@ Feature: Agent dealmaker
     And I fill in "user_first_name" with "Anna"
     And I fill in "user_last_name" with "Lee"
     And I fill in "user_address_attributes_address_line_1" with "Vlodivostok"
+    And I fill in "user_address_attributes_address_line_3" with "Vlodivostok"
     And I fill in "user_address_attributes_zip_code" with "22-222"
     And I fill in "user_screen_name" with "Anna Lee2"
     And I fill in "user_email" with "annalee@nbs.com"

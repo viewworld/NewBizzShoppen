@@ -1,4 +1,4 @@
-@lead_manager @$_freelance_agent  @m1 @ao
+@lead_manager @$_freelance_agent  @m1 @ao @faircalls
 Feature: Lead creation by freelance agent
 
 In order to create and manage leads I sell
@@ -8,6 +8,7 @@ I can use my agent panel
 Background:
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
     And I am on the homepage
+    And I visit domain http://faircalls.eu
     And I make sure current locale is "en"
     Then I sign in as bob@person.com with password supersecret
     And I go to agents leads

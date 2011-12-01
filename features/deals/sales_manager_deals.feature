@@ -167,11 +167,12 @@ Feature: Deals from Sales Manager perspective
     And I click hidden link by url regex "/suppliers\/deals\/\d+\/edit/"
     And "deal_deal_template_ids_" dropdown should have values "Computer details2"
     Then I am not sign in
+    And I visit domain http://fairdeals.eu
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
-    And I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Electronics deals"
     And I follow translated "deals.index.view.view_deal"
     And I confirm a js popup on the next step

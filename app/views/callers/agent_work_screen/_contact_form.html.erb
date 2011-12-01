@@ -4,8 +4,8 @@
             <param:header>
               <div class="fltr ta_r">
                 <%= render :partial => "callers/agent_work_screen/results_actions", :locals => @locals %>
-                <%= contact.higher_contact ? bt_link_to(nil, t("contacts.edit.prev"), url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => contact.higher_contact), :remote => true, :id => "prev_contact") : "" %>
-                <%= contact.lower_contact ? bt_link_to(nil, t("contacts.edit.next"), url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => contact.lower_contact), :remote => true, :id => "next_contact") : "" %>
+                <%= contact.higher_contact ? bt_link_to(nil, t("contacts.edit.prev"), url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => contact.higher_contact, :fast => "true"), :remote => true, :id => "prev_contact") : "" %>
+                <%= contact.lower_contact ? bt_link_to(nil, t("contacts.edit.next"), url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => contact.lower_contact, :fast => "true"), :remote => true, :id => "next_contact") : "" %>
               </div>
             </param:header>
           <param:content>

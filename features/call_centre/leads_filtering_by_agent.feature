@@ -1,4 +1,4 @@
-@lead_manager @$_call_centre @m5 @tgn
+@lead_manager @$_call_centre @m5 @tgn @faircalls
 Feature: Leads filtering by agent
 
 Background:
@@ -17,6 +17,7 @@ Background:
   Given lead Ultimate wires deal is created by user ccagent01@nbs.com with role call_centre_agent
   Given lead Ultimate desks deal is created by user ccagent02@nbs.com with role call_centre_agent
   Given lead Ultimate doors deal is created by user ccagent02@nbs.com with role call_centre_agent
+  And I visit domain http://faircalls.eu
   Then I sign in as call_centre@person.com with password supersecret
   And I go to call centre leads
 

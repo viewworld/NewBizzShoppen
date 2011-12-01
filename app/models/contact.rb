@@ -25,7 +25,7 @@ class Contact < AbstractLead
   scope :all_available_to_assign, where(:agent_id => nil).with_completed_status(false).with_pending_status(false)
   scope :available_to_assign, lambda { |user| all_available_to_assign.joins("left join contact_past_user_assignments on leads.id=contact_past_user_assignments.contact_id AND contact_past_user_assignments.user_id = #{user.id}").where("contact_past_user_assignments.user_id is NULL") }
   scope :with_results, joins(:call_results)
-  scope :with_agents, lambda { |agent_ids| where("call_results.creator_id IN (:agent_ids)", {:agent_ids => agent_ids }) unless agent_ids.to_a.select{ |id| !id.blank? }.empty? }
+  scope :with_agents, lambda { |agent_ids| where("call_results.creator_id IN (:agent_ids)", {:agent_ids => agent_ids}) unless agent_ids.to_a.select { |id| !id.blank? }.empty? }
   scope :from_last_import, where(:last_import => true)
   scoped_order :company_name
 
@@ -65,20 +65,20 @@ class Contact < AbstractLead
       created_contacts = []
       rows = formatted_rows.split("\r\n")
       rows.shift.split("\t").each do |h|
-        headers << h.underscore.gsub(" ","_").delete('/"')
+        headers << h.underscore.gsub(" ", "_").delete('/"')
       end if rows.present?
       rows.each do |contact_row|
         contact = Contact.new(attrs)
         contact_row.split("\t").each_with_index do |value, index|
           if CSV_ATTRS.include? headers[index]
             contact.send "#{headers[index]}=", case headers[index]
-              when "country" then
-                Country.find_by_name(value.delete('/"'))
-              when "region" then
-                Region.find_by_name(value.delete('/"'))
-              else
-                value.delete('/"')
-            end
+                                                 when "country" then
+                                                   Country.find_by_name(value.delete('/"'))
+                                                 when "region" then
+                                                   Region.find_by_name(value.delete('/"'))
+                                                 else
+                                                   value.delete('/"')
+                                               end
           end
         end
         created_contacts << contact if contact.save rescue nil
@@ -97,7 +97,7 @@ class Contact < AbstractLead
   end
 
   def current_call_result_name
-    current_call_result ? current_call_result.result.name : "-"  
+    current_call_result ? current_call_result.result.name : "-"
   end
 
   def current_call_result_note
@@ -110,7 +110,7 @@ class Contact < AbstractLead
 
   def upgrade_to_lead
     self.reload
-    lead = self.deep_clone!({:with_callbacks => true, :include => [:lead_purchases, :lead_translations, { :lead_template_values => :lead_template_value_translations} ]})
+    lead = self.deep_clone!({:with_callbacks => true, :include => [:lead_purchases, :lead_translations, {:lead_template_values => :lead_template_value_translations}]})
     lead.update_attribute :type, "Lead"
     self.update_attribute(:lead_id, lead.id)
   end
@@ -173,4 +173,29 @@ class Contact < AbstractLead
   def last_name
     contact_name.to_s.split[1..-1].to_a.join(' ')
   end
+
+  def crm_call_results
+    crm_option = campaign.crm_option
+    if crm_option == Campaign::CRM_OPTION_OFF
+      call_results
+    else
+      select = "campaign_id IN (#{campaign.crm_campaigns+",#{campaign_id}"})"
+      if crm_option == Campaign::CRM_OPTION_COMPANY_NAME
+        crm_select(select, ["company_name"])
+      elsif crm_option == Campaign::CRM_OPTION_CVR
+        crm_select(select, ["company_vat_no"])
+      elsif crm_option == Campaign::CRM_OPTION_CONTACT_EMAIL
+        crm_select(select, ["email_address"])
+      elsif crm_option == Campaign::CRM_OPTION_ALL
+        crm_select(select, ["company_name", "email_address", "company_vat_no"])
+      end
+    end
+  end
+
+  def crm_select(select, fields)
+    query = "#{select}"
+    fields.each { |field| query += " AND lower(#{field}) = '#{send(field).blank? ? "YOU WILL NOT FIND ME - HA HA HA HA" : send(field).downcase}'" }
+    CallResult.where(:contact_id => (Contact.where(query) + [self]).uniq.map(&:id)).order("created_at DESC")
+  end
+
 end

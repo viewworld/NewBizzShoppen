@@ -1,6 +1,7 @@
 <%
    cols = 3
    cols += 1 if not block_tools.nil?
+   cols += 2 if crm
 -%>
 
 <table id="call_results" class="generic">
@@ -10,6 +11,10 @@
     <th><%= t("call_results.table.date") %></th>
     <th><%= t("call_results.table.agent") %></th>
     <th><%= t("call_results.table.result_type") %></th>
+    <% if crm %>
+        <th><%= t("call_results.table.contact_name") %></th>
+        <th><%= t("call_results.table.campaign_name") %></th>
+    <% end %>
     <% if block_tools %>
         <th class="ta_r">
           <%= t("call_results.table.actions") %>
@@ -33,6 +38,10 @@
         <td><%= call_result.created_at %></td>
         <td><%= call_result.creator.full_name %></td>
         <td><%= call_result.result %></td>
+        <% if crm %>
+            <td><%= call_result.contact.company_name %></td>
+            <td><%= call_result.contact.campaign %></td>
+        <% end %>
         <% if block_tools %>
             <td class="tda ta_r">
               <%= with_output_buffer { block_tools.call(call_result) } if call_result.can_be_managed_by?(current_user) %>
@@ -51,31 +60,31 @@
 
     <script type="text/javascript">
         jQuery("#call_result_<%= call_result.id %>").qtip(
-        {
-            position: {
-                corner: {
-                    target: 'topMiddle',
-                    tooltip: 'bottomMiddle'
-                },
-            },
-            hide: {
-                fixed: true
-            },
-            content: $("#call_result_<%= call_result.id %>_tooltip").html(),
-            style: {
-                name: "cream",
-                border: {
-                    radius: 3
-                },
-                width: 300,
-                tip: {
-                    corner: 'bottomMiddle',
-                    size: {
-                        x: 12,
-                        y : 8
+                {
+                    position: {
+                        corner: {
+                            target: 'topMiddle',
+                            tooltip: 'bottomMiddle'
+                        },
+                    },
+                    hide: {
+                        fixed: true
+                    },
+                    content: $("#call_result_<%= call_result.id %>_tooltip").html(),
+                    style: {
+                        name: "cream",
+                        border: {
+                            radius: 3
+                        },
+                        width: 300,
+                        tip: {
+                            corner: 'bottomMiddle',
+                            size: {
+                                x: 12,
+                                y : 8
+                            }
+                        }
                     }
-                }
-            }
-        });
+                });
     </script>
 <% end %>

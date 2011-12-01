@@ -24,16 +24,20 @@
     
     <div id="available_subscriptions">
         <h2><%= t("subscriptions.available_subscriptions") %>:</h2>        
-        <br/>  
+        <br/>
         <p>
             <%= blurb(:blurb_subscription_select) %>
         </p>
-        <br/>
+
+        <hl pdd="5"/>
+      
         <% @subscriptions = SubscriptionPlan.active.exclude_free(true).exclude_current_plan(current_user.active_subscription_plan).for_role(role).ascend_by_billing_price.select{|sp| current_user.subscription_can_be_changed_to?(sp) } %>
         <% if @subscriptions.any? %>
+          <div class="subscription_plans">
             <% @subscriptions.each do |subscription_plan| %>
                 <%= render :partial => 'shared/subscriptions/subscription', :locals => {:subscription_plan => subscription_plan, :role => role} %>
             <% end %>
+          </div>
         <% else %>
             <%= t("subscriptions.listing.no_available_subscriptions") %>
         <% end %>

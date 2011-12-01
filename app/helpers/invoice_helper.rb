@@ -31,4 +31,11 @@ module InvoiceHelper
     end
   end
 
+  def send_invoice_warning(invoice)
+    if invoice.sent? or invoice.paid?
+      t("administration.invoices.mailing.new.view.invoice_already_sent_or_paid", :status => t("administration.invoices.mailing.new.view.#{invoice.paid? ? 'paid' : 'sent'}"))
+    else
+      false
+    end
+  end
 end

@@ -36,11 +36,12 @@ Feature: Sign in
     | bbo   | supersecret    |
     | bob   | wrong-password |
 
-  @_tested @_done
+  @_tested @_done @faircalls
   Scenario Outline: A registered user can login and be directed to their home page
     Given I am signed up and confirmed as user with email <login> and password <password> and role <role>
     And user with email "<login>" is a subaccount of user with email "<parent_email>" and role "<parent_role>"
     And user with email "<login>" has logged before
+    And I visit domain <domain>
     And I fill in "user_email" with "<login>"
     And I fill in "user_password" with "<password>"
     And I press translated "home.show.view.sign_in"
@@ -48,15 +49,15 @@ Feature: Sign in
     Then I should be on "<the page>"
 
     Examples:
-    | login           | password    | role              | the page              |  parent_email | parent_role |
-    | bob@person.com  | supersecret | admin             | the homepage          | | |
-    | bob@person.com  | supersecret | agent             | agent home            | | |
-    | bob@person.com  | supersecret | call_centre       | agent home            | | |
-    | bob@person.com  | supersecret | call_centre_agent | agent home            | call_centre2121@nbs.com | call_centre |
-    | bob@person.com  | supersecret | member  | member home | | |
-    | bob@person.com  | supersecret | supplier          | supplier home            | ||
-    | leadbuyer@nbs.com  | secret | lead_supplier        | supplier home            |  | |
-    | leaduser@nbs.com  | secret | lead_user         | supplier home            |  | |
+    | domain              | login           | password    | role              | the page              |  parent_email | parent_role |
+    | http://localhost    | bob@person.com  | supersecret | admin             | the homepage          | | |
+    | http://faircalls.eu | bob@person.com  | supersecret | agent             | agent home            | | |
+    | http://faircalls.eu | bob@person.com  | supersecret | call_centre       | agent home            | | |
+    | http://faircalls.eu | bob@person.com  | supersecret | call_centre_agent | agent home            | call_centre2121@nbs.com | call_centre |
+    | http://fairdeals.eu | bob@person.com  | supersecret | member            | the homepage | | |
+    | http://fairleads.eu | bob@person.com  | supersecret | supplier          | supplier home            | ||
+    | http://fairleads.eu | leadbuyer@nbs.com  | secret | lead_supplier       | supplier home            |  | |
+    | http://fairleads.eu | leaduser@nbs.com  | secret | lead_user            | supplier home            |  | |
 
   @_tested @_done
   Scenario: A logged in user on the login page should just redirect to their home page
@@ -157,18 +158,20 @@ Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
   Scenario: When user confirms his account he should be redirected to his home page
     #buyer
     Given setting for "email_verification_for_suppliers" is set to "1"
+    And I visit domain http://fairleads.eu
     Given I am not sign in
     Given I have not confirmed user with email buyer_not_confirmed@nbs.com and role supplier
     Then confirmation link should confirm account for buyer_not_confirmed@nbs.com
     And I should be on supplier home
     #agent
+    And I visit domain http://faircalls.eu
     Given I am not sign in
     Given I have not confirmed user with email agent_not_confirmed@nbs.com and role agent
     Then confirmation link should confirm account for agent_not_confirmed@nbs.com
     And I should be on agent home
-    #purchase manager
-    Given setting for "email_verification_for_members" is set to "1"
-    Given I am not sign in
-    Given I have not confirmed user with email purchase_manager_not_confirmed@nbs.com and role member
-    Then confirmation link should confirm account for purchase_manager_not_confirmed@nbs.com
-    And I should be on member home
+    #purchase manager deprecated
+#    Given setting for "email_verification_for_members" is set to "1"
+#    Given I am not sign in
+#    Given I have not confirmed user with email purchase_manager_not_confirmed@nbs.com and role member
+#    Then confirmation link should confirm account for purchase_manager_not_confirmed@nbs.com
+#    And I should be on member home

@@ -1,0 +1,26 @@
+<tr id="contact_row_id_<%= contact.id %>" class="<%= cycle("odd", "even") %><%= contact.completed? ? " completed" : "" %><%= @contact == contact ? " highlight_row" : "" %>">
+  <td class="cl"></td>
+  <td><%= contact.company_name %></td>
+  <td class="ta_r"><%= contact.company_phone_number %></td>
+  <td class="ta_r"><%= contact.direct_phone_number %></td>
+  <td><%= contact.current_call_result_name %> <%= "(#{contact.current_call_result.creator.full_name})" if contact.current_call_result %></td>
+  <td><%= contact.current_call_result_note %></td>
+
+  <td class="tda ta_r">
+    <ul-actions>
+      <li>
+        <%= link_to t("campaigns.edit.show_button"), url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => contact, :fast => "true"), :class => "default_action", :remote => true, :method => :get %>
+      </li>
+      <% unless contact.completed? %>
+          <li>
+            <%= link_to t("campaigns.edit.deassign_button"), url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :destroy, :campaign_id => campaign, :id => contact, :deassign => true), :remote => true, :method => :delete %>
+          </li>
+      <% end %>
+      <li>
+        <%= link_to t("campaigns.edit.remove_button"), url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :destroy, :campaign_id => campaign, :id => contact), :confirm => t("campaigns.edit.remove_confirm"), :remote => true, :method => :delete %>
+      </li>
+    </ul-actions>
+  </td>
+
+  <td class="cr"></td>
+</tr>

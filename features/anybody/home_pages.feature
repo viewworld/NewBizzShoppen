@@ -68,21 +68,24 @@ Feature: Home pages
     When I am on member home page
     Then I should see translated "category_home.show.view.forgotten_password_link"
 
-  @_done
+  @_done @faircalls
   Scenario: On role home page it should be possible to logout
     Given I am signed up and confirmed as user with email agent_tomek@nbs.com and password secret and role agent
+    And I visit domain http://faircalls.eu
     And I am on the home page
     And I sign in as agent_tomek@nbs.com with password secret
     And I am on agent home page
     Then I should see translated "category_home.show.view.sign_out"
     When I sign out
     Given I am signed up and confirmed as user with email mysterious_customer@nbs.com and password secret and role supplier
+    And I visit domain http://fairleads.eu
     And I am on the home page
     And I sign in as mysterious_customer@nbs.com with password secret
     And I am on supplier home page
     Then I should see translated "category_home.show.view.sign_out"
     When I sign out
     Given I am signed up and confirmed as user with email pm@nbs.com and password secret and role member
+    And I visit domain http://fairdeals.eu
     And I am on the home page
     And I sign in as pm@nbs.com with password secret
     And I am on member home page

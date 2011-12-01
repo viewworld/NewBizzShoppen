@@ -17,10 +17,10 @@
               <% end %>
               <hl/>
               <div class="pdd_10 ta_c">
-                  <%= index != 0 ? link_to_function(t("advanced_import.preview.view.first_object_button"), "$('#object_container_#{index}').hide();$('#object_container_0').show();") : t("advanced_import.preview.view.first_object_button") %>
-                  <%= index != 0 ? link_to_function(t("advanced_import.preview.view.prev_object_button"), "$('#object_container_#{index}').hide();$('#object_container_#{index-1}').show();") : t("advanced_import.preview.view.prev_object_button") %>
-                  <%= size-1 != index ? link_to_function(t("advanced_import.preview.view.next_object_button"), "$('#object_container_#{index}').hide();$('#object_container_#{index+1}').show();") : t("advanced_import.preview.view.next_object_button") %>
-                  <%= size-1 != index ? link_to_function(t("advanced_import.preview.view.last_object_button"), "$('#object_container_#{index}').hide();$('#object_container_#{size-1}').show();") : t("advanced_import.preview.view.last_object_button") %>
+                <%= index != 0 ? link_to_function(t("advanced_import.preview.view.first_object_button"), "$('#object_container_#{index}').hide();$('#object_container_0').show();") : t("advanced_import.preview.view.first_object_button") %>
+                <%= index != 0 ? link_to_function(t("advanced_import.preview.view.prev_object_button"), "$('#object_container_#{index}').hide();$('#object_container_#{index-1}').show();") : t("advanced_import.preview.view.prev_object_button") %>
+                <%= size-1 != index ? link_to_function(t("advanced_import.preview.view.next_object_button"), "$('#object_container_#{index}').hide();$('#object_container_#{index+1}').show();") : t("advanced_import.preview.view.next_object_button") %>
+                <%= size-1 != index ? link_to_function(t("advanced_import.preview.view.last_object_button"), "$('#object_container_#{index}').hide();$('#object_container_#{size-1}').show();") : t("advanced_import.preview.view.last_object_button") %>
               </div>
             </div>
         <% end %>
@@ -32,6 +32,9 @@
             <% if ["contact", "supplier", "lead"].include?(model_name) %>
                 <%= hidden_field_tag :object_id, @object_id %>
             <% end %>
+            <% if model_name == "contact" %>
+                <%= hidden_field_tag :unique_only, @unique_only %>
+            <% end %>
             <%= hidden_field_tag :creator_id, @creator_id %>
         <% end %>
 
@@ -41,6 +44,9 @@
             <%= hidden_field_tag :attachment, @attachment_file %>
             <% if ["contact", "supplier", "lead"].include?(model_name) %>
                 <%= hidden_field_tag :object_id, @object_id %>
+            <% end %>
+            <% if model_name == "contact" %>
+                <%= hidden_field_tag :unique_only, @unique_only %>
             <% end %>
             <%= hidden_field_tag :creator_id, @creator_id %>
         <% end %>

@@ -9,8 +9,6 @@ class ::User::CallCentreAgent < ::User
   has_many :contacts, :foreign_key => :agent_id, :order => "leads.position ASC"
   has_many :deals, :as => :creator
 
-  validate :check_address
-
   # TODO wtf?
   def can_publish_leads?
     true

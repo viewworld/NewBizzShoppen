@@ -186,7 +186,7 @@ Then /^User (.+) with role (.+) is big buyer$/ do |email, role|
     user.active_subscription.update_attribute(:big_buyer, true)
   else
     subscription_plan = SubscriptionPlan.make!(:assigned_roles => [user.role.to_sym], :billing_cycle => 12, :big_buyer => true)
-    subscription_plan.subscription_plan_lines.make!
+    subscription_plan.subscription_plan_lines.make!(:price => 10)
     user.upgrade_subscription!(subscription_plan)
   end
 end
@@ -390,7 +390,7 @@ Given /^there are no object for model "([^"]*)"$/ do |model|
 end
 
 Given /^there is bounced email for "([^"]*)"$/ do |email|
-  EmailBounce.make!(:email => email)
+  ArchivedEmail.make!(:bounced, :to => email)
 end
 
 

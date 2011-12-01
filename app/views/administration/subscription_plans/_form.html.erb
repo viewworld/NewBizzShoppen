@@ -1,8 +1,10 @@
+<%= javascript_include_tag :ckeditor %>
 <div class="column_left">
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_200">
       <ol class="align_inputs">
         <%= form.input :name %>
+        <%= form.input :subscription_text, :as => :ckeditor, :input_html => {:width => '320px', :height => '150px', :toolbar => "Lite"}, :wrapper_html => {:class => "text"} %>
         <%= form.input :billing_cycle %>
         <%= form.input :lockup_period %>
         <%= form.input :billing_period %>

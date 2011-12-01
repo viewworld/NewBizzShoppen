@@ -5,9 +5,7 @@
         <%= link_to "next", group_deal_path(primary_deal, :next => true), :class => "arrow_right", :remote => true %>
         <div class="frm_head">
             <h2><%= link_to primary_deal.header, deal_path(primary_deal.slug) %></h2>
-          <% if primary_deal.group_deal? %>
-            <div class="splash splash_red"><%= t("deals.index.view.group_deal_splash_label") %></div>
-          <% end %>
+            <div class="splash splash_red"><span><%= primary_deal.group_deal? ? t("deals.index.view.group_deal_splash_label") : t("deals.index.view.fair_deal_splash_label") %></span></div>
         </div>
         <div class="frm_content">
 
@@ -39,37 +37,40 @@
           </div>
 
           <div class="deal_desc">
-            <p>
-              <%= primary_deal.description %>
-            </p>
-
-            <div id="countdown" class="countdown">
-              <span class="countdown_title">Time left:</span>
-              <div class="dash days_dash">
-                <span class="dash_title"><%= t("deals.show.view.days") %></span>
-                
-                <div class="digit">0</div>
-                <div class="digit">0</div>
-              </div>
-              <div class="dash hours_dash">
-                <span class="dash_title"><%= t("deals.show.view.hours") %></span>
-
-                <div class="digit">0</div>
-                <div class="digit">0</div>
-              </div>
-              <div class="dash minutes_dash">
-                <span class="dash_title"><%= t("deals.show.view.minutes") %></span>
-
-                <div class="digit">0</div>
-                <div class="digit">0</div>
-              </div>
-              <div class="dash seconds_dash">
-                <span class="dash_title"><%= t("deals.show.view.seconds") %></span>
-
-                <div class="digit">0</div>
-                <div class="digit">0</div>
-              </div>
+            <div class="deal_featured_desc">
+              <%= raw primary_deal.featured_description %>
             </div>
+
+            <% if primary_deal.group_deal? %>
+                <div id="countdown" class="countdown">
+                  <span class="countdown_title">Time left:</span>
+                  <div class="dash days_dash">
+                    <span class="dash_title"><%= t("deals.show.view.days") %></span>
+
+                    <div class="digit">0</div>
+                    <div class="digit">0</div>
+                  </div>
+                  <div class="dash hours_dash">
+                    <span class="dash_title"><%= t("deals.show.view.hours") %></span>
+
+                    <div class="digit">0</div>
+                    <div class="digit">0</div>
+                  </div>
+                  <div class="dash minutes_dash">
+                    <span class="dash_title"><%= t("deals.show.view.minutes") %></span>
+
+                    <div class="digit">0</div>
+                    <div class="digit">0</div>
+                  </div>
+                  <div class="dash seconds_dash">
+                    <span class="dash_title"><%= t("deals.show.view.seconds") %></span>
+
+                    <div class="digit">0</div>
+                    <div class="digit">0</div>
+                  </div>
+                </div>
+            <% end %>
+
           </div>
 
           <clb/>
@@ -93,6 +94,7 @@
       </div>
 
     <script>
+    <% if primary_deal.group_deal? %>
     jQuery(document).ready(function() {
         d = new Date();
         seconds = (<%= primary_deal.end_date.to_i %> - parseInt(d.getTime() / 1000));
@@ -108,6 +110,7 @@
             omitWeeks: true
         });
     });
+    <% end %>
 
     $('#modal_for_share_deal_by_email_<%= email_form_id %>').dialog({
         autoOpen: false,

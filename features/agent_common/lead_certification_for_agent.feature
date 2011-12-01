@@ -1,5 +1,9 @@
-@lead_certification @agent @requested @m10
+@lead_certification @agent @requested @m10 @faircalls
 Feature: Lead certification for agent
+
+Background:
+  Given I am on the homepage
+  And I visit domain http://faircalls.eu
 
 @_done @_tested
 Scenario: I can mark a lead as certified
@@ -52,6 +56,7 @@ Scenario: I can see that the lead I have marked as certified was confirmed by th
 Scenario: When creating a new lead I can click "Create and certify"
   Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
   And I am on the homepage
+  And I visit domain http://faircalls.eu
   And I make sure current locale is "en"
   Then I sign in as bob@person.com with password supersecret
   And I go to agents leads

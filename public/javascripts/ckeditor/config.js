@@ -87,7 +87,8 @@ CKEDITOR.editorConfig = function( config )
         ['Styles','Format'],
         ['Bold','Italic','Underline'],
         ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-        ['Link','Unlink']
+        ['Link','Unlink'],
+        ['Image']
     ];
 };
 

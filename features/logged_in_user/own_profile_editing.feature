@@ -2,7 +2,7 @@
 Feature: User Account - Profile edit
 
   Background:
-    Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
+    Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role supplier
     And I am on the homepage
     And I make sure current locale is "en"
     Then I sign in as bob@person.com with password supersecret
@@ -11,9 +11,9 @@ Feature: User Account - Profile edit
  @_tested @_done
   Scenario: I change my password
     Given I follow translated "password.edit.view.change_password"
-    And I fill in "user_agent_current_password" with "supersecret"
-    And I fill in "user_agent_password" with "secret"
-    And I fill in "user_agent_password_confirmation" with "secret"
+    And I fill in "user_supplier_current_password" with "supersecret"
+    And I fill in "user_supplier_password" with "secret"
+    And I fill in "user_supplier_password_confirmation" with "secret"
     Then I press translated "password.edit.view.button_update_user"
     And I should see translated "password.update.controller.successful_update_notice"
     Given I am not sign in
@@ -34,29 +34,29 @@ Feature: User Account - Profile edit
 
   @_tested @_done
   Scenario: A user should be able to update their profile
-    And I fill in "user_agent_email" with "new-email@example.com"
+    And I fill in "user_supplier_email" with "new-email@example.com"
     And I press translated "password.edit.view.button_update_user"
     Then I should see translated "my_profile.update.controller.successful_update_notice"
 
   @_tested @_done
   Scenario: A user shouldn't be able to update their profile with bad data
-    And I fill in "user_agent_email" with "not-an-email"
+    And I fill in "user_supplier_email" with "not-an-email"
     And I press translated "password.edit.view.button_update_user"
     Then I should see translated "activerecord.errors.messages.invalid"
 
   @_tested @_done
   Scenario: A logged in user shouldn't be able to create a new account
-   When I go to agent sign up
-   Then I am on agents root
    When I go to supplier sign up
-   Then I am on agents root
+   Then I am on suppliers root
+   When I go to agent sign up
+   Then I am on suppliers root
 
   @m5 @tgn @_tested @added @_done
   Scenario: I can add to my profile company name, company registration number, ean number
     When I go to my profile page
-    Then I fill in "user_agent_company_name" with "My Company"
-    And I fill in "user_agent_vat_number" with "32543453482354"
-    And I fill in "user_agent_company_ean_number" with "Y7894D"
+    Then I fill in "user_supplier_company_name" with "My Company"
+    And I fill in "user_supplier_vat_number" with "32543453482354"
+    And I fill in "user_supplier_company_ean_number" with "Y7894D"
     When I press translated "password.edit.view.button_update_user"
     Then I should see translated "my_profile.update.controller.successful_update_notice"
 

@@ -1,8 +1,9 @@
-@m5 @tgn
+@m5 @tgn @faircalls
 Feature: Leads managements for call centre agent
 
 Background:
   Given I am on the homepage
+  And I visit domain http://faircalls.eu
   And I make sure current locale is "en"
   And I have user with email call_centre@person.com and role call_centre
   And I am signed up and confirmed as user with email call_centre_agent@person.com and password supersecret and role call_centre_agent

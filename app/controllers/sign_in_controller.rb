@@ -30,17 +30,20 @@ class SignInController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        success_notice = I18n.t("flash.accounts.create.no_verification") if @user.confirmed?
+
         if session[:site] == "fairdeals" and @user.has_role?(:member) and @user.confirmed? and @user.rpx_identifier.blank?
           @user.send_invitation_email(params[param_key][:password])
           path = session[:user_return_to] if session[:user_return_to]
+          success_notice = I18n.t("devise.sessions.new.controller.successfully_logged_in")
           sign_in(@user)
         end
         unless @user.rpx_identifier.blank?
           @user.confirm!
           sign_in(@user)
         end
-        success_notice = I18n.t("flash.accounts.create.no_verification") if @user.confirmed?
-        flash[:notice] = @user.rpx_identifier.blank? ? success_notice : "Your account has been successfully created! You are now log in."
+
+        flash[:notice] = @user.rpx_identifier.blank? ? success_notice : I18n.t("devise.sessions.new.controller.successfully_logged_in")
         format.html { redirect_to(path) }
       else
         format.html { render("new") }

@@ -449,6 +449,25 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
 
     ActiveRecord::Migration.execute "UPDATE campaigns SET currency_id = #{Currency.default_currency.present? ? Currency.default_currency.id : Currency.active.first.id} WHERE currency_id IS NULL"
 
+    # -----------------------------------------------------------------------------------------------------------------
+    #                                                 DOMAINS
+    # -----------------------------------------------------------------------------------------------------------------
+    puts "Creating domains"
+    [
+      {:name => 'fairleads.com', :site => 'fairleads', :locale => 'en', :default => true},
+      {:name => 'fairleads.dk', :site => 'fairleads', :locale => 'da', :default => false},
+      {:name => 'fairdeals.dk', :site => 'fairdeals', :locale => 'da', :default => false},
+      {:name => 'thefairdeals.com', :site => 'fairdeals', :locale => 'en', :default => false},
+      {:name => 'fairdeals.eu', :site => 'fairdeals', :locale => 'en', :default => true},
+      {:name => 'faircalls.dk', :site => 'faircalls', :locale => 'da', :default => false},
+      {:name => 'faircalls.eu', :site => 'faircalls', :locale => 'en', :default => true}
+    ].each do |domain_attrs|
+      unless Domain.where(domain_attrs).first
+        domain_attrs[:name] = "beta.#{domain_attrs[:name]}" if Rails.env.staging?
+        Domain.create!(domain_attrs)
+      end
+    end
+
     unless Rails.env.production?
 
       ['LeadCategory', 'DealCategory'].map(&:constantize).each do |model_name|
@@ -580,7 +599,8 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         'blurb_subscription_select',
         'blurb_subscriptions_for_supplier',
         'blurb_subscriptions_for_category supplier',
-        'blurb_subscriptions_for_member'
+        'blurb_subscriptions_for_member',
+        'blurb_deal_confirmation_page'
     ].each do |key|
       unless Article::Cms::InterfaceContentText.where(:key => key).first
         article = Article::Cms::InterfaceContentText.make!(:title => key.humanize, :content => key.humanize, :key => key)
@@ -639,11 +659,11 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     campaign.results = Result.generic_results
     campaign.users = call_centre.subaccounts
 
-    [{:company_name => "Bon Jovi inc.", :company_phone_number => "888 112 113"},
-     {:company_name => "Mleko company", :company_phone_number => "510 333 333"},
-     {:company_name => "Stefanek corp", :company_phone_number => "888 422 633"},
-     {:company_name => "PHU Sciemkata", :company_phone_number => "602 222 333"}].each do |attrs|
-      Contact.find_or_create_by_company_name attrs.merge(:country => country, :campaign => campaign, :creator => call_centre, :category => category, :contact_name => "", :phone_number => "", :email_address => "", :creator_name => call_centre.full_name)
+    [{:company_name => "Bon Jovi inc.", :company_phone_number => "888 112 113", :email_address => "bj@bj.com", :company_vat_no => "0000099999"},
+     {:company_name => "Mleko company", :company_phone_number => "510 333 333", :email_address => ""},
+     {:company_name => "Stefanek corp", :company_phone_number => "888 422 633", :email_address => ""},
+     {:company_name => "PHU Sciemkata", :company_phone_number => "602 222 333", :email_address => ""}].each do |attrs|
+      Contact.find_or_create_by_company_name attrs.merge(:country => country, :campaign => campaign, :creator => call_centre, :category => category, :contact_name => "", :phone_number => "", :creator_name => call_centre.full_name)
     end
 
     Contact.where("last_call_result_at IS NULL").each do |contact|

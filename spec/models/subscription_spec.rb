@@ -179,6 +179,25 @@ describe Subscription do
         @prev_subscription.billing_price.should == 12.5
       end
 
+      it "should create credit note for unused amount of subscription" do
+        setup_customer(@payable_subscription1)
+        @customer.active_subscription.update_attribute(:billing_date, Date.today)
+        @invoice = Invoice.create(:user => @customer)
+
+        expect{
+          @customer.upgrade_subscription!(@payable_subscription2)
+        }.to change{ Refund.count }.by(1)
+
+        @customer.active_subscription.update_attribute(:billing_date, Date.today)
+
+        Currency.all.each { |c| c.update_attribute(:exchange_rate, 1.0)}
+
+        @invoice = Invoice.create(:user => @customer)
+        invoice_line_for_refund = @invoice.invoice_lines.detect { |l| l.payable.is_a?(Refund) }
+        invoice_line_for_refund.should_not be_nil
+        invoice_line_for_refund.netto_price.should < 0
+      end
+
     end
 
     context "downgrade" do
@@ -239,21 +258,20 @@ describe Subscription do
     end
 
     context "cancel" do
-      it "should be cancelled when in normal state and at least one day passed" do
+      it "should be cancelled when in normal state and even on the same day as applied/upgrade" do
         setup_customer(@payable_subscription1)
-        set_date_today_to(@customer.active_subscription.start_date+1)
+        end_date = @customer.active_subscription.end_date
         @customer.cancel_subscription!
-        @prev_subscription.reload
-        @prev_subscription.should be_cancelled
-        @customer.active_subscription.should_not be_payable
+        @customer.active_subscription.should be_cancelled
+        @customer.active_subscription.end_date.should == end_date
       end
 
-      it "should NOT be cancelled on the same day as applied/upgraded" do
+      it "should prolong as free when cancelled" do
         setup_customer(@payable_subscription1)
         @customer.cancel_subscription!
-        @prev_subscription.reload
-        @prev_subscription.should_not be_cancelled
-        @customer.active_subscription.should be_payable
+        @customer.active_subscription.should be_cancelled
+        set_date_today_to(@customer.active_subscription.end_date+1)
+        @customer.active_subscription.should_not be_payable
       end
 
       it "should be cancelled when in lockup state and generate penalty" do
@@ -329,26 +347,131 @@ describe Subscription do
     end
 
     context "billing dates" do
-      it "should set billing date to end date when billing period is 0" do
+      it "should set billing date to start date when billing period is 0" do
         @payable_subscription10 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12, :billing_period => 0)
         @payable_subscription10.subscription_plan_lines.make!(:price => 200)
         setup_customer(@payable_subscription10)
-        @customer.active_subscription.billing_date.should == Date.today + 12*7
+        @customer.active_subscription.billing_date.should == Date.today
       end
 
-      it "should set billing date to end date + 1 week when billing period is 1" do
+      it "should set billing date to start date + 1 week when billing period is 1" do
         @payable_subscription10 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12, :billing_period => 1)
         @payable_subscription10.subscription_plan_lines.make!(:price => 200)
         setup_customer(@payable_subscription10)
-        @customer.active_subscription.billing_date.should == Date.today + 13*7
+        @customer.active_subscription.billing_date.should == Date.today + 7
+      end
+    end
+
+    context "subscription change by admin" do
+      it "should change to less expensive even if the subscription plan does not allow downgrading" do
+        @payable_subscription2.update_attribute(:can_be_downgraded, false)
+        setup_customer(@payable_subscription2)
+        @customer.admin_change_subscription!(@payable_subscription1)
+        @prev_subscription.reload
+        @prev_subscription.should be_admin_changed
+        @prev_subscription.subscription_plan.should == @payable_subscription2
+        @prev_subscription.end_date.should == Date.today - 1.day
+        @customer.active_subscription.subscription_plan.should == @payable_subscription1
+        @customer.active_subscription.end_date.should == Date.today + 12.weeks
       end
 
-      it "should set billing date to end date - 1 week when billing period is -1" do
-        @payable_subscription10 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12, :billing_period => -1)
-        @payable_subscription10.subscription_plan_lines.make!(:price => 200)
-        setup_customer(@payable_subscription10)
-        @customer.active_subscription.billing_date.should == Date.today + 11*7
+      it "should change to more expensive even if the subscription plan does not allow upgrading" do
+        @payable_subscription1.update_attribute(:can_be_upgraded, false)
+        setup_customer(@payable_subscription1)
+        @customer.admin_change_subscription!(@payable_subscription2)
+        @prev_subscription.reload
+        @prev_subscription.should be_admin_changed
+        @prev_subscription.subscription_plan.should == @payable_subscription1
+        @prev_subscription.end_date.should == Date.today - 1.day
+        @customer.active_subscription.subscription_plan.should == @payable_subscription2
+        @customer.active_subscription.end_date.should == Date.today + 12.weeks
       end
+
+      it "should change to other subscription plan from date specified by admin" do
+        setup_customer(@payable_subscription1)
+        @customer.admin_change_subscription!(@payable_subscription2, Date.today + 5.days)
+        @customer.active_subscription.should be_admin_changed
+        @customer.active_subscription.subscription_plan.should == @payable_subscription1
+        @customer.active_subscription.end_date.should == Date.today + 4.days
+        @customer.subscriptions.last.subscription_plan.should == @payable_subscription2
+        @customer.subscriptions.last.start_date.should == Date.today + 5.days
+        @customer.subscriptions.last.end_date.should == Date.today + 5.days + 12.weeks
+      end
+
+      it "should change to other subscription plan when in lockup period" do
+        @payable_subscription2.update_attribute(:lockup_period, 2)
+        setup_customer(@payable_subscription2)
+        set_date_today_to(@customer.active_subscription.lockup_start_date)
+        @customer.active_subscription.enter_lockup!
+        @customer.active_subscription.should be_lockup
+        @customer.admin_change_subscription!(@payable_subscription1)
+        @prev_subscription.reload
+        @prev_subscription.should be_admin_changed
+        @prev_subscription.subscription_plan.should == @payable_subscription2
+        @prev_subscription.end_date.should == Date.today - 1.day
+        @customer.active_subscription.subscription_plan.should == @payable_subscription1
+        @customer.active_subscription.end_date.should == Date.today + 12.weeks
+      end
+
+      it "should not apply penalty when changed by admin in lockup period" do
+        @payable_subscription2.update_attribute(:lockup_period, 2)
+        setup_customer(@payable_subscription2)
+        set_date_today_to(@customer.active_subscription.lockup_start_date)
+        @customer.active_subscription.enter_lockup!
+        @customer.active_subscription.should be_lockup
+        @customer.admin_change_subscription!(@payable_subscription1)
+        @customer.subscriptions.count.should eql(2)
+        @customer.subscription_plans.should include(@payable_subscription1,@payable_subscription2)
+      end
+
+      it "should change to other subscription when in free period" do
+        @payable_subscription2.update_attribute(:free_period, 2)
+        setup_customer(@payable_subscription2, { :vat_number => "VAT39438928282" })
+        set_date_today_to(Date.today + 1.day)
+        @customer.active_subscription.is_today_in_free_period?.should be_true
+        @customer.admin_change_subscription!(@payable_subscription1)
+        @prev_subscription.reload
+        @prev_subscription.should be_admin_changed
+        @prev_subscription.subscription_plan.should == @payable_subscription2
+        @prev_subscription.end_date.should == Date.today - 1.day
+        @customer.active_subscription.subscription_plan.should == @payable_subscription1
+        @customer.active_subscription.end_date.should == Date.today + 12.weeks
+      end
+
+      it "should cancel the free period when admin changes the subscription" do
+        @payable_subscription2.update_attribute(:free_period, 2)
+        setup_customer(@payable_subscription2, { :vat_number => "VAT39438928282" })
+        set_date_today_to(Date.today + 1.day)
+        @customer.active_subscription.is_today_in_free_period?.should be_true
+        @customer.admin_change_subscription!(@payable_subscription1)
+        @customer.active_subscription.is_today_in_free_period?.should be_false
+        @customer.active_subscription.free_period_can_be_applied?.should be_false
+        @customer.active_subscription.free_period_used?.should be_true
+      end
+
+      it "should not be possible to set the start date in the past for admin change" do
+        setup_customer(@payable_subscription2)
+        @customer.admin_change_subscription!(@payable_subscription1, Date.today-1.day).should be_false
+      end
+
+      it "should not be possible to set the start date more than 1 day in the future of the end date of non-free active subscription" do
+        setup_customer(@payable_subscription2)
+        @customer.admin_change_subscription!(@payable_subscription1, @customer.active_subscription.end_date + 2.days).should be_false
+      end
+
+      it "should be possible to set the start date any day in the future when user has free active subscription" do
+        @free_subscription = SubscriptionPlan.active.free.for_role("supplier").first
+        setup_customer(@free_subscription)
+        @customer.admin_change_subscription!(@payable_subscription1, Date.today + 1.year).should be_true
+      end
+
+      it "should not be possible for admin to change the subscription when there are scheduled subscriptions in the future" do
+        setup_customer(@payable_subscription2)
+        @customer.downgrade_subscription!(@payable_subscription1).should be_true
+        @customer.subscriptions.future.count.should eql(1)
+        @customer.admin_change_subscription!(@payable_subscription1).should be_false
+      end
+
     end
 
   end

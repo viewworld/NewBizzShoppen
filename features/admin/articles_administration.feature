@@ -160,4 +160,12 @@ Scenario: I can see type of article on the listing
 Scenario: As admin, it should be possible to edit all kind of articles by displaying Edit link in interface when articles is listed or displayed
   Given I go to the home page
   Then I click hidden link by url regex "/administration\/articles\/\d+\/edit/"
-  And I should see translated "administration.articles.edit.view.header" with options "name:Blurb start page role selection"
+  And I should see translated "administration.articles.edit.view.header" with options "name:Blurb supplier home"
+
+#8603
+@m23 @requested @_done @tested_elsewhere @rspec
+Scenario: I can save a blurb with empty body
+
+#8603
+@m23 @requested @_done @non_testable
+Scenario: When blurb has empty body it is not displayed (takes no space on the page)

@@ -1,6 +1,6 @@
 <ul class="nav<%= (user_signed_in? and current_user.has_role?(:admin)) ? " admin_nav" : "" %>">
   <%= main_menu_link_to_role_specific_home_page %>
-  <% unless user_signed_in? and current_user.has_role?(:category_supplier) and current_user.with_role.parent_accessible_categories_without_auto_buy.empty? %>
+  <% unless (user_signed_in? and current_user.has_role?(:category_supplier) and current_user.with_role.parent_accessible_categories_without_auto_buy.empty?) or (session[:site] == "faircalls") %>
       <% if @home_category %>
           <%= main_menu_link_to(t("layout.main_menu.shared.browse_leads"), category_home_page_leads_path(@home_category.cached_slug), :tab => "browse_leads") unless @auto_buy_category %>
       <% else %>

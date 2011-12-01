@@ -4,9 +4,13 @@ Feature: Deals from procurement manager perspective
   Background:
     Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role member
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    And subscription plan has following lines
+      | name                 | price |
+      | subscr premium line1 |    99 |
     And user with email "procurment@nbs.com" upgrades to subscription named "Premium member"
     And I am on the homepage
     And I make sure current locale is "en"
+    And I visit domain http://fairdeals.eu
     Then I sign in as procurment@nbs.com with password secret
 
   @_tested @_done @tgn
@@ -16,7 +20,7 @@ Feature: Deals from procurement manager perspective
 
   @_tested @_done @tgn
   Scenario: I can "Browse deals" instead of "Browse leads"
-    Then I should see translated "layout.main_menu.shared.browse_deals"
+    Then I should see translated "layout.fairdeals.main_menu.deals"
     And I should not see "Browse leads"
 
   @m18 @selenium @_done @_tested @tgn
@@ -26,7 +30,7 @@ Feature: Deals from procurement manager perspective
     And a deal named "Some deal #2" exists within category "Electronics deals"
     And a deal named "Some deal #3" exists within category "Electronics deals"
     And a deal named "Some deal #4" exists within category "Electronics deals"
-    Then I follow translated "layout.main_menu.shared.browse_deals"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Electronics deals"
     And I follow translated "common.show_all"
     And I should see "Some deal #1"
@@ -36,36 +40,36 @@ Feature: Deals from procurement manager perspective
     And I follow translated "common.show_paginated"
 
   # only child (1 level)
-  @m18 @selenium @_done @_tested @tgn
+  @m18 @selenium @_done @_tested @tgn @_deprecated
   Scenario: I can see the dropdown menu of subcategories on the particular category leads listing
-    Given Deal category Sound files is created
-    And Deal category named "Podcasts" already exists within category named "Sound files"
-    And Deal category named "Music" already exists within category named "Sound files"
-    And Deal category named "Scientific" already exists within category named "Podcasts"
-    And Deal category named "Comedy" already exists within category named "Podcasts"
-    Given a deal named "Some deal #1" exists within category "Electronics deals"
-    Then a deal named "Various music" exists within category "Music"
-    Then a deal named "Various podcasts" exists within category "Podcasts"
-    Then a deal named "Skeptical Guide To Universe" exists within category "Scientific"
-    Then a deal named "Funny pod" exists within category "Comedy"
-    Then I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow category "Sound files"
-    And "category_selector" dropdown should have values "Podcasts,Music"
-    And I select "Podcasts" from "category_selector"
-    And "category_selector" dropdown should have values "Scientific,Comedy"
-    And I should see "Various podcasts"
-    And I select "Scientific" from "category_selector"
-    And I should see "Skeptical Guide To Universe"
+#    Given Deal category Sound files is created
+#    And Deal category named "Podcasts" already exists within category named "Sound files"
+#    And Deal category named "Music" already exists within category named "Sound files"
+#    And Deal category named "Scientific" already exists within category named "Podcasts"
+#    And Deal category named "Comedy" already exists within category named "Podcasts"
+#    Given a deal named "Some deal #1" exists within category "Electronics deals"
+#    Then a deal named "Various music" exists within category "Music"
+#    Then a deal named "Various podcasts" exists within category "Podcasts"
+#    Then a deal named "Skeptical Guide To Universe" exists within category "Scientific"
+#    Then a deal named "Funny pod" exists within category "Comedy"
+#    Then I follow translated "layout.fairdeals.main_menu.deals"
+#    And I follow category "Sound files"
+#    And "category_selector" dropdown should have values "Podcasts,Music"
+#    And I select "Podcasts" from "category_selector"
+#    And "category_selector" dropdown should have values "Scientific,Comedy"
+#    And I should see "Various podcasts"
+#    And I select "Scientific" from "category_selector"
+#    And I should see "Skeptical Guide To Universe"
 
   @_tested @_done @tgn
   Scenario: I can see list of deals categories and subcategories
-    Then I follow translated "layout.main_menu.shared.browse_deals"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
     And I should see "Electronics deals"
 
   @_tested @_done @tgn
   Scenario: I can browse deals in seelcted category
     Given a deal named "Some deal #1" exists within category "Electronics deals"
-    Then I follow translated "layout.main_menu.shared.browse_deals"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Electronics deals"
     Then I should see "Some deal #1"
 
@@ -77,27 +81,28 @@ Feature: Deals from procurement manager perspective
     When I follow translated "layout.main_menu.member.my_requests"
     And I should not see "New lead"
 
-  @_done @_tested @tgn
+  # removed from fairdeals home page
+  @_done @_tested @tgn @_deprecated
   Scenario: I should see "Latest Deals" instead of "Best Sellers"
-    When I follow translated "layout.main_menu.shared.home"
-    Then I should see translated "supplier_home.show.view.header_latest_deals"
-    And I should not see "Best sellers"
+#    When I follow translated "layout.main_menu.shared.home"
+#    Then I should see translated "supplier_home.show.view.header_latest_deals"
+#    And I should not see "Best sellers"
 
   @_done @_tested @tgn @_deprecated
   Scenario: I can see contact information for deals when I am logged in
-    Given a deal named "Some deal #1" exists within category "Electronics deals"
-    #Given a deal named "Some deal #1" exists with attributes "contact_name:SE Cupps"
-    Given a deal named "Some deal #1" exists with attributes "company_name:SE Cupps"
-    Then I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow category "Electronics deals"
-    #Then I should see translated "deals.listing.contact_label"
-    #And I should see translated "deals.listing.contact_name_label"
-    And I should see "SE Cupps"
+#    Given a deal named "Some deal #1" exists within category "Electronics deals"
+#    #Given a deal named "Some deal #1" exists with attributes "contact_name:SE Cupps"
+#    Given a deal named "Some deal #1" exists with attributes "company_name:SE Cupps"
+#    Then I follow translated "layout.main_menu.shared.browse_deals"
+#    And I follow category "Electronics deals"
+#    #Then I should see translated "deals.listing.contact_label"
+#    #And I should see translated "deals.listing.contact_name_label"
+#    And I should see "SE Cupps"
 
   @_done @_tested @tgn
   Scenario: I can click "Contact me"
     Given a deal named "Some deal #1" exists within category "Electronics deals"
-    Then I follow translated "layout.main_menu.shared.browse_deals"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Electronics deals"
     Then I should see translated "deals.index.view.view_deal"
 
@@ -158,6 +163,30 @@ Feature: Deals from procurement manager perspective
     And I press translated "supplier_accounts.new.view.button_create_account"
     And I should see translated "deals.new.view.frame_header"
 
+  #8340
+  @m22 @requested @tgn @_done @_tested
+  Scenario: When I have free subscription and I click get deal then I should see questions if I want to upgrade
+    Given I am not sign in
+    Given I visit domain http://fairdeals.dk
+    And I am signed up and confirmed as user with email procurmentfree@nbs.com and password secret and role member
+    And I sign in as procurmentfree@nbs.com with password secret
+    Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
+    And user "buyer@nbs.com" has assigned role "deal_maker"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:ultimate some funky deal|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow category "Business deals"
+    And I follow translated "deals.index.view.view_deal"
+    Then I should see translated "deals.index.view.contact_me"
+    And I follow translated "deals.index.view.contact_me"
+    And I should be on my profile
+    Then I follow translated "subscriptions.listing.upgrade"
+    And I should see "ultimate some funky deal"
+    And I follow translated "deals.index.view.contact_me"
+    And I fill in "lead_phone_number" with "+49 23432423423234"
+
+  #8340
+  @m22 @requested @tgn @_done @_tested_elsewhere
+  Scenario: When I try to get deal on free subscription and I decide to upgrade then I should be redirected to my profile page
 
   #7531
   @m19 @requested @_done @_tested @tgn
@@ -186,6 +215,7 @@ Feature: Deals from procurement manager perspective
   @m19 @requested @_done @_tested @tgn
   Scenario: Email with deal information for procurment manager should be customizable per deal (with default template)
     Given I am not sign in
+    And I visit domain http://fairleads.eu
     And I make sure current locale is "da"
     Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     And user "buyer@nbs.com" has deal maker role enabled
@@ -290,3 +320,30 @@ Feature: Deals from procurement manager perspective
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
     Then the "lead_linkedin_url" field should contain "www.linkedin.com/profile/123"
+
+  #8339
+  @m22 @requested @ao @_done @_tested
+  Scenario: I should not see activation dates on the listing and only deals with valid dates should be displayed
+    Given a deal named "Some deal #1" exists within category "Electronics deals"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow category "Electronics deals"
+    Then I should not see "Activation"
+
+  #8606
+  @m23 @requested @tgn @_done @_tested
+  Scenario: I can see a blurb text when I confirm a deal
+    Given I visit domain http://fairdeals.dk
+    And I am not sign in
+    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
+    And user "buyer@nbs.com" has deal maker role enabled
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL"
+    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
+    Then I sign in as purchase_manager101@nbs.com with password supersecret
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow category "Business deals"
+    And I follow translated "deals.index.view.view_deal"
+    And I follow translated "deals.index.view.contact_me"
+    And I press translated "member.leads.new.view.button_create"
+    And I should see "Blurb deal confirmation page"

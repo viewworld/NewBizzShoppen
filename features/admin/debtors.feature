@@ -56,7 +56,6 @@ Feature: Debtors
       | subscr premium line2 |     3 |
     Given user with email "kastomer2@nbs.fake" upgrades to subscription named "Premium supplier"
     And user "kastomer2@nbs.fake" with role "supplier" should have attributes "subscriber_type:'ad-hoc'"
-    And the date is "14" days from now
     And user subscriptions are reviewed by rake task
     And user "kastomer2@nbs.fake" with role "supplier" should have attributes "subscriber_type:'subscriber'"
 
@@ -134,7 +133,30 @@ Feature: Debtors
     And I should see "Fox"
 
  @m21 @requested @selenium @_done @tested_elsewhere @tgn
-  Scenario: When multiple debtors are selected for invoicing then if there is no seller than default one is applied
+ Scenario: When multiple debtors are selected for invoicing then if there is no seller than default one is applied
     
-  @m21 @requested @subscriptions @tgn @_done @tested_elsewhere
-  Scenario: Not invoiced items should be added to the subscription invoice at billing time
+ @m21 @requested @subscriptions @tgn @_done @tested_elsewhere
+ Scenario: Not invoiced items should be added to the subscription invoice at billing time
+
+ #8337
+ @m22 @requested @tgn @_done @_tested
+ Scenario: When I issue an invoice for subscriber then I should not see the screen to select user/seller
+   Given there is a seller with attributes "name:TestSeller88, first_name:John, last_name:Koval, company_name:Trust"
+   And subscription plan exists with attributes "name:TestSubPlan, billing_cycle:4"
+   And subscription plan has seller "TestSeller88"
+   And subscription plan has following lines
+   | name                 | price |
+   | subscr premium line1 |    99 |
+   | subscr premium line2 |     3 |
+   Given user with email "kastomer@nbs.fake" upgrades to subscription named "TestSubPlan"
+   When I follow translated "layout.main_menu.admin.upcoming_invoices"
+   Then I follow translated "administration.upcoming_invoices.index.view.create_invoice"
+   And "invoice_seller_id" should be selected for value "TestSeller88"
+
+ #8332
+ @m22 @requested @_done @_tested @ao
+ Scenario: I should see total value
+   When I follow translated "layout.main_menu.admin.upcoming_invoices"
+   Then I should see translated "administration.upcoming_invoices.index.view.total_in_euro"
+
+

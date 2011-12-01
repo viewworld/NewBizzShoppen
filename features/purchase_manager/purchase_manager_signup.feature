@@ -6,7 +6,8 @@ Feature: Purchase Manager signup
   Should be able to create a Purchase Manager account
 
   Background: Set English locale on the home page
-    Given I am on the homepage
+    Given I visit domain http://fairdeals.eu
+    And I am on the homepage
     And I make sure current locale is "en"
 
   @added @_done
@@ -59,10 +60,11 @@ Feature: Purchase Manager signup
     When I go to member sign up
     And I select "" from "user_member_address_attributes_country_id"
     And I press translated "supplier_accounts.new.view.button_create_account"
-    And I should see "13" occurrences of css class "inline-errors" for tag "p"
+    And I should see "12" occurrences of css class "inline-errors" for tag "p"
 
+  # when on free subscription - get deal is displayed but informs that you have to upgrade - tested elsewhere
   @m21 @requested @subscriptions @_done @_tested @tgn
-  Scenario: Free subscription doesn't allow to get the deal but user can create tenders
+  Scenario: Free subscription doesn't allow to get the deal but user can create tenders and see get deal button
     Given I visit domain http://fairdeals.dk
     Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     And subscription plan exists with attributes "name:Premium supplier,deal_maker:1,big_buyer:1,assigned_roles:supplier"
@@ -73,7 +75,7 @@ Feature: Purchase Manager signup
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
-    And I should not see translated "deals.index.view.contact_me"
+    And I should see translated "deals.index.view.contact_me"
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I follow translated "layout.fairdeals.main_menu.deals"

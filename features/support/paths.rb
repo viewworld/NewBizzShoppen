@@ -22,6 +22,8 @@ module NavigationHelpers
       '/administration'
     when /agents root/
       '/agents'
+    when /suppliers root/
+      '/suppliers'
     when /administration users/
         '/administration/users'
     when /administration edit user for (.*)/
@@ -179,6 +181,8 @@ module NavigationHelpers
       comments_threads_path
     when /administration edit subscription plan named (.*)/
       edit_administration_subscription_plan_path(SubscriptionPlan.where(:name => $1).first)
+    when /campaign testing one page/
+      callers_campaign_agent_work_screen_index_path(Campaign.find_by_name("Testing One"))
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

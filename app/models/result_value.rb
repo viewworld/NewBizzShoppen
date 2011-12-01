@@ -18,6 +18,14 @@ class ResultValue < ActiveRecord::Base
     Material.where(:id => value.to_s.split(","))
   end
 
+  def material_id
+    value.to_i
+  end
+
+  def material_id=(_material_id)
+    self.value = _material_id
+  end
+
   private
   def value_format
     return true if !result_field.is_mandatory and value.blank?

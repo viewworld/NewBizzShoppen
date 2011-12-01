@@ -1,5 +1,7 @@
 class CreditNote < ActiveRecord::Base
   belongs_to :invoice
+  belongs_to :currency
+  belongs_to :user
 
   NOTE_TYPES = ["credit".freeze, "refund".freeze]
 
@@ -7,14 +9,6 @@ class CreditNote < ActiveRecord::Base
 
   scope :with_keyword, lambda { |keyword| where("users.first_name like :q or users.last_name like :q or credit_notes.number::TEXT like :q", { :q => "%#{keyword}%" }).joins(:invoice => [:user]) }
   scope :with_type, lambda { |type_name| where("lower(type) = ?", type_name) }
-
-  after_create :set_number
-
-  private
-
-  def set_number
-    self.update_attribute :number, CreditNote.count(:conditions => ["invoices.seller_id = ?", invoice.seller_id], :joins => :invoice)
-  end
 
   public
 
@@ -26,20 +20,21 @@ class CreditNote < ActiveRecord::Base
     invoice.user
   end
 
-  def total
-    invoice_lines.sum('brutto_value')
-  end
-
   def full_number
-    "#{number}/#{created_at.year}"
+    number ? "#{number}/#{created_at.year}" : ""
   end
 end
 
 class Credit < CreditNote
 
   after_save :set_invoice_as_paid_and_credited
+  after_create :set_number
 
   private
+
+  def set_number
+    self.update_attribute :number, Credit.count(:conditions => ["invoices.seller_id = ?", invoice.seller_id], :joins => :invoice)
+  end
 
   def set_invoice_as_paid_and_credited
     invoice.update_attribute(:paid_at, Time.now)
@@ -54,11 +49,18 @@ class Credit < CreditNote
     I18n.t("models.credit_note.type.credit")
   end
 
+  def total
+    invoice_lines.sum('brutto_value')
+  end
 end
 
 class Refund < CreditNote
 
   def type_as_text
     I18n.t("models.credit_note.type.refund")
+  end
+
+  def total
+    refund_price
   end
 end

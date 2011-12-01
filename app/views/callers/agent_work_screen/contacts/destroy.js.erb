@@ -1,13 +1,15 @@
 display_notice("<%= escape_javascript(@contact_old.destroyed? ? t("contacts.destroy.flash.successfully_removed") : t("contacts.destroy.flash.successfully_deassigned"))  %>", true);
-$("#switch_campaign_form").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/switch_campaign_form", :locals => @locals)) %>");
-$("#call_sheet").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/call_sheet", :locals => @locals)) %>");
-$("#pending_calls").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/pending_calls", :locals => @locals)) %>");
-$("#completed_contacts").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/completed_contacts", :locals => @locals)) %>");        
+<% if @contact_old.destroyed? %>
+$('#contact_row_id_<%= @contact_old.id %>').remove();
+<% if @contact %>
+reset_class_cycle_for_contact_tables();
+$('#contact_row_id_<%= @contact.id %>').addClass('highlight_row');
+<% end %>
+<% end %>
 $("#results_sheet").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/results_sheet", :locals => @locals)) %>");
 $("#contact_info").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "callers/agent_work_screen/contact_form", :locals => @locals) : "") %>");
 $("#call_result_form").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "callers/agent_work_screen/call_result_form", :locals => @locals) : "") %>");
 <% unless @contact %>
-    display_notice("<%= escape_javascript(t("contacts.show.flash.you_have_no_contacts_assigned")) %>", false);
+display_notice("<%= escape_javascript(t("contacts.show.flash.you_have_no_contacts_assigned")) %>", false);
 <% end %>
-
-loadScripts();        
+//loadScripts();

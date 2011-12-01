@@ -2,7 +2,8 @@
 Feature: Lead templates management for purchase manager
 
 Background:
-  Given I am on the homepage
+  And I am on the homepage
+  Given I visit domain http://fairdeals.eu
   And I make sure current locale is "en"
   And I have user with email other_purchase_manager@nbs.com and role member
   And I am signed up and confirmed as user with email purchase_manager@person.com and password supersecret and role member

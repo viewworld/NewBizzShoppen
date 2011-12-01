@@ -1,4 +1,4 @@
-@comments @noguess @ao @m9
+@comments @noguess @ao @m9 @faircalls
 Feature: Comments administration as call centre admin
 
 Background:
@@ -19,7 +19,27 @@ Background:
   And comment thread for lead "Lead#3" was posted by users "customer1@nbs.com, call_centre1@nbs.com, customer1@nbs.com"
   And user "customer1@nbs.com" with role "supplier" has attributes "screen_name: Mark Driscoll"
   And user "customer2@nbs.com" with role "supplier" has attributes "screen_name: John Doe"
+  And I visit domain http://faircalls.eu
   And I sign in as call_centre1@nbs.com with password supersecret
+
+@requested @m10 @tgn @selenium @_tested @_done
+Scenario: I can block comments from my agents
+  Given lead Lead#6 is created by user cca1.call_centre1@nbs.com with role call_centre_agent
+  And a lead Lead#6 exists within category Computers and is bought by user customer2@nbs.com with role supplier
+  And comment thread for lead "Lead#6" was posted by users "customer2@nbs.com, cca1.call_centre1@nbs.com, customer2@nbs.com"
+  Given I follow translated "layout.main_menu.call_centre.leads"
+  And I fill in "search_with_keyword" with "Lead#6"
+  And I press translated "call_centre.leads.index.view.search_button"
+  And I follow translated "comments.shared.show_comments"
+  When I follow translated "comments.threads.show.view.block"
+  Then I should see translated "comments.threads.show.view.comment_blocked"
+  And I should see "Comment title #1"
+  And I should not see "Comment title #2"
+  And I should not see "Comment title #3"
+  When I follow translated "comments.threads.show.view.unblock"
+  Then I should see "Comment title #1"
+  And I should see "Comment title #2"
+  And I should see "Comment title #3"
 
 @_tested @_done
 Scenario: I can see the amount of comments per lead on the listing of Leads created by my agents
@@ -92,24 +112,7 @@ Scenario: I cannot start new thread
   And I follow translated "comments.shared.show_comments"
   And I should not see translated "comments.threads.new.view.header" with options "header: Lead#3"
 
-@requested @m10 @tgn @selenium @_tested @_done
-Scenario: I can block comments from my agents
-  Given lead Lead#6 is created by user cca1.call_centre1@nbs.com with role call_centre_agent
-  And a lead Lead#6 exists within category Computers and is bought by user customer2@nbs.com with role supplier
-  And comment thread for lead "Lead#6" was posted by users "customer2@nbs.com, cca1.call_centre1@nbs.com, customer2@nbs.com"
-  Given I follow translated "layout.main_menu.call_centre.leads"
-  And I fill in "search_with_keyword" with "Lead#6"
-  And I press translated "call_centre.leads.index.view.search_button"
-  And I follow translated "comments.shared.show_comments"
-  When I follow translated "comments.threads.show.view.block"
-  Then I should see translated "comments.threads.show.view.comment_blocked"
-  And I should see "Comment title #1"
-  And I should not see "Comment title #2"
-  And I should not see "Comment title #3"
-  When I follow translated "comments.threads.show.view.unblock"
-  Then I should see "Comment title #1"
-  And I should see "Comment title #2"
-  And I should see "Comment title #3"
+
 
 @requested @m10 @selenium @tgn @_tested @_done
 Scenario: I can block particular agent of mine from further dialog with given buyer on given lead

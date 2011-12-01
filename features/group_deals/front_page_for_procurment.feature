@@ -167,9 +167,10 @@ Feature: Front page for procurment
     And a deal named "GroupDealA" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:super ultra deal social medias,start_date:01-01-2011,end_date:01-01-2013"
     Given I am signed up and confirmed as user with email purchase_manager@nbs.com and password secret and role member
     And I am on the homepage
+    And I visit domain http://fairdeals.dk
     And I make sure current locale is "en"
     Then I sign in as purchase_manager@nbs.com with password secret
-    And I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Electronics deals"
     And I click hidden link by url regex "/\/deals\/\d+/"
     And I follow translated "deals.show.view.share_by_email"
@@ -184,7 +185,7 @@ Feature: Front page for procurment
 
   Scenario: I should be able to browse deals by the arrows on the left and right side of the big featured group deal
 
-  @is @_tested @_done @wip
+  @is @_tested @_done
   Scenario: As admin I can select primary featured deal to be displayed on procurement page
     Given I am on the homepage
     And I make sure current locale is "en"
@@ -258,6 +259,7 @@ Feature: Front page for procurment
     And deal named "PrimaryGroupDeal" is a primary featured deal
     Given I visit domain http://fairdeals.dk
     And I should see "1" occurrences of css class "splash_red" for tag "div"
+    And I should see translated "deals.index.view.group_deal_splash_label" within ".splash span"
 
   #7630
   @m19 @requested @group_deals @_tested @_done @tgn
@@ -288,3 +290,39 @@ Feature: Front page for procurment
 
   @m21 @requested @is @tested_elsewhere @_done
   Scenario: When featured deal is unpublished then available backup deal should appear on the front page
+
+  @m22 @requested @_done @_tested @ao
+  Scenario: I should not see time countdown when deal is not a group deal
+    Given a deal named "PrimaryDeal" exists within category "Electronics deals"
+    And a deal named "PrimaryDeal" exists with attributes "published:1,group_deal:0,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And deal named "PrimaryDeal" is a primary featured deal
+    And I visit domain http://fairdeals.dk
+    Then I should not see CSS path "#countdown"
+
+  @m22 @requested @_done @_tested @ao
+  Scenario: I should see "Featured description" for the main featured deal
+    Given a deal named "PrimaryDeal" exists within category "Electronics deals"
+    And a deal named "PrimaryDeal" exists with attributes "featured_description:FeaturedDescriptionText,published:1,group_deal:0,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And deal named "PrimaryDeal" is a primary featured deal
+    And I visit domain http://fairdeals.dk
+    Then I should see "FeaturedDescriptionText" within "div.deal_desc"
+
+  @m22 @requested @_done @_tested @ao
+  Scenario: I should see "Short featured description" for the secondary featured deals
+    Given a deal named "PrimaryDeal" exists within category "Electronics deals"
+    And a deal named "PrimaryDeal" exists with attributes "featured_description:FeaturedDescriptionText,published:1,group_deal:0,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And deal named "PrimaryDeal" is a primary featured deal
+    When a deal named "SecondaryGroupDeal" exists within category "Electronics deals"
+    And a deal named "SecondaryGroupDeal" exists with attributes "short_featured_description:ShortDescription,published:1,group_deal:1,price:99,deal_price:200,discounted_price:50,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And deal named "SecondaryGroupDeal" is "1" secondary featured deal
+    And I visit domain http://fairdeals.dk
+    Then I should see "ShortDescription" within "div.other_deals"
+
+  @m22 @requested @_done @_tested @ao
+  Scenario: Non-group deal should be marked by a splash saying "Fair deal" on the main page in the featured deal box
+    Given a deal named "PrimaryDeal" exists within category "Electronics deals"
+    And a deal named "PrimaryDeal" exists with attributes "published:1,group_deal:0,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And deal named "PrimaryDeal" is a primary featured deal
+    Given I visit domain http://fairdeals.dk
+    And I should see "1" occurrences of css class "splash_red" for tag "div"
+    And I should see translated "deals.index.view.fair_deal_splash_label" within ".splash span"

@@ -104,7 +104,6 @@ Feature: VAT rates
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.admin.upcoming_invoices"
     And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-    And I press translated "administration.invoices.new.view.button_create"
     And I follow translated "administration.invoices.edit.view.show_invoice"
     Then I should see "27.00%" within ".invoice_data"
 
@@ -120,7 +119,6 @@ Feature: VAT rates
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.admin.upcoming_invoices"
     And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-    And I press translated "administration.invoices.new.view.button_create"
     And I follow translated "administration.invoices.edit.view.show_invoice"
     Then I should not see "27%" within ".invoice_data"
 

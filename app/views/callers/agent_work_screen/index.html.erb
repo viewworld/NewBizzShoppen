@@ -26,6 +26,7 @@
   </div>
 
   <%= t("agent_work_screen.index.contact_search_label") %> <%= text_field_tag "autocompleter", nil %>
+  <%= bt_link_to_function nil, t("agent_work_screen.index.new_contact"), "javascript:$('#modal_new_contact_form_div').dialog('open');" %>
 
   <a data-remote="true" data-method="get" id="autocomplter_result_form" href="" class="display:none"></a>
 
@@ -37,12 +38,12 @@
               }
           });
           $("#autocompleter").autocomplete({
-              url : 'callers/campaigns/<%= @campaign.id %>/contacts_for_search.js',
-              mustMatch : false
-          }
-                  ).result(function(event, item) {
-              $("#autocomplter_result_form").attr("href", "/callers/campaigns/<%= @campaign.id %>/agent_work_screen/contacts/" + item[1]).click();
-          });
+                      url : 'callers/campaigns/<%= @campaign.id %>/contacts_for_search.js',
+                      mustMatch : false
+                  }
+          ).result(function(event, item) {
+                      $("#autocomplter_result_form").attr("href", "/callers/campaigns/<%= @campaign.id %>/agent_work_screen/contacts/" + item[1]).click();
+                  });
 
           $("#autocompleter").autocomplete('contacts_for_search', function(event, data, formatted) {
           });
@@ -61,20 +62,50 @@
 
     <br/>
 
+    <header>
+
+      <param:content>
+        <div id="tab_change_header"><%= t('agent_work_screen.index.call_log') %></div>
+      </param:content>
+
+      <param:actions>
+        <ul id="tab_change_links" class="header_actions">
+          <li>
+            <%= bt_link_to nil, t("agent_work_screen.index.show_call_log_for_current_contact"), "javascript:void(0)", :onclick => "displayWorkScreenTab('#results_sheet', ['#{t('agent_work_screen.index.call_log')}','#{t('agent_work_screen.index.call_sheet')}','#{t('agent_work_screen.index.pending_calls')}','#{t('agent_work_screen.index.completed_contacts')}'])", :class => "bt_active", :id => "results_sheet_switch_link" %>
+          </li>
+          <li>
+            <%= bt_link_to nil, t("agent_work_screen.index.show_current_call_sheet"), "javascript:void(0)", :onclick => "displayWorkScreenTab('#call_sheet', ['#{t('agent_work_screen.index.call_log')}','#{t('agent_work_screen.index.call_sheet')}','#{t('agent_work_screen.index.pending_calls')}','#{t('agent_work_screen.index.completed_contacts')}'])", :id => "call_sheet_switch_link" %>
+          </li>
+          <li>
+            <%= bt_link_to nil, t("agent_work_screen.index.show_pending_calls"), "javascript:void(0)", :onclick => "displayWorkScreenTab('#pending_calls', ['#{t('agent_work_screen.index.call_log')}','#{t('agent_work_screen.index.call_sheet')}','#{t('agent_work_screen.index.pending_calls')}','#{t('agent_work_screen.index.completed_contacts')}'])", :id => "pending_calls_switch_link" %>
+          </li>
+          <li>
+            <%= bt_link_to nil, t("agent_work_screen.index.show_completed_contacts"), "javascript:void(0)", :onclick => "displayWorkScreenTab('#completed_contacts', ['#{t('agent_work_screen.index.call_log')}','#{t('agent_work_screen.index.call_sheet')}','#{t('agent_work_screen.index.pending_calls')}','#{t('agent_work_screen.index.completed_contacts')}'])", :id => "completed_contacts_switch_link" %>
+          </li>
+          <li class="last">
+            <%= bt_link_to nil, t("agent_work_screen.index.show_my_results"), callers_production_path %>
+          </li>
+        </ul>
+      </param:actions>
+    </header>
+
     <div id="results_sheet">
       <%= render :partial => "callers/agent_work_screen/results_sheet", :locals => @locals %>
     </div>
 
     <div id="call_sheet" style="display:none">
-      <%= render :partial => "callers/agent_work_screen/call_sheet", :locals => @locals %>
+      <%= image_tag "/images/global_loader.gif" %>
+      <%#= render :partial => "callers/agent_work_screen/call_sheet", :locals => @locals %>
     </div>
 
     <div id="pending_calls" style="display:none">
-      <%= render :partial => "callers/agent_work_screen/pending_calls", :locals => @locals %>
+      <%= image_tag "/images/global_loader.gif" %>
+      <%#= render :partial => "callers/agent_work_screen/pending_calls", :locals => @locals %>
     </div>
 
     <div id="completed_contacts" style="display:none">
-      <%= render :partial => "callers/agent_work_screen/completed_contacts", :locals => @locals %>
+      <%= image_tag "/images/global_loader.gif" %>
+      <%#= render :partial => "callers/agent_work_screen/completed_contacts", :locals => @locals %>
     </div>
   </div>
 
@@ -88,7 +119,7 @@
 
   <div id="modal_new_contact_form_div">
     <% @lead = @new_contact = Contact.new %>
-    <%= semantic_form_for @new_contact, :url => url_for(:controller => "/callers/agent_work_screen/contacts", :action => :create, :campaign_id => @campaign.id), :html => { :method => :post, :id => "new_contact_form" }, :remote => true do |form| %>
+    <%= semantic_form_for @new_contact, :url => url_for(:controller => "/callers/agent_work_screen/contacts", :action => :create, :campaign_id => @campaign.id), :html => {:method => :post, :id => "new_contact_form"}, :remote => true do |form| %>
         <frm title="">
           <param:content>
             <%= render :partial => '/shared/leads/form', :locals => {:form => form, :campaign => @campaign, :contact => @new_contact} %>
@@ -98,13 +129,13 @@
   </div>
 
   <%= render "shared/email_template_popup/template_editor" %>
-  <%= render :partial => "shared/email_template_popup/template_vars_popup", :locals => { :instance_name => "body_editor" } %>
+  <%= render :partial => "shared/email_template_popup/template_vars_popup", :locals => {:instance_name => "body_editor"} %>
 
 </column-mc:>
 
 <js:>
   <script type="text/javascript">
-      <% if !@contact and @pending_contacts.any? %>
+      <% if !@contact and @pending_contacts and @pending_contacts.any? %>
       display_notice("<%= escape_javascript(t("contacts.show.flash.you_have_only_callback_contacts")) %>", false);
       <% elsif !@contact%>
       display_notice("<%= escape_javascript(t("contacts.show.flash.you_have_no_contacts_assigned")) %>", false);
@@ -117,8 +148,11 @@
       setup_jquery_dialog("call_result");
       setup_jquery_vars_popup_dialog();
 
-      $(document).ready(function(){
-          $.get('<%= callers_campaign_agent_work_screen_agent_information_path(@campaign) %>');
+      $(document).ready(function() {
+          $.get('<%= callers_campaign_agent_work_screen_call_sheet_path(@campaign) %>')
+          $.get('<%= callers_campaign_agent_work_screen_pending_call_path(@campaign) %>')
+          $.get('<%= callers_campaign_agent_work_screen_complete_contact_path(@campaign) %>')
+          $.get('<%= callers_campaign_agent_work_screen_agent_information_path(@campaign) %>')
       });
 
       $('#modal_new_contact_form_div').dialog({
@@ -137,22 +171,27 @@
           }
       });
 
-    var fields_array = ["contact_company_name", "contact_company_phone_number", "contact_country_id", "contact_company_website", "contact_address_line_1",
-                        "contact_address_line_2", "contact_address_line_3", "contact_zip_code", "contact_country_id", "contact_company_vat_no", "contact_company_ean_number",
-                        "contact_contact_name", "contact_contact_title", "contact_direct_phone_number", "contact_phone_number", "contact_email_address", "contact_linkedin_url",
-                        "contact_facebook_url", "contact_note"];
+      var fields_array = ["contact_company_name", "contact_company_phone_number", "contact_country_id", "contact_company_website", "contact_address_line_1",
+          "contact_address_line_2", "contact_address_line_3", "contact_zip_code", "contact_country_id", "contact_company_vat_no", "contact_company_ean_number",
+          "contact_contact_name", "contact_contact_title", "contact_direct_phone_number", "contact_phone_number", "contact_email_address", "contact_linkedin_url",
+          "contact_facebook_url", "contact_note"];
 
-    function validate_new_contact_form(){
-        company_name_is_valid = custom_form_validator_for_field("#new_contact_form","contact_company_name", "not_empty");
-        company_phone_is_valid = custom_form_validator_for_field("#new_contact_form","contact_company_phone_number", "not_empty");
-        country_is_valid = custom_form_validator_for_field("#new_contact_form","contact_country_id", "selected");
+      function validate_new_contact_form() {
+          company_name_is_valid = custom_form_validator_for_field("#new_contact_form", "contact_company_name", "not_empty");
+          company_phone_is_valid = custom_form_validator_for_field("#new_contact_form", "contact_company_phone_number", "not_empty");
+          country_is_valid = custom_form_validator_for_field("#new_contact_form", "contact_country_id", "selected");
 
-        if(company_name_is_valid && company_phone_is_valid && country_is_valid){
-            $('#new_contact_form').submit();
-            $('#modal_new_contact_form_div').dialog('close');
-            custom_clear_form("#new_contact_form", window.fields_array)
-        }
-    }
+          if (company_name_is_valid && company_phone_is_valid && country_is_valid) {
+              $('#new_contact_form').submit();
+              $('#modal_new_contact_form_div').dialog('close');
+              custom_clear_form("#new_contact_form", window.fields_array)
+          }
+      }
+<% if @selected_call_result %>
+$(document).ready(function() {
+  $.get('<%= edit_callers_campaign_agent_work_screen_contact_call_result_path(@campaign, @selected_call_result.contact, @selected_call_result) -%>')
+});
+<% end %>
   </script>
 </js:>
 

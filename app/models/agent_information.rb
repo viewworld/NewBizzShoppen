@@ -17,12 +17,22 @@ class AgentInformation
     }).flatten.first.to_f
   end
 
+  def time
+    UserSessionLog.for_user(user).started_between(date_from, date_to+1.day).sum(:hours_count)
+  end
+
+  # helper initializers
+
   def self.today(user)
     new(Date.today,Date.today, user)
   end
 
   def self.week(user)
     new(Time.now.beginning_of_week.to_date, Time.now.end_of_week.to_date, user)
+  end
+
+  def self.last_four_weeks(user)
+    new((Time.now.beginning_of_week-3.weeks).to_date, Time.now.end_of_week.to_date, user)
   end
 
   def self.quarter(user)

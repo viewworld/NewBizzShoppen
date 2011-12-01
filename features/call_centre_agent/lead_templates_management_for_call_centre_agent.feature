@@ -1,8 +1,9 @@
-@lead_templates @m5 @$_call_centre_agent @tgn  @requested
+@lead_templates @m5 @$_call_centre_agent @tgn  @requested @faircalls
 Feature: Lead templates managements for call centre agent
 
 Background:
   Given I am on the homepage
+  And I visit domain http://faircalls.eu
   And I make sure current locale is "en"
   And I have user with email call_centre91@nbs.com and role call_centre
   And I have user with email other_call_centre@nbs.com and role call_centre

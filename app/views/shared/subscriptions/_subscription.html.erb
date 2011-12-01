@@ -1,21 +1,23 @@
 <div id="subscription_plan_<%= subscription_plan.id %>" class="subscription_plan_item">
   <h3><%= subscription_plan.name %></h3>
 
-  <% if subscription_plan.payable? %>
-      <p><%= as_currency(subscription_plan.total_billing, subscription_plan.currency) %> / <%= subscription_plan.billing_cycle %> <%= t("subscriptions.listing.weeks") %></p>
-  <% else %>
-      <p><%= t("subscriptions.listing.free") %></p>
-  <% end %>
+  <div class="subscription_plan_price">
+    <% if subscription_plan.payable? %>
+        <p class="billing"><%= as_currency(subscription_plan.total_billing, subscription_plan.currency) %></p>
 
-  <% [:big_buyer, :team_buyers, :deal_maker].each do |method| %>
-      <% if subscription_plan.send("#{method}?".to_sym) %>
-          <p><%= t("subscriptions.listing.features.#{method}") %></p>
-      <% end %>
-  <% end %>
-  <br/>
-  <p>
+        <p>(<%= subscription_plan.billing_cycle %> <%= t("subscriptions.listing.weeks") %>)</p>
+    <% else %>
+        <p class="billing"><%= t("subscriptions.listing.free") %></p>
+    <% end %>
+  </div>
+
+  <% if subscription_plan.subscription_text.present? %>
+      <p><%= raw subscription_plan.subscription_text %></p>
+  <% end %>  
+
+  <p class="subscription_plan_footer">    
     <% if defined? subscriptions_form and subscriptions_form %>
-        <%= radio_button_tag "user_#{role}[subscription_plan_id]", subscription_plan.id, subscriptions_form.object.subscription_plan_id.to_i == subscription_plan.id, :id => "user_#{role}_subscription_plan_id" %>
+        <%= radio_button_tag "user_#{role}[subscription_plan_id]", subscription_plan.id, subscriptions_form.object.subscription_plan_id.to_i == subscription_plan.id, :id => "user_#{role}_subscription_plan_id", :style => "display: none" %>
     <% else %>
         <% if subscription_upgrade_or_downgrade?(current_user.active_subscription_plan, subscription_plan) == :upgrade %>
             <%= bt_link_to nil, t("subscriptions.listing.upgrade"), upgrade_my_profile_subscription_plan_path(subscription_plan.id), :confirm => t("subscriptions.confirmation.upgrade") %>

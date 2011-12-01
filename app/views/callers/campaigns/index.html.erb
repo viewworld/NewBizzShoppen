@@ -74,6 +74,11 @@
                   <%= link_to t("campaigns.index.destroy"), callers_campaign_path(campaign), :confirm => t("campaigns.index.destroy_confirmation"), :method => :delete %>
                 </li>
             <% end %>
+            <% if current_user.admin? %>
+                <li>
+                  <%= link_to t("campaigns.index.duplicate"), duplicate_callers_campaign_path(campaign), :confirm => t("campaigns.index.duplication_confirmation"), :method => :post %>
+                </li>
+            <% end %>
           </ul-actions>
       <% end %>
   <% end %>

@@ -40,6 +40,7 @@ gem 'ruby-hmac', '0.4.0'
 gem 'jammit-s3', :path => "vendor/gems/jammit-s3"
 gem "ajaxful_rating", :path => 'vendor/gems/ajaxful-rating'
 gem 'postmark-rails'
+#gem 'sanitize'
 
 group :production do
   gem 'hoptoad_notifier'
@@ -55,6 +56,7 @@ group :development do
   gem 'tolk', :path => "vendor/gems/tolk"
   gem "nifty-generators"
   gem "bullet"
+  gem "parallel"
 end
 
 group :test do

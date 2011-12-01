@@ -1,5 +1,5 @@
 <%
-   cols = 5
+   cols = 6
    cols += 1 if show_checkboxes
    cols += 1 if not block_tools.nil?
    cols -= 1 if current_user.admin?
@@ -54,8 +54,8 @@
             <td>
               <% if Rails.env != "test" %>
 
-                  <!--<iframe src="https://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(deal)) %>&amp;send=false&amp;layout=button_count&amp;width=120&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:21px;" allowTransparency="true"></iframe>-->
-                  <iframe src="https://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri("https://fairleads.com/deals/7295") %>&amp;send=true&amp;layout=button_count&amp;width=120&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:21px;" allowTransparency="true"></iframe>
+                  <iframe src="https://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(deal)) %>&amp;send=false&amp;layout=button_count&amp;width=120&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:21px;" allowTransparency="true"></iframe>
+                  <!--<iframe src="https://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri("https://fairleads.com/deals/7295") %>&amp;send=true&amp;layout=button_count&amp;width=120&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:21px;" allowTransparency="true"></iframe>-->
               <% end %>
             </td>
         <% end %>

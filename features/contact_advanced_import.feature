@@ -1,8 +1,9 @@
-@advanced_import @m17 @is @$_call_centre
+@advanced_import @m17 @is @$_call_centre @faircalls
 Feature: Lead Advanced Import
 
   Background:
     Given I am on the homepage
+    And I visit domain http://faircalls.eu
     And I sign in as translator_call_centre@nbs.com with password secret
     And I follow translated "layout.main_menu.call_centre.campaigns"
     And I follow translated "campaigns.table.name"

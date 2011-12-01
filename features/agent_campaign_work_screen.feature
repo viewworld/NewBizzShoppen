@@ -1,8 +1,10 @@
-@m5b @agent_campaign @$_call_centre_agent @tbr @__campaign_calling_session @selenium
+@m5b @agent_campaign @$_call_centre_agent @tbr @__campaign_calling_session @selenium @faircalls
 Feature: Agent campaign - calling session
 
    Background:
     Given I am on the homepage
+    And I visit domain http://faircalls.eu
+    And I am not sign in
     And I make sure current locale is "en"
     And I sign in as translator_call_centre_agent@nbs.com with password secret
     And I follow translated "layout.main_menu.call_centre.campaigns"
@@ -272,6 +274,9 @@ Feature: Agent campaign - calling session
       And I follow translated "call_results.edit.button_new_result"
       And I should see translated "call_results.new.customize_email_template"
 
+    @m23 @requested @system @tgn @_done @_non_testable
+    Scenario: Any customized email in the agent work screen should be saved
+
     # 5168
     @m11 @requested @ao @tested_elsewhere @_done
     Scenario: I can see a message when there are no more contacts in my campaign
@@ -343,6 +348,7 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
       And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_address_line_3" with "Londek Zdroj"
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
       And I follow translated "call_results.new.save_button"
@@ -357,6 +363,7 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
       And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_address_line_3" with "Londek Zdroj"
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
       And I select "Leisure" from "all_categories"
@@ -374,6 +381,7 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
       And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_address_line_3" with "Londek Zdroj"
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
       And I select "Leisure" from "all_categories"
@@ -415,12 +423,14 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
       And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_address_line_3" with "Londek Zdroj"
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
       And I follow translated "call_results.new.save_button"
       Then I should see translated "call_results.create.flash.successfully_added"
       Given I am not sign in
       And I am on the homepage
+      And I visit domain http://localhost
       And I sign in as newcategory_buyer888@nbs.com with password testin
       Then I should see translated "my_profile.edit.view.header"
 
@@ -433,12 +443,14 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
       And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_address_line_3" with "Londek Zdroj"
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
       And I follow translated "call_results.new.save_button"
       Then I should see translated "call_results.create.flash.successfully_added"
       Given I am not sign in
       And I am on the homepage
+      And I visit domain http://localhost
       And I sign in as newcategory_buyer888@nbs.com with password testin
       Then I should see translated "my_profile.edit.view.header_contact_confirmation"
       And the "user_category_supplier_company_name" field should contain "Bon Jovi inc."
@@ -456,12 +468,14 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
       And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_address_line_3" with "Londek Zdroj"
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
       And I follow translated "call_results.new.save_button"
       Then I should see translated "call_results.create.flash.successfully_added"
       Given I am not sign in
       And I am on the homepage
+      And I visit domain http://localhost
       And I sign in as newcategory_buyer888@nbs.com with password testin
       Then I should see translated "my_profile.edit.view.header_contact_confirmation"
       And I press translated "password.edit.view.button_update_user"
@@ -476,12 +490,14 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
       And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_address_line_3" with "Londek Zdroj"
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
       And I follow translated "call_results.new.save_button"
       Then I should see translated "call_results.create.flash.successfully_added"
       Given I am not sign in
       And I am on the homepage
+      And I visit domain http://localhost
       And I sign in as newcategory_buyer888@nbs.com with password testin
       Then I should see translated "my_profile.edit.view.header_contact_confirmation"
       And I press translated "password.edit.view.button_update_user"
@@ -506,6 +522,7 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
       And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_address_line_3" with "Londek Zdroj"
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "new_buyer888@nbs.com"
       And I check "call_result_user_not_charge_vat"
@@ -571,6 +588,7 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
       And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_address_line_3" with "Londek Zdroj"
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "new_buyer888@nbs.com"
       And I follow translated "call_results.new.save_button"
@@ -582,6 +600,7 @@ Feature: Agent campaign - calling session
       And last email sent should have content "Fairleads username: new_buyer888@nbs.com"
       Then I am not sign in
       And I am on the homepage
+      And I visit domain http://localhost
       And I sign in as new_buyer888@nbs.com with password testin
       Then I should see translated "my_profile.edit.view.header_contact_confirmation"
       And I press translated "password.edit.view.button_update_user"
@@ -614,6 +633,7 @@ Feature: Agent campaign - calling session
       And last email sent should have content "Fairdeals username: new_member888@nbs.com"
       Then I am not sign in
       And I am on the homepage
+      And I visit domain http://fairdeals.eu
       And I sign in as new_member888@nbs.com with password testin
       Then I should see translated "my_profile.edit.view.header_contact_confirmation"
       And I press translated "password.edit.view.button_update_user"

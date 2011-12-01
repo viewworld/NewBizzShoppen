@@ -12,8 +12,9 @@ class Subscription < ActiveRecord::Base
   acts_as_list :scope => :user_id
   scope :active, lambda { where("is_active = ? and ((end_date IS NULL and billing_cycle = 0) or end_date >= ?)", true, Date.today) }
   scope :billable, where("billing_cycle > 0 AND billing_date IS NOT NULL AND billing_date <= current_date AND invoiced_at IS NULL")
+  scope :future, lambda { where("start_date > ?", Date.today) }
 
-  attr_accessor :next_subscription_plan
+  attr_accessor :next_subscription_plan, :next_subscription_plan_start_date
   include AASM
 
   aasm_initial_state Proc.new { |subscription| subscription.initial_state }
@@ -28,6 +29,7 @@ class Subscription < ActiveRecord::Base
   aasm_state :non_cancelable
   aasm_state :prolonged, :enter => :perform_prolong
   aasm_state :upgraded_from_penalty
+  aasm_state :admin_changed, :enter => :perform_admin_change
 
   aasm_event :enter_lockup do
     transitions :from => [:normal, :penalty, :non_cancelable], :to => :lockup, :guard => :lockup_period_started?
@@ -42,7 +44,7 @@ class Subscription < ActiveRecord::Base
   end
 
   aasm_event :cancel do
-    transitions :from => :normal, :to => :cancelled, :guard => :can_be_cancelled?
+    transitions :from => :normal, :to => :cancelled
   end
 
   aasm_event :cancel_during_lockup, :after => :perform_cancelled_during_lockup do
@@ -50,11 +52,15 @@ class Subscription < ActiveRecord::Base
   end
 
   aasm_event :prolong do
-    transitions :from => [:normal, :lockup, :penalty, :non_cancelable], :to => :prolonged, :guard => :can_be_prolonged?
+    transitions :from => [:normal, :lockup, :penalty, :cancelled, :non_cancelable], :to => :prolonged, :guard => :can_be_prolonged?
   end
 
   aasm_event :upgrade_from_penalty, :after => :perform_upgrade_from_penalty do
     transitions :from => [:penalty, :non_cancelable], :to =>  :upgraded_from_penalty
+  end
+
+  aasm_event :admin_change do
+    transitions :from => Subscription.aasm_states.map(&:name), :to => :admin_changed
   end
 
   def initial_state
@@ -84,7 +90,7 @@ class Subscription < ActiveRecord::Base
         self.end_date =  end_date + free_period.weeks
         CompanyVat.create(:vat_number => user.vat_number.strip)
       end
-      self.billing_date = end_date + billing_period.weeks
+      self.billing_date = start_date + billing_period.weeks
     end
   end
 
@@ -119,17 +125,19 @@ class Subscription < ActiveRecord::Base
       paid_days = (new_end_date - start_date).to_i
       paid_days -= free_period*7 if is_free_period
 
+      previous_total = total_billing
       subscription_plan_lines.each do |spl|
         spl.recalculate(total_days, paid_days)
+      end
+      if invoiced?
+        Refund.create(:user => user, :refund_price => (previous_total - total_billing), :currency => currency, :description => I18n.t("models.credit_note.descriptions.subscription_refund", :days => paid_days > 0 ? total_days-paid_days : total_days, :name => name))
       end
     end
   end
 
   def perform_cancel
-    self.recalculate_subscription_plan_lines(Date.today-1, is_free_period_applied?)
-    self.end_date = Date.today-1
+    self.prolongs_as_free = true
     self.cancelled_at = Time.now
-    self.class.clone_from_subscription_plan!(SubscriptionPlan.active.free.for_role(user.role).first, user)
   end
 
   def perform_cancelled_during_lockup
@@ -161,6 +169,12 @@ class Subscription < ActiveRecord::Base
     self.class.clone_from_subscription_plan!(next_subscription_plan, user)
   end
 
+  def perform_admin_change
+    self.recalculate_subscription_plan_lines(next_subscription_plan_start_date-1, is_free_period_applied?)
+    self.end_date = next_subscription_plan_start_date-1
+    self.class.clone_from_subscription_plan!(next_subscription_plan, user, next_subscription_plan_start_date)
+  end
+
   def invoiced?
     !invoiced_at.blank?
   end
@@ -179,10 +193,6 @@ class Subscription < ActiveRecord::Base
 
   def can_be_prolonged?
     payable? and end_date < Date.today
-  end
-
-  def can_be_cancelled?
-    payable? and start_date != Date.today
   end
 
   def can_cancel_at
@@ -227,6 +237,10 @@ class Subscription < ActiveRecord::Base
         user.update_attribute(:subscriber_type, User::SUBSCRIBER_TYPE_SUBSCRIBER)
       end
     end
+  end
+
+  def days_left
+    (end_date - Date.today).to_i
   end
 
   private

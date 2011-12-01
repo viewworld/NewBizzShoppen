@@ -1,8 +1,9 @@
-@lead_manager @$_call_centre @m5 @tgn
+@lead_manager @$_call_centre @m5 @tgn @faircalls
 Feature: My leads for call centre
 
 Background:
   Given I am on the homepage
+  And I visit domain http://faircalls.eu
   And I make sure current locale is "en"
   And I am signed up and confirmed as user with email call_centre@person.com and password supersecret and role call_centre
   Given I have user with email ccagent01@nbs.com and role call_centre_agent

@@ -514,7 +514,7 @@ p
     margin: 10px 0;
 }
 
-.header_ribbon h1
+.header_ribbon > h1
 {
     background: url(/images/bg_header_ribbon_green.png) no-repeat 0 0 transparent;
     position: absolute;
@@ -526,7 +526,7 @@ p
     text-shadow: -1px -1px 0 #62951c;
 }
 
-.header_ribbon h1 span
+.header_ribbon > h1 > span
 {
     height: 43px;
     line-height: 38px;
@@ -535,7 +535,7 @@ p
     background: url(/images/bg_header_ribbon_green.png) no-repeat right -43px;
 }
 
-.header_ribbon h1 span a
+.header_ribbon > h1 > span a
 {
     color: #fff;
     font-weight: normal;
@@ -1414,6 +1414,11 @@ span.cke_skin_kama
     padding-bottom: 20px;
 }
 
+.deal_featured_desc div[style],p[style]
+{
+    background-color: #F8F8F8 !important;
+}
+
 .primary_deal .frm_foot p
 {
     text-align: right;
@@ -1537,7 +1542,7 @@ span.cke_skin_kama
     position: absolute;
     top: -15px;
     right: -15px;
-    
+
     text-align:center;
     text-shadow: 0 1px 0 #e77b6d;
     font-size: 16px;
@@ -1547,7 +1552,12 @@ span.cke_skin_kama
     color: #782300;
 }
 
-
+.splash span
+{
+    width: 60px;
+    display: block;
+    margin-left: 11px;
+}
 
 /* --- other styles ----
 ------------------------------------------------------------------------------------ */

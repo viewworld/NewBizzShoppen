@@ -1,8 +1,9 @@
-@comments @$_freelance_agent @noguess @ao @m9
+@comments @$_freelance_agent @noguess @ao @m9 @faircalls
 Feature: Comments administration as freelance agent
 
 Background:
   Given I am on the homepage
+  Given I visit domain http://faircalls.eu
   And I make sure current locale is "en"
   And I am signed up and confirmed as user with email agent1@nbs.com and password supersecret and role agent
   And lead Lead#1 is created by user agent1@nbs.com with role agent

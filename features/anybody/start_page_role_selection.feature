@@ -32,10 +32,11 @@ Scenario: I can set remember me option by selecting a checkbox and logging in
 #  Then I should see translated "devise.sessions.signed_in"
 
 #7455
-@m19 @requested @_done @_tested
+@m19 @requested @_done @_tested @faircalls
 Scenario: For each role homepage there should be two separate blurbs: for logged in and logged out user
   #buyer
   Given I am not sign in
+  And I visit domain http://fairleads.eu
   And I am on the supplier home page
   And I should see "Blurb supplier home"
   And I should not see "Blurb supplier home logged in"
@@ -44,6 +45,7 @@ Scenario: For each role homepage there should be two separate blurbs: for logged
   And I should see "Blurb supplier home logged in"
   #agent
   Given I am not sign in
+  And I visit domain http://faircalls.eu
   And I am on the agent home page
   And I should see "Blurb agent home"
   And I should not see "Blurb agent home logged in"
@@ -51,19 +53,22 @@ Scenario: For each role homepage there should be two separate blurbs: for logged
   And I am on the agent home page
   And I should see "Blurb agent home logged in"
   #purchase manager
-  Given I am not sign in
-  And I am on the member home page
-  And I should see "Blurb member home"
-  And I should not see "Blurb agent home logged in"
-  And I sign in as translator_purchase_manager@nbs.com with password secret
-  And I am on the member home page
-  And I should see "Blurb member home logged in"
+  # home page for member is deprecated
+#  Given I am not sign in
+#  And I visit domain http://fairdeals.eu
+#  And I am on the member home page
+#  And I should see "Blurb member home"
+#  And I should not see "Blurb agent home logged in"
+#  And I sign in as translator_purchase_manager@nbs.com with password secret
+#  And I am on the member home page
+#  And I should see "Blurb member home logged in"
 
 #7452
-@m19 @requested @_done @_tested
+@m19 @requested @_done @_tested @faircalls
 Scenario: When user logs out then he lands on his specific role home page
   #buyer
   Given I am not sign in
+  And I visit domain http://fairleads.eu
   And I am on the supplier home page
   And I sign in as buyer@nbs.com with password secret
   And I should be on supplier home
@@ -71,15 +76,18 @@ Scenario: When user logs out then he lands on his specific role home page
   And I should be on supplier home
   #agent
   Given I am not sign in
+  And I visit domain http://faircalls.eu
   And I am on the agent home page
   And I sign in as agent@nbs.com with password secret
   And I should be on agent home
   Then I am not sign in
   And I should be on agent home
   #purchase manager
-  Given I am not sign in
-  And I am on the member home page
-  And I sign in as translator_purchase_manager@nbs.com with password secret
-  And I should be on member home
-  Then I am not sign in
-  And I should be on the homepage
+  # home page for member is deprecated
+#  Given I am not sign in
+#  And I visit domain http://fairdeals.eu
+#  And I am on the member home page
+#  And I sign in as translator_purchase_manager@nbs.com with password secret
+#  And I should be on member home
+#  Then I am not sign in
+#  And I should be on the homepage

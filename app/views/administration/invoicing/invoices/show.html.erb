@@ -6,7 +6,7 @@
     <%= bt_link_to :printer, t("administration.invoices.show.view.print_invoice"), "javascript:void(0)", :onclick => '$("#invoice_container").printElement()' %>
     <%= bt_link_to :download, t("administration.invoices.show.view.download_pdf"), administration_invoicing_invoice_path(@invoice, :format => :pdf) %>
     <%= bt_link_to :chbox_selected, t("administration.invoices.index.view.set_as_paid"), administration_invoicing_invoice_path(@invoice.id, {:invoice_id => @invoice.id, :invoice => {:paid_at => Time.now, :cash_flow => @invoice.total}}), {:method => :put} unless @invoice.paid? %>
-    <%= bt_link_to :mail, t("administration.invoices.show.view.send"), new_administration_invoicing_invoice_mailing_path(@invoice), :method => :get, :confirm => ((@invoice.sent? or @invoice.paid?) ? t("administration.invoices.mailing.new.view.invoice_already_sent_or_paid") : false) %>
+    <%= bt_link_to :mail, @invoice.sent? ? t("administration.invoices.show.view.resend") : t("administration.invoices.show.view.send"), new_administration_invoicing_invoice_mailing_path(@invoice), :method => :get, :confirm => send_invoice_warning(@invoice) %>
     <%= bt_link_to :pencil, t("administration.invoices.show.view.edit_invoice"), edit_administration_invoicing_invoice_path(@invoice) %>
   </div>
 

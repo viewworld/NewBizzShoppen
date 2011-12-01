@@ -67,8 +67,9 @@ class User < ActiveRecord::Base
   has_many :read_comments, :through => :comment_readers, :source => :comment
   belongs_to :contact
   has_many :deal_comment_threads, :class_name => "Comment", :foreign_key => "user_id"
-  has_many :email_bounces, :foreign_key => :email, :primary_key => :email
+  has_many :email_bounces, :class_name => "ArchivedEmail", :foreign_key => :to, :primary_key => :email, :conditions => "status = #{ArchivedEmail::BOUNCED}"
   has_many :subscriptions
+  has_many :subscription_plans, :through => :subscriptions
 
   alias_method :parent, :user
 
@@ -211,27 +212,8 @@ class User < ActiveRecord::Base
     "User::#{role.to_s.camelize}".constantize
   end
 
-  def mailer_host
-    if has_role?(:member)
-      mailer_fairdeals_host
-    else
-      Nbs::Application.config.action_mailer.default_url_options[:host]
-    end
-  end
-
-  def mailer_fairdeals_host
-    dom_lang = with_role.address.present? ? with_role.address.country.locale == "en" ? "eu" : "dk" : "dk"
-    if Rails.env.production?
-      "fairdeals.#{dom_lang}"
-    elsif Rails.env.staging?
-      "beta.fairdeals.#{dom_lang}"
-    else
-      "fairdeals.#{dom_lang}:3000"
-    end
-  end
-
   def deliver_email_template(uniq_id)
-    TemplateMailer.delay.new(email, uniq_id.to_sym, country, {:user => self.with_role})
+    TemplateMailer.delay.new(email, uniq_id.to_sym, country, {:user => self.with_role, :sender_id => User.get_current_user_id})
   end
 
   def check_billing_rate
@@ -301,6 +283,18 @@ class User < ActiveRecord::Base
 
   public
 
+  def self.get_current_user_id
+    Thread.current[:current_user_id]
+  end
+
+  def domain
+    Domain.where(:site => with_role.site, :locale => I18n.locale).first || Domain.where(:site => with_role.site).with_default.first
+  end
+
+  def domain_name
+    domain ? domain.name : 'fairleads.com'
+  end
+
   def all_requested_lead_requests
     LeadRequest.where(:requested_by => (parent ? parent.subaccounts : subaccounts).with_role(:lead_user).map(&:id))
   end
@@ -352,11 +346,11 @@ class User < ActiveRecord::Base
   end
 
   def confirmation_instructions_url
-    "https://#{mailer_host}/users/confirmation?confirmation_token=#{confirmation_token}"
+    "http://#{domain_name}/users/confirmation?confirmation_token=#{confirmation_token}"
   end
 
   def reset_password_instructions_url
-    "https://#{mailer_host}/users/password/edit?reset_password_token=#{reset_password_token}"
+    "http://#{domain_name}/users/password/edit?reset_password_token=#{reset_password_token}"
   end
 
   def roles_as_text
@@ -539,6 +533,10 @@ class User < ActiveRecord::Base
     has_role?(:category_supplier)
   end
 
+  def site
+    :fairleads
+  end
+
   def purchase_limit_reached?(lead, buyout=false)
     return false unless big_buyer?
     not_invoiced_cost = LeadPurchase.with_not_invoiced.where("owner_id = ?", id).map { |lp| lp.not_invoiced_euro_sum.to_f }.sum
@@ -625,14 +623,14 @@ class User < ActiveRecord::Base
       unless subscribed_categories.empty?
         uniq_id = "lead_notification_#{lead_notification_type == LEAD_NOTIFICATION_ONCE_PER_DAY ? 'daily' : 'weekly'}"
         leads = Lead.for_notification(subscribed_categories, lead_notification_type)
-        TemplateMailer.delay.new(email, uniq_id.to_sym, user.with_role.address.country, {:user => self, :leads => leads})
+        TemplateMailer.delay.new(email, uniq_id.to_sym, user.with_role.address.country, {:user => self, :leads => leads, :sender_id => User.get_current_user_id})
       end
     end
   end
 
   def category_supplier_category_home_url
     if has_role?(:category_supplier)
-      "https://#{mailer_host}/#{with_role.buying_categories.first.cached_slug}"
+      "http://#{domain_name}/#{with_role.buying_categories.first.cached_slug}"
     end
   end
 
@@ -640,11 +638,11 @@ class User < ActiveRecord::Base
     if has_role?(:category_supplier)
       category_supplier_category_home_url
     elsif has_role?(:supplier)
-      "https://#{mailer_host}/supplier_home"
+      "http://#{domain_name}/supplier_home"
     elsif has_role?(:member)
-      "https://#{mailer_host}"
+      "http://#{domain_name}"
     else
-      "https://#{mailer_host}/"
+      "http://#{domain_name}/"
     end
   end
 
@@ -674,7 +672,7 @@ class User < ActiveRecord::Base
     template = EmailTemplate.find_by_uniq_id("#{has_role?(:member) ? 'member' : 'supplier'}_invitation")
     template = customize_email_template(template)
     TemplateMailer.delay.new(email, template, with_role.address.present? ? with_role.address.country : Country.get_country_from_locale,
-                             {:user => self.with_role, :new_password => new_password}, assets_to_path_names(email_materials))
+                             {:user => self.with_role, :new_password => new_password, :sender_id => User.get_current_user_id}, assets_to_path_names(email_materials))
   end
 
   def country
@@ -708,7 +706,7 @@ class User < ActiveRecord::Base
   end
 
   def deliver_welcome_email_for_upgraded_contact
-    TemplateMailer.delay.new(email, "upgraded_contact_to_#{role_to_campaign_template_name}_welcome".to_sym, with_role.address.country, {:user => self})
+    TemplateMailer.delay.new(email, "upgraded_contact_to_#{role_to_campaign_template_name}_welcome".to_sym, with_role.address.country, {:user => self, :sender_id => User.get_current_user_id})
   end
 
   def active_subscription
@@ -738,6 +736,10 @@ class User < ActiveRecord::Base
 
   def subscription_plan_is_valid?(subscription_plan)
     subscription_plan and subscription_plan.is_active and subscription_plan.has_role?(self.role.to_sym)
+  end
+
+  def start_date_for_admin_change_is_valid?(start_date)
+    (start_date >= Date.today) and (active_subscription.is_free? or (start_date <= active_subscription.end_date + 1.day))
   end
 
   def subscription_can_be_applied?(subscription_plan)
@@ -777,6 +779,24 @@ class User < ActiveRecord::Base
     else
       self.errors.add(:base, I18n.t("subscriptions.cant_be_upgraded"))
       false
+    end
+  end
+
+  def admin_change_subscription!(subscription_plan, start_date = Date.today)
+    if !subscription_plan_is_valid?(subscription_plan)
+      self.errors.add(:base, I18n.t("subscriptions.new_subscription_plan_is_invalid"))
+      return false
+    elsif !start_date_for_admin_change_is_valid?(start_date)
+      self.errors.add(:base, I18n.t("subscriptions.start_date_is_invalid"))
+      return false
+    elsif subscriptions.future.count > 0
+      self.errors.add(:base, I18n.t("subscriptions.there_are_future_subscriptions"))
+      return false
+    else
+      as = active_subscription
+      as.next_subscription_plan = subscription_plan
+      as.next_subscription_plan_start_date = start_date
+      as.admin_change!
     end
   end
 

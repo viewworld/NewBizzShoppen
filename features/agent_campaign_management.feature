@@ -1,8 +1,9 @@
-@m5b @agent_campaign @$_administrator @$_call_centre @tbr
+@m5b @agent_campaign @$_administrator @$_call_centre @tbr @faircalls
 Feature: Agent campaign - management
 
    Background:
-    Given I am on the homepage
+    And I am on the homepage
+    Given I visit domain http://faircalls.eu
     And I make sure current locale is "en"
     And I sign in as translator_call_centre@nbs.com with password secret
     And I follow translated "layout.main_menu.call_centre.campaigns"
@@ -567,6 +568,7 @@ Feature: Agent campaign - management
       Then I add user "translator_call_centre@nbs.com" to campaign "Testing One"
       Then I execute js for display action block for "campaigns"
       Then I follow translated "campaigns.index.result"
+      Then I wait 4 second
       Then I select "John Smith" from "agent_ids"
       Then I execute js for select agent_ids "1" to set selected as "false"
       Then I press translated "campaigns.show.search_button"
@@ -767,3 +769,24 @@ Feature: Agent campaign - management
         @m14 @requested @my_results @$_admin @tgn @_done @tested_elsewhere
         Scenario: I should see "My results" renamed to "Production" and displayed the same way as campaign's "Results"
 
+        #8315
+        @m22 @requested @is @_done @_tested
+        Scenario: I can click to duplicate a campaign (data, briefing)
+          Given I am not sign in
+          And I sign in as blazejek@gmail.com with password secret
+          And I follow translated "layout.main_menu.admin.campaigns"
+          And I follow translated "campaigns.index.duplicate"
+          And I should see translated "flash.campaigns.duplicate.notice"
+          And I should see "Copy of Testing"
+
+        #8315
+        @m22 @requested @is @_done @_tested_elsewhere
+        Scenario: When I duplicate a campaign, agents and their assigments should be copied
+
+        #8315
+        @m22 @requested @is @_done @_tested_elsewhere
+        Scenario: When I duplicate a campaign, materials repository should be copied
+
+        #8315
+        @m22 @requested @is @_done @_tested_elsewhere
+        Scenario: When I duplicate a campaign, customization emails and other data should be copied

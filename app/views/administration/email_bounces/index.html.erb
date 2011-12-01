@@ -13,9 +13,8 @@
         <thead>
         <tr>
           <th class="hl"></th>
-          <th style="width: 75px"><%= t("administration.email_bounces.index.view.postmark_id") %></th>
-          <th style="width: 100px"><%= t("administration.email_bounces.index.view.name") %></th>
-          <th><%= t("administration.email_bounces.index.view.email") %></th>
+          <th style="width: 100px"><%= t("administration.email_bounces.index.view.email") %></th>
+          <th><%= t("administration.email_bounces.index.view.sender") %></th>
           <th><%= t("administration.email_bounces.index.view.subject") %></th>
           <th style="width: 140px"><%= t("administration.email_bounces.index.view.bounced_at") %></th>
           <th class="ta_r"><%= t("administration.email_bounces.index.view.actions") %></th>
@@ -25,7 +24,7 @@
         <tfoot>
         <tr>
           <td class="fl"></td>
-          <td colspan="6"></td>
+          <td colspan="5"></td>
           <td class="fr"></td>
         </tr>
         </tfoot>
@@ -33,9 +32,8 @@
         <% @email_bounces.each do |eb| %>
             <tr class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
-              <td class="ta_c"><%= eb.postmark_id %></td>
-              <td><%= eb.name %></td>
-              <td><%= eb.email %></td>
+              <td class="ta_c"><%= eb.to %></td>
+              <td><%= eb.sender ? eb.sender.email : t("administration.email_bounces.index.view.anonymous") %></td>
               <td><%= eb.subject %></td>
               <td><%= eb.bounced_at %></td>
               <td class="tda ta_r">
@@ -49,7 +47,7 @@
             </tr>
         <% end %>
         <tr class="pagination">
-          <td colspan="8" class="ta_c">
+          <td colspan="7" class="ta_c">
             <%= will_paginate @email_bounces, :previous_label => '&laquo;', :next_label => '&raquo;' %>
           </td>
         </tr>

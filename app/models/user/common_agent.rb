@@ -36,13 +36,6 @@ module User::CommonAgent
       self.payout = 0 if payout.blank?
     end
 
-    def check_address
-      if address and address.address_line_3.blank?
-        return address.errors.add(:address_line_3, :blank)
-      end
-      true
-    end
-
     public
 
     def name
@@ -59,6 +52,10 @@ module User::CommonAgent
 
     def all_contacts_with_results
       Contact.with_agents(id).with_results
+    end
+
+    def site
+      :faircalls
     end
 
     alias_method :to_s, :name

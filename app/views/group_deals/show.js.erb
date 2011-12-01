@@ -1,2 +1,2 @@
-$('#countdown').stopCountDown();
+try { $('#countdown').stopCountDown(); } catch(err) {}
 $("#primary_group_deal").html("<%= escape_javascript(render(:partial => "fairdeals_home/primary_deal", :locals => {:primary_deal => @deal})) %>");

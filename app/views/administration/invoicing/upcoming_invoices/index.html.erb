@@ -94,7 +94,7 @@
               <td class="ta_r"><%= lead_purchase.not_invoiced_count %></td>
               <td class="ta_r"><%= as_currency(lead_purchase.not_invoiced_sum, Currency.where(:id => lead_purchase.currency_id).first) %></td>
               <td class="tda ta_r">
-                <%= bt_link_to nil, t("administration.upcoming_invoices.index.view.create_invoice"), new_administration_invoicing_invoice_path(:invoice => {:user_id => lead_purchase.owner_id, :currency_id => lead_purchase.currency_id}), :class => "default_action" %>
+                <%= bt_link_to nil, t("administration.upcoming_invoices.index.view.create_invoice"), administration_invoicing_invoices_path(:invoice => {:user_id => lead_purchase.owner_id, :currency_id => lead_purchase.currency_id, :seller_id => lead_purchase.owner.active_subscription.seller_id}), :method => :post, :class => "default_action" %>
               </td>
               <td class="cr"></td>
             </tr>
@@ -103,7 +103,7 @@
               <td class="fl"></td>
               <td class="no_pdd_lr"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></td>
               <td colspan="5"></td>
-              <td class="ta_r"><%= as_currency(@total_euro_sum, Currency.euro) %></td>
+              <td class="ta_r"><b><%= t("administration.upcoming_invoices.index.view.total_in_euro") %>:</b> <%= as_currency(@total_euro_sum, Currency.euro) %></td>
               <td class="tda ta_r">
                 <%= bt_link_to :invoice, t("administration.upcoming_invoices.index.view.invoice_selected"), "javascript:void(0)", :onclick => "submitBulkForm('#{administration_invoicing_bulk_invoice_users_path}#PUT');" %>
               </td>

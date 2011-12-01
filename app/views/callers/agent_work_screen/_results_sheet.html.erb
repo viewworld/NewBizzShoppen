@@ -1,40 +1,16 @@
-<header>
-  <param:content><%= t('agent_work_screen.index.call_log') %></param:content>
-
-  <param:actions>
-    <ul class="header_actions">
-      <li>
-        <%= bt_link_to nil, t("agent_work_screen.index.show_call_log_for_current_contact"), "javascript:void(0)", :onclick => "displayWorkScreenTab('#results_sheet')", :class => "bt_active" %>
-      </li>
-      <li class="">
-        <%= bt_link_to nil, t("agent_work_screen.index.show_current_call_sheet"), "javascript:void(0)", :onclick => "displayWorkScreenTab('#call_sheet')" %>
-      </li>
-      <li>
-        <%= bt_link_to nil, t("agent_work_screen.index.show_pending_calls"), "javascript:void(0)", :onclick => "displayWorkScreenTab('#pending_calls')" %>
-      </li>
-      <li>
-        <%= bt_link_to nil, t("agent_work_screen.index.show_completed_contacts"), "javascript:void(0)", :onclick => "displayWorkScreenTab('#completed_contacts')" %>
-      </li>
-      <li class="last">
-        <%= bt_link_to nil, t("agent_work_screen.index.show_my_results"), callers_production_path %>
-      </li>
-    </ul>
-  </param:actions>
-</header>
-
 <% if contact %>
-
-    <%= call_results_table contact.call_results, :agent_work_screen => true do |blocks| %>
+    <%= call_results_table contact.crm_call_results, :agent_work_screen => true, :crm => contact.campaign.crm_option > 0 do |blocks| %>
         <% blocks.tools do |call_result| %>
             <ul-actions>
-                <li>
-                  <%= link_to t("call_results.table.edit_link"), edit_callers_campaign_agent_work_screen_contact_call_result_path(campaign, contact, call_result), :class => "default_action", :remote => true %>
-                </li>
-                <li>
-                  <%= link_to t("call_results.table.remove_link"), callers_campaign_agent_work_screen_contact_call_result_path(campaign, contact, call_result), :confirm => t("call_results.table.remove_confirm"), :method => :delete, :remote => true %>
-                </li>
+              <li>
+                <%= link_to t("call_results.table.edit_link"), edit_callers_campaign_agent_work_screen_contact_call_result_path(campaign, contact, call_result), :class => "default_action", :remote => true %>
+              </li>
+              <% unless contact.completed? %>
+                  <li>
+                    <%= link_to t("call_results.table.remove_link"), callers_campaign_agent_work_screen_contact_call_result_path(campaign, contact, call_result), :confirm => t("call_results.table.remove_confirm"), :method => :delete, :remote => true %>
+                  </li>
+              <% end %>
             </ul-actions>
         <% end %>
     <% end %>
-
 <% end %>

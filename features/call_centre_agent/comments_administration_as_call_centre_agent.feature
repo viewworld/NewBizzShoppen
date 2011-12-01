@@ -1,8 +1,9 @@
-@comments @$_call_centre @noguess @ao @m9
+@comments @$_call_centre @noguess @ao @m9 @faircalls
 Feature: Comments administration as call centre agent
 
 Background:
   Given I am on the homepage
+  And I visit domain http://faircalls.eu
   And I make sure current locale is "en"
   And I am signed up and confirmed as user with email cca1.call_centre1@nbs.com and password supersecret and role call_centre_agent
   And an user with role call_centre_agent and email cca1.call_centre1@nbs.com belongs to call centre call_centre1@nbs.com

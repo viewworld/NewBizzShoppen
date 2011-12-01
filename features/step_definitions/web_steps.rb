@@ -52,6 +52,12 @@ When /^(?:|I )fill in "([^"]*)" with "([^"]*)"(?: within "([^"]*)")?$/ do |field
   end
 end
 
+When /^(?:|I )fill in "([^"]*)" with today's date(?: within "([^"]*)")?$/ do |field, selector|
+  with_scope(selector) do
+    fill_in(field, :with => Date.today)
+  end
+end
+
 When /^(?:|I )fill in translated "([^"]*)" with "([^"]*)"(?: within "([^"]*)")?$/ do |field, value, selector|
   with_scope(selector) do
     fill_in(I18n.t(field), :with => value)
@@ -393,10 +399,6 @@ Given /^I reset page/ do
   page.driver.reset!
 end
 
-When /^I visit domain "([^\"]*)"$/ do |domain_name|
-  Capybara.default_host = domain_name
-end
-
 When /^I set referer to "([^\"]*)"$/ do |referer|
   page.driver.header "HTTP_REFERER", referer
 end
@@ -430,6 +432,10 @@ Given /^I visit domain (.+)$/ do |domain|
     visit("/fairdeals")
   elsif domain.include?("faircalls")
     visit("/faircalls")
+  elsif domain.include?("fairleads")
+    visit("/fairleads")
+  elsif domain.include?("localhost")
+    visit("/")
   else
     visit(Capybara.app_host)
   end

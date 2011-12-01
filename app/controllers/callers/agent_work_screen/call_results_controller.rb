@@ -43,6 +43,8 @@ class Callers::AgentWorkScreen::CallResultsController < Callers::AgentWorkScreen
     end
     @call_result.contact = @contact
     @call_result.attributes = params[:call_result]
+    #final = @contact.current_call_result.result.final?
+    #@contact.update_attribute(:completed, final) if @contact.completed != final
     update! do |success, failure|
       success.js { }
       failure.js { render 'edit' }
@@ -51,7 +53,11 @@ class Callers::AgentWorkScreen::CallResultsController < Callers::AgentWorkScreen
 
   def destroy
     destroy! do |success, failure|
-      success.js { set_locals }
+      success.js {
+        set_locals
+        add_completed_to_locals
+        add_pending_to_locals
+      }
       failure.js {}
     end    
   end

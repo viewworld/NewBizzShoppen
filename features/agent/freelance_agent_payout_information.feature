@@ -1,8 +1,9 @@
-@user_accounts @$_call_centre  @m4 @tgn
+@user_accounts @$_call_centre @m4 @tgn @faircalls
 Feature: Freelance agent payout information
 
 Background:
-  Given I am on the homepage
+  Given I visit domain http://faircalls.eu
+  And I am on the homepage
   And I make sure current locale is "en"
   And I am signed up and confirmed as user with email agent@person.com and password secret and role agent
   Then I sign in as agent@person.com with password secret

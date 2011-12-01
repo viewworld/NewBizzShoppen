@@ -1,16 +1,17 @@
 <% if @contact.valid? %>
-    display_notice("<%= escape_javascript(t("contacts.create.flash.contact_successfully_created")) %>", true);
-<% else %>
-    display_notice("<%= escape_javascript(t("contacts.create.flash.contact_not_be_created")) %>", true);
-<% end %>
+display_notice("<%= escape_javascript(t("contacts.create.flash.contact_successfully_created")) %>", true);
+$('#call_sheet tr').removeClass('highlight_row');
+$('#pending_calls tr').removeClass('highlight_row');
 
-$("#switch_campaign_form").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/switch_campaign_form", :locals => @locals)) %>");
-$("#call_sheet").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/call_sheet", :locals => @locals)) %>");
-$("#pending_calls").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/pending_calls", :locals => @locals)) %>");
-$("#completed_contacts").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/completed_contacts", :locals => @locals)) %>");
+$('#call_sheet #contacts tbody').append("<%= escape_javascript(render(:partial => "callers/contacts/contact", :locals => @locals)) %>");
+reset_class_cycle_for_contact_tables();
+add_default_action_for_contact_row('contact_row_id_<%= @contact.id %>');
+$('#contact_row_id_<%= @contact.id %>').addClass('highlight_row');
+<% @lead = @contact %>
+<% else %>
+display_notice("<%= escape_javascript(t("contacts.create.flash.contact_not_be_created")) %>", true);
+<% end %>
 $("#results_sheet").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/results_sheet", :locals => @locals)) %>");
 $("#contact_info").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "callers/agent_work_screen/contact_form", :locals => @locals) : "") %>");
 $("#call_result_form").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "callers/agent_work_screen/call_result_form", :locals => @locals) : "") %>");
-$("#agent_information").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/agent_information")) %>");
-
-loadScripts();
+//loadScripts();

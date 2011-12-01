@@ -1,7 +1,9 @@
-@lead_certification @requested @m10
+@lead_certification @requested @m10 @faircalls
 Feature: Lead certification for guest
 
 Background:
+  Given I am on the homepage
+  And I visit domain http://faircalls.eu
   Given there are no leads
   And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
   And lead BestLead is created by user agent007@nbs.com with role agent
@@ -67,6 +69,7 @@ Scenario: After signup I can login instantly and do not have to confirm it by em
   And I fill in "user_member_password_confirmation" with "secret"
   And I check "user_member_agreement_read"
   And I press translated "supplier_accounts.new.view.button_create_account"
+  And I visit domain http://fairdeals.eu
   And I am on the home page
   And I sign in as james@bond.co.uk with password secret
   Then I should be signed in

@@ -14,4 +14,10 @@ class Float
   def as_seconds
     self.to_i
   end
+
+  def as_hours_and_minutes
+    hours = self.to_i
+    minutes = ((self - hours) * 60).round
+    "#{hours}:#{minutes<10 ? '0'+minutes.to_s : minutes.to_s}"
+  end
 end

@@ -493,14 +493,16 @@ Scenario: It should be possible for me to login using new password
   And I sign in as bob@person.com with password newpass
   Then I should see translated "devise.sessions.signed_in"
 
-@added @m8b @_done @_tested
+@added @m8b @_done @_tested @faircalls
 Scenario: It should be possible for other users to login after password change
   Given someone is signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
   And I sign out
+  And I visit domain http://faircalls.eu
   And I am on the home page
   And I sign in as ejdzent@nbs.com with password secret
   Then I should see translated "devise.sessions.signed_in"
   When I sign out
+  And I visit domain http://localhost
   And I am on the home page
   And I sign in as bob@person.com with password supersecret
   And I am on administration edit user for ejdzent@nbs.com
@@ -510,6 +512,7 @@ Scenario: It should be possible for other users to login after password change
   And I press translated "password.edit.view.button_update_user"
   Then I should see translated "password.flashes.successfully_changed"
   When I sign out
+  And I visit domain http://faircalls.eu
   And I am on the home page
   And I sign in as ejdzent@nbs.com with password newpass
   Then I should see translated "devise.sessions.signed_in"
@@ -784,3 +787,163 @@ Scenario: User with unpaid subscription cannot be deleted
   And I follow translated "administration.users.index.view.delete"
   Then I should see translated "administration.users.destroy.flash.user_deletion_failure"
 
+@m22 @requested @_done @_tested @tgn
+Scenario: I can see user's active subscription on user's edit page and button to Stop subscription
+  Given I have user with email xena@xena.pl and role supplier
+  When subscription plan exists with attributes "name:Premium supplier,assigned_roles:supplier,billing_cycle:2"
+  And user with email "xena@xena.pl" upgrades to subscription named "Premium supplier"
+  When I go to administration users
+  Then I fill in "search_with_keyword" with "xena@xena.pl"
+  And I press translated "administration.users.index.view.search_button"
+  And I follow translated "administration.users.index.view.edit"
+  Then I should see "Premium supplier"
+  And I should see "14 days left"
+  When I follow translated "administration.users.stop_subscription"
+  Then I fill in "search_with_keyword" with "xena@xena.pl"
+  And I press translated "administration.users.index.view.search_button"
+  And I follow translated "administration.users.index.view.edit"
+  Then I should not see translated "administration.users.stop_subscription"
+
+#8331
+# VAT rate 25%: 240 => 300
+@m22 @requested @_done @_tested @ao
+Scenario: When editing a user I can click a button and go to invoices page filtered for this user
+  When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
+  And User kastomer@nbs.fake with role supplier is from country Denmark
+  And User kastomer@nbs.fake with role supplier is big buyer
+  And lead TestLead1 exists with attributes "price:120"
+  And lead TestLead2 exists with attributes "price:120"
+  And currency "DKK" exists with attributes "exchange_rate:1"
+  And lead TestLead1 exists with currency "DKK"
+  And lead TestLead2 exists with currency "DKK"
+  And a lead TestLead1 exists within category Computers and is bought by user kastomer@nbs.fake with role supplier
+  And a lead TestLead2 exists within category Computers and is bought by user kastomer@nbs.fake with role supplier
+  And I go to administration edit user for kastomer@nbs.fake
+  And I follow translated "administration.users.edit.view.view_user_debts"
+  Then I should see "240.00" within "#invoices_list"
+  And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
+  And I go to administration edit user for kastomer@nbs.fake
+  And I follow translated "administration.users.edit.view.view_user_invoices"
+  And I should see "300.00" within "#invoices_list"
+
+#8605
+@m23 @subscriptions @requested @_done @_tested
+Scenario: I can select user's new subscription plan
+  When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
+  And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "500"
+  And I go to administration edit user for kastomer@nbs.fake
+  And I select "Medium for supplier" from "subscription_subscription_plan_id"
+  And I fill in "subscription[start_date]" with today's date
+  And I press translated "administration.users.edit.view.change"
+  Then I should see translated "flash.change_subscription.create.successful"
+  And I should see "Active subscription: Medium for supplier"
+
+#8605
+@m23 @subscriptions @requested @_done @_tested
+Scenario: I can change user's subscription plan no matter what constraints it has (skip no upgrade/downgrade rules)
+  When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
+  And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0,can_be_upgraded:false,can_be_downgraded:false" and price "100"
+  And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0,can_be_upgraded:false,can_be_downgraded:false" and price "500"
+  And I go to administration edit user for kastomer@nbs.fake
+  And I select "Basic for supplier" from "subscription_subscription_plan_id"
+  And I fill in "subscription[start_date]" with today's date
+  And I press translated "administration.users.edit.view.change"
+  Then I should see translated "flash.change_subscription.create.successful"
+  And I should see "Active subscription: Basic for supplier"
+  When I select "Medium for supplier" from "subscription_subscription_plan_id"
+  And I fill in "subscription[start_date]" with today's date
+  And I press translated "administration.users.edit.view.change"
+  Then I should see translated "flash.change_subscription.create.successful"
+  And I should see "Active subscription: Medium for supplier"
+  When I select "Basic for supplier" from "subscription_subscription_plan_id"
+  And I fill in "subscription[start_date]" with today's date
+  And I press translated "administration.users.edit.view.change"
+  Then I should see translated "flash.change_subscription.create.successful"
+  And I should see "Active subscription: Basic for supplier"
+
+#8605
+@m23 @subscriptions @requested @_done @_tested
+Scenario: I can change user's subscription plan when he entered lockup period
+  When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
+  And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:2,lockup_period:1,billing_period:0,free_period:0" and price "100"
+  And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:2,lockup_period:1,billing_period:0,free_period:0" and price "500"
+  And I go to administration edit user for kastomer@nbs.fake
+  And I select "Medium for supplier" from "subscription_subscription_plan_id"
+  And I fill in "subscription[start_date]" with today's date
+  And I press translated "administration.users.edit.view.change"
+  Then I should see translated "flash.change_subscription.create.successful"
+  And I should see "Active subscription: Medium for supplier"
+  When the date is "8" days from now
+  And active subscription for user "kastomer@nbs.fake" is in lockup period
+  And I select "Basic for supplier" from "subscription_subscription_plan_id"
+  And I fill in "subscription[start_date]" with today's date
+  And I press translated "administration.users.edit.view.change"
+  Then I should see translated "flash.change_subscription.create.successful"
+  And I should see "Active subscription: Basic for supplier"
+
+#8605
+@m23 @subscriptions @requested @_done @_tested
+Scenario: I can change user's subscription plan when he is in free period
+  When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd,vat_number:666"
+  And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:2,lockup_period:1,billing_period:0,free_period:1" and price "100"
+  And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:2,lockup_period:1,billing_period:0,free_period:1" and price "500"
+  And I go to administration edit user for kastomer@nbs.fake
+  And I select "Medium for supplier" from "subscription_subscription_plan_id"
+  And I fill in "subscription[start_date]" with today's date
+  And I press translated "administration.users.edit.view.change"
+  Then I should see translated "flash.change_subscription.create.successful"
+  And I should see "Active subscription: Medium for supplier"
+  And I should see "Active subscription is in free period until"
+  When I select "Basic for supplier" from "subscription_subscription_plan_id"
+  And I fill in "subscription[start_date]" with today's date
+  And I press translated "administration.users.edit.view.change"
+  Then I should see translated "flash.change_subscription.create.successful"
+  And I should see "Active subscription: Basic for supplier"
+  And I should not see "Active subscription is in free period until"
+
+#8605
+@m23 @subscriptions @requested @_done @_tested
+Scenario: I can select start date when I change user's subscription plan
+  When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
+  And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
+  And I go to administration edit user for kastomer@nbs.fake
+  And I select "Basic for supplier" from "subscription_subscription_plan_id"
+  And I fill in "subscription[start_date]" with "2020-01-01"
+  And I press translated "administration.users.edit.view.change"
+  Then I should see translated "flash.change_subscription.create.successful"
+  And I should see "Active subscription: Free supplier subscription"
+  And I should see translated "administration.users.edit.view.next_subscription_plan" with options "next_plan_name:Basic for supplier,next_plan_active_from:2020-01-01"
+
+#8605
+@m23 @subscriptions @requested @_done @tested_elsewhere
+Scenario: When I select user's new subscription plan then the current plan end date should change
+
+#8605
+@m23 @subscriptions @requested @added @_done @_tested
+Scenario: I can't change user subscription when he has other subscription scheduled after the active one
+  When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
+  And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
+  And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "500"
+  And user "kastomer@nbs.fake" upgraded subscription to "Medium for supplier"
+  And user "kastomer@nbs.fake" downgraded subscription to "Basic for supplier"
+  And I go to administration edit user for kastomer@nbs.fake
+  Then I should see "Active subscription: Medium for supplier"
+  And I should see translated "administration.users.edit.view.remove_scheduled_subscriptions"
+
+#8605
+@m23 @subscriptions @requested @added @_done @_tested
+Scenario: I can remove user's scheduled subscriptions
+  When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
+  And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
+  And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "500"
+  And user "kastomer@nbs.fake" upgraded subscription to "Medium for supplier"
+  And user "kastomer@nbs.fake" downgraded subscription to "Basic for supplier"
+  And I go to administration edit user for kastomer@nbs.fake
+  And I press translated "administration.users.edit.view.remove_scheduled"
+  Then I should see translated "flash.change_subscription.create.successful"
+  And I should not see translated "administration.users.edit.view.remove_scheduled_subscriptions"
+  When I select "Basic for supplier" from "subscription_subscription_plan_id"
+  And I fill in "subscription[start_date]" with today's date
+  And I press translated "administration.users.edit.view.change"
+  Then I should see translated "flash.change_subscription.create.successful"
+  And I should see "Active subscription: Basic for supplier"

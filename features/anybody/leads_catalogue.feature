@@ -1,10 +1,11 @@
-@lead_catalog @$_guest @m1
+@lead_catalog @$_guest @m1 @faircalls
 Feature: Leads catalogue
 
 Background:
   Given I am on the homepage
   And I make sure current locale is "en"
   And I am not sign in
+  And I visit domain http://faircalls.eu
   And lead Printers ultimate deal exists within category Computers
   And lead Printers ultimate deal exists with attributes "creator_name:Jacek Smietana,price:989.39,purchase_value:7843.99,description:Public desc about printers deal,exposures_count:887,clicks_count:17"
   And lead Faxes ultimate deal exists within category Computers
@@ -77,6 +78,7 @@ Scenario: I should see currency in which lead is being sold
 @m5 @tgn @_tested @_done
 Scenario: When you click on a lead that you have not bought, and you are not signed up you should be given the opportunity to sign in or create a new account
   Given Category named "Sample category" already exists
+  And I visit domain http://fairleads.eu
   And Lead named "Lead sample" exists within "Sample category" category
   And I go to browse leads
   And I follow category "Sample category"

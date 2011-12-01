@@ -31,6 +31,7 @@ en:
       confrimation_message: "Are you sure? All subsequent replies will be deleted as well."
       field_cant_be_blank: "can't be blank"
       field_incorrect_format: "incorrect value"
+      enter_email_address: "Enter email address"
     no_categories_for_category_supplier: "Your Category Supplier account has no associated categories. You can't sign in."
     edit_hint: "Edit hint"
     agree_to: "Agree to"
@@ -222,6 +223,7 @@ en:
 
         controller:
           successfully_connect_to_social: "Hello %{first_name}! Your %{account_type} account had been connected to your fairleads account with email %{email}. Now you can use any of them to log in."
+          successfully_logged_in: "Your account has been successfully created! You are now signed in."
       signed_in: "Signed in successfully."
       signed_out: "Signed out successfully."
 
@@ -315,6 +317,12 @@ en:
       cost_type1: "Agent's billing rate"
       cost_type2: "Fixed hourly rate"
       cost_type3: "Don't calculate cost"
+    crm_options:
+      crm_option0: "Disabled"
+      crm_option1: "Select by Company Name"
+      crm_option2: "Select by CVR"
+      crm_option3: "Select by Email Address"
+      crm_option4: "All must match"
     filter:
       header: Search
       keyword_label: Keyword
@@ -405,6 +413,8 @@ en:
       destroy_confirmation: Are you sure?
       my_results: "Production"
       not_allowed_to_edit: "You are not allowed to edit this settings"
+      duplicate: "Duplicate"
+      duplication_confirmation: "Are you sure you want to duplicate the campaign?"
     call_result_details_table:
       date: Date
       contact: Contact
@@ -417,10 +427,11 @@ en:
         view:
           title: "Editing template: %{name}"
           button_update: "Save"
-
     form:
       description: "Description"
       briefing: "Briefing"
+      crm_options: "CRM options"
+      crm_campaigns: "CRM campaigns"
   agent_work_screen:
     index:
       title: Agent work screen
@@ -448,6 +459,14 @@ en:
       new_contact_title: "Create new contact"
       create: "Create"
       cancel: "Cancel"
+      agent_information:
+        value_created: "Value created"
+        today: "Today"
+        this_year: "This year"
+        this_quarter: "This quarter"
+        this_week: "This week"
+        time: "Time"
+        last_four_weeks: "Last 4 weeks"
   contacts:
     filter:
       title: Search
@@ -516,6 +535,8 @@ en:
       date: Date
       agent: Agent
       result_type: Result type
+      contact_name: Contact name
+      campaign_name: Campaign
       actions: Actions
       edit_link: Edit
       remove_link: Remove
@@ -552,6 +573,7 @@ en:
       result: Result
       button_new_result: New result
       my_results: "Production"
+      email_sent_to: "sent to"
     create:
       flash:
         successfully_added: Call result has been successfully added. Next contact has been selected.
@@ -872,6 +894,8 @@ en:
           change_to_category_supplier: "Change to category supplier"
           change_to_regular_supplier: "Change to regular supplier"
           view_created_leads: "View created leads"
+          view_user_debts: "View user debts"
+          view_user_invoices: "View user invoices"
           not_charge_vat: "Do not charge VAT"
           available_categories: "Available public categories"
           selected_categories: "Selected categories"
@@ -880,6 +904,22 @@ en:
           selected_interests_categories: "Selected category interests"
           subaccounts_list: "Subaccounts"
           change_supplier_interests_link: "Set interests"
+          active_subscription: "Active subscription:"
+          active_subscription_period: "Active subscription period"
+          active_subscription_days_left: "%{number} days left"
+          subscription_management: "User subscription management"
+          cant_upgrade_nor_downgrade: "User can't neither upgrade not downgrade his current subscription"
+          cant_upgrade: "User can't upgrade his current subscription"
+          cant_downgrade: "User can't downgrade his current subscription"
+          in_free_period: "Active subscription is in free period until %{free_period_date}"
+          next_subscription_plan: "User's next subscription plan is '%{next_plan_name}' active from %{next_plan_active_from}"
+          users_active_subscription_will_prolong: "User's active subscription will prolong on %{prolong_date}"
+          as_free_subscription: "as free subscription"
+          change_users_subscription: "Change user's subscription"
+          change: "Change"
+          remove_scheduled_subscriptions: "Remove any scheduled subscriptions to change the active one"
+          remove_scheduled: "Remove scheduled subscriptions"
+          no_other_subscription_plans_for_user: "There are no other subscription plan available for this user"
       create:
         flash:
           user_creation_successful: User has been created successfuly
@@ -975,6 +1015,7 @@ en:
           title_stats: "Statistics recalculation"
           button_update_stats: "Update stats"
           contacts_settings_title: "Fairdeals contact settings"
+          test_send_email: "Test send email"
       update:
         controller:
           successful_update_notice: "Settings were successfully updated."
@@ -993,6 +1034,7 @@ en:
           edit: "Edit"
           button_update: "Save"
 
+          test_send_email: "Test send email"
     category_email_templates:
       update:
         controller:
@@ -1075,6 +1117,8 @@ en:
           bounced_at: "Bounced at"
           actions: "Actions"
           details: "Details"
+          sender: "Sender"
+          anonymous: "Anonymous"
       show:
         view:
           header: "Bounce details"
@@ -1093,6 +1137,7 @@ en:
           type_code: "Type code"
           dump_available: "Dump available"
 
+          body: "Body"
     articles:
       show:
         view:
@@ -1321,6 +1366,7 @@ en:
             type_paypal: "PayPal"
             type_manual: "Manual"
             amount: "Amount"
+          resend: "Resend"
       edit:
         view:
           header: "Editing invoice for %{name}"
@@ -1397,8 +1443,10 @@ en:
             subject: "Subject"
             body: "Body"
             title: "Send invoice"
-            invoice_already_sent_or_paid: "Warning: invoice has been already sent or paid."
+            invoice_already_sent_or_paid: "Warning: invoice has been already %{status}."
             button_cancel: "Cancel"
+            paid: "paid"
+            sent: "sent"
       bulk_mailings:
         new:
           view:
@@ -1502,6 +1550,7 @@ en:
           supplier_type: "Type"
           supplier_role: "Role"
           invoice_selected: "Invoice selected"
+          total_in_euro: "Total value in Euro"
     bank_accounts:
       form:
         view:
@@ -2177,6 +2226,7 @@ en:
         view:
           edit: "Edit"
           destroy: "Destroy"
+          you_need_to_upgrade_subscription_warning: "You need to upgrade your subscription to be able to create deals"
       new:
         view:
           title: "New Deal"
@@ -2476,6 +2526,17 @@ en:
 
         new_lead: "New lead"
         new_deal: "New deal"
+        header_campaigns: "Campaigns"
+        campaigns:
+          pending_contacts: "Pending contacts"
+          call_backs: "Call backs"
+          completion: "Completion"
+        header_history: "History"
+        header_communication: "Communication"
+        communication:
+          email: "E-mail"
+          date: "Date"
+          status: "Status"
   member_home:
     show:
       view:
@@ -2735,6 +2796,8 @@ en:
       form:
         name_label: "Name"
         short_description_label: "Short description"
+        featured_description_label: "Featured description"
+        short_featured_description_label: "Short featured description"
         detailed_description_label: "Detailed description"
         company_description_label: "Company description"
         deal_category_label: "Deal category"
@@ -2752,6 +2815,11 @@ en:
         additional_language: "Additional language"
         new_translation: "New translation"
   models:
+    archived_emails:
+      status:
+        status0: "Not sent"
+        status1: "Sent"
+        status2: "Bounced"
     call_result:
       not_unique_email_address: "User with this e-mail already exists!"
     user:
@@ -2839,7 +2907,11 @@ en:
       type:
         credit: "credit"
         refund: "refund"
+      descriptions:
+        subscription_refund: "Refund for unused %{days} days in subscription %{name}"
     subscription_plan_incorrect_roles_set: "Role member cannot be selected with other roles."
+    email_template:
+      test_send_disclaimer: "This is preview only. Information inside the brackets will be replaced by data when email will be sent to actual recipient through system."
   activerecord:
     models:
       article:
@@ -2968,6 +3040,11 @@ en:
         invalid: "is invalid"
 
   flash:
+    change_subscription:
+      create:
+        successful: "User's subscription plan has been changed"
+      destroy:
+        successful: "User's scheduled subscriptions have been removed"
     accounts:
       create:
         no_verification: "Your account has been successfully created! You can now sign in."
@@ -3079,6 +3156,9 @@ en:
     bulk_invoice_users:
       update:
         notice: "Selected users have been successfully invoiced."
+    campaigns:
+      duplicate:
+        notice: "Campaign duplication task has been successfully added to queue. It will be finished in few seconds."
   formtastic:
     date:
       formats:
@@ -3722,6 +3802,7 @@ en:
       view:
         header: "Contacts import"
         title: "Advanced import - create new contacts from spreadsheet."
+        unique_only: "Unique only"
     choose:
       view:
         header: "Contacts import - fields selection"
@@ -3732,6 +3813,7 @@ en:
     create:
       flash:
         success: "Import completed. %{counter} contacts have been successfully imported"
+        success_with_not_unique: "%{counter} contacts were not unique and were not imported"
 
   suppliers_advanced_import:
     show:
@@ -3796,6 +3878,7 @@ en:
         save: "Save"
         view_deal: "View deal"
         group_deal_splash_label: "Group deal"
+        fair_deal_splash_label: "Fair deal"
       search:
         keyword_label: "Keyword"
         search_button: "Search"
@@ -3863,6 +3946,7 @@ en:
         time_left_label: "Time left"
         created_leads_label: "Created leads"
         deal_code_label: "Deal code"
+        get_deal_confirmation_for_free_subscription_msg: "Do you want to upgrade your subscription to get deal?"
     common:
       assets:
         view:
@@ -3951,6 +4035,7 @@ en:
       view:
         title: "Editing email template %{name}"
         button_cancel: "Cancel"
+        test_send_email: "Test send email"
   deal_requests:
     create:
       flash:
@@ -3968,6 +4053,9 @@ en:
     will_prolong_on: "Your current subscription plan will automatically prolong on %{prolong_date}"
     next_subscription_plan: "Next subscription plan is '%{next_plan_name}' and it will be active from %{next_plan_active_from}"
     lockup_period_notification: "You have entered a lockup period for your subscription. The subscription plan cannot be downgraded."
+    new_subscription_plan_is_invalid: "The new subscription plan is invalid"
+    start_date_is_invalid: "The start date for new subscription is invalid"
+    there_are_future_subscriptions: "You can not change the subscription because there is already other subscription scheduled to start after the current one"
     confirmation:
       cancel: "Are you sure you want to cancel your current subscription plan?"
       downgrade: "Are you sure you want to downgrade your current subscription plan?"
@@ -3987,3 +4075,5 @@ en:
         team_buyers: "Team suppliers"
         deal_maker: "Deal maker"
       weeks: "weeks"
+    as_free_subscription: "as free subscription"
+    active_subscription_is_canceled: "Your current subscription plan is canceled"

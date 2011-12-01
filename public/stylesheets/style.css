@@ -679,7 +679,7 @@ h4
     margin: 10px 0;
 }
 
-.header_ribbon h1
+.header_ribbon > h1
 {
     background: url(/images/bg_header_ribbon_green.png) no-repeat 0 0 transparent;
     position: absolute;
@@ -691,7 +691,7 @@ h4
     text-shadow: -1px -1px 0 #62951c;
 }
 
-.header_ribbon h1 span
+.header_ribbon > h1 > span
 {
     height: 43px;
     line-height: 38px;
@@ -700,13 +700,20 @@ h4
     background: url(/images/bg_header_ribbon_green.png) no-repeat right -43px;
 }
 
-.header_ribbon h1 span a
+.header_ribbon > h1 > span a
 {
     color: #fff;
     font-weight: normal;
     text-decoration: none;
     border-bottom: 1px dotted #fff;
     font-size: 16px
+}
+
+.header_ribbon > h1 > span .ajaxful-rating-wrapper
+{
+    position: absolute;
+    right: -125px;
+    top: 5px;
 }
 
 .header_actions
@@ -862,6 +869,11 @@ h4
     font-weight: bold;
     margin: 15px 0;
     padding: 12px;
+}
+
+.frm .flash
+{
+    margin-bottom: 0;
 }
 
 .flash.flash_notice
@@ -1088,6 +1100,12 @@ input:focus, textarea:focus, select:focus
     height: 116px;
     padding-right: 20px;
     overflow: hidden;
+}
+
+.solid_list.row_4 .lead_content,
+.solid_list.row_4 .news_content
+{
+    height: 82px;
 }
 
 .solid_list li
@@ -1915,19 +1933,106 @@ li.disabled
 
 /* --- subscription plans ------------------------------------------------------------------------ */
 
-.subscription_plan_item {
+.subscription_plans
+{
+    text-align: center;
+}
+
+.subscription_plan_item
+{
     display: inline-block;
     display: inline !ie7;
     zoom: 1 !ie7;
-    margin: 3px;
-
     vertical-align: top;
-    padding: 8px 10px;
-    border: 1px solid #ccc;
+    cursor: pointer;
+
+    margin: 4px;
+    min-height: 200px;
+    width: 200px;
+    border: 1px solid #d0d0d0;
     min-width: 150px;
     text-align: center;
     background: #fff;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
-    border-radius: 10px;
+    border-radius: 10px;    
+
+    -moz-box-shadow: 0 0 4px rgba(0,0,0,.2);
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0,.2);
+    box-shadow: 0 0 4px rgba(0,0,0,.2);
+}
+
+.subscription_plan_item.active
+{
+    border: 3px solid #2da9ff;
+
+    -moz-box-shadow: 0 0 6px rgba(0,0,0,.3);
+    -webkit-box-shadow: 0 0 6px rgba(0,0,0,.3);
+    box-shadow: 0 0 6px rgba(0,0,0,.3);
+    margin: 2px
+}
+
+.subscription_plan_item h3
+{
+    font-size: 16px;
+    padding: 9px 5px;
+    font-weight: bold;    
+}
+
+.subscription_plan_item .subscription_plan_price
+{
+    background: #fafafa;
+    border-top: 1px solid #d0d0d0;
+    border-bottom: 1px solid #d0d0d0;
+    padding: 8px;
+    margin-bottom: 7px;
+}
+
+.subscription_plan_item .billing
+{
+    color: #0096ff;
+    font-size: 26px;
+    font-weight: bold;
+    padding: 0 5px 3px;
+}
+
+.subscription_plan_item > p
+{
+    padding: 0 5px;
+}
+
+.subscription_plan_footer
+{
+    padding-top: 5px;
+}
+
+
+/* --- deal show ----
+------------------------------------------------------------------------------------ */
+
+.deal_show_wrapper .frm_tiny
+{
+    margin-bottom: 15px;
+}
+
+.deal_show_wrapper .company_info
+{
+    padding: 10px;
+    text-align: center;
+}
+
+.deal_show_wrapper .time_left_counter
+{
+    padding-top: 25px;
+    text-align: center;
+}
+
+.deal_show_wrapper .time_left_counter h3
+{
+    padding-bottom: 8px;
+}
+
+.deal_show_wrapper .element_description p
+{
+    margin-bottom: 10px;
 }

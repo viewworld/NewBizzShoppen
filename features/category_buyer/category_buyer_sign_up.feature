@@ -18,6 +18,7 @@ Feature: Category buyer sign up
     And I fill in "user_category_supplier_password_confirmation" with "secret"
     And I fill in "user_category_supplier_address_attributes_address_line_1" with "Kaminskiego 19"
     And I fill in "user_category_supplier_address_attributes_address_line_2" with "Bielsko-Biala"
+    And I fill in "user_category_supplier_address_attributes_address_line_3" with "Bielsko-Biala"
     And I fill in "user_category_supplier_address_attributes_zip_code" with "43-300"
     And I select "United Kingdom" from "user_category_supplier_address_attributes_country_id"
     And I check "user_category_supplier_agreement_read"

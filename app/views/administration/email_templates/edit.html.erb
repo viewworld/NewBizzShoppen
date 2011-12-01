@@ -1,5 +1,6 @@
 <column-mc:>
   <%= javascript_include_tag :ckeditor %>
+  <%= javascript_include_tag "popup_email_template_editor" %>
   <header back="true"><%= t("administration.email_templates.edit.view.title", :name => @email_template.subject) %><%= image_tag_for_locale %></header>
 
   <%= semantic_form_for [:administration, @email_template], :url => administration_email_template_path(@email_template), :method => :put do |form| %>
@@ -10,6 +11,9 @@
         <param:actions>
           <ibt c="fltri" icon="save">
             <%= form.submit t("administration.email_templates.edit.view.button_update") %>
+          </ibt>
+          <ibt c="fltri" icon="mail">
+            <%= button_to_function t("administration.email_templates.edit.view.test_send_email"), "test_send_email_prompt('#{test_send_email_administration_email_template_path(@email_template)}')" %>
           </ibt>
           <ibt c="bt_grey fltri">
             <%= button_to_function t("administration.settings.edit.view.button_cancel"), href(administration_email_templates_path) %>

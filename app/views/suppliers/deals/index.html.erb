@@ -2,19 +2,27 @@
 <column-mc:>
   <%= render :partial => "shared/deals/actions", :locals => {:path => new_suppliers_deal_path} %>
 
-   <%= deals_table @deals do |blocks| %>
-      <% blocks.tools do |deal| %>
-          <ul-actions>
-            <li>
-              <%= link_to t("supplier.deals.index.view.edit"), edit_suppliers_deal_path(deal), :class => "default_action" %>
-            </li>
-            <li>
-              <%= link_to t("supplier.deals.index.view.destroy"), suppliers_deal_path(deal), :method => :delete, :confirm => t("common.confirmation") %>
-            </li>
-          </ul-actions>
-      <% end %>
-      <% blocks.rowtooltip do |deal| %>
-          <p><%= render :partial => "/shared/deal_comments/deal_threads", :locals => { :deal => deal, :threads => deal.comment_threads.roots.order("created_at DESC") } %></p>
+ <% if current_user.has_free_subscription? %>
+    <div class="flash flash_notice"><%= t("supplier.deals.index.view.you_need_to_upgrade_subscription_warning") %></div>
+ <% end %>
+
+  <% if @deals.blank? %>
+      <%= blank_state_message %>
+  <% else %>
+      <%= deals_table @deals do |blocks| %>
+          <% blocks.tools do |deal| %>
+              <ul-actions>
+                <li>
+                  <%= link_to t("supplier.deals.index.view.edit"), edit_suppliers_deal_path(deal), :class => "default_action" %>
+                </li>
+                <li>
+                  <%= link_to t("supplier.deals.index.view.destroy"), suppliers_deal_path(deal), :method => :delete, :confirm => t("common.confirmation") %>
+                </li>
+              </ul-actions>
+          <% end %>
+          <% blocks.rowtooltip do |deal| %>
+              <p><%= render :partial => "/shared/deal_comments/deal_threads", :locals => { :deal => deal, :threads => deal.comment_threads.roots.order("created_at DESC") } %></p>
+          <% end %>
       <% end %>
   <% end %>
 </column-mc:>

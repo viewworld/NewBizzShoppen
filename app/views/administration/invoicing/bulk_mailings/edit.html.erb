@@ -6,19 +6,26 @@
       <frm title="">
         <param:content>
           <%= hidden_field_tag :invoice_ids, params[:invoice_ids].join(",") %>
-          <div class="pdd_10 no_pdd_t">
+          <div class="pdd_10 no_pdd_tb">
             <fieldset class="inputs labels_ta_r labels_100">
-                <ol>
-                    <li class="string">
-                      <%= label_tag :sent %>
+              <ol>
+                <li class="string">
+                  <%= label_tag :sent %>
+                  <div class="txt">
+                    <strong>
                       <%= @sent_invoices.size %> <%= t("administration.invoices.bulk_mailings.new.view.out_of") %> <%= @invoices.size %>
-                    </li>
-                    <li class="string">
-                        <%= label_tag :recipients %>
-                        <%= @invoices.map { |invoice| "#{invoice.user.email} (#{invoice.full_number})" }.join(", ") %>
-
-                    </li>
-                </ol>
+                    </strong>
+                  </div>
+                </li>
+                <li class="string">
+                  <%= label_tag :recipients %>
+                  <div class="txt">
+                    <strong>
+                      <%= @invoices.map { |invoice| "#{invoice.user.email} (#{invoice.full_number})" }.join(", ") %>
+                    </strong>
+                  </div>
+                </li>
+              </ol>
             </fieldset>
           </div>
 

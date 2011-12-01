@@ -150,7 +150,6 @@ Scenario: I can create new invoice from suggestion on invoices pending creation 
   Then I sign in as jon@lajoie.ca with password secret
   And I go to administration upcoming invoices
   And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-  Then I press translated "administration.invoices.new.view.button_create"
   Then I should see translated "administration.invoices.show.view.header"
   And I go to administration invoices
   And I follow translated "administration.invoices.index.view.show_invoice"
@@ -467,12 +466,15 @@ Scenario: When creating new invoice a default seller should be selected
   When there is a seller with attributes "company_name:SellerOne" for country "Denmark"
   And there is a seller with attributes "company_name:DefaultSeller,default:1" for country "Denmark"
   And there is a seller with attributes "company_name:SellerThree" for country "Denmark"
-  And someone is signed up and confirmed as user with email customer_one@nbs.fake and password secret and role supplier with attributes "first_name:John 1,last_name:Smith,country:2"
-  And User customer_one@nbs.fake with role supplier is big buyer
-  And a lead LeadOne exists within category Computers and is bought by user customer_one@nbs.fake with role supplier
-  And I follow translated "layout.main_menu.admin.upcoming_invoices"
-  And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-  And I press translated "administration.invoices.new.view.button_create"
+#  And someone is signed up and confirmed as user with email customer_one@nbs.fake and password secret and role supplier with attributes "first_name:John 1,last_name:Smith,country:2"
+  #And User customer_one@nbs.fake with role supplier is big buyer
+  #And a lead LeadOne exists within category Computers and is bought by user customer_one@nbs.fake with role supplier
+#  And I follow translated "layout.main_menu.admin.upcoming_invoices"
+#  And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
+#  Then the "invoice_seller_name" field should contain "DefaultSeller"
+  Then I go to administration invoices page
+  And I select ", agent@nbs.com" from "invoice_user_id"
+  And I press "Create invoice"
   Then the "invoice_seller_name" field should contain "DefaultSeller"
 
 @m5 @tgn @_tested @_done
@@ -625,7 +627,6 @@ Scenario: I can see invoices generated from debtors tab
   Then I should not see "Janko Muzykant"
   When I follow translated "layout.main_menu.admin.upcoming_invoices"
   Then I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-  And I press translated "administration.invoices.new.view.button_create"
   When I click hidden link by url regex "/administration\/invoicing\/invoices$/"
   Then I should see "Janko Muzykant"
 
@@ -664,3 +665,6 @@ Scenario: I can see warning in a popup when trying to send invoice which has bee
   And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d+/"
   Then I confirm a js popup on the next step
   And I follow translated "administration.invoices.show.view.send"
+
+@m22 @requested @tgn @_done @_non_testable
+Scenario: I should see a warning that invoice has been already sent or paid (accurate message)

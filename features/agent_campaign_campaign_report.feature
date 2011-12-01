@@ -8,13 +8,14 @@ Feature: Campaign report
     And campaign report data is generated
     And I follow translated "layout.main_menu.admin.reports"
 
-  @_done @_tested
+  @_done @_tested @faircalls
   Scenario: I can see all values per campaign
     Then I should see translated "campaign_reports.index.empty_report_msg"
     And I press translated "campaign_reports.index.search_button"
     And I should see "TestCampaignReport1" within "#reports_table"
     And I should see "TestCampaignReport2" within "#reports_table"
     When I am not sign in
+    And I visit domain http://faircalls.eu
     Then I am on the homepage
     And I sign in as testreportscca01@nbs.com with password secret
     And I follow translated "layout.main_menu.call_centre_agent.reports"

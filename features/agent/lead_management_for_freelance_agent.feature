@@ -1,8 +1,9 @@
-@lead_manager @$_freelance_agent @m1
+@lead_manager @$_freelance_agent @m1 @faircalls
 Feature: Lead Management - My Leads Manage for Freelance Agent
 
 Background:
-  Given I am on the homepage
+  And I am on the homepage
+  Given I visit domain http://faircalls.eu
   And I make sure current locale is "en"
   And Category named "Sample category" already exists
   Given I am signed up and confirmed as user with email john@doe.com and password secret and role agent

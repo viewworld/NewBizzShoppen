@@ -4,18 +4,15 @@ class Callers::AgentWorkScreenController < Callers::CallerController
   before_filter :set_campaign
   before_filter :set_agent
   before_filter :set_contacts
-  before_filter :set_pending_contacts
-  before_filter :set_completed_contacts
   before_filter :set_contact
   before_filter :set_contact_managing
 
   def index
-    authorize_manage_rights(@contact) if @contact 
+    authorize_manage_rights(@contact) if @contact
     set_locals
+    @selected_call_result = params[:selected_call_result_id].blank? ? nil : CallResult.where(:creator_id => current_user.call_centre? ? current_user.subaccount_ids : current_user.id).find_by_id(params[:selected_call_result_id])
     redirect_to callers_campaign_agent_work_screen_index_path(Campaign.find(params[:change_campaign_id])) if params[:change_campaign_id]
   end
-
-
 
   private
   def set_campaign
@@ -50,9 +47,17 @@ class Callers::AgentWorkScreenController < Callers::CallerController
               :agent => @agent,
               :contact => @contact,
               :contacts => @contacts,
-              :pending_contacts => @pending_contacts,
-              :completed_contacts => @completed_contacts,
               :namespace => "callers" }
+  end
+
+  def add_pending_to_locals
+   set_pending_contacts
+   @locals[:pending_contacts] = @pending_contacts
+  end
+
+  def add_completed_to_locals
+    set_completed_contacts
+    @locals[:completed_contacts] = @completed_contacts
   end
 
   def set_contact_managing

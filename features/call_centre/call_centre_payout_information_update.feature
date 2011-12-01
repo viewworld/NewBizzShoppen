@@ -1,10 +1,11 @@
-@user_accounts @$_call_centre  @m5 @tgn
+@user_accounts @$_call_centre  @m5 @tgn @faircalls
 Feature: Call centre payout information update
 
 Background:
   Given I am on the homepage
   And I make sure current locale is "en"
   And I am signed up and confirmed as user with email call_centre@person.com and password supersecret and role call_centre
+  And I visit domain http://faircalls.eu
   Then I sign in as call_centre@person.com with password supersecret
 
 @_done @non_testable

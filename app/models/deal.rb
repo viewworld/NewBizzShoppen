@@ -13,7 +13,7 @@ class Deal < AbstractLead
   belongs_to :lead_category, :class_name => "Category", :foreign_key => "lead_category_id"
   belongs_to :deal_admin, :class_name => "User", :foreign_key => "deal_admin_email", :primary_key => "email"
 
-  scope :without_inactive, where("leads.end_date >= ? and leads.start_date <= ?", Date.today, Date.today)
+  scope :without_inactive, lambda { where("leads.end_date >= ? and leads.start_date <= ?", Date.today, Date.today) }
   scope :without_requested_by, lambda { |u| select("DISTINCT leads.*").joins("LEFT JOIN leads lr ON lr.deal_id = leads.id").where(["(lr.requested_by <> ? OR lr.requested_by IS NULL)", u.id]) if u }
   scope :active_is, lambda { |q| where("#{q == "1" ? "end_date >= ? and start_date <= ?" : "end_date < ? or start_date > ?"}", Date.today, Date.today) }
   scope :for_user, lambda { |q| where("creator_id = ?", q.id) }
@@ -167,7 +167,8 @@ class Deal < AbstractLead
     template = EmailTemplate.find_by_uniq_id("deal_certification_buyer_welcome")
     TemplateMailer.delay.new(supplier.email, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.render({:user => supplier, :password => password}),
-                                        :bcc_recipients => template.bcc, :cc_recipients => template.cc})
+                                        :bcc_recipients => template.bcc, :cc_recipients => template.cc,
+                                        :sender_id => User.get_current_user_id, :email_template_uniq_id => template.uniq_id})
   end
 
   def slug
@@ -180,18 +181,18 @@ class Deal < AbstractLead
   end
   
   def next_group_deal
-    if deal = Deal.order("end_date ASC").where("((end_date >= ? and id <> ?) or id <> ?) and end_date >= current_date", self.end_date, self.id, self.id).first
+    if deal = Deal.without_inactive.order("id ASC").where("id > ?", self.id).first
       deal
     else
-      self
+      Deal.without_inactive.order("id ASC").first
     end
   end
 
   def previous_group_deal
-    if deal = Deal.order("end_date DESC").where("((end_date <= ? and id <> ?) or id <> ?) and end_date >= current_date", self.end_date, self.id, self.id).first
+    if deal = Deal.without_inactive.order("id DESC").where("id < ?", self.id).first
       deal
     else
-      self
+      Deal.without_inactive.order("id DESC").first
     end
   end
 
