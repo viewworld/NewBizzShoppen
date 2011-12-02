@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_filter :authorize_with_http_basic_for_staging, :check_category_supplier, :update_log_entries, :set_user_time_zone
   after_filter :do_something
   before_filter :prepare_search, :if => proc{session[:site]=="fairdeals"}
+  before_filter :redirect_to_paypal_confirmation
 
   layout proc { session[:layout] }
 
@@ -20,6 +21,12 @@ class ApplicationController < ActionController::Base
   before_filter :set_locale
 
   helper_method :locale
+
+  def redirect_to_paypal_confirmation
+    if user_signed_in? and current_user.subscription_required? and current_user.active_subscription.unconfirmed_paypal?
+      redirect_to unconfirmed_paypal_subscriptions_path
+    end
+  end
 
   def prepare_search
     @search ||= Deal.scoped_search

@@ -62,6 +62,7 @@ module PayPal
         :token                 => "TOKEN",
         :username              => "USER",
         :version               => "VERSION",
+        :total_billing_cycles  => "TOTALBILLINGCYCLES"
       }
 
       CA_FILE = File.dirname(__FILE__) + "/cacert.pem"

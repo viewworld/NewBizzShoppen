@@ -54,7 +54,7 @@ class SubscriptionPlan < ActiveRecord::Base
   end
 
   def subscription_plan_lines_in_context_of_number_of_billing_periods
-    if payable? and subscription_plan_lines.any? and subscription_plan_lines.detect{|spl| !spl.price_divides_by?(number_of_periods) }
+    if !is_free? and subscription_plan_lines.any? and subscription_plan_lines.detect{|spl| !spl.price_divides_by?(number_of_periods) }
       errors.add(:base, :invalid)
     end
   end
@@ -108,14 +108,6 @@ class SubscriptionPlan < ActiveRecord::Base
 
   def assigned_roles=(_roles)
     self.roles = _roles
-  end
-
-  def number_of_periods
-    payable? ? subscription_period / billing_cycle : 1
-  end
-
-  def total_billing_for_subperiod
-    total_billing / number_of_periods
   end
 
 end

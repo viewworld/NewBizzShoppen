@@ -32,6 +32,8 @@ class Subscription < ActiveRecord::Base
   aasm_state :prolonged, :enter => :perform_prolong
   aasm_state :upgraded_from_penalty
   aasm_state :admin_changed, :enter => :perform_admin_change
+  aasm_state :unconfirmed_paypal
+  aasm_state :confirmed_paypal
 
   aasm_event :enter_lockup do
     transitions :from => [:normal, :penalty, :non_cancelable], :to => :lockup, :guard => :lockup_period_started?
@@ -39,6 +41,10 @@ class Subscription < ActiveRecord::Base
 
   aasm_event :upgrade do
     transitions :from => [:normal, :lockup], :to => :upgraded
+  end
+
+  aasm_event :confirm_paypal, :after => :perform_confirm_paypal do
+    transitions :from => :unconfirmed_paypal, :to => :confirmed_paypal
   end
 
   aasm_event :downgrade do
@@ -71,6 +77,8 @@ class Subscription < ActiveRecord::Base
       :penalty
     elsif last_subscription and last_subscription.upgraded_from_penalty?
       :non_cancelable
+    elsif last_subscription.nil? and use_paypal?
+      :unconfirmed_paypal
     else
       :normal
     end
@@ -106,7 +114,7 @@ class Subscription < ActiveRecord::Base
     subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price", "is_active"]).each do |method|
       subscription.send("#{method}=".to_sym, subscription_plan.send(method.to_sym))
     end
-    subscription.subscription_plan = subscription_plan
+    subscription.subscription_plan = subscription_plan.is_a?(Subscription) ? subscription_plan.subscription_plan : subscription_plan
     subscription_plan.subscription_plan_lines.each do |line|
       subscription.subscription_plan_lines << line.clone
     end
@@ -159,7 +167,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def perform_prolong
-    self.class.clone_from_subscription_plan!(prolongs_as_free ? SubscriptionPlan.active.free.for_role(user.role).first : self.subscription_plan, user, end_date+1, paypal_invoice_id)
+    self.class.clone_from_subscription_plan!(prolongs_as_free? ? SubscriptionPlan.active.free.for_role(user.role).first : self, user, end_date+1, paypal_invoice_id)
   end
 
   def perform_upgrade_from_penalty
@@ -172,6 +180,11 @@ class Subscription < ActiveRecord::Base
     self.recalculate_subscription_plan_lines(next_subscription_plan_start_date-1, is_free_period_applied?)
     self.end_date = next_subscription_plan_start_date-1
     self.class.clone_from_subscription_plan!(next_subscription_plan, user, next_subscription_plan_start_date)
+  end
+
+  def perform_confirm_paypal
+    self.end_date = Date.today-1
+    self.class.clone_from_subscription_plan!(self, user)
   end
 
   def invoiced?
@@ -187,11 +200,11 @@ class Subscription < ActiveRecord::Base
   end
 
   def can_be_prolonged?
-    payable? and end_date < Date.today
+    !is_free? and end_date < Date.today
   end
 
   def can_cancel_at
-    if payable? and normal?
+    if !is_free? and normal?
       start_date + 1.day
     elsif downgraded?
       end_date + 1.day
@@ -221,7 +234,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def will_prolong?
-    payable?
+    !is_free?
   end
 
   def self.auto_prolong
@@ -249,6 +262,54 @@ class Subscription < ActiveRecord::Base
     end
   end
 
+  def big_buyer?
+    if unconfirmed_paypal?
+      false
+    else
+      read_attribute(:big_buyer)
+    end
+  end
+
+  def team_buyers?
+    if unconfirmed_paypal?
+      false
+    else
+      read_attribute(:team_buyers)
+    end
+  end
+
+  def deal_maker?
+    if unconfirmed_paypal?
+      false
+    else
+      read_attribute(:deal_maker)
+    end
+  end
+
+  def can_be_downgraded?
+    if unconfirmed_paypal?
+      false
+    else
+      read_attribute(:can_be_downgraded)
+    end
+  end
+
+  def can_be_upgraded?
+    if unconfirmed_paypal?
+      true
+    else
+      read_attribute(:can_be_upgraded)
+    end
+  end
+
+  def prolongs_as_free?
+    if unconfirmed_paypal?
+      true
+    else
+      read_attribute(:prolongs_as_free)
+    end
+  end
+
   private
 
   def handle_user_privileges
@@ -261,9 +322,9 @@ class Subscription < ActiveRecord::Base
       period_start_date = start_date + (n * billing_cycle).weeks
       period_end_date   = period_start_date + billing_cycle.weeks - 1.day
       subscription_sub_periods.create!(:start_date => period_start_date,
-                                      :end_date => is_free? ? nil : period_end_date,
+                                      :end_date => (is_free? and !unconfirmed_paypal?) ? nil : period_end_date,
                                       :paypal_retries => paypal_retries,
-                                      :billing_date => is_free? ? nil : (n == 0 and billing_period.to_i < 0) ? period_start_date : period_start_date + billing_period.to_i.weeks)
+                                      :billing_date => is_free? ? nil : (n == 0 and billing_period.to_i < 0) ? period_start_date : (period_start_date + billing_period.to_i.weeks))
     end
   end
 end

@@ -21,7 +21,7 @@ module CommonSubscriptions
     end
 
     def is_free?
-      !payable?
+      !payable? or (respond_to?(:unconfirmed_paypal?) and unconfirmed_paypal?)
     end
 
     def cache_prices!
@@ -30,5 +30,12 @@ module CommonSubscriptions
       reload
     end
 
+    def number_of_periods
+      !is_free? ? subscription_period / billing_cycle : 1
+    end
+
+    def total_billing_for_subperiod
+      total_billing / number_of_periods
+    end
   end
 end

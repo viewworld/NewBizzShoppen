@@ -182,13 +182,13 @@ class User < ActiveRecord::Base
     casted_obj = self.send(:casted_class).find(id)
     [:leads, :lead_purchases, :lead_requests, :leads_in_cart].detect do |method|
       casted_obj.respond_to?(method) and !casted_obj.send(method).empty?
-    end.nil? and (!active_subscription or (!active_subscription.payable? and subscriptions.detect { |s| s.payable? and !s.invoiced?}.nil?))
+    end.nil? and (!active_subscription or (active_subscription.is_free? and subscriptions.detect { |s| s.payable? and !s.invoiced?}.nil?))
   end
 
   def handle_locking
     if locked
       self.locked_at = locked == "unlock" ? nil : Time.now
-      self.cancel_subscription = true if locked_at and active_subscription and active_subscription.payable?
+      self.cancel_subscription = true if locked_at and active_subscription and !active_subscription.is_free?
     end
   end
 
@@ -735,7 +735,7 @@ class User < ActiveRecord::Base
   end
 
   def subscription_plan_is_valid?(subscription_plan)
-    subscription_plan and subscription_plan.is_active and subscription_plan.has_role?(self.role.to_sym)
+    subscription_plan and (subscription_plan.is_a?(Subscription) or (subscription_plan.is_a?(SubscriptionPlan) and subscription_plan.is_active)) and subscription_plan.has_role?(self.role.to_sym)
   end
 
   def start_date_for_admin_change_is_valid?(start_date)
@@ -890,7 +890,7 @@ class User < ActiveRecord::Base
 
   def can_create_deals?
     has_one_of_roles?(:agent, :admin, :call_centre_agent, :call_centre) or
-        (supplier? and active_subscription.payable? and (!active_subscription.is_today_in_free_period? or
+        (supplier? and !active_subscription.is_free? and (!active_subscription.is_today_in_free_period? or
             (active_subscription.is_today_in_free_period? and active_subscription.free_deals_in_free_period.to_i > 0)) )
   end
 end

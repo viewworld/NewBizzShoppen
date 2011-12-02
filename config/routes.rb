@@ -368,6 +368,8 @@ Nbs::Application.routes.draw do
     end
   end
 
+  resource :unconfirmed_paypal_subscriptions, :only => [:show]
+
   constraints(Fairdeals) do
     match '/(:id)' => "fairdeals_home#show"
   end

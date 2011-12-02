@@ -38,7 +38,7 @@ class Members::LeadsController < Members::MemberController
   end
 
   def check_if_deal_is_already_requested
-    if (@deal = Deal.find_by_id(params[:deal_id]) and @deal.requested_by?(current_user)) or !current_user.active_subscription.payable?
+    if (@deal = Deal.find_by_id(params[:deal_id]) and @deal.requested_by?(current_user)) or current_user.active_subscription.is_free?
       redirect_to deal_path(:id => @deal.slug)
     end
   end
