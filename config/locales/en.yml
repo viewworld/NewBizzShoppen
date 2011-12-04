@@ -828,6 +828,20 @@ en:
         new_password_label: "New password"
         new_password_confirmation_label: "New password confirmation"
 
+  callers:
+    history:
+      view:
+        header: "History"
+        table:
+          details: "Details"
+          actions: "Actions"
+    communication:
+      view:
+        header: "Communication"
+        table:
+          details: "Details"
+          actions: "Actions"
+
   administration:
     featured_deals:
       view:
