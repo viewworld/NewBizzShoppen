@@ -186,13 +186,15 @@ class Campaign < ActiveRecord::Base
 
   include AdvancedImport
 
-  def create_contacts_from_xls(spreadsheet, current_user)
+  def create_contacts_from_xls(spreadsheet, current_user, only_unique)
     spreadsheet.default_sheet = spreadsheet.sheets.first
     2.upto(spreadsheet.last_row) do |line|
       contact = contacts.build
       Campaign.import_fields.each_with_index { |field, index| contact = assign_field(contact, field, spreadsheet.cell(line, index+1), spreadsheet.celltype(line, index+1)) }
       contact = Campaign.assign_current_user(contact, current_user, self)
-      contact.save
+      unless only_unique and !Contact.where("id IS NOT NULL AND campaign_id = #{contact.campaign_id} AND company_name = '#{contact.company_name}' AND company_vat_no = '#{contact.company_vat_no}' AND email_address = '#{contact.email_address}'").blank?
+        contact.save
+      end
     end
   end
 
@@ -271,11 +273,11 @@ class Campaign < ActiveRecord::Base
 
   def duplicate!
     campaign = self.deep_clone!(:with_callbacks => false, :include => [:campaigns_results, :user_session_logs,
-    {:contacts => [ {:call_results => [:call_log, :result_values, :archived_email]}, :contact_past_user_assignments, {:lead_template_values => :lead_template_value_translations}, :translations ]},
-    {:send_material_email_template => :translations},
-    {:upgrade_contact_to_buyer_email_template => :translations},
-    {:upgrade_contact_to_category_buyer_email_template => :translations},
-    {:upgrade_contact_to_member_email_template => :translations}])
+                                                                       {:contacts => [{:call_results => [:call_log, :result_values, :archived_email]}, :contact_past_user_assignments, {:lead_template_values => :lead_template_value_translations}, :translations]},
+                                                                       {:send_material_email_template => :translations},
+                                                                       {:upgrade_contact_to_buyer_email_template => :translations},
+                                                                       {:upgrade_contact_to_category_buyer_email_template => :translations},
+                                                                       {:upgrade_contact_to_member_email_template => :translations}])
 
     campaign.users = users
     campaign.name = "Copy of #{name} #{Time.now.strftime("%d-%m-%Y %H:%M")}"
