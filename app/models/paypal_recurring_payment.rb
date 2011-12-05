@@ -16,6 +16,7 @@ class PaypalRecurringPayment
       :amount       => @options[:subscription_plan].billing_price,
       :currency     => @options[:subscription_plan].currency.to_s
     }).checkout
+    archive_response!("checkout")
     @response.valid?
   end
 
@@ -33,6 +34,7 @@ class PaypalRecurringPayment
       :ipn_url      => @options[:ipn_url],
       :failed => 1
     }).request_payment
+    archive_response!("request_payment")
     @response.approved? and @response.completed?
   end
 
@@ -53,6 +55,7 @@ class PaypalRecurringPayment
       :outstanding => :next_billing,
       :failed => 1
     }).create_recurring_profile
+    archive_response!("create_recurring_profile")
   end
 
   def profile_id
@@ -63,8 +66,27 @@ class PaypalRecurringPayment
     @response.errors.map { |i| "#{i[:code]}: #{i[:messages]}" }.join("<br />")
   end
 
+  def detailed_response_errors
+    "#{@response.to_yaml}\n#{@response.errors.map { |i| "#{i[:code]}: #{i[:messages]}" }.join('\n')}"
+  end
+
   def archive_response!(response_type)
-    ArchivedPaypalResponse.create(:user => @options[:user], :response_type => response_type,  :response_details => @response.inspect, :subscription => @options[:subscription_plan],
-                                  :has_errors => false)
+    apr = ArchivedPaypalResponse.create(:user => @options[:user], :response_type => response_type,
+                                  :response_details => detailed_response_errors,
+                                  :subscription => @options[:subscription_plan],
+                                  :has_errors => response_has_errors?, :response_type => response_type)
+    notify_about_errors(apr)
+  end
+
+  def response_has_errors?
+    (@response.respond_to?(:valid?) and !@response.valid?) or !@response.errors.empty?
+  end
+
+  def notify_about_errors(archived_response)
+    if archived_response.has_errors?
+      TemplateMailer.delay.new("tomasz.noworyta@gmail.com,aossowski@gmail.com", :blank_template, Country.get_country_from_locale,
+                              {:subject_content => "Paypal recurring payment error has occurred",
+                               :body_content => "<p>ArchivedPaypalResponse: ##{archived_response.id}</p><p>Time: #{Time.now.strftime("%d-%m-%Y %H:%M")}</p><br /><b>Backtrace:</b><p>#{detailed_response_errors.gsub("\n", "<br />")}</p>"})
+    end
   end
 end
