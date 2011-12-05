@@ -1,0 +1,21 @@
+<column-mc:>
+  <header><%= t("unconfirmed_paypal_subscriptions.show.view.header") %></header>
+
+  <div class="frm_tiny pdd_15 ta_c">
+  <% if @paypal_recurring.checkout? %>
+    <h2><%= t("unconfirmed_paypal_subscriptions.show.view.message", :subscription => current_user.active_subscription.name) %></h2>
+    <div class="pdd_10 grid_50 grid_c">
+
+        <ibt c="fltri">
+          <%= bt_link_to nil, t("unconfirmed_paypal_subscriptions.show.view.button_confirm"), @paypal_recurring.checkout_url, :method => :get %>
+        </ibt>
+    </div>
+  <% else %>
+    <h2><%= t("unconfirmed_paypal_subscriptions.show.view.message_failure", :subscription => current_user.active_subscription.name) %></h2>
+        <br/>
+        <%=@paypal_recurring.response_errors  %>
+  <% end %>
+    <clb/>
+  </div>
+
+</column-mc:>

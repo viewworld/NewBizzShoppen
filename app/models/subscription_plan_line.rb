@@ -10,7 +10,7 @@ class SubscriptionPlanLine < ActiveRecord::Base
   private
 
   def price_in_context_of_billing_cycle
-    if resource.is_a?(SubscriptionPlan) and resource.payable? and !price_divides_by?(resource.number_of_periods)
+    if resource.is_a?(SubscriptionPlan) and !resource.is_free? and !price_divides_by?(resource.number_of_periods)
       errors.add(:price, :must_divide_by, :number => resource.number_of_periods)
     end
   end

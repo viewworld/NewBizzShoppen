@@ -20,6 +20,7 @@ module PayPal
       attr_accessor :return_url
       attr_accessor :start_at
       attr_accessor :token
+      attr_accessor :total_billing_cycles
 
       def initialize(options = {})
         options.each {|name, value| send("#{name}=", value)}
@@ -139,7 +140,7 @@ module PayPal
       #   response = ppr.create_recurring_profile
       #
       def create_recurring_profile
-        params = collect(:amount, :initial_amount, :initial_amount_action, :currency, :description, :payer_id, :token, :reference, :start_at, :failed, :outstanding, :ipn_url, :frequency, :period, :email)
+        params = collect(:amount, :initial_amount, :initial_amount_action, :currency, :description, :payer_id, :token, :reference, :start_at, :failed, :outstanding, :ipn_url, :frequency, :period, :email, :total_billing_cycles)
         request.run(:create_profile, params)
       end
 

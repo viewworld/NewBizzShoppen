@@ -3,26 +3,22 @@ class SubscriptionPlansController < SecuredController
   before_filter :fetch_user
   before_filter :fetch_subscription_plan, :except => [:cancel]
   before_filter :handle_paypal_subscription, :except => [:paypal_confirmed, :paypal_canceled, :cancel]
+  skip_before_filter :redirect_to_paypal_confirmation
 
   private
 
   def handle_paypal_subscription
     if @subscription_plan.use_paypal?
-    ppr = PayPal::Recurring.new({
-      :return_url   => paypal_confirmed_my_profile_subscription_plan_url(@subscription_plan),
-      :cancel_url   => paypal_canceled_my_profile_subscription_plan_url(@subscription_plan),
-      :ipn_url      => payment_notification_url,
-      :description  => @subscription_plan.name,
-      :amount       => @subscription_plan.billing_price,
-      :currency     => @subscription_plan.currency.to_s
-    })
+      paypal_recurring = PaypalRecurringPayment.new(:subscription_plan => @subscription_plan,
+                                                    :return_url => paypal_confirmed_my_profile_subscription_plan_url(@subscription_plan),
+                                                    :cancel_url => paypal_canceled_my_profile_subscription_plan_url(@subscription_plan),
+                                                    :ipn_url => payment_notification_url)
 
-    response = ppr.checkout
-    if response.valid?
-    redirect_to response.checkout_url
-    else
-      redirect_to :back
-    end
+      if paypal_recurring.checkout?
+        redirect_to paypal_recurring.checkout_url
+      else
+        redirect_to :back
+      end
     end
   end
 
@@ -31,51 +27,27 @@ class SubscriptionPlansController < SecuredController
   end
 
   def fetch_subscription_plan
-    @subscription_plan = SubscriptionPlan.find(params[:id])
+    @subscription_plan = current_user.active_subscription.unconfirmed_paypal? ? current_user.active_subscription : SubscriptionPlan.find(params[:id])
   end
 
   public
 
   def paypal_confirmed
-    ppr = PayPal::Recurring.new({
-      :token       => params[:token],
-      :payer_id    => params[:PayerID],
-      :amount      => @subscription_plan.total_billing_for_subperiod,
-      :currency     => @subscription_plan.currency.to_s,
-      :description => @subscription_plan.name,
-      :ipn_url      => payment_notification_url,
-      :failed => 1
-    })
-    response = ppr.request_payment
-
-
-    if response.approved? and response.completed?
-      if @user.active_subscription.total_billing < @subscription_plan.total_billing
+    if PaypalRecurringPayment.new(:subscription_plan => @subscription_plan, :token => params[:token], :payer_id => params[:PayerID], :ipn_url => payment_notification_url).request_payment?
+      if @user.active_subscription.unconfirmed_paypal?
+        @user.active_subscription.confirm_paypal!
+      elsif @user.active_subscription.total_billing < @subscription_plan.total_billing
         @user.upgrade_subscription!(@subscription_plan)
       else
         @user.downgrade_subscription!(@subscription_plan)
       end
 
-      ppr = PayPal::Recurring.new({
-        :amount      => @subscription_plan.total_billing_for_subperiod,
-        :currency    => @subscription_plan.currency.to_s,
-        :description => @subscription_plan.name,
-        :ipn_url     => payment_notification_url,
-        :frequency   => @subscription_plan.billing_cycle,
-        :token       => params[:token],
-        :period      => :daily,
-        :reference   => @user.active_subscription.id.to_s,
-        :payer_id    => params[:PayerID],
-        :start_at    => Time.now.utc,
-        :failed      => 1,
-        :outstanding => :next_billing,
-        :ipn_url      => payment_notification_url,
-        :failed => 1
-      })
+      paypal_recurring = PaypalRecurringPayment.new(:subscription_plan => @subscription_plan, :user => @user, :token => params[:token], :payer_id => params[:PayerID],
+                                                    :ipn_url => payment_notification_url)
 
-      response = ppr.create_recurring_profile
+      paypal_recurring.create_profile
 
-      @user.active_subscription.update_attributes(:paypal_profile_id => response.profile_id, :paypal_invoice_id => @user.active_subscription.id)
+      @user.active_subscription.update_attributes(:paypal_profile_id => paypal_recurring.profile_id, :paypal_invoice_id => @user.active_subscription.id)
     end
 
     redirect_to my_profile_path

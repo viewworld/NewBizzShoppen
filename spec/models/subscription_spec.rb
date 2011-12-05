@@ -98,6 +98,42 @@ describe Subscription do
       @member.should_not be_valid
       @member.should have(1).error_on(:subscription_plan_id)
     end
+
+    it "should create special type of subscription when paypal subscription is chosen at signup" do
+      @subscription_plan.update_attributes(:use_paypal => true, :big_buyer => true, :team_buyers => true, :deal_maker => true, :can_be_upgraded => false,
+                                          :can_be_downgraded => true)
+
+      @customer = User::Supplier.make!(:subscription_plan_id => @subscription_plan.id)
+      @customer.active_subscription.subscription_plan.should == @subscription_plan
+      @customer.active_subscription.should be_unconfirmed_paypal
+
+      @customer.big_buyer?.should_not == @subscription_plan.big_buyer?
+      @customer.team_buyers?.should_not == @subscription_plan.team_buyers?
+      @customer.deal_maker?.should_not == @subscription_plan.deal_maker?
+      @customer.active_subscription.can_be_downgraded?.should_not == @subscription_plan.can_be_downgraded?
+      @customer.active_subscription.can_be_upgraded?.should_not == @subscription_plan.can_be_upgraded?
+      @customer.active_subscription.can_be_upgraded?.should_not == @subscription_plan.can_be_upgraded?
+      @customer.active_subscription.prolongs_as_free?.should == true
+
+      @customer.active_subscription.subscription_sub_periods.detect { |sp| !sp.billing_date.nil? }.should == nil
+    end
+
+    it "should behave as normal subscription when paypal is confirmed after signup" do
+      @subscription_plan.update_attributes(:use_paypal => true, :big_buyer => true, :team_buyers => true, :deal_maker => true, :can_be_upgraded => false,
+                                          :can_be_downgraded => true)
+
+      @customer = User::Supplier.make!(:subscription_plan_id => @subscription_plan.id)
+
+      @customer.active_subscription.confirm_paypal!
+
+      @customer.big_buyer?.should == @subscription_plan.big_buyer?
+      @customer.team_buyers?.should == @subscription_plan.team_buyers?
+      @customer.deal_maker?.should == @subscription_plan.deal_maker?
+      @customer.active_subscription.can_be_downgraded? == @subscription_plan.can_be_downgraded?
+      @customer.active_subscription.can_be_upgraded? == @subscription_plan.can_be_upgraded?
+      @customer.active_subscription.can_be_upgraded? == @subscription_plan.can_be_upgraded?
+      @customer.active_subscription.prolongs_as_free?.should == false
+    end
   end
 
   context "subscription transitions" do
