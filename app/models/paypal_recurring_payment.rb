@@ -50,7 +50,7 @@ class PaypalRecurringPayment
       :reference   => @options[:user].active_subscription.id.to_s,
       :payer_id    => @options[:payer_id],
       :start_at    => @options[:start_at] || Time.now.utc,
-      :total_billing_cycles   => @options[:subscription_plan].subscription_sub_periods.size,
+      #:total_billing_cycles   => @options[:subscription_plan].subscription_sub_periods.size,
       :failed      => 1,
       :outstanding => :next_billing,
       :failed => 1
@@ -84,9 +84,8 @@ class PaypalRecurringPayment
 
   def notify_about_errors(archived_response)
     if archived_response.has_errors?
-      TemplateMailer.delay.new("fairleads@selleo.com", :blank_template, Country.get_country_from_locale,
-                              {:subject_content => "Paypal recurring payment error has occurred",
-                               :body_content => "<p>ArchivedPaypalResponse: ##{archived_response.id}</p><p>Time: #{Time.now.strftime("%d-%m-%Y %H:%M")}</p><br /><b>Backtrace:</b><p>#{detailed_response_errors.gsub("\n", "<br />")}</p>"})
+      EmailNotification.notify("Paypal recurring payment error has occurred",
+      "<p>ArchivedPaypalResponse: ##{archived_response.id}</p><p>Time: #{Time.now.strftime("%d-%m-%Y %H:%M")}</p><br /><b>Backtrace:</b><p>#{detailed_response_errors.gsub("\n", "<br />")}</p>")
     end
   end
 end

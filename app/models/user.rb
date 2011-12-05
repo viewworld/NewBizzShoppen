@@ -758,9 +758,14 @@ class User < ActiveRecord::Base
 
   def downgrade_subscription!(subscription_plan)
     if subscription_can_be_changed_to?(subscription_plan) and active_subscription.can_be_downgraded_to?(subscription_plan)
-      as = active_subscription
-      as.next_subscription_plan = subscription_plan
-      as.downgrade!
+      if profile = PaypalRecurringProfile.new(active_subscription.paypal_profile_id) and profile.update_profile(:totalbillingcycles => active_subscription.subscription_sub_periods.size)
+        as = active_subscription
+        as.next_subscription_plan = subscription_plan
+        as.downgrade!
+      else
+        self.errors.add(:base, profile.result["L_LONGMESSAGE0"])
+        false
+      end
     else
       self.errors.add(:base, I18n.t("subscriptions.cant_be_downgraded"))
       false
@@ -769,6 +774,8 @@ class User < ActiveRecord::Base
 
   def upgrade_subscription!(subscription_plan)
     if subscription_can_be_changed_to?(subscription_plan) and active_subscription.can_be_upgraded_to?(subscription_plan)
+      active_subscription.cancel_paypal_profile if active_subscription.use_paypal?
+
       as = active_subscription
       as.next_subscription_plan = subscription_plan
       if as.may_upgrade?
@@ -802,11 +809,21 @@ class User < ActiveRecord::Base
 
   def cancel_subscription!
     if active_subscription.may_cancel?
-      active_subscription.cancel!
-      update_attribute(:subscriber_type, SUBSCRIBER_TYPE_AD_HOC)
+      if profile = PaypalRecurringProfile.new(active_subscription.paypal_profile_id) and profile.update_profile(:totalbillingcycles => active_subscription.subscription_sub_periods.size)
+        active_subscription.cancel!
+        update_attribute(:subscriber_type, SUBSCRIBER_TYPE_AD_HOC)
+      else
+        self.errors.add(:base, profile.result["L_LONGMESSAGE0"])
+        false
+      end
     elsif active_subscription.may_cancel_during_lockup?
-      active_subscription.cancel_during_lockup!
-      update_attribute(:subscriber_type, SUBSCRIBER_TYPE_AD_HOC)
+      if profile = PaypalRecurringProfile.new(active_subscription.paypal_profile_id) and profile.update_profile(:totalbillingcycles => active_subscription.subscription_sub_periods.size*2)
+        active_subscription.cancel_during_lockup!
+        update_attribute(:subscriber_type, SUBSCRIBER_TYPE_AD_HOC)
+      else
+        self.errors.add(:base, profile.result["L_LONGMESSAGE0"])
+        false
+      end
     else
       self.errors.add(:base, I18n.t("subscriptions.cant_be_canceled"))
       false

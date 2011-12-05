@@ -2,12 +2,12 @@ require "paypal/recurring"
 
 PayPal::Recurring.configure do |config|
   config.sandbox = true
-  config.username = "seller_1292244681_biz_api1.gmail.com"
-  config.password = "1292244690"
-  config.signature = "AUVjzPkoCJAf1p9N6vEssI4hIPVVA6XjBKUpjBLNogHCfw29dQWFK6bF"
+  config.username = APP_CONFIG[:paypal_api_email]
+  config.password = APP_CONFIG[:paypal_api_password]
+  config.signature = APP_CONFIG[:paypal_api_key]
 end
 
-#p = PaypalNVP.new(true, { :user => "seller_1292244681_biz_api1.gmail.com", :pass => "1292244690", :cert => "AUVjzPkoCJAf1p9N6vEssI4hIPVVA6XjBKUpjBLNogHCfw29dQWFK6bF", :url => "https://api-3t.sandbox.paypal.com/nvp" })
+#p = PaypalNVP.new(true, { :user => APP_CONFIG[:paypal_api_email], :pass => APP_CONFIG[:paypal_api_password], :cert => APP_CONFIG[:paypal_api_key], :url => APP_CONFIG[:paypal_api_url] })
 #data = {
 #  :method => "GetRecurringPaymentsProfileDetails",
 #  :profileid => "I-91VAF2330GT5"

@@ -310,6 +310,10 @@ class Subscription < ActiveRecord::Base
     end
   end
 
+  def cancel_paypal_profile
+    PaypalRecurringProfile.new(active_subscription.paypal_profile_id).cancel_profile
+  end
+
   private
 
   def handle_user_privileges
