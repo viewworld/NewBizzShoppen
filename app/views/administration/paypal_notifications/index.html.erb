@@ -65,7 +65,7 @@
             <tr id="currency_<%= paypal_notification.id %>" class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
               <td class="ta_c"><%= paypal_notification.transaction_id %></td>
-              <td><%= paypal_notification.params["recurring_payment_id"] if paypal_notification.params %></td>
+              <td><%= link_to(paypal_notification.params["recurring_payment_id"], administration_paypal_notifications_path(:search => { :with_keyword => paypal_notification.params["recurring_payment_id"] }) ) if paypal_notification.params and paypal_notification.params["recurring_payment_id"] %></td>
               <td><%= paypal_notification.params["txn_type"] if paypal_notification.params %></td>
               <td><%= paypal_notification.type %></td>
               <td><%= paypal_notification.status %></td>
