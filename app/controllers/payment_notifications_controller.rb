@@ -3,9 +3,9 @@ class PaymentNotificationsController < ApplicationController
   before_filter :authorize_with_http_basic_for_staging, :except => [:create]
 
   def create
-    if respond_to?(params[:txn_type])
+    begin
       send params[:txn_type]
-    else
+    rescue
       upn = UnknownPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
       EmailNotification.notify("Unhandled txn_type: #{params[:txn_type]}", "<p>UnknownPaymentNotification: #{upn.id}</p> <>br /> Backtrace: <p>#{upn.params.inspect}</p>")
     end
