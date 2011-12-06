@@ -15,6 +15,7 @@ class Subscription < ActiveRecord::Base
   scope :active, lambda { where("is_active = ? and ((end_date IS NULL and subscription_period = 0) or end_date >= ?)", true, Date.today) }
   scope :billable, lambda { where("subscription_period > 0 AND billing_date IS NOT NULL AND billing_date <= ? AND invoiced_at IS NULL", Date.today) }
   scope :future, lambda { where("start_date > ?", Date.today) }
+  scope :for_recurring_payment, lambda {|payment_id,invoice_id| where(:paypal_payment_id => payment_id, :paypal_invoice_id => invoice_id) }
 
   attr_accessor :next_subscription_plan, :next_subscription_plan_start_date
   include AASM
@@ -111,7 +112,7 @@ class Subscription < ActiveRecord::Base
 
   def self.clone_from_subscription_plan!(subscription_plan, user, start_date=nil, paypal_invoice_id=nil)
     subscription = Subscription.new(:user => user)
-    subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price", "is_active"]).each do |method|
+    subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price", "is_active", "aasm_state"]).each do |method|
       subscription.send("#{method}=".to_sym, subscription_plan.send(method.to_sym))
     end
     subscription.subscription_plan = subscription_plan.is_a?(Subscription) ? subscription_plan.subscription_plan : subscription_plan
@@ -311,7 +312,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def cancel_paypal_profile
-    PaypalRecurringProfile.new(active_subscription.paypal_profile_id).cancel_profile
+    PaypalRecurringProfile.new(paypal_profile_id).cancel_profile
   end
 
   private
@@ -331,4 +332,13 @@ class Subscription < ActiveRecord::Base
                                       :billing_date => is_free? ? nil : (n == 0 and billing_period.to_i < 0) ? period_start_date : (period_start_date + billing_period.to_i.weeks))
     end
   end
+
+  def find_payable_subscription_sub_period(spn)
+    if sub_period = subscription_sub_periods.paypal_unpaid.first
+      sub_period.update_recurring_payment_status(spn)
+    else
+      EmailNotification.notify("recurring_payment: Matching sub period not found", "<p>SubscriptionPaymentNotification: #{spn.id}</p> <>br /> Backtrace: <p>#{spn.params.inspect}</p>")
+    end
+  end
+
 end

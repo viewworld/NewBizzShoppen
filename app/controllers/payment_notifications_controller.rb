@@ -44,13 +44,16 @@ class PaymentNotificationsController < ApplicationController
   end
 
   def recurring_payment
-    #time = Time.parse(params[:payment_date])
-    #subscription_sub_period = SubscriptionSubPeriod.where("subscriptions.paypal_profile_id = ? and subscriptions.paypal_invoice_id = ? and billing_date = ?",
-    #                                           params[:recurring_payment_id], params[:rp_invoice_id], time.to_date)
-    #unless subscription_sub_period.paypal_paid_auto? or subscription_sub_period.paypal_paid_manual?
-    #  subscription_sub_period.payment_notification.create(:params => params, :status => params[:payment_status], :transaction_id => params[:txn_id])
-    #  subscription_sub_period.update_attribute(:paypal_paid_auto, true)  if params[:payment_status] == "Completed"
-    #end
+    spn = SubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
+    if subscription = Subscription.for_recurring_payment(params[:recurring_payment_id], params[:rp_invoice_id]).first
+      if subscription_sub_period = subscription.subscription_sub_periods.with_paypal_txn_id(params[:txn_id]).first
+        subscription_sub_period.update_recurring_payment_status(spn)
+      else
+        subscription.find_payable_subscription_sub_period(spn)
+      end
+    else
+      EmailNotification.notify("recurring_payment: Matching subscription not found", "<p>SubscriptionPaymentNotification: #{spn.id}</p> <>br /> Backtrace: <p>#{spn.params.inspect}</p>")
+    end
   end
 
 end

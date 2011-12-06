@@ -6,6 +6,7 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   belongs_to :invoice
   belongs_to :refund
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
+  has_many :subscription_payment_notifications, :primary_key => :paypal_txn_id, :foreign_key => :transaction_id
 
   validates_presence_of :start_date, :subscription
 
@@ -17,6 +18,8 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   scope :with_date, lambda{|date| where("start_date <= :date AND end_date >= :date", {:date => date})}
   scope :without_invoice, where(:invoice_id => nil)
   scope :billable, lambda { where("subscription_period > 0 AND billing_date IS NOT NULL AND billing_date <= ? AND invoiced_at IS NULL", Date.today) }
+  scope :with_paypal_txn_id, lambda {|txn_id| where(:paypal_txn_id => txn_id)}
+  scope :paypal_unpaid, where("paypal_paid_auto IS NOT TRUE AND paypal_paid_manual IS NOT TRUE")
 
   private
 
@@ -59,6 +62,16 @@ class SubscriptionSubPeriod < ActiveRecord::Base
 
   def billable?
     subscription.subscription_period > 0 and billing_date and billing_date <= Date.today and !invoice
+  end
+
+  def paypal_paid?
+    paypal_paid_auto? or paypal_paid_manual?
+  end
+
+  def update_recurring_payment_status(spn)
+    if !paypal_paid? and spn.status == "Completed"
+      update_attribute(:paypal_paid_auto, true)
+    end
   end
 
 

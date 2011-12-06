@@ -16,7 +16,7 @@
         <% if @subscription_plan.persisted? %>
             <li class="string">
               <%= label_tag :total_billing %>
-              <div class="txt"><strong><%= as_currency(@subscription_plan.total_billing, @subscription_plan.currency) %></strong></div>
+              <div class="txt"><strong><%= as_currency(@subscription_plan.total_billing, @subscription_plan.currency, 2) %></strong></div>
             </li>
         <% end %>
       </ol>

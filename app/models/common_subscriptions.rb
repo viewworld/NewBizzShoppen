@@ -2,7 +2,6 @@ module CommonSubscriptions
 
   def self.included(base)
     base.class_eval do
-      before_save :cache_prices
       scope :without_paypal, where(:use_paypal => false)
       scope :with_paypal, where(:use_paypal => true)
     end

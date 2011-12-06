@@ -103,11 +103,12 @@ describe SubscriptionSubPeriod do
       setup_customer(sp)
 
       #paypal payment
+      @customer.active_subscription.confirm_paypal!
+      @prev_subscription = @customer.active_subscription
       @customer.active_subscription.subscription_sub_periods.first.update_attribute(:paypal_paid_auto, true)
-      Invoice.create(:user_id => @customer.id, :subscription_sub_period_id => @customer.active_subscription.subscription_sub_periods.first)
 
       set_date_today_to(Date.today + 2.weeks)
-
+      Subscription.any_instance.expects(:cancel_paypal_profile).returns(nil)
       expect {
         @customer.upgrade_subscription!(@payable_subscription3)
       }.to change { Refund.count }.by(1)
@@ -146,9 +147,10 @@ describe SubscriptionSubPeriod do
       setup_customer(@payable_subscription2)
 
       #subperiod is payed by paypal
+      @customer.active_subscription.confirm_paypal!
       @customer.active_subscription.subscription_sub_periods.first.update_attribute(:paypal_paid_auto, true)
 
-      @invoice = Invoice.create(:user_id => @customer.id, :subscription_sub_period_id => @customer.active_subscription.subscription_sub_periods.first)
+      @invoice = @customer.active_subscription.subscription_sub_periods.first.invoice
       @invoice.invoice_lines.size.should == @customer.active_subscription.subscription_sub_periods[0].subscription_plan_lines.size
       @invoice.invoice_lines.first.netto_price.should == @customer.active_subscription.subscription_sub_periods[0].subscription_plan_lines.first.price
       @invoice.invoice_lines.first.name.should == @customer.active_subscription.subscription_sub_periods[0].subscription_plan_lines.first.name
@@ -187,6 +189,7 @@ describe SubscriptionSubPeriod do
     it "should generate unpaid invoice when number of retries is exceeded" do
       @payable_subscription2.update_attributes(:use_paypal => true, :paypal_retries => 2)
       setup_customer(@payable_subscription2)
+      @customer.active_subscription.confirm_paypal!
 
       expect {
         @customer.active_subscription.subscription_sub_periods[0].update_attribute(:paypal_retries, 0)
@@ -198,6 +201,7 @@ describe SubscriptionSubPeriod do
     it "should generate paid invoice when marked as paid by paypal IPN and send email to user" do
       @payable_subscription2.update_attributes(:use_paypal => true)
       setup_customer(@payable_subscription2)
+      @customer.active_subscription.confirm_paypal!
 
       expect {
         @customer.active_subscription.subscription_sub_periods[0].update_attribute(:paypal_paid_auto, true)

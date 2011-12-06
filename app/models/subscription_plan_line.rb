@@ -5,7 +5,9 @@ class SubscriptionPlanLine < ActiveRecord::Base
   validates_numericality_of :price
   validate :price_in_context_of_billing_cycle
 
+  after_create :reload
   after_save :cache_prices
+  after_destroy :cache_prices
 
   private
 
@@ -16,8 +18,7 @@ class SubscriptionPlanLine < ActiveRecord::Base
   end
 
   def cache_prices
-    reload
-    resource.cache_prices! if price_changed?
+    resource.cache_prices!
   end
 
   public
