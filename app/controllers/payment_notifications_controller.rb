@@ -45,7 +45,7 @@ class PaymentNotificationsController < ApplicationController
 
   def recurring_payment
     spn = SubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
-    sub_periods = SubscriptionSubPeriod.paypal_unpaid.for_recurring_payment(params[:recurring_payment_id], params[:rp_invoice_id])
+    sub_periods = SubscriptionSubPeriod.paypal_unpaid.for_recurring_payment(params[:recurring_payment_id], params[:rp_invoice_id]).readonly(false)
 
     if subscription_sub_period = sub_periods.where(:paypal_txn_id => params[:txn_id]).first || sub_periods.where(:paypal_txn_id => nil).first
       subscription_sub_period.update_recurring_payment_status(spn)

@@ -178,6 +178,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def perform_admin_change
+    cancel_paypal_profile if use_paypal?
     self.recalculate_subscription_plan_lines(next_subscription_plan_start_date-1, is_free_period_applied?)
     self.end_date = next_subscription_plan_start_date-1
     self.class.clone_from_subscription_plan!(next_subscription_plan, user, next_subscription_plan_start_date)
