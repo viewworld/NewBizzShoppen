@@ -174,7 +174,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def generate_invoice_lines_for_refund
-    Refund.where(:user_id => user_id, :paid_at => nil).each do |refund|
+    ::Refund.where(:user_id => user_id, :paid_at => nil).each do |refund|
       if refund.currency == currency
         amount = refund.refund_price
       else
