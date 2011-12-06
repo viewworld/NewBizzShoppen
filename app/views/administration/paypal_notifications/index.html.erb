@@ -1,0 +1,94 @@
+<search-box:>
+  <div class="search_box">
+    <h2><%= t("common.search") %></h2>
+
+    <div class="search_content">
+      <%= form_for @search, :url => administration_paypal_notifications_path do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.label :with_keyword, t("administration.leads.index.search.keyword_label") %>
+                <%= f.text_field :with_keyword, :style => "width:140px" %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("administration.leads.index.view.search_button") %>
+                </ibt>
+                <p>
+                  <%= bt_clear_filter %>
+                </p>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+
+<column-mc:>
+  <header>
+    <param:content>
+      <%= t("administration.paypal_notifications.index.view.title") %>
+    </param:content>
+
+    <param:actions>
+    </param:actions>
+  </header>
+
+  <% if @paypal_notifications.blank? %>
+      <%= blank_state_message %>
+  <% else %>
+      <table id="currencies_table" class="generic">
+        <thead>
+        <tr>
+          <th class="hl"></th>
+          <th style="width:10px"><%= t("administration.paypal_notifications.index.view.table.txn_id") %></th>
+          <th><%= t("administration.paypal_notifications.index.view.table.profile_id") %></th>
+          <th><%= t("administration.paypal_notifications.index.view.table.txn_type") %></th>
+          <th><%= t("administration.paypal_notifications.index.view.table.type") %></th>
+          <th><%= t("administration.paypal_notifications.index.view.table.status") %></th>
+          <th><%= t("administration.paypal_notifications.index.view.table.created_at") %></th>
+          <th class="ta_r"><%= t("administration.currencies.index.view.actions") %></th>
+          <th class="hr"></th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="7"></td>
+          <td class="fr"></td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <% @paypal_notifications.each do |paypal_notification| %>
+            <tr id="currency_<%= paypal_notification.id %>" class="<%= cycle("odd", "even") %>">
+              <td class="cl"></td>
+              <td class="ta_c"><%= paypal_notification.transaction_id %></td>
+              <td><%= paypal_notification.params["recurring_payment_id"] if paypal_notification.params %></td>
+              <td><%= paypal_notification.params["txn_type"] if paypal_notification.params %></td>
+              <td><%= paypal_notification.type %></td>
+              <td><%= paypal_notification.status %></td>
+              <td><%= format_date paypal_notification.created_at, true %></td>
+              <td class="tda ta_r">
+                <ul-actions>
+                  <li>
+                    <%= link_to t("administration.paypal_notifications.index.view.show"), administration_paypal_notification_path(paypal_notification), :class => "default_action" %>
+                  </li>
+                </ul-actions>
+              </td>
+              <td class="cr"></td>
+            </tr>
+        <% end %>
+
+      <% if will_paginate %>
+          <tr class="pagination">
+            <td colspan="10" class="ta_c">
+              <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+            </td>
+          </tr>
+      <% end %>
+        </tbody>
+      </table>
+  <% end %>
+</column-mc:>

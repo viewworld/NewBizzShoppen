@@ -1722,6 +1722,21 @@ en:
         line_name: "Name"
         line_price: "Price"
         delete_line: "Delete"
+    paypal_notifications:
+      index:
+        view:
+          title: "PayPal notifications"
+          show: "Show"
+          table:
+            txn_id: "Txn ID"
+            type: "Type"
+            status: "Status"
+            profile_id: "Profile ID"
+            created_at: "Created at"
+            txn_type: "Txn type"
+      show:
+        view:
+          header: "Paypal notification details"
   agent:
     leads:
       index:
