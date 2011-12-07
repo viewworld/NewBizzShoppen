@@ -48,6 +48,10 @@ group :production do
   gem 'hoptoad_notifier'
 end
 
+group :testing do
+  gem 'hoptoad_notifier'
+end
+
 group :staging do
   gem 'hoptoad_notifier'
   gem 'system-metrics'
