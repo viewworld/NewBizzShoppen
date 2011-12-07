@@ -77,6 +77,7 @@ Nbs::Application.routes.draw do
         get 'fetch_subscription_plans'
       end
     end
+    resources :paypal_notifications, :only => [:index, :show]
   end
 
   namespace :suppliers do

@@ -95,8 +95,6 @@ module ActiveRecord
       def process_cloneable options
         options = self.send(:default_cloneable_configuration).merge(options)
         options.merge!(self.acts_as_deep_cloneable_configuration) if self.respond_to? :acts_as_deep_cloneable_configuration and !options[:sub]
-        begin
-          send :skip_callbacks unless options[:with_callbacks]
           object = options[:replace_object_associations_only] ? send(:process_with_replacing, options) : send(:process_with_cloning, options)
 
           if options[:include]
@@ -108,13 +106,12 @@ module ActiveRecord
               unless (options[:except] || {}).include?(association.to_sym)
                 cloned_object = object.send :set_association, self, association, deep_associations, options
                 object.send("#{association}=", cloned_object)
+                callbacks_data = object.send :skip_callbacks unless options[:with_callbacks]
                 object.save(:validate => options[:validate]) if options[:save]
+                object.send(:restore_callbacks, callbacks_data) unless options[:with_callbacks]
               end
             end
           end
-        ensure
-          send :restore_callbacks unless options[:with_callbacks]
-        end
         object
       end
 
@@ -125,7 +122,9 @@ module ActiveRecord
         kopy.send :set_custom_values_for_attributes, options[:attributes] if options[:attributes]
         kopy.send :set_relation_values_for_attributes, options[:relation_attribute] if options[:relation_attribute]
         if options[:save]
+          callbacks_data = kopy.send :skip_callbacks unless options[:with_callbacks]
           kopy.save(:validate => options[:validate])
+          kopy.send(:restore_callbacks, callbacks_data) unless options[:with_callbacks]
           kopy.send :clone_stamps, self
         end
         kopy.send :replace_object_associations, options if options[:associations]
@@ -134,7 +133,9 @@ module ActiveRecord
       end
 
       def process_with_replacing(options)
+        callbacks_data = self.send :skip_callbacks unless options[:with_callbacks]
         self.save(:validate => options[:validate]) if options[:save]
+        self.send(:restore_callbacks, callbacks_data) unless options[:with_callbacks]
         self.send :replace_object_associations, options if options[:associations]
         self
       end
@@ -181,7 +182,9 @@ module ActiveRecord
         associations_reflections.each do |assoc_reflection|
           object = self.send(assoc_reflection.name)
           self.send("#{assoc_reflection.name}=", options[:associations][object]) if options[:associations].keys.include?(object)
+          callbacks_data = self.send :skip_callbacks unless options[:with_callbacks]
           self.save(:validate => options[:validate])  if options[:save]
+          self.send(:restore_callbacks, callbacks_data) unless options[:with_callbacks]
         end
       end
 
@@ -224,13 +227,15 @@ module ActiveRecord
       end
 
       def skip_callbacks
-        self.send(:fetch_callbacks_data).each do |callback_data|
+        callbacks_data = self.send(:fetch_callbacks_data)
+        callbacks_data.each do |callback_data|
           self.class.skip_callback(callback_data[:type], callback_data[:kind], callback_data[:filter])
         end
+        callbacks_data
       end
 
-      def restore_callbacks
-        self.send(:fetch_callbacks_data).each do |callback_data|
+      def restore_callbacks(callbacks_data)
+        callbacks_data.each do |callback_data|
           self.class.set_callback(callback_data[:type], callback_data[:kind], callback_data[:filter])
         end
       end

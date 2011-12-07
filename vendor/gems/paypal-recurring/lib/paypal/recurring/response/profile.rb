@@ -21,7 +21,12 @@ module PayPal
           :frequency           => :BILLINGFREQUENCY,
           :currency            => :CURRENCYCODE,
           :amount              => :AMT,
-          :initial_amount      => :AGGREGATEOPTIONALAMT
+          :initial_amount      => :AGGREGATEOPTIONALAMT,
+          :total_billing_cycles  => :TOTALBILLINGCYCLES,
+          :trial_billing_period       => :TRIALBILLINGPERIOD,
+          :trial_billing_frequency    => :TRIALBILLINGFREQUENCY,
+          :trial_amount               => :TRIALAMT,
+          :trial_total_billing_cycles => :TRIALTOTALBILLINGCYCLES
         )
 
         OUTSTANDING = {
@@ -61,6 +66,10 @@ module PayPal
 
         def build_period(value)
           PERIOD.fetch(value, value)
+        end
+
+        def build_trial_billing_period(value) # :nodoc:
+          PERIOD.fetch(value.to_sym, value) if value
         end
 
         alias_method :build_start_at, :build_date

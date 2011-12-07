@@ -37,7 +37,7 @@ class PaymentNotificationsController < ApplicationController
     spn = SubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
     subscription = Subscription.where("paypal_profile_id = ? and paypal_invoice_id = ?", params[:recurring_payment_id], params[:rp_invoice_id]).first
     if subscription
-      subscription.cancel!
+      subscription.cancel! unless subscription.admin_changed?
     else
       EmailNotification.notify("recurring_payment_profile_cancel: Subscription not found", "<p>SubscriptionPaymentNotification: #{spn.id}</p> <>br /> Backtrace: <p>#{spn.params.inspect}</p>")
     end
@@ -45,14 +45,12 @@ class PaymentNotificationsController < ApplicationController
 
   def recurring_payment
     spn = SubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
-    if subscription = Subscription.for_recurring_payment(params[:recurring_payment_id], params[:rp_invoice_id]).first
-      if subscription_sub_period = subscription.subscription_sub_periods.with_paypal_txn_id(params[:txn_id]).first
-        subscription_sub_period.update_recurring_payment_status(spn)
-      else
-        subscription.find_payable_subscription_sub_period(spn)
-      end
+    sub_periods = SubscriptionSubPeriod.paypal_unpaid.for_recurring_payment(params[:recurring_payment_id], params[:rp_invoice_id]).readonly(false)
+
+    if subscription_sub_period = sub_periods.where(:paypal_txn_id => params[:txn_id]).first || sub_periods.where(:paypal_txn_id => nil).first
+      subscription_sub_period.update_recurring_payment_status(spn)
     else
-      EmailNotification.notify("recurring_payment: Matching subscription not found", "<p>SubscriptionPaymentNotification: #{spn.id}</p> <>br /> Backtrace: <p>#{spn.params.inspect}</p>")
+      EmailNotification.notify("recurring_payment: Matching sub period not found", "<p>SubscriptionPaymentNotification: #{spn.id}</p> <>br /> Backtrace: <p>#{spn.params.inspect}</p>")
     end
   end
 
