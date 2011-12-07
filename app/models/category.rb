@@ -189,7 +189,7 @@ class Category < ActiveRecord::Base
   end
 
   def deals_count_for_user(user)
-    deals.including_subcategories.without_inactive.published_only.count
+    deals.including_subcategories.without_inactive.published_only.not_blocked_by_sold_out_vouchers.count
   end
 
   def leads_count_for_user(user)

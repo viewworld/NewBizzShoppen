@@ -349,6 +349,13 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                  :body => "<p>Name: {{name}}</p><p>Phone number: {{phone_number}}</p><p>E-mail: {{email_from}}</p><p>Request: {{deal_description}}</p>"},
          :da => {:subject => "[DK] {{name}} has requested a deal",
                  :body => "<p>Name: {{name}}</p><p>Phone number: {{phone_number}}</p><p>E-mail: {{email_from}}</p><p>Request: {{deal_description}}</p>"}
+        },
+    {:name => "Voucher notification for member",
+         :uniq_id => "voucher_notification",
+         :en => {:subject => "You have new voucher!",
+                 :body => "<p>Congratulations! You have new voucher. You can find it in attachment.</p>"},
+         :da => {:subject => "[DK]You have new voucher!",
+                 :body => "<p>Congratulations! You have new voucher. You can find it in attachment.</p>"}
         }
     ]
 

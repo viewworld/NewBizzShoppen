@@ -1,18 +1,17 @@
-
- <div class="pdd_10 no_pdd_t">
-    <fieldset class="inputs labels_ta_r labels_160">
-      <ol class="align_inputs">
-        <li class="header">
-          <h3><%= t("shared.leads.form.contact_information") %></h3>
-        </li>
-        <%= form.input :contact_name, :hint => hint_for(@lead, :contact_name) %>
-        <%= form.input :direct_phone_number, :hint => hint_for(@lead, :direct_phone_number) %>
-        <%= form.input :phone_number, :hint => hint_for(@lead, :phone_number) %>
-        <%= form.input :email_address, :hint => hint_for(@lead, :email_address) %>
-        <%= form.input :linkedin_url, :hint => hint_for(@lead, :linkedin_url) %>
-        <%= form.input :facebook_url, :hint => hint_for(@lead, :facebook_url) %>
-        <%= form.input :note, :as => :text, :hint => hint_for(@lead, :note), :input_html => {:style => "height: 150px;width:230px;"} if @contact %>
-        <%= form.input :hidden_description, :label => t("member.leads.new.view.lead_note"), :input_html => {:style => "height: 150px;width:230px;"}  %>
-      </ol>
-    </fieldset>
-  </div>
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_160">
+    <ol class="align_inputs">
+      <li class="header">
+        <h3><%= t("shared.leads.form.contact_information") %></h3>
+      </li>
+      <%= form.input :contact_name, :hint => hint_for(@lead, :contact_name) %>
+      <%= form.input :direct_phone_number, :hint => hint_for(@lead, :direct_phone_number) %>
+      <%= form.input :phone_number, :hint => hint_for(@lead, :phone_number) %>
+      <%= form.input :email_address, :hint => hint_for(@lead, :email_address) %>
+      <%= form.input :linkedin_url, :hint => hint_for(@lead, :linkedin_url) %>
+      <%= form.input :facebook_url, :hint => hint_for(@lead, :facebook_url) %>
+      <%= form.input :note, :as => :text, :hint => hint_for(@lead, :note), :input_html => {:style => "height: 150px;width:230px;"} if @contact %>
+      <%= form.input :hidden_description, :label => t("member.leads.new.view.lead_note"), :input_html => {:style => "height: 150px;width:230px;"} %>
+    </ol>
+  </fieldset>
+</div>

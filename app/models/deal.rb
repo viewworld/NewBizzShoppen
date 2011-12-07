@@ -23,6 +23,7 @@ class Deal < AbstractLead
   scope :active_is, lambda { |q| where("#{q == "1" ? "end_date >= ? and start_date <= ?" : "end_date < ? or start_date > ?"}", Date.today, Date.today) }
   scope :for_user, lambda { |q| where("creator_id = ?", q.id) }
   scope :group_deals, where(:group_deal => true)
+  scope :not_blocked_by_sold_out_vouchers, where("leads.voucher_enabled = false OR (leads.voucher_enabled = true and leads.voucher_max_number > (select count(*) from voucher_numbers where voucher_numbers.deal_id = leads.id and voucher_numbers.state <> 'new'))")
 
   scoped_order :header, :end_date, :published, :created_at, :company_name
 
@@ -233,16 +234,16 @@ class Deal < AbstractLead
 
   def remove_to_many_voucher_numbers
     if voucher_enabled and voucher_max_number < voucher_numbers.size
-      voucher_numbers.can_be_deleted[0..voucher_numbers.size-voucher_max_number-1].each { |vn| vn.destroy }
+      voucher_numbers.can_be_deleted(Time.now)[0..voucher_numbers.size-voucher_max_number-1].each { |vn| vn.destroy }
     end
   end
 
   def remove_voucher_numbers_if_disable
-    voucher_numbers.can_be_deleted.delete_all unless voucher_enabled
+    voucher_numbers.can_be_deleted(Time.now).delete_all unless voucher_enabled
   end
 
   def voucher_can_be_disabled
-    voucher_numbers.can_not_be_deleted.size == 0
+    voucher_numbers.can_not_be_deleted(Time.now).size == 0
   end
 
   def can_be_editable_by(current_user)
@@ -310,7 +311,7 @@ class Deal < AbstractLead
   end
 
   def voucher_max_number_greater_or_equal_not_new_voucher_numbers
-    errors.add(:voucher_max_number, I18n.t("models.deal.voucher_max_number_validation")) if self.voucher_max_number < self.voucher_numbers.can_not_be_deleted.size
+    errors.add(:voucher_max_number, I18n.t("models.deal.voucher_max_number_validation")) if self.voucher_max_number < self.voucher_numbers.can_not_be_deleted(Time.now).size
   end
 
 end

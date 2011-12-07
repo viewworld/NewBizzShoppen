@@ -8,7 +8,7 @@ module VoucherPaypalPayment
         :cmd        => '_cart',
         :upload     => 1,
         :return     => return_url,
-        :invoice    => "v_#{deal_unique_id}_#{number}",
+        :invoice    => "v_#{deal_unique_id}_#{number}_#{user_id}",
         :notify_url => notify_url,
         :cert_id    => APP_CONFIG[:paypal_cert_id]
     }

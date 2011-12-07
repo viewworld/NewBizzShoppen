@@ -6,6 +6,7 @@ class CreateVoucherNumbers < ActiveRecord::Migration
        t.string :deal_unique_id
        t.string :state, :default => "new"
        t.integer :user_id
+       t.datetime :reserved_until
        t.timestamps
      end
   end

@@ -8,14 +8,16 @@ class VoucherNumber < ActiveRecord::Base
   STATE_ACTIVE = "active".freeze
   STATE_USED = "used".freeze
   STATES = [STATE_NEW, STATE_ACTIVE, STATE_USED]
+  DELETE_PERMISSION_DELAY = 30.minutes.freeze
 
   validates_presence_of :number, :deal_id, :state
   validates_uniqueness_of :number, :scope => :deal_id
   validates_format_of :number, :with => /\A[A-Z\d]{9}\z/, :message => I18n.t("models.voucher_number.validates_format_of_number")
   validates_inclusion_of :state, :in => STATES
 
-  scope :can_be_deleted, where("state = '#{STATE_NEW}'")
-  scope :can_not_be_deleted, where("state <> '#{STATE_NEW}'")
+  scope :available_for_now, lambda { |time| where("state = '#{STATE_NEW}' and (reserved_until is NULL or reserved_until < ?)", time) }
+  scope :can_be_deleted, lambda { |time| where("state = '#{STATE_NEW}' and (reserved_until is NULL or reserved_until < ?)", time-DELETE_PERMISSION_DELAY) }
+  scope :can_not_be_deleted, lambda { |time| where("state <> '#{STATE_NEW}' or (state = '#{STATE_NEW}' and reserved_until > ?)", time-DELETE_PERMISSION_DELAY) }
   scope :find_active, lambda { |deal_unique_id, voucher_number| where("deal_unique_id = ? and number = ? and state = '#{STATE_ACTIVE}'", deal_unique_id, voucher_number) }
   scope :find_used, lambda { |deal_unique_id, voucher_number| where("deal_unique_id = ? and number = ? and state = '#{STATE_USED}'", deal_unique_id, voucher_number) }
 
@@ -32,11 +34,16 @@ class VoucherNumber < ActiveRecord::Base
   end
 
   def translated_state
+    return I18n.t("models.voucher_number.states.pending") if state == STATE_NEW and !reserved_until.blank? and reserved_until > Time.now-DELETE_PERMISSION_DELAY
     I18n.t("models.voucher_number.states.#{state}")
   end
 
   def expired_date
     deal.voucher_until_type == 0 ? deal.voucher_end_date : (created_at + deal.voucher_number_of_weeks.weeks)
+  end
+
+  def file_path(extension)
+    Rails.root.join "public/html2pdf/voucher_cache/voucher_#{deal_unique_id}_#{number}.#{extension}"
   end
 
   def to_pdf
@@ -45,17 +52,29 @@ class VoucherNumber < ActiveRecord::Base
     av.instance_eval do
       extend ApplicationHelper
     end
-    pdf_path = Rails.root.join "public/html2pdf/voucher_cache/voucher_#{deal_unique_id}_#{number}.pdf"
-    html_path = Rails.root.join "public/html2pdf/voucher_cache/voucher_#{deal_unique_id}_#{number}.html"
-
+    pdf_path, html_path = file_path("pdf"), file_path("html")
     html = av.render(:partial => 'voucher_numbers/pdf', :type => :erb, :locals => {:voucher_number => self, :deal => self.deal})
     markup = File.read(Rails.root.join("app/views/layouts/pdf_voucher.html")) % html
     File.open(Rails.root.join(html_path), 'w') { |f| f.write(markup) }
     unless File.exists? pdf_path
       `python public/html2pdf/pisa.py #{html_path} #{pdf_path}`
-      #File.delete(html_path)
+      File.delete(html_path)
     end
-    html
+    pdf_path
+  end
+
+  def reserve!(current_user)
+    self.reserved_until = Time.now + 30.minutes
+    self.user_id = current_user.id
+    self.save!
+  end
+
+  def activate!(payment_notification)
+    update_attribute(:state, STATE_ACTIVE)
+    invoice = Invoice.create(:user_id => user_id, :paid_at => Time.now, :seller => user.active_subscription.seller, :currency => deal.currency, :voucher_number => self)
+    PaypalTransaction.create(:invoice => invoice, :payment_notification => payment_notification, :amount => deal.discounted_price, :paid_at => Time.now)
+    invoice_path = Pathname.new(File.join(::Rails.root.to_s, 'public/html2pdf/invoice_cache', invoice.store_pdf(user).basename))
+    TemplateMailer.delay.new(user.email, :voucher_notification, Country.get_country_from_locale, {}, [to_pdf, invoice_path])
   end
 
   class << self

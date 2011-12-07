@@ -12,7 +12,7 @@ Feature: Lead Advanced Import
     And I follow translated "campaigns.edit.button_import_contacts"
     And campaign "Testing Two" should have "0" contacts
 
-  @wip @_done @_tested
+  @_done @_tested
   Scenario: I can import contact from spreadsheet (ods, xls, xlsx) with regular import
     And I press translated "contacts.new.import_from_excel_button" within "#contact_import_form"
     And I should see translated "contacts.import_xls.flash.unknown_format"

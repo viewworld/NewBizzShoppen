@@ -2083,6 +2083,8 @@ en:
           short_deal_description_label: "Short deal description"
           deal_description_label: "Deal description"
           view_description_link: "See description..."
+          voucher_label: "Voucher"
+          voucher_link: "Download pdf"
     lead_templates:
       index:
         view:
@@ -2958,6 +2960,7 @@ en:
         new: "New"
         active: "Active"
         used: "Used"
+        pending: "Pending"
       validates_format_of_number: "should have exactly 9 characters (capital letters and/or numbers)"
       validate_voucher_result:
         valid: "This is correct voucher, do you want to activate it now?"

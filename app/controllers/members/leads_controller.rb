@@ -4,6 +4,7 @@ class Members::LeadsController < Members::MemberController
   set_tab "created_leads"
 
   before_filter :check_if_deal_is_already_requested, :only => [:new, :create]
+  before_filter :get_lead, :only => [:edit, :show, :redirect_to_paypal, :update, :destroy, :pdf]
 
   protected
 
@@ -28,13 +29,13 @@ class Members::LeadsController < Members::MemberController
      [:address_line_1, current_user.address.address_line_1], [:address_line_2, current_user.address.address_line_2],
      [:zip_code, current_user.address.zip_code], [:address_line_3, current_user.address.address_line_3],
      [:currency_id, Currency.default_currency.present? ? Currency.default_currency.id : nil], [:country, Country.get_country_from_locale]].each do |field|
-        params[field.first] = field.last if params[field.first].blank?
+      params[field.first] = field.last if params[field.first].blank?
     end
 
     params.merge({
-        :published      => false,
-        :current_user   => current_user
-    })
+                     :published => false,
+                     :current_user => current_user
+                 })
   end
 
   def check_if_deal_is_already_requested
@@ -66,16 +67,22 @@ class Members::LeadsController < Members::MemberController
   end
 
   def edit
-    @lead = Lead.requested_by_member(current_user).find(params[:id])
   end
 
   def show
-    @lead = Lead.requested_by_member(current_user).find(params[:id])
+  end
+
+  def redirect_to_paypal
+    @voucher_number = @lead.deal.voucher_numbers.available_for_now(Time.now).first
+    return redirect_to root_path if @voucher_number.blank?
+    @voucher_number.reserve!(current_user)
+  end
+
+  def pdf
+    send_file @lead.deal.voucher_numbers.where(:user_id => current_user.id).first.file_path("pdf"), :type => 'application/pdf'
   end
 
   def update
-    @lead = Lead.requested_by_member(current_user).find(params[:id])
-
     update! do |success, failure|
       success.html { redirect_to params[:get_deal] == "1" ? members_lead_path(@lead) : members_leads_path }
       success.js { render :nothing => true }
@@ -85,8 +92,6 @@ class Members::LeadsController < Members::MemberController
   end
 
   def destroy
-    @lead = Lead.requested_by_member(current_user).find(params[:id])
-
     if @lead.destroy
       flash[:notice] = I18n.t("member.leads.destroy.flash.lead_deletion_successful")
     else
@@ -94,4 +99,9 @@ class Members::LeadsController < Members::MemberController
     end
     redirect_to members_leads_path
   end
+
+  def get_lead
+    @lead = Lead.requested_by_member(current_user).find(params[:id])
+  end
+
 end

@@ -56,6 +56,15 @@
                       <%= link_to t("member.leads.edit.view.view_description_link"), deal_path(:id => @lead.deal.slug) %>
                     </div>
                   </li>
+                  </li>
+                  <% if @lead.deal.voucher_numbers.where(:user_id => current_user.id).first %>
+                      <li class="string">
+                        <%= form.label t("member.leads.edit.view.voucher_label") %>
+                        <div class="txt">
+                          <%= link_to t("member.leads.edit.view.voucher_link"), pdf_members_lead_path(@lead) %>
+                        </div>
+                      </li>
+                  <% end %>
 
                   <% if params[:get_deal] == "1" %>
                       <%= form.input :hidden_description, :required => false, :label => t("member.leads.new.view.lead_note"), :input_html => {:style => "height: 150px;width:230px;"} %>

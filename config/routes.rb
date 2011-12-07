@@ -159,7 +159,12 @@ Nbs::Application.routes.draw do
 
   namespace :members do
     root :to => "leads#index"
-    resources :leads, :path => :requests
+    resources :leads, :path => :requests do
+      member do
+        get 'redirect_to_paypal'
+        get 'pdf'
+      end
+    end
     resources :tenders, :path => :leads do
       resources :certifications, :only => :create
     end

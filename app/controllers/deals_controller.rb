@@ -26,6 +26,7 @@ class DealsController < ApplicationController
     @search = Deal.scoped_search(params[:search])
     @search.published_only = true
     @search.without_inactive = true
+    @search.not_blocked_by_sold_out_vouchers = true
 
     @deals = @search.order("group_deal DESC, header").paginate(:page => params[:page], :per_page => Settings.default_leads_per_page, :show_all => params[:show_all] == "1")
 
