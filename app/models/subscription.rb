@@ -313,7 +313,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def cancel_paypal_profile
-    PaypalRecurringProfile.new(paypal_profile_id).cancel_profile
+    PaypalRecurringProfile.new(paypal_profile_id).cancel_profile if paypal_profile_id
   end
 
   private

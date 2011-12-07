@@ -8,7 +8,7 @@ class SubscriptionPlansController < SecuredController
   private
 
   def handle_paypal_subscription
-    if @subscription_plan.use_paypal?
+    if @subscription_plan.use_paypal? and (!@subscription_plan.free_period_can_be_applied_to?(current_user) or @subscription_plan.paypal_billing_at_start?)
       paypal_recurring = PaypalRecurringPayment.new(:subscription_plan => @subscription_plan,
                                                     :return_url => paypal_confirmed_my_profile_subscription_plan_url(@subscription_plan),
                                                     :cancel_url => paypal_canceled_my_profile_subscription_plan_url(@subscription_plan),

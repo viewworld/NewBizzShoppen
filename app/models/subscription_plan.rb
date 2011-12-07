@@ -110,4 +110,8 @@ class SubscriptionPlan < ActiveRecord::Base
     self.roles = _roles
   end
 
+  def free_period_can_be_applied_to?(user)
+    free_period.to_i > 0 and CompanyVat.where(:vat_number => user.vat_number.strip).first.nil?
+  end
+
 end
