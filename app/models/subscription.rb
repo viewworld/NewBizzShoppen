@@ -265,7 +265,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def big_buyer?
-    if unconfirmed_paypal?
+    if unconfirmed_paypal? and !is_today_in_free_period?
       false
     else
       read_attribute(:big_buyer)
@@ -273,7 +273,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def team_buyers?
-    if unconfirmed_paypal?
+    if unconfirmed_paypal? and !is_today_in_free_period?
       false
     else
       read_attribute(:team_buyers)
@@ -281,7 +281,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def deal_maker?
-    if unconfirmed_paypal?
+    if unconfirmed_paypal? and !is_today_in_free_period?
       false
     else
       read_attribute(:deal_maker)

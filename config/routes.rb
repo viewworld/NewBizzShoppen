@@ -1,6 +1,6 @@
 Nbs::Application.routes.draw do
 
-  resources :payment_notifications do
+  resources :payment_notifications, :only => [:create] do
     member do
       post 'show'
     end
