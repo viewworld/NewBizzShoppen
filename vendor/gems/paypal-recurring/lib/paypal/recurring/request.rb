@@ -62,7 +62,11 @@ module PayPal
         :token                 => "TOKEN",
         :username              => "USER",
         :version               => "VERSION",
-        :total_billing_cycles  => "TOTALBILLINGCYCLES"
+        :total_billing_cycles  => "TOTALBILLINGCYCLES",
+        :trial_billing_period       => "TRIALBILLINGPERIOD",
+        :trial_billing_frequency    => "TRIALBILLINGFREQUENCY",
+        :trial_amount               => "TRIALAMT",
+        :trial_total_billing_cycles => "TRIALTOTALBILLINGCYCLES"
       }
 
       CA_FILE = File.dirname(__FILE__) + "/cacert.pem"
@@ -148,6 +152,10 @@ module PayPal
       end
 
       def build_period(value) # :nodoc:
+        PERIOD.fetch(value.to_sym, value) if value
+      end
+
+      def build_trial_billing_period(value) # :nodoc:
         PERIOD.fetch(value.to_sym, value) if value
       end
 

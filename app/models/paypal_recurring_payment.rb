@@ -38,6 +38,18 @@ class PaypalRecurringPayment
     @response.approved? and @response.completed?
   end
 
+  def free_period_hash
+    if @options[:user].active_subscription.paypal_billing_at_start and @options[:user].active_subscription.is_free_period_applied?
+    return {
+      :trial_billing_period => :daily,
+      :trial_billing_frequetotal_billing_cyclesncy => @options[:user].active_subscription.free_period,
+      :trial_amount => 0.0,
+      :trial_total_billing_cycles => 1
+    }
+    end
+    {}
+  end
+
   def create_profile
     @response = PayPal::Recurring.new({
       :amount      => @options[:subscription_plan].total_billing_for_subperiod,
@@ -53,8 +65,8 @@ class PaypalRecurringPayment
       #:total_billing_cycles   => @options[:subscription_plan].subscription_sub_periods.size,
       :failed      => 1,
       :outstanding => :next_billing,
-      :failed => 1
-    }).create_recurring_profile
+      :failed => 1,
+    }.merge(free_period_hash)).create_recurring_profile
     archive_response!("create_recurring_profile")
   end
 
