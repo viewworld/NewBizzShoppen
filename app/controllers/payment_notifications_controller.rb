@@ -12,6 +12,10 @@ class PaymentNotificationsController < ApplicationController
     render :nothing => true
   end
 
+  def show
+    create
+  end
+
   private
 
   def cart
@@ -53,5 +57,4 @@ class PaymentNotificationsController < ApplicationController
       EmailNotification.notify("recurring_payment: Matching sub period not found", "<p>SubscriptionPaymentNotification: #{spn.id}</p> <>br /> Backtrace: <p>#{spn.params.inspect}</p>")
     end
   end
-
 end

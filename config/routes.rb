@@ -1,6 +1,10 @@
 Nbs::Application.routes.draw do
 
-  resources :payment_notifications
+  resources :payment_notifications do
+    member do
+      post 'show'
+    end
+  end
 
   get "agent_home/show"
   get "supplier_home/show"
