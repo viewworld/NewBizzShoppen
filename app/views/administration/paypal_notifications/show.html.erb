@@ -27,16 +27,18 @@
       <p><%= format_date @paypal_notification.created_at, true %></p>
 
 
-      <br/>
-      <br/>
       <% if @paypal_notification.params.is_a?(Hash) %>
-      <b>PARAMETERS</b><br/><br/>
+        <br/><hr/><br/><b>PARAMETERS</b><br/><br/>
           <% @paypal_notification.params.keys.sort.each do |key| %>
 
             <p><b><%= key %>:</b>&nbsp;<%= @paypal_notification.params[key] %></p>
           <% end %>
 
       <% end %>
+
+      <br/><hr/><br/><b>ASSOCIATED RESPONSES</b><br/><br/>
+
+      <%= render :partial => '/administration/archived_paypal_responses/table', :locals => {:responses => @responses, :collection => @collection} %>
 
     </div>
   </div>
