@@ -81,13 +81,11 @@
             </tr>
         <% end %>
 
-      <% if will_paginate %>
           <tr class="pagination">
             <td colspan="10" class="ta_c">
-              <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+              <%= will_paginate @paypal_notifications, :previous_label => '&laquo;', :next_label => '&raquo;' %>
             </td>
           </tr>
-      <% end %>
         </tbody>
       </table>
   <% end %>

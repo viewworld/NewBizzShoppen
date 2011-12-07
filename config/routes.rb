@@ -82,6 +82,7 @@ Nbs::Application.routes.draw do
       end
     end
     resources :paypal_notifications, :only => [:index, :show]
+    resources :archived_paypal_responses, :only => [:index, :show]
   end
 
   namespace :suppliers do

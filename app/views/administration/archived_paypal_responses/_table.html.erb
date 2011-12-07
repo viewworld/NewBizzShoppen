@@ -1,0 +1,47 @@
+<table id="responses_table" class="generic">
+  <thead>
+  <tr>
+    <th class="hl"></th>
+    <th style="width:10px"><%= t("administration.archived_paypal_responses.index.view.table.user_id") %></th>
+    <th><%= t("administration.archived_paypal_responses.index.view.table.subscription_type") %> <%= t("administration.archived_paypal_responses.index.view.table.subscription_id") %></th>
+    <th><%= t("administration.archived_paypal_responses.index.view.table.response_type") %></th>
+    <th><%= t("administration.archived_paypal_responses.index.view.table.has_errors") %></th>
+    <th><%= t("administration.archived_paypal_responses.index.view.table.created_at") %></th>
+    <th class="ta_r"><%= t("administration.currencies.index.view.actions") %></th>
+    <th class="hr"></th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td class="fl"></td>
+    <td colspan="7"></td>
+    <td class="fr"></td>
+  </tr>
+  </tfoot>
+  <tbody>
+  <% responses.each do |resp| %>
+      <tr id="response_<%= resp.id %>" class="<%= cycle("odd", "even") %>">
+        <td class="cl"></td>
+        <td class="ta_c"><%= link_to resp.user_id, administration_archived_paypal_responses_path(:search => {:with_user_id => resp.user_id}) if resp.user_id%></td>
+        <td><%= link_to "#{resp.subscription_type} #{resp.subscription_id}", administration_archived_paypal_responses_path(:search => {:with_subscription_type => resp.subscription_type, :with_subscription_id => resp.subscription_id}) %></td>
+        <td><%= link_to resp.response_type, administration_archived_paypal_responses_path(:search => {:with_response_type => resp.response_type}) %></td>
+        <td><%= link_to "#{resp.has_errors}", administration_archived_paypal_responses_path(:search => {:with_has_errors => resp.has_errors.to_s}) %></td>
+        <td><%= format_date resp.created_at, true %></td>
+        <td class="tda ta_r">
+          <ul-actions>
+            <li>
+              <%= link_to t("administration.archived_paypal_responses.index.view.show"), administration_archived_paypal_response_path(resp), :class => "default_action" %>
+            </li>
+          </ul-actions>
+        </td>
+        <td class="cr"></td>
+      </tr>
+  <% end %>
+
+    <tr class="pagination">
+      <td colspan="10" class="ta_c">
+        <%= will_paginate responses, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+      </td>
+    </tr>
+  </tbody>
+</table>

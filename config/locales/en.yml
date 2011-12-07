@@ -1737,6 +1737,21 @@ en:
       show:
         view:
           header: "Paypal notification details"
+    archived_paypal_responses:
+      index:
+        view:
+          title: "Archived PayPal responses"
+          show: "Show"
+          table:
+            user_id: "User ID"
+            subscription_id: "Subscription ID"
+            subscription_type: "Subscription type"
+            response_type: "Response type"
+            has_errors: "Has errors?"
+            created_at: "Created at"
+      show:
+        view:
+          header: "Response details"
   agent:
     leads:
       index:
