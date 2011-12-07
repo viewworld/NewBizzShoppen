@@ -42,7 +42,7 @@ class PaypalRecurringPayment
     if @options[:user].active_subscription.paypal_billing_at_start and @options[:user].active_subscription.is_free_period_applied?
     return {
       :trial_billing_period => :daily,
-      :trial_billing_frequetotal_billing_cyclesncy => @options[:user].active_subscription.free_period,
+      :trial_billing_frequency => @options[:user].active_subscription.free_period,
       :trial_amount => 0.0,
       :trial_total_billing_cycles => 1
     }

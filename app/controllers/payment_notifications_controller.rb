@@ -1,6 +1,6 @@
 class PaymentNotificationsController < ApplicationController
-  protect_from_forgery :except => [:create]
-  before_filter :authorize_with_http_basic_for_staging, :except => [:create]
+  protect_from_forgery :except => [:create, :show]
+  before_filter :authorize_with_http_basic_for_staging, :except => [:create, :show]
 
   def create
     if respond_to?(params[:txn_type], true)
@@ -10,6 +10,10 @@ class PaymentNotificationsController < ApplicationController
       EmailNotification.notify("Unhandled txn_type: #{params[:txn_type]}", "<p>UnknownPaymentNotification: #{upn.id}</p> <>br /> Backtrace: <p>#{upn.params.inspect}</p>")
     end
     render :nothing => true
+  end
+
+  def show
+    create
   end
 
   private
@@ -53,5 +57,4 @@ class PaymentNotificationsController < ApplicationController
       EmailNotification.notify("recurring_payment: Matching sub period not found", "<p>SubscriptionPaymentNotification: #{spn.id}</p> <>br /> Backtrace: <p>#{spn.params.inspect}</p>")
     end
   end
-
 end
