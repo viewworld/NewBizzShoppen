@@ -1,6 +1,6 @@
 class PaymentNotificationsController < ApplicationController
   protect_from_forgery :except => [:create]
-  before_filter :authorize_with_http_basic_for_staging, :except => [:create]
+  before_filter :authorize_with_http_basic_for_staging, :except => [:create, :show]
 
   def create
     if respond_to?(params[:txn_type], true)
