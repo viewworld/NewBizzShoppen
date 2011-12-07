@@ -9,6 +9,7 @@ class ArchivedEmail < ActiveRecord::Base
   serialize :bounce_details, Hash
 
   scope :bounced, where(:status => BOUNCED)
+  scope :with_email, lambda{|email| where(:to => email)}
 
   belongs_to :sender, :class_name => "User"
 end
