@@ -4,8 +4,10 @@ Feature: Subscriptions Paypal
   # -------------------------------------------------------------------------------------------------------------------
   # Subperiods
   # -------------------------------------------------------------------------------------------------------------------
+  @non_testable @_done
   Scenario: Billing cycle should be renamed to "Subscription period"
 
+  @non_testable @_done
   Scenario: I can enter "Billing cycle" in weeks to make payments in smaller parts than subscrition period
 
   # -------------------------------------------------------------------------------------------------------------------
