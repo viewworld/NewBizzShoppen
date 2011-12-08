@@ -46,15 +46,17 @@
   <tr class="description_row">
     <td colspan="2">
       <p class="border_bottom">
-        <strong><%= I18n.t("voucher_numbers.pdf.detailed_description") %>:</strong> <%= deal.hidden_description %></p>
+        <strong><%= I18n.t("voucher_numbers.pdf.detailed_description") %>:</strong> <%= st_lite(deal.hidden_description) %></p>
 
-      <p class="border_bottom"><strong><%= I18n.t("voucher_numbers.pdf.fine_print") %>:</strong> <%= deal.fine_print %>
+      <p class="border_bottom"><strong><%= I18n.t("voucher_numbers.pdf.fine_print") %>:</strong> <%= st_lite(deal.fine_print) %>
       </p>
 
-      <p><strong><%= I18n.t("voucher_numbers.pdf.how_to_redeem") %>:</strong> <%= deal.voucher_how_to_redeem %></p>
+      <p><strong><%= I18n.t("voucher_numbers.pdf.how_to_redeem") %>:</strong> <%= st_lite(deal.voucher_how_to_redeem) %></p>
     </td>
   </tr>
   </tbody>
 </table>
+
+
 
 
