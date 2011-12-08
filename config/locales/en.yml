@@ -3744,6 +3744,7 @@ en:
       show_comments: "show comments"
       hide_comments: "hide comments"
       no_comments: "No comments has been added."
+      here: "here"
     leads:
       show:
         view:
@@ -4135,6 +4136,8 @@ en:
       with_n_weeks_billing_cycle: "with %{number} weeks billing cycle"
     as_free_subscription: "as free subscription"
     active_subscription_is_canceled: "Your current subscription plan is canceled"
+    paypal_subscription_not_confirmed: "Paypal subscription has not been confimed!"
+    active_subscription_is_canceled_in_paypal: "Update your billing information clicking %{link}!"
   unconfirmed_paypal_subscriptions:
     show:
       view:

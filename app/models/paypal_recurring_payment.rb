@@ -39,7 +39,7 @@ class PaypalRecurringPayment
   end
 
   def free_period_hash
-    if @options[:user].active_subscription.paypal_billing_at_start and @options[:user].active_subscription.is_free_period_applied?
+    if @options[:user].active_subscription.paypal_billing_at_start and @options[:user].active_subscription.is_free_period_applied? and !@options[:user].active_subscription.cancelled_in_paypal?
     return {
       :trial_billing_period => :daily,
       :trial_billing_frequency => @options[:user].active_subscription.free_period,
@@ -61,8 +61,11 @@ class PaypalRecurringPayment
       :period      => :daily,
       :reference   => @options[:user].active_subscription.id.to_s,
       :payer_id    => @options[:payer_id],
-      :start_at    => @options[:start_at] || Time.now.utc,
-      #:total_billing_cycles   => @options[:subscription_plan].subscription_sub_periods.size,
+      :start_at    => @options[:start_at] ||
+                      @options[:user].active_subscription.cancelled_in_paypal? ?
+                        @options[:user].active_subscription.next_billing_cycle_for_recurring_payment_renewal.billing_date.to_time.utc : Time.now.utc,
+      :total_billing_cycles => @options[:user].active_subscription.cancelled_in_paypal? ?
+          @options[:subscription_plan].subscription_sub_periods.with_billing_date_greater_or_equal(Date.today).size : nil,
       :failed      => 1,
       :outstanding => :next_billing,
       :failed => 1,
