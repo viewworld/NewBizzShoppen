@@ -349,6 +349,13 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                  :body => "<p>Name: {{name}}</p><p>Phone number: {{phone_number}}</p><p>E-mail: {{email_from}}</p><p>Request: {{deal_description}}</p>"},
          :da => {:subject => "[DK] {{name}} has requested a deal",
                  :body => "<p>Name: {{name}}</p><p>Phone number: {{phone_number}}</p><p>E-mail: {{email_from}}</p><p>Request: {{deal_description}}</p>"}
+        },
+        {:name => "Subscription cancelled through paypal",
+         :uniq_id => "subscription_cancelled_through_paypal",
+         :en => {:subject => "Paypal recurring payment cancelled. Reactivate it!",
+                 :body => "<p>You have cancelled Your recurring payment in Paypal.com for the Fairleads subscription. <a href=\"{{subscription.create_recurring_profile_from_next_billing_cycle_link}}\">Click here to reactivate it from next billing cycle!</a></p>"},
+         :da => {:subject => "[DK] Paypal recurring payment cancelled. Reactivate it!",
+                 :body => "<p>[DK] </p>"}
         }
     ]
 

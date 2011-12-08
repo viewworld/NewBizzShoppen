@@ -8,7 +8,8 @@ class SubscriptionPlansController < SecuredController
   private
 
   def handle_paypal_subscription
-    if @subscription_plan.use_paypal? and (!@subscription_plan.free_period_can_be_applied_to?(current_user) or @subscription_plan.paypal_billing_at_start?)
+    if (@subscription_plan.is_a?(SubscriptionPlan) and @subscription_plan.use_paypal? and (!@subscription_plan.free_period_can_be_applied_to?(current_user) or @subscription_plan.paypal_billing_at_start?)) or
+        (@subscription_plan.is_a?(Subscription) and @subscription_plan.cancelled_in_paypal? and @subscription_plan.next_billing_cycle_for_recurring_payment_renewal)
       paypal_recurring = PaypalRecurringPayment.new(:subscription_plan => @subscription_plan,
                                                     :return_url => paypal_confirmed_my_profile_subscription_plan_url(@subscription_plan),
                                                     :cancel_url => paypal_canceled_my_profile_subscription_plan_url(@subscription_plan),
@@ -27,7 +28,8 @@ class SubscriptionPlansController < SecuredController
   end
 
   def fetch_subscription_plan
-    @subscription_plan = current_user.active_subscription.unconfirmed_paypal? ? current_user.active_subscription : SubscriptionPlan.find(params[:id])
+    @subscription_plan = (current_user.active_subscription.unconfirmed_paypal? or current_user.active_subscription.cancelled_in_paypal?) ?
+                          current_user.active_subscription : SubscriptionPlan.find(params[:id])
   end
 
   public
@@ -47,6 +49,11 @@ class SubscriptionPlansController < SecuredController
 
       paypal_recurring.create_profile
 
+      if @user.active_subscription.cancelled_in_paypal? and !paypal_recurring.response_has_errors?
+        @user.active_subscription.update_attribute(:cancelled_in_paypal, false)
+      end
+
+
       @user.active_subscription.update_attributes(:paypal_profile_id => paypal_recurring.profile_id, :paypal_invoice_id => @user.active_subscription.id)
     end
 
@@ -54,6 +61,11 @@ class SubscriptionPlansController < SecuredController
   end
 
   def paypal_canceled
+    flash[:alert] = I18n.t("subscriptions.paypal_subscription_not_confirmed")
+    redirect_to my_profile_path
+  end
+
+  def paypal_renew
 
   end
 

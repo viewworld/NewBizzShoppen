@@ -344,6 +344,7 @@ Nbs::Application.routes.draw do
         get 'paypal_subscription'
         get 'paypal_confirmed'
         get 'paypal_canceled'
+        get 'paypal_renew'
       end
     end
   end

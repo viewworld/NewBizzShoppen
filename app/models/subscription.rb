@@ -19,6 +19,9 @@ class Subscription < ActiveRecord::Base
   scope :for_recurring_payment, lambda {|payment_id,invoice_id| where(:paypal_profile_id => payment_id, :paypal_invoice_id => invoice_id) }
 
   attr_accessor :next_subscription_plan, :next_subscription_plan_start_date
+
+  liquid :create_recurring_profile_from_next_billing_cycle_link
+
   include AASM
 
   aasm_initial_state Proc.new { |subscription| subscription.initial_state }
@@ -334,6 +337,18 @@ class Subscription < ActiveRecord::Base
 
   def cancel_paypal_profile
     PaypalRecurringProfile.new(paypal_profile_id).cancel_profile if paypal_profile_id
+  end
+
+  def send_paypal_profile_reactivation_link
+    TemplateMailer.delay.new(user.email, :subscription_cancelled_through_paypal, Country.get_country_from_locale, {:subscription => self})
+  end
+
+  def next_billing_cycle_for_recurring_payment_renewal
+    subscription_sub_periods.paypal_unpaid.without_invoice.with_billing_date_greater_or_equal(Date.today).first
+  end
+
+  def create_recurring_profile_from_next_billing_cycle_link
+    "http://#{user.domain_name}/my_profile/subscription_plans/17/paypal_renew"
   end
 
   private
