@@ -1705,6 +1705,7 @@ en:
           edit: "Edit"
           destroy: "Destroy"
           confirmation_msg: "Are you sure?"
+          use_paypal: "Use PayPal?"
       new:
         view:
           header: "New subscription plan"

@@ -14,6 +14,8 @@ class SubscriptionPlan < ActiveRecord::Base
     [:at_end, false]
   ]
 
+  DISABLE_PAYPAL_SUBSCRIPTIONS = true
+
   validates_presence_of :name, :subscription_period, :billing_cycle, :billing_period, :assigned_roles, :currency_id, :currency, :seller, :seller_id
   validates_numericality_of :subscription_period, :greater_than_or_equal_to => 0
   validates_numericality_of :billing_period, :less_than => :billing_cycle, :if => Proc.new { |sp| sp.billing_cycle.to_i > 0 }
@@ -41,6 +43,7 @@ class SubscriptionPlan < ActiveRecord::Base
   scope :with_keyword, lambda { |q| where("lower(name) like ?", "%#{q.downcase}%") }
   scope :active, where(:is_active => true)
   scope :exclude_free, lambda{ |exclude| exclude ? where("billing_price > 0.0") : where("") }
+  scope :include_paypal, lambda{ |include| include ? where("") : where("use_paypal IS FALSE") }
   scope :exclude_current_plan, lambda{ |plan| where("billing_price <> ? and id <> ?", plan.billing_price, plan.id)}
   scope :free, where(:subscription_period => 0)
   scope :for_role, lambda { |role| where("roles_mask & #{2**SubscriptionPlan.valid_roles.index(role.to_sym)} > 0 ") }
