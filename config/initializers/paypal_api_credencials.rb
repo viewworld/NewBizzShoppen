@@ -1,7 +1,7 @@
 require "paypal/recurring"
 
 PayPal::Recurring.configure do |config|
-  config.sandbox = true
+  config.sandbox = !Rails.env.production?
   config.username = APP_CONFIG[:paypal_api_email]
   config.password = APP_CONFIG[:paypal_api_password]
   config.signature = APP_CONFIG[:paypal_api_key]

@@ -23,9 +23,9 @@ production:
   paypal_secret: i1knTfEsql5724S1MCX5QgV1Me0xXw
   paypal_cert_id: JTL4K5CBZA9HA
   paypal_url: "https://www.paypal.com/cgi-bin/webscr"
-  paypal_api_email:
-  paypal_api_password:
-  paypal_api_key:
+  paypal_api_email: "admin_api1.fairleads.com"
+  paypal_api_password: "8T7H3529UWE775HK"
+  paypal_api_key: "ACeUiIrWgxnYT8IMF-wJwdgl.sjEA5RpsViJ6SPhHx2TT4xITs8R8CKt"
   paypal_api_url: "https://api-3t.paypal.com/nvp"
 
 staging:
