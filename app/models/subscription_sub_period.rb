@@ -40,6 +40,10 @@ class SubscriptionSubPeriod < ActiveRecord::Base
     if !invoice and ((paypal_retries_changed? and paypal_retries == 0) or (paypal_paid_auto_changed? and paypal_paid_auto?))
       _invoice = Invoice.create(:user => subscription.user, :subscription_sub_period_id => self.id)
       _invoice.send_by_email(user)
+
+      if paypal_retries_changed? and paypal_retries == 0 and subscription.automatic_downgrading?
+        subscription.downgrade_paypal!
+      end
     end
   end
 

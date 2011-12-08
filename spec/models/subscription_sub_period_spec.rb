@@ -198,6 +198,25 @@ describe SubscriptionSubPeriod do
       @customer.active_subscription.subscription_sub_periods[0].invoice.should_not be_paid
     end
 
+    it "should auto downgrade when number of retries is exceeded AND auto downgrading is enabled" do
+      @payable_subscription4 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12)
+      @payable_subscription4.subscription_plan_lines.make!(:price => 200)
+      @payable_subscription2.update_attributes(:use_paypal => true, :paypal_retries => 2, :automatic_downgrading => true,
+                                               :automatic_downgrade_subscription_plan_id => @payable_subscription4.id)
+
+      setup_customer(@payable_subscription2)
+      @customer.active_subscription.confirm_paypal!
+      @prev_subscription = @customer.active_subscription
+
+      Subscription.any_instance.expects(:cancel_paypal_profile).returns(nil)
+      @customer.active_subscription.subscription_sub_periods[0].update_attribute(:paypal_retries, 0)
+
+      @customer.active_subscription.subscription_plan.should == @payable_subscription4
+      @prev_subscription.reload
+      @prev_subscription.should be_downgraded_paypal
+      @customer.active_subscription.should be_normal
+    end
+
     it "should generate paid invoice when marked as paid by paypal IPN and send email to user" do
       @payable_subscription2.update_attributes(:use_paypal => true)
       setup_customer(@payable_subscription2)

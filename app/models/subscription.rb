@@ -8,6 +8,7 @@ class Subscription < ActiveRecord::Base
   belongs_to :subscription_plan
   belongs_to :currency
   belongs_to :seller
+  belongs_to :automatic_downgrade_subscription_plan, :class_name => "SubscriptionPlan"
   after_create :handle_user_privileges
   after_create :create_subscription_sub_periods
 
@@ -35,6 +36,7 @@ class Subscription < ActiveRecord::Base
   aasm_state :admin_changed, :enter => :perform_admin_change
   aasm_state :unconfirmed_paypal
   aasm_state :confirmed_paypal
+  aasm_state :downgraded_paypal
 
   aasm_event :enter_lockup do
     transitions :from => [:normal, :penalty, :non_cancelable], :to => :lockup, :guard => :lockup_period_started?
@@ -50,6 +52,10 @@ class Subscription < ActiveRecord::Base
 
   aasm_event :downgrade do
     transitions :from => [:normal, :penalty], :to => :downgraded
+  end
+
+  aasm_event :downgrade_paypal, :after => :perform_downgrade_paypal do
+    transitions :from => [:normal, :lockup], :to => :downgraded_paypal, :guard => :can_be_downgraded_paypal?
   end
 
   aasm_event :cancel do
@@ -154,6 +160,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def perform_upgrade
+    cancel_paypal_profile if use_paypal?
     self.recalculate_subscription_plan_lines(Date.today-1, is_free_period_applied?)
     self.end_date = Date.today-1
     self.class.clone_from_subscription_plan!(next_subscription_plan, user)
@@ -189,6 +196,13 @@ class Subscription < ActiveRecord::Base
     self.class.clone_from_subscription_plan!(self, user)
   end
 
+  def perform_downgrade_paypal
+    cancel_paypal_profile
+    self.recalculate_subscription_plan_lines(Date.today-1, is_free_period_applied?)
+    self.end_date = Date.today-1
+    self.class.clone_from_subscription_plan!(automatic_downgrade_subscription_plan, user)
+  end
+
   def invoiced?
     !invoiced_at.blank?
   end
@@ -203,6 +217,10 @@ class Subscription < ActiveRecord::Base
 
   def can_be_prolonged?
     !is_free? and end_date < Date.today
+  end
+
+  def can_be_downgraded_paypal?
+    use_paypal? and automatic_downgrading?
   end
 
   def can_cancel_at
