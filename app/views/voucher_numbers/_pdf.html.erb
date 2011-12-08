@@ -1,35 +1,60 @@
-<p class="main_logo"><img src="../../images/invoices/logo.jpg" alt="logo" width="200"/></p>
+<table>
+  <tbody>
+  <tr class="first_row">
+    <td>
+      <p><%= I18n.t("voucher_numbers.pdf.deal_name") %>:</p>
 
-<% if deal.logo %>
-    <p>
-      <img src="<%= "#{'../..' unless Rails.env == "production"}" + deal.logo.url.gsub(/\?\d*\z/, "") %>" alt="logo" width="150"/>
-    </p>
-<% end %>
+      <h2><%= deal.header %></h2>
+    </td>
+    <td class="ta_r"><img src="../../images/invoices/logo.jpg" alt="logo" width="170" class="logo"/></td>
+  </tr>
+  <tr>
+    <td>
+      <p><strong><%= I18n.t("voucher_numbers.pdf.voucher_value") %>:</strong> <%= deal.deal_price %></p>
 
-<h2><%= I18n.t("voucher_numbers.pdf.deal_name") %>: <%= deal.header %></h2>
+      <p><strong><%= I18n.t("voucher_numbers.pdf.price_paid") %>:</strong> <%= deal.discounted_price %></p>
+    </td>
+    <td class="ta_r">
+      <p>
+        <strong><%= I18n.t("voucher_numbers.pdf.valid_until") %>:</strong> <%= voucher_number.expired_date.strftime("%d-%m-%Y") %>
+      </p>
+    </td>
+  </tr>
 
-<% if deal.voucher_heading_picture %>
-    <p>
-      <img src="<%= "#{'../..' unless Rails.env == "production"}" + deal.voucher_heading_picture.url.gsub(/\?\d*\z/, "") %>" alt="logo" width="150"/>
-    </p>
-<% end %>
+  <% if deal.logo || deal.voucher_heading_picture %>
+      <tr>
+        <td>
+          <% if deal.logo %>
+              <img src="<%= "#{'../..' unless Rails.env == "production"}" + deal.logo.url.gsub(/\?\d*\z/, "") %>" alt="logo" width="150"/>
+          <% end %>
+        </td>
+        <td>
+          <% if deal.voucher_heading_picture %>
+              <img src="<%= "#{'../..' unless Rails.env == "production"}" + deal.voucher_heading_picture.url.gsub(/\?\d*\z/, "") %>" alt="logo" width="150"/>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
 
-<div class="deal_details">
-  <p><strong><%= I18n.t("voucher_numbers.pdf.voucher_value") %>:</strong> <%= deal.deal_price %></p>
-  <p><strong><%= I18n.t("voucher_numbers.pdf.price_paid") %>:</strong> <%= deal.discounted_price %></p>
-  <p>
-    <strong><%= I18n.t("voucher_numbers.pdf.valid_until") %>:</strong> <%= voucher_number.expired_date.strftime("%d-%m-%Y") %>
-  </p>
-  <p><strong><%= I18n.t("voucher_numbers.pdf.detailed_description") %>:</strong> <%= deal.hidden_description %></p>
-  <p><strong><%= I18n.t("voucher_numbers.pdf.fine_print") %>:</strong> <%= deal.fine_print %></p>
-  <p><strong><%= I18n.t("voucher_numbers.pdf.how_to_redeem") %>:</strong> <%= deal.voucher_how_to_redeem %></p>
-  <p><strong><%= I18n.t("voucher_numbers.pdf.deal_id") %>:</strong> <%= voucher_number.deal_unique_id %></p>
-  <p><strong><%= I18n.t("voucher_numbers.pdf.voucher_number") %>:</strong> <%= voucher_number.number %></p>
-</div>
+  <tr>
+    <td colspan="2">
+      <p><strong><%= I18n.t("voucher_numbers.pdf.deal_id") %>:</strong> <%= voucher_number.deal_unique_id %></p>
 
+      <p><strong><%= I18n.t("voucher_numbers.pdf.voucher_number") %>:</strong> <%= voucher_number.number %></p>
+    </td>
+  </tr>
+  <tr class="description_row">
+    <td colspan="2">
+      <p class="border_bottom">
+        <strong><%= I18n.t("voucher_numbers.pdf.detailed_description") %>:</strong> <%= deal.hidden_description %></p>
 
+      <p class="border_bottom"><strong><%= I18n.t("voucher_numbers.pdf.fine_print") %>:</strong> <%= deal.fine_print %>
+      </p>
 
-
-
+      <p><strong><%= I18n.t("voucher_numbers.pdf.how_to_redeem") %>:</strong> <%= deal.voucher_how_to_redeem %></p>
+    </td>
+  </tr>
+  </tbody>
+</table>
 
 
