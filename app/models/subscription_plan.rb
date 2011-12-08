@@ -16,9 +16,10 @@ class SubscriptionPlan < ActiveRecord::Base
 
   DISABLE_PAYPAL_SUBSCRIPTIONS = true
 
-  validates_presence_of :name, :subscription_period, :billing_cycle, :billing_period, :assigned_roles, :currency_id, :currency, :seller, :seller_id
+  validates_presence_of :name, :subscription_period, :billing_cycle, :assigned_roles, :currency_id, :currency, :seller, :seller_id
+  validates_presence_of :billing_period, :unless => :use_paypal?
   validates_numericality_of :subscription_period, :greater_than_or_equal_to => 0
-  validates_numericality_of :billing_period, :less_than => :billing_cycle, :if => Proc.new { |sp| sp.billing_cycle.to_i > 0 }
+  validates_numericality_of :billing_period, :less_than => :billing_cycle, :if => Proc.new { |sp| sp.billing_cycle.to_i > 0 and !sp.use_paypal? }
   validates_numericality_of :lockup_period, :free_period, :allow_nil => true
   validates_numericality_of :billing_cycle, :greater_than => 0, :less_than_or_equal_to => :subscription_period, :if => Proc.new{|sp| sp.subscription_period.to_i > 0}
   validates_numericality_of :billing_cycle, :equal_to => 0, :if => Proc.new{|sp| sp.subscription_period.to_i == 0}
@@ -114,8 +115,12 @@ class SubscriptionPlan < ActiveRecord::Base
     self.roles = _roles
   end
 
+  def has_free_period?
+    free_period.to_i > 0
+  end
+
   def free_period_can_be_applied_to?(user)
-    free_period.to_i > 0 and CompanyVat.where(:vat_number => user.vat_number.strip).first.nil?
+    has_free_period? and user.has_free_period_available?
   end
 
 end

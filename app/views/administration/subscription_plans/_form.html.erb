@@ -8,7 +8,9 @@
         <%= form.input :subscription_period %>
         <%= form.input :billing_cycle %>
         <%= form.input :lockup_period %>
+        <span id="billing_period">
         <%= form.input :billing_period %>
+        </span>
         <%= form.input :free_period, :input_html => { :onkeyup => "enable_free_deals_in_free_period()"} %>
         <%= form.input :currency_id, :collection => currencies_for_select %>
         <%= form.input :seller_id, :collection => Seller.all, :include_blank => false %>
@@ -118,9 +120,11 @@
     function switch_use_paypal_features(){
         if($('#subscription_plan_use_paypal').attr('checked')){
             $('#use_paypal_features').show();
+            $('#billing_period').hide();
         }
         else {
             $('#use_paypal_features').hide();
+            $('#billing_period').show();
             $('#subscription_plan_automatic_downgrading').attr('checked', '');
             switch_automatic_downgrading();
         }

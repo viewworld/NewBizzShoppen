@@ -4134,6 +4134,7 @@ en:
         deal_maker: "Deal maker"
       weeks: "weeks"
       with_n_weeks_billing_cycle: "with %{number} weeks billing cycle"
+      plus_n_weeks_free_period: "+ %{number} weeks of free period"
     as_free_subscription: "as free subscription"
     active_subscription_is_canceled: "Your current subscription plan is canceled"
   unconfirmed_paypal_subscriptions:
