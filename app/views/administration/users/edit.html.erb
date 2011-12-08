@@ -70,7 +70,7 @@
             <br/>
 
             <h3><%= t("administration.users.edit.view.change_users_subscription") %></h3>
-            <% @available_subscriptions = SubscriptionPlan.active.exclude_current_plan(@user.active_subscription_plan).for_role(@user.with_role.role).ascend_by_billing_price %>
+            <% @available_subscriptions = SubscriptionPlan.active.without_paypal.exclude_current_plan(@user.active_subscription_plan).for_role(@user.with_role.role).ascend_by_billing_price %>
             <% if @user.subscriptions.future.count > 0 %>
                 <%= t("administration.users.edit.view.remove_scheduled_subscriptions") %>
                 <%= semantic_form_for :subscription, :url => administration_user_change_subscription_plan_path(@user), :html => {:method => :delete} do |f| %>
