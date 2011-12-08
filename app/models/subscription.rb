@@ -144,7 +144,9 @@ class Subscription < ActiveRecord::Base
       end
 
       subscription_sub_periods.where("start_date > ?", new_end_date + 1.day).without_invoice.destroy_all
-      subscription_sub_periods.with_date(new_end_date + 1.day).first.update_attribute(:end_date, new_end_date)
+      if sub_period_including_new_end_date = subscription_sub_periods.with_date(new_end_date + 1.day).first
+        sub_period_including_new_end_date.update_attribute(:end_date, new_end_date)
+      end
       subscription_sub_periods.each{|sp| sp.recalculate}
     end
   end
