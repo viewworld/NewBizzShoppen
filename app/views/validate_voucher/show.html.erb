@@ -1,12 +1,26 @@
 <column-mc:>
   <header><%= t("validate_voucher.show.header") %></header>
-  <%= t("validate_voucher.show.text") %><br/><br/>
+  <h3><%= t("validate_voucher.show.text") %></h3>
+  <br/>
 
   <%= form_tag validate_voucher_path, :method => :post do %>
-      <label><%= t("validate_voucher.show.deal_id_label") %></label> <%= text_field_tag "deal_unique_id", nil, :style => "width:80px" %>
-      <label><%= t("validate_voucher.show.voucher_number_label") %></label> <%= text_field_tag "voucher_number", nil, :style => "width:200px" %>
-      <%= submit_tag t("validate_voucher.show.validate_button") %>
+      <fieldset class="inputs">
+        <ol>
+          <li class="string">
+            <label><%= t("validate_voucher.show.deal_id_label") %></label>
+            <%= text_field_tag "deal_unique_id", nil, :style => "width:60px" %>
+          </li>
+          <li class="string">
+            <label><%= t("validate_voucher.show.voucher_number_label") %></label>
+            <%= text_field_tag "voucher_number", nil %>
+          </li>
+          <li class="commit">
+            <ibt>
+              <%= submit_tag t("validate_voucher.show.validate_button") %>
+            </ibt>
+          </li>
+        </ol>
+      </fieldset>
   <% end %>
-
 </column-mc:>
 

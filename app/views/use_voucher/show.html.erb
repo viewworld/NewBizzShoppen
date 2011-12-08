@@ -1,16 +1,28 @@
 <column-mc:>
   <header><%= t("use_voucher.show.header") %></header>
-  <%= t("use_voucher.show.text") %><br/><br/>
+  <h3><%= t("use_voucher.show.text") %></h3>
+  <br/>
+
   <%= form_tag use_voucher_path, :method => :post do %>
-      <label><%= t("use_voucher.show.deal_id_label") %></label> <%= text_field_tag "deal_unique_id", @deal_unique_id, :style => "width:80px;background-color:#EEFFEE;", :disabled => true; %>
-      <label><%= t("use_voucher.show.voucher_number_label") %></label> <%= text_field_tag "voucher_number", @voucher_number, :style => "width:200px;background-color:#EEFFEE", :disabled => true; %>
-
-      <%= hidden_field_tag "deal_unique_id", @deal_unique_id %>
-      <%= hidden_field_tag "voucher_number", @voucher_number %>
-
-      <%= submit_tag t("use_voucher.show.activate_button") %>
-
-      <%= link_to t("use_voucher.show.back_link"), validate_voucher_path %>
+        <%= hidden_field_tag "deal_unique_id", @deal_unique_id %>
+        <%= hidden_field_tag "voucher_number", @voucher_number %>
+        <fieldset class="inputs">
+        <ol>
+          <li class="string">
+            <label><%= t("use_voucher.show.deal_id_label") %></label>
+            <%= text_field_tag "deal_unique_id", @deal_unique_id, :style => "width:80px;background-color:#EEFFEE;", :disabled => true; %>
+          </li>
+          <li class="string">
+            <label><%= t("use_voucher.show.voucher_number_label") %></label>
+            <%= text_field_tag "voucher_number", @voucher_number, :style => "width:200px;background-color:#EEFFEE", :disabled => true; %>
+          </li>
+          <li class="commit">
+            <ibt>
+              <%= submit_tag t("use_voucher.show.activate_button") %>
+            </ibt>
+            <p>or <%= link_to t("use_voucher.show.back_link"), validate_voucher_path %></p>
+          </li>
+        </ol>
+      </fieldset>    
   <% end %>
-
 </column-mc:>
