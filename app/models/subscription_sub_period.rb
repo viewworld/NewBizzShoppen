@@ -23,6 +23,8 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   scope :for_recurring_payment, lambda { |recurring_payment_id, invoice_id| where("subscriptions.paypal_profile_id = ? and subscriptions.paypal_invoice_id = ?", recurring_payment_id, invoice_id).joins(:subscription).order("subscription_sub_periods.id") }
   scope :without_invoice, where(:invoice_id => nil)
   scope :with_billing_date_greater_or_equal, lambda { |date| where("billing_date >= ?", date) }
+  scope :with_billing_date_less_or_equal, lambda { |date| where("subscription_sub_periods.billing_date <= ?", date) }
+  scope :with_paypal_cancelled, where("subscriptions.cancelled_in_paypal = ?", true).joins(:subscription)
 
   private
 

@@ -28,4 +28,8 @@ end
 
 every 1.day, :at => "0:00" do
   command File.join(dir_pwd, "RAILS_ENV=production thor nbs:prolong_subscriptions_daily")
+  end
+
+every 1.day, :at => "1:00 am" do
+  command File.join(dir_pwd, "RAILS_ENV=production thor nbs:create_unpaid_invoices_for_unpaid_sub_periods")
 end
