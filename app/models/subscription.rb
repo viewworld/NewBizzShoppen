@@ -81,6 +81,18 @@ class Subscription < ActiveRecord::Base
     transitions :from => Subscription.aasm_states.map(&:name), :to => :admin_changed
   end
 
+  def self.canceled_in_paypal(prof_id, spn)
+    if subscription = Subscription.where("paypal_profile_id = ?", prof_id).first
+      unless subscription.admin_changed?
+        subscription.cancel!
+        subscription.update_attribute(:cancelled_in_paypal, true)
+        subscription.send_paypal_profile_reactivation_link
+      end
+    else
+      EmailNotification.notify("recurring_payment_profile_cancel: Subscription not found", "<p>SubscriptionPaymentNotification: #{spn.id}</p> <>br /> Backtrace: <p>#{spn.params.inspect}</p>")
+    end
+  end
+
   def initial_state
     last_subscription = user.subscriptions.last
     if last_subscription and last_subscription.cancelled_during_lockup?
