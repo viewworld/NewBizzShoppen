@@ -49,6 +49,22 @@ describe PaypalRecurringPayment do
       paypal_recurring.checkout_url.should include("token=EC")
     end
 
+    it "should store all incoming paypal responses" do
+      paypal_recurring = PaypalRecurringPayment.new(:subscription_plan => @sp,
+                                                    :return_url => 'http://localhost',
+                                                    :cancel_url => 'http://localhost',
+                                                    :ipn_url => 'http://localhost/ipn')
+      ArchivedPaypalResponse.count.should eql(0)
+      paypal_recurring.checkout?
+      ArchivedPaypalResponse.count.should eql(1)
+    end
+
+    it "should notify about errors via email" do
+      paypal_recurring = PaypalRecurringPayment.new(:subscription_plan => @sp)
+      EmailNotification.expects(:notify)
+      paypal_recurring.checkout?.should_not be_true
+    end
+
 
   end
 
