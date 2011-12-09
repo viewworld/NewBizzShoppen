@@ -805,7 +805,7 @@ Scenario: I can see user's active subscription on user's edit page and button to
   Then I should not see translated "administration.users.stop_subscription"
 
 #8331
-# VAT rate 25%: 240 => 300
+# VAT rate 25%: 240 => 300 + subscription
 @m22 @requested @_done @_tested @ao
 Scenario: When editing a user I can click a button and go to invoices page filtered for this user
   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
@@ -824,10 +824,10 @@ Scenario: When editing a user I can click a button and go to invoices page filte
   And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
   And I go to administration edit user for kastomer@nbs.fake
   And I follow translated "administration.users.edit.view.view_user_invoices"
-  And I should see "300.00" within "#invoices_list"
+  And I should see "312.50" within "#invoices_list"
 
 #8605
-@m23 @subscriptions @requested @_done @_tested
+@m23 @subscriptions @requested @_done @_tested @wip
 Scenario: I can select user's new subscription plan
   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
   And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "500"

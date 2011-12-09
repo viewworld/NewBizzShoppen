@@ -45,7 +45,7 @@ class SubscriptionPlan < ActiveRecord::Base
   scope :active, where(:is_active => true)
   scope :exclude_free, lambda{ |exclude| exclude ? where("billing_price > 0.0") : where("") }
   scope :include_paypal, lambda{ |include| include ? where("") : where("use_paypal IS FALSE") }
-  scope :exclude_current_plan, lambda{ |plan| where("billing_price <> ? and id <> ?", plan.billing_price, plan.id)}
+  scope :exclude_current_plan, lambda{ |plan| where("billing_price <> ? and id <> ?", plan.billing_price.to_f, plan.id)}
   scope :free, where(:subscription_period => 0)
   scope :for_role, lambda { |role| where("roles_mask & #{2**SubscriptionPlan.valid_roles.index(role.to_sym)} > 0 ") }
   scope :for_roles, lambda { |roles| where( roles.map { |r| "roles_mask & #{2**SubscriptionPlan.valid_roles.index(r.to_sym)} > 0" }.join(" AND ") ) unless roles.empty? }
