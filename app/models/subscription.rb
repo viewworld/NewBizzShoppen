@@ -87,7 +87,7 @@ class Subscription < ActiveRecord::Base
       :penalty
     elsif last_subscription and last_subscription.upgraded_from_penalty?
       :non_cancelable
-    elsif last_subscription.nil? and use_paypal?
+    elsif (last_subscription.nil? or (is_today_in_free_period? and !paypal_billing_at_start?)) and use_paypal?
       :unconfirmed_paypal
     else
       :normal
