@@ -27,6 +27,10 @@ When /^user "([^"]*)" downgraded subscription to "([^"]*)"$/ do |email, plan_nam
   user.downgrade_subscription!(plan)
 end
 
+When /^there are no subscription plans$/ do
+  SubscriptionPlan.destroy_all
+end
+
 
 
 

@@ -397,3 +397,7 @@ end
 Given /^user should exist with email "([^"]*)" and role "([^"]*)"$/ do |email, role|
   assert User.where(:email => email).first.has_role?(role.to_sym)
 end
+
+Given /^user with email "([^"]*)" is a test account$/ do |email|
+  User.where(:email => email).first.with_role.update_attribute(:test_account, true)
+end

@@ -36,24 +36,12 @@ Feature: Subscriptions Paypal
   Scenario: User should see the detailed information on the missing payments in the email he receives
 
   # -------------------------------------------------------------------------------------------------------------------
-  # Signing in
+  # Signing in MOVED
   # -------------------------------------------------------------------------------------------------------------------
-  Scenario: When user cancels recurring billing in Paypal he should be asked to reactivate recurring payments everytime he logs in
-
-  Scenario: When user cancels recurring billing in Paypal and has unpaid invoices issued he should be asked to pay for them every time he logs in
-
-  Scenario: When user cancels recurring billing in Paypal and has unpaid invoices he should not be able to use the application until he pays
 
   # -------------------------------------------------------------------------------------------------------------------
-  # Signing up
+  # Signing up MOVED
   # -------------------------------------------------------------------------------------------------------------------
-  Scenario: When must enter billing information at start is enabled then I must confirm recurring payment in Paypal as part of signup
-
-  Scenario: When must enter billing information at start is enabled then free period is handled by Paypal
-
-  Scenario: When must enter billing information at end of free period is enabled for my subscription I should recevive an email to confirm recurring payent in Paypal before free period ends
-
-  Scenario: If I do not confirm recurring payments in Paypal the subscrption should behave as it has been canceled (issue unpaid invoice and send email, sing in restrictions)
 
   # -------------------------------------------------------------------------------------------------------------------
   # IPN
@@ -62,7 +50,7 @@ Feature: Subscriptions Paypal
   @system
   Scenario: The number of retries should be saved in subperiod
 
-  @system
+  @system @non_testable
   Scenario: Application should receive information from Paypal about payment status
 
   Scenario: When the number of retries exceeds the subscription plan limit then the subscription should be downgraded
