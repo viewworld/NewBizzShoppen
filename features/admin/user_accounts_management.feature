@@ -827,7 +827,7 @@ Scenario: When editing a user I can click a button and go to invoices page filte
   And I should see "312.50" within "#invoices_list"
 
 #8605
-@m23 @subscriptions @requested @_done @_tested @wip
+@m23 @subscriptions @requested @_done @_tested
 Scenario: I can select user's new subscription plan
   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
   And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "500"
