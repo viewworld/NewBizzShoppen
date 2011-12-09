@@ -79,7 +79,7 @@ Feature: Buy out
     And I should see "1,230.00" within ".ta_c:nth-child(7)"
     And I should see "1,230.00" within "span.green"
 
-  @added @m6 @_done @_tested
+  @added @m6 @_done @_tested  @wip
   Scenario: I can buyout and pay by paypal
     Given there are no leads
     And Category named "Computers" already exists
