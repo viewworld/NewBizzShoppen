@@ -13,10 +13,10 @@ test:
   paypal_secret: testsecret
   paypal_cert_id: 123456789
   paypal_url: "test/paypal/url"
-  paypal_api_email: testapi@example.com
-  paypal_api_password: 111111111111
-  paypal_api_key: apikeysecret
-  paypal_api_url: "/nvp"
+  paypal_api_email: seller_1292244681_biz_api1.gmail.com
+  paypal_api_password: 1292244690
+  paypal_api_key: AUVjzPkoCJAf1p9N6vEssI4hIPVVA6XjBKUpjBLNogHCfw29dQWFK6bF
+  paypal_api_url: "https://api-3t.sandbox.paypal.com/nvp"
 
 production:
   paypal_email: admin@fairleads.com

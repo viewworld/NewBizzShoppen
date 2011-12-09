@@ -268,6 +268,10 @@ Given /^I make sure current locale is "([^"]*)"$/ do |locale|
   visit "/locales/#{locale}"
 end
 
+Given /^I make sure Paypal subscriptions are enabled$/ do
+  SubscriptionPlan::DISABLE_PAYPAL_SUBSCRIPTIONS = false
+end
+
 Then /^locale should be set to "([^"]*)"$/ do |locale|
   I18n.locale.should == locale.to_sym
 end
