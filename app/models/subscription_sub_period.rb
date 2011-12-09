@@ -20,7 +20,7 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   scope :billable, lambda { where("subscription_period > 0 AND billing_date IS NOT NULL AND billing_date <= ? AND invoiced_at IS NULL", Date.today) }
   scope :with_paypal_txn_id, lambda {|txn_id| where(:paypal_txn_id => txn_id)}
   scope :paypal_unpaid, where("paypal_paid_auto IS NOT TRUE AND paypal_paid_manual IS NOT TRUE")
-  scope :for_recurring_payment, lambda { |recurring_payment_id, invoice_id| where("subscriptions.paypal_profile_id = ? and subscriptions.paypal_invoice_id = ?", recurring_payment_id, invoice_id).joins(:subscription).order("subscription_sub_periods.id") }
+  scope :for_recurring_payment, lambda { |recurring_payment_id| where("subscriptions.paypal_profile_id = ?", recurring_payment_id).joins(:subscription).order("subscription_sub_periods.id") }
   scope :without_invoice, where(:invoice_id => nil)
   scope :with_billing_date_greater_or_equal, lambda { |date| where("billing_date >= ?", date) }
   scope :with_billing_date_less_or_equal, lambda { |date| where("subscription_sub_periods.billing_date <= ?", date) }
