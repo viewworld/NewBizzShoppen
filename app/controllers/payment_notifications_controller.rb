@@ -38,17 +38,8 @@ class PaymentNotificationsController < ApplicationController
   end
 
   def recurring_payment_profile_cancel
-    spn = SubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
-    subscription = Subscription.where("paypal_profile_id = ?", params[:recurring_payment_id]).first
-    if subscription
-      unless subscription.admin_changed?
-        subscription.cancel!
-        subscription.update_attribute(:cancelled_in_paypal, true)
-        subscription.send_paypal_profile_reactivation_link
-      end
-    else
-      EmailNotification.notify("recurring_payment_profile_cancel: Subscription not found", "<p>SubscriptionPaymentNotification: #{spn.id}</p> <>br /> Backtrace: <p>#{spn.params.inspect}</p>")
-    end
+    Subscription.canceled_in_paypal(params[:recurring_payment_id],
+                                    SubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id]))
   end
 
   def recurring_payment
