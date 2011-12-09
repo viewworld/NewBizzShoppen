@@ -185,7 +185,7 @@ Then /^User (.+) with role (.+) is big buyer$/ do |email, role|
   if user.active_subscription.payable?
     user.active_subscription.update_attribute(:big_buyer, true)
   else
-    subscription_plan = SubscriptionPlan.make!(:assigned_roles => [user.role.to_sym], :subscription_period => 12, :big_buyer => true)
+    subscription_plan = SubscriptionPlan.make!(:assigned_roles => [user.role.to_sym], :subscription_period => 12, :big_buyer => true, :currency => Currency.find_by_name("DKK"))
     subscription_plan.subscription_plan_lines.make!(:price => 10)
     user.upgrade_subscription!(subscription_plan)
   end
