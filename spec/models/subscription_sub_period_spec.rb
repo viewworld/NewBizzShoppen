@@ -108,7 +108,7 @@ describe SubscriptionSubPeriod do
       @customer.active_subscription.subscription_sub_periods.first.update_attribute(:paypal_paid_auto, true)
 
       set_date_today_to(Date.today + 2.weeks)
-      Subscription.any_instance.expects(:cancel_paypal_profile).returns(nil)
+      Subscription.any_instance.expects(:cancel_paypal_profile).returns(nil).at_least(1)
       expect {
         @customer.upgrade_subscription!(@payable_subscription3)
       }.to change { Refund.count }.by(1)
