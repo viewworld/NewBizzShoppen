@@ -29,7 +29,7 @@ Feature: Subscriptions Paypal
 
   Scenario: When user cancels recurring billing in Paypal and billing date comes an unpaid invoice should be generated
 
-  Scenario: User should be able to pay pay the missing amount using link/button in the email he receives
+  Scenario: User should be able to pay the missing amount using link/button in the email he receives
 
   Scenario: User should be able to reactivate recurring payments using link/button in the email he receives
 
