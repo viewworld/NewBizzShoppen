@@ -780,8 +780,6 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
   desc "create_unpaid_invoices_for_unpaid_sub_periods", ""
 
   def create_unpaid_invoices_for_unpaid_sub_periods
-    SubscriptionSubPeriod.without_invoice.with_billing_date_less_or_equal(Date.today).with_paypal_cancelled.readonly(false).each do |sp|
-      sp.update_attribute(:paypal_retries, 0)
-    end
+    SubscriptionSubPeriod.create_unpaid_invoices_for_unpaid_sub_periods
   end
 end
