@@ -12,7 +12,7 @@ module CommonSubscriptions
     public
 
     def payable?
-      subscription_period > 0
+      subscription_period.to_i > 0
     end
 
     def total_billing

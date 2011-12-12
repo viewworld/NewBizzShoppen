@@ -13,7 +13,7 @@ Then /^last payment notification is marked as "([^"]*)"$/ do |status|
 end
 
 Then /^last payment notification is linked to invoice$/ do
-  assert PaymentNotification.last.payment_transaction.invoice.present? == true
+  assert CartPaymentNotification.last.payment_transaction.invoice.present? == true
 end
 
 Then /^cart for user "([^"]*)" has VAT included in total value$/ do |email|

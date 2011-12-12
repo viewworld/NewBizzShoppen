@@ -797,7 +797,7 @@ Scenario: I can see user's active subscription on user's edit page and button to
   And I press translated "administration.users.index.view.search_button"
   And I follow translated "administration.users.index.view.edit"
   Then I should see "Premium supplier"
-  And I should see "14 days left"
+  And I should see "13 days left"
   When I follow translated "administration.users.stop_subscription"
   Then I fill in "search_with_keyword" with "xena@xena.pl"
   And I press translated "administration.users.index.view.search_button"
