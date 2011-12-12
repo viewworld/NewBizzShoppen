@@ -165,7 +165,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def generate_invoice_lines_for_paypal_subscriber
-    if user and subscription_sub_period = SubscriptionSubPeriod.find_by_id(subscription_sub_period_id) and subscription_sub_period.billable? and subscription_sub_period.subscription.currency == currency
+    if user and subscription_sub_period = SubscriptionSubPeriod.find_by_id(subscription_sub_period_id) and subscription_sub_period.billable?
       user = self.user.with_role
       user.update_attribute(:subscriber_type, User::SUBSCRIBER_TYPE_SUBSCRIBER) if user.ad_hoc?
       invoice_lines_based_on_subscription_sub_period(subscription_sub_period)
