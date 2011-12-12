@@ -75,7 +75,6 @@ Feature: Subscription management for user
     And the date is "14" days from now
     And I sign in as admin@nbs.com with password secret
     And I am on administration upcoming invoices
-    And I open page in browser
     Then I should see "46.43" within "tbody#invoices_list tr:nth-of-type(1)"
 
   @selenium @_done @_tested
