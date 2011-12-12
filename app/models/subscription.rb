@@ -17,6 +17,7 @@ class Subscription < ActiveRecord::Base
   scope :billable, lambda { where("subscription_period > 0 AND billing_date IS NOT NULL AND billing_date <= ? AND invoiced_at IS NULL", Date.today) }
   scope :future, lambda { where("start_date > ?", Date.today) }
   scope :for_recurring_payment, lambda {|payment_id| where(:paypal_profile_id => payment_id) }
+  scope :with_currency, lambda { |currency| where(:currency_id => currency.id) }
 
   attr_accessor :next_subscription_plan, :next_subscription_plan_start_date
 
