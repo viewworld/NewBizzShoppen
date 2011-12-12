@@ -1,0 +1,31 @@
+<column-mc:>
+  <header back="true"><%= t("administration.archived_paypal_responses.show.view.header") %></header>
+
+  <div class="grid_800 pdd_10 no_pdd_r">
+    <div class="element_description">
+      <h3><%= t("administration.archived_paypal_responses.index.view.table.user_id") %></h3>
+      <p><%= @archived_paypal_response.user_id %></p>
+
+      <h3><%= t("administration.archived_paypal_responses.index.view.table.subscription_type") %></h3>
+      <p><%= @archived_paypal_response.subscription_type %></p>
+
+      <h3><%= t("administration.archived_paypal_responses.index.view.table.subscription_id") %></h3>
+      <p><%= @archived_paypal_response.subscription_id %></p>
+
+      <h3><%= t("administration.archived_paypal_responses.index.view.table.response_type") %></h3>
+      <p><%= @archived_paypal_response.response_type %></p>
+
+      <h3><%= t("administration.archived_paypal_responses.index.view.table.has_errors") %></h3>
+      <p><%= @archived_paypal_response.has_errors %></p>
+
+      <h3><%= t("administration.archived_paypal_responses.index.view.table.created_at") %></h3>
+      <p><%= format_date @archived_paypal_response.created_at, true %></p>
+
+      <br/>
+      <br/>
+      <p><%= raw @archived_paypal_response.response_details.to_yaml.gsub("\n",'<br/>') if @archived_paypal_response.response_details %></p>
+
+    </div>
+  </div>
+
+</column-mc:>

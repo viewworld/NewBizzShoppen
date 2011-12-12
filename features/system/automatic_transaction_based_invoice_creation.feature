@@ -38,7 +38,7 @@ Scenario: Invoice should be created per currency
   And lead Keyboards deal exists with attributes "price:868.68,currency_id:2"
   And lead Keyboards deal is bought by user gerard.jones@paerson22.com with role supplier and is assigned to user lead_user.jones@paerson22.com with role lead_user
   When I go to administration upcoming invoices
-  Then I should see "3" rows in a table with headers within "table.generic"
+  Then I should see "4" rows in a table with headers within "table.generic"
   When I follow translated "administration.upcoming_invoices.index.view.create_invoice" within "tbody#invoices_list tr:nth-of-type(1)"
   Then "invoice_currency_id" should be selected for "1"
   And the "invoice_invoice_lines_attributes_0_name" field should contain "Monitors deal"

@@ -4,7 +4,7 @@
         <%= blurb(:blurb_subscription_select) %>
     </p>
     <hl pdd="10"/>
-    <% @subscriptions = SubscriptionPlan.active.exclude_free(false).for_role(role).ascend_by_billing_price %>
+    <% @subscriptions = SubscriptionPlan.active.exclude_free(false).include_paypal(!SubscriptionPlan::DISABLE_PAYPAL_SUBSCRIPTIONS).for_role(role).ascend_by_billing_price %>
     <% if @subscriptions.any? %>
       <div class="subscription_plans">
         <% @subscriptions.each do |subscription_plan| %>

@@ -30,7 +30,7 @@ describe PaymentNotificationsController do
 
     it "should create payment notification and buy leads if validation pass" do
       PaymentNotification.count.should == 0
-      post :create, :txn_id => "irek", :payment_status => "Completed", :secret => APP_CONFIG[:paypal_secret], :receiver_email => APP_CONFIG[:paypal_email], :mc_gross => @customer.cart.total.to_s, :invoice => @customer.cart.id
+      post :create, :txn_type => "cart", :txn_id => "irek", :payment_status => "Completed", :secret => APP_CONFIG[:paypal_secret], :receiver_email => APP_CONFIG[:paypal_email], :mc_gross => @customer.cart.total.to_s, :invoice => @customer.cart.id
       PaymentNotification.count.should == 1
       payment_notification = PaymentNotification.first
       payment_notification.status.should == "Completed"

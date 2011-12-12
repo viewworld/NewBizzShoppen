@@ -751,7 +751,7 @@ Scenario: When creating agent/call centre agent then city and country should be 
 @m21 @requested @subscriptions @_tested @_done @tgn
 Scenario: I can cancel user's subscription
   Given I have user with email xena@xena.pl and role supplier
-  When subscription plan exists with attributes "name:Premium supplier,assigned_roles:supplier,billing_cycle:10"
+  When subscription plan exists with attributes "name:Premium supplier,assigned_roles:supplier,subscription_period:10"
   And user with email "xena@xena.pl" upgrades to subscription named "Premium supplier"
   And the date is "1" days from now
   When I go to administration users
@@ -763,7 +763,7 @@ Scenario: I can cancel user's subscription
 @m21 @requested @subscriptions @_tested @_done @tgn
 Scenario: When I lock user his/hers subscription is canceled
   Given I have user with email xena@xena.pl and role supplier
-  When subscription plan exists with attributes "name:Premium supplier,assigned_roles:supplier,billing_cycle:10"
+  When subscription plan exists with attributes "name:Premium supplier,assigned_roles:supplier,subscription_period:10"
   And user with email "xena@xena.pl" upgrades to subscription named "Premium supplier"
   And the date is "1" days from now
   When I go to administration users
@@ -790,14 +790,14 @@ Scenario: User with unpaid subscription cannot be deleted
 @m22 @requested @_done @_tested @tgn
 Scenario: I can see user's active subscription on user's edit page and button to Stop subscription
   Given I have user with email xena@xena.pl and role supplier
-  When subscription plan exists with attributes "name:Premium supplier,assigned_roles:supplier,billing_cycle:2"
+  When subscription plan exists with attributes "name:Premium supplier,assigned_roles:supplier,subscription_period:2"
   And user with email "xena@xena.pl" upgrades to subscription named "Premium supplier"
   When I go to administration users
   Then I fill in "search_with_keyword" with "xena@xena.pl"
   And I press translated "administration.users.index.view.search_button"
   And I follow translated "administration.users.index.view.edit"
   Then I should see "Premium supplier"
-  And I should see "14 days left"
+  And I should see "13 days left"
   When I follow translated "administration.users.stop_subscription"
   Then I fill in "search_with_keyword" with "xena@xena.pl"
   And I press translated "administration.users.index.view.search_button"
@@ -805,7 +805,7 @@ Scenario: I can see user's active subscription on user's edit page and button to
   Then I should not see translated "administration.users.stop_subscription"
 
 #8331
-# VAT rate 25%: 240 => 300
+# VAT rate 25%: 240 => 300 + subscription
 @m22 @requested @_done @_tested @ao
 Scenario: When editing a user I can click a button and go to invoices page filtered for this user
   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
@@ -824,13 +824,13 @@ Scenario: When editing a user I can click a button and go to invoices page filte
   And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
   And I go to administration edit user for kastomer@nbs.fake
   And I follow translated "administration.users.edit.view.view_user_invoices"
-  And I should see "300.00" within "#invoices_list"
+  And I should see "312.50" within "#invoices_list"
 
 #8605
 @m23 @subscriptions @requested @_done @_tested
 Scenario: I can select user's new subscription plan
   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
-  And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "500"
+  And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "500"
   And I go to administration edit user for kastomer@nbs.fake
   And I select "Medium for supplier" from "subscription_subscription_plan_id"
   And I fill in "subscription[start_date]" with today's date
@@ -842,8 +842,8 @@ Scenario: I can select user's new subscription plan
 @m23 @subscriptions @requested @_done @_tested
 Scenario: I can change user's subscription plan no matter what constraints it has (skip no upgrade/downgrade rules)
   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
-  And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0,can_be_upgraded:false,can_be_downgraded:false" and price "100"
-  And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0,can_be_upgraded:false,can_be_downgraded:false" and price "500"
+  And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0,can_be_upgraded:false,can_be_downgraded:false" and price "100"
+  And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0,can_be_upgraded:false,can_be_downgraded:false" and price "500"
   And I go to administration edit user for kastomer@nbs.fake
   And I select "Basic for supplier" from "subscription_subscription_plan_id"
   And I fill in "subscription[start_date]" with today's date
@@ -865,8 +865,8 @@ Scenario: I can change user's subscription plan no matter what constraints it ha
 @m23 @subscriptions @requested @_done @_tested
 Scenario: I can change user's subscription plan when he entered lockup period
   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
-  And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:2,lockup_period:1,billing_period:0,free_period:0" and price "100"
-  And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:2,lockup_period:1,billing_period:0,free_period:0" and price "500"
+  And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:2,lockup_period:1,billing_period:0,free_period:0" and price "100"
+  And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:2,lockup_period:1,billing_period:0,free_period:0" and price "500"
   And I go to administration edit user for kastomer@nbs.fake
   And I select "Medium for supplier" from "subscription_subscription_plan_id"
   And I fill in "subscription[start_date]" with today's date
@@ -885,8 +885,8 @@ Scenario: I can change user's subscription plan when he entered lockup period
 @m23 @subscriptions @requested @_done @_tested
 Scenario: I can change user's subscription plan when he is in free period
   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd,vat_number:666"
-  And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:2,lockup_period:1,billing_period:0,free_period:1" and price "100"
-  And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:2,lockup_period:1,billing_period:0,free_period:1" and price "500"
+  And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:2,lockup_period:1,billing_period:0,free_period:1" and price "100"
+  And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:2,lockup_period:1,billing_period:0,free_period:1" and price "500"
   And I go to administration edit user for kastomer@nbs.fake
   And I select "Medium for supplier" from "subscription_subscription_plan_id"
   And I fill in "subscription[start_date]" with today's date
@@ -905,7 +905,7 @@ Scenario: I can change user's subscription plan when he is in free period
 @m23 @subscriptions @requested @_done @_tested
 Scenario: I can select start date when I change user's subscription plan
   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
-  And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
+  And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
   And I go to administration edit user for kastomer@nbs.fake
   And I select "Basic for supplier" from "subscription_subscription_plan_id"
   And I fill in "subscription[start_date]" with "2020-01-01"
@@ -922,8 +922,8 @@ Scenario: When I select user's new subscription plan then the current plan end d
 @m23 @subscriptions @requested @added @_done @_tested
 Scenario: I can't change user subscription when he has other subscription scheduled after the active one
   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
-  And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
-  And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "500"
+  And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
+  And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "500"
   And user "kastomer@nbs.fake" upgraded subscription to "Medium for supplier"
   And user "kastomer@nbs.fake" downgraded subscription to "Basic for supplier"
   And I go to administration edit user for kastomer@nbs.fake
@@ -934,8 +934,8 @@ Scenario: I can't change user subscription when he has other subscription schedu
 @m23 @subscriptions @requested @added @_done @_tested
 Scenario: I can remove user's scheduled subscriptions
   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
-  And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
-  And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "500"
+  And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
+  And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "500"
   And user "kastomer@nbs.fake" upgraded subscription to "Medium for supplier"
   And user "kastomer@nbs.fake" downgraded subscription to "Basic for supplier"
   And I go to administration edit user for kastomer@nbs.fake

@@ -2,10 +2,13 @@
   <h3><%= subscription_plan.name %></h3>
 
   <div class="subscription_plan_price">
-    <% if subscription_plan.payable? %>
+    <% unless subscription_plan.is_free? %>
         <p class="billing"><%= as_currency(subscription_plan.total_billing, subscription_plan.currency) %></p>
 
-        <p>(<%= subscription_plan.billing_cycle %> <%= t("subscriptions.listing.weeks") %>)</p>
+        <p>
+          <%= subscription_plan.subscription_period %> <%= t("subscriptions.listing.weeks") %><%= " #{t('subscriptions.listing.with_n_weeks_billing_cycle', :number => subscription_plan.billing_cycle)}" if subscription_plan.number_of_periods > 1 %>
+          <span class="red"><%= t("subscriptions.listing.plus_n_weeks_free_period", :number => subscription_plan.free_period) if !current_user or subscription_plan.free_period_can_be_applied_to?(current_user) %></span>
+        </p>
     <% else %>
         <p class="billing"><%= t("subscriptions.listing.free") %></p>
     <% end %>
@@ -15,7 +18,7 @@
       <p><%= raw subscription_plan.subscription_text %></p>
   <% end %>  
 
-  <p class="subscription_plan_footer">    
+  <p class="subscription_plan_footer">
     <% if defined? subscriptions_form and subscriptions_form %>
         <%= radio_button_tag "user_#{role}[subscription_plan_id]", subscription_plan.id, subscriptions_form.object.subscription_plan_id.to_i == subscription_plan.id, :id => "user_#{role}_subscription_plan_id", :style => "display: none" %>
     <% else %>

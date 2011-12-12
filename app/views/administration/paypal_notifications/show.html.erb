@@ -1,0 +1,46 @@
+<column-mc:>
+  <header back="true"><%= t("administration.paypal_notifications.show.view.header") %></header>
+
+  <div class="grid_800 pdd_10 no_pdd_r">
+    <div class="element_description">
+      <h3>Txn ID</h3>
+      <p><%= @paypal_notification.transaction_id %></p>
+
+      <h3>Txn status</h3>
+      <p><%= @paypal_notification.status %></p>
+
+      <% if @paypal_notification.is_a?(SubscriptionPaymentNotification) %>
+      <h3>Profile ID</h3>
+      <p><%= @paypal_notification.params["recurring_payment_id"] if @paypal_notification.params %></p>
+      <% end %>
+
+      <h3>Txn type</h3>
+      <p><%= @paypal_notification.params["txn_type"] if @paypal_notification.params %></p>
+
+      <h3>Notification Type</h3>
+      <p><%= @paypal_notification.type %></p>
+
+      <h3>Buyer</h3>
+      <p><%= @paypal_notification.buyer_id %></p>
+
+      <h3>Created at</h3>
+      <p><%= format_date @paypal_notification.created_at, true %></p>
+
+
+      <% if @paypal_notification.params.is_a?(Hash) %>
+        <br/><hr/><br/><b>PARAMETERS</b><br/><br/>
+          <% @paypal_notification.params.keys.sort.each do |key| %>
+
+            <p><b><%= key %>:</b>&nbsp;<%= @paypal_notification.params[key] %></p>
+          <% end %>
+
+      <% end %>
+
+      <br/><hr/><br/><b>ASSOCIATED RESPONSES</b><br/><br/>
+
+      <%= render :partial => '/administration/archived_paypal_responses/table', :locals => {:responses => @responses, :collection => @collection} %>
+
+    </div>
+  </div>
+
+</column-mc:>

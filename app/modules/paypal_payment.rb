@@ -41,6 +41,25 @@ module PaypalPayment
     values
   end
 
+  def encrypt_subscription(token)
+    encrypt_for_paypal({
+        :currency_code => 'EUR',
+        :business      => APP_CONFIG[:paypal_email],
+        :cmd           => '_xclick-subscriptions',
+        :no_shipping   => 1,
+        :no_note       => 1,
+        :item_name     => name,
+        :a3            => 6000,
+        :p3            => billing_cycle,
+        :t3            => 'W',
+        :sra           => paypal_retries?,
+        :return        => 'http://fairdeals.dk',
+        :srt           => 10, # Recurring times
+        :invoice       => token,
+        :src           => 1
+    })
+  end
+
   def paypal_encrypted(return_url, notify_url)
     encrypt_for_paypal(hash_for_paypal(return_url, notify_url))
   end

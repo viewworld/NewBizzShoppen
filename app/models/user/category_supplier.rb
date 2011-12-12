@@ -67,7 +67,7 @@ class ::User::CategorySupplier < ::User
   end
 
   def remove_category_supplier
-    return false unless (has_role?(:category_supplier) and has_role?(:supplier) and (!active_subscription.payable? or active_subscription.subscription_plan.roles.include?(:supplier)))
+    return false unless (has_role?(:category_supplier) and has_role?(:supplier) and (active_subscription.is_free? or active_subscription.subscription_plan.roles.include?(:supplier)))
     subaccounts.each { |user| u = ::User::CategorySupplier.find(user.id); u.send(:remove_role_category_supplier); u.save }
     send(:remove_role_category_supplier)
     save

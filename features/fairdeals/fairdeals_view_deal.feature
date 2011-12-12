@@ -34,7 +34,7 @@ Feature: Fairdeals view deal
   Scenario: I should see Company contact name, Company contact e-mail, Company weblink, Company contact telephone number when I click OK
     Given I visit domain http://fairdeals.dk
     Then I sign in as procurment@nbs.com with password secret
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
     And user with email "procurment@nbs.com" upgrades to subscription named "Premium member"
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
@@ -57,7 +57,7 @@ Feature: Fairdeals view deal
   @_done @_tested @tgn
   Scenario: As PM I can fill in additional field for lead "Please tell us about your needs"
     Given I visit domain http://fairdeals.dk
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
     And user with email "procurment@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as procurment@nbs.com with password secret
     Then I follow translated "layout.fairdeals.main_menu.deals"

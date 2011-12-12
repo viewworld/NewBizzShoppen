@@ -68,7 +68,7 @@ module ActiveRecord
       #     #=> {:parrots => {old_parrot_object => new_parrot}}
       #
       def deep_clone(options = {})
-        self.send :process, options
+        self.send :process_cloneable, options
       end
 
       def deep_clone!(options = {})
@@ -76,11 +76,11 @@ module ActiveRecord
       end
 
       def deep_replace(options = {})
-        self.send :process, options.merge(:replace_object_associations_only => true)
+        self.send :process_cloneable, options.merge(:replace_object_associations_only => true)
       end
 
       def deep_replace!(options = {})
-        deep_replace(options.merge(:save => true))        
+        deep_replace(options.merge(:save => true))
       end
 
       def get_clone_relations(*table_names)
@@ -92,25 +92,26 @@ module ActiveRecord
       end
 
       private
-      def process options
+      def process_cloneable options
         options = self.send(:default_cloneable_configuration).merge(options)
         options.merge!(self.acts_as_deep_cloneable_configuration) if self.respond_to? :acts_as_deep_cloneable_configuration and !options[:sub]
-        object = options[:replace_object_associations_only] ? send(:process_with_replacing, options) : send(:process_with_cloning, options)
+          object = options[:replace_object_associations_only] ? send(:process_with_replacing, options) : send(:process_with_cloning, options)
 
-        if options[:include]
-          Array(options[:include]).each do |association, deep_associations|
-            if (association.kind_of? Hash)
-              deep_associations = association.values.first
-              association       = association.keys.first
-            end
-            unless (options[:except] || {}).include?(association.to_sym)
-              cloned_object = object.send :set_association, self, association, deep_associations, options
-              object.send("#{association}=", cloned_object)
-              object.save(:validate => options[:validate]) if options[:save]
+          if options[:include]
+            Array(options[:include]).each do |association, deep_associations|
+              if (association.kind_of? Hash)
+                deep_associations = association.values.first
+                association       = association.keys.first
+              end
+              unless (options[:except] || {}).include?(association.to_sym)
+                cloned_object = object.send :set_association, self, association, deep_associations, options
+                object.send("#{association}=", cloned_object)
+                callbacks_data = object.send :skip_callbacks unless options[:with_callbacks]
+                object.save(:validate => options[:validate]) if options[:save]
+                object.send(:restore_callbacks, callbacks_data) unless options[:with_callbacks]
+              end
             end
           end
-        end
-
         object
       end
 
@@ -120,9 +121,10 @@ module ActiveRecord
         kopy.send :set_default_values_for_attributes, options[:except] if options[:except]
         kopy.send :set_custom_values_for_attributes, options[:attributes] if options[:attributes]
         kopy.send :set_relation_values_for_attributes, options[:relation_attribute] if options[:relation_attribute]
-        kopy.send :cancel_callbacks unless options[:with_callbacks]
         if options[:save]
+          callbacks_data = kopy.send :skip_callbacks unless options[:with_callbacks]
           kopy.save(:validate => options[:validate])
+          kopy.send(:restore_callbacks, callbacks_data) unless options[:with_callbacks]
           kopy.send :clone_stamps, self
         end
         kopy.send :replace_object_associations, options if options[:associations]
@@ -131,14 +133,16 @@ module ActiveRecord
       end
 
       def process_with_replacing(options)
+        callbacks_data = self.send :skip_callbacks unless options[:with_callbacks]
         self.save(:validate => options[:validate]) if options[:save]
+        self.send(:restore_callbacks, callbacks_data) unless options[:with_callbacks]
         self.send :replace_object_associations, options if options[:associations]
         self
       end
 
       def clone_stamps(original_object)
         [:created_at,:updated_at,:created_by,:updated_by].each do |attribute|
-          self.update_attribute(attribute, original_object.send(attribute)) if self.respond_to? attribute  
+          self.update_attribute(attribute, original_object.send(attribute)) if self.respond_to? attribute
         end
       end
 
@@ -178,7 +182,9 @@ module ActiveRecord
         associations_reflections.each do |assoc_reflection|
           object = self.send(assoc_reflection.name)
           self.send("#{assoc_reflection.name}=", options[:associations][object]) if options[:associations].keys.include?(object)
+          callbacks_data = self.send :skip_callbacks unless options[:with_callbacks]
           self.save(:validate => options[:validate])  if options[:save]
+          self.send(:restore_callbacks, callbacks_data) unless options[:with_callbacks]
         end
       end
 
@@ -195,36 +201,50 @@ module ActiveRecord
       end
 
       def set_has_one_or_belongs_to_association(original_object, association, options)
-        unless original_object.send(association).nil?
-          sub_kopy = (options[:associations] || {}).keys.include?(original_object.send(association)) ? options[:associations][original_object.send(association)] : original_object.send(association).send(:process, options)
-          self.send(:set_clone_relations, sub_kopy.send(:get_clone_relations)) unless options[:replace_object_associations_only]
-          sub_kopy
-        end
+        sub_kopy = (options[:associations] || {}).keys.include?(original_object.send(association)) ? options[:associations][original_object.send(association)] : original_object.send(association).send(:process_cloneable, options)
+        self.send(:set_clone_relations, sub_kopy.send(:get_clone_relations)) unless options[:replace_object_associations_only]
+        sub_kopy
       end
 
       def set_has_many_association(original_object, association, options)
         primary_key = original_object.class.reflect_on_association(association).primary_key_name.to_sym
         options.merge!(:relation_attribute => {primary_key => self.id})
         original_object.send(association).collect do |obj|
-          sub_kopy = (options[:associations] || {}).keys.include?(obj) ? options[:associations][obj] : obj.send(:process, options)
+          sub_kopy = (options[:associations] || {}).keys.include?(obj) ? options[:associations][obj] : obj.send(:process_cloneable, options)
           self.send(:set_clone_relations, sub_kopy.send(:get_clone_relations)) unless options[:replace_object_associations_only]
           sub_kopy
         end
       end
 
       def set_has_and_belongs_to_many_association(original_object, association, options)
-        original_object.send(association).collect{|object| (options[:replace_object_associations_only] and options[:associations].keys.include?(object)) ? options[:associations][object] : object}        
+        original_object.send(association).collect{|object| (options[:replace_object_associations_only] and options[:associations].keys.include?(object)) ? options[:associations][object] : object}
       end
 
-      def cancel_callbacks
-        [:save, :update, :create].each{|callback_type| self.class.reset_callbacks(callback_type)}
+      def fetch_callbacks_data
+        [:save, :update, :create].map do |type|
+          self.class.send("_#{type.to_s}_callbacks").map{|c|{:filter => c.filter, :kind => c.kind, :type => type}}.reject{|c|c[:filter].to_s.include?"autosave"}
+        end.flatten
       end
-      
+
+      def skip_callbacks
+        callbacks_data = self.send(:fetch_callbacks_data)
+        callbacks_data.each do |callback_data|
+          self.class.skip_callback(callback_data[:type], callback_data[:kind], callback_data[:filter])
+        end
+        callbacks_data
+      end
+
+      def restore_callbacks(callbacks_data)
+        callbacks_data.each do |callback_data|
+          self.class.set_callback(callback_data[:type], callback_data[:kind], callback_data[:filter])
+        end
+      end
+
       def default_cloneable_configuration
         {
             :except => nil,
             :include => nil,
-            :attributes => nil,  
+            :attributes => nil,
             :associations => nil,
             :save => false,
             :validate => false,

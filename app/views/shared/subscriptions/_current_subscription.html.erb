@@ -1,7 +1,7 @@
 <div id="subscription_plan_<%= subscription_plan.id %>">
     <h3><%= subscription_plan.name %></h3>
 
-    <% if subscription_plan.payable? %>
+    <% unless subscription_plan.is_free? %>
         <p><%= as_currency(subscription_plan.total_billing, subscription_plan.currency) %></p>
         <p><%= t("subscriptions.current_subscription_billing_cycle", :from => current_user.active_subscription.start_date , :to => current_user.active_subscription.end_date) %></p>
         <% if next_subscription = current_user.next_subscription %>

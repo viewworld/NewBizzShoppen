@@ -1,0 +1,3 @@
+class SubscriptionPaymentNotification < PaymentNotification
+
+end

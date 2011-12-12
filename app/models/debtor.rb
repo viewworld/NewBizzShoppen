@@ -10,5 +10,6 @@ class Debtor < ActiveRecord::Base
   scope :with_assigned_at_date_before_and_including, lambda { |date| where("owner_id in (select owner_id from debtors where assigned_at::DATE <= ?)",date.to_postgresql_date)}
   scope :with_role, lambda { |role| where("owner_id in (select owner_id from debtors INNER JOIN users ON owner_id=users.id where users.roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0)") }
   scope :with_subscriber_type, lambda { |subscriber_type| where("owner_id in (select owner_id from debtors INNER JOIN users ON owner_id=users.id where users.subscriber_type like ?)", subscriber_type) }
+  scope :with_owner, lambda { |owner| where(:owner_id => owner.to_i)}
 end
 

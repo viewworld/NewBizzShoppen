@@ -49,6 +49,7 @@
           <th><%= t("administration.subscription_plans.index.view.name") %></th>
           <th><%= t("administration.subscription_plans.index.view.roles") %>
           <th><%= t("administration.subscription_plans.index.view.total_amount") %></th>
+          <th><%= t("administration.subscription_plans.index.view.use_paypal") %></th>
           <th><%= t("administration.subscription_plans.index.view.is_active") %></th>
           <th class="ta_r"><%= t("administration.subscription_plans.index.view.actions") %></th>
           <th class="hr"></th>
@@ -68,7 +69,8 @@
 
               <td><%= subscription_plan.name %></td>
               <td><%= subscription_plan.roles_as_text %></td>
-              <td><%= as_currency(subscription_plan.total_billing, subscription_plan.currency)  %></td>
+              <td><%= as_currency(subscription_plan.total_billing, subscription_plan.currency, 2)  %></td>
+              <td><%= subscription_plan.use_paypal? ? t("common.yes_label") : t("common.no_label") %></td>
               <td><%= subscription_plan.is_active? ? t("common.yes_label") : t("common.no_label") %></td>
 
               <td class="tda ta_r">

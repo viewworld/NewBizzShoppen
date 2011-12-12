@@ -21,17 +21,17 @@
 <% if current_user and current_user.can_upgrade_or_downgrade_subscription? %>
 
     <hl pdd="10"/>
-    
+
     <div id="available_subscriptions">
-        <h2><%= t("subscriptions.available_subscriptions") %>:</h2>        
+        <h2><%= t("subscriptions.available_subscriptions") %>:</h2>
         <br/>
         <p>
             <%= blurb(:blurb_subscription_select) %>
         </p>
 
         <hl pdd="5"/>
-      
-        <% @subscriptions = SubscriptionPlan.active.exclude_free(true).exclude_current_plan(current_user.active_subscription_plan).for_role(role).ascend_by_billing_price.select{|sp| current_user.subscription_can_be_changed_to?(sp) } %>
+
+        <% @subscriptions = SubscriptionPlan.active.exclude_free(true).include_paypal((!SubscriptionPlan::DISABLE_PAYPAL_SUBSCRIPTIONS or current_user.test_account?)).exclude_current_plan(current_user.active_subscription_plan).for_role(role).ascend_by_billing_price.select{|sp| current_user.subscription_can_be_changed_to?(sp) } %>
         <% if @subscriptions.any? %>
           <div class="subscription_plans">
             <% @subscriptions.each do |subscription_plan| %>

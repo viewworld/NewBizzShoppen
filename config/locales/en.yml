@@ -1705,6 +1705,7 @@ en:
           edit: "Edit"
           destroy: "Destroy"
           confirmation_msg: "Are you sure?"
+          use_paypal: "Use PayPal?"
       new:
         view:
           header: "New subscription plan"
@@ -1722,6 +1723,36 @@ en:
         line_name: "Name"
         line_price: "Price"
         delete_line: "Delete"
+    paypal_notifications:
+      index:
+        view:
+          title: "PayPal notifications"
+          show: "Show"
+          table:
+            txn_id: "Txn ID"
+            type: "Type"
+            status: "Status"
+            profile_id: "Profile ID"
+            created_at: "Created at"
+            txn_type: "Txn type"
+      show:
+        view:
+          header: "Paypal notification details"
+    archived_paypal_responses:
+      index:
+        view:
+          title: "Archived PayPal responses"
+          show: "Show"
+          table:
+            user_id: "User ID"
+            subscription_id: "Subscription ID"
+            subscription_type: "Subscription type"
+            response_type: "Response type"
+            has_errors: "Has errors?"
+            created_at: "Created at"
+      show:
+        view:
+          header: "Response details"
   agent:
     leads:
       index:
@@ -2910,6 +2941,10 @@ en:
       descriptions:
         subscription_refund: "Refund for unused %{days} days in subscription %{name}"
     subscription_plan_incorrect_roles_set: "Role member cannot be selected with other roles."
+    subscription_plan:
+      billing_types:
+        at_start: "Billing at start"
+        at_end: "Billing at the end of free period"
     email_template:
       test_send_disclaimer: "This is preview only. Information inside the brackets will be replaced by data when email will be sent to actual recipient through system."
   activerecord:
@@ -2969,6 +3004,23 @@ en:
         invalid: "is invalid"
         not_a_number: "is not a number"
         record_invalid: "Record is invalid"
+        less_than_or_equal_to: "must be less than or equal to %{count}"
+        greater_than_or_equal_to: "must be greater than or equal to %{count}"
+        inclusion: "is not included in the list"
+        exclusion: "is reserved"
+        confirmation: "doesn't match confirmation"
+        accepted: "must be accepted"
+        empty: "can't be empty"
+        too_long: "is too long (maximum is %{count} characters)"
+        too_short: "is too short (minimum is %{count} characters)"
+        wrong_length: "is the wrong length (should be %{count} characters)"
+        taken: "has already been taken"
+        greater_than: "must be greater than %{count}"
+        equal_to: "must be equal to %{count}"
+        less_than: "must be less than %{count}"
+        odd: "must be odd"
+        even: "must be even"
+        must_divide_by: "must divide by %{number}"
       models:
         user:
           attributes:
@@ -3577,7 +3629,7 @@ en:
         name: "Name"
         billing_cycle: "Billing cycle (weeks)"
         lockup_period: "Lockup period (weeks)"
-        billing_period: "Billing period (+/- weeks)"
+        billing_period: "Billing date (+/- weeks)"
         free_period: "Free period (weeks)"
         currency_id: "Currency"
         is_active: "Active?"
@@ -3588,6 +3640,12 @@ en:
         deal_maker: "Deal maker role enabled?"
         seller_id: "Seller"
         assigned_roles: "Roles"
+        use_paypal: "Use PayPal"
+        automatic_downgrading: "Automatic downgrading"
+        automatic_downgrade_subscription_plan_id: "Automatic downgrading to"
+        paypal_retries: "PayPal payment retries"
+        paypal_billing_at_start: "Billing type"
+        free_deals_in_free_period: "Number of free deals in free period"
   users:
     passwords:
       edit:
@@ -3691,6 +3749,7 @@ en:
       show_comments: "show comments"
       hide_comments: "hide comments"
       no_comments: "No comments has been added."
+      here: "here"
     leads:
       show:
         view:
@@ -4079,5 +4138,16 @@ en:
         team_buyers: "Team suppliers"
         deal_maker: "Deal maker"
       weeks: "weeks"
+      with_n_weeks_billing_cycle: "with %{number} weeks billing cycle"
+      plus_n_weeks_free_period: "+ %{number} weeks of free period"
     as_free_subscription: "as free subscription"
     active_subscription_is_canceled: "Your current subscription plan is canceled"
+    paypal_subscription_not_confirmed: "Paypal subscription has not been confimed!"
+    active_subscription_is_canceled_in_paypal: "Update your billing information clicking %{link}!"
+  unconfirmed_paypal_subscriptions:
+    show:
+      view:
+        header: "Unconfirmed Paypal subscription"
+        message: "Please go to PayPal and confirm payment on Your subscription named %{subscription}"
+        button_confirm: "Confirm Your payment"
+        message_failure: "It is not possible to confirm Your subscription named %{subscription} right now. Please try again later."

@@ -1,6 +1,10 @@
 Nbs::Application.routes.draw do
 
-  resources :payment_notifications
+  resources :payment_notifications, :only => [:create] do
+    member do
+      post 'show'
+    end
+  end
 
   get "agent_home/show"
   get "supplier_home/show"
@@ -72,7 +76,13 @@ Nbs::Application.routes.draw do
     resources :youtube_introductions
     resources :email_bounces
     resources :languages
-    resources :subscription_plans
+    resources :subscription_plans do
+      collection do
+        get 'fetch_subscription_plans'
+      end
+    end
+    resources :paypal_notifications, :only => [:index, :show]
+    resources :archived_paypal_responses, :only => [:index, :show]
   end
 
   namespace :suppliers do
@@ -331,6 +341,10 @@ Nbs::Application.routes.draw do
       member do
         get 'upgrade'
         get 'downgrade'
+        get 'paypal_subscription'
+        get 'paypal_confirmed'
+        get 'paypal_canceled'
+        get 'paypal_renew'
       end
     end
   end
@@ -360,6 +374,8 @@ Nbs::Application.routes.draw do
       post 'test_send_email'
     end
   end
+
+  resource :unconfirmed_paypal_subscriptions, :only => [:show]
 
   constraints(Fairdeals) do
     match '/(:id)' => "fairdeals_home#show"

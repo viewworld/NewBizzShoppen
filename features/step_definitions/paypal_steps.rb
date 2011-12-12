@@ -1,7 +1,7 @@
 Given /^paypal payment for user with email "([^"]*)" and role "([^"]*)"$/ do |email, role|
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   rack_test_session_wrapper = Capybara.current_session.driver
-  rack_test_session_wrapper.post("/payment_notifications", :txn_id => "irek", :payment_status => "Completed", :secret => APP_CONFIG[:paypal_secret], :receiver_email => APP_CONFIG[:paypal_email], :mc_gross => BigDecimal(customer.cart.total.to_s).to_s, :invoice => customer.cart.id)
+  rack_test_session_wrapper.post("/payment_notifications", :txn_type => "cart", :txn_id => "irek", :payment_status => "Completed", :secret => APP_CONFIG[:paypal_secret], :receiver_email => APP_CONFIG[:paypal_email], :mc_gross => BigDecimal(customer.cart.total.to_s).to_s, :invoice => customer.cart.id)
 end
 
 Then /^I should be redirected to paypal page$/ do
@@ -13,7 +13,7 @@ Then /^last payment notification is marked as "([^"]*)"$/ do |status|
 end
 
 Then /^last payment notification is linked to invoice$/ do
-  assert PaymentNotification.last.payment_transaction.invoice.present? == true
+  assert CartPaymentNotification.last.payment_transaction.invoice.present? == true
 end
 
 Then /^cart for user "([^"]*)" has VAT included in total value$/ do |email|

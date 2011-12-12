@@ -53,7 +53,7 @@ Given /^user "([^"]*)" has team buyers enabled$/ do |email|
   if user.active_subscription.payable?
     user.active_subscription.update_attribute(:team_buyers, true)
   else
-    subscription_plan = SubscriptionPlan.make!(:assigned_roles => [user.role.to_sym], :billing_cycle => 12, :team_buyers => true)
+    subscription_plan = SubscriptionPlan.make!(:assigned_roles => [user.role.to_sym], :subscription_period => 12, :team_buyers => true)
     subscription_plan.subscription_plan_lines.make!
     user.upgrade_subscription!(subscription_plan)
   end
@@ -67,7 +67,7 @@ Given /^user "([^"]*)" has deal maker role enabled$/ do |email|
   elsif user.active_subscription.payable?
     user.active_subscription.update_attribute(:deal_maker, true)
   else
-    subscription_plan = SubscriptionPlan.make!(:assigned_roles => [user.role.to_sym], :billing_cycle => 12, :deal_maker => true, :big_buyer => true)
+    subscription_plan = SubscriptionPlan.make!(:assigned_roles => [user.role.to_sym], :subscription_period => 12, :deal_maker => true, :big_buyer => true)
     subscription_plan.subscription_plan_lines.make!
     user.upgrade_subscription!(subscription_plan)
   end
@@ -185,7 +185,7 @@ Then /^User (.+) with role (.+) is big buyer$/ do |email, role|
   if user.active_subscription.payable?
     user.active_subscription.update_attribute(:big_buyer, true)
   else
-    subscription_plan = SubscriptionPlan.make!(:assigned_roles => [user.role.to_sym], :billing_cycle => 12, :big_buyer => true)
+    subscription_plan = SubscriptionPlan.make!(:assigned_roles => [user.role.to_sym], :subscription_period => 12, :big_buyer => true, :currency => Currency.find_by_name("DKK"))
     subscription_plan.subscription_plan_lines.make!(:price => 10)
     user.upgrade_subscription!(subscription_plan)
   end
@@ -396,4 +396,8 @@ end
 
 Given /^user should exist with email "([^"]*)" and role "([^"]*)"$/ do |email, role|
   assert User.where(:email => email).first.has_role?(role.to_sym)
+end
+
+Given /^user with email "([^"]*)" is a test account$/ do |email|
+  User.where(:email => email).first.with_role.update_attribute(:test_account, true)
 end

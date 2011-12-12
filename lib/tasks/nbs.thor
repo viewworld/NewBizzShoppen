@@ -349,6 +349,13 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                  :body => "<p>Name: {{name}}</p><p>Phone number: {{phone_number}}</p><p>E-mail: {{email_from}}</p><p>Request: {{deal_description}}</p>"},
          :da => {:subject => "[DK] {{name}} has requested a deal",
                  :body => "<p>Name: {{name}}</p><p>Phone number: {{phone_number}}</p><p>E-mail: {{email_from}}</p><p>Request: {{deal_description}}</p>"}
+        },
+        {:name => "Subscription cancelled through paypal",
+         :uniq_id => "subscription_cancelled_through_paypal",
+         :en => {:subject => "Paypal recurring payment cancelled. Reactivate it!",
+                 :body => "<p>You have cancelled Your recurring payment in Paypal.com for the Fairleads subscription. <a href=\"{{subscription.create_recurring_profile_from_next_billing_cycle_link}}\">Click here to reactivate it from next billing cycle!</a></p>"},
+         :da => {:subject => "[DK] Paypal recurring payment cancelled. Reactivate it!",
+                 :body => "<p>[DK] </p>"}
         }
     ]
 
@@ -407,7 +414,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     ["category_supplier", "supplier", "member"].each do |role|
       subscription_name = "Free #{role.humanize.downcase} subscription"
       unless SubscriptionPlan.where(:name => subscription_name).first.present?
-        sub = SubscriptionPlan.make!(:name => subscription_name, :billing_cycle => 0, :billing_period => 0, :assigned_roles => [role.to_sym], :seller => Seller.default, :currency => Currency.default_currency)
+        sub = SubscriptionPlan.make!(:name => subscription_name, :subscription_period => 0, :billing_period => 0, :assigned_roles => [role.to_sym], :seller => Seller.default, :currency => Currency.default_currency)
         "User::#{role.camelize}".constantize.all.each do |user|
           user.apply_subscription!(sub)
         end
@@ -768,5 +775,11 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
 
   def prolong_subscriptions_daily
     Subscription.auto_prolong
+  end
+
+  desc "create_unpaid_invoices_for_unpaid_sub_periods", ""
+
+  def create_unpaid_invoices_for_unpaid_sub_periods
+    SubscriptionSubPeriod.create_unpaid_invoices_for_unpaid_sub_periods
   end
 end

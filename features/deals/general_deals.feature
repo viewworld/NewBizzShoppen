@@ -19,7 +19,7 @@ Feature: General deals
     Given I am on the homepage
     And I visit domain http://fairdeals.dk
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And I follow translated "layout.fairdeals.main_menu.deals"
@@ -59,7 +59,7 @@ Feature: General deals
     Given I am on the homepage
     And I visit domain http://fairdeals.dk
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And I follow translated "layout.fairdeals.main_menu.deals"
@@ -82,7 +82,7 @@ Feature: General deals
      Given I am on the homepage
     And I visit domain http://fairdeals.dk
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And I follow translated "layout.fairdeals.main_menu.deals"
@@ -105,7 +105,7 @@ Feature: General deals
     Given I am on the homepage
     And I visit domain http://fairdeals.dk
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And I follow translated "layout.fairdeals.main_menu.deals"
@@ -119,7 +119,7 @@ Feature: General deals
     Then lead generated from deal in category "Asd" by "purchase_manager101@nbs.com" is bought
     Then I am not sign in
     And I am signed up and confirmed as user with email purchase_manager202@nbs.com and password supersecret and role member
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
     And user with email "purchase_manager202@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager202@nbs.com with password supersecret
     And I follow translated "layout.fairdeals.main_menu.deals"
@@ -184,7 +184,7 @@ Feature: General deals
     Given I am on the homepage
     And I visit domain http://fairdeals.dk
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And I follow translated "layout.fairdeals.main_menu.deals"

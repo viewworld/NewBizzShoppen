@@ -24,7 +24,7 @@ Nbs::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   #Required by Devise
-  config.action_mailer.default_url_options = {:host => 'beta.fairleads.com'}
+  config.action_mailer.default_url_options = {:host => 'testing.fairleads.com'}
 
   config.action_mailer.delivery_method     = :postmark
   config.action_mailer.postmark_settings = { :api_key => "a132d83a-7585-444a-b3cf-a522acfcb9fb" }

@@ -1,0 +1,3 @@
+class UnknownPaymentNotification < PaymentNotification
+
+end

@@ -48,7 +48,7 @@ Feature: Debtors
 
   @m21 @requested @subscriptions @_done @_tested @tgn
   Scenario: At subscription billing date user is added a subscriber flag (rake task)
-    Given subscription plan exists with attributes "name:Premium supplier, billing_cycle:2, billing_period:0"
+    Given subscription plan exists with attributes "name:Premium supplier, subscription_period:2, billing_period:0"
     And subscription plan has currency named "DKK"
     And subscription plan has following lines
       | name                 | price |
@@ -61,7 +61,7 @@ Feature: Debtors
 
   @m21 @requested @subscriptions @selenium @tgn @_done @_tested
   Scenario: If user has ad-hoc flag then at subscription date items are added to subscription invoice and flag is changed to subscriber
-    Given subscription plan exists with attributes "name:Premium supplier, billing_cycle:12"
+    Given subscription plan exists with attributes "name:Premium supplier, subscription_period:12"
     And subscription plan has currency named "DKK"
     And subscription plan has following lines
       | name                 | price |
@@ -91,7 +91,7 @@ Feature: Debtors
   @m21 @requested @selenium @tgn @_tested @_done @tgn
   Scenario: When multiple debtors are selected for invoicing then seller company is assigned to each of them based on their subscription's seller
     Given there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:123" for country "Denmark"
-    Given subscription plan exists with attributes "name:Premium supplier, billing_cycle:12"
+    Given subscription plan exists with attributes "name:Premium supplier, subscription_period:12"
     And subscription plan has currency named "DKK"
     And subscription plan has seller "DannyTheSeller"
     And subscription plan has following lines
@@ -121,7 +121,7 @@ Feature: Debtors
   Scenario: I can see members in the debtors list and invoice them as suppliers
     Given I have user with email member7@rt.tv and role member
     And user "member7@rt.tv" with role "member" has attributes "first_name:Hank, last_name:Fox"
-    Given subscription plan exists with attributes "name:Premium supplier, billing_cycle:12, assigned_roles:member"
+    Given subscription plan exists with attributes "name:Premium supplier, subscription_period:12, assigned_roles:member"
     And subscription plan has currency named "DKK"
     And subscription plan has following lines
       | name                 | price |
@@ -142,7 +142,7 @@ Feature: Debtors
  @m22 @requested @tgn @_done @_tested
  Scenario: When I issue an invoice for subscriber then I should not see the screen to select user/seller
    Given there is a seller with attributes "name:TestSeller88, first_name:John, last_name:Koval, company_name:Trust"
-   And subscription plan exists with attributes "name:TestSubPlan, billing_cycle:4"
+   And subscription plan exists with attributes "name:TestSubPlan, subscription_period:4"
    And subscription plan has seller "TestSeller88"
    And subscription plan has following lines
    | name                 | price |

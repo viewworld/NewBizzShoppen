@@ -113,3 +113,21 @@ Feature: Customer signup
 
   @m21 @requested @subscriptions @tested_elsewhere @_done @tgn
   Scenario: When supplier is not big buyer and tries to creates the deal then the created company category will not be autobuy
+
+  @subscriptions @m24 @tgn @selenium @_done @_tested
+  Scenario: As supplier I cannot create new deals if I used my free deals limit
+    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper,vat_number:3947DF4738DF937824"
+    And I sign in as buyer@nbs.com with password secret
+    When subscription plan exists with attributes "name:Premium supplier,deal_maker:1,big_buyer:1,assigned_roles:supplier,free_period:1,free_deals_in_free_period:2"
+    And user with email "buyer@nbs.com" upgrades to subscription named "Premium supplier"
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
+    And I follow translated "deals.common.listing.view.new_deal"
+    Then I fill deal creation form
+    Then I press translated "supplier.deals.new.view.create_button"
+    And I follow translated "deals.common.listing.view.new_deal"
+    Then I fill deal creation form
+    Then I press translated "supplier.deals.new.view.create_button"
+    And I should not see translated "deals.common.listing.view.new_deal"
+
+  @subscriptions @system @m24 @tgn @_done @_tested
+  Scenario: Number of available free deals should decrement each time a deal is created in free period

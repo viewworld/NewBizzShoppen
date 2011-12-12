@@ -1,6 +1,7 @@
 class Devise::SessionsController < ApplicationController
   prepend_before_filter :require_no_authentication, :only => [:new, :create]
   include Devise::Controllers::InternalHelpers
+  skip_before_filter :redirect_to_paypal_confirmation
 
   # GET /resource/sign_in
   def new
