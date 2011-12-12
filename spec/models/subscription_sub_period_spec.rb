@@ -135,7 +135,7 @@ describe SubscriptionSubPeriod do
       @payable_subscription1.update_attribute(:use_paypal, false)
       setup_customer(@payable_subscription1)
 
-      @invoice = Invoice.create(:user_id => @customer.id)
+      @invoice = Invoice.create(:user_id => @customer.id, :currency => @payable_subscription1.currency)
       @invoice.invoice_lines.size.should == @customer.active_subscription.subscription_sub_periods[0].subscription_plan_lines.size
       @invoice.invoice_lines.first.netto_price.should == @customer.active_subscription.subscription_sub_periods[0].subscription_plan_lines.first.price
       @invoice.invoice_lines.first.name.should == @customer.active_subscription.subscription_sub_periods[0].subscription_plan_lines.first.name

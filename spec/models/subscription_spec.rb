@@ -252,7 +252,7 @@ describe Subscription do
       it "should create credit note for unused amount of subscription" do
         setup_customer(@payable_subscription1)
         @customer.active_subscription.update_attribute(:billing_date, Date.today)
-        @invoice = Invoice.create(:user => @customer)
+        @invoice = Invoice.create(:user => @customer, :currency => @payable_subscription1.currency)
 
         expect{
           @customer.upgrade_subscription!(@payable_subscription2)
