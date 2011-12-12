@@ -51,7 +51,7 @@ end
 Then /^invoice line is created for lead "([^"]*)" and user with email "([^"]*)" and role "([^"]*)"$/ do |header, email, role|
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   lead = Lead.where(:header => header).first
-  assert !customer.invoices.last.invoice_lines.detect { |il| il.payable.lead == lead }.nil?
+  assert !customer.invoices.last.invoice_lines.detect { |il| il.payable.is_a?(LeadPurchase) and il.payable.lead == lead }.nil?
 end
 
 Then /^invoices count for user with email "([^"]*)" and role "([^"]*)" is (\d+)$/ do |email, role, count|
