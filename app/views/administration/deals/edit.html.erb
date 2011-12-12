@@ -15,6 +15,10 @@
     </param:actions>
   </header>
 
+  <% unless @deal.enabled? %>
+    <div class="flash flash_notice"><%= t("deals.common.max_auto_buy_limit_reached") %></div>
+  <% end %>
+
   <%= semantic_form_for [:administration, @deal], :method => :put, :html => {:multipart => true} do |form| %>
       <frm title="#{@deal.header}">
         <param:content>

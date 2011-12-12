@@ -176,8 +176,9 @@ class Lead < AbstractLead
   def auto_buy
     if published_changed? and published and category.auto_buy
       user = category.category_customers.first.user.with_role
-      if user.big_buyer? and !bought_by_user?(user) and user.can_auto_buy?(self)
+      if user.big_buyer? and !bought_by_user?(user)
         user.cart.add_lead(self)
+        deal.check_max_auto_buy! if deal
       end
     end
   end

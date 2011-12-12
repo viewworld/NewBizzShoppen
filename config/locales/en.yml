@@ -4045,6 +4045,7 @@ en:
         no_leads_created_yet_message: "No leads have been created yet."
         title: "Leads created by deal"
         sold: "Sold?"
+      max_auto_buy_limit_reached: "Max auto buy limit has been reached."
     new:
       view:
         frame_header: "Get deal"

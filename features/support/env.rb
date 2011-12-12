@@ -56,7 +56,7 @@ Spork.prefork do
   block.call
   load_db
   if !Capybara.app_host.blank? and !Capybara.app_host.to_s.include?("localhost")
-    Capybara.app_host = "localhost:#{Capybara.app_host.split(":").last.to_s.split("/").first}"
+    Capybara.app_host = "localhost:#{Capybara.app_host.to_s.split(":").last.to_s.split("/").first}"
   end
   end
 
