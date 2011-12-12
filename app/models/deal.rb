@@ -1,14 +1,19 @@
 class Deal < AbstractLead
   include ScopedSearch::Model
 
+  VOUCHER_UNTIL_TYPE_DATE = 0.freeze
+  VOUCHER_UNTIL_TYPE_WEEKS = 1.freeze  
+
   has_one :deal_request_details_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'deal_request_details'", :dependent => :destroy
   has_one :logo, :class_name => "Asset::DealLogo", :as => :resource, :conditions => "asset_type = 'Asset::DealLogo'", :dependent => :destroy
+  has_one :voucher_heading_picture, :class_name => "Asset::VoucherPicture", :as => :resource, :conditions => "asset_type = 'Asset::VoucherPicture'", :dependent => :destroy
   has_many :images, :class_name => "Asset::DealImage", :as => :resource, :conditions => "asset_type = 'Asset::DealImage'", :dependent => :destroy
   has_many :materials, :class_name => "Asset::DealMaterial", :as => :resource, :conditions => "asset_type = 'Asset::DealMaterial'", :dependent => :destroy
   has_many :leads, :class_name => "Lead", :foreign_key => "deal_id"
   has_many :comment_threads, :class_name => "Comment", :foreign_key => :commentable_id, :conditions => {:commentable_type => 'AbstractLead'}
   has_many :deal_certification_requests, :dependent => :destroy
   has_many :featured_deals
+  has_many :voucher_numbers
   has_and_belongs_to_many :deal_templates, :class_name => "LeadTemplate", :join_table => "leads_lead_templates", :foreign_key => "lead_id", :association_foreign_key => "lead_template_id"
   belongs_to :lead_category, :class_name => "Category", :foreign_key => "lead_category_id"
   belongs_to :deal_admin, :class_name => "User", :foreign_key => "deal_admin_email", :primary_key => "email"
@@ -18,22 +23,30 @@ class Deal < AbstractLead
   scope :active_is, lambda { |q| where("#{q == "1" ? "end_date >= ? and start_date <= ?" : "end_date < ? or start_date > ?"}", Date.today, Date.today) }
   scope :for_user, lambda { |q| where("creator_id = ?", q.id) }
   scope :group_deals, where(:group_deal => true)
+  scope :not_blocked_by_sold_out_vouchers, where("leads.voucher_enabled = false OR (leads.voucher_enabled = true and leads.voucher_max_number > (select count(*) from voucher_numbers where voucher_numbers.deal_id = leads.id and voucher_numbers.state <> 'new'))")
 
   scoped_order :header, :end_date, :published, :created_at, :company_name
 
   validates_presence_of :start_date, :end_date, :email_address
-  validates_presence_of :deal_admin_email, :unless => Proc.new{|d| d.new_record? }
+  validates_presence_of :deal_admin_email, :unless => Proc.new { |d| d.new_record? }
 
-  validates_numericality_of :price, :greater_than_or_equal_to => 0, :if => Proc.new{|d| d.group_deal == true }
-  validates_numericality_of :discounted_price, :greater_than_or_equal_to => 0, :if => Proc.new{|d| d.group_deal == true }
+  validates_numericality_of :deal_price, :greater_than_or_equal_to => 0, :if => Proc.new { |d| d.group_deal == true or d.voucher_enabled == true }
+  validates_numericality_of :discounted_price, :greater_than_or_equal_to => 0, :if => Proc.new { |d| d.group_deal == true or d.voucher_enabled == true}
   validates_numericality_of :created_leads, :greater_than_or_equal_to => 0, :only_integer => true
 
-  validates_presence_of :price, :discounted_price, :social_media_description, :if => Proc.new{|d| d.group_deal == true }
+  validates_presence_of :price, :discounted_price, :social_media_description, :if => Proc.new { |d| d.group_deal == true }
 
-  validate :deal_admin_presence, :unless => Proc.new{|d| d.new_record? }
+  validates_presence_of :voucher_end_date, :if => Proc.new { |d| d.voucher_enabled == true and d.voucher_until_type == 0 }
+  validates_presence_of :voucher_number_of_weeks, :if => Proc.new { |d| d.voucher_enabled == true and d.voucher_until_type == 1 }
+  validates_numericality_of :voucher_number_of_weeks, :greater_than_or_equal_to => 1, :only_integer => true, :if => Proc.new { |d| d.voucher_enabled == true and d.voucher_until_type == 1 }
+  validates_presence_of :voucher_max_number, :if => Proc.new { |d| d.voucher_enabled == true }
+  validates_numericality_of :voucher_max_number, :greater_than_or_equal_to => 1, :only_integer => true, :if => Proc.new { |d| d.voucher_enabled == true }
+  validate :voucher_max_number_greater_or_equal_not_new_voucher_numbers
+
+  validate :deal_admin_presence, :unless => Proc.new { |d| d.new_record? }
 
   before_create :create_uniq_deal_category, :set_default_max_auto_buy
-  after_create :certify_for_unknown_email, :assign_deal_admin
+  after_create :certify_for_unknown_email, :assign_deal_admin, :set_deal_unique_id
   before_save :set_dates, :check_deal_request_details_email_template, :set_enabled_from, :handle_max_auto_buy
 
   attr_accessor :creation_step, :use_company_name_as_category
@@ -41,6 +54,8 @@ class Deal < AbstractLead
   accepts_nested_attributes_for :logo, :reject_if => proc { |attributes| attributes['asset'].blank? }
   accepts_nested_attributes_for :images, :reject_if => proc { |attributes| attributes['asset'].blank? }
   accepts_nested_attributes_for :materials, :reject_if => proc { |attributes| attributes['asset'].blank? }
+  accepts_nested_attributes_for :voucher_heading_picture, :reject_if => proc { |attributes| attributes['asset'].blank? }
+  accepts_nested_attributes_for :voucher_numbers
 
   ajaxful_rateable :stars => 5, :allow_update => false, :cache_column => :deal_average_rating
   acts_as_commentable
@@ -115,7 +130,11 @@ class Deal < AbstractLead
         :price => 0,
         :max_auto_buy => Settings.default_max_auto_buy_per_4_weeks.to_i)
   end
-  
+
+  def self.until_type_for_radio
+    [[I18n.t("models.deal.until_type_for_radio.end_date"), VOUCHER_UNTIL_TYPE_DATE], [I18n.t("models.deal.until_type_for_radio.number_of_weeks"), VOUCHER_UNTIL_TYPE_WEEKS]]
+  end
+
   def build_supplier(params={})
     if supplier
       supplier
@@ -135,11 +154,11 @@ class Deal < AbstractLead
   end
 
   def self.group_deals_for_select
-      group_deals.without_inactive.map{|gd| [gd.to_s_for_group_deals_for_select, gd.id]}
+    group_deals.without_inactive.map { |gd| [gd.to_s_for_group_deals_for_select, gd.id] }
   end
 
   def self.all_deals_for_select
-      without_inactive.map{|gd| [gd.to_s_for_group_deals_for_select, gd.id]}
+    without_inactive.map { |gd| [gd.to_s_for_group_deals_for_select, gd.id] }
   end
 
   def to_s_for_group_deals_for_select
@@ -189,7 +208,7 @@ class Deal < AbstractLead
   def general_discount?
     deal_price.to_f == 0 or discounted_price.to_f == 0
   end
-  
+
   def assign_lead_category_to_supplier!
     if supplier and lead_category.is_customer_unique?
       supplier.update_attribute(:deal_category_id, lead_category.id)
@@ -217,7 +236,7 @@ class Deal < AbstractLead
 
   def current_four_week_period_end_date
     current_four_week_period_start_date + 28.days
-  end
+  end  
   
   def next_group_deal
     if deal = Deal.without_inactive.order("id ASC").where("id > ?", self.id).first
@@ -237,6 +256,36 @@ class Deal < AbstractLead
 
   def can_be_managed_by?(user)
     user.has_role?(:admin) or creator == user or email_address == user.email or (user.has_role?(:call_centre) and user.with_role.subaccounts.map(&:id).include?(creator.id))
+  end
+
+  def generate_deal_unique_id
+    DecimalToOtherSystemsConverter.convert_to_alphabetical(id, 4)
+  end
+
+  def create_missing_voucher_numbers
+    if voucher_enabled and voucher_max_number > voucher_numbers.size
+      (voucher_max_number - voucher_numbers.size).times do
+        voucher_numbers.create
+      end
+    end
+  end
+
+  def remove_to_many_voucher_numbers
+    if voucher_enabled and voucher_max_number < voucher_numbers.size
+      voucher_numbers.can_be_deleted(Time.now)[0..voucher_numbers.size-voucher_max_number-1].each { |vn| vn.destroy }
+    end
+  end
+
+  def remove_voucher_numbers_if_disable
+    voucher_numbers.can_be_deleted(Time.now).delete_all unless voucher_enabled
+  end
+
+  def voucher_can_be_disabled
+    voucher_numbers.can_not_be_deleted(Time.now).size == 0
+  end
+
+  def can_be_editable_by(current_user)
+    current_user.id == creator.id or current_user.email == email_address or current_user.email == deal_admin_email
   end
 
   private
@@ -292,4 +341,19 @@ class Deal < AbstractLead
   def set_default_max_auto_buy
     self.max_auto_buy = Settings.default_max_auto_buy_per_4_weeks.to_i unless max_auto_buy
   end
+
+  def set_deal_unique_id
+    self.update_attribute(:deal_unique_id, generate_deal_unique_id)
+  end
+
+  def set_voucher_numbers
+    self.create_missing_voucher_numbers
+    self.remove_voucher_numbers_if_disable
+    self.remove_to_many_voucher_numbers
+  end
+
+  def voucher_max_number_greater_or_equal_not_new_voucher_numbers
+    errors.add(:voucher_max_number, I18n.t("models.deal.voucher_max_number_validation")) if self.voucher_max_number < self.voucher_numbers.can_not_be_deleted(Time.now).size
+  end
+
 end

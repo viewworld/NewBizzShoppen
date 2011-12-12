@@ -56,14 +56,13 @@ class Invoice < ActiveRecord::Base
   after_create :duplicate_company_and_supplier_information, :set_year
   after_validation :set_default_currency, :if => Proc.new{ |i| i.new_record? }
   after_update :update_revenue_frozen
-  after_create :generate_invoice_lines_for_supplier, :generate_invoice_lines_for_subscriber, :generate_invoice_lines_for_paypal_subscriber, :generate_invoice_lines_for_refund
+  after_create :generate_invoice_lines_for_supplier, :generate_invoice_lines_for_subscriber, :generate_invoice_lines_for_paypal_subscriber, :generate_invoice_lines_for_refund, :generate_invoice_line_for_voucher
   before_update :generate_manual_transaction_for_big_buyer
   before_save :mark_all_invoice_lines_as_paid
   after_save :recalculate_invoice_items
   after_initialize :set_seller
 
-  attr_accessor :subscription_sub_period_id
-
+  attr_accessor :subscription_sub_period_id, :voucher_number
   #Uncomment reject_if, if not validating invoice lines
   accepts_nested_attributes_for :invoice_lines, :allow_destroy => true #,:reject_if => lambda { |a| a[:name].blank? }
   accepts_nested_attributes_for :supplier_address, :seller_address
@@ -194,6 +193,20 @@ class Invoice < ActiveRecord::Base
   def generate_manual_transaction_for_big_buyer
     if paid_at_changed? and cash_flow_changed? and user and user.big_buyer?
       ManualTransaction.create(:invoice => self, :amount => cash_flow, :paid_at => Time.now)
+    end
+  end
+
+  def generate_invoice_line_for_voucher
+    unless voucher_number.blank?
+       InvoiceLine.create(
+            :invoice => self,
+            :payable => voucher_number,
+            :name => voucher_number.deal.header,
+            :netto_price => voucher_number.deal.discounted_price,
+            :vat_rate => user.country_vat_rate,
+            :quantity => 1)
+      self.paid_at = Time.now
+      self.save
     end
   end
 

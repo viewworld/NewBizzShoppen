@@ -356,7 +356,14 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                  :body => "<p>You have cancelled Your recurring payment in Paypal.com for the Fairleads subscription. <a href=\"{{subscription.create_recurring_profile_from_next_billing_cycle_link}}\">Click here to reactivate it from next billing cycle!</a></p>"},
          :da => {:subject => "[DK] Paypal recurring payment cancelled. Reactivate it!",
                  :body => "<p>[DK] </p>"}
-        }
+        },
+        {:name => "Voucher notification for member",
+         :uniq_id => "voucher_notification",
+         :en => {:subject => "You have new voucher!",
+                 :body => "<p>Congratulations! You have new voucher. You can find it in attachment.</p>"},
+         :da => {:subject => "[DK]You have new voucher!",
+                 :body => "<p>Congratulations! You have new voucher. You can find it in attachment.</p>"}
+        }    
     ]
 
 

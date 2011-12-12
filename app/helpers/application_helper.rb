@@ -244,4 +244,9 @@ module ApplicationHelper
     show_all_enabled = params[:show_all] == "1"
     link_to show_all_enabled ? t("common.show_paginated") : t("common.show_all"), "javascript:show_all_pages('#{form_id}', '#{show_all_enabled ? 0 : 1}')", :class => "show_all_link"
   end
+
+  def st_lite(text)
+    sanitize_options = {:tags=>[],:attributes=>[]}
+    raw sanitize(text, sanitize_options)
+  end
 end

@@ -24,4 +24,19 @@ class CartPaymentNotification < PaymentNotification
       PaypalTransaction.create(:invoice => invoice, :payment_notification => self, :amount => supplier.cart.total, :paid_at => self.created_at)
     end
   end
+
+
+  public
+
+  def self.process(params)
+    params[:invoice].to_s.slice!(0..7)
+    payment_notification = CartPaymentNotification.create!(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
+    if payment_notification.status == "Completed" &&
+        params[:secret] == APP_CONFIG[:paypal_secret] &&
+        params[:receiver_email] == APP_CONFIG[:paypal_email] &&
+        BigDecimal.new(params[:mc_gross]) == payment_notification.supplier.cart.total
+      payment_notification.supplier.cart.paid!
+    end
+  end
+
 end

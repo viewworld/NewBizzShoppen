@@ -4,6 +4,20 @@ Given /^paypal payment for user with email "([^"]*)" and role "([^"]*)"$/ do |em
   rack_test_session_wrapper.post("/payment_notifications", :txn_type => "cart", :txn_id => "irek", :payment_status => "Completed", :secret => APP_CONFIG[:paypal_secret], :receiver_email => APP_CONFIG[:paypal_email], :mc_gross => BigDecimal(customer.cart.total.to_s).to_s, :invoice => customer.cart.id)
 end
 
+Given /^paypal voucher payment for deal "([^"]*)" and user with email "([^"]*)" and role "([^"]*)"$/ do |deal, email, role|
+  deal = Deal.where(:header => deal).first
+  voucher_number = deal.voucher_numbers.first
+  voucher_number.state.should == "new"
+  voucher_number.reserved_until.blank?.should == false
+  member = "User::#{role.camelize}".constantize.find_by_email(email)
+  rack_test_session_wrapper = Capybara.current_session.driver
+  rack_test_session_wrapper.post("/payment_notifications", :txn_id => "irek", :payment_status => "Completed", :secret => APP_CONFIG[:paypal_secret], :receiver_email => APP_CONFIG[:paypal_email], :mc_gross => BigDecimal(deal.discounted_price.to_s).to_s, :invoice => "v_#{voucher_number.deal_unique_id}_#{voucher_number.number}_#{voucher_number.user_id}")
+  voucher_number.reload.state.should == "active"
+  invoice = member.invoices.last
+  invoice.invoice_lines.last.payable.should == voucher_number
+  invoice.paid?.should == true
+end
+
 Then /^I should be redirected to paypal page$/ do
   assert current_path.include?("test/paypal/url")
 end

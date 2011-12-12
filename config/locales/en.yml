@@ -2114,6 +2114,8 @@ en:
           short_deal_description_label: "Short deal description"
           deal_description_label: "Deal description"
           view_description_link: "See description..."
+          voucher_label: "Voucher"
+          voucher_link: "Download pdf"
     lead_templates:
       index:
         view:
@@ -2533,6 +2535,7 @@ en:
         sign_out: "Sign out"
         add_team_member: "Add team member"
         i_have_an_account: "I have an account"
+        validate_voucher_button: "Validate voucher"
 
         create_new_membership_account: "Create a new membership account"
   agent_home:
@@ -2768,6 +2771,43 @@ en:
     create:
       flash:
         email_sent_successfully: "Your email has been sent"
+  voucher_numbers:
+    edit:
+      header: "Edit voucher numbers"
+      back_link: "Go back to deal"
+      update_button: "Update all"
+      table:
+        number: "Number"
+        state: "State"
+    update:
+      flash:
+        success: "Voucher numbers have been updated properly."
+        the_same_number: "Sorry, your changes haven't been saved. All numbers have to be unique."
+    pdf:
+      deal_name: "Deal name"
+      voucher_value: "Voucher value"
+      price_paid: "Price paid"
+      valid_until: "Valid until"
+      detailed_description: "Detailed description"
+      fine_print: "Fine print"
+      how_to_redeem: "How to redeem"
+      deal_id: "Deal id"
+      voucher_number: "Voucher number"
+  use_voucher:
+    show:
+      header: "Use voucher"
+      text: "This is correct voucher, do you want to use it now?"
+      deal_id_label: "Deal id"
+      voucher_number_label: "Voucher number"
+      activate_button: "Use"
+      back_link: "Back"
+  validate_voucher:
+    show:
+      header: "Validate voucher"
+      text: "Please enter deal id and voucher number:"
+      deal_id_label: "Deal id"
+      voucher_number_label: "Voucher number"
+      validate_button: "Validate"
 
   shared:
     accounts:
@@ -2831,6 +2871,7 @@ en:
         short_featured_description_label: "Short featured description"
         detailed_description_label: "Detailed description"
         company_description_label: "Company description"
+        how_to_redeem_label: "How to redeem"
         deal_category_label: "Deal category"
         price_label: "Lead price"
         discounted_price_label: "Discounted deal price"
@@ -2845,6 +2886,8 @@ en:
         url_label: "URL"
         additional_language: "Additional language"
         new_translation: "New translation"
+        deal_unique_id_label: "Deal id"
+        edit_voucher_number_link: "Edit voucher numbers"
   models:
     archived_emails:
       status:
@@ -2857,7 +2900,7 @@ en:
       payout_validation_message: "can only be between 0 and 100"
       agreement_read_validation_message: "You have to accept the agreement"
       not_linked_to_social_provider: "not linked"
-      subscription_plan_not_specified: "Subscripion plan has not been chosen."
+      subscription_plan_not_specified: "Subscription plan has not been chosen."
     lead:
       hotness:
         lvl0: Upcoming
@@ -2947,6 +2990,26 @@ en:
         at_end: "Billing at the end of free period"
     email_template:
       test_send_disclaimer: "This is preview only. Information inside the brackets will be replaced by data when email will be sent to actual recipient through system."
+    voucher_number:
+      states:
+        new: "New"
+        active: "Active"
+        used: "Used"
+        pending: "Pending"
+      validates_format_of_number: "should have exactly 9 characters (capital letters and/or numbers)"
+      validate_voucher_result:
+        valid: "This is correct voucher, do you want to activate it now?"
+        already_used: "This is correct voucher number but unfortunately it is already activated. Please try with another one."
+        invalid: "Sorry, voucher number is incorrect. Please try again."
+      use_voucher_result:
+        used: "Voucher has been activated successfully."
+        error: "Sorry but we was not able to activate your voucher."
+    deal:
+      until_type_for_radio:
+        number_of_weeks: "Number of weeks"
+        end_date: "End date"
+      voucher_max_number_validation: "can not be smaller then activated vouchers numbers"
+
   activerecord:
     models:
       article:
@@ -4014,11 +4077,13 @@ en:
       assets:
         view:
           logo_label: "Logo"
+          voucher_heading_picture_label: "Voucher heading picture"
           add_logo_label: "Add deal logo"
           add_image_label: "Add deal image"
           add_material_label: "Add deal material"
           add_logo_button: "Add logo"
           remove_logo: "remove"
+          remove_voucher_heading_picture: "remove"
           images_label: "Images"
           remove_image: "remove"
           add_image_button: "Add image"
@@ -4143,12 +4208,3 @@ en:
       plus_n_weeks_free_period: "+ %{number} weeks of free period"
     as_free_subscription: "as free subscription"
     active_subscription_is_canceled: "Your current subscription plan is canceled"
-    paypal_subscription_not_confirmed: "Paypal subscription has not been confimed!"
-    active_subscription_is_canceled_in_paypal: "Update your billing information clicking %{link}!"
-  unconfirmed_paypal_subscriptions:
-    show:
-      view:
-        header: "Unconfirmed Paypal subscription"
-        message: "Please go to PayPal and confirm payment on Your subscription named %{subscription}"
-        button_confirm: "Confirm Your payment"
-        message_failure: "It is not possible to confirm Your subscription named %{subscription} right now. Please try again later."

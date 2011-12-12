@@ -3,14 +3,19 @@
     <p><%= blurb("blurb_deal_confirmation_page") %></p>
   </div>
 
-  <br />
+  <br/>
 
-  <div class="frm_tiny pdd_15 ta_c">    
+  <div class="frm_tiny pdd_15 ta_c">
     <h2><%= t("member.leads.show.view.confirmation_message") %></h2>
+
     <div class="pdd_10 grid_50 grid_c">
-        <ibt>
-          <%= button_to t("member.leads.show.view.ok_confirmation"), root_path, :method => :get %>
-        </ibt>
+      <ibt>
+        <% if @lead.deal.voucher_enabled and !@lead.deal.voucher_numbers.available_for_now(Time.now).blank? %>
+            <%= button_to t("member.leads.show.view.ok_confirmation"), redirect_to_paypal_members_lead_path(@lead), :method => :get %>
+        <% else %>
+            <%= button_to t("member.leads.show.view.ok_confirmation"), root_path, :method => :get %>
+        <% end %>
+      </ibt>
     </div>
     <clb/>
 

@@ -1,0 +1,47 @@
+<column-mc:>
+  <header><%= t("voucher_numbers.edit.header") %></header>  
+  <%= semantic_form_for :deal, @deal, :url => voucher_number_path(@deal), :html => {:method => :put} do |f| %>
+        <table class="generic">
+          <thead>
+          <tr>
+            <th class="hl"></th>
+            <th><%= t("voucher_numbers.edit.table.number") %></th>
+            <th><%= t("voucher_numbers.edit.table.state") %></th>
+            <th class="hr"></th>
+          </tr>
+          </thead>
+
+          <tfoot>
+          <tr>
+            <td class="fl"></td>
+            <td colspan="2"></td>
+            <td class="fr"></td>
+          </tr>
+          </tfoot>
+          <tbody>
+          <%= f.fields_for :voucher_numbers do |builder| %>
+              <tr>
+                <td></td>
+                <td>
+                  <ul>
+                    <% input_html = builder.object.state == VoucherNumber::STATE_NEW ? {} : {:style => "background-color:#EEEEEE;", :disabled => true} %>
+                    <%= builder.input :number, :label => false, :input_html => input_html %>
+                  </ul>
+                </td>
+                <td><%= builder.object.translated_state %></td>
+                <td></td>
+              </tr>
+          <% end %>
+          <tr class="main_actions">
+             <td></td>
+             <td><%= link_to t("voucher_numbers.edit.back_link"), @role == "admin" ? edit_administration_deal_path(@deal) : self.send("edit_#{@role.pluralize}_deal_path", @deal) %></td>
+             <td colspan="3">
+               <ibt c="fltri" icon="save">
+                 <%= f.submit t("voucher_numbers.edit.update_button") %>
+               </ibt>               
+             </td>
+          </tr>
+          </tbody>
+        </table>
+  <% end %>
+</column-mc:>

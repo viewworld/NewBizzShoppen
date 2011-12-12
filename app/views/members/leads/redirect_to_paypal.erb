@@ -1,0 +1,13 @@
+<column-mc:>
+  <script language="javascript">
+      $(document).ready(function() {
+          $('#submit_voucher').submit();
+      });
+  </script>
+
+  redirecting to paypal, please wait...
+  <%= form_tag APP_CONFIG[:paypal_url], :id => "submit_voucher" do %>
+      <%= hidden_field_tag :cmd, "_s-xclick" %>
+      <%= hidden_field_tag :encrypted, @voucher_number.paypal_encrypted(root_path, payment_notifications_url(:secret => APP_CONFIG[:paypal_secret])) %>
+  <% end %>
+</column-mc:>
