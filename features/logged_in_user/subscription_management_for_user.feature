@@ -54,8 +54,8 @@ Feature: Subscription management for user
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.downgrade"
-    Then I should see translated "subscriptions.next_subscription_plan" with options "next_plan_name:Basic for supplier,next_plan_active_from:{Date.today+4.weeks+1.day}"
-    And I should see translated "subscriptions.can_be_canceled_at" with options "cancel_date:{Date.today+4.weeks+1.day}"
+    Then I should see translated "subscriptions.next_subscription_plan" with options "next_plan_name:Basic for supplier,next_plan_active_from:{Date.today+4.weeks}"
+    And I should see translated "subscriptions.can_be_canceled_at" with options "cancel_date:{Date.today+4.weeks}"
     And I should see translated "subscriptions.cant_be_upgraded_nor_downgraded"
 
   @selenium @_done @_tested
