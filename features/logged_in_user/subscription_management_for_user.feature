@@ -84,6 +84,7 @@ Feature: Subscription management for user
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
+    And I follow translated "layout.my_profile_link"
     And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:2,lockup_period:1,billing_period:0,free_period:0" and price "100"
     When the date is "8" days from now
     And active subscription for user "supp@nbs.com" is in lockup period
