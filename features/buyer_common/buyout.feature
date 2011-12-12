@@ -227,7 +227,7 @@ Feature: Buy out
     Given I am signed up and confirmed as user with email admin@lajoie.ca and password secret and role admin
     And I sign in as admin@lajoie.ca with password secret
     And I follow translated "layout.main_menu.admin.upcoming_invoices"
-    Then I should see "1,230.00" within "#invoices_list :nth-child(8)"
+    Then I should see "1,230.00" within "#invoices_list tr:nth-child(2) td:nth-child(8)"
 
   @added @m6 @_done @_tested
   Scenario: Admin should see correct values on invoice generated for big buyer from buyouts
@@ -238,6 +238,7 @@ Feature: Buy out
     And User jon@lajoie.ca with role supplier is big buyer
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
+  And lead "Printers" has currency "DKK"
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I go to browse leads
@@ -249,8 +250,9 @@ Feature: Buy out
     And I follow translated "layout.main_menu.admin.upcoming_invoices"
     And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
     And I follow translated "administration.invoices.edit.view.show_invoice"
-    Then I should see "10" within ".invoice_data tr:nth-child(1) td:nth-child(3)"
-    And I should see "1,230.00" within "td:nth-child(7)"
+  And I open page in browser
+    Then I should see "10" within ".invoice_data tr:nth-child(2) td:nth-child(3)"
+    And I should see "1,240.00" within "tr:nth-child(4) td:nth-child(3)"
 
   #Buyout from my leads page - i.e. you have bought lead once -> decided it is so good that it is worth buying out -> click buyout lead and buy remaining instances
   @requested @m8 @ao @_done @_tested
