@@ -75,7 +75,6 @@ Feature: Subscription management for user
     And the date is "14" days from now
     And I sign in as admin@nbs.com with password secret
     And I am on administration upcoming invoices
-    And I open page in browser
     Then I should see "46.43" within "tbody#invoices_list tr:nth-of-type(1)"
 
   @selenium @_done @_tested
@@ -163,11 +162,11 @@ Feature: Subscription management for user
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
     Then I should see "Basic for supplier" within "#current_subscription"
-    And I should see translated "subscriptions.will_prolong_on" with options "prolong_date:{Date.today+15.days}"
-    When the date is "15" days from now
+    And I should see translated "subscriptions.will_prolong_on" with options "prolong_date:{Date.today+14.days}"
+    When the date is "14" days from now
     And I follow translated "layout.my_profile_link"
     Then I should see "Basic for supplier" within "#current_subscription"
-    And I should see translated "subscriptions.will_prolong_on" with options "prolong_date:{Date.today+15.days}"
+    And I should see translated "subscriptions.will_prolong_on" with options "prolong_date:{Date.today+14.days}"
 
   @added @selenium @_done @_tested
   Scenario: When I cancel my subscription during lockup period then the current subscirption should prolong one more time and then become free
