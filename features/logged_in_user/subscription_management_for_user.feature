@@ -19,10 +19,11 @@ Feature: Subscription management for user
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
+    And I follow translated "layout.my_profile_link"
     Then I should see translated "subscriptions.current_subscription" within "#current_subscription"
     And I should see "Basic for supplier" within "#current_subscription"
     And I should see translated "subscriptions.available_subscriptions"
-    And I should see translated "subscriptions.will_prolong_on" with options "prolong_date:{Date.today+4.weeks+1.day}"
+    And I should see translated "subscriptions.will_prolong_on" with options "prolong_date:{Date.today+4.weeks}"
 
   @selenium @_done @_tested @_deprecated
   Scenario: I can cancel my subscription any time after the change of subscription plan
