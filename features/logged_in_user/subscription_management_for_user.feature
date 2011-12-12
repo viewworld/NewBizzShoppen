@@ -181,7 +181,7 @@ Feature: Subscription management for user
     Then I should see translated "subscriptions.lockup_period_notification"
     When I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.cancel"
-    Then I should see translated "subscriptions.next_subscription_plan" with options "next_plan_name:Basic for supplier,next_plan_active_from:{Date.today+7}"
+    Then I should see translated "subscriptions.next_subscription_plan" with options "next_plan_name:Basic for supplier,next_plan_active_from:{Date.today+6}"
 
   @selenium @_done @_tested
   Scenario: I can use free period only once, when registered with other email but the same CVR number then I should not be able to use free period with warning: 'Sorry you company has already used its free subscription period'

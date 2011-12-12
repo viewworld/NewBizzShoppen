@@ -146,7 +146,7 @@ class Invoice < ActiveRecord::Base
         :name => subscription_plan_line.name,
         :netto_price => subscription_plan_line.price,
         :vat_rate => user.country_vat_rate,
-        :quantity => 1)
+        :quantity => 1) if subscription_plan_line.price.to_f > 0
     end
     subscription_sub_period.update_attribute(:invoice, self)
   end
