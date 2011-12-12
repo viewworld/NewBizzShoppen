@@ -18,7 +18,7 @@
       <p><%= raw subscription_plan.subscription_text %></p>
   <% end %>  
 
-  <p class="subscription_plan_footer">    
+  <p class="subscription_plan_footer">
     <% if defined? subscriptions_form and subscriptions_form %>
         <%= radio_button_tag "user_#{role}[subscription_plan_id]", subscription_plan.id, subscriptions_form.object.subscription_plan_id.to_i == subscription_plan.id, :id => "user_#{role}_subscription_plan_id", :style => "display: none" %>
     <% else %>
