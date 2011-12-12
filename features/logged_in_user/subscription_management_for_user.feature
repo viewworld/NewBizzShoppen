@@ -66,15 +66,16 @@ Feature: Subscription management for user
     And I follow translated "subscriptions.listing.upgrade"
     And I follow translated "layout.my_profile_link"
     When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "200"
-    And the date is "14" days from now
+    And the date is "13" days from now
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
     And I follow translated "layout.my_profile_link"
     When I sign out
-    And the date is "15" days from now
+    And the date is "14" days from now
     And I sign in as admin@nbs.com with password secret
     And I am on administration upcoming invoices
+    And I open page in browser
     Then I should see "46.43" within "tbody#invoices_list tr:nth-of-type(1)"
 
   @selenium @_done @_tested
