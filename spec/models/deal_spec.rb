@@ -17,7 +17,7 @@ describe Deal do
     it "should be disabled when max auto buy is reached and reactivated when 4 weeks passes" do
       @supplier = User::Supplier.make!
 
-      @subscription_plan = SubscriptionPlan.make!(:assigned_roles => [@supplier.role.to_sym], :billing_cycle => 12, :big_buyer => true)
+      @subscription_plan = SubscriptionPlan.make!(:assigned_roles => [@supplier.role.to_sym], :subscription_period => 12, :billing_cycle => 12, :big_buyer => true)
       @subscription_plan.subscription_plan_lines.make!(:price => 10)
       @supplier.upgrade_subscription!(@subscription_plan)
 
