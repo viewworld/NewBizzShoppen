@@ -720,6 +720,10 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         Locale.create!(:code => attrs[:code], :language => lang, :enabled => attrs[:enabled], :symbol => attrs[:symbol])
       end
     end
+
+    Deal.where(:enabled_from => nil).each do |d|
+      d.update_attribute(:enabled_from, d.created_at)
+    end
   end
 
   desc "recalculate_leads_average_ratings", ""
