@@ -4,7 +4,7 @@ Feature: Vouchers
   Background:
   Given I am on the homepage
 
-  @_done @_tested @wip
+  @_done @_tested
   Scenario: When voucher is enabled for deal then 'get deal' request redirect to deal information request page, after click on "ok" user is redirected to paypal for payment
     And I visit domain http://fairdeals.eu
     And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
@@ -41,7 +41,7 @@ Feature: Vouchers
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL|voucher_enabled:true|voucher_until_type:1|deal_price:2|discounted_price:1|voucher_max_number:1"
     And I am signed up and confirmed as user with email translator_purchase_manager@nbs.com and password supersecret and role member
     Then voucher number with index "0" for deal "software components" has number "000000001" and state "active"
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10,billing_cycle:10"
     And user with email "translator_purchase_manager@nbs.com" upgrades to subscription named "Premium member"
     And I sign in as translator_purchase_manager@nbs.com with password secret
     Then I follow translated "layout.fairdeals.main_menu.deals"
@@ -157,7 +157,7 @@ Feature: Vouchers
 
   @_done @_tested
   Scenario: user (without being log in) can validate voucher on home page with button "validate voucher"
-    Then I press translated "supplier_home.show.view.validate_voucher_button"
+    Then I follow translated "supplier_home.show.view.validate_voucher_button"
     Then a deal is created by "agent@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks|voucher_enabled:true|voucher_until_type:1|deal_price:2|discounted_price:1|voucher_max_number:3|"
     Then voucher number with index "0" for deal "super" has number "000000001" and state "new"
     Then voucher number with index "2" for deal "super" has number "000000002" and state "used"
