@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   helper_method :locale
 
   def redirect_to_paypal_confirmation
-    if user_signed_in? and current_user.subscription_required? and current_user.active_subscription.unconfirmed_paypal? and !current_user.active_subscription.is_today_in_free_period?
+    if user_signed_in? and current_user and current_user.subscription_required? and current_user.active_subscription.unconfirmed_paypal? and !current_user.active_subscription.is_today_in_free_period?
       redirect_to unconfirmed_paypal_subscriptions_path
     end
   end
