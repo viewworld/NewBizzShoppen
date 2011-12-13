@@ -53,7 +53,7 @@
         <%= form.input :cost_type, :as => :radio, :collection => Campaign::COST_TYPES.map { |lnt| [t("campaigns.cost_types.cost_type#{lnt}"), lnt] }, :wrapper_html => {:class => "collection"} %>
         <%= form.input :crm_option, :as => :radio, :collection => Campaign::CRM_OPTIONS.map { |lnt| [t("campaigns.crm_options.crm_option#{lnt}"), lnt] }, :wrapper_html => {:class => "collection"}, :label => t("campaigns.form.crm_options") %>
         <li class="select" style="padding-top:10px">
-          <%= label_tag t("campaigns.form.crm_campaigns") %>
+          <%= label_tag t("campaigns.form.crm_campaigns"), t("campaigns.form.crm_campaigns") %>
           <%= select_tag "campaign[crm_campaigns]", options_from_collection_for_select(Campaign.available_for_user(current_user), "id", "name", campaign.crm_campaigns.blank? ? nil : campaign.crm_campaigns.split(",")), :multiple => true, :style => "width:200px;height:100px" %>
         </li>
       </ol>
