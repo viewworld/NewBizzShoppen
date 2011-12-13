@@ -63,11 +63,11 @@
             <tr class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
               <td><%= credit_note.full_number %></td>
-              <td><%= credit_note.supplier.first_name if credit_note.supplier %></td>
-              <td><%= credit_note.supplier.last_name if credit_note.supplier %></td>
-              <td><%= credit_note.supplier.screen_name if credit_note.supplier %></td>
+              <td><%= credit_note.supplier.first_name %></td>
+              <td><%= credit_note.supplier.last_name %></td>
+              <td><%= credit_note.supplier.screen_name %></td>
               <td><%= t("administration.refunds.index.view.type_#{credit_note.type_as_text}") %></td>
-              <td class="ta_r"><%= as_currency(credit_note.total, credit_note.invoice.currency) if credit_note.invoice %></td>
+              <td class="ta_r"><%= as_currency(credit_note.total, credit_note.invoice.currency) %></td>
               <td class="cr"></td>
             </tr>
         <% end %>
