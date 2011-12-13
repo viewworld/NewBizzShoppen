@@ -27,6 +27,7 @@ class SubscriptionPlan < ActiveRecord::Base
   validate :check_roles
   validate :subscription_period_in_context_of_billing_cycle
   validate :subscription_plan_lines_in_context_of_number_of_billing_periods
+  validates_associated :subscription_plan_lines
 
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
   has_many :subscriptions
@@ -60,8 +61,8 @@ class SubscriptionPlan < ActiveRecord::Base
   end
 
   def subscription_plan_lines_in_context_of_number_of_billing_periods
-    if !is_free? and subscription_plan_lines.any? and subscription_plan_lines.detect{|spl| !spl.price_divides_by?(number_of_periods) }
-      errors.add(:base, :invalid)
+    if !is_free? and subscription_plan_lines.any? and spls = subscription_plan_lines.select{|spl| !spl.price_divides_by?(number_of_periods) } and spls.any?
+      errors.add(:subscription_period, :lines_must_divide_by_number_of_periods, :count => number_of_periods)
     end
   end
 
