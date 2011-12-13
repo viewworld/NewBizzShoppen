@@ -108,3 +108,11 @@ Feature: Fairdeals view deal
   #7831
   @m20 @requested @is @non_testable @_done
   Scenario: The styles of text should be inverted for headings like company and company description under deals listing
+
+  #8885
+  @m25 @requested
+  Scenario: When I get the deal then on the deal view page I can see heading "How to get your deal" and rich text for deal confirmation page
+
+  #8885
+  @m25 @requested
+  Scenario: When I get the deal then on the deal view page I can see deal code under deal confirmation page (it should be clickable if deal code resembles valid URL)

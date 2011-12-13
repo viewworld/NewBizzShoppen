@@ -211,3 +211,7 @@ Feature: Deals from Sales Manager perspective
     Then I should see translated "supplier.deals.edit.view.new_template"
     And I follow translated "supplier.deals.edit.view.new_template"
     And I should see translated "supplier.lead_templates.new.view.header"
+
+  #8885
+  @m25 @requested
+  Scenario: As a deal maker I can fill out Deal confirmation page rich text field for each deal

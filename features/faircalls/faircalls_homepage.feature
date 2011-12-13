@@ -120,3 +120,11 @@ Scenario: I should see email address, date, status (bounce/delivered) in "Commun
 #8387
 @m23 @requested @tgn @_done @_tested_elsewhere
 Scenario: When I click on an email then I should be redirected to the agent work screen wth that item selected
+
+#8820
+@m25 @requested
+Scenario: I can see full list of History items when I click "Complete list" on faircalls home page
+
+#8820
+@m25 @requested
+Scenario: I can see full list of Communication items when I click "Complete list" on faircalls home page
