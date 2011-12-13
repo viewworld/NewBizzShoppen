@@ -18,7 +18,7 @@ class Deal < AbstractLead
   belongs_to :lead_category, :class_name => "Category", :foreign_key => "lead_category_id"
   belongs_to :deal_admin, :class_name => "User", :foreign_key => "deal_admin_email", :primary_key => "email"
 
-  scope :without_inactive, lambda { where("leads.end_date >= ? and leads.start_date <= ? and enabled_from <= ?", Date.today, Date.today, Date.today) }
+  scope :without_inactive, lambda { where("leads.end_date >= ? and leads.start_date <= ? and leads.enabled_from <= ?", Date.today, Date.today, Date.today) }
   scope :without_requested_by, lambda { |u| select("DISTINCT leads.*").joins("LEFT JOIN leads lr ON lr.deal_id = leads.id").where(["(lr.requested_by <> ? OR lr.requested_by IS NULL)", u.id]) if u }
   scope :active_is, lambda { |q| where("#{q == "1" ? "end_date >= ? and start_date <= ?" : "end_date < ? or start_date > ?"}", Date.today, Date.today) }
   scope :for_user, lambda { |q| where("creator_id = ?", q.id) }
@@ -48,6 +48,7 @@ class Deal < AbstractLead
   before_create :create_uniq_deal_category, :set_default_max_auto_buy
   after_create :certify_for_unknown_email, :assign_deal_admin, :set_deal_unique_id
   before_save :set_dates, :check_deal_request_details_email_template, :set_enabled_from, :handle_max_auto_buy
+  after_save :set_voucher_numbers
 
   attr_accessor :creation_step, :use_company_name_as_category
 

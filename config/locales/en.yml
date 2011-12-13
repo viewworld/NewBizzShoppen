@@ -4208,3 +4208,11 @@ en:
       plus_n_weeks_free_period: "+ %{number} weeks of free period"
     as_free_subscription: "as free subscription"
     active_subscription_is_canceled: "Your current subscription plan is canceled"
+
+  unconfirmed_paypal_subscriptions:
+    show:
+      view:
+        header: "Unconfirmed Paypal subscription"
+        message: "Please go to PayPal and confirm payment on Your subscription named %{subscription}"
+        button_confirm: "Confirm Your payment"
+        message_failure: "It is not possible to confirm Your subscription named %{subscription} right now. Please try again later."
