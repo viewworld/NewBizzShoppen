@@ -17,7 +17,7 @@ class CreditNote < ActiveRecord::Base
   end
 
   def supplier
-    invoice ? invoice.user : nil
+    invoice.user
   end
 
   def full_number
