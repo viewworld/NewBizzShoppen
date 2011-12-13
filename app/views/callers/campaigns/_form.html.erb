@@ -29,8 +29,7 @@
           <h3><%= t("campaigns.edit.campaign_targets") %></h3>
         </li>
         <%= form.input :finished_contacts_per_hour, :input_html => {:style => "width:95px"} %>
-        <%= form.input :production_value_per_hour, :input_html => {:style => "width:95px"} %>
-        <p style="padding: 5px;">&euro;</p>
+        <%= form.input :production_value_per_hour, :input_html => {:style => "width:95px"}, :hint => "&euro;" %>        
         <%= form.input :success_rate, :input_html => {:style => "width:95px"} %>
       </ol>
     </fieldset>
@@ -50,12 +49,13 @@
                        :input_html => {:class => "datepicker", :value => campaign.end_date},
                        :hint => t('models.result_field.date_format') %>
         <%= form.input :max_contact_number, :input_html => {:style => "width:95px"} %>
-        <%= form.input :fixed_cost_value, :input_html => {:style => "width:95px"} %>
-        <p style="padding: 5px;">&euro;</p>
+        <%= form.input :fixed_cost_value, :input_html => {:style => "width:95px"}, :hint => "&euro;" %>        
         <%= form.input :cost_type, :as => :radio, :collection => Campaign::COST_TYPES.map { |lnt| [t("campaigns.cost_types.cost_type#{lnt}"), lnt] }, :wrapper_html => {:class => "collection"} %>
         <%= form.input :crm_option, :as => :radio, :collection => Campaign::CRM_OPTIONS.map { |lnt| [t("campaigns.crm_options.crm_option#{lnt}"), lnt] }, :wrapper_html => {:class => "collection"}, :label => t("campaigns.form.crm_options") %>
-        <%= t("campaigns.form.crm_campaigns") %><br/>
-        <%= select_tag "campaign[crm_campaigns]", options_from_collection_for_select(Campaign.available_for_user(current_user), "id", "name", campaign.crm_campaigns.blank? ? nil : campaign.crm_campaigns.split(",")), :multiple => true, :style => "width:200px;height:100px" %>
+        <li class="select" style="padding-top:10px">
+          <%= label_tag t("campaigns.form.crm_campaigns") %>
+          <%= select_tag "campaign[crm_campaigns]", options_from_collection_for_select(Campaign.available_for_user(current_user), "id", "name", campaign.crm_campaigns.blank? ? nil : campaign.crm_campaigns.split(",")), :multiple => true, :style => "width:200px;height:100px" %>
+        </li>
       </ol>
     </fieldset>
   </div>
