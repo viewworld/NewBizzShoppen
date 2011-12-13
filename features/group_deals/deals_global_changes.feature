@@ -41,7 +41,6 @@ Feature: Deals global changes
     And I make sure current locale is "en"
     And I follow translated "layout.main_menu.shared.browse_deals"
     And I follow category "Electronics deals"
-    And I open page in browser
     Then I should see "27"
 
   @_done @_tested
