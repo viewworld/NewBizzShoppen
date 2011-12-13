@@ -8,7 +8,7 @@
             <%= main_menu_link_to t("layout.main_menu.shared.browse_leads"), categories_path, :tab => "browse_leads" %>
           <% end %>
       <% end %>
-      <% if !user_signed_in? or !current_user.has_role?(:category_supplier) or current_user.show_deals? %>
+      <% if current_user_has_role?(:admin) %>
         <%= main_menu_link_to(t("layout.main_menu.shared.browse_deals"), deal_categories_path, :tab => "browse_deals") %>
       <% end %>
   <% end %>
