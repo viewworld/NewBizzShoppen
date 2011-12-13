@@ -44,7 +44,7 @@ Scenario: Invoice should be created per currency
   And the "invoice_invoice_lines_attributes_0_name" field should contain "Monitors deal"
   And the "invoice_invoice_lines_attributes_1_name" field should contain "Printers deal"
   When I go to administration upcoming invoices
-  Then I should see "2" rows in a table with headers within "table.generic"
+  Then I should see "3" rows in a table with headers within "table.generic"
   When I follow translated "administration.upcoming_invoices.index.view.create_invoice" within "tbody#invoices_list tr:nth-of-type(1)"
   Then "invoice_currency_id" should be selected for "2"
   And the "invoice_invoice_lines_attributes_0_name" field should contain "Keyboards deal"
