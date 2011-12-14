@@ -119,6 +119,28 @@ describe SubscriptionSubPeriod do
       @prev_subscription.subscription_sub_periods.first.billing_price.should eql(5.06)
     end
 
+    it "should generate Refund associated with invoice" do
+      sp = SubscriptionPlan.make!(:subscription_period => 12, :billing_cycle => 3, :use_paypal => true)
+      sp.subscription_plan_lines.make!(:price => 9)
+      sp.subscription_plan_lines.make!(:price => 21.36)
+      sp.reload
+      setup_customer(sp)
+
+      #paypal payment
+      @customer.active_subscription.confirm_paypal!
+      @prev_subscription = @customer.active_subscription
+      @customer.active_subscription.subscription_sub_periods.first.update_attribute(:paypal_paid_auto, true)
+
+      set_date_today_to(Date.today + 2.weeks)
+      Subscription.any_instance.expects(:cancel_paypal_profile).returns(nil).at_least(1)
+      expect {
+        @customer.upgrade_subscription!(@payable_subscription3)
+      }.to change { Refund.count }.by(1)
+
+      @prev_subscription.reload
+      @prev_subscription.subscription_sub_periods.first.refund.invoice.should == @prev_subscription.subscription_sub_periods.first.invoice
+    end
+
     it "should delete all unused subperiods" do
       sp = SubscriptionPlan.make!(:subscription_period => 12, :billing_cycle => 3)
       sp.subscription_plan_lines.make!(:price => 9)

@@ -58,8 +58,11 @@ class SubscriptionSubPeriod < ActiveRecord::Base
     prices_hash = subscription_plan_lines.map{|spl| spl.recalculate(billing_cycle_days, total_days) }
     price_to_refund = prices_hash.sum { |ph| ph[:old_price] - ph[:new_price] }
     if invoice and end_date >= Date.today-1 and !refund and price_to_refund > 0
-      self.refund = Refund.create(:user => subscription.user, :refund_price => price_to_refund, :currency => currency,
-                    :description => I18n.t("models.credit_note.descriptions.subscription_refund",
+      self.refund = Refund.create(:user => subscription.user,
+                                  :invoice_id => invoice.id,
+                                  :refund_price => price_to_refund,
+                                  :currency => currency,
+                                  :description => I18n.t("models.credit_note.descriptions.subscription_refund",
                     :days => prices_hash.sum { |ph| ph[:unused_days] }, :name => subscription.name))
       self.save
     end

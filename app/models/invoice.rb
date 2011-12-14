@@ -187,7 +187,8 @@ class Invoice < ActiveRecord::Base
             :netto_price => amount*-1,
             :vat_rate => 0,
             :quantity => 1)
-      refund.update_attribute(:paid_at, Time.now)
+      refund.update_attributes(:paid_at => Time.now,
+                               :paid_invoice_id => self.id)
     end
   end
 
