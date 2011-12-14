@@ -807,6 +807,18 @@ Feature: Agent campaign - management
         @m25 @requested
         Scenario: As admin I can go to agent work screen from campaign edit
 
+        #9143
+        @m25 @requested
+        Scenario: When I go to production from campaign's edit page the results are already filtered fro that campaign
+
+        #9143
+        @m25 @requested
+        Scenario: When admin or call centre go to agent work screen then he can choose to see all contacts or become certain agent
+
+        #9143
+        @m25 @requested
+        Scenario: When call centre go to agent work screen then he can choose to see all contacts or become certain agent
+
         #8891
         @m25 @requested
         Scenario: As admin or call centre I can move all contacts to different campaign
