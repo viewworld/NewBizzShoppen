@@ -5,7 +5,7 @@
       <meta property="og:url" content="<%= deal_url(:id => @deal.slug) %>"/>
       <meta property="og:image" content="<%= path_to_image("logo_fairleads_with_border.jpg") %>"/>
       <meta property="og:site_name" content="Fairleads"/>
-      <meta property="og:description" content="<%= @deal.group_deal? and !@deal.social_media_description.blank? ? @deal.social_media_description : @deal.description %>">
+      <meta property="og:description" content="<%= (@deal.group_deal? and !@deal.social_media_description.blank?) ? @deal.social_media_description : @deal.description %>">
       <meta property="fb:app_id" content="198584516868482"/>
   <% end %>
   <%= javascript_include_tag "jquery.lwtCountdown-1.0" %>

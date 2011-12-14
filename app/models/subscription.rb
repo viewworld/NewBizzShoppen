@@ -123,7 +123,7 @@ class Subscription < ActiveRecord::Base
         self.end_date =  end_date + free_period.weeks
         CompanyVat.create(:vat_number => user.vat_number.strip)
       end
-      self.billing_date = start_date + billing_period.weeks
+      self.billing_date = start_date + billing_period.to_i.weeks
     end
   end
 
