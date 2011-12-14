@@ -24,19 +24,19 @@ class PaypalRecurringPayment
     @response.checkout_url
   end
 
-  def request_payment?
-    @response = PayPal::Recurring.new({
-      :token       => @options[:token],
-      :payer_id    => @options[:payer_id],
-      :amount      => @options[:subscription_plan].total_billing_for_subperiod,
-      :currency    => @options[:subscription_plan].currency.to_s,
-      :description => @options[:subscription_plan].name,
-      :ipn_url      => @options[:ipn_url],
-      :failed => 1
-    }).request_payment
-    archive_response!("request_payment")
-    @response.approved? and @response.completed?
-  end
+  #def request_payment?
+  #  @response = PayPal::Recurring.new({
+  #    :token       => @options[:token],
+  #    :payer_id    => @options[:payer_id],
+  #    :amount      => @options[:subscription_plan].total_billing_for_subperiod,
+  #    :currency    => @options[:subscription_plan].currency.to_s,
+  #    :description => @options[:subscription_plan].name,
+  #    :ipn_url      => @options[:ipn_url],
+  #    :failed => 1
+  #  }).request_payment
+  #  archive_response!("request_payment")
+  #  @response.approved? and @response.completed?
+  #end
 
   def free_period_hash
     if @options[:user].active_subscription.paypal_billing_at_start and @options[:user].active_subscription.is_free_period_applied? and !@options[:user].active_subscription.cancelled_in_paypal?
