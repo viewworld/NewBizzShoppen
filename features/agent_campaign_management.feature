@@ -832,9 +832,19 @@ Feature: Agent campaign - management
         Scenario: As call centre I can move contacts to campaigns that are assigned to me
 
         #6553
-        @m25 @requested
+        @m25 @requested @selenium @_done @_tested
         Scenario: In production I can see Export all button beside the search button
+          Then I create call result
+          Then I execute js for display action block for "campaigns"
+          Then I follow translated "campaigns.index.result"
+          Then I wait 1 second
+          Then I should see translated "campaigns.show.export_button"
 
         #6553
-        @m25 @requested
+        @m25 @requested @selenium @_done @_tested
         Scenario: In production the export button exports all results matched by filters
+          Then I create call result
+          Then I execute js for display action block for "campaigns"
+          Then I follow translated "campaigns.index.result"
+          Then I wait 1 second
+          Then I follow translated "campaigns.show.export_button"
