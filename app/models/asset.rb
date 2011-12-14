@@ -56,6 +56,10 @@ class Asset < ActiveRecord::Base
     end
   end
 
+  def full_local_path_for_current
+    Pathname.new(File.join([::Rails.root, 'public', self.url.gsub("https://fairleads.s3.amazonaws.com/production", "")]).gsub(/(releases\/\d+)/, "current"))
+  end
+
 end
 
 class Asset::CategoryImage < Asset
