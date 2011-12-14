@@ -364,6 +364,16 @@ class Subscription < ActiveRecord::Base
     "http://#{user.domain_name}/my_profile/subscription_plans/#{id}/paypal_renew"
   end
 
+
+  def send_end_of_free_period_email
+    TemplateMailer.delay.new(user.email, :subscription_free_period_ended_for_paypal, Country.get_country_from_locale, {:subscription => self})
+  end
+
+  def self.send_reminder_about_end_of_free_period
+    Subscription.where("aasm_state = ? and free_period > 0", "unconfirmed_paypal").
+                 select { |s| s.free_subscription_end_date <= Date.today }.each { |s| s.send_end_of_free_period_email }
+  end
+
   private
 
   def handle_user_privileges

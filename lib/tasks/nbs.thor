@@ -800,4 +800,10 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
   def create_unpaid_invoices_for_unpaid_sub_periods
     SubscriptionSubPeriod.create_unpaid_invoices_for_unpaid_sub_periods
   end
+
+  desc "send_end_of_free_period_email", ""
+
+  def send_end_of_free_period_email
+    Subscription.send_reminder_about_end_of_free_period
+  end
 end

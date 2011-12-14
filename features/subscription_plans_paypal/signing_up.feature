@@ -36,7 +36,7 @@ Feature: Signing up with PayPal
   @_done @_non_testable
   Scenario: When must enter billing information at start is enabled then free period is handled by Paypal
 
-  @wip
+  @_done @_tested
   Scenario: When must enter billing information at end of free period is enabled for my subscription I should recevive an email to confirm recurring payent in Paypal before free period ends
     Given setting for "email_verification_for_suppliers" is set to "0"
     And there are no subscription plans
@@ -61,8 +61,16 @@ Feature: Signing up with PayPal
     And I check "user_supplier_agreement_read"
     And I choose "user_supplier_subscription_plan_id"
     And I press translated "supplier_accounts.new.view.button_create_account"
-    And the date is "8" days from now
     And I sign in as kastomer@nbs.fake with password secret
-    And I run ruby "puts User::Supplier.where(:email=> 'kastomer@nbs.fake').first.active_subscription.inspect"
+    And I should not see translated "unconfirmed_paypal_subscriptions.show.view.header"
+    And I am not sign in
+    And subscriptions are checked if any of them has ending free period
+    And no email has been send
+    And the date is "8" days from now
+    And subscriptions are checked if any of them has ending free period
+    And last email sent should have been sent to recipient "kastomer@nbs.fake"
+    And I sign in as kastomer@nbs.fake with password secret
+    And I should see translated "unconfirmed_paypal_subscriptions.show.view.header"
 
+  @_done @_tested_elsewhere
   Scenario: If I do not confirm recurring payments in Paypal the subscrption should behave as it has been canceled (issue unpaid invoice and send email, sing in restrictions)

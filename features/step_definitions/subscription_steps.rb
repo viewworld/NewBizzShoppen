@@ -61,3 +61,7 @@ Given /^the current subperiod for user "([^"]*)" is auto paid by paypal$/ do |em
     ssp.update_attribute(:paypal_paid_auto, true)
   end
 end
+
+When /^subscriptions are checked if any of them has ending free period$/ do
+  Subscription.send_reminder_about_end_of_free_period
+end
