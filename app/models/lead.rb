@@ -201,7 +201,7 @@ class Lead < AbstractLead
   def send_email_with_deal_details_and_files
     if deal
       TemplateMailer.delay.new(requestee.email, deal.deal_request_details_email_template || :deal_request_details, Country.get_country_from_locale, {:deal => deal, :sender_id => User.get_current_user_id},
-      (deal.images + deal.materials).map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url])) })
+      (deal.images + deal.materials).map{ |material| material.full_local_path_for_current })
     end
   end
 
