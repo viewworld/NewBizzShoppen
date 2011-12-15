@@ -391,6 +391,7 @@ Nbs::Application.routes.draw do
   resource :unconfirmed_paypal_subscriptions, :only => [:show]
 
   constraints(Fairdeals) do
+    match '/all_deals' => "fairdeals_home#index"
     match '/(:id)' => "fairdeals_home#show"
   end
 
