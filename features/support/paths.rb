@@ -71,6 +71,8 @@ module NavigationHelpers
       when /browse (.*) deals/
         dc = DealCategory.where(:name => $1).first
         deals_index_path(:slag => dc.cached_slug)
+      when /all deals/
+        all_deals_path
       when /deals/
         '/deals'
       when /supplier cart/

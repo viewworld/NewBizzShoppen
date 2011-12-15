@@ -28,6 +28,10 @@
   <%= t("agent_work_screen.index.contact_search_label") %> <%= text_field_tag "autocompleter", nil %>
   <%= bt_link_to_function nil, t("agent_work_screen.index.new_contact"), "javascript:$('#modal_new_contact_form_div').dialog('open');" %>
 
+  <% if @agent != current_user %>
+      <b><%= t("agent_work_screen.index.logged_as_other_user", :user => @agent.screen_name) %></b>
+  <% end %>
+
   <a data-remote="true" data-method="get" id="autocomplter_result_form" href="" class="display:none"></a>
 
   <script language="javascript">
@@ -149,10 +153,10 @@
       setup_jquery_vars_popup_dialog();
 
       $(document).ready(function() {
-          $.get('<%= callers_campaign_agent_work_screen_call_sheet_path(@campaign) %>')
-          $.get('<%= callers_campaign_agent_work_screen_pending_call_path(@campaign) %>')
-          $.get('<%= callers_campaign_agent_work_screen_complete_contact_path(@campaign) %>')
-          $.get('<%= callers_campaign_agent_work_screen_agent_information_path(@campaign) %>')
+          $.get('<%= callers_campaign_agent_work_screen_call_sheet_path(@campaign, :other_user_id => params[:other_user_id]) %>')
+          $.get('<%= callers_campaign_agent_work_screen_pending_call_path(@campaign, :other_user_id => params[:other_user_id]) %>')
+          $.get('<%= callers_campaign_agent_work_screen_complete_contact_path(@campaign, :other_user_id => params[:other_user_id]) %>')
+          $.get('<%= callers_campaign_agent_work_screen_agent_information_path(@campaign, :other_user_id => params[:other_user_id]) %>')
       });
 
       $('#modal_new_contact_form_div').dialog({

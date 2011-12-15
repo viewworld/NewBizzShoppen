@@ -14,12 +14,13 @@ class AbstractLead < ActiveRecord::Base
   has_many :lead_translations, :foreign_key => :lead_id, :dependent => :destroy
   has_many :lead_purchases, :foreign_key => :lead_id
   has_many :lead_template_values, :foreign_key => :lead_id
-  
+
   liquid_methods :show_lead_details_url, :category_name, :header, :description, :hidden_description, :company_name, :contact_name, :phone_number, :email_address,
-                 :address, :www_address, :direct_phone_number,:fine_print, :company_description
+                 :address, :www_address, :direct_phone_number, :fine_print, :company_description
 
   #TODO ???
-  liquid :header
+  liquid :show_lead_details_url, :category_name, :header, :description, :hidden_description, :company_name, :contact_name, :phone_number, :email_address,
+         :address, :www_address, :direct_phone_number, :fine_print, :company_description
 
   attr_accessor :category_is_changed
   attr_accessor :tmp_creator_id
@@ -28,8 +29,8 @@ class AbstractLead < ActiveRecord::Base
   attr_accessor :validate_contact_email
 
   validates_presence_of :header, :description, :company_name, :contact_name, :phone_number, :country_id, :currency, :address_line_1, :address_line_3, :zip_code, :if => :process_for_lead_information?
-  validates_presence_of :hidden_description, :unless => Proc.new{|l| l.created_by?('Member')}, :if => :process_for_lead_information?
-  validates_presence_of :email_address, :if => Proc.new{|l| l.validate_contact_email }
+  validates_presence_of :hidden_description, :unless => Proc.new { |l| l.created_by?('Member') }, :if => :process_for_lead_information?
+  validates_presence_of :email_address, :if => Proc.new { |l| l.validate_contact_email }
   validates_format_of :email_address, :allow_blank => true, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   validate :check_category, :if => :process_for_lead_information?
 
@@ -64,8 +65,8 @@ class AbstractLead < ActiveRecord::Base
     self.creator = current_user if creator.nil?
     templates = LeadTemplate.with_category_and_its_ancestors(category).where("is_active = ?", true).
         where("(is_global = ? or (creator_id = ? and creator_type = ?) or (creator_id = ? and creator_type = ?) or creator_type = ? or creator_id in (?) or lead_templates.id in (?))",
-                 true, creator.parent_id, creator.parent.nil? ? "" : creator.parent.send(:casted_class).to_s, creator.id, creator.class.to_s, "User::Admin",
-                 (creator.has_role?(:call_centre_agent) and creator.parent.present?) ? creator.parent.send(:casted_class).find(creator.parent_id).subaccounts : [], deal.present? ? deal.deal_template_ids : [])
+              true, creator.parent_id, creator.parent.nil? ? "" : creator.parent.send(:casted_class).to_s, creator.id, creator.class.to_s, "User::Admin",
+              (creator.has_role?(:call_centre_agent) and creator.parent.present?) ? creator.parent.send(:casted_class).find(creator.parent_id).subaccounts : [], deal.present? ? deal.deal_template_ids : [])
     templates = templates.where("is_mandatory = ?", with_mandatory_only) unless with_mandatory_only.nil?
     templates.order("lead_templates.name")
   end

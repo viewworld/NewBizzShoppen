@@ -72,6 +72,7 @@ Deal.blueprint do
   end_date { Date.today+5 }
   company_description { Faker::Lorem.sentences(2).to_s }
   published { true }
+  use_company_name_as_category { true }
 end
 
 Lead.blueprint(:featured) do

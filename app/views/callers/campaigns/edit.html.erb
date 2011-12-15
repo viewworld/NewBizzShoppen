@@ -38,6 +38,13 @@
               <%= bt_link_to :plus, t("campaigns.edit.button_create_contact"), new_callers_campaign_contact_path(@campaign) %>
             </li>
             <li>
+              <%= bt_link_to nil, t("campaigns.edit.production"), callers_production_path(:campaign_ids => [@campaign.id]) %>
+            </li>
+            <li>
+              <%= bt_link_to nil, t("campaigns.edit.agent_work_screen_as"), "javascript:void();", :onclick => "go_to_agent_work_screen_as_user(#{@campaign.id})" %>
+            </li>
+            <li><%= select_tag :user_id, options_from_collection_for_select(current_user.admin? ? @campaign.users : [current_user]+@campaign.users.where(:id => current_user.subaccount_ids), 'id', 'screen_name') %></li>
+            <li>
               <%= bt_link_to :users, t("campaigns.edit.button_import_contacts"), new_callers_campaign_contact_path(@campaign, :type => "import") %>
             </li>
             <li class="last">
@@ -98,6 +105,11 @@
         if($('#email_template_id option:selected').val() != ''){
             window.location.href = '/callers/campaigns/' + campaign_id.toString() + '/email_templates/' + $('#email_template_id option:selected').val() + '/edit'
         }
+    }
+
+    function go_to_agent_work_screen_as_user(campaign_id){
+        selected_user = $('#user_id option:selected').val();
+        window.location.href = "/callers/campaigns/" + campaign_id.toString() + "/agent_work_screen?other_user_id=" + selected_user.toString();
     }
   </script>
 </js:>
