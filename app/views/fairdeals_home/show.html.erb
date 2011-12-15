@@ -158,5 +158,26 @@
               $('#request_deal_form').submit();
           }
       }
+
+      $(function()
+      {
+        var prev_height, new_height;
+        var can_resize = false;
+
+        $(".arrow_left, .arrow_right").live("click", function() {
+            can_resize = true;
+            prev_height = $("#primary_group_deal .frm_content").height();
+        });
+
+        $('#primary_group_deal').ajaxComplete(function() {
+            if(can_resize == true)
+            {
+                can_resize = false;
+                new_height = $("#primary_group_deal .frm_content").height();
+                $("#primary_group_deal .frm_content").height(prev_height);
+                $("#primary_group_deal .frm_content").animate({height: new_height+"px"});
+            }
+}       );
+      });
   </script>
 </js:>
