@@ -233,6 +233,8 @@ Nbs::Application.routes.draw do
         get 'export'
       end
     end
+    resource :history, :controller => "history", :only => [:show]
+    resource :communication, :controller => "communication", :only => [:show]
 
     resources :contacts do
       resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
