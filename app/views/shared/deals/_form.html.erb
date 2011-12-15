@@ -40,6 +40,9 @@
         <%= form.input :fine_print, :label => t("shared.deals.form.fine_print_label"), :as => :ckeditor, :input_html => {:width => '320px', :height => '150px', :toolbar => "Lite"}, :wrapper_html => {:class => "text"} %>
         <%= form.input :short_featured_description, :input_html => {:style => "height: 50px;width:280px;"}, :label => t("shared.deals.form.short_featured_description_label") %>
         <%= form.input :featured_description, :label => t("shared.deals.form.featured_description_label"), :as => :ckeditor, :input_html => {:width => '320px', :height => '150px', :toolbar => "Lite"}, :wrapper_html => {:class => "text"} %>
+        <% if current_user.deal_maker? %>
+        <%= form.input :deal_confirmation_page, :label => t("shared.deals.form.deal_confirmation_page"), :as => :ckeditor, :input_html => {:width => '320px', :height => '150px', :toolbar => "Lite"}, :wrapper_html => {:class => "text"} %>
+        <% end %>
         <%= form.input :start_date, :as => :string,
                        :wrapper_html => {:class => "date"},
                        :input_html => {:class => "datepicker", :value => deal.start_date.to_date},

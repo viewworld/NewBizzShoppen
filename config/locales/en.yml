@@ -2892,6 +2892,7 @@ en:
         new_translation: "New translation"
         deal_unique_id_label: "Deal id"
         edit_voucher_number_link: "Edit voucher numbers"
+        deal_confirmation_page: "Confirmation page"
   models:
     archived_emails:
       status:
@@ -4013,6 +4014,7 @@ en:
         view_deal: "View deal"
         group_deal_splash_label: "Group deal"
         fair_deal_splash_label: "Fair deal"
+        back_to_front_page: "Back to front page"
       search:
         keyword_label: "Keyword"
         search_button: "Search"
@@ -4081,6 +4083,7 @@ en:
         created_leads_label: "Created leads"
         deal_code_label: "Deal code"
         get_deal_confirmation_for_free_subscription_msg: "Do you want to upgrade your subscription to get deal?"
+        confirmation_page_label: "How to get Your deal?"
     common:
       assets:
         view:

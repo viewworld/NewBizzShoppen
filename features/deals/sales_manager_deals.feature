@@ -213,5 +213,13 @@ Feature: Deals from Sales Manager perspective
     And I should see translated "supplier.lead_templates.new.view.header"
 
   #8885
-  @m25 @requested
+  @m25 @requested @selenium @_done @_tested
   Scenario: As a deal maker I can fill out Deal confirmation page rich text field for each deal
+    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
+    And user "buyer@nbs.com" has deal maker role enabled
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    And I follow translated "layout.main_menu.lead_supplier.my_deals"
+    And I click hidden link by url regex "/suppliers\/deals\/\d+\/edit/"
+    And I wait 2 second
+    And I fill in "deal_deal_confirmation_page_editor" ckeditor with "deal instructions are as follows"
+    And I press translated "supplier.deals.edit.view.update_button"

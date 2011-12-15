@@ -16,11 +16,21 @@
 
 <column-mc:>
   <div class="deal_show_wrapper">
-    <header back="true"><%= @deal.header %><%= ratings_for(@deal, :force_static => !current_user_has_role?(:member)) %></header>
+    <header><%= @deal.header %><%= ratings_for(@deal, :force_static => !current_user_has_role?(:member)) %></header>
 
     <div class="column_2to3">
       <div class="element_description">
         <h2></h2>
+
+        <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) and @deal.deal_confirmation_page %>
+            <h3><%= t("deals.show.view.confirmation_page_label") %></h3>
+
+            <p><%= @deal.deal_confirmation_page.to_s.html_safe %></p>
+        <% end %>
+
+        <h3><%= t("deals.show.view.deal_code_label") %></h3>
+
+        <p><%= @deal.deal_code_is_url? ? link_to(@deal.deal_code, @deal.deal_code_as_url) : @deal.deal_code %></p>
 
         <h3><%= t("deals.show.view.short_description_label") %></h3>
 
@@ -56,7 +66,12 @@
       </div>
     </div>
 
+
+
     <div class="grid_300 fltr">
+      <%= bt_link_to nil, t("deals.index.view.back_to_front_page"), root_path, :class => "bt_max bt_big" %>
+      <br />
+      <br />
       <div class="frm_tiny company_info">
 
         <% if @deal.logo %>
@@ -110,7 +125,7 @@
                 <%= deal_show_li(@deal.zip_code, t("deals.show.view.zip_code_label")) %>
                 <%= deal_show_li(@deal.country, t("deals.show.view.country_label")) %>
                 <%= deal_show_li(@deal.region, t("deals.show.view.region_label")) %>
-                <%= deal_show_li(@deal.deal_code, t("deals.show.view.deal_code_label")) %>
+                <%= deal_show_li(@deal.deal_code_is_url? ? link_to(@deal.deal_code, @deal.deal_code_as_url) : @deal.deal_code, t("deals.show.view.deal_code_label")) %>
             <% end %>
           </ul>
         </div>

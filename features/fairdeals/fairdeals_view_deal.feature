@@ -110,9 +110,28 @@ Feature: Fairdeals view deal
   Scenario: The styles of text should be inverted for headings like company and company description under deals listing
 
   #8885
-  @m25 @requested
+  @m25 @requested @tgn @_tested @_done
   Scenario: When I get the deal then on the deal view page I can see heading "How to get your deal" and rich text for deal confirmation page
 
   #8885
-  @m25 @requested
+  @m25 @requested @tgn @_tested @_done
   Scenario: When I get the deal then on the deal view page I can see deal code under deal confirmation page (it should be clickable if deal code resembles valid URL)
+    Given a deal named "Abc group deal #1" exists within category "Electronics deals"
+    And a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:0,discounted_price:25,social_media_description:quo vadis,deal_code:www.google.com,deal_confirmation_page:to get your deal you need to ..."
+    Given I visit domain http://fairdeals.dk
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
+    And user with email "procurment@nbs.com" upgrades to subscription named "Premium member"
+    Then I sign in as procurment@nbs.com with password secret
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow category "Electronics deals"
+    And I follow "Abc group deal #1"
+    And I follow translated "deals.index.view.contact_me"
+    And I fill in "lead_hidden_description" with "my specific needs are following etc"
+    And I press translated "member.leads.new.view.button_create"
+    And I press translated "member.leads.show.view.ok_confirmation"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow category "Electronics deals"
+    And I follow "Abc group deal #1"
+    And I should see link with label "www.google.com"
+    And I should see translated "deals.show.view.confirmation_page_label"
+    And I should see "to get your deal you need to ..."
