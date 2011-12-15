@@ -84,7 +84,7 @@
     <div class="column_1to3 fltl" style="padding: 0 15px" id="history">
       <frm title="#{t('agent_home.show.view.header_history')}" c="no_marg">
         <param:header>
-
+          <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), callers_history_path, :class => "fltr" %>
         </param:header>
         <param:content>
           <ul class="solid_list row_4">
@@ -100,7 +100,7 @@
     <div class="column_1to3 fltl" id="communication">
       <frm title="#{t('agent_home.show.view.header_communication')}" c="no_marg">
         <param:header>
-
+          <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), callers_communication_path, :class => "fltr" %>
         </param:header>
         <param:content>
           <ul class="solid_list row_4">

@@ -1,0 +1,46 @@
+<column-mc:>
+  <header back="true" backurl="#{agent_home_path}">
+
+    <param:content>
+      <%= t("callers.history.view.header") %>
+    </param:content>
+
+  </header>
+
+  <table class="generic leads_table">
+    <thead>
+    <tr>
+      <th class="hl"></th>
+      <th style="width: 36px;"></th>
+      <th style="width: 350px;"><%= t("callers.history.view.table.details") %></th>
+      <th></th>
+      <th style="width: 80px;"><%= t("callers.history.view.table.actions") %></th>
+      <th class="hr"></th>
+    </tr>
+    </thead>
+
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="4"></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
+
+    <tbody>
+    <% @history.each do |call_result| %>
+        <tr>
+          <td class="cl">
+          <td></td>
+          <td><%= call_result.contact.company_name %></td>
+          <td><%= call_result.result.name %>, <%= format_date call_result.created_at, true %></td>
+          <td><%= link_to t("supplier_home.show.view.read_more_link"), callers_campaign_agent_work_screen_index_path(call_result.contact.campaign, :selected_call_result_id => call_result.id), :class => "read_more" %></td>
+          <td class="cr">
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <%= will_paginate @history, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+
+</column-mc:>

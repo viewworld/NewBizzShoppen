@@ -375,6 +375,7 @@ en:
         call_centres: "Call centres"
         call_centre_agents: "Call centre agents"
       search_button: Search
+      export_button: Export
       table:
         results: Results
         all_results: ALL RESULTS
@@ -405,6 +406,8 @@ en:
       upgrade_to_category_supplier_email_template: "Edit 'Upgrade to category supplier' email"
       materials_repository: "Materials repository"
       edit_template: "Edit template"
+      production: "Production"
+      agent_work_screen_as: "Go to agent work screen as"
     index:
       title: Campaigns
       edit: Edit
@@ -467,6 +470,7 @@ en:
         this_week: "This week"
         time: "Time"
         last_four_weeks: "Last 4 weeks"
+      logged_as_other_user: "Logged as user: %{user}"
   contacts:
     filter:
       title: Search
@@ -778,6 +782,7 @@ en:
         browse_our_deals: "Browse our deals"
         find_a_vendor: "Find a vendor - make a tender"
         contact_us: "Contact us"
+        see_all_deals: "See all deals"
         deal_request:
           name: "Name"
           email_from: "E-mail"
@@ -827,6 +832,20 @@ en:
         change_users_password: "Change user's password"
         new_password_label: "New password"
         new_password_confirmation_label: "New password confirmation"
+
+  callers:
+    history:
+      view:
+        header: "History"
+        table:
+          details: "Details"
+          actions: "Actions"
+    communication:
+      view:
+        header: "Communication"
+        table:
+          details: "Details"
+          actions: "Actions"
 
   administration:
     featured_deals:
@@ -2888,6 +2907,7 @@ en:
         new_translation: "New translation"
         deal_unique_id_label: "Deal id"
         edit_voucher_number_link: "Edit voucher numbers"
+        deal_confirmation_page: "Confirmation page"
   models:
     archived_emails:
       status:
@@ -4009,6 +4029,7 @@ en:
         view_deal: "View deal"
         group_deal_splash_label: "Group deal"
         fair_deal_splash_label: "Fair deal"
+        back_to_front_page: "Back to front page"
       search:
         keyword_label: "Keyword"
         search_button: "Search"
@@ -4077,6 +4098,7 @@ en:
         created_leads_label: "Created leads"
         deal_code_label: "Deal code"
         get_deal_confirmation_for_free_subscription_msg: "Do you want to upgrade your subscription to get deal?"
+        confirmation_page_label: "How to get Your deal?"
     common:
       assets:
         view:

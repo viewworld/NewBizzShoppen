@@ -228,7 +228,13 @@ Nbs::Application.routes.draw do
       end
     end
 
-    resource :production, :controller => "production", :only => [:show]
+    resource :production, :controller => "production", :only => [:show] do
+      member do
+        get 'export'
+      end
+    end
+    resource :history, :controller => "history", :only => [:show]
+    resource :communication, :controller => "communication", :only => [:show]
 
     resources :contacts do
       resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
@@ -387,6 +393,7 @@ Nbs::Application.routes.draw do
   resource :unconfirmed_paypal_subscriptions, :only => [:show]
 
   constraints(Fairdeals) do
+    match '/all_deals' => "fairdeals_home#index"
     match '/(:id)' => "fairdeals_home#show"
   end
 

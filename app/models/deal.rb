@@ -289,6 +289,14 @@ class Deal < AbstractLead
     current_user.id == creator.id or current_user.email == email_address or current_user.email == deal_admin_email
   end
 
+  def deal_code_is_url?
+    deal_code ? !(deal_code.match(/http:\/\//) or deal_code.match(/www./)).nil? : false
+  end
+
+  def deal_code_as_url
+    deal_code.to_s.match(/http:\/\//).nil? ? "http://#{deal_code}" : deal_code
+  end
+
   private
 
   def set_enabled_from
