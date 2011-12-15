@@ -782,6 +782,7 @@ en:
         browse_our_deals: "Browse our deals"
         find_a_vendor: "Find a vendor - make a tender"
         contact_us: "Contact us"
+        see_all_deals: "See all deals"
         deal_request:
           name: "Name"
           email_from: "E-mail"

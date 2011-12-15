@@ -332,17 +332,26 @@ Feature: Front page for procurment
   Scenario: When deals are browsed by the arrows on the fairdeals page then transition effect should be added
 
   #8882
-  @m25 @requested
+  @m25 @requested @_done @_tested
   Scenario: I can see a link with arrow underneath the featured deals to load all deals
+    When I visit domain http://fairdeals.dk
+    And I follow translated "fairdeals_home.show.view.see_all_deals"
+    Then I should be on all deals page
 
   #8882
-  @m25 @requested
+  @m25 @requested @_done @_tested
   Scenario: When See all deals is clicked then instead of featured deals first six deals are loaded
+    When there are "20" existing deals
+    And I visit domain http://fairdeals.dk
+    And I follow translated "fairdeals_home.show.view.see_all_deals"
+    Then I should see "5" elements within CSS path "div.other_deals"
 
   #8882
-  @m25 @requested
+  @m25 @requested @_done @nontestable
   Scenario: When I scroll down the next six deals are loaded on the front page until all deals are loaded
 
   #8882
-  @m25 @requested
+  @m25 @requested @_done @_tested
   Scenario: I should not see articles listing on the front page
+    Given I visit domain http://fairdeals.dk
+    Then I should not see CSS path "div.news"
