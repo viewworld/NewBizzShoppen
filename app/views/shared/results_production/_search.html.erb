@@ -54,7 +54,12 @@
                   </li>
                   <li class="commit">
                     <ibt c="bt_green" icon="magnify">
-                      <%= submit_tag t("campaigns.show.search_button") %>
+                      <%= link_to_function t("campaigns.show.search_button"), 'submit_search()' %>
+                    </ibt>
+                  </li>
+                  <li class="commit">
+                    <ibt c="bt_green" icon="download">
+                      <%= link_to_function t("campaigns.show.export_button"), 'submit_export()' %>
                     </ibt>
                   </li>
                 </ol>
@@ -78,3 +83,19 @@
         <% end %>
       </div>
     </div>
+
+    <js:>
+        <script type="text/javascript">
+
+          function submit_search() {
+            $('#search_new').attr('action', '<%= callers_production_path %>');
+            $('#search_new').submit();
+          }
+
+          function submit_export() {
+              $('#search_new').attr('action', '<%= export_callers_production_path %>');
+              $('#search_new').submit();
+          }
+
+        </script>
+    </js:>

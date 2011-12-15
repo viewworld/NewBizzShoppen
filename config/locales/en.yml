@@ -375,6 +375,7 @@ en:
         call_centres: "Call centres"
         call_centre_agents: "Call centre agents"
       search_button: Search
+      export_button: Export
       table:
         results: Results
         all_results: ALL RESULTS

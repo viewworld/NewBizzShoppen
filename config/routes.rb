@@ -228,7 +228,11 @@ Nbs::Application.routes.draw do
       end
     end
 
-    resource :production, :controller => "production", :only => [:show]
+    resource :production, :controller => "production", :only => [:show] do
+      member do
+        get 'export'
+      end
+    end
 
     resources :contacts do
       resources :call_results, :only => [:new, :create, :edit, :update, :destroy]

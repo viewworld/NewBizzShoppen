@@ -3,6 +3,12 @@ module CampaignActions
   public
 
   def show
+    set_locals
+  end
+
+  protected
+
+  def set_locals
     set_contacts
     campaign_result_ids =  @campaign.to_a.map(&:results).flatten.uniq.map(&:id)
     @all_results = Result.where("results.id IN (?)", campaign_result_ids)
@@ -24,9 +30,6 @@ module CampaignActions
                           User.assigned_to_campaigns.with_results.for_campaigns(@campaign).with_agents_without_call_centres.where("parent_id = ?", current_user.id)) :
                           @campaign.users.with_agents_without_call_centres
   end
-
-
-  protected
 
   def set_contacts
     params[:search]||={}

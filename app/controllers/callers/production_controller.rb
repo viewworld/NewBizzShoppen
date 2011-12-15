@@ -3,5 +3,13 @@ class Callers::ProductionController < Callers::CallerController
   set_tab "campaigns"
   include ::CampaignActions
 
-   before_filter :set_campaign, :only => [:show]
+  before_filter :set_campaign, :only => [:show,:export]
+
+  def export
+    set_locals
+    @call_result_ids = CallResult.for_table_row(@date_from, @date_to, @results.map(&:id), @agent_ids, @campaign.is_a?(Array) ? @campaign.map(&:id) : @campaign.id).map{|hash| hash[:ids]}.flatten
+
+    send_data CallResult.to_csv(@call_result_ids), :filename => "call_result.csv"
+  end
+
 end
