@@ -47,6 +47,7 @@ Feature: Subscriptions Paypal
 
   Scenario: User should be able to pay the missing amount using link/button in the email he receives
 
+  @_done @_tested_elsewhere
   Scenario: User should be able to reactivate recurring payments using link/button in the email he receives
 
   Scenario: User should see the detailed information on the missing payments in the email he receives
@@ -69,6 +70,7 @@ Feature: Subscriptions Paypal
   @system @non_testable
   Scenario: Application should receive information from Paypal about payment status
 
+  @system @_tested_elsewhere @rspec
   Scenario: When the number of retries exceeds the subscription plan limit then the subscription should be downgraded
 
   Scenario: When the number of retries exceeds the subscription plan limit then the recurring payment should be disabled in Paypal

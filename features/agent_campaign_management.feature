@@ -790,3 +790,51 @@ Feature: Agent campaign - management
         #8315
         @m22 @requested @is @_done @_tested_elsewhere
         Scenario: When I duplicate a campaign, customization emails and other data should be copied
+
+        #9143
+        @m25 @requested
+        Scenario: As call centre I can go to production from campaign edit
+
+        #9143
+        @m25 @requested
+        Scenario: As call centre I can go to agent work screen from campaign edit
+
+        #9143
+        @m25 @requested
+        Scenario: As admin I can go to production from campaign edit
+
+        #9143
+        @m25 @requested
+        Scenario: As admin I can go to agent work screen from campaign edit
+
+        #9143
+        @m25 @requested
+        Scenario: When I go to production from campaign's edit page the results are already filtered fro that campaign
+
+        #9143
+        @m25 @requested
+        Scenario: When admin or call centre go to agent work screen then he can choose to see all contacts or become certain agent
+
+        #9143
+        @m25 @requested
+        Scenario: When call centre go to agent work screen then he can choose to see all contacts or become certain agent
+
+        #8891
+        @m25 @requested
+        Scenario: As admin or call centre I can move all contacts to different campaign
+
+        #8891
+        @m25 @requested
+        Scenario: As admin or call centre I can move selected contacts to different campaign
+
+        #8891
+        @m25 @requested
+        Scenario: As call centre I can move contacts to campaigns that are assigned to me
+
+        #6553
+        @m25 @requested
+        Scenario: In production I can see Export all button beside the search button
+
+        #6553
+        @m25 @requested
+        Scenario: In production the export button exports all results matched by filters

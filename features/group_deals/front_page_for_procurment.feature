@@ -326,3 +326,23 @@ Feature: Front page for procurment
     Given I visit domain http://fairdeals.dk
     And I should see "1" occurrences of css class "splash_red" for tag "div"
     And I should see translated "deals.index.view.fair_deal_splash_label" within ".splash span"
+
+  #8883
+  @m25 @requested
+  Scenario: When deals are browsed by the arrows on the fairdeals page then transition effect should be added
+
+  #8882
+  @m25 @requested
+  Scenario: I can see a link with arrow underneath the featured deals to load all deals
+
+  #8882
+  @m25 @requested
+  Scenario: When See all deals is clicked then instead of featured deals first six deals are loaded
+
+  #8882
+  @m25 @requested
+  Scenario: When I scroll down the next six deals are loaded on the front page until all deals are loaded
+
+  #8882
+  @m25 @requested
+  Scenario: I should not see articles listing on the front page

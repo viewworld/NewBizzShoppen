@@ -355,7 +355,14 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
          :en => {:subject => "Paypal recurring payment cancelled. Reactivate it!",
                  :body => "<p>You have cancelled Your recurring payment in Paypal.com for the Fairleads subscription. <a href=\"{{subscription.create_recurring_profile_from_next_billing_cycle_link}}\">Click here to reactivate it from next billing cycle!</a></p>"},
          :da => {:subject => "[DK] Paypal recurring payment cancelled. Reactivate it!",
-                 :body => "<p>[DK] </p>"}
+                 :body => "<p>[DK] You have cancelled Your recurring payment in Paypal.com for the Fairleads subscription. <a href=\"{{subscription.create_recurring_profile_from_next_billing_cycle_link}}\">Click here to reactivate it from next billing cycle!</a></p>"}
+        },
+        {:name => "Free period ended for PayPal subscription",
+         :uniq_id => "subscription_free_period_ended_for_paypal",
+         :en => {:subject => "Free period ended for Paypal subscription. Update billing information!",
+                 :body => "<p>Your free period for the Fairleads subscription has ended. <a href=\"{{subscription.create_recurring_profile_from_next_billing_cycle_link}}\">Click here to update your billing information</a></p>"},
+         :da => {:subject => "[DK] Free period ended for Paypal subscription. Update billing information!",
+                 :body => "<p>[DK] Your free period for the Fairleads subscription has ended. <a href=\"{{subscription.create_recurring_profile_from_next_billing_cycle_link}}\">Click here to update your billing information</a></p>"}
         },
         {:name => "Voucher notification for member",
          :uniq_id => "voucher_notification",
@@ -792,5 +799,11 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
 
   def create_unpaid_invoices_for_unpaid_sub_periods
     SubscriptionSubPeriod.create_unpaid_invoices_for_unpaid_sub_periods
+  end
+
+  desc "send_end_of_free_period_email", ""
+
+  def send_end_of_free_period_email
+    Subscription.send_reminder_about_end_of_free_period
   end
 end

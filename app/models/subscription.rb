@@ -123,7 +123,7 @@ class Subscription < ActiveRecord::Base
         self.end_date =  end_date + free_period.weeks
         CompanyVat.create(:vat_number => user.vat_number.strip)
       end
-      self.billing_date = start_date + billing_period.weeks
+      self.billing_date = start_date + billing_period.to_i.weeks
     end
   end
 
@@ -361,7 +361,17 @@ class Subscription < ActiveRecord::Base
   end
 
   def create_recurring_profile_from_next_billing_cycle_link
-    "http://#{user.domain_name}/my_profile/subscription_plans/17/paypal_renew"
+    "http://#{user.domain_name}/my_profile/subscription_plans/#{id}/paypal_renew"
+  end
+
+
+  def send_end_of_free_period_email
+    TemplateMailer.delay.new(user.email, :subscription_free_period_ended_for_paypal, Country.get_country_from_locale, {:subscription => self})
+  end
+
+  def self.send_reminder_about_end_of_free_period
+    Subscription.where("aasm_state = ? and free_period > 0", "unconfirmed_paypal").
+                 select { |s| s.free_subscription_end_date <= Date.today }.each { |s| s.send_end_of_free_period_email }
   end
 
   private

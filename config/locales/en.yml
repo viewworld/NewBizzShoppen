@@ -3085,6 +3085,10 @@ en:
         even: "must be even"
         must_divide_by: "must divide by %{number}"
       models:
+        subscription_plan:
+          attributes:
+            subscription_period:
+              lines_must_divide_by_number_of_periods: "all prices for subscription plan lines must divide by number of subscription periods which is %{count}"
         user:
           attributes:
             email:
