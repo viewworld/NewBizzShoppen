@@ -1,6 +1,6 @@
 class Callers::AgentWorkScreenController < Callers::CallerController
 
-  before_filter lambda {authorize_role(:call_centre, :call_centre_agent, :agent)}
+  before_filter lambda {authorize_role(:call_centre, :call_centre_agent, :agent, :admin)}
   before_filter :set_campaign
   before_filter :set_agent
   before_filter :set_contacts
@@ -20,8 +20,18 @@ class Callers::AgentWorkScreenController < Callers::CallerController
   end
 
   def set_agent
-    @agent = current_user
-    @campaign.assign_contacts_to_agent(@agent)
+    if (current_user.call_centre? or current_user.admin?) and (other_user_id = params[:other_user_id] || session[:other_user_id]) and other_user_id.to_i != current_user.id
+      @agent = current_user.admin? ? User.find_by_id(other_user_id).with_role : current_user.subaccounts.find_by_id(other_user_id)
+      raise CanCan::AccessDenied unless @agent
+      @agent = @agent.with_role
+      session[:other_user_id] = other_user_id if params[:other_user_id]
+    elsif current_user.admin? and (!params[:other_user_id] and !session[:other_user_id])
+      raise CanCan::AccessDenied
+    else
+      session[:other_user_id] = nil
+      @agent = current_user
+      @campaign.assign_contacts_to_agent(@agent)
+    end
   end
 
   def set_contacts
@@ -35,7 +45,7 @@ class Callers::AgentWorkScreenController < Callers::CallerController
   # TODO REFACTOR! it takes over 1s
   def set_completed_contacts
     #@completed_contacts = @campaign.contacts.with_completed_status(true).select{ |contact| contact.current_call_result.creator == current_user.with_role }
-    @completed_contacts = @campaign.contacts.with_completed_status(true).joins("RIGHT JOIN (SELECT contact_id, MAX(created_at) FROM call_results 	WHERE creator_type = '#{current_user.with_role.class.to_s}' and creator_id = #{current_user.id} GROUP BY contact_id) cs ON cs.contact_id = leads.id")
+    @completed_contacts = @campaign.contacts.with_completed_status(true).joins("RIGHT JOIN (SELECT contact_id, MAX(created_at) FROM call_results 	WHERE creator_type = '#{@agent.with_role.class.to_s}' and creator_id = #{@agent.id} GROUP BY contact_id) cs ON cs.contact_id = leads.id")
   end
 
   def set_contact

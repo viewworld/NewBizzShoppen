@@ -12,11 +12,11 @@ class Callers::AgentWorkScreen::ContactsController < Callers::AgentWorkScreenCon
 
   def create
     @campaign = Campaign.find(params[:campaign_id])
-    attrs = {:creator => current_user, :creator_name => current_user.full_name, :campaign_id => @campaign.id, :category_id => @campaign.category_id}
+    attrs = {:creator => @agent, :creator_name => @agent.full_name, :campaign_id => @campaign.id, :category_id => @campaign.category_id}
     @contact = Contact.new(params[:contact])
     @contact.attributes = attrs
     if @contact.save
-      @contact.assign_agent(current_user)
+      @contact.assign_agent(@agent)
     end
     set_locals
   end
@@ -38,6 +38,7 @@ class Callers::AgentWorkScreen::ContactsController < Callers::AgentWorkScreenCon
   private
   def set_contact
     @lead = @contact = @campaign.contacts.find_by_id(params[:id]) || @contacts.first
+    set_agent
   end
 
 end
