@@ -47,8 +47,13 @@
         <% unless agent_work_screen %>
             <td><%= contact.agent_name %></td>
         <% end %>
-        <td><%= contact.current_call_result_name %> <%= "(#{contact.current_call_result.creator.full_name})" if contact.current_call_result %></td>
-        <td><%= contact.current_call_result_note %></td>
+        <% if current_call_result = contact.current_call_result %>
+            <td><%= current_call_result.result.name %> <%= "(#{current_call_result.creator.full_name})" %></td>
+            <td><%= current_call_result.note %></td>
+        <% else %>
+            <td>-</td>
+            <td>-</td>
+        <% end %>
         <% if block_tools %>
             <td class="tda ta_r">
               <%= with_output_buffer { block_tools.call(contact) } %>
