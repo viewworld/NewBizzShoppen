@@ -60,7 +60,7 @@
             </li>
             <% if !current_user.has_role?(:admin) and (campaign.can_be_managed_by?(current_user) or campaign.has_user_as_member?(current_user))  %>
                 <li>
-                  <%= link_to t("campaigns.table.work_screen"), callers_campaign_agent_work_screen_index_path(campaign), :class => "default_action" %>
+                  <%= link_to t("campaigns.table.work_screen"), callers_campaign_agent_work_screen_index_path(campaign, :other_user_id => ( (current_user.call_centre? or current_user.id.admin?) ? current_user.id : nil)), :class => "default_action" %>
                 </li>
             <% end %>
             <% if current_user.has_one_of_roles?(:admin, :call_centre) and campaign.can_be_managed_by?(current_user) %>

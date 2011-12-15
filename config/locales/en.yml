@@ -406,6 +406,8 @@ en:
       upgrade_to_category_supplier_email_template: "Edit 'Upgrade to category supplier' email"
       materials_repository: "Materials repository"
       edit_template: "Edit template"
+      production: "Production"
+      agent_work_screen_as: "Go to agent work screen as"
     index:
       title: Campaigns
       edit: Edit
@@ -468,6 +470,7 @@ en:
         this_week: "This week"
         time: "Time"
         last_four_weeks: "Last 4 weeks"
+      logged_as_other_user: "Logged as user: %{user}"
   contacts:
     filter:
       title: Search

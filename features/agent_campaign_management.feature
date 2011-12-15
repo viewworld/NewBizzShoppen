@@ -792,32 +792,74 @@ Feature: Agent campaign - management
         Scenario: When I duplicate a campaign, customization emails and other data should be copied
 
         #9143
-        @m25 @requested
+        @m25 @requested @_done @_tested @tgn
         Scenario: As call centre I can go to production from campaign edit
+          And I follow translated "layout.main_menu.admin.campaigns"
+          And I follow translated "campaigns.edit.edit_button"
+          And I should see translated "campaigns.edit.production"
 
         #9143
-        @m25 @requested
+        @m25 @requested @selenium @_done @_tested @tgn
         Scenario: As call centre I can go to agent work screen from campaign edit
+          Given I add user "translator_call_centre@nbs.com" to campaign "Testing Two"
+          And I add user "translator_call_centre_agent@nbs.com" to campaign "Testing Two"
+          And user translator_call_centre@nbs.com with role call_centre exists with attributes "screen_name:translator_call_centre@nbs.com"
+          And user translator_call_centre_agent@nbs.com with role call_centre_agent exists with attributes "screen_name:translator_call_centre_agent@nbs.com"
+          And I follow translated "layout.main_menu.admin.campaigns"
+          And I fill in "search_with_keyword" with "Testing Two"
+          And I press translated "campaigns.filter.search_button"
+          When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
+          And I select "translator_call_centre_agent@nbs.com" from "user_id"
+          And I follow translated "campaigns.edit.agent_work_screen_as"
+          Then I should see translated "agent_work_screen.index.logged_as_other_user" with options "user:translator_call_centre_agent@nbs.com"
+
 
         #9143
-        @m25 @requested
+        @m25 @requested @_done @_tested @tgn
         Scenario: As admin I can go to production from campaign edit
+          Given I am not sign in
+          And I sign in as blazejek@gmail.com with password secret
+          And I follow translated "layout.main_menu.admin.campaigns"
+          And I follow translated "campaigns.edit.edit_button"
+          And I should see translated "campaigns.edit.production"
 
         #9143
-        @m25 @requested
+        @m25 @requested @selenium @_tested @_done @tgn
         Scenario: As admin I can go to agent work screen from campaign edit
+          Given I add user "translator_call_centre@nbs.com" to campaign "Testing Two"
+          And I add user "translator_call_centre_agent@nbs.com" to campaign "Testing Two"
+          And user translator_call_centre@nbs.com with role call_centre exists with attributes "screen_name:translator_call_centre@nbs.com"
+          And user translator_call_centre_agent@nbs.com with role call_centre_agent exists with attributes "screen_name:translator_call_centre_agent@nbs.com"
+          Given I am not sign in
+          And I sign in as blazejek@gmail.com with password secret
+          And I follow translated "layout.main_menu.admin.campaigns"
+          And I fill in "search_with_keyword" with "Testing Two"
+          And I press translated "campaigns.filter.search_button"
+          When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
+          And I select "translator_call_centre_agent@nbs.com" from "user_id"
+          And I follow translated "campaigns.edit.agent_work_screen_as"
+          Then I should see translated "agent_work_screen.index.logged_as_other_user" with options "user:translator_call_centre_agent@nbs.com"
 
         #9143
-        @m25 @requested
+        @m25 @requested @_tested @_done @tgn
         Scenario: When I go to production from campaign's edit page the results are already filtered fro that campaign
+          Given I am not sign in
+          And I sign in as blazejek@gmail.com with password secret
+          And I follow translated "layout.main_menu.admin.campaigns"
+          And I fill in "search_with_keyword" with "Testing One"
+          And I press translated "campaigns.filter.search_button"
+          And I follow translated "campaigns.edit.edit_button"
+          And I follow translated "campaigns.edit.production"
+          And "campaign_ids" should be selected for value "Testing One"
 
         #9143
-        @m25 @requested
-        Scenario: When admin or call centre go to agent work screen then he can choose to see all contacts or become certain agent
+        @m25 @requested @_done @_tested_elsewhere @tgn
+        Scenario: When admin go to agent work screen then he can choose to become certain agent
 
         #9143
-        @m25 @requested
-        Scenario: When call centre go to agent work screen then he can choose to see all contacts or become certain agent
+        @m25 @requested @_done @_tested_elsewhere @tgn
+        Scenario: When call centre go to agent work screen then he can choose to be himself or become certain agent of his
+
 
         #8891
         @m25 @requested
