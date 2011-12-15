@@ -16,7 +16,7 @@
 
 <column-mc:>
   <div class="deal_show_wrapper">
-    <header><%= @deal.header %><%= ratings_for(@deal, :force_static => !current_user_has_role?(:member)) %></header>
+    <header back="true"><%= @deal.header %><%= ratings_for(@deal, :force_static => !current_user_has_role?(:member)) %></header>
 
     <div class="column_2to3">
       <div class="element_description">
@@ -69,9 +69,6 @@
 
 
     <div class="grid_300 fltr">
-      <%= bt_link_to nil, t("deals.index.view.back_to_front_page"), root_path, :class => "bt_max bt_big" %>
-      <br />
-      <br />
       <div class="frm_tiny company_info">
 
         <% if @deal.logo %>
@@ -210,6 +207,7 @@
     <div id="modal_for_share_deal_by_email" style="display:none;">
       <%= render :partial => "share_deal_by_email/new", :locals => {:deal => @deal} %>
     </div>
+    <div style="width: 300px;"><%= bt_link_to nil, t("deals.index.view.back_to_front_page"), root_path, :class => "bt_max bt_big" %></div>
   </div>
 </column-mc:>
 
