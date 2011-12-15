@@ -10,14 +10,14 @@
         <li class="last">
           <%= bt_link_to :user, t("supplier_home.show.view.create_new_supplier_account"), new_supplier_account_path %>
         </li>
+        <li>
+            <%= link_to t("supplier_home.show.view.validate_voucher_button"), validate_voucher_path, :method => :get, :class => "validate_voucher_bt" %>
+        </li>
       </ul>
     </param:actions>
   </header>
 
   <div class="pdd_5 no_pdd_b">
-
-    <%= link_to t("supplier_home.show.view.validate_voucher_button"), validate_voucher_path, :method => :get, :class => "validate_coucher_bt" %>
-
     <% unless user_signed_in? %>
         <div class="grid_360 fltr">
           <frm title="#{t('agent_home.show.view.i_have_an_account')}" c="no_marg">
