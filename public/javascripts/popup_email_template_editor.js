@@ -135,7 +135,7 @@
   }
 
   function open_email_variables_dialog(){
-      if($('#email_template_editor_uniq_id').val() == "upgrade_contact_to_category_buyer"){
+      if($('#email_template_editor_uniq_id').val() == undefined || $('#email_template_editor_uniq_id').val() == "upgrade_contact_to_category_buyer"){
           $('#modal_for_email_template_vars').dialog('open');
       }
       else
@@ -146,7 +146,7 @@
   }
 
   function insert_variable_to_editor(variable, instance_name){
-      CKEDITOR.instances[instance_name].insertHtml( "{{" + variable + "}}" );
+      CKEDITOR.instances[instance_name].insertHtml( variable );
       $('#modal_for_email_template_vars').dialog('close');
   }
 
@@ -162,4 +162,12 @@
           data: {email: email, subject: $('#' + subject_field_id).val(), body: eval('CKEDITOR.instances.' + ckeditor_body_instance_id +'.getData()')}
         });
       }
+  }
+
+  function set_email_variables_for_popup(variables){
+      html_content = [];
+      $.each(variables, function(index, variable) {
+          html_content.push("<a href=\"#\" onclick=\"insert_variable_to_editor('" + variable + "', 'body_editor'); return false;\">" + variable + "</a>");
+      });
+      $('#modal_for_email_template_vars').html(html_content.join("<br />"));
   }

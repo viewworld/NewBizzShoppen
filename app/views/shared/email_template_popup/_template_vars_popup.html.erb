@@ -1,13 +1,15 @@
 <div id="modal_for_email_template_vars" style="display:none;">
   <%
+     variables = unless defined? email_template
      [
-        ["First name", "user.first_name"], ["Last name", "user.last_name"],
-        ["E-mail", "user.email"], ["Screen name", "user.screen_name"],
-        ["Link to category homepage", "user.category_supplier_category_home_url"],
-        ["Auto generated password", "password"],
 
-     ].each do |label, field|
+     ]
+     else
+         email_template.available_variables
+     end
+
+     variables.each do |label|
   %>
-      <%= link_to_function label, "insert_variable_to_editor('#{field}', '#{instance_name}')" %><br />
+      <%= link_to_function label, "insert_variable_to_editor('#{label}', '#{instance_name}')" %><br />
   <% end %>
 </div>
