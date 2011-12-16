@@ -153,6 +153,8 @@
 
 <js:>
   <script type="text/javascript">
+    var SCROLL_TIMEOUT = 4000;
+
       function validate_request_deal_form() {
           name_is_valid = custom_form_validator_for_field("#request_deal_form", "email_deal_request_preview_name", "not_empty");
           phone_is_valid = custom_form_validator_for_field("#request_deal_form", "email_deal_request_preview_phone_number", "not_empty");
@@ -170,6 +172,8 @@
         var can_resize = false;
 
         $(".arrow_left, .arrow_right").live("click", function() {
+            SCROLL_TIMEOUT = 10000;
+            $('#primary_group_deal').stopTime('primary_deal_timer');
             can_resize = true;
             prev_height = $("#primary_group_deal .frm_content").height();
         });
@@ -182,7 +186,27 @@
                 $("#primary_group_deal .frm_content").height(prev_height);
                 $("#primary_group_deal .frm_content").animate({height: new_height+"px"});
             }
+
+            $('#primary_group_deal').oneTime(SCROLL_TIMEOUT, 'primary_deal_timer', function() {
+                can_resize = true;
+                prev_height = $("#primary_group_deal .frm_content").height();
+                $.ajax({
+                    url: $('a.arrow_right').attr('href'),
+                    type: 'GET',
+                    dataType: 'script'
+                });
+            });
 }       );
+      });
+
+      $('#primary_group_deal').oneTime(SCROLL_TIMEOUT, 'primary_deal_timer', function() {
+        can_resize = true;
+        prev_height = $("#primary_group_deal .frm_content").height();
+        $.ajax({
+            url: $('a.arrow_right').attr('href'),
+            type: 'GET',
+            dataType: 'script'
+        });
       });
   </script>
 </js:>
