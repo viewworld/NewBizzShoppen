@@ -862,15 +862,15 @@ Feature: Agent campaign - management
 
 
         #8891
-        @m25 @requested
+        @m26 @requested
         Scenario: As admin or call centre I can move all contacts to different campaign
 
         #8891
-        @m25 @requested
+        @m26 @requested
         Scenario: As admin or call centre I can move selected contacts to different campaign
 
         #8891
-        @m25 @requested
+        @m26 @requested
         Scenario: As call centre I can move contacts to campaigns that are assigned to me
 
         #6553
