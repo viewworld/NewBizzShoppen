@@ -139,6 +139,12 @@
 
 <js:>
   <script type="text/javascript">
+      <% if @selected_call_result %>
+        $(document).ready(function() {
+          $.get('<%= edit_callers_campaign_agent_work_screen_contact_call_result_path(@campaign, @selected_call_result.contact, @selected_call_result) -%>')
+        });
+      <% end %>
+
       <% if !@contact and @pending_contacts and @pending_contacts.any? %>
       display_notice("<%= escape_javascript(t("contacts.show.flash.you_have_only_callback_contacts")) %>", false);
       <% elsif !@contact%>
@@ -191,11 +197,6 @@
               custom_clear_form("#new_contact_form", window.fields_array)
           }
       }
-<% if @selected_call_result %>
-$(document).ready(function() {
-  $.get('<%= edit_callers_campaign_agent_work_screen_contact_call_result_path(@campaign, @selected_call_result.contact, @selected_call_result) -%>')
-});
-<% end %>
   </script>
 </js:>
 

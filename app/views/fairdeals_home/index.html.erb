@@ -2,7 +2,7 @@
 
   <div class="grid_680 fltl">
     <%= render :partial => 'group', :locals => {:deals => @deals} %>
-    <center><div id="deal_loader" style="display:none"><%= image_tag('global_loader.gif') %></div></center>
+    <div id="deal_loader" class="ta_c" style="display:none"><%= image_tag('global_loader.gif') %></div>
   </div>
 
   <div class="grid_280 fltr">
@@ -145,11 +145,7 @@
             type: 'POST',
             data: { page: PAGE },
             beforeSend: function(xhr) {
-                $('#deal_loader').show();
                 PAGE = PAGE + 1;
-            },
-            complete: function() {
-                $('#deal_loader').hide();
             }
         });
       }
@@ -159,5 +155,8 @@
                  loadMoreDeals();
               }
       });
+
+      $(document).ajaxStart(function(){$("#deal_loader").show()});
+      $(document).ajaxStop(function(){$("#deal_loader").hide()});
   </script>
 </js:>

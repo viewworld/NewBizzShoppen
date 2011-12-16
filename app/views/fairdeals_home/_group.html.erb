@@ -2,7 +2,7 @@
   <div class="group">
     <div class="other_deals">
       <% group.each do |deal| %>
-          <%= render :partial => 'secondary_deal', :locals => {:position => group.index(deal), :featured => deal, :middle => group.index(deal).eql?(1) ? "col_middle" : nil} %>
+          <%= render :partial => 'secondary_deal', :locals => {:position => group.index(deal), :featured => deal, :skip_blank => true,:middle => group.index(deal).eql?(1) ? "col_middle" : nil} %>
       <% end %>
     </div>
     <clb/>
