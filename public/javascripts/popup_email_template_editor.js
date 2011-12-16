@@ -135,14 +135,7 @@
   }
 
   function open_email_variables_dialog(){
-      if($('#email_template_editor_uniq_id').val() == undefined || $('#email_template_editor_uniq_id').val() == "upgrade_contact_to_category_buyer"){
-          $('#modal_for_email_template_vars').dialog('open');
-      }
-      else
-      {
-          alert("No variables are available for that template!")
-      }
-
+    $('#modal_for_email_template_vars').dialog('open');
   }
 
   function insert_variable_to_editor(variable, instance_name){
@@ -169,5 +162,12 @@
       $.each(variables, function(index, variable) {
           html_content.push("<a href=\"#\" onclick=\"insert_variable_to_editor('" + variable + "', 'body_editor'); return false;\">" + variable + "</a>");
       });
-      $('#modal_for_email_template_vars').html(html_content.join("<br />"));
+      if(html_content.length == 0){
+          $('#modal_for_email_template_vars').html("No variables available for this template.");
+      }
+      else
+      {
+          $('#modal_for_email_template_vars').html(html_content.join("<br />"));
+      }
+
   }
