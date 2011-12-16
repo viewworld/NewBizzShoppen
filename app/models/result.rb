@@ -72,6 +72,11 @@ class Result < ActiveRecord::Base
     end
   end
 
+  def email_template_variables_for_type
+    template = EmailTemplate.find_by_uniq_id(email_template_name_for_type)
+    template ? template.available_variables : []
+  end
+
   private
 
   def check_is_reported_and_is_success

@@ -22,4 +22,12 @@
       </frm>
   <% end %>
 
+  <%= render :partial => "shared/email_template_popup/template_vars_popup", :locals => {:instance_name => "email_template_body_editor", :email_template => @email_template} %>
+
 </column-mc:>
+
+<js:>
+  <script type="text/javascript">
+    setup_jquery_vars_popup_dialog();
+  </script>
+</js:>
