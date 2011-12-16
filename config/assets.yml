@@ -39,6 +39,7 @@ javascripts:
     - public/javascripts/jquery.lwtCountdown-1.0.js
     - public/javascripts/global_template_editor.js
     - public/javascripts/global_field_validator.js
+    - public/javascripts/jquery.cycle.all.js
 
 
 stylesheets:
