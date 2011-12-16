@@ -180,7 +180,7 @@ class User < ActiveRecord::Base
 
   def can_be_removed
     casted_obj = self.send(:casted_class).find(id)
-    [:leads, :lead_purchases, :lead_requests, :leads_in_cart].detect do |method|
+    [:leads, :lead_purchases, :lead_requests, :leads_in_cart, :deals].detect do |method|
       casted_obj.respond_to?(method) and !casted_obj.send(method).empty?
     end.nil? and (!active_subscription or (active_subscription.is_free? and subscriptions.detect { |s| s.payable? and !s.invoiced?}.nil?))
   end
