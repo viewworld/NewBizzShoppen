@@ -26,7 +26,11 @@
         <br/>
     <% end %>
     <!--- end / other deals --->
-    <center><%= link_to t("fairdeals_home.show.view.see_all_deals"), all_deals_path %></center>
+
+    <div class="pdd_5 ta_c">
+      <%= bt_link_to :arrow_right, t("fairdeals_home.show.view.see_all_deals"), all_deals_path %>
+    </div>
+
   </div>
 
   <div class="grid_280 fltr">
