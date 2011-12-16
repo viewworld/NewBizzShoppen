@@ -53,9 +53,9 @@ module EmailTemplateHelp
         if item.class == String
           result << "{{#{item}}}"
         else
-          keys = if item == Lead
+          keys = if item.to_s == "Lead"
                    Lead::LIQUID_METHODS.call(self).keys - ["fine_print"]
-                 elsif item == Deal
+                 elsif item.to_s == "Deal"
                    Deal::LIQUID_METHODS.call(self).keys - ["show_lead_details_url"]
                  else
                    "#{item.to_s}::LIQUID_METHODS".constantize.call(self).keys
