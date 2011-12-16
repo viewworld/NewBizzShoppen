@@ -1,6 +1,7 @@
 class AddEnabledFromToLeads < ActiveRecord::Migration
   def self.up
     add_column :leads, :enabled_from, :date
+    execute "UPDATE leads SET enabled_from = created_at WHERE type = 'Deal' and enabled_from IS NULL"
     Deal.update_all("voucher_enabled = false")
     Deal.update_all("voucher_until_type = 0")
     Deal.update_all("voucher_number_of_weeks = 1")
