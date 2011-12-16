@@ -19,16 +19,17 @@
         </param:actions>
       </frm>
   <% end %>
+
+  <% @template = EmailTemplate.find_by_uniq_id("#{@user.is_a?(User::Member) ? 'member' : 'supplier'}_invitation") %>
   <%= render "shared/email_template_popup/template_editor" %>
-  <%= render :partial => "shared/email_template_popup/template_vars_popup", :locals => { :instance_name => "body_editor" } %>
+  <%= render :partial => "shared/email_template_popup/template_vars_popup", :locals => { :instance_name => "body_editor", :email_template => @template } %>
 </column-mc:>
 
 <js:>
     <script type="text/javascript">
     function fill_editor_with_template_values(){
      <%=
-     template = EmailTemplate.find_by_uniq_id("#{@user.is_a?(User::Member) ? 'member' : 'supplier'}_invitation")
-     "fill_email_template_editor_with_values('#{template.subject}', '#{template.from}', '#{template.bcc}', '#{template.cc}', '#{template.body_sanitized}', '#{template.uniq_id}')".html_safe
+     "fill_email_template_editor_with_values('#{@template.subject}', '#{@template.from}', '#{@template.bcc}', '#{@template.cc}', '#{@template.body_sanitized}', '#{@template.uniq_id}')".html_safe
      -%>
     }
         setup_jquery_dialog("user");
