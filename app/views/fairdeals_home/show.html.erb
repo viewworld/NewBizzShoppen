@@ -10,8 +10,19 @@
     <% end %>
 
     <% unless @primary_deal.blank? %>
-        <div id="primary_group_deal">
-          <%= render :partial => 'primary_deal', :locals => {:primary_deal => @primary_deal} %>
+      <div class="primary_deals_wrapper">
+          <%= link_to_function "previous", '#', :class => "arrow_left" %>
+          <%= link_to_function "next", '#', :class => "arrow_right" %>
+          <div id="primary_deals">
+            <div id="primary_group_deal">
+              <%= render :partial => 'primary_deal', :locals => {:primary_deal => @primary_deal} %>
+            </div>
+            <% @featured_deals[1..9].each do |deal| %>
+                <div style="display:none">
+                  <%= render :partial => 'primary_deal', :locals => {:primary_deal => deal} %>
+                </div>
+            <% end %>
+          </div>
         </div>
     <% end %>
 
@@ -153,7 +164,6 @@
 
 <js:>
   <script type="text/javascript">
-    var SCROLL_TIMEOUT = 4000;
 
       function validate_request_deal_form() {
           name_is_valid = custom_form_validator_for_field("#request_deal_form", "email_deal_request_preview_name", "not_empty");
@@ -166,47 +176,15 @@
           }
       }
 
-      $(function()
-      {
-        var prev_height, new_height;
-        var can_resize = false;
-
-        $(".arrow_left, .arrow_right").live("click", function() {
-            SCROLL_TIMEOUT = 10000;
-            $('#primary_group_deal').stopTime('primary_deal_timer');
-            can_resize = true;
-            prev_height = $("#primary_group_deal .frm_content").height();
-        });
-
-        $('#primary_group_deal').ajaxComplete(function() {
-            if(can_resize == true)
-            {
-                can_resize = false;
-                new_height = $("#primary_group_deal .frm_content").height();
-                $("#primary_group_deal .frm_content").height(prev_height);
-                $("#primary_group_deal .frm_content").animate({height: new_height+"px"});
-            }
-
-            $('#primary_group_deal').oneTime(SCROLL_TIMEOUT, 'primary_deal_timer', function() {
-                can_resize = true;
-                prev_height = $("#primary_group_deal .frm_content").height();
-                $.ajax({
-                    url: $('a.arrow_right').attr('href'),
-                    type: 'GET',
-                    dataType: 'script'
-                });
-            });
-}       );
+      $('#primary_deals').cycle({
+        fx:     'scrollLeft',
+        timeout: 5000,
+        next: '.arrow_right',
+        prev: '.arrow_left',
+        pause: 1,
+        width: 680,
+        fit: 1
       });
 
-      $('#primary_group_deal').oneTime(SCROLL_TIMEOUT, 'primary_deal_timer', function() {
-        can_resize = true;
-        prev_height = $("#primary_group_deal .frm_content").height();
-        $.ajax({
-            url: $('a.arrow_right').attr('href'),
-            type: 'GET',
-            dataType: 'script'
-        });
-      });
   </script>
 </js:>

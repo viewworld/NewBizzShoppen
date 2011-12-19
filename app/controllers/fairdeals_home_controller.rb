@@ -20,11 +20,6 @@ class FairdealsHomeController < ApplicationController
     @primary_deal = Deal.where(:id => params[:id]).first || @featured_deals[0]
   end
 
-  def cycle
-    @featured_deals = FeaturedDeal.with_active_deals(Date.today)
-    @primary_deal = Deal.where(:id => params[:id]).first || @featured_deals[0]
-  end
-
   def index
     @per_page = 3
     @deals = Deal.without_inactive.order("end_date ASC")
