@@ -1,7 +1,8 @@
 @m25 @is @callers_communication
 Feature: Callers communication
 
-  @wip
+  #8820
+  @_done @_tested @requested
   Scenario: I can see full list of Communication items when I click "Complete list" on faircalls home page
     Given I visit domain http://faircalls.eu
     And campaign report data is generated
