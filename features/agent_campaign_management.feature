@@ -747,7 +747,7 @@ Feature: Agent campaign - management
           And I should see translated "production.show.view.header"
           And I should see "Campaigns"
 
-        @m13 @requested @$_call_centre @$_admin @after_m12_presentation @tgn @_tested @_done
+        @m13 @requested @$_call_centre @$_admin @after_m12_presentation @tgn @_tested @_done @selenium
         Scenario: I can select for which agents display the results
           Given I have user with email ccagent01@nbs.com and role call_centre_agent
           And user ccagent01@nbs.com with role call_centre_agent exists with attributes "first_name:Greg,last_name:Foam"
@@ -759,7 +759,7 @@ Feature: Agent campaign - management
           And I follow translated "layout.main_menu.call_centre.campaigns"
           And I follow translated "campaigns.header.my_results_global_button"
           And I select "Greg Foam" from "agent_ids"
-          And I press translated "campaigns.show.search_button"
+          And I follow translated "campaigns.show.search_button"
           And I should see translated "production.show.view.header"
 
 

@@ -51,12 +51,12 @@ Feature: Front page for procurment
     And I should see "Electronics deals"
 
   # News: As is - news listing for procurement manager.
-  @_done @_tested
+  @_done @_tested @_deprecated
   Scenario: I can browse news for Procurement manager
-    Given published purchase manager news exists with attributes "title:sample procurment news,content:quo vadis"
-    Given I visit domain http://fairdeals.dk
-    And I should see "sample procurment news"
-    And I should see "quo vadis"
+    #Given published purchase manager news exists with attributes "title:sample procurment news,content:quo vadis"
+    #Given I visit domain http://fairdeals.dk
+    #And I should see "sample procurment news"
+    #And I should see "quo vadis"
 
   @_done @_tested
   Scenario: As not logged user I should have a menu on the right side with buttons
