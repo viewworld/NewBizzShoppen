@@ -10,18 +10,20 @@
     <% end %>
 
     <% unless @primary_deal.blank? %>
-      <%= link_to_function "previous", '#', :class => "arrow_left" %>
-      <%= link_to_function "next", '#', :class => "arrow_right" %>
-      <div id="primary_deals">
-        <div id="primary_group_deal">
-          <%= render :partial => 'primary_deal_cycle', :locals => {:primary_deal => @primary_deal} %>
-        </div>
-        <% @featured_deals[1..9].each do |deal| %>
-            <div style="display:none">
-              <%= render :partial => 'primary_deal_cycle', :locals => {:primary_deal => deal} %>
+      <div class="primary_deals_wrapper">
+          <%= link_to_function "previous", '#', :class => "arrow_left" %>
+          <%= link_to_function "next", '#', :class => "arrow_right" %>
+          <div id="primary_deals">
+            <div id="primary_group_deal">
+              <%= render :partial => 'primary_deal_cycle', :locals => {:primary_deal => @primary_deal} %>
             </div>
-        <% end %>
-      </div>
+            <% @featured_deals[1..9].each do |deal| %>
+                <div style="display:none">
+                  <%= render :partial => 'primary_deal_cycle', :locals => {:primary_deal => deal} %>
+                </div>
+            <% end %>
+          </div>
+        </div>
     <% end %>
 
     <!--- other deals --->
@@ -176,33 +178,33 @@
 
       $(function()
       {
-        var prev_height, new_height;
-        var can_resize = false;
-
-        $(".arrow_left, .arrow_right").live("click", function() {
-            can_resize = true;
-            prev_height = $("#primary_group_deal .frm_content").height();
-        });
-
-        $('#primary_group_deal').ajaxComplete(function() {
-            if(can_resize == true)
-            {
-                can_resize = false;
-                new_height = $("#primary_group_deal .frm_content").height();
-                $("#primary_group_deal .frm_content").height(prev_height);
-                $("#primary_group_deal .frm_content").animate({height: new_height+"px"});
-            }
-}       );
+//        var prev_height, new_height;
+//        var can_resize = false;
+//
+//        $(".arrow_left, .arrow_right").live("click", function() {
+//            can_resize = true;
+//            prev_height = $("#primary_group_deal .frm_content").height();
+//        });
+//
+//        $('#primary_group_deal').ajaxComplete(function() {
+//            if(can_resize == true)
+//            {
+//                can_resize = false;
+//                new_height = $("#primary_group_deal .frm_content").height();
+//                $("#primary_group_deal .frm_content").height(prev_height);
+//                $("#primary_group_deal .frm_content").animate({height: new_height+"px"});
+//            }
+//}       );
       });
 
       $('#primary_deals').cycle({
-        fx:     'scrollRight',
+        fx:     'scrollHorz',
         timeout: 5000,
-        delay: -2000,
-        next: $('.arrow_right'),
-        prev: $('.arrow_left'),
+        next: '.arrow_right',
+        prev: '.arrow_left',
         pause: 1,
-        speed: 2000
+        width: 680,
+        fit: 1
       });
 
   </script>

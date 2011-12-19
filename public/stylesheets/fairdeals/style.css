@@ -1356,9 +1356,48 @@ span.cke_skin_kama
 
 /* --- primary deal --- */
 
+#primary_deals
+{
+    margin-bottom: 5px;
+}
+
+.primary_deals_wrapper
+{
+    position: relative;
+}
+
+.primary_deals_wrapper .arrow_left,
+.primary_deals_wrapper .arrow_right
+{
+    position: absolute;
+    top: 50%;
+    margin-top: -30px;
+    display: block;
+    width: 37px;
+    height: 59px;
+    font-size: 0;
+    text-indent: -9999px;
+    z-index: 100;
+
+}
+
+.primary_deals_wrapper .arrow_left
+{
+    background: url(/images/fairdeals/primary_lead/arrow_left.png);
+    left: -10px;
+}
+
+.primary_deals_wrapper .arrow_right
+{
+    background: url(/images/fairdeals/primary_lead/arrow_right.png);
+    right: -10px;
+}
+
+
 .primary_deal
 {
-    position: relative;    
+    position: relative;
+    margin-top: 5px;
 }
 
 .primary_deal .frm_head
@@ -1429,33 +1468,6 @@ span.cke_skin_kama
 {
     margin-left: 3px;
 }
-
-.primary_deal .arrow_left,
-.primary_deal .arrow_right
-{
-    position: absolute;
-    top: 50%;
-    margin-top: -30px;
-    display: block;
-    width: 37px;
-    height: 59px;
-    font-size: 0;
-    text-indent: -9999px;
-
-}
-
-.primary_deal .arrow_left
-{
-    background: url(/images/fairdeals/primary_lead/arrow_left.png);
-    left: -10px;
-}
-
-.primary_deal .arrow_right
-{
-    background: url(/images/fairdeals/primary_lead/arrow_right.png);
-    right: -10px;
-}
-
 
 
 .primary_deal .countdown
@@ -1540,8 +1552,8 @@ span.cke_skin_kama
     height: 60px;
     padding-top: 24px;
     position: absolute;
-    top: -15px;
-    right: -15px;
+    top: -5px;
+    right: 0px;
 
     text-align:center;
     text-shadow: 0 1px 0 #e77b6d;
