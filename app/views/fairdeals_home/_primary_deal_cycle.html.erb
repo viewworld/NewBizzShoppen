@@ -40,7 +40,7 @@
             </div>
 
             <% if primary_deal.group_deal? %>
-                <div id="countdown_<%= primary_deal.id %>" class="countdown">
+                <div id="countdown_<%= email_form_id %>" class="countdown">
                   <span class="countdown_title">Time left:</span>
                   <div class="dash days_dash">
                     <span class="dash_title"><%= t("deals.show.view.days") %></span>
@@ -96,7 +96,7 @@
     jQuery(document).ready(function() {
         d = new Date();
         seconds = (<%= primary_deal.end_date.to_i %> - parseInt(d.getTime() / 1000));
-        $('#countdown_<%= primary_deal.id %>').countDown({
+        $('#countdown_<%= email_form_id %>').countDown({
             targetOffset: {
                 'year':     0,
                 'month':    0,
