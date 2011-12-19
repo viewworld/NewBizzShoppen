@@ -85,9 +85,9 @@ Scenario: For each country I can specify email signature
 Scenario: The email signature should include Fairleads logo
 
 #8823
-@m25 @requested
+@m25 @requested @_done @is @_tested_elsewhere
 Scenario: Every email should have a list of all variables that can used within its body
 
 #8823
-@m25 @requested
+@m25 @requested @_done @tgn @_non_testable
 Scenario: I choose available variables from the ckeditor popup

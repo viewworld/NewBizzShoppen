@@ -16,7 +16,8 @@ Feature: Group deals
     And a deal named "Dddddd  common deal #1" exists with attributes "published:1,group_deal:0"
     And I am on the homepage
     And I make sure current locale is "en"
-    And I follow translated "layout.main_menu.shared.browse_deals"
+    And I visit domain http://fairdeals.eu
+    And I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Electronics deals"
     Then I should see "Zzzzzzz group deal #1" before "Zzzzzzz group deal #2"
     Then I should see "Zzzzzzz group deal #2" before "Aaaaaa common deal #1"
