@@ -45,4 +45,12 @@ class PaymentNotificationsController < ApplicationController
       EmailNotification.notify("recurring_payment: Matching sub period not found", "<p>SubscriptionPaymentNotification: #{spn.id}</p> <>br /> Backtrace: <p>#{spn.params.inspect}</p>")
     end
   end
+
+  def recurring_payment_failed
+    Subscription.payment_failed(params[:recurring_payment_id], SubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i))
+  end
+
+  def recurring_payment_suspended_due_to_max_failed_payment
+    Subscription.payment_suspended(params[:recurring_payment_id], SubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i))
+  end
 end

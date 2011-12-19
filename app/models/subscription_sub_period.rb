@@ -11,13 +11,13 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   validates_presence_of :start_date, :subscription
 
   after_create :create_subscription_plan_lines
-  after_save :create_invoice_when_marked_as_paid_or_retries_exceeded
+  after_save :create_invoice_when_marked_as_paid
 
   delegate :currency, :user, :to => :subscription
 
   scope :with_date, lambda{|date| where("start_date <= :date AND end_date >= :date", {:date => date})}
   scope :without_invoice, where(:invoice_id => nil)
-  scope :billable, lambda { where("subscription_period > 0 AND billing_date IS NOT NULL AND billing_date <= ? AND invoiced_at IS NULL", Date.today) }
+  scope :billable, lambda { where("billing_date IS NOT NULL AND billing_date <= ? AND invoice_id IS NULL", Date.today) }
   scope :with_paypal_txn_id, lambda {|txn_id| where(:paypal_txn_id => txn_id)}
   scope :paypal_unpaid, where("paypal_paid_auto IS NOT TRUE AND paypal_paid_manual IS NOT TRUE")
   scope :for_recurring_payment, lambda { |recurring_payment_id| where("subscriptions.paypal_profile_id = ?", recurring_payment_id).joins(:subscription).order("subscription_sub_periods.id") }
@@ -40,14 +40,14 @@ class SubscriptionSubPeriod < ActiveRecord::Base
     self.euro_billing_price = subscription.currency.to_euro(billing_price)
   end
 
-  def create_invoice_when_marked_as_paid_or_retries_exceeded
-    if !invoice and ((paypal_retries_changed? and paypal_retries == 0) or (paypal_paid_auto_changed? and paypal_paid_auto?))
-      _invoice = Invoice.create(:user => subscription.user, :subscription_sub_period_id => self.id, :currency => subscription.currency)
-      _invoice.send_by_email(user)
+  def create_and_send_invoice!
+    _invoice = Invoice.create(:user => subscription.user, :subscription_sub_period_id => self.id, :currency => subscription.currency)
+    _invoice.send_by_email(user)
+  end
 
-      if paypal_retries_changed? and paypal_retries == 0 and subscription.automatic_downgrading?
-        subscription.downgrade_paypal!
-      end
+  def create_invoice_when_marked_as_paid
+    if !invoice and paypal_paid_auto_changed? and paypal_paid_auto?
+      create_and_send_invoice!
     end
   end
 
