@@ -328,7 +328,7 @@ Feature: Front page for procurment
     And I should see translated "deals.index.view.fair_deal_splash_label" within ".splash span"
 
   #8883
-  @m25 @requested
+  @m25 @requested @_done @nontestable
   Scenario: When deals are browsed by the arrows on the fairdeals page then transition effect should be added
 
   #8882
