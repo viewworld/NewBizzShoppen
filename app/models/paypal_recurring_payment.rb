@@ -67,7 +67,7 @@ class PaypalRecurringPayment
       :total_billing_cycles => @options[:user].active_subscription.cancelled_in_paypal? ?
           @options[:subscription_plan].subscription_sub_periods.with_billing_date_greater_or_equal(Date.today).size : nil,
       :failed      => @options[:subscription_plan].paypal_retries.to_i,
-      :outstanding => :next_billing
+      :outstanding => :no_auto
     }.merge(free_period_hash)).create_recurring_profile
     archive_response!("create_recurring_profile")
   end

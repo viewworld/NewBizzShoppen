@@ -213,8 +213,14 @@ describe SubscriptionSubPeriod do
       setup_customer(@payable_subscription2)
       @customer.active_subscription.confirm_paypal!
 
+      profile_id = "I-ZXCVBFGH"
+      @customer.active_subscription.update_attribute(:paypal_profile_id, profile_id)
+
       expect {
-        @customer.active_subscription.subscription_sub_periods[0].update_attribute(:paypal_retries, 0)
+        #first try
+        Subscription.payment_failed(profile_id, SubscriptionPaymentNotification.create)
+        #second try
+        Subscription.payment_failed(profile_id, SubscriptionPaymentNotification.create)
       }.to change { Invoice.count }.by(1)
 
       @customer.active_subscription.subscription_sub_periods[0].invoice.should_not be_paid
@@ -230,8 +236,13 @@ describe SubscriptionSubPeriod do
       @customer.active_subscription.confirm_paypal!
       @prev_subscription = @customer.active_subscription
 
+      profile_id = "I-ZXCVBFGH"
+      @customer.active_subscription.update_attribute(:paypal_profile_id, profile_id)
+
       Subscription.any_instance.expects(:cancel_paypal_profile).returns(nil)
-      @customer.active_subscription.subscription_sub_periods[0].update_attribute(:paypal_retries, 0)
+
+      #when payment suspended notification is received
+      Subscription.payment_suspended(profile_id, SubscriptionPaymentNotification.create)
 
       @customer.active_subscription.subscription_plan.should == @payable_subscription4
       @prev_subscription.reload

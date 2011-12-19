@@ -28,6 +28,7 @@ class SubscriptionPlan < ActiveRecord::Base
   validate :subscription_period_in_context_of_billing_cycle
   validate :subscription_plan_lines_in_context_of_number_of_billing_periods
   validates_associated :subscription_plan_lines
+  validates_numericality_of :paypal_retries, :greater_than => 0, :if => Proc.new { |sp| sp.use_paypal? }
 
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
   has_many :subscriptions

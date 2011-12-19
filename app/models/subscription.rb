@@ -11,6 +11,7 @@ class Subscription < ActiveRecord::Base
   belongs_to :automatic_downgrade_subscription_plan, :class_name => "SubscriptionPlan"
   after_create :handle_user_privileges
   after_create :create_subscription_sub_periods
+  after_save :check_if_paypal_retries_exceeded
 
   acts_as_list :scope => :user_id
   scope :active, lambda { where("is_active = ? and ((end_date IS NULL and subscription_period = 0) or end_date >= ?)", true, Date.today) }
@@ -94,6 +95,26 @@ class Subscription < ActiveRecord::Base
     end
   end
 
+  def self.payment_failed(prof_id, spn)
+    subscription = SubscriptionSubPeriod.paypal_unpaid.for_recurring_payment(prof_id).readonly(false).first.subscription
+
+    if subscription
+     subscription.update_attribute(:paypal_retries_counter, subscription.paypal_retries_counter + 1)
+    else
+      EmailNotification.notify("recurring_payment_failed: Subscription not found", "<p>SubscriptionPaymentNotification: #{spn.id}</p> <>br /> Backtrace: <p>#{spn.params.inspect}</p>")
+    end
+  end
+
+  def self.payment_suspended(prof_id, spn)
+    subscription = SubscriptionSubPeriod.paypal_unpaid.for_recurring_payment(prof_id).readonly(false).first.subscription
+
+    if subscription
+     subscription.update_attribute(:paypal_retries_counter, subscription.paypal_retries)
+    else
+      EmailNotification.notify("recurring_payment_suspended_due_to_max_failed_payment: Subscription not found", "<p>SubscriptionPaymentNotification: #{spn.id}</p> <>br /> Backtrace: <p>#{spn.params.inspect}</p>")
+    end
+  end
+
   def initial_state
     last_subscription = user.subscriptions.last
     if last_subscription and last_subscription.cancelled_during_lockup?
@@ -134,7 +155,7 @@ class Subscription < ActiveRecord::Base
 
   def self.clone_from_subscription_plan!(subscription_plan, user, start_date=nil, paypal_invoice_id=nil)
     subscription = Subscription.new(:user => user)
-    subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price", "is_active", "aasm_state"]).each do |method|
+    subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price", "is_active", "aasm_state", "paypal_retires_counter"]).each do |method|
       subscription.send("#{method}=".to_sym, subscription_plan.send(method.to_sym))
     end
     subscription.subscription_plan = subscription_plan.is_a?(Subscription) ? subscription_plan.subscription_plan : subscription_plan
@@ -389,6 +410,13 @@ class Subscription < ActiveRecord::Base
                                       :end_date => (is_free? and !unconfirmed_paypal?) ? nil : period_end_date,
                                       :paypal_retries => paypal_retries,
                                       :billing_date => is_free? ? nil : (n == 0 and billing_period.to_i < 0) ? period_start_date : (period_start_date + billing_period.to_i.weeks))
+    end
+  end
+
+  def check_if_paypal_retries_exceeded
+    if use_paypal? and paypal_retries_counter_changed? and paypal_retries == paypal_retries_counter
+      subscription_sub_periods.without_invoice.billable.each { |sp| sp.send(:create_and_send_invoice!) }
+      downgrade_paypal! if automatic_downgrading? and may_downgrade_paypal?
     end
   end
 end

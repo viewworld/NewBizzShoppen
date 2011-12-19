@@ -471,6 +471,7 @@ SubscriptionPlan.blueprint do
   big_buyer { false }
   deal_maker { false }
   seller { Seller.make! }
+  paypal_retries { 1 }
 end
 
 SubscriptionPlanLine.blueprint do

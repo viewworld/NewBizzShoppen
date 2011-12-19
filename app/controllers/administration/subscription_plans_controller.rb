@@ -4,7 +4,7 @@ class Administration::SubscriptionPlansController < Administration::Administrati
   set_subtab "subscription_plans"
 
   def new
-    @subscription_plan = SubscriptionPlan.new(:seller => Seller.default)
+    @subscription_plan = SubscriptionPlan.new(:seller => Seller.default, :paypal_retries => 1)
   end
 
   def create
