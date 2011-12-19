@@ -16,7 +16,7 @@
         <div id="primary_group_deal">
           <%= render :partial => 'primary_deal_cycle', :locals => {:primary_deal => @primary_deal} %>
         </div>
-        <% @featured_deals[1..-1].each do |deal| %>
+        <% @featured_deals[1..9].each do |deal| %>
             <div style="display:none">
               <%= render :partial => 'primary_deal_cycle', :locals => {:primary_deal => deal} %>
             </div>
