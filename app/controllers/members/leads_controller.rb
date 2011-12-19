@@ -73,13 +73,14 @@ class Members::LeadsController < Members::MemberController
   end
 
   def redirect_to_paypal
+    return redirect_to root_path unless @lead.deal.voucher_numbers.where(:user_id => current_user.id, :state => "used").first.blank?
     @voucher_number = @lead.deal.voucher_numbers.available_for_now(Time.now).first
     return redirect_to root_path if @voucher_number.blank?
     @voucher_number.reserve!(current_user)
   end
 
   def pdf
-    send_file @lead.deal.voucher_numbers.where(:user_id => current_user.id).first.file_path("pdf"), :type => 'application/pdf'
+    send_file @lead.deal.voucher_numbers.where(:user_id => current_user.id, :state => "used").first.file_path("pdf"), :type => 'application/pdf'
   end
 
   def update
