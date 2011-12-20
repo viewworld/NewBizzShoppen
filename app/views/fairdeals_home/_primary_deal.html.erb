@@ -1,13 +1,11 @@
 <% unless primary_deal.blank? %>
     <% email_form_id = ActiveSupport::SecureRandom.hex(16) %>
       <div class="frm_plain primary_deal">
-        <%= link_to "previous", group_deal_path(primary_deal, :previous => true), :class => "arrow_left", :remote => true %>
-        <%= link_to "next", group_deal_path(primary_deal, :next => true), :class => "arrow_right", :remote => true %>
         <div class="frm_head">
             <h2><%= link_to primary_deal.header, deal_path(primary_deal.slug) %></h2>
             <div class="splash splash_red"><span><%= primary_deal.group_deal? ? t("deals.index.view.group_deal_splash_label") : t("deals.index.view.fair_deal_splash_label") %></span></div>
         </div>
-        <div class="frm_content">
+        <div class="frm_content" style="min-height:255px">
 
           <div class="deal_info">
             <p>
@@ -42,7 +40,7 @@
             </div>
 
             <% if primary_deal.group_deal? %>
-                <div id="countdown" class="countdown">
+                <div id="countdown_<%= email_form_id %>" class="countdown">
                   <span class="countdown_title">Time left:</span>
                   <div class="dash days_dash">
                     <span class="dash_title"><%= t("deals.show.view.days") %></span>
@@ -98,7 +96,7 @@
     jQuery(document).ready(function() {
         d = new Date();
         seconds = (<%= primary_deal.end_date.to_i %> - parseInt(d.getTime() / 1000));
-        $('#countdown').countDown({
+        $('#countdown_<%= email_form_id %>').countDown({
             targetOffset: {
                 'year':     0,
                 'month':    0,
