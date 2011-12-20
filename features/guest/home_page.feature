@@ -63,3 +63,7 @@ Feature: Home page
   #7747
   @m20 @requested @ao @non_testable @_done
   Scenario: Integration with User Voice
+
+  #9269
+  @m26 @requested
+  Scenario: I can see different terms and conditions page for fairleads,fairdeals and faircalls
