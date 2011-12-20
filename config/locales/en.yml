@@ -408,6 +408,8 @@ en:
       edit_template: "Edit template"
       production: "Production"
       agent_work_screen_as: "Go to agent work screen as"
+      button_move_selected_contacts: "Move selected"
+      button_copy_selected_contacts: "Copy selected"
     index:
       title: Campaigns
       edit: Edit
