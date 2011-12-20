@@ -286,7 +286,7 @@ class Deal < AbstractLead
   end
 
   def can_be_editable_by(current_user)
-    current_user.id == creator.id or current_user.email == email_address or current_user.email == deal_admin_email
+    current_user.id == creator.id or current_user.email == email_address or current_user.email == deal_admin_email or current_user.admin?
   end
 
   def deal_code_is_url?

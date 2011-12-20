@@ -209,7 +209,7 @@
     <div id="modal_for_share_deal_by_email" style="display:none;">
       <%= render :partial => "share_deal_by_email/new", :locals => {:deal => @deal} %>
     </div>
-    <div style="width: 300px;"><%= bt_link_to nil, t("deals.index.view.back_to_front_page"), root_path, :class => "bt_max bt_big" %></div>
+    <div style="width: 300px;"><%= link_to t("deals.index.view.back_to_front_page"), root_path %></div>
   </div>
 </column-mc:>
 
