@@ -6,20 +6,14 @@
     <br/>
   </div>
 
-  <hl pdd="15"/>
-
-  <div class="frm_tiny" style="margin-bottom:10px;">
-    <div class="pdd_10">
-      <p><%= t("member_accounts.new.view.janrain_sign_up_label") %>
-        <% unless Rails.env.test? %>
-            <%= link_to_rpx image_tag("icons/social_login.png"), member_accounts_url %>
-            <%= javascript_include_rpx member_accounts_url %>
-        <% end %>
-      </p>
-      <%= render(:partial => "shared/accounts/rpx_message", :locals => {:user => @user}) unless @user.rpx_identifier.blank? %>
-    </div>
-  </div>
-
+  <% unless @user.rpx_identifier.blank? %>
+      <hl pdd="15"/>
+      <div class="frm_tiny" style="margin-bottom:10px;">
+        <div class="pdd_10">
+          <%= render(:partial => "shared/accounts/rpx_message", :locals => {:user => @user}) %>
+        </div>
+      </div>
+  <% end %>
 
   <%= render :partial => "sign_in/purchase_manager_form", :locals => {:user => @user, :url => member_accounts_path} %>
 </column-mc:>
