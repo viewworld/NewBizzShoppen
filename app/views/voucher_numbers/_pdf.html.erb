@@ -25,12 +25,12 @@
       <tr>
         <td>
           <% if deal.logo %>
-              <img src="<%= "#{'../..' unless Rails.env == "production"}" + deal.logo.url.gsub(/\?\d*\z/, "") %>" alt="logo" width="150"/>
+              <img src="<%= "#{'../..' unless ["production", "staging"].include?(Rails.env)}" + deal.logo.url.gsub(/\?\d*\z/, "") %>" alt="logo" width="150"/>
           <% end %>
         </td>
         <td>
           <% if deal.voucher_heading_picture %>
-              <img src="<%= "#{'../..' unless Rails.env == "production"}" + deal.voucher_heading_picture.url.gsub(/\?\d*\z/, "") %>" alt="logo" width="150"/>
+              <img src="<%= "#{'../..' unless ["production", "staging"].include?(Rails.env)}" + deal.voucher_heading_picture.url.gsub(/\?\d*\z/, "") %>" alt="logo" width="150"/>
           <% end %>
         </td>
       </tr>
