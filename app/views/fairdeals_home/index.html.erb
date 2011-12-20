@@ -98,19 +98,17 @@
       <% end %>
     </div>
 
-    <div class="news">
-      <!--
-    <h2><%= t('member_home.show.view.header_news') %><%= link_to t("member_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass => 'Member'}) %></h2>
-    -->
-      <ul>
-        <% if @news.any? %>
-            <%= render :partial => 'news', :collection => @news, :as => :news %>
-        <% else %>
-            <%= render :partial => 'shared/blank_data_li' %>
-        <% end %>
-      </ul>
+    <!--<div class="news">-->
+    <!--<h2><%= t('member_home.show.view.header_news') %><%= link_to t("member_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass => 'Member'}) %></h2>-->
+      <!--<ul>-->
+        <!--<% if @news.any? %>-->
+            <!--<%= render :partial => 'news', :collection => @news, :as => :news %>-->
+        <!--<% else %>-->
+            <!--<%= render :partial => 'shared/blank_data_li' %>-->
+        <!--<% end %>-->
+      <!--</ul>-->
 
-    </div>
+    <!--</div>-->
 
   </div>
   <clb/>
