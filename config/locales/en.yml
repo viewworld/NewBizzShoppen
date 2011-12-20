@@ -2105,6 +2105,8 @@ en:
           view_all_leads_link: "View all leads"
           confirmation_message: "We have successfully received the contact request, and that we will be in touch as soon as possible."
           ok_confirmation: "OK"
+          voucher_confirmation_message: "Please go to Paypal page to pay for Your voucher."
+          go_to_paypal: "Go to Paypal"
       destroy:
         flash:
           lead_deletion_successful: "Lead has been deleted successfully."
