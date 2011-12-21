@@ -1948,7 +1948,7 @@ li.disabled
     position: relative;
 
     margin: 5px;
-    min-height: 200px;
+    min-height: 240px;
     width: 200px;
     border: 1px solid #d0d0d0;
     min-width: 150px;
@@ -2016,12 +2016,19 @@ li.disabled
     margin-bottom: 7px;
 }
 
-.subscription_plan_item .billing
+.subscription_plan_item .subscription_plan_price p
+{
+    font-size: 11px;
+    line-height: 14px;
+    padding-top: 3px;
+}
+
+.subscription_plan_item .subscription_plan_price p.billing
 {
     color: #0096ff;
     font-size: 26px;
     font-weight: bold;
-    padding: 0 5px 3px;
+    padding: 3px 5px 8px;
 }
 
 .subscription_plan_item > p
@@ -2031,7 +2038,7 @@ li.disabled
 
 .subscription_plan_footer
 {
-    padding-top: 5px;
+    padding: 5px 0 !important;
 }
 
 
