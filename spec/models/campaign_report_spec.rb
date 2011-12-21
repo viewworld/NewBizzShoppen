@@ -174,6 +174,17 @@ describe CampaignReport do
       cr.value_created.should == 253.0
     end
 
+    it "should return correct number of call results" do
+      CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset-1.day)
+      CallResult.make!(:contact => @contact1_2, :result => @result_final_reported, :creator => @call_centre_agent1)
+      CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
+      CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
+      cr.number_of_call_results.should == 6
+    end
+
     it "should return correct leads sold total value" do
       CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
       CallResult.make!(:contact => @contact1_3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)

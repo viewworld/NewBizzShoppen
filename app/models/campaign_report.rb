@@ -115,6 +115,10 @@ class CampaignReport
     leads_sold_total_value - production_cost
   end
 
+  def number_of_call_results
+    all_call_results.count
+  end
+
   def self.store_pdf(report_cache)
     pdf_path = Rails.root.join "public/html2pdf/campaign_reports_cache/#{report_cache}.pdf"
     html_path = Rails.root.join "public/html2pdf/campaign_reports_cache/#{report_cache}.html"
@@ -138,6 +142,16 @@ class CampaignReport
   end
 
   private
+
+  def all_call_results
+    crs = CallResult.for_campaign(campaign).where("call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported
+    crs = if selected_users?
+      crs.where("call_results.creator_id in (?)", user.map(&:id))
+    elsif user
+      crs.where("call_results.creator_id = ?", user.id)
+    end
+    selected_result_ids ? crs.where("results.id IN (?)", selected_result_ids) : crs
+  end
 
   def final_results(result=nil)
     rsp = CallResult.final_for_campaign(campaign).where("call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported
