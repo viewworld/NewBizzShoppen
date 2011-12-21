@@ -14,7 +14,7 @@ module InvoicePaypalPayment
     }
 
     index = 0
-    invoice_lines.each do |line|
+    invoice_lines.select { |il| il.netto_price > 0  }.each do |line|
       index += 1
       values.merge!({
                         "amount_#{index}"      => line.netto_price,
