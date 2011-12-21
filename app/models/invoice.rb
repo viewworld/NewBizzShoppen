@@ -16,6 +16,7 @@ class Invoice < ActiveRecord::Base
 
   include ScopedSearch::Model
   include MultiScopedOrder
+  include InvoicePaypalPayment
 
   belongs_to :user
   belongs_to :currency
@@ -69,6 +70,8 @@ class Invoice < ActiveRecord::Base
 
   scoped_order :revenue_frozen, :paid_at, :number, :sale_date, :seller_name
   multi_scoped_order :sale_date_and_number
+
+  liquid :full_number, :pay_via_paypal_link
 
   protected
 
@@ -321,6 +324,10 @@ class Invoice < ActiveRecord::Base
 
   def send_by_email(user)
     invoice_path = Pathname.new(File.join(::Rails.root.to_s,'public/html2pdf/invoice_cache', store_pdf(user).basename))
-    TemplateMailer.delay.new(user.email, :invoice, Country.get_country_from_locale, {}, Array(invoice_path))
+    TemplateMailer.delay.new(user.email, paid? ? :invoice : :unpaid_invoice, Country.get_country_from_locale, {:invoice => self}, Array(invoice_path))
+  end
+
+  def pay_via_paypal_link
+    "http://#{user.domain_name}/paypal_unpaid_invoices/#{id}"
   end
 end

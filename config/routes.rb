@@ -341,6 +341,7 @@ Nbs::Application.routes.draw do
   resources :articles
   resources :help_popups
   resources :login_keys
+  resources :paypal_unpaid_invoices
 
   resource :my_profile, :controller => "my_profile", :only => [:update] do
     member do
