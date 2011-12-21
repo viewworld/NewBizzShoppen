@@ -398,6 +398,11 @@ Result.blueprint(:final_reported) do
   is_reported { true }
 end
 
+Result.blueprint(:not_final_reported) do
+  final { false }
+  is_reported { true }
+end
+
 Result.blueprint(:final) do
   final { true }
 end
