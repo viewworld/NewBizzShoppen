@@ -1,4 +1,4 @@
-<% if current_user and current_user.can_upgrade_or_downgrade_subscription? %>
+<% if current_user  %>
     <div id="available_subscriptions">
       <!--<h2><%= t("subscriptions.available_subscriptions") %>:</h2>-->
       <!--<br/>-->
@@ -24,18 +24,31 @@
             <%#= t("subscriptions.listing.no_available_subscriptions") %>
         <% end %>
       </div>
+
     </div>
 <% end %>
 
 <% if current_user and current_user.has_active_subscription? %>
     <hl pdd="10"/>
     <div id="current_subscription">
+      <% if next_subscription = current_user.next_subscription %>
+          <p><%= t("subscriptions.next_subscription_plan", :next_plan_name => next_subscription.subscription_plan.name, :next_plan_active_from => next_subscription.start_date) %></p>
+      <% elsif current_user.active_subscription.will_prolong? %>
+          <p><%= t("subscriptions.will_prolong_on", :prolong_date => current_user.active_subscription.end_date + 1.day) %> <%= t("subscriptions.as_free_subscription") if current_user.active_subscription.cancelled? %></p>
+      <% end %>
+
       <% if !current_user.can_upgrade_or_downgrade_subscription? %>
           <h3><%= t("subscriptions.cant_be_upgraded_nor_downgraded") %></h3>
       <% elsif !current_user.can_upgrade_subscription? %>
           <h3><%= t("subscriptions.cant_be_upgraded") %></h3>
       <% elsif !current_user.can_upgrade_subscription? %>
           <h3><%= t("subscriptions.cant_be_downgraded") %></h3>
+      <% end %>
+
+      <% unless current_user.has_free_subscription? %>
+          <% if current_user.active_subscription.lockup? %>
+              <h3><%= t("subscriptions.lockup_period_notification") %></h3>
+          <% end %>
       <% end %>
     </div>
 <% end %>
