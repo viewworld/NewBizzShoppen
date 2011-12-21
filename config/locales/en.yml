@@ -4211,6 +4211,7 @@ en:
     new_subscription_plan_is_invalid: "The new subscription plan is invalid"
     start_date_is_invalid: "The start date for new subscription is invalid"
     there_are_future_subscriptions: "You can not change the subscription because there is already other subscription scheduled to start after the current one"
+    active: "Active"
     confirmation:
       cancel: "Are you sure you want to cancel your current subscription plan?"
       downgrade: "Are you sure you want to downgrade your current subscription plan?"
@@ -4230,6 +4231,7 @@ en:
         team_buyers: "Team suppliers"
         deal_maker: "Deal maker"
       weeks: "weeks"
+      selected: "Your choice"
       with_n_weeks_billing_cycle: "with %{number} weeks billing cycle"
       plus_n_weeks_free_period: "+ %{number} weeks of free period"
     as_free_subscription: "as free subscription"
