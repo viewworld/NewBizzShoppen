@@ -43,6 +43,7 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   def create_and_send_invoice!
     _invoice = Invoice.create(:user => subscription.user, :subscription_sub_period_id => self.id, :currency => subscription.currency)
     _invoice.send_by_email(user)
+    PaypalTransaction.create(:invoice => _invoice, :amount => _invoice.total, :paid_at => Time.now) if invoice.paid?
   end
 
   def create_invoice_when_marked_as_paid
@@ -88,7 +89,7 @@ class SubscriptionSubPeriod < ActiveRecord::Base
 
   def self.create_unpaid_invoices_for_unpaid_sub_periods
     SubscriptionSubPeriod.without_invoice.with_billing_date_less_or_equal(Date.today).with_paypal_cancelled.readonly(false).each do |sp|
-      sp.update_attribute(:paypal_retries, 0)
+      sp.send(:create_and_send_invoice!)
     end
   end
 

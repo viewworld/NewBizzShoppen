@@ -19,7 +19,14 @@ class PaymentNotificationsController < ApplicationController
   private
 
   def cart
-    params[:invoice].match(/^v_/) ? VoucherPaymentNotification.process(params) : CartPaymentNotification.process(params)
+    case params[:invoice]
+      when /^v_/
+        VoucherPaymentNotification.process(params)
+      when /^i_/
+        InvoicePaymentNotification.process(params)
+      else
+        CartPaymentNotification.process(params)
+    end
   end
 
   def recurring_payment_profile_created
