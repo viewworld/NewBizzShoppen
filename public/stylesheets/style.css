@@ -1945,9 +1945,10 @@ li.disabled
     zoom: 1 !ie7;
     vertical-align: top;
     cursor: pointer;
+    position: relative;
 
-    margin: 4px;
-    min-height: 200px;
+    margin: 5px;
+    min-height: 240px;
     width: 200px;
     border: 1px solid #d0d0d0;
     min-width: 150px;
@@ -1964,12 +1965,39 @@ li.disabled
 
 .subscription_plan_item.active
 {
-    border: 3px solid #2da9ff;
+    border: 4px solid #2da9ff;
 
-    -moz-box-shadow: 0 0 6px rgba(0,0,0,.3);
-    -webkit-box-shadow: 0 0 6px rgba(0,0,0,.3);
-    box-shadow: 0 0 6px rgba(0,0,0,.3);
+    -moz-box-shadow: 0 0 8px rgba(0,0,0,.3);
+    -webkit-box-shadow: 0 0 8px rgba(0,0,0,.3);
+    box-shadow: 0 0 8px rgba(0,0,0,.3);
     margin: 2px
+}
+
+.subscription_plan_item .active_badge
+{
+    position: absolute;
+    display: none;
+
+    left: 50%;
+    margin-left: -55px;
+    margin-top: -24px;
+    width: 100px;
+    height: 12px;
+    padding: 6px 5px;
+    color: #eee;
+    font-weight: bold;
+    font-size: 11px;
+    text-align: center;
+    background: #000;
+    background: rgba(0,0,0,.8);
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+}
+
+.subscription_plan_item.active .active_badge
+{
+    display: block;
 }
 
 .subscription_plan_item h3
@@ -1988,12 +2016,19 @@ li.disabled
     margin-bottom: 7px;
 }
 
-.subscription_plan_item .billing
+.subscription_plan_item .subscription_plan_price p
+{
+    font-size: 11px;
+    line-height: 14px;
+    padding-top: 3px;
+}
+
+.subscription_plan_item .subscription_plan_price p.billing
 {
     color: #0096ff;
     font-size: 26px;
     font-weight: bold;
-    padding: 0 5px 3px;
+    padding: 3px 5px 8px;
 }
 
 .subscription_plan_item > p
@@ -2003,7 +2038,7 @@ li.disabled
 
 .subscription_plan_footer
 {
-    padding-top: 5px;
+    padding: 5px 0 !important;
 }
 
 

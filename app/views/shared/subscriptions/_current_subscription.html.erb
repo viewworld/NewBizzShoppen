@@ -1,34 +1,40 @@
-<div id="subscription_plan_<%= subscription_plan.id %>">
-    <h3><%= subscription_plan.name %></h3>
+<div id="subscription_plan_<%= subscription_plan.id %>" class="subscription_plan_item active">
+  <div class="active_badge">Selected</div>
+  <h3><%= subscription_plan.name %></h3>
 
+  <div class="subscription_plan_price">
     <% unless subscription_plan.is_free? %>
-        <p><%= as_currency(subscription_plan.total_billing, subscription_plan.currency) %></p>
-        <p><%= t("subscriptions.current_subscription_billing_cycle", :from => current_user.active_subscription.start_date , :to => current_user.active_subscription.end_date) %></p>
+        <p class="billing"><%= as_currency(subscription_plan.total_billing, subscription_plan.currency) %></p>
+
+        <p><%= t("subscriptions.current_subscription_billing_cycle", :from => current_user.active_subscription.start_date, :to => current_user.active_subscription.end_date) %></p>
         <% if next_subscription = current_user.next_subscription %>
             <p><%= t("subscriptions.next_subscription_plan", :next_plan_name => next_subscription.subscription_plan.name, :next_plan_active_from => next_subscription.start_date) %></p>
         <% elsif current_user.active_subscription.will_prolong? %>
-          <p><%= t("subscriptions.will_prolong_on", :prolong_date => current_user.active_subscription.end_date + 1.day) %> <%= t("subscriptions.as_free_subscription") if current_user.active_subscription.cancelled? %></p>
+            <p><%= t("subscriptions.will_prolong_on", :prolong_date => current_user.active_subscription.end_date + 1.day) %> <%= t("subscriptions.as_free_subscription") if current_user.active_subscription.cancelled? %></p>
         <% end %>
     <% else %>
         <p><%= t("subscriptions.listing.free") %></p>
     <% end %>
+  </div>
 
-    <% unless current_user.has_free_subscription? %>
-        <% if !current_user.can_cancel_subscription? and cancel_date = current_user.can_cancel_subscription_at %>
+  <% unless current_user.has_free_subscription? %>
+      <% if !current_user.can_cancel_subscription? and cancel_date = current_user.can_cancel_subscription_at %>
           <h3><%= t("subscriptions.can_be_canceled_at", :cancel_date => cancel_date) %></h3>
-        <% elsif !current_user.can_cancel_subscription? and !current_user.active_subscription.cancelled? %>
+      <% elsif !current_user.can_cancel_subscription? and !current_user.active_subscription.cancelled? %>
           <h3><%= t("subscriptions.cant_be_canceled") %></h3>
-        <% elsif current_user.active_subscription.cancelled? %>
+      <% elsif current_user.active_subscription.cancelled? %>
           <h3><%= t("subscriptions.active_subscription_is_canceled") %></h3>
-        <% else %>
-          <%= bt_link_to nil, t("subscriptions.listing.cancel"), cancel_my_profile_subscription_plans_path, :class => "fltl", :confirm => t("subscriptions.confirmation.cancel") %>
-        <% end %>
+      <% else %>
+          <p class="subscription_plan_footer">
+            <%= bt_link_to nil, t("subscriptions.listing.cancel"), cancel_my_profile_subscription_plans_path, :confirm => t("subscriptions.confirmation.cancel") %>
+          </p>
+      <% end %>
 
-        <% if current_user.active_subscription.lockup? %>
-            <h3><%= t("subscriptions.lockup_period_notification") %></h3>
-        <% end %>
-    <% end %>
+      <% if current_user.active_subscription.lockup? %>
+          <h3><%= t("subscriptions.lockup_period_notification") %></h3>
+      <% end %>
+  <% end %>
 
-    <clb/>
-    
+  <clb/>
+
 </div>

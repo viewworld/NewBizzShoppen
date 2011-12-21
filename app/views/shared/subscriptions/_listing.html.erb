@@ -1,45 +1,41 @@
-<% if current_user and current_user.has_active_subscription?  %>
-    <div id="current_subscription">
-        <h2><%= t("subscriptions.current_subscription")%>:</h2>
-        <br/>
-        <%= render :partial => 'shared/subscriptions/current_subscription', :locals => {:subscription_plan => current_user.active_subscription_plan} %>
-
-        <% if current_user.active_subscription.is_today_in_free_period? %>
-            <h3><%= t("subscriptions.free_period_notification", :free_period_date => current_user.active_subscription.free_subscription_end_date) %></h3>
-        <% end %>
-
-        <% if !current_user.can_upgrade_or_downgrade_subscription? %>
-            <h3><%= t("subscriptions.cant_be_upgraded_nor_downgraded")%></h3>
-        <% elsif !current_user.can_upgrade_subscription? %>
-          <h3><%= t("subscriptions.cant_be_upgraded")%></h3>
-        <% elsif !current_user.can_upgrade_subscription? %>
-          <h3><%= t("subscriptions.cant_be_downgraded")%></h3>
-        <% end %>
-    </div>
-<% end %>
-
 <% if current_user and current_user.can_upgrade_or_downgrade_subscription? %>
-
-    <hl pdd="10"/>
-
     <div id="available_subscriptions">
-        <h2><%= t("subscriptions.available_subscriptions") %>:</h2>
-        <br/>
-        <p>
-            <%= blurb(:blurb_subscription_select) %>
-        </p>
+      <!--<h2><%= t("subscriptions.available_subscriptions") %>:</h2>-->
+      <!--<br/>-->
 
-        <hl pdd="5"/>
+      <p>
+        <%= blurb(:blurb_subscription_select) %>
+      </p>
 
-        <% @subscriptions = SubscriptionPlan.active.exclude_free(true).include_paypal((!SubscriptionPlan::DISABLE_PAYPAL_SUBSCRIPTIONS or current_user.test_account?)).exclude_current_plan(current_user.active_subscription_plan).for_role(role).ascend_by_billing_price.select{|sp| current_user.subscription_can_be_changed_to?(sp) } %>
+      <hl pdd="5"/>
+
+      <div class="subscription_plans">
+
+        <% if current_user and current_user.has_active_subscription? %>
+            <%= render :partial => 'shared/subscriptions/current_subscription', :locals => {:subscription_plan => current_user.active_subscription_plan} %>
+        <% end %>
+        <% @subscriptions = SubscriptionPlan.active.exclude_free(true).include_paypal((!SubscriptionPlan::DISABLE_PAYPAL_SUBSCRIPTIONS or current_user.test_account?)).exclude_current_plan(current_user.active_subscription_plan).for_role(role).ascend_by_billing_price.select { |sp| current_user.subscription_can_be_changed_to?(sp) } %>
         <% if @subscriptions.any? %>
-          <div class="subscription_plans">
             <% @subscriptions.each do |subscription_plan| %>
                 <%= render :partial => 'shared/subscriptions/subscription', :locals => {:subscription_plan => subscription_plan, :role => role} %>
             <% end %>
-          </div>
         <% else %>
-            <%= t("subscriptions.listing.no_available_subscriptions") %>
+            <%#= if user has not active subscription & no available subscriptions %>
+            <%#= t("subscriptions.listing.no_available_subscriptions") %>
         <% end %>
+      </div>
+    </div>
+<% end %>
+
+<% if current_user and current_user.has_active_subscription? %>
+    <hl pdd="10"/>
+    <div id="current_subscription">
+      <% if !current_user.can_upgrade_or_downgrade_subscription? %>
+          <h3><%= t("subscriptions.cant_be_upgraded_nor_downgraded") %></h3>
+      <% elsif !current_user.can_upgrade_subscription? %>
+          <h3><%= t("subscriptions.cant_be_upgraded") %></h3>
+      <% elsif !current_user.can_upgrade_subscription? %>
+          <h3><%= t("subscriptions.cant_be_downgraded") %></h3>
+      <% end %>
     </div>
 <% end %>
