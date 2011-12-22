@@ -346,4 +346,4 @@ Feature: Deals from procurement manager perspective
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
     And I press translated "member.leads.new.view.button_create"
-    And I should see "Blurb deal confirmation page"
+    And I should see "Blurb voucher confirmation page"
