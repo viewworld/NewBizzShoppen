@@ -121,7 +121,7 @@ class CampaignReport
 
   def average_number_of_minutes_per_final_result
     if frc = final_results.count and frc.zero?
-      "inf"
+      "-"
     else
       ((total_hours * 60) / frc).round
     end
@@ -129,7 +129,7 @@ class CampaignReport
 
   def average_number_of_call_results_per_finished_contact
     if fcc = finished_contacts.count and fcc.zero?
-      "inf"
+      "-"
     else
       (number_of_call_results.to_f / fcc).round(2)
     end
@@ -137,7 +137,7 @@ class CampaignReport
 
   def number_of_results_per_minute
     if th = total_hours and th.zero?
-      "inf"
+      "-"
     else
       (number_of_call_results.to_f / (th * 60)).round(2)
     end
