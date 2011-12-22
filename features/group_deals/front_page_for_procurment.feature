@@ -150,7 +150,7 @@ Feature: Front page for procurment
     And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "PrimaryGroupDeal" is a primary featured deal
     And I visit domain http://fairdeals.dk
-    Then I should see CSS path "#countdown"
+    Then I should see CSS path "div.countdown .seconds_dash"
 
   @is @non_testable @_done
   Scenario: It should be possible to tweet the featured group deal
