@@ -297,6 +297,11 @@ class Deal < AbstractLead
     deal_code.to_s.match(/http:\/\//).nil? ? "http://#{deal_code}" : deal_code
   end
 
+  def brutto_discounted_price(user)
+    vat_rate = user.not_charge_vat? ? 0 : Seller.default.vat_rate
+    vat_rate > 0 ? discounted_price + (discounted_price * BigDecimal(vat_rate.to_s).div(100,4)) : discounted_price
+  end
+
   private
 
   def set_enabled_from
@@ -364,5 +369,4 @@ class Deal < AbstractLead
   def voucher_max_number_greater_or_equal_not_new_voucher_numbers
     errors.add(:voucher_max_number, I18n.t("models.deal.voucher_max_number_validation")) if self.voucher_max_number < self.voucher_numbers.can_not_be_deleted(Time.now).size
   end
-
 end
