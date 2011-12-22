@@ -224,6 +224,9 @@ describe SubscriptionSubPeriod do
       }.to change { Invoice.count }.by(1)
 
       @customer.active_subscription.subscription_sub_periods[0].invoice.should_not be_paid
+
+      ActionMailer::Base.deliveries.last.to.should include(@customer.email)
+      ActionMailer::Base.deliveries.last.body.raw_source.should include "/paypal_unpaid_invoices/#{@customer.active_subscription.subscription_sub_periods[0].invoice_id}"
     end
 
     it "should auto downgrade when number of retries is exceeded AND auto downgrading is enabled" do

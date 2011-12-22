@@ -41,3 +41,7 @@ Then /^cart for user "([^"]*)" has additional line for VAT$/ do |email|
   u.cart.hash_for_paypal(nil,nil).values.map(&:to_s).should include u.cart.total_vat_value.to_s
 end
 
+When /^I visit link to pay unpaid invoice for user "([^"]*)"$/ do |email|
+  u = User.where(:email => email).first.with_role
+  visit "/paypal_unpaid_invoices/#{u.invoices.detect { |i| !i.paid? }.id}"
+end
