@@ -26,3 +26,17 @@ Feature: Agent timesheets - agent timesheet
   Scenario: I should see total number of results per day of week for all weeks
 
   Scenario: I should see total value created per day of week for all weeks
+
+  Scenario: I should see average time first result was created each day of week
+
+  Scenario: I should see average time last result was created each day of week
+
+  Scenario: I should see average log out time each day of week
+
+  Scenario: I should see average value created each day of week
+
+  Scenario: I should see total hours worked each day of week
+
+  Scenario: I should see total number of results each day of week
+
+  Scenario: I should see total value created
