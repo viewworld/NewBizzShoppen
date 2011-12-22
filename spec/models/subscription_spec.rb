@@ -19,7 +19,7 @@ describe Subscription do
       @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :billing_cycle => 3, :can_be_upgraded => false)
       @payable_subscription1.subscription_plan_lines.make!(:price => 25)
       @payable_subscription1.subscription_plan_lines.make!(:price => 5)
-      @payable_subscription1.total_billing.should == 30
+      @payable_subscription1.total_billing.should == 30 * 4
       @customer = User::Supplier.make!(:subscription_plan_id => @payable_subscription1.id)
       @customer.active_subscription.total_billing.to_f.should == 30 * 4
     end
