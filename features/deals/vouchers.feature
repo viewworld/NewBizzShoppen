@@ -20,7 +20,7 @@ Feature: Vouchers
     Then I follow translated "deals.index.view.view_deal"
     Then I follow translated "deals.index.view.contact_me"
     And I press translated "member.leads.new.view.button_create"
-    Then I press translated "member.leads.show.view.ok_confirmation"
+    Then I press translated "member.leads.show.view.go_to_paypal"
     Then I should see "redirecting to paypal, please wait..."
     #check paypal response
     Then paypal voucher payment for deal "software components" and user with email "translator_purchase_manager@nbs.com" and role "member"
