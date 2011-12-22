@@ -94,6 +94,6 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   end
 
   def total_brutto_billing
-    subscription_plan_lines.inject(0.0) { |total, subscription_plan_line| subscription_plan_line.brutto_price + total }
+    subscription_plan_lines.inject(0.0) { |total, subscription_plan_line| subscription_plan_line.brutto_price.to_f + total }
   end
 end

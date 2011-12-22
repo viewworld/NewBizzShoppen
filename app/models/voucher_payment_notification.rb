@@ -7,7 +7,7 @@ class VoucherPaymentNotification < PaymentNotification
     if payment_notification.status == "Completed" &&
         params[:secret] == APP_CONFIG[:paypal_secret] &&
         params[:receiver_email] == APP_CONFIG[:paypal_email] &&
-        BigDecimal.new(params[:mc_gross]) == voucher_number.deal.discounted_price
+        BigDecimal.new(params[:mc_gross]) == voucher_number.deal.brutto_discounted_price(User.find(user_id).with_role)
       voucher_number.activate!(payment_notification)
     end
   end

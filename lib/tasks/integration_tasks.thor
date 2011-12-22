@@ -153,5 +153,9 @@ class IntegrationTasks < Thor
   desc "m26", ""
   def m26
     Subscription.where(:vat_rate => nil).each { |s| s.update_attribute(:vat_rate, s.seller.vat_rate) }
+    SubscriptionPlanLine.where("resource_type = 'Subscription' OR resource_type = 'SubscriptionSubPeriod'").each do |spl|
+      spl.brutto_price = spl.vat_rate > 0 ? spl.price + (spl.price * BigDecimal(spl.vat_rate.to_s).div(100,4)) : spl.price
+      spl.save
+    end
   end
 end
