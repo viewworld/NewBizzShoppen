@@ -1744,6 +1744,7 @@ en:
         line_name: "Name"
         line_price: "Price"
         delete_line: "Delete"
+        lines_per_billing_cycle: "Lines are added per each billing cycle"
     paypal_notifications:
       index:
         view:
