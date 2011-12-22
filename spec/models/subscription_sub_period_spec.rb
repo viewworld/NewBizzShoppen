@@ -263,6 +263,54 @@ describe SubscriptionSubPeriod do
 
       ActionMailer::Base.deliveries.last.to.should include(@customer.email)
     end
+
+    it "should become normal when renewed after it was cancelled in paypal" do
+      @payable_subscription2.update_attributes(:use_paypal => true)
+      setup_customer(@payable_subscription2)
+      @customer.active_subscription.confirm_paypal!
+
+      profile_id = "I-ZXCVBFGH"
+      @customer.active_subscription.update_attribute(:paypal_profile_id, profile_id)
+
+      @customer.active_subscription.should be_normal
+
+      Subscription.canceled_in_paypal(profile_id, SubscriptionPaymentNotification.create)
+
+      @customer.active_subscription.should be_cancelled
+      @customer.active_subscription.should be_cancelled_in_paypal
+
+      @customer.active_subscription.normalize!
+
+      @customer.active_subscription.should be_normal
+      @customer.active_subscription.should_not be_cancelled_in_paypal
+      @customer.active_subscription.should_not be_prolongs_as_free
+    end
+
+    it "should become normal when renewed after it was cancelled in paypal during lockup" do
+      @payable_subscription2.update_attributes(:use_paypal => true, :lockup_period => 6)
+      setup_customer(@payable_subscription2)
+      @customer.active_subscription.confirm_paypal!
+
+      profile_id = "I-ZXCVBFGH"
+      @customer.active_subscription.update_attribute(:paypal_profile_id, profile_id)
+
+      set_date_today_to(Date.today+7.weeks)
+
+      @customer.active_subscription.enter_lockup!
+
+      @customer.active_subscription.should be_lockup
+
+      Subscription.canceled_in_paypal(profile_id, SubscriptionPaymentNotification.create)
+
+      @customer.active_subscription.should be_cancelled_during_lockup
+      @customer.active_subscription.should be_cancelled_in_paypal
+
+      @customer.active_subscription.normalize!
+
+      @customer.active_subscription.should be_normal
+      @customer.active_subscription.should_not be_cancelled_in_paypal
+      @customer.active_subscription.should_not be_prolongs_as_free
+    end
   end
 
 end

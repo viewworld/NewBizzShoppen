@@ -201,6 +201,7 @@ Nbs::Application.routes.draw do
         collection do
           post 'batch_remove'
           post 'batch_assign'
+          post 'batch_move'
           post 'bulk_contacts_export_csv'
           post 'import_xls'
         end

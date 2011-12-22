@@ -49,7 +49,7 @@ class SubscriptionPlansController < SecuredController
     paypal_recurring.create_profile
 
     if @user.active_subscription.cancelled_in_paypal? and !paypal_recurring.response_has_errors?
-      @user.active_subscription.update_attribute(:cancelled_in_paypal, false)
+      @user.active_subscription.normalize!
     end
 
 

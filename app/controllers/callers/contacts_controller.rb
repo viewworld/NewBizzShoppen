@@ -72,6 +72,17 @@ class Callers::ContactsController < Callers::CallerController
     redirect_to edit_callers_campaign_path(@campaign)
   end
 
+  def batch_move
+    if params[:contact_ids].blank?
+      flash[:notice] = t('contacts.batch_remove.flash.no_contacts_selected')
+    else
+      @target_campaign = current_user.admin? ? Campaign.find(params[:target_campaign_id]) : current_user.campaigns.find(params[:target_campaign_id])
+      Contact.batch_move(params[:contact_ids], @target_campaign, params[:action_type] == "copy")
+      flash[:notice] = t('contacts.batch_remove.flash.removed_successfully')
+    end
+    redirect_to edit_callers_campaign_path(@campaign)
+  end
+
   def bulk_contacts_export_csv
     send_data Contact.to_csv(*@campaign.contacts.map(&:id)), :filename => "contacts.csv"
   end

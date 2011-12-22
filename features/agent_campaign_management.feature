@@ -863,15 +863,15 @@ Feature: Agent campaign - management
 
         #8891
         @m26 @requested
-        Scenario: As admin or call centre I can move all contacts to different campaign
-
-        #8891
-        @m26 @requested
         Scenario: As admin or call centre I can move selected contacts to different campaign
 
         #8891
         @m26 @requested
-        Scenario: As call centre I can move contacts to campaigns that are assigned to me
+        Scenario: As admin or call centre I can duplicate selected contacts to different campaign
+
+        #8891
+        @m26 @requested
+        Scenario: As call centre I can move or duplicate contacts to campaigns that are assigned to me
 
         #6553
         @m25 @requested @selenium @_done @_tested

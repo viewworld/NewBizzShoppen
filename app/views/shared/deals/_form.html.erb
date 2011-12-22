@@ -118,7 +118,7 @@
                 <%= form.input :deal_admin_email %>
             </span>
         <% end %>
-        <% if user_signed_in? and (current_user.admin? or current_user.deal_maker?) and !form.object.new_record? and !current_user.supplier? %>
+        <% if user_signed_in? and (current_user.admin? or current_user.deal_maker?) and !current_user.supplier? %>
             <%= form.input(:voucher_enabled, :onclick => "enable_voucher();") if @deal.voucher_can_be_disabled %>
             <div id="voucher_additional_fields" style="display:<%= @deal.voucher_enabled? ? "block" : "none" %>">
               <li class="string optional">
@@ -126,15 +126,17 @@
                 <span style="margin-top:9px;display:inherit;"><%= @deal.deal_unique_id %></span>
               </li>
 
-              <% if @deal.voucher_heading_picture and @deal.voucher_heading_picture.id %>
-                  <%= render :partial => "shared/deals/voucher_heading_picture", :locals => {:deal => @deal} %>
-              <% else %>
-                  <%= form.semantic_fields_for :voucher_heading_picture, @deal.build_voucher_heading_picture do |voucher_heading_picture_form| %>
-                      <fieldset class="inputs labels_ta_r labels_200">
-                        <ol>
-                          <%= voucher_heading_picture_form.input :asset, :as => :file, :label => "Upload voucher heading image" %>
-                        </ol>
-                      </fieldset>
+              <% unless @deal.new_record? %>
+                  <% if @deal.voucher_heading_picture and @deal.voucher_heading_picture.id %>
+                      <%= render :partial => "shared/deals/voucher_heading_picture", :locals => {:deal => @deal} %>
+                  <% else %>
+                      <%= form.semantic_fields_for :voucher_heading_picture, @deal.build_voucher_heading_picture do |voucher_heading_picture_form| %>
+                          <fieldset class="inputs labels_ta_r labels_200">
+                            <ol>
+                              <%= voucher_heading_picture_form.input :asset, :as => :file, :label => "Upload voucher heading image" %>
+                            </ol>
+                          </fieldset>
+                      <% end %>
                   <% end %>
               <% end %>
 

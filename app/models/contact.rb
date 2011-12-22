@@ -52,6 +52,10 @@ class Contact < AbstractLead
       [assigned_count, contact_ids.count]
     end
 
+    def batch_move(ids, target_campaign, copy=false)
+      find(ids.gsub(/^,/, "").split(",")).each { |c| c.send("#{copy ? 'copy' : 'move'}_to_campaign!".to_sym, target_campaign) } unless ids.blank?
+    end
+
     def to_csv(*ids)
       FasterCSV.generate(:force_quotes => true) do |csv|
         contacts = find(ids)
@@ -196,6 +200,17 @@ class Contact < AbstractLead
     query = "#{select}"
     fields.each { |field| query += " AND lower(#{field}) = '#{send(field).blank? ? "YOU WILL NOT FIND ME - HA HA HA HA" : send(field).downcase}'" }
     CallResult.where(:contact_id => (Contact.where(query) + [self]).uniq.map(&:id)).order("created_at DESC")
+  end
+
+  def move_to_campaign!(other_campaign)
+    update_attribute(:campaign, other_campaign)
+  end
+
+  def copy_to_campaign!(other_campaign)
+    new_contact = self.deep_clone!(:with_callbacks => false, :include => [:call_results => [:call_log, :result_values, :archived_email]])
+    new_contact.campaign = other_campaign
+    new_contact.save
+    new_contact
   end
 
 end

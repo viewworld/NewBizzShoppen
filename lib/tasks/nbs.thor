@@ -628,7 +628,8 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         'blurb_subscriptions_for_supplier',
         'blurb_subscriptions_for_category supplier',
         'blurb_subscriptions_for_member',
-        'blurb_deal_confirmation_page'
+        'blurb_deal_confirmation_page',
+        'blurb_voucher_confirmation_page'
     ].each do |key|
       unless Article::Cms::InterfaceContentText.where(:key => key).first
         article = Article::Cms::InterfaceContentText.make!(:title => key.humanize, :content => key.humanize, :key => key)
