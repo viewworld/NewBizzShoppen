@@ -154,7 +154,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def self.clone_from_subscription_plan!(subscription_plan, user, start_date=nil, paypal_invoice_id=nil)
-    subscription = Subscription.new(:user => user)
+    subscription = Subscription.new(:user => user, :vat_rate => !user.not_charge_vat? ? subscription_plan.seller.vat_rate : 0)
     subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price", "is_active", "aasm_state", "paypal_retires_counter"]).each do |method|
       subscription.send("#{method}=".to_sym, subscription_plan.send(method.to_sym))
     end
@@ -393,6 +393,14 @@ class Subscription < ActiveRecord::Base
   def self.send_reminder_about_end_of_free_period
     Subscription.where("aasm_state = ? and free_period > 0", "unconfirmed_paypal").
                  select { |s| s.free_subscription_end_date <= Date.today }.each { |s| s.send_end_of_free_period_email }
+  end
+
+  def total_brutto_billing
+    subscription_sub_periods.inject(0.0) { |total, subscription_sub_period|  subscription_sub_period.total_brutto_billing + total }
+  end
+
+  def total_brutto_billing_for_sub_period
+    subscription_sub_periods.first.total_brutto_billing
   end
 
   private

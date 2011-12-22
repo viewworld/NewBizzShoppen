@@ -3030,6 +3030,8 @@ en:
         end_date: "End date"
       voucher_max_number_validation: "can not be smaller then activated vouchers numbers"
 
+    invoice:
+      invoice_paypal_name: "Invoice %{number}"
   activerecord:
     models:
       article:

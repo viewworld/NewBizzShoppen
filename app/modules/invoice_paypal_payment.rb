@@ -13,25 +13,13 @@ module InvoicePaypalPayment
         :cert_id    => APP_CONFIG[:paypal_cert_id]
     }
 
-    index = 0
-    invoice_lines.each do |line|
-      index += 1
       values.merge!({
-                        "amount_#{index}"      => line.netto_price,
-                        "item_name_#{index}"   => line.name,
-                        "item_number_#{index}" => line.id,
-                        "quantity_#{index}"    => line.quantity
+                        "amount_1"      => total,
+                        "item_name_1"   => I18n.t("models.invoice.invoice_paypal_name", :number => full_number),
+                        "item_number_1" => id,
+                        "quantity_1"    => 1
                     })
-    end
 
-    unless user.not_charge_vat?
-      values.merge!({
-                        "amount_#{index+1}"      => total_vat,
-                        "item_name_#{index+1}"   => I18n.t("cart.vat_line_title", :percentage => "#{user.country_vat_rate}%"),
-                        "item_number_#{index+1}" => "",
-                        "quantity_#{index+1}"    => 1
-                    })
-    end
     values
   end
 

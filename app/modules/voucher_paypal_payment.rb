@@ -13,7 +13,7 @@ module VoucherPaypalPayment
         :cert_id    => APP_CONFIG[:paypal_cert_id]
     }
       values.merge!({
-                        "amount_1"      => deal.discounted_price.to_f,
+                        "amount_1"      => deal.brutto_discounted_price(user).to_f,
                         "item_name_1"   => "voucher for deal #{deal.header}",
                         "item_number_1" => id,
                         "quantity_1"    => 1
