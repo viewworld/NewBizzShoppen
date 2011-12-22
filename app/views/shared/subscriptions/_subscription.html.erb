@@ -1,6 +1,8 @@
 <div id="subscription_plan_<%= subscription_plan.id %>" class="subscription_plan_item">
   <div class="active_badge"><%= t("subscriptions.listing.selected") %></div>
-  <h3><%= subscription_plan.name %></h3>
+  <div class="subscription_plan_head">
+    <h3><%= subscription_plan.name %></h3>
+  </div>
 
   <div class="subscription_plan_price">
     <% unless subscription_plan.is_free? %>
@@ -19,7 +21,7 @@
       <p><%= raw subscription_plan.subscription_text %></p>
   <% end %>  
 
-  <p class="subscription_plan_footer">
+  <div class="subscription_plan_footer">
     <% if defined? subscriptions_form and subscriptions_form %>
         <%= radio_button_tag "user_#{role}[subscription_plan_id]", subscription_plan.id, subscriptions_form.object.subscription_plan_id.to_i == subscription_plan.id, :id => "user_#{role}_subscription_plan_id", :style => "display: none" %>
     <% else %>
@@ -29,5 +31,5 @@
             <%= bt_link_to nil, t("subscriptions.listing.downgrade"), downgrade_my_profile_subscription_plan_path(subscription_plan.id), :confirm => t("subscriptions.confirmation.downgrade") %>
         <% end %>
     <% end %>
-  </p>
+  </div>
 </div>
