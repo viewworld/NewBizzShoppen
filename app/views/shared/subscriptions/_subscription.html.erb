@@ -10,7 +10,7 @@
 
         <p>
           <%= subscription_plan.subscription_period %> <%= t("subscriptions.listing.weeks") %><%= " #{t('subscriptions.listing.with_n_weeks_billing_cycle', :number => subscription_plan.billing_cycle)}" if subscription_plan.number_of_periods > 1 %>
-          <span class="red"><%= t("subscriptions.listing.plus_n_weeks_free_period", :number => subscription_plan.free_period) if !current_user or subscription_plan.free_period_can_be_applied_to?(current_user) %></span>
+          <span class="red"><%= t("subscriptions.listing.plus_n_weeks_free_period", :number => subscription_plan.free_period) if (!current_user and subscription_plan.free_period.to_i > 0) or subscription_plan.free_period_can_be_applied_to?(current_user) %></span>
         </p>
     <% else %>
         <p class="billing"><%= t("subscriptions.listing.free") %></p>

@@ -10,8 +10,8 @@ Feature: Subscription management for user
   @_done @_tested
   Scenario: I can see my subscription type in my profile
     When I follow translated "layout.my_profile_link"
-    Then I should see translated "subscriptions.current_subscription" within "#current_subscription"
-    And I should see translated "subscriptions.listing.free" within "#current_subscription"
+    Then I should see CSS path "div.subscription_plans .active"
+    And I should see translated "subscriptions.listing.free" within "div.subscription_plans .active"
 
   @selenium @_done @_tested
   Scenario: I can change my subscription type

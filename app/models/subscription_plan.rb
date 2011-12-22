@@ -14,7 +14,7 @@ class SubscriptionPlan < ActiveRecord::Base
     [:at_end, false]
   ]
 
-  DISABLE_PAYPAL_SUBSCRIPTIONS = true
+  DISABLE_PAYPAL_SUBSCRIPTIONS = Rails.env.production?
 
   validates_presence_of :name, :subscription_period, :billing_cycle, :assigned_roles, :currency_id, :currency, :seller, :seller_id
   validates_presence_of :billing_period, :unless => :use_paypal?
