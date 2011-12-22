@@ -134,7 +134,7 @@ class Invoice < ActiveRecord::Base
             :payable => lead_purchase,
             :name => lead_purchase.lead.header,
             :netto_price => lead_purchase.lead.price,
-            :vat_rate => supplier.country_vat_rate,
+            :vat_rate => seller.vat_rate,
             :quantity => lead_purchase.quantity)
       end
     end
@@ -147,7 +147,7 @@ class Invoice < ActiveRecord::Base
         :payable => subscription_plan_line,
         :name => subscription_plan_line.name,
         :netto_price => subscription_plan_line.price,
-        :vat_rate => user.country_vat_rate,
+        :vat_rate => seller.vat_rate,
         :quantity => 1) if subscription_plan_line.price.to_f > 0
     end
     subscription_sub_period.update_attribute(:invoice, self)
@@ -207,7 +207,7 @@ class Invoice < ActiveRecord::Base
             :payable => voucher_number,
             :name => voucher_number.deal.header,
             :netto_price => voucher_number.deal.discounted_price,
-            :vat_rate => user.country_vat_rate,
+            :vat_rate => seller.vat_rate,
             :quantity => 1)
       self.paid_at = Time.now
       self.save

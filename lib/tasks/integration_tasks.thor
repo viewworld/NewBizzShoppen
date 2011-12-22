@@ -149,4 +149,9 @@ class IntegrationTasks < Thor
 
     ActiveRecord::Migration.execute "UPDATE payment_notifications SET type = 'CartPaymentNotification' WHERE type IS NULL"
   end
+
+  desc "m26", ""
+  def m26
+    Subscription.where(:vat_rate => nil).each { |s| s.update_attribute(:vat_rate, s.seller.vat_rate) }
+  end
 end

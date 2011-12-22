@@ -52,7 +52,7 @@ class PaypalRecurringPayment
 
   def create_profile
     @response = PayPal::Recurring.new({
-      :amount      => @options[:subscription_plan].total_billing_for_subperiod,
+      :amount      => @options[:subscription_plan].total_brutto_billing_for_sub_period,
       :currency    => @options[:subscription_plan].currency.to_s,
       :description => @options[:subscription_plan].name,
       :ipn_url     => @options[:ipn_url],

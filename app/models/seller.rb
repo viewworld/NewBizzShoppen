@@ -52,4 +52,8 @@ class Seller < ActiveRecord::Base
     for_country(country_id.to_i).first || default
   end
 
+  def vat_rate
+    (address and address.country) ? address.country.vat_rate.rate : 0
+  end
+
 end

@@ -16,7 +16,8 @@ module CommonSubscriptions
     end
 
     def total_billing
-      subscription_plan_lines.sum(:price)
+      periods = (is_a?(SubscriptionPlan) or is_a?(SubscriptionSubPeriod)) ? 1 : number_of_periods
+      subscription_plan_lines.sum(:price) * periods
     end
 
     def is_free?
@@ -34,7 +35,7 @@ module CommonSubscriptions
     end
 
     def total_billing_for_subperiod
-      total_billing / number_of_periods
+      total_billing
     end
   end
 end

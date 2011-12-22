@@ -31,7 +31,7 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   def create_subscription_plan_lines
     subscription.subscription_plan_lines.each do |spl|
       subscription_plan_lines.create!(:name => spl.name,
-                                      :price => spl.price).recalculate(subscription.total_days, total_days)
+                                      :price => spl.price)
     end
   end
 
@@ -93,5 +93,7 @@ class SubscriptionSubPeriod < ActiveRecord::Base
     end
   end
 
-
+  def total_brutto_billing
+    subscription_plan_lines.inject(0.0) { |total, subscription_plan_line| subscription_plan_line.brutto_price + total }
+  end
 end
