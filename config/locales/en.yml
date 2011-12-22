@@ -110,6 +110,7 @@ en:
         refunds: "Refunds"
         campaigns: Campaigns
         reports: "Reports"
+        agent_timesheets: "Timesheets"
         subscription_plans: "Subscriptions"
       agent:
         leads: My leads
@@ -123,6 +124,7 @@ en:
         lead_templates: "Lead templates"
         campaigns: Campaigns
         reports: "Reports"
+        agent_timesheets: "Timesheets"
         deals: "My deals"
       call_centre_agent:
         leads: "My leads"
@@ -3907,6 +3909,9 @@ en:
         active: "Active"
         inactive: "Inactive"
         all: "All"
+  agent_timesheets:
+    index:
+      header: "Agent timesheets"
 
   advanced_import:
     show:
