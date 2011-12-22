@@ -64,7 +64,7 @@ Scenario: I can filter articles to blurb only
   And I follow translated "layout.main_menu.admin.articles"
   And I select translated "administration.articles.index.view.interface_content_texts" from "search_with_subclass"
   And I press translated "administration.articles.index.view.search_button"
-  Then I should see "InterfaceContentText"
+  Then I should see "Interface content text"
   And I should not see "MainPageArticle"
   And I should not see "HelpPopup"
 
