@@ -60,7 +60,7 @@ class PaypalRecurringPayment
       :ipn_url     => @options[:ipn_url],
       :frequency   => @options[:subscription_plan].billing_cycle,
       :token       => @options[:token],
-      :period      => :daily,
+      :period      => SubscriptionPlan::DISABLE_PAYPAL_SUBSCRIPTIONS ? :daily : :weekly,
       :reference   => @options[:user].active_subscription.id.to_s,
       :payer_id    => @options[:payer_id],
       :start_at    => @options[:start_at] ||
