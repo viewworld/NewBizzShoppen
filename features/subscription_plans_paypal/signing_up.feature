@@ -6,7 +6,7 @@ Feature: Signing up with PayPal
     And I make sure current locale is "en"
     And I make sure Paypal subscriptions are enabled
 
-  @_done @_tested @wip
+  @_done @_tested
   Scenario: When must enter billing information at start is enabled then I must confirm recurring payment in Paypal as part of signup
     Given setting for "email_verification_for_suppliers" is set to "0"
     And there are no subscription plans
