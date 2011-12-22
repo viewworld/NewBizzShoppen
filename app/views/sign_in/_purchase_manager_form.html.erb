@@ -2,7 +2,7 @@
     <frm title="#{t('member_accounts.new.view.header')}" c="no_marg">
       <param:content>
         <div>
-            <%= render :partial => "shared/subscriptions/new_account", :locals => { :role => "member", :subscriptions_form => form} %>
+          <%= render :partial => "shared/subscriptions/new_account", :locals => {:role => "member", :subscriptions_form => form} %>
         </div>
         <div class="column_left">
           <div class="pdd_10 no_pdd_t">
@@ -46,6 +46,13 @@
         <clb/>
       </param:content>
       <param:actions>
+        <div style="position: absolute;left: 142px;">
+          <%= t("member_accounts.new.view.janrain_sign_up_label") %>
+          <% unless Rails.env.test? %>
+              <%= link_to_rpx image_tag("icons/social_login.png"), member_accounts_url %>
+              <%= javascript_include_rpx member_accounts_url %>
+          <% end %>
+        </div>
         <ibt c="fltri" icon="plus">
           <%= form.submit t("member_accounts.new.view.button_create_account") %>
         </ibt>

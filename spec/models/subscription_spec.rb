@@ -16,12 +16,31 @@ describe Subscription do
 
   context "calculations" do
     it "should yield correct billing price" do
-      @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :can_be_upgraded => false)
+      @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :billing_cycle => 3, :can_be_upgraded => false)
       @payable_subscription1.subscription_plan_lines.make!(:price => 25)
       @payable_subscription1.subscription_plan_lines.make!(:price => 5)
-      @payable_subscription1.total_billing.should.eql?(30)
+      @payable_subscription1.total_billing.should == 30 * 4
       @customer = User::Supplier.make!(:subscription_plan_id => @payable_subscription1.id)
-      @customer.active_subscription.total_billing.should.eql?(30)
+      @customer.active_subscription.total_billing.to_f.should == 30 * 4
+    end
+
+    it "should calculate correct brutto prices when applied" do
+      @seller = Seller.make!
+      @seller.address.country.vat_rate.update_attribute(:rate, 50)
+      @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :billing_cycle => 3)
+      @payable_subscription1.subscription_plan_lines.make!(:price => 4)
+      @customer = User::Supplier.make!(:subscription_plan_id => @payable_subscription1.id)
+      @customer.active_subscription.total_brutto_billing.should == 24
+      @customer.active_subscription.total_brutto_billing_for_sub_period.should == 6
+    end
+
+    it "should calculate correct brutto prices when applied and customer does not charge vat" do
+      @seller = Seller.make!
+      @seller.address.country.vat_rate.update_attribute(:rate, 50)
+      @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 2, :billing_cycle => 1)
+      @payable_subscription1.subscription_plan_lines.make!(:price => 4)
+      @customer = User::Supplier.make!(:subscription_plan_id => @payable_subscription1.id, :not_charge_vat => true)
+      @customer.active_subscription.total_brutto_billing.should == 8
     end
 
     it "should cache price of subscription plan lines" do
@@ -29,9 +48,9 @@ describe Subscription do
       @payable_subscription1.subscription_plan_lines.make!(:price => 25)
       @payable_subscription1.subscription_plan_lines.make!(:price => 5)
       @payable_subscription1.reload
-      @payable_subscription1.billing_price.should eql(30)
+      @payable_subscription1.billing_price.should == 30
       @customer = User::Supplier.make!(:subscription_plan_id => @payable_subscription1.id)
-      @customer.active_subscription.billing_price.should eql(@payable_subscription1.billing_price)
+      @customer.active_subscription.billing_price.should == @payable_subscription1.billing_price
     end
 
     context "dates" do
@@ -490,7 +509,7 @@ describe Subscription do
         @customer.active_subscription.enter_lockup!
         @customer.active_subscription.should be_lockup
         @customer.admin_change_subscription!(@payable_subscription1)
-        @customer.subscriptions.count.should eql(2)
+        @customer.subscriptions.count.should == 2
         @customer.subscription_plans.should include(@payable_subscription1,@payable_subscription2)
       end
 
@@ -538,7 +557,7 @@ describe Subscription do
       it "should not be possible for admin to change the subscription when there are scheduled subscriptions in the future" do
         setup_customer(@payable_subscription2)
         @customer.downgrade_subscription!(@payable_subscription1).should be_true
-        @customer.subscriptions.future.count.should eql(1)
+        @customer.subscriptions.future.count.should == 1
         @customer.admin_change_subscription!(@payable_subscription1).should be_false
       end
     end

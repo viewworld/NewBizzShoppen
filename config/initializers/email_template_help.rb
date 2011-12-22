@@ -14,7 +14,8 @@ module EmailTemplateHelp
       "lead_rated_as_unsatisfactory" => {:classes => ["LeadPurchase"], :custom => []},
       "notify_buyers_about_lead_update" => {:classes => ["Lead"], :custom => []},
       "contact_us" => {:classes => [], :custom => []},
-      "invoice" => {:classes => [], :custom => []},
+      "invoice" => {:classes => ["Invoice"], :custom => []},
+      "unpaid_invoice" => {:classes => ["Invoice"], :custom => []},
       "category_request" => {:classes => [], :custom => ["request_type", "category_name", "lead_description", "leads_count_per_month", "can_be_contacted"]},
 
       "more_leads_request" => {:classes => [], :custom => ["category_name", "company_name", "contact_name", "contact_email", "contact_phone", "note"]},
