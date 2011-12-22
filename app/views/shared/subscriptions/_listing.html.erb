@@ -31,6 +31,9 @@
 <% if current_user and current_user.has_active_subscription? %>
     <hl pdd="10"/>
     <div id="current_subscription">
+      <% if current_user.active_subscription.is_today_in_free_period? %>
+          <p><%= image_tag("icons/hint.png") %><%= t("subscriptions.free_period_notification", :free_period_date => current_user.active_subscription.free_subscription_end_date) %></p>
+      <% end %>
       <% if next_subscription = current_user.next_subscription %>
           <p><%= image_tag("icons/hint.png") %><%= t("subscriptions.next_subscription_plan", :next_plan_name => next_subscription.subscription_plan.name, :next_plan_active_from => next_subscription.start_date) %></p>
       <% elsif current_user.active_subscription.will_prolong? %>
