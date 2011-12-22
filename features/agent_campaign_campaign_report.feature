@@ -103,17 +103,17 @@ Feature: Campaign report
   Scenario: I can see realised result
 
   #9289
-  @m26 @requested @tested_elsewhere
+  @m26 @requested @_done @tested_elsewhere
   Scenario: I should see number of results instead of number of calls made
 
   #9289
-  @m26 @requested @tested_elsewhere
+  @m26 @requested @_done @tested_elsewhere
   Scenario: I should see avg number of results per finished contacts instead of avg number of calls
 
   #9289
-  @m26 @requested @tested_elsewhere
+  @m26 @requested @_done @tested_elsewhere
   Scenario: I should see avg number of minutes per final result
 
   #9289
-  @m26 @requested @tested_elsewhere
+  @m26 @requested @_done @tested_elsewhere
   Scenario: I should see number of results per minute
