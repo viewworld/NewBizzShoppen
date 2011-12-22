@@ -11,6 +11,7 @@ Feature: Agent timesheets - agent timesheet
 
   Scenario: I should see time of last result created each day
 
+  # (First login time - Last log out time) - total time registered that day
   Scenario: I should see logout time each day
 
   Scenario: I should see hours worked each day
