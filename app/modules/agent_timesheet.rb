@@ -23,12 +23,8 @@ module AgentTimesheet
     end
   end
 
-  def first_week
-    @first_week ||= scoped_view.minimum(:week)
-  end
-
-  def last_week
-    @last_week ||= scoped_view.maximum(:week)
+  def weeks
+    datasource.select("DISTINCT(year,week)")
   end
 
 end

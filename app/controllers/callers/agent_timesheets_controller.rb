@@ -8,12 +8,11 @@ class Callers::AgentTimesheetsController < Callers::CallerController
   def index
     super do |format|
       format.html
-      #format.pdf { send_file CampaignReport.store_pdf(params[:report]), :type => 'application/pdf'}
     end
   end
 
   def collection
-
+    @agent_timesheets = AgentTimesheet::Overview.new(:campaigns => Campaign.all.map(&:id), :agents => User::Agent.all.map(&:id))
   end
 
 end
