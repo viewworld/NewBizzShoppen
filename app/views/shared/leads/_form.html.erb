@@ -59,7 +59,7 @@
             <h3><%= current_user.has_role?(:member) ? t("shared.leads.form.member.lead_information") : t("shared.leads.form.lead_information") %></h3>
           </li>
           <% categories = current_user.has_role?(:admin) ? LeadCategory.without_locked.all : current_user.has_role?(:call_centre) ? LeadCategory.without_locked.with_call_centre_unique(current_user).all : current_user.has_role?(:member) ? LeadCategory.without_locked.with_agent_unique(current_user).without_supplier_unique.all : LeadCategory.without_locked.with_agent_unique(current_user).all %>
-          <%= form.input :category_id, :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(categories), :include_blank => false, :input_html => {:onchange => (@contact ? "" : "check_templates_compatibility(#{@lead.new_record? ? 0 : @lead.id}, $('#lead_category_id').val());")}, :hint => hint_for(@lead, :category_id) %>
+          <%= form.input :category_id, :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(categories), :required => current_user.has_role?(:member), :include_blank => current_user.has_role?(:member), :input_html => {:onchange => (@contact ? "" : "check_templates_compatibility(#{@lead.new_record? ? 0 : @lead.id}, $('#lead_category_id').val());")}, :hint => hint_for(@lead, :category_id) %>
           <%= form.input :category_is_changed, :as => :hidden, :value => "0" %>
           <% if current_user.has_role?(:member) %>
               <%= form.input :is_international, :as => :hidden, :value => 0 %>

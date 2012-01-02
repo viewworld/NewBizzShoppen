@@ -62,6 +62,7 @@ class AbstractLead < ActiveRecord::Base
   end
 
   def lead_templates(with_mandatory_only=nil)
+    return [] unless category
     self.creator = current_user if creator.nil?
     templates = LeadTemplate.with_category_and_its_ancestors(category).where("is_active = ?", true).
         where("(is_global = ? or (creator_id = ? and creator_type = ?) or (creator_id = ? and creator_type = ?) or creator_type = ? or creator_id in (?) or lead_templates.id in (?))",

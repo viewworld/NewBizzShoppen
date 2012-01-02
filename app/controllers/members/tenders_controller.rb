@@ -8,13 +8,7 @@ class Members::TendersController < Members::MemberController
   def new
     @lead = Lead.new(:current_user => current_user, :currency => Currency.default_currency, :country => Country.get_country_from_locale)
     @lead.copy_user_profile(current_user)
-    @lead.category_id = if params[:category_id]
-      params[:category_id]
-    elsif @categories.any?
-      @categories.first.id
-    else
-      redirect_to :back
-    end
+    @lead.category_id = params[:category_id]
     @lead.correct_category_if_cannot_publish_leads
     @lead.duplicate_fields(current_user.leads.find_by_id(params[:lead_id]))
     @lead.published = current_user.can_publish_leads?
@@ -26,8 +20,10 @@ class Members::TendersController < Members::MemberController
     @lead.current_user = current_user
     session[:selected_category] = @lead.category_id
     @lead.validate_contact_email = true if params[:commit_certify] and @lead.email_address.blank?
-    @lead.price = @lead.category.default_price
-    @lead.currency = @lead.category.currency
+    if @lead.category
+      @lead.price = @lead.category.default_price
+      @lead.currency = @lead.category.currency
+    end
     @tender = @lead
 
     create! do |success, failure|
