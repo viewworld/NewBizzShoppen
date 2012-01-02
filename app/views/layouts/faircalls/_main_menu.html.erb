@@ -1,0 +1,24 @@
+<ul class="nav<%= (user_signed_in? and current_user.has_role?(:admin)) ? " admin_nav" : "" %>">
+  <%= main_menu_link_to_role_specific_home_page %>
+  <% if current_user %>
+      <% current_user.roles_sorted.each do |role| %>
+          <%= render "/layouts/faircalls/menu_sections/#{role.to_s}" %>
+      <% end %>
+      <% if current_user.deal_maker? and current_user.has_any_role?(:call_centre, :call_centre_agent, :agent) %>
+        <%= main_menu_link_to(t("layout.main_menu.shared.deal_maker_users"), deal_maker_users_path, :tab => "deal_maker_users") %>
+      <% end %>
+  <% end %>
+</ul>
+
+<script type="text/javascript">
+    jQuery(document).ready(function()
+    {
+        $('.has_child').each(function() {
+            var t = $(this);
+            if ( t.width() > t.find(".subnav").width())
+            {
+                t.find(".subnav").css("width", t.width());
+            }
+        })
+    })
+</script>

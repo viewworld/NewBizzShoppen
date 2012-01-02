@@ -61,26 +61,10 @@
     <%= link_to image_tag("logo_fairleads.png"), root_path, :class => "logo" %>
   </div>
 
-  <%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_supplier) && !current_user.big_buyer? %>
+
 
   <div id="user_menu">
-    <%= render "layouts/fairleads/main_menu" %>
-
-    <% if session[:show_cart_hint] == "1" %>
-        <div class="hidden">
-          <div id="cart_hint_div"><%= t("layout.cart.lead_added_to_cart_hint", :link => link_to(t("layout.cart.here_link"), suppliers_cart_path)).html_safe %> <%= link_to_function t("layout.cart.close_hint"), "$.post('#{suppliers_cart_path(:show_cart_hint => 0)}', {'_method':'put'})" %></div>
-        </div>
-    <% end %>
-
-    <% if current_user && current_user.has_role?(:lead_supplier) && !current_user.big_buyer? %>
-        <div id="cart">
-          <ul class="nav">
-            <li>
-              <%= link_to(content_tag(:span, image_tag("icons/basket.png") + t("layout.cart.cart_header", :count => current_user.cart.count)), "#", :id => "basket_bt") %>
-            </li>
-          </ul>
-        </div>
-    <% end %>
+    <%= render "layouts/faircalls/main_menu" %>
   </div>
 
   <div id="modal_for_longer_session" style="display:none">
@@ -115,7 +99,7 @@
   </div>
 
   <div id="footer">
-    <%= render "/layouts/fairleads/footer" %>
+    <%= render "layouts/faircalls/footer" %>
   </div>
 </div>
 
