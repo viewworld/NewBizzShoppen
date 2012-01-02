@@ -8,7 +8,7 @@
     <% unless subscription_plan.is_free? %>
         <p class="billing"><%= as_currency(subscription_plan.total_billing, subscription_plan.currency) %></p>
 
-        <p><%= t("subscriptions.current_subscription_billing_cycle", :from => current_user.active_subscription.start_date, :to => current_user.active_subscription.end_date) %></p>
+        <p><%= t("subscriptions.current_subscription_billing_cycle", :from => l(current_user.active_subscription.start_date, :format => :long), :to => l(current_user.active_subscription.end_date, :format => :long)) %></p>
     <% else %>
         <p class="billing"><%= t("subscriptions.listing.free") %></p>
     <% end %>
@@ -16,7 +16,7 @@
 
   <% unless current_user.has_free_subscription? %>
     <% if !current_user.can_cancel_subscription? and cancel_date = current_user.can_cancel_subscription_at %>
-      <h3><%= t("subscriptions.can_be_canceled_at", :cancel_date => cancel_date) %></h3>
+      <h3><%= t("subscriptions.can_be_canceled_at", :cancel_date => l(cancel_date, :format => :long)) %></h3>
     <% elsif !current_user.can_cancel_subscription? and !current_user.active_subscription.cancelled? %>
       <h3><%= t("subscriptions.cant_be_canceled") %></h3>
     <% elsif current_user.active_subscription.cancelled? %>

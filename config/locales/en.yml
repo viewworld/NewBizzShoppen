@@ -72,6 +72,7 @@ en:
     formats:
       default: "%d-%m-%Y"
       datepicker: "dd-mm-yy"
+      long: "%d %B %Y"
     format:
       standard: "%d-%m-%Y"
   layout:
