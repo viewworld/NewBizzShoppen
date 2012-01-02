@@ -3,12 +3,14 @@ class VoucherNumbersController < SecuredController
   before_filter :set_role
   before_filter :set_object
   before_filter :check_permission_for_deal
+  before_filter :check_deal_maker_for_supplier
 
   def current_user
     @user ||= ::User::CallCentre.find_by_id(super.id)
     @user ||= ::User::CallCentreAgent.find_by_id(super.id)
     @user ||= ::User::Admin.find_by_id(super.id)
     @user ||= ::User::Agent.find_by_id(super.id)
+    @user ||= ::User::Supplier.find_by_id(super.id)
   end
 
   def edit
@@ -34,7 +36,7 @@ class VoucherNumbersController < SecuredController
   private
 
   def authorize_user_for_namespace!
-    authorize_role(:call_centre, :call_centre_agent, :admin, :agent)
+    authorize_role(:call_centre, :call_centre_agent, :admin, :agent, :supplier)
   end
 
   def set_role
@@ -46,6 +48,8 @@ class VoucherNumbersController < SecuredController
               "admin"
             elsif ::User::Agent.find_by_id(current_user.id)
               "agent"
+            elsif ::User::Supplier.find_by_id(current_user.id)
+              "supplier"
             end
   end
 
@@ -55,6 +59,10 @@ class VoucherNumbersController < SecuredController
 
   def check_permission_for_deal
     raise CanCan::AccessDenied if @deal.blank? or !@deal.can_be_editable_by(current_user)
+  end
+
+  def check_deal_maker_for_supplier
+    raise CanCan::AccessDenied if @user and @user.supplier? and !@user.deal_maker?
   end
 
 end
