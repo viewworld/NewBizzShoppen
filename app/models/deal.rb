@@ -358,6 +358,7 @@ class Deal < AbstractLead
 
   def set_deal_unique_id
     self.update_attribute(:deal_unique_id, generate_deal_unique_id)
+    voucher_numbers.select { |vn| vn.deal_unique_id == nil }.each { |vn| vn.update_attribute(:deal_unique_id, deal_unique_id) }
   end
 
   def set_voucher_numbers

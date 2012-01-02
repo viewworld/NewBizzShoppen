@@ -65,7 +65,7 @@
               <%= form.input :min_created_leads, :label => t("shared.deals.form.min_created_leads") %>
             </div>
         <% end %>
-        <% unless user_signed_in? and current_user.supplier? %>
+        <% if user_signed_in? and current_user.deal_maker? %>
             <div>
               <%= form.input :group_deal, :wrapper_html => {:style => "margin-left:200px"}, :onclick => "enable_group_deal();" %>
             </div>
@@ -118,7 +118,7 @@
                 <%= form.input :deal_admin_email %>
             </span>
         <% end %>
-        <% if user_signed_in? and (current_user.admin? or current_user.deal_maker?) and !current_user.supplier? %>
+        <% if user_signed_in? and (current_user.admin? or current_user.deal_maker?) %>
             <%= form.input(:voucher_enabled, :onclick => "enable_voucher();") if @deal.voucher_can_be_disabled %>
             <div id="voucher_additional_fields" style="display:<%= @deal.voucher_enabled? ? "block" : "none" %>">
               <li class="string optional">

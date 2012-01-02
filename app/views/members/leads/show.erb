@@ -3,6 +3,13 @@
     <p><%= blurb("blurb_voucher_confirmation_page") %></p>
   </div>
 
+  <% unless @lead.deal.deal_confirmation_page.blank? %>
+      <br />
+      <div>
+        <p><%= @lead.deal.deal_confirmation_page.to_s.html_safe %></p>
+      </div>
+  <% end %>
+
   <br/>
 
   <div class="frm_tiny pdd_15 ta_c">
