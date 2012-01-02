@@ -44,12 +44,18 @@ Feature: Subscriptions Paypal
     And date today is "2020-12-12"
     And I run ruby "SubscriptionSubPeriod.create_unpaid_invoices_for_unpaid_sub_periods"
     Then first invoice for user "kastomer@nbs.fake" is not paid
+    Given I am on the homepage
+    And I sign in as kastomer@nbs.fake with password secret
+    And I visit link to pay unpaid invoice for user "kastomer@nbs.fake"
+    And I press translated "paypal_unpaid_invoices.show.view.pay_invoice"
 
+  @_done @_tested_elsewhere
   Scenario: User should be able to pay the missing amount using link/button in the email he receives
 
   @_done @_tested_elsewhere
   Scenario: User should be able to reactivate recurring payments using link/button in the email he receives
 
+  @_done @_non_testable
   Scenario: User should see the detailed information on the missing payments in the email he receives
 
   # -------------------------------------------------------------------------------------------------------------------
@@ -64,16 +70,18 @@ Feature: Subscriptions Paypal
   # IPN
   # -------------------------------------------------------------------------------------------------------------------
 
-  @system
+  @system @_done @_tested_elsewhere @rspec
   Scenario: The number of retries should be saved in subperiod
 
-  @system @non_testable
+  @system @non_testable @_done
   Scenario: Application should receive information from Paypal about payment status
 
-  @system @_tested_elsewhere @rspec
+  @system @_done @_tested_elsewhere @rspec
   Scenario: When the number of retries exceeds the subscription plan limit then the subscription should be downgraded
 
+  @_done @_done @_tested_elsewhere @rspec
   Scenario: When the number of retries exceeds the subscription plan limit then the recurring payment should be disabled in Paypal
 
+  @_done @_done @_tested_elsewhere @rspec
   Scenario: When user gets automatically downgraded then the last unpaid subperiod should be handled by Paypal manual payments
 

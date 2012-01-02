@@ -92,7 +92,7 @@ describe SubscriptionSubPeriod do
       set_date_today_to(Date.today + 2.weeks)
       @customer.upgrade_subscription!(@payable_subscription3)
       @prev_subscription.reload
-      @prev_subscription.subscription_sub_periods.first.billing_price.should eql(5.06)
+      @prev_subscription.subscription_sub_periods.first.billing_price.should eql(20.24)
     end
 
     it "should recalculate subperiod when upgrading" do
@@ -114,9 +114,9 @@ describe SubscriptionSubPeriod do
       }.to change { Refund.count }.by(1)
 
       @prev_subscription.reload
-      @prev_subscription.subscription_sub_periods.first.refund.refund_price.should == 2.53
+      @prev_subscription.subscription_sub_periods.first.refund.refund_price.should == 10.12
       @prev_subscription.subscription_sub_periods.first.refund.description.should match /Refund for unused 14 days/
-      @prev_subscription.subscription_sub_periods.first.billing_price.should eql(5.06)
+      @prev_subscription.subscription_sub_periods.first.billing_price.should eql(20.24)
     end
 
     it "should generate Refund associated with invoice" do
@@ -224,6 +224,9 @@ describe SubscriptionSubPeriod do
       }.to change { Invoice.count }.by(1)
 
       @customer.active_subscription.subscription_sub_periods[0].invoice.should_not be_paid
+
+      ActionMailer::Base.deliveries.last.to.should include(@customer.email)
+      ActionMailer::Base.deliveries.last.body.raw_source.should include "/paypal_unpaid_invoices/#{@customer.active_subscription.subscription_sub_periods[0].invoice_id}"
     end
 
     it "should auto downgrade when number of retries is exceeded AND auto downgrading is enabled" do
@@ -262,6 +265,54 @@ describe SubscriptionSubPeriod do
       @customer.active_subscription.subscription_sub_periods[0].invoice.should be_paid
 
       ActionMailer::Base.deliveries.last.to.should include(@customer.email)
+    end
+
+    it "should become normal when renewed after it was cancelled in paypal" do
+      @payable_subscription2.update_attributes(:use_paypal => true)
+      setup_customer(@payable_subscription2)
+      @customer.active_subscription.confirm_paypal!
+
+      profile_id = "I-ZXCVBFGH"
+      @customer.active_subscription.update_attribute(:paypal_profile_id, profile_id)
+
+      @customer.active_subscription.should be_normal
+
+      Subscription.canceled_in_paypal(profile_id, SubscriptionPaymentNotification.create)
+
+      @customer.active_subscription.should be_cancelled
+      @customer.active_subscription.should be_cancelled_in_paypal
+
+      @customer.active_subscription.normalize!
+
+      @customer.active_subscription.should be_normal
+      @customer.active_subscription.should_not be_cancelled_in_paypal
+      @customer.active_subscription.should_not be_prolongs_as_free
+    end
+
+    it "should become normal when renewed after it was cancelled in paypal during lockup" do
+      @payable_subscription2.update_attributes(:use_paypal => true, :lockup_period => 6)
+      setup_customer(@payable_subscription2)
+      @customer.active_subscription.confirm_paypal!
+
+      profile_id = "I-ZXCVBFGH"
+      @customer.active_subscription.update_attribute(:paypal_profile_id, profile_id)
+
+      set_date_today_to(Date.today+7.weeks)
+
+      @customer.active_subscription.enter_lockup!
+
+      @customer.active_subscription.should be_lockup
+
+      Subscription.canceled_in_paypal(profile_id, SubscriptionPaymentNotification.create)
+
+      @customer.active_subscription.should be_cancelled_during_lockup
+      @customer.active_subscription.should be_cancelled_in_paypal
+
+      @customer.active_subscription.normalize!
+
+      @customer.active_subscription.should be_normal
+      @customer.active_subscription.should_not be_cancelled_in_paypal
+      @customer.active_subscription.should_not be_prolongs_as_free
     end
   end
 

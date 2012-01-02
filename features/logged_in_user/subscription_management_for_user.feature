@@ -10,8 +10,8 @@ Feature: Subscription management for user
   @_done @_tested
   Scenario: I can see my subscription type in my profile
     When I follow translated "layout.my_profile_link"
-    Then I should see translated "subscriptions.current_subscription" within "#current_subscription"
-    And I should see translated "subscriptions.listing.free" within "#current_subscription"
+    Then I should see CSS path "div.subscription_plans .active"
+    And I should see translated "subscriptions.listing.free" within "div.subscription_plans .active"
 
   @selenium @_done @_tested
   Scenario: I can change my subscription type
@@ -21,8 +21,7 @@ Feature: Subscription management for user
     And I follow translated "subscriptions.listing.upgrade"
     And I follow translated "layout.my_profile_link"
     Then I should see translated "subscriptions.current_subscription" within "#current_subscription"
-    And I should see "Basic for supplier" within "#current_subscription"
-    And I should see translated "subscriptions.available_subscriptions"
+    And I should see "Basic for supplier" within ".subscription_plans"
     And I should see translated "subscriptions.will_prolong_on" with options "prolong_date:{Date.today+4.weeks}"
 
   @selenium @_done @_tested @_deprecated
@@ -42,7 +41,7 @@ Feature: Subscription management for user
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
-    And I should see "Basic for supplier" within "#current_subscription"
+    And I should see "Basic for supplier" within ".subscription_plans"
 
   @selenium @_done @_tested
   Scenario: When I change my subscription to less expensive then the change will apply on next billing cycle
@@ -129,7 +128,7 @@ Feature: Subscription management for user
     And I follow translated "subscriptions.listing.cancel"
     When the date is "29" days from now
     When I follow translated "layout.my_profile_link"
-    Then I should see "Free supplier subscription" within "#current_subscription"
+    Then I should see "Free supplier subscription" within ".subscription_plans"
     Then user "supp@nbs.com" should not be deal maker
 
   @selenium @_done @_tested
@@ -161,11 +160,11 @@ Feature: Subscription management for user
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
-    Then I should see "Basic for supplier" within "#current_subscription"
+    Then I should see "Basic for supplier" within ".subscription_plans"
     And I should see translated "subscriptions.will_prolong_on" with options "prolong_date:{Date.today+14.days}"
     When the date is "14" days from now
     And I follow translated "layout.my_profile_link"
-    Then I should see "Basic for supplier" within "#current_subscription"
+    Then I should see "Basic for supplier" within ".subscription_plans"
     And I should see translated "subscriptions.will_prolong_on" with options "prolong_date:{Date.today+14.days}"
 
   @added @selenium @_done @_tested

@@ -1,17 +1,28 @@
 <column-mc:>
   <div>
-    <p><%= blurb("blurb_deal_confirmation_page") %></p>
+    <p><%= blurb("blurb_voucher_confirmation_page") %></p>
   </div>
+
+  <% unless @lead.deal.deal_confirmation_page.blank? %>
+      <br />
+      <div>
+        <p><%= @lead.deal.deal_confirmation_page.to_s.html_safe %></p>
+      </div>
+  <% end %>
 
   <br/>
 
   <div class="frm_tiny pdd_15 ta_c">
-    <h2><%= t("member.leads.show.view.confirmation_message") %></h2>
+    <% if @lead.deal.voucher_enabled and !@lead.deal.voucher_numbers.available_for_now(Time.now).blank? %>
+        <h2><%= t("member.leads.show.view.voucher_confirmation_message") %></h2>
+    <% else %>
+        <h2><%= t("member.leads.show.view.confirmation_message") %></h2>
+    <% end %>
 
     <div class="pdd_10 grid_50 grid_c">
       <ibt>
         <% if @lead.deal.voucher_enabled and !@lead.deal.voucher_numbers.available_for_now(Time.now).blank? %>
-            <%= button_to t("member.leads.show.view.ok_confirmation"), redirect_to_paypal_members_lead_path(@lead), :method => :get %>
+            <%= button_to t("member.leads.show.view.go_to_paypal"), redirect_to_paypal_members_lead_path(@lead), :method => :get %>
         <% else %>
             <%= button_to t("member.leads.show.view.ok_confirmation"), deal_path(@lead.deal), :method => :get %>
         <% end %>

@@ -70,7 +70,7 @@ Feature: Generating leads from deals
     And I press translated "member.leads.new.view.button_create"
     And I should see translated "member.leads.show.view.confirmation_message"
     And I press translated "member.leads.show.view.ok_confirmation"
-    And I should be on the homepage
+    And I should be on show deal Templates deal test
 
   # If there is any template information associated with the deal the procurement manager is prompted for the information. And the procurement manager can enter some note information (will go into hidden description)
   @_done @tested_elsewhere

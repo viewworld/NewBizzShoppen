@@ -410,6 +410,8 @@ en:
       edit_template: "Edit template"
       production: "Production"
       agent_work_screen_as: "Go to agent work screen as"
+      button_move_selected_contacts: "Move selected"
+      button_copy_selected_contacts: "Copy selected"
     index:
       title: Campaigns
       edit: Edit
@@ -1744,6 +1746,7 @@ en:
         line_name: "Name"
         line_price: "Price"
         delete_line: "Delete"
+        lines_per_billing_cycle: "Lines are added per each billing cycle"
     paypal_notifications:
       index:
         view:
@@ -2107,6 +2110,8 @@ en:
           view_all_leads_link: "View all leads"
           confirmation_message: "We have successfully received the contact request, and that we will be in touch as soon as possible."
           ok_confirmation: "OK"
+          voucher_confirmation_message: "Please go to Paypal page to pay for Your voucher."
+          go_to_paypal: "Go to Paypal"
       destroy:
         flash:
           lead_deletion_successful: "Lead has been deleted successfully."
@@ -3032,6 +3037,8 @@ en:
         end_date: "End date"
       voucher_max_number_validation: "can not be smaller then activated vouchers numbers"
 
+    invoice:
+      invoice_paypal_name: "Invoice %{number}"
   activerecord:
     models:
       article:
@@ -4219,6 +4226,7 @@ en:
     new_subscription_plan_is_invalid: "The new subscription plan is invalid"
     start_date_is_invalid: "The start date for new subscription is invalid"
     there_are_future_subscriptions: "You can not change the subscription because there is already other subscription scheduled to start after the current one"
+    active: "Active"
     confirmation:
       cancel: "Are you sure you want to cancel your current subscription plan?"
       downgrade: "Are you sure you want to downgrade your current subscription plan?"
@@ -4238,6 +4246,7 @@ en:
         team_buyers: "Team suppliers"
         deal_maker: "Deal maker"
       weeks: "weeks"
+      selected: "Your choice"
       with_n_weeks_billing_cycle: "with %{number} weeks billing cycle"
       plus_n_weeks_free_period: "+ %{number} weeks of free period"
     as_free_subscription: "as free subscription"
@@ -4252,3 +4261,13 @@ en:
         message: "Please go to PayPal and confirm payment on Your subscription named %{subscription}"
         button_confirm: "Confirm Your payment"
         message_failure: "It is not possible to confirm Your subscription named %{subscription} right now. Please try again later."
+  paypal_unpaid_invoices:
+    flash:
+      notice:
+        invoice_already_paid: "Invoice %{number} has already been paid!"
+    show:
+      view:
+        header: "Unpaid invoice %{number}"
+        pay_invoice: "Pay invoice"
+        message: "Go to Paypal to pay for the invoice %{number}"
+        amount: "Amount:"

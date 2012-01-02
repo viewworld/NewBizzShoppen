@@ -370,7 +370,14 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                  :body => "<p>Congratulations! You have new voucher. You can find it in attachment.</p>"},
          :da => {:subject => "[DK]You have new voucher!",
                  :body => "<p>Congratulations! You have new voucher. You can find it in attachment.</p>"}
-        }    
+        },
+        {:name => "Unpaid Invoice",
+         :uniq_id => "unpaid_invoice",
+         :en => {:subject => "Unpaid invoice {{invoice.full_number}}",
+                 :body => "<p>You have unpaid invoice {{invoice.full_number}}. Click <a href=\"{{invoice.pay_via_paypal_link}}\">here to pay the invoice via Paypal</a></p>"},
+         :da => {:subject => "[DK] Invoice",
+                 :body => "<p><p>You have unpaid invoice {{invoice.full_number}}. Click <a href=\"{{invoice.pay_via_paypal_link}}\">here to pay the invoice via Paypal</a></p></p>"}
+        }
     ]
 
 
@@ -621,7 +628,8 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         'blurb_subscriptions_for_supplier',
         'blurb_subscriptions_for_category supplier',
         'blurb_subscriptions_for_member',
-        'blurb_deal_confirmation_page'
+        'blurb_deal_confirmation_page',
+        'blurb_voucher_confirmation_page'
     ].each do |key|
       unless Article::Cms::InterfaceContentText.where(:key => key).first
         article = Article::Cms::InterfaceContentText.make!(:title => key.humanize, :content => key.humanize, :key => key)

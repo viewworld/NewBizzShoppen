@@ -18,7 +18,7 @@
         <% if @subscription_plan.persisted? %>
             <li class="string">
               <%= label_tag :total_billing %>
-              <div class="txt"><strong><%= as_currency(@subscription_plan.total_billing, @subscription_plan.currency, 2) %></strong></div>
+              <div class="txt" id="total_billing"><strong><%= as_currency(@subscription_plan.total_billing, @subscription_plan.currency, 2) %></strong></div>
             </li>
         <% end %>
       </ol>
@@ -68,6 +68,7 @@
 <hl/>
 <div class="pdd_20" style="padding-top:10px">
   <%= bt_link_to :plus, t("administration.subscription_plans.form.new_line"), "javascript:void(0)", :onclick => "#{fields_for_subscription_plan_line_fields(form)}" %>
+  <%= t("administration.subscription_plans.form.lines_per_billing_cycle") %>
 </div>
 
 <clb/>
@@ -157,4 +158,15 @@
     switch_use_paypal_features();
     switch_automatic_downgrading();
     enable_free_deals_in_free_period()
+
+
+    function sum_prices(){
+        total = 0.0;
+        $('input[type=text][id*=_price]').each(function(index) {
+            val = parseFloat($(this).val());
+            total = total + (isNaN(val) ? 0 : val);
+        });
+        $('#total_billing').html("<strong>" + total.toString() + "</strong>");
+
+    }
 </script>

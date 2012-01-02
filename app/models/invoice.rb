@@ -16,6 +16,7 @@ class Invoice < ActiveRecord::Base
 
   include ScopedSearch::Model
   include MultiScopedOrder
+  include InvoicePaypalPayment
 
   belongs_to :user
   belongs_to :currency
@@ -69,6 +70,8 @@ class Invoice < ActiveRecord::Base
 
   scoped_order :revenue_frozen, :paid_at, :number, :sale_date, :seller_name
   multi_scoped_order :sale_date_and_number
+
+  liquid :full_number, :pay_via_paypal_link
 
   protected
 
@@ -131,7 +134,7 @@ class Invoice < ActiveRecord::Base
             :payable => lead_purchase,
             :name => lead_purchase.lead.header,
             :netto_price => lead_purchase.lead.price,
-            :vat_rate => supplier.country_vat_rate,
+            :vat_rate => seller.vat_rate,
             :quantity => lead_purchase.quantity)
       end
     end
@@ -144,7 +147,7 @@ class Invoice < ActiveRecord::Base
         :payable => subscription_plan_line,
         :name => subscription_plan_line.name,
         :netto_price => subscription_plan_line.price,
-        :vat_rate => user.country_vat_rate,
+        :vat_rate => seller.vat_rate,
         :quantity => 1) if subscription_plan_line.price.to_f > 0
     end
     subscription_sub_period.update_attribute(:invoice, self)
@@ -204,7 +207,7 @@ class Invoice < ActiveRecord::Base
             :payable => voucher_number,
             :name => voucher_number.deal.header,
             :netto_price => voucher_number.deal.discounted_price,
-            :vat_rate => user.country_vat_rate,
+            :vat_rate => seller.vat_rate,
             :quantity => 1)
       self.paid_at = Time.now
       self.save
@@ -321,6 +324,10 @@ class Invoice < ActiveRecord::Base
 
   def send_by_email(user)
     invoice_path = Pathname.new(File.join(::Rails.root.to_s,'public/html2pdf/invoice_cache', store_pdf(user).basename))
-    TemplateMailer.delay.new(user.email, :invoice, Country.get_country_from_locale, {}, Array(invoice_path))
+    TemplateMailer.delay.new(user.email, paid? ? :invoice : :unpaid_invoice, Country.get_country_from_locale, {:invoice => self}, Array(invoice_path))
+  end
+
+  def pay_via_paypal_link
+    "http://#{user.domain_name}/paypal_unpaid_invoices/#{id}"
   end
 end

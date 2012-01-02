@@ -11,7 +11,7 @@ Given /^paypal voucher payment for deal "([^"]*)" and user with email "([^"]*)" 
   voucher_number.reserved_until.blank?.should == false
   member = "User::#{role.camelize}".constantize.find_by_email(email)
   rack_test_session_wrapper = Capybara.current_session.driver
-  rack_test_session_wrapper.post("/payment_notifications", :txn_type => "cart", :txn_id => "irek", :payment_status => "Completed", :secret => APP_CONFIG[:paypal_secret], :receiver_email => APP_CONFIG[:paypal_email], :mc_gross => BigDecimal(deal.discounted_price.to_s).to_s, :invoice => "v_#{voucher_number.deal_unique_id}_#{voucher_number.number}_#{voucher_number.user_id}")
+  rack_test_session_wrapper.post("/payment_notifications", :txn_type => "cart", :txn_id => "irek", :payment_status => "Completed", :secret => APP_CONFIG[:paypal_secret], :receiver_email => APP_CONFIG[:paypal_email], :mc_gross => BigDecimal(deal.brutto_discounted_price(member).to_s).to_s, :invoice => "v_#{voucher_number.deal_unique_id}_#{voucher_number.number}_#{voucher_number.user_id}")
   voucher_number.reload.state.should == "active"
   invoice = member.invoices.last
   invoice.invoice_lines.last.payable.should == voucher_number
@@ -41,3 +41,7 @@ Then /^cart for user "([^"]*)" has additional line for VAT$/ do |email|
   u.cart.hash_for_paypal(nil,nil).values.map(&:to_s).should include u.cart.total_vat_value.to_s
 end
 
+When /^I visit link to pay unpaid invoice for user "([^"]*)"$/ do |email|
+  u = User.where(:email => email).first.with_role
+  visit "/paypal_unpaid_invoices/#{u.invoices.detect { |i| !i.paid? }.id}"
+end

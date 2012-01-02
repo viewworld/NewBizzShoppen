@@ -1948,12 +1948,13 @@ li.disabled
     position: relative;
 
     margin: 5px;
-    min-height: 240px;
+    min-height: 195px;
     width: 200px;
     border: 1px solid #d0d0d0;
     min-width: 150px;
     text-align: center;
     background: #fff;
+    padding-bottom: 45px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;    
@@ -2000,7 +2001,13 @@ li.disabled
     display: block;
 }
 
-.subscription_plan_item h3
+.subscription_plan_item .subscription_plan_head
+{
+    height: 47px;
+    overflow: hidden;
+}
+
+.subscription_plan_item .subscription_plan_head h3
 {
     font-size: 16px;
     padding: 9px 5px;
@@ -2038,7 +2045,17 @@ li.disabled
 
 .subscription_plan_footer
 {
-    padding: 5px 0 !important;
+    position: absolute;
+    bottom: 0;
+    width:100%;
+    padding: 6px 0 10px;
+    text-align: center;
+}
+
+#current_subscription img
+{
+    vertical-align: -3px;
+    padding-right: 5px;
 }
 
 

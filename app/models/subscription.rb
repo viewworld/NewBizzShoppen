@@ -83,10 +83,18 @@ class Subscription < ActiveRecord::Base
     transitions :from => Subscription.aasm_states.map(&:name), :to => :admin_changed
   end
 
+  aasm_event :normalize, :after => :perform_normalize do
+    transitions :from => [:cancelled, :cancelled_during_lockup], :to => :normal, :guard => :use_paypal?
+  end
+
   def self.canceled_in_paypal(prof_id, spn)
-    if subscription = Subscription.where("paypal_profile_id = ?", prof_id).first
+    if subscription = SubscriptionSubPeriod.paypal_unpaid.for_recurring_payment(prof_id).readonly(false).first.subscription
       unless subscription.admin_changed?
-        subscription.cancel!
+        if subscription.may_cancel?
+          subscription.cancel!
+        else
+          subscription.cancel_during_lockup!
+        end
         subscription.update_attribute(:cancelled_in_paypal, true)
         subscription.send_paypal_profile_reactivation_link
       end
@@ -154,7 +162,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def self.clone_from_subscription_plan!(subscription_plan, user, start_date=nil, paypal_invoice_id=nil)
-    subscription = Subscription.new(:user => user)
+    subscription = Subscription.new(:user => user, :vat_rate => !user.not_charge_vat? ? subscription_plan.seller.vat_rate : 0)
     subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price", "is_active", "aasm_state", "paypal_retires_counter"]).each do |method|
       subscription.send("#{method}=".to_sym, subscription_plan.send(method.to_sym))
     end
@@ -196,6 +204,13 @@ class Subscription < ActiveRecord::Base
   def perform_cancelled_during_lockup
     self.cancelled_at = Time.now
     self.class.clone_from_subscription_plan!(self.subscription_plan, user, end_date + 1.day)
+  end
+
+  def perform_normalize
+    self.cancelled_at = nil
+    self.cancelled_in_paypal = false
+    self.prolongs_as_free = false
+    self.save
   end
 
   def perform_upgrade
@@ -393,6 +408,14 @@ class Subscription < ActiveRecord::Base
   def self.send_reminder_about_end_of_free_period
     Subscription.where("aasm_state = ? and free_period > 0", "unconfirmed_paypal").
                  select { |s| s.free_subscription_end_date <= Date.today }.each { |s| s.send_end_of_free_period_email }
+  end
+
+  def total_brutto_billing
+    subscription_sub_periods.inject(0.0) { |total, subscription_sub_period|  subscription_sub_period.total_brutto_billing + total }
+  end
+
+  def total_brutto_billing_for_sub_period
+    subscription_sub_periods.first.total_brutto_billing
   end
 
   private

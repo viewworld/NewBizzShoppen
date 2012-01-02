@@ -3,19 +3,13 @@ class SubscriptionPlanLine < ActiveRecord::Base
 
   validates_presence_of :name, :price
   validates_numericality_of :price
-  #validate :price_in_context_of_billing_cycle
 
   after_create :reload
   after_save :cache_prices
   after_destroy :cache_prices
+  before_save :apply_vat_rate
 
   private
-
-  #def price_in_context_of_billing_cycle
-  #  if resource.is_a?(SubscriptionPlan) and !resource.is_free? and !price_divides_by?(resource.number_of_periods)
-  #    errors.add(:price, :must_divide_by, :number => resource.number_of_periods)
-  #  end
-  #end
 
   def cache_prices
     resource.cache_prices!
@@ -34,6 +28,22 @@ class SubscriptionPlanLine < ActiveRecord::Base
     self.price = _new_price
     self.save!
     { :old_price => _old_price, :new_price => _new_price, :unused_days => total_days-paid_days }
+  end
+
+  def vat_rate
+    if resource.is_a?(Subscription)
+      resource.vat_rate
+    elsif resource.is_a?(SubscriptionSubPeriod)
+      resource.subscription.vat_rate
+    else
+      0
+    end
+  end
+
+  def apply_vat_rate
+    if price_changed?
+      self.brutto_price = vat_rate > 0 ? price + (price * BigDecimal(vat_rate.to_s).div(100,4)) : price
+    end
   end
 
 end

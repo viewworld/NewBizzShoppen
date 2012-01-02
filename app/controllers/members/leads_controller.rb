@@ -80,7 +80,12 @@ class Members::LeadsController < Members::MemberController
   end
 
   def pdf
-    send_file @lead.deal.voucher_numbers.where(:user_id => current_user.id).where("state = 'used' or state = 'active'").first.file_path("pdf"), :type => 'application/pdf'
+    voucher = @lead.deal.voucher_numbers.where(:user_id => current_user.id).where("state = 'used' or state = 'active'").first
+    if voucher
+      send_file voucher.file_path("pdf"), :type => 'application/pdf'
+    else
+      redirect_to :back
+    end
   end
 
   def update
