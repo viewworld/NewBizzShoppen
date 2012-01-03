@@ -13,13 +13,20 @@
       <td><%= invoice.number %> / <%= invoice.creation_date.year %></td>
     </tr>
     <tr>
-      <td class="ta_r"><strong><%= t("administration.invoices.show.view.payment_deadline") %>:</strong></td>
-      <td><%= invoice.payment_deadline_date %></td>
-    </tr>
-    <tr>
       <td class="ta_r"><strong><%= t("administration.invoices.show.view.creation_date") %>:</strong></td>
-      <td><%= invoice.creation_date %></td>
+      <td><%= format_date invoice.creation_date %></td>
     </tr>
+    <% unless invoice.paid? %>
+    <tr>
+      <td class="ta_r"><strong><%= t("administration.invoices.show.view.payment_deadline") %>:</strong></td>
+      <td><%= format_date invoice.payment_deadline_date %></td>
+    </tr>
+    <% else %>
+        <tr>
+          <td class="ta_r"></td>
+          <td></td>
+        </tr>
+    <% end %>
     </tbody>
   </table>
 

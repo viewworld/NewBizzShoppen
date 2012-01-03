@@ -172,6 +172,8 @@ class Invoice < ActiveRecord::Base
       user.update_attribute(:subscriber_type, User::SUBSCRIBER_TYPE_SUBSCRIBER) if user.ad_hoc?
       invoice_lines_based_on_subscription_sub_period(subscription_sub_period)
       update_attribute(:paid_at, Time.now) if subscription_sub_period.paypal_paid_auto? or subscription_sub_period.paypal_paid_manual?
+    elsif subscription_sub_period_id
+      EmailNotification.notify("Invoice created without lines for paypal subscription", "Invoice: #{id}, subscription_sub_period_id: #{subscription_sub_period_id}")
     end
   end
 
