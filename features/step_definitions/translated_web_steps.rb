@@ -3,7 +3,17 @@ Then /^I should see translated "([^"]*)"(?: with options "([^"]*)")?$/ do |key, 
   I18n.locale = :en
   if options.present?
     options = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
+    localize_format = options.delete(:localize)
     options.each{ |k,v| options[k] = eval(v[/\{(.*?)\}/,1]) if v[/\{(.*?)\}/,1] }
+
+    if localize_format
+      options.each_pair do |k, v|
+        if v.is_a?(Date)
+          options[k] = I18n.l(v, :format => localize_format.to_sym)
+        end
+      end
+    end
+
   Then %{I should see "#{I18n.t(key, options)}"}
     else
   Then %{I should see "#{I18n.t(key)}"}
