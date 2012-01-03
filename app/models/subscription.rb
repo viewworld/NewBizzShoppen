@@ -172,6 +172,7 @@ class Subscription < ActiveRecord::Base
     end
     subscription.apply_time_constraints(start_date ? start_date : Date.today)
     subscription.paypal_invoice_id = paypal_invoice_id
+    subscription.billing_period = 0 if subscription.use_paypal?
     subscription.save
     subscription.reload
     subscription.cache_prices!
