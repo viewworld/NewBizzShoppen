@@ -27,15 +27,14 @@ describe Debtor do
 
     it "should generate debt when subscription does not use paypal" do
       setup_customer(@payable_subscription1)
-      Debtor.with_owner(@customer).sum(:price).should eql(15)
+      Debtor.with_owner(@customer).sum(:price).should == 15
       @customer.upgrade_subscription!(@payable_subscription2)
-      throw Debtor.with_owner(@customer).sum(:price).to_f
-      Debtor.with_owner(@customer).sum(:price).should eql(21.36) # 21.36 is for every period
+      Debtor.with_owner(@customer).sum(:price).should == 21.36 # 21.36 is for every period
     end
 
     it "should not generate debt when subscription use paypal" do
       setup_customer(@payable_subscription3)
-      Debtor.with_owner(@customer).sum(:price).should eql(0)
+      Debtor.with_owner(@customer).sum(:price).should == 0
     end
   end
 end
