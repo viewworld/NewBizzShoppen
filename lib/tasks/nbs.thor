@@ -590,7 +590,9 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     [
         'About us',
         'Privacy',
-        'Terms & Conditions'
+        'Terms & Conditions',
+        'Fairdeals Terms & Conditions',
+        'Faircalls Terms & Conditions'
     ].each do |title|
       unless Article::Cms::MainPageArticle.includes(:translations).where(:article_translations => {:title => title}).first
         article = Article::Cms::MainPageArticle.make!(:title => title, :content => title, :key => title.parameterize('_'))
@@ -735,6 +737,11 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         Locale.create!(:code => attrs[:code], :language => lang, :enabled => attrs[:enabled], :symbol => attrs[:symbol])
       end
     end
+
+    #create proc translations
+    #based on https://github.com/rails/rails/blob/master/activesupport/lib/active_support/locale/en.yml
+    Translation.create_or_update!(:locale => "en", :key => "date.month_names", :is_proc => true, :value => "%w{nil January February March April May June July August September October November December}")
+    Translation.create_or_update!(:locale => "da", :key => "date.month_names", :is_proc => true, :value => "%w{nil Januar Februar Marts April Maj Juni Juli August September Oktober November December}")
   end
 
   desc "recalculate_leads_average_ratings", ""

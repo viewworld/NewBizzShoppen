@@ -32,12 +32,12 @@
     <hl pdd="10"/>
     <div id="current_subscription">
       <% if current_user.active_subscription.is_today_in_free_period? %>
-          <p><%= image_tag("icons/hint.png") %><%= t("subscriptions.free_period_notification", :free_period_date => current_user.active_subscription.free_subscription_end_date) %></p>
+          <p><%= image_tag("icons/hint.png") %><%= t("subscriptions.free_period_notification", :free_period_date => l(current_user.active_subscription.free_subscription_end_date, :format => :long)) %></p>
       <% end %>
       <% if next_subscription = current_user.next_subscription %>
-          <p><%= image_tag("icons/hint.png") %><%= t("subscriptions.next_subscription_plan", :next_plan_name => next_subscription.subscription_plan.name, :next_plan_active_from => next_subscription.start_date) %></p>
+          <p><%= image_tag("icons/hint.png") %><%= t("subscriptions.next_subscription_plan", :next_plan_name => next_subscription.subscription_plan.name, :next_plan_active_from => l(next_subscription.start_date, :format => :long)) %></p>
       <% elsif current_user.active_subscription.will_prolong? %>
-          <p><%= image_tag("icons/hint.png") %><%= t("subscriptions.will_prolong_on", :prolong_date => current_user.active_subscription.end_date + 1.day) %> <%= t("subscriptions.as_free_subscription") if current_user.active_subscription.cancelled? %></p>
+          <p><%= image_tag("icons/hint.png") %><%= t("subscriptions.will_prolong_on", :prolong_date => l(current_user.active_subscription.end_date + 1.day, :format => :long)) %> <%= t("subscriptions.as_free_subscription") if current_user.active_subscription.cancelled? %></p>
       <% end %>
 
       <% if !current_user.can_upgrade_or_downgrade_subscription? %>
