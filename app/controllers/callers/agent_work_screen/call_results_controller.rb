@@ -23,7 +23,7 @@ class Callers::AgentWorkScreen::CallResultsController < Callers::AgentWorkScreen
       @contact.published = true unless attributes[:published].to_i.zero?
       @contact.save
     end
-    @call_result = CallResult.new(params[:call_result])
+    @call_result = CallResult.new(params[:call_result].merge(:current_user => current_user))
     @call_result.creator = current_user
     @call_result.contact = @contact
     create! do |success, failure|

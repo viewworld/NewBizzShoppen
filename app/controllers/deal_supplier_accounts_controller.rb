@@ -10,7 +10,7 @@ class DealSupplierAccountsController < ApplicationController
     if @user.save
       @deal.current_dcr.change_state("agreed")
       @deal.assign_lead_category_to_supplier!
-      @deal.send_supplier_welcome_email(params[:user_supplier][:password])
+      @deal.send_supplier_welcome_email(params[:user_supplier][:password], current_user)
       flash[:notice] = t("supplier.deal_certification_requests.update.flash.certify_success")
       redirect_to root_path
     else
