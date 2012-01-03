@@ -1,7 +1,10 @@
 <ul class="nav<%= (user_signed_in? and current_user.has_role?(:admin)) ? " admin_nav" : "" %>">
   <%= main_menu_link_to_role_specific_home_page %>
   <% if current_user %>
-      <% current_user.roles_sorted.each do |role| %>
+
+      <%= render("/layouts/fairleads/menu_sections/admin") if current_user.admin? %>
+
+      <% current_user.roles_sorted.to_a.except(:admin).each do |role| %>
           <%= render "/layouts/faircalls/menu_sections/#{role.to_s}" %>
       <% end %>
       <% if current_user.deal_maker? and current_user.has_any_role?(:call_centre, :call_centre_agent, :agent) %>

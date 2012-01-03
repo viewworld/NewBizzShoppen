@@ -29,8 +29,8 @@ Scenario: Invoice lines for manually created invoice should be automatically gen
   And I select "Xerox, gerard.jones@paerson22.com" from "invoice_user_id"
   And I select "DannyTheSeller" from "invoice_seller_id"
   And I press translated "administration.invoices.index.view.create_invoice"
-  Then the "invoice_invoice_lines_attributes_0_name" field should contain "Monitors deal"
-  And the "invoice_invoice_lines_attributes_1_name" field should contain "Printers deal"
+  Then at least one text field with id like "invoice_invoice_lines_attributes_" should contain value "Monitors deal"
+  And at least one text field with id like "invoice_invoice_lines_attributes_" should contain value "Printers deal"
 
 @added @m5 @ao @_done @_tested
 Scenario: Invoice should be created per currency
