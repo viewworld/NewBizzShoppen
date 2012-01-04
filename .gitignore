@@ -17,4 +17,5 @@
 /public/assets/*
 /db/snapshots/cucumber.sql
 /public/html2pdf/invoice_cache
+/public/html2pdf/voucher_cache
 /public/javascripts/translations.js
