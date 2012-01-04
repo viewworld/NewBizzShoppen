@@ -18,7 +18,7 @@ class CategoryRequestsController < ApplicationController
         TemplateMailer.delay.new(Settings.contact_us_email, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => @email_template_preview.subject, :body_content => @email_template_preview.body,
                                         :bcc_recipients => @email_template_preview.bcc, :cc_recipients => @email_template_preview.cc,
-                                        :reply_to => @email_template_preview.email_from, :sender_id => User.get_current_user_id,
+                                        :reply_to => @email_template_preview.email_from, :sender_id => user_signed_in? ? current_user.id : nil,
                                         :email_template_uniq_id => "category_request"})
 
         if current_user

@@ -213,7 +213,7 @@ class User < ActiveRecord::Base
   end
 
   def deliver_email_template(uniq_id)
-    TemplateMailer.delay.new(email, uniq_id.to_sym, country, {:user => self.with_role, :sender_id => User.get_current_user_id})
+    TemplateMailer.delay.new(email, uniq_id.to_sym, country, {:user => self.with_role, :sender_id => nil})
   end
 
   def check_billing_rate
@@ -283,10 +283,6 @@ class User < ActiveRecord::Base
   end
 
   public
-
-  def self.get_current_user_id
-    Thread.current[:current_user_id]
-  end
 
   def domain
     Domain.where(:site => with_role.site, :locale => I18n.locale).first || Domain.where(:site => with_role.site).with_default.first
@@ -624,7 +620,7 @@ class User < ActiveRecord::Base
       unless subscribed_categories.empty?
         uniq_id = "lead_notification_#{lead_notification_type == LEAD_NOTIFICATION_ONCE_PER_DAY ? 'daily' : 'weekly'}"
         leads = Lead.for_notification(subscribed_categories, lead_notification_type)
-        TemplateMailer.delay.new(email, uniq_id.to_sym, user.with_role.address.country, {:user => self, :leads => leads, :sender_id => User.get_current_user_id})
+        TemplateMailer.delay.new(email, uniq_id.to_sym, user.with_role.address.country, {:user => self, :leads => leads, :sender_id => nil})
       end
     end
   end
@@ -673,7 +669,7 @@ class User < ActiveRecord::Base
     template = EmailTemplate.find_by_uniq_id("#{has_role?(:member) ? 'member' : 'supplier'}_invitation")
     template = customize_email_template(template)
     TemplateMailer.delay.new(email, template, with_role.address.present? ? with_role.address.country : Country.get_country_from_locale,
-                             {:user => self.with_role, :new_password => new_password, :sender_id => User.get_current_user_id}, assets_to_path_names(email_materials))
+                             {:user => self.with_role, :new_password => new_password, :sender_id => nil}, assets_to_path_names(email_materials))
   end
 
   def country
@@ -707,7 +703,7 @@ class User < ActiveRecord::Base
   end
 
   def deliver_welcome_email_for_upgraded_contact
-    TemplateMailer.delay.new(email, "upgraded_contact_to_#{role_to_campaign_template_name}_welcome".to_sym, with_role.address.country, {:user => self, :sender_id => User.get_current_user_id})
+    TemplateMailer.delay.new(email, "upgraded_contact_to_#{role_to_campaign_template_name}_welcome".to_sym, with_role.address.country, {:user => self, :sender_id => nil})
   end
 
   def active_subscription

@@ -8,7 +8,7 @@ class ShareDealByEmailController < ApplicationController
       TemplateMailer.delay.new(params[:email_to], :blank_template, Country.get_country_from_locale,
                                        {:subject_content => @email_preview.subject, :body_content => @email_preview.body,
                                         :bcc_recipients => @email_preview.bcc, :cc_recipients => @email_preview.cc, :reply_to => @email_preview.email_from,
-                                        :sender_id => User.get_current_user_id, :email_template_uniq_id => "share_deal_by_email"})
+                                        :sender_id => user_signed_in? ? current_user.id : nil, :email_template_uniq_id => "share_deal_by_email"})
     end
     redirect_to :back
   end

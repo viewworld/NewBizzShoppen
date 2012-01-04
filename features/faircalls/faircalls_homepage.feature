@@ -62,9 +62,9 @@ Scenario: I should see my active "Campaigns" in the left box
   And I sign in as testreportscca01@nbs.com with password secret
   And I should see "TestCampaignReport1"
   And I should see "TestCampaignReport2"
-  And I should see "Pending contacts: 1"
+  And I should see "Pending contacts: 2"
   And I should see "Call backs: 1"
-  And I should see "Completion: 83%"
+  And I should see "Completion: 66%"
   When I follow "TestCampaignReport1"
   Then I should see "Agent work screen - TestCampaignReport1"
 

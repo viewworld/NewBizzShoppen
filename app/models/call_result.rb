@@ -1,7 +1,7 @@
 class CallResult < ActiveRecord::Base
   attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_2,
                 :contact_address_line_3, :contact_zip_code, :contact_country_id, :contact_phone_number,
-                :contact_company_name, :buying_category_ids, :result_id_changed, :user_not_charge_vat
+                :contact_company_name, :buying_category_ids, :result_id_changed, :user_not_charge_vat, :current_user
 
   belongs_to :contact
   belongs_to :result
@@ -241,7 +241,7 @@ class CallResult < ActiveRecord::Base
     TemplateMailer.delay.new(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.body,
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc,
-                                        :sender_id => User.get_current_user_id, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
+                                        :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
                                         assets_to_path_names(send_material_result_value.materials))
   end
 
@@ -253,7 +253,7 @@ class CallResult < ActiveRecord::Base
     TemplateMailer.delay.new(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.render({:user => user, :password => password}),
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc,
-                                        :sender_id => User.get_current_user_id, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
+                                        :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
                                         assets_to_path_names(send_material_result_value.materials))
   end
   

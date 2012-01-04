@@ -52,7 +52,7 @@ Feature: Home page
   @m8 @requested @tgn @_tested @_done
   Scenario: Make year automatically change in footer
     Given I go to the homepage
-    Then I should see "2011 Fairleads Ltd"
+    Then I should see "2012 Fairleads Ltd"
 
   #7638
   @m20 @requested @ao @_done @_tested
