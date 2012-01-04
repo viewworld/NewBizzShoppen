@@ -20,6 +20,7 @@ class VoucherNumber < ActiveRecord::Base
   scope :can_not_be_deleted, lambda { |time| where("state <> '#{STATE_NEW}' or (state = '#{STATE_NEW}' and reserved_until > ?)", time-DELETE_PERMISSION_DELAY) }
   scope :find_active, lambda { |deal_unique_id, voucher_number| where("deal_unique_id = ? and number = ? and state = '#{STATE_ACTIVE}'", deal_unique_id, voucher_number) }
   scope :find_used, lambda { |deal_unique_id, voucher_number| where("deal_unique_id = ? and number = ? and state = '#{STATE_USED}'", deal_unique_id, voucher_number) }
+  scope :active_or_used, where("state = '#{STATE_ACTIVE}' or state = '#{STATE_USED}'")
 
   default_scope order("id")
 
@@ -43,7 +44,7 @@ class VoucherNumber < ActiveRecord::Base
   end
 
   def file_path(extension)
-    Rails.root.join "public/html2pdf/voucher_cache/voucher_#{deal_unique_id}_#{number}.#{extension}"
+    Rails.root.join "public/system/voucher_cache/voucher_#{deal_unique_id}_#{number}.#{extension}"
   end
 
   def to_pdf

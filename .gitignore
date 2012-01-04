@@ -10,6 +10,7 @@
 /capybara/**/*
 .idea
 /public/system/assets
+/public/system/voucher_cache
 /public/assets/*
 .rvmrc
 .livereload

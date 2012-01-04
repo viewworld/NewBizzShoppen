@@ -40,10 +40,14 @@
             <li>
               <%= bt_link_to nil, t("campaigns.edit.production"), callers_production_path(:campaign_ids => [@campaign.id]) %>
             </li>
+
+
+            <% if users_for_agent_work_screen = (current_user.admin? ? @campaign.users : [current_user]+@campaign.users.where(:id => current_user.subaccount_ids)) and !users_for_agent_work_screen.empty? %>
             <li>
               <%= bt_link_to nil, t("campaigns.edit.agent_work_screen_as"), "javascript:void();", :onclick => "go_to_agent_work_screen_as_user(#{@campaign.id})" %>
             </li>
-            <li><%= select_tag :user_id, options_from_collection_for_select(current_user.admin? ? @campaign.users : [current_user]+@campaign.users.where(:id => current_user.subaccount_ids), 'id', 'screen_name') %></li>
+            <li><%= select_tag :user_id, options_from_collection_for_select(users_for_agent_work_screen, 'id', 'screen_name') %></li>
+            <% end %>
             <li>
               <%= bt_link_to :users, t("campaigns.edit.button_import_contacts"), new_callers_campaign_contact_path(@campaign, :type => "import") %>
             </li>
