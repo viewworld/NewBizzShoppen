@@ -5,10 +5,8 @@
     </param:content>
   </header>
 
-  <%= render :partial => 'overview_table', :locals => {:type => :hours, :overview => @overview, :results => @results} %>
-
-  <%= render :partial => 'overview_table', :locals => {:type => :results, :overview => @overview, :results => @results} %>
-
-  <%= render :partial => 'overview_table', :locals => {:type => :value, :overview => @overview, :results => @results} %>
+  <% [:hours,:results,:value].each do |k| %>
+    <%= render(:partial => "overview_table", :locals => {:type => k, :overview => @overview, :results => @results}) %>
+  <% end %>
 
 </column-mc:>

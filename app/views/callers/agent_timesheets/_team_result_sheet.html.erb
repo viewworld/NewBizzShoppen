@@ -10,17 +10,17 @@
     </thead>
     <tbody>
     <% overview.cweeks.each do |cweek| %>
-      <tr>
+      <tr rowid="<%= "#{cweek.year}#{cweek.cweek}" %>">
         <td><%= t("agent_timesheets.index.week") %> <%= cweek.to_s %></td>
         <% overview.days_of_week.each do |dow| %>
           <td class="val">
-          <% if results[cweek.year] and results[cweek.year][cweek.cweek] and results[cweek.year][cweek.cweek][dow] %>
-            <%= as_currency(results[cweek.year][cweek.cweek][dow].first.send(type),nil,2) %>
+          <% if day = results.detect{|d| d.dow == dow and d.year == cweek.year and d.week == cweek.cweek} and day.send(type).to_f > 0 %>
+            <%= as_currency(day.send(type),nil,2) %>
           <% else %>
             <%= as_currency(0,nil,2) %>
           <% end %>
-          </td>
         <% end %>
+        </td>
         <td class="total_h"></td>
       </tr>
     <% end %>

@@ -3920,7 +3920,15 @@ en:
   agent_timesheets:
     index:
       header: "Agent timesheets"
-
+      week: "Week"
+      total: "Total"
+      overview:
+        hours_header: "Hours"
+        results_header: "Results"
+        value_header: "Value"
+        hours_total: "Total hours"
+        results_total: "Total results"
+        value_total: "Total value"
   advanced_import:
     show:
       view:
