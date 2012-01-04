@@ -862,15 +862,44 @@ Feature: Agent campaign - management
 
 
         #8891
-        @m26 @requested
+        @m26 @requested @selenium @_done @_tested @tgn
         Scenario: As admin or call centre I can move selected contacts to different campaign
+          And I fill in "search_with_keyword" with "Testing Two"
+          And I press translated "campaigns.filter.search_button"
+          And I click hidden link by url regex "/\/callers\/campaigns\/\d+\/edit/"
+          And I follow translated "campaigns.edit.button_create_contact"
+          And I fill in "contact_company_name" with "Moveable contact"
+          And I fill in "contact_company_phone_number" with "+44 3423424234"
+          And I select "Denmark" from "contact_country_id"
+          And I press translated "contacts.new.create_button"
+          And I check "mark_all"
+          And I select "Testing One" from "target_campaign_id"
+          And I follow translated "campaigns.edit.button_move_selected_contacts"
+          And I should see translated "contacts.batch_move.flash.moved_successfully" with options "campaign:Testing One"
+          And campaign "Testing Two" should not have contact named "Moveable contact"
+          And campaign "Testing One" should have contact named "Moveable contact"
 
         #8891
-        @m26 @requested
+        @m26 @requested @selenium @_done @_tested @tgn
         Scenario: As admin or call centre I can duplicate selected contacts to different campaign
+          And I fill in "search_with_keyword" with "Testing Two"
+          And I press translated "campaigns.filter.search_button"
+          And I click hidden link by url regex "/\/callers\/campaigns\/\d+\/edit/"
+          And I follow translated "campaigns.edit.button_create_contact"
+          And I fill in "contact_company_name" with "Moveable contact"
+          And I fill in "contact_company_phone_number" with "+44 3423424234"
+          And I select "Denmark" from "contact_country_id"
+          And I press translated "contacts.new.create_button"
+          And I check "mark_all"
+          And I select "Testing One" from "target_campaign_id"
+          And I follow translated "campaigns.edit.button_copy_selected_contacts"
+          And I should see translated "contacts.batch_move.flash.copied_successfully" with options "campaign:Testing One"
+          And campaign "Testing Two" should have contact named "Moveable contact"
+          And campaign "Testing One" should have contact named "Moveable contact"
+
 
         #8891
-        @m26 @requested
+        @m26 @requested @_done @_tested_elsewhere @tgn
         Scenario: As call centre I can move or duplicate contacts to campaigns that are assigned to me
 
         #6553

@@ -65,5 +65,11 @@ Feature: Home page
   Scenario: Integration with User Voice
 
   #9269
-  @m26 @requested
+  @m26 @requested @tgn @_done @_tested
   Scenario: I can see different terms and conditions page for fairleads,fairdeals and faircalls
+    Given I am on the homepage
+    And I follow "Terms & Conditions"
+    Given I visit domain http://fairdeals.eu
+    And I follow "Fairdeals Terms & Conditions"
+    Given I visit domain http://faircalls.eu
+    And I follow "Faircalls Terms & Conditions"
