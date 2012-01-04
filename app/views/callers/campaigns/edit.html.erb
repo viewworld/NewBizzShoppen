@@ -94,14 +94,12 @@
           <%= form_tag batch_remove_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_remove_form" do %>
               <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_remove" %>
           <% end %>
-          <% if false %>
           <%= form_tag batch_move_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_move_form" do %>
               <%= select_tag "target_campaign_id", options_for_select(( (current_user.admin? ? Campaign.all : current_user.campaigns).except(@campaign) ).map { |u| [u.name, u.id] }) %>
               <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_move_form" %>
               <%= hidden_field_tag "action_type", nil, :id => "hf_batch_move_form_action_type" %>
               <%= bt_link_to :arrow_right, t("campaigns.edit.button_move_selected_contacts"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_move_form');$('#hf_batch_move_form_action_type').val('move');$('#batch_move_form').submit();" %>
               <%= bt_link_to :arrow_right, t("campaigns.edit.button_copy_selected_contacts"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_move_form');$('#hf_batch_move_form_action_type').val('copy');$('#batch_move_form').submit();" %>
-          <% end %>
           <% end %>
       <% end %>
   <% end %>
