@@ -135,3 +135,7 @@ Feature: Fairdeals view deal
     And I should see link with label "www.google.com"
     And I should see translated "deals.show.view.confirmation_page_label"
     And I should see "to get your deal you need to ..."
+
+  #9535
+  @m26 @requested
+  Scenario: When I click get deal then I should see company logo, name and description enclosed into styled box without any headers like company name, logo or description
