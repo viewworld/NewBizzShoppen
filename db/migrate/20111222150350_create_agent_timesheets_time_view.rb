@@ -75,7 +75,7 @@ class CreateAgentTimesheetsTimeView < ActiveRecord::Migration
         HAVING
           SUM(agent_information.sum) > 0
       }
-      execute "DROP VIEW agent_information"
+      #execute "DROP VIEW agent_information"
       execute %{
         CREATE VIEW agent_information AS
         SELECT
@@ -98,7 +98,7 @@ class CreateAgentTimesheetsTimeView < ActiveRecord::Migration
             ELSE EXTRACT(DOW FROM user_session_logs.end_time) - 1
           END::INTEGER as dow,
           EXTRACT(WEEK FROM user_session_logs.end_time)::INTEGER as week,
-        	EXTRACT(YEAR FROM user_session_logs.end_date) as year,
+        	EXTRACT(YEAR FROM user_session_logs.end_date)::INTEGER as year,
           user_session_logs.campaign_id,
           SUM(user_session_logs.hours_count) as hours,
           (
@@ -163,10 +163,10 @@ class CreateAgentTimesheetsTimeView < ActiveRecord::Migration
 
   def self.down
     ActiveRecord::Base.transaction do
+      execute "DROP VIEW agent_timesheets_overview"
       execute "DROP VIEW agent_timesheets"
       execute "DROP VIEW agent_information"
       execute "DROP VIEW agent_timesheets_value"
-      execute "DROP VIEW agent_timesheets_overview"
       execute "DROP TRIGGER user_session_logs_end_date_trigger ON user_session_logs"
       execute "DROP FUNCTION set_user_session_logs_end_date()"
       execute "DROP LANGUAGE PLPGSQL"

@@ -1,10 +1,9 @@
 class AgentTimesheet::Overview
 
-  include AgentTimesheet
+  include AgentTimesheetCommon
 
-  def datasource
-    AgentTimesheet::View::OverviewView.show_weekends(@show_weekends).for_campaigns(@campaigns)
+  def results
+    @scoped.select("SUM(hours) as hours, SUM(results) as results, SUM(value) as value, week, dow, year").group("user_id, week, dow, year")
   end
-
 
 end
