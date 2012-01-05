@@ -178,6 +178,10 @@ describe Subscription do
       @customer.deal_maker?.should_not == @subscription_plan.deal_maker?
 
     end
+
+    it "should not be overriding the big buyer property if set for user by admin" do
+
+    end
   end
 
   context "subscription transitions" do

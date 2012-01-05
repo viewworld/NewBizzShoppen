@@ -896,7 +896,7 @@ class User < ActiveRecord::Base
   end
 
   def big_buyer?
-    active_subscription ? active_subscription.big_buyer? : parent ? parent.big_buyer? : false
+    active_subscription ? (read_attribute(:big_buyer) ? true : active_subscription.big_buyer?) : parent ? parent.big_buyer? : false
   end
 
   def team_buyers?
