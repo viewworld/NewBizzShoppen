@@ -74,6 +74,15 @@
                           <%= link_to t("member.leads.edit.view.voucher_link"), pdf_members_lead_path(@lead) %>
                         </div>
                       </li>
+
+                      <% unless @lead.deal.voucher_how_to_redeem.blank? %>
+                          <li class="string">
+                            <%= form.label t("member.leads.edit.view.voucher_how_to_redeem_label") %>
+                            <div class="txt">
+                              <%= @lead.deal.voucher_how_to_redeem.to_s.html_safe %>
+                            </div>
+                          </li>
+                      <% end %>
                   <% end %>
 
                   <% if params[:get_deal] == "1" %>

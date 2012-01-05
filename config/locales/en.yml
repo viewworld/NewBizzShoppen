@@ -2147,6 +2147,7 @@ en:
           voucher_link: "Download pdf"
           confirmation_page_label: "How to get Your deal?"
           deal_code_label: "Deal code"
+          voucher_how_to_redeem_label: "How to redeem?"
     lead_templates:
       index:
         view:

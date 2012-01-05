@@ -94,5 +94,8 @@ Feature: User Account - Profile edit
   Scenario: As category supplier I should not see Change account to normal supplier
 
   #9503
-  @m26 @requested
+  @m26 @requested @tgn @_done @_tested
   Scenario: The OK button on my profile should redirect to main page
+    When I go to my profile page
+    Then I press translated "password.edit.view.button_update_user"
+    And I should be on the homepage

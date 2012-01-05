@@ -42,5 +42,5 @@ Scenario: On deal request details page I should see Confirmation page field and 
 Scenario: On deal request details page I should see template forms aligned to right column - under Note field
 
 #9506
-@m26
+@m26 @tgn @_done @_tested_elsewhere
 Scenario: On deal request details page for deal with voucher enabled I should see How to reedem instructions
