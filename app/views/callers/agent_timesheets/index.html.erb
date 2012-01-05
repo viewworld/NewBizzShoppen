@@ -6,7 +6,11 @@
   </header>
 
   <% [:hours,:results,:value].each do |k| %>
-    <%= render(:partial => "overview_table", :locals => {:type => k, :overview => @overview, :results => @results}) %>
+    <%#= render :partial => "overview_table", :locals => {:type => k, :overview => @overview, :results => @overview.results} %>
+  <% end %>
+
+  <% @team_result_sheet.cweeks.each do |cweek| %>
+    <%#= render :partial => "team_result_sheet_table", :locals => {:cweek => cweek, :team_result_sheet => @team_result_sheet, :results => @team_result_sheet.results} %>
   <% end %>
 
 </column-mc:>

@@ -1,0 +1,14 @@
+<column-mc:>
+  <header>
+    <param:content>
+      <%= t("agent_timesheets.new.header") %>
+    </param:content>
+  </header>
+
+  <%= semantic_form_for @search, :url => callers_agent_timesheets_path do |f| %>
+    <h3><%= t("agent_timesheets.new.time_period") %></h3>
+    <%= f.input :start_date, :as => :datepicker %>
+    <%= f.input :end_date, :as => :datepicker %>
+    <%= f.commit_button %>
+  <% end %>
+</column-mc:>

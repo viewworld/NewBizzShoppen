@@ -1,5 +1,7 @@
 class AgentTimesheet < ActiveRecord::Base
 
+  belongs_to :user
+
   scope :show_weekends, lambda{|show| where(:dow => 0..4) unless show }
   scope :for_campaigns, lambda{|campaign| where(:campaign_id => campaign.map(&:to_i))}
   scope :for_agents, lambda{|users| where(:user_id => users.map(&:to_i))}

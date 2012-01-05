@@ -6,14 +6,19 @@ class Callers::AgentTimesheetsController < Callers::CallerController
   before_filter lambda {authorize_role(:call_centre, :admin, :call_centre_agent, :agent)}
 
   def index
-    super do |format|
-      format.html
+    unless params[:search]
+      @search = AgentTimesheet::Search.new
+      render :action => :new
+    else
+      super do |format|
+        format.html
+      end
     end
   end
 
   def collection
-    @overview = AgentTimesheet::Overview.new(:campaigns => Campaign.all.map(&:id), :agents => User::Agent.all.map(&:id))
-    @results = @overview.results
+    @overview = AgentTimesheet::Overview.new(:campaigns => Campaign.all.map(&:id), :agents => User::Agent.all)
+    @team_result_sheet = AgentTimesheet::TeamResultSheet.new(:campaigns => Campaign.all.map(&:id), :agents => User::Agent.all)
   end
 
 end

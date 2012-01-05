@@ -1,0 +1,84 @@
+  <table class="generic">
+    <thead>
+    <tr>
+      <td><%= t("agent_timesheets.index.week") %> <%= cweek.to_s %></td>
+      <% team_result_sheet.days_of_week.each do |dow| %>
+        <td colspan="3"><%= Date.commercial(2010,1,dow+1).strftime("%A") %></td>
+      <% end %>
+      <td colspan="3"><%= t("agent_timesheets.index.total") %></td>
+    </tr>
+    <tr>
+      <td></td>
+      <% team_result_sheet.days_of_week.each do %>
+        <td><%= t("agent_timesheets.index.team_result_sheet.time") %></td>
+        <td><%= t("agent_timesheets.index.team_result_sheet.results") %></td>
+        <td><%= t("agent_timesheets.index.team_result_sheet.value") %></td>
+      <% end %>
+      <td><%= t("agent_timesheets.index.team_result_sheet.time") %></td>
+      <td><%= t("agent_timesheets.index.team_result_sheet.results") %></td>
+      <td><%= t("agent_timesheets.index.team_result_sheet.value") %></td>
+    </tr>
+    </thead>
+    <tbody>
+    <% team_result_sheet.agents.each do |agent| %>
+      <tr>
+        <td><%= agent.screen_name %></td>
+        <% team_result_sheet.days_of_week.each do |dow| %>
+          <% if results[cweek.year] and results[cweek.year][cweek.cweek] and results[cweek.year][cweek.cweek][agent.id] and results[cweek.year][cweek.cweek][agent.id][dow] %>
+            <td class="val_h"><%= results[cweek.year][cweek.cweek][agent.id][dow].first.hours.to_f %></td>
+            <td class="val_r"><%= results[cweek.year][cweek.cweek][agent.id][dow].first.results.to_i %></td>
+            <td class="val_v"><%= results[cweek.year][cweek.cweek][agent.id][dow].first.value.to_f %></td>
+          <% else %>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+          <% end %>
+        <% end %>
+        <td class="total_h_h"></td>
+        <td class="total_h_r"></td>
+        <td class="total_h_v"></td>
+      </tr>
+    <% end %>
+    </tbody>
+    <tfoot>
+    <tr>
+    <td><%= t("agent_timesheets.index.total") %></td>
+    <% team_result_sheet.days_of_week.each do %>
+        <td class="total_v_h"></td>
+        <td class="total_v_r"></td>
+        <td class="total_v_v"></td>
+    <% end %>
+    <td class="total_v_h"></td>
+    <td class="total_v_r"></td>
+    <td class="total_v_v"></td>
+    </tr>
+    </tfoot>
+  </table>
+
+  <script type="text/javascript">
+    function sum_row(row, type) {
+        var sum = 0;
+        $(row).find("td.val_" + type).each(function() {
+          sum += Number($(this).html());
+        });
+        $(row).find("td.total_h_" + type).html(Math.round(sum*100)/100);
+    }
+
+    function sum_col(cell) {
+        var pos = $(cell).closest('td').prevAll().length;
+        var sum = 0;
+        $(cell).closest('table').find('tbody tr').find('td:eq(' + pos + ')').each(function() {
+            sum += Number($(this).html());
+        });
+        $(cell).html(Math.round(sum*100)/100);
+    }
+
+    $(document).ready(function(){
+        $('.total_h_h').each(function(){sum_row($(this).closest('tr'),'h')});
+        $('.total_h_r').each(function(){sum_row($(this).closest('tr'),'r')});
+        $('.total_h_v').each(function(){sum_row($(this).closest('tr'),'v')});
+        $('.total_v_h').each(function(){sum_col($(this))});
+        $('.total_v_r').each(function(){sum_col($(this))});
+        $('.total_v_v').each(function(){sum_col($(this))});
+    });
+  </script>

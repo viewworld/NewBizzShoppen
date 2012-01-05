@@ -3929,6 +3929,13 @@ en:
         hours_total: "Total hours"
         results_total: "Total results"
         value_total: "Total value"
+      team_result_sheet:
+        time: "Time"
+        results: "Results"
+        value: "Value"
+    new:
+      header: "Agent timesheets"
+      time_period: "Select time period"
   advanced_import:
     show:
       view:

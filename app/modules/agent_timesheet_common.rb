@@ -1,13 +1,13 @@
 module AgentTimesheetCommon
 
-  attr :scoped
+  attr_accessor :scoped, :agents
 
   DEFAULT_OPTIONS = {
       :show_weekends    => true,
       :start_date       => (Date.today-1.year).beginning_of_week,
       :end_date         => Date.today.end_of_week,
       :campaigns        => [],
-      :agents           => User::Agent.all.map(&:id),
+      :agents           => User::Agent.all,
       :call_centres     => [],
       :display_time     => true,
       :display_results  => true,

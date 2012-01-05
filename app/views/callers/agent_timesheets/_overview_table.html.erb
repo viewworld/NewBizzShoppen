@@ -15,25 +15,25 @@
         <% overview.days_of_week.each do |dow| %>
           <td class="val">
           <% if results[cweek.year] and results[cweek.year][cweek.cweek] and results[cweek.year][cweek.cweek][dow] %>
-            <%= as_currency(results[cweek.year][cweek.cweek][dow].first.send(type),nil,2) %>
+            <%= results[cweek.year][cweek.cweek][dow].first.send(type).to_f %>
           <% else %>
-            <%= as_currency(0,nil,2) %>
+            <%= 0 %>
           <% end %>
           </td>
         <% end %>
         <td class="total_h"></td>
       </tr>
     <% end %>
+    </tbody>
     <tfoot>
     <tr>
-      <td><%= t("agent_timesheets.index.total") %></td>
-      <% overview.days_of_week.each do |dow| %>
+    <td><%= t("agent_timesheets.index.total") %></td>
+    <% overview.days_of_week.each do |dow| %>
         <td class="total_v"></td>
-      <% end %>
-      <td class="total_v"></td>
+    <% end %>
+    <td class="total_v"></td>
     </tr>
     </tfoot>
-    </tbody>
   </table>
 
   <script type="text/javascript">
