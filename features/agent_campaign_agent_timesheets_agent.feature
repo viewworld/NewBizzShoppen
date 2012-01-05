@@ -1,4 +1,4 @@
-@m26 @requested
+@m26 @requested @agent_timesheets
 Feature: Agent timesheets - agent timesheet
 
   Scenario: I should see average value per hour

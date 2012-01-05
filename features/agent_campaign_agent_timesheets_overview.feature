@@ -1,4 +1,4 @@
-@m26 @requested
+@m26 @requested @agent_timesheets
 Feature: Agent timesheets - overview
 
   Scenario: I can see table with week days grouped by week number for hours

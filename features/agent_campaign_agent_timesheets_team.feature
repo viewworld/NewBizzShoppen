@@ -1,4 +1,4 @@
-@m26 @requested
+@m26 @requested @agent_timesheets
 Feature: Agent timesheets - team result sheet
 
   Scenario: I can see table for each week divided by agents and day of week
