@@ -3596,7 +3596,7 @@ en:
         title: "Title"
         time_zone: "Time zone"
         deal_maker_role_enabled: "Deal maker role enabled"
-        big_supplier: "Big supplier"
+        big_buyer: "Got credit"
       user/call_centre_agent:
         first_name: "First name"
         last_name: "Last name"
@@ -3668,7 +3668,7 @@ en:
         title: "Title"
         time_zone: "Time zone"
         show_deals: "Show deals"
-        big_supplier: "Big supplier"
+        big_buyer: "Got credit"
       country:
         name: "Country name"
       lead_template:

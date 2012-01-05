@@ -162,5 +162,6 @@ class IntegrationTasks < Thor
   desc "m26b", ""
   def m26b
      Translation.where(:key => "layout.fairdeals.main_menu.member.my_requests", :locale => "en").first.update_attribute(:value, "My deals")
+     Translation.where(:key => "formtastic.labels.subscription_plan.big_buyer", :locale => "en").first.update_attribute(:value, "Got credit enabled?")
   end
 end
