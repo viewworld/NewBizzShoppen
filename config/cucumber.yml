@@ -6,5 +6,5 @@ std_opts = "--format #{ENV['CUCUMBER_FORMAT'] || 'progress'} --strict --tags ~@w
 default: <%= std_opts %> features
 wip: --tags @wip:3 --wip features
 rerun: <%= rerun_opts %> --format rerun --out rerun.txt --strict --tags ~@wip
-teamcity: --tags @_done,@_qa,@_accepted,@_tested,@done --tags ~@selenium --tags ~@nontestable --tags ~@tested_elsewhere --tags ~@_to_fix -b
-javascript: --tags @selenium --tags @_done,@_qa,@_accepted,@_tested,@done --tags ~@nontestable  --tags ~@tested_elsewhere --tags ~@_to_fix --tags ~@m5b -b
+teamcity: --tags @_done,@_qa,@_accepted,@_tested,@done --tags ~@selenium --tags ~@nontestable --tags ~@tested_elsewhere --tags ~@_to_fix --tags ~@tc_file_mgmt -b
+javascript: --tags @selenium --tags @_done,@_qa,@_accepted,@_tested,@done --tags ~@nontestable  --tags ~@tested_elsewhere --tags ~@_to_fix --tags ~@m5b --tags ~@faircalls -b

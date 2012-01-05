@@ -9,7 +9,7 @@ Background: Set English locale and login
   Then I sign in as bob@person.com with password supersecret
   And I go to administration categories
 
-@added @selenium @_tested @_done
+@added @selenium @_tested @_done @tc_file_mgmt
 Scenario: I can create a category and add new lead templates to it which I can mark as mandatory or optional
   When I follow translated "administration.categories.index.view.new_category"
   And I fill in "category_name" with "Test category"

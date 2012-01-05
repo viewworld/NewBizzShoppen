@@ -319,3 +319,12 @@ Then /I can see call results from other campaign/ do
     Then I should not see "VAT OK" within "#call_results"
     Then I should not see "Bon Jovi INC." within "#call_results"}
 end
+
+When /^campaign "([^"]*)" (should|should not) have contact named "([^"]*)"$/ do |campaign_name, should_have, contact_company_name|
+  contact = Contact.where(:company_name => contact_company_name, :campaign_id => Campaign.where(:name => campaign_name).first.id).first
+  if should_have == "should"
+    contact.should_not be_nil
+  else
+    contact.should be_nil
+  end
+end

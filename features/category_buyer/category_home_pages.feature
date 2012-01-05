@@ -143,7 +143,7 @@ Feature: Category home pages
     And I follow translated "category_home.show.view.read_more_link" within "#latest_leads"
     Then I should be on the Best Lead lead page
 
-  @_done
+  @_done @tc_file_mgmt
   Scenario: There should be room for a category picture on the category home pages
     When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
     And I am on the home page

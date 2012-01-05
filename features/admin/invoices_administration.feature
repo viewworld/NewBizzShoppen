@@ -343,7 +343,7 @@ Scenario: I can filter invoices list by following parameters - creation range, p
   Then I should see "Ferdek Kiepski" within "#invoices"
   And I should not see "Janko Muzykant" within "#invoices"
 
-@ao @_done @_tested
+@ao @_done @_tested @tc_file_mgmt
 Scenario: I can download invoice as PDF file
   When invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "charge_vat:1"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
@@ -353,7 +353,7 @@ Scenario: I can download invoice as PDF file
   Then I should see "Cello Ltd"
   And I should see "122"
 
-@_done @ao @_tested
+@_done @ao @_tested @tc_file_mgmt
 Scenario: I can send invoice to given email address (as an attachment)
   When invoice exists for user "kastomer@nbs.fake" with role "supplier"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
@@ -442,7 +442,7 @@ Scenario: I should see amounts grouped by vat rate when vat is not paid in custo
   Then I should see translated "administration.invoices.show.view.vat_spec"
   And I should see "122" within ".totals"
 
-@added @m4b @_done
+@added @m4b @_done @tc_file_mgmt
 Scenario: We do not need to generate a copy of the invoice, just the orininal
   When invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "charge_vat:1"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"

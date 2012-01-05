@@ -539,6 +539,10 @@ en:
         successfully_removed: Contact has been successfully removed.
         successfully_deassigned: Contact has been successfully deassigned.
 
+    batch_move:
+      flash:
+        moved_successfully: "Selected contacts have been successfully moved to %{campaign}"
+        copied_successfully: "Selected contacts have been successfully copied to %{campaign}"
   call_results:
     table:
       date: Date

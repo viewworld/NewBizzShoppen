@@ -274,7 +274,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def filename
-    "invoice_#{number}_#{creation_date.year}_#{user.full_name.downcase.gsub(/[-&^%$@!~"'* ,.\/\\]/, '_')}"
+    "invoice_#{number}_#{creation_date.year}_#{user.full_name.downcase.gsub(/[-&^%$@!~"'()* ,.\/\\]/, '_')}"
   end
 
   def total(without_credited=false)

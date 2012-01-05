@@ -87,4 +87,12 @@ Feature: User Account - Profile edit
   Scenario: Only one Facebook/Google/Linkedin account can be connected to fairleads account
     
   @m12 @$_all @is
-  Scenario: I can see time zone for user    
+  Scenario: I can see time zone for user
+
+  #9509
+  @m26 @requested
+  Scenario: As category supplier I should not see Change account to normal supplier
+
+  #9503
+  @m26 @requested
+  Scenario: The OK button on my profile should redirect to main page

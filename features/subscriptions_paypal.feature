@@ -23,7 +23,7 @@ Feature: Subscriptions Paypal
   @_done @_tested_elsewhere @rspec
   Scenario: Unpaid invoice is generated when number of Paypal retries is exceeded
 
-  @_done @_tested
+  @_done @_tested @tc_file_mgmt
   Scenario: Invoice generated automatically for Paypal payment should by sent to user by email
     Given user with email "kastomer@nbs.fake" and password "secret" and role "supplier" exists with confirmed paypal subscription named "Paypal for supp" with attributes "subscription_period:3,billing_cycle:1"
     And the current subperiod for user "kastomer@nbs.fake" is auto paid by paypal
@@ -37,7 +37,7 @@ Feature: Subscriptions Paypal
     Then last email sent should have been sent to recipient "kastomer@nbs.fake"
     And last email sent should have subject "Paypal recurring payment cancelled. Reactivate it!"
 
-  @_done @_tested
+  @_done @_tested @tc_file_mgmt
   Scenario: When user cancels recurring billing in Paypal and billing date comes an unpaid invoice should be generated
     Given user with email "kastomer@nbs.fake" and password "secret" and role "supplier" exists with confirmed paypal subscription named "Paypal for supp" with attributes "subscription_period:1,billing_cycle:1"
     And active subscription for user "kastomer@nbs.fake" has been canceled in paypal

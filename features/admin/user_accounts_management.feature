@@ -947,3 +947,7 @@ Scenario: I can remove user's scheduled subscriptions
   And I press translated "administration.users.edit.view.change"
   Then I should see translated "flash.change_subscription.create.successful"
   And I should see "Active subscription: Basic for supplier"
+
+#9400
+@m26 @requested
+Scenario: I can mark supplier or category supplier as big buyer (new name Got credit) (overrides subscription properties)

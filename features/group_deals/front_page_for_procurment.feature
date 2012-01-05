@@ -355,3 +355,7 @@ Feature: Front page for procurment
   Scenario: I should not see articles listing on the front page
     Given I visit domain http://fairdeals.dk
     Then I should not see CSS path "div.news"
+
+  #9437
+  @m26 @requested
+  Scenario: On fairdeals.dk and fairdeals.eu the certificate should be removed

@@ -85,3 +85,15 @@ Feature: Purchase Manager signup
     And I fill in "lead_hidden_description" with "my specific needs are following etc"
     And I press translated "member.leads.new.view.button_create"
     And I press translated "member.leads.show.view.ok_confirmation"
+
+  #9532
+  @m26 @requested
+  Scenario: Remove screen name for member, use first name with company name
+
+  #9532
+  @m26 @requested
+  Scenario: On the signup page remove region select for DK language
+
+  #9532
+  @m26 @requested
+  Scenario: Remove timezone for DK language and set it to +1 CPH
