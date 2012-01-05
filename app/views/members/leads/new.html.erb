@@ -29,13 +29,13 @@
 
                 <p class="i expandable"><%= @deal.fine_print.to_s.html_safe %></p>
 
-                <% if @deal.logo %>
-                    <p><%= image_tag(@deal.logo.url) %></p>
-                <% end %>
-
-                <p><%= @deal.company_name %></p>
-
-                <p class="i expandable"><%= @deal.company_description.to_s.html_safe %></p>
+                <div class="company_frame">
+                    <% if @deal.logo %>
+                        <p class="company_frame_logo"><%= image_tag(@deal.logo.url) %></p>
+                    <% end %>
+                    <p class="company_frame_name"><%= @deal.company_name %></p>
+                    <%= @deal.company_description.to_s.html_safe %>
+                </div>
               </div>
             </div>
           </div>
