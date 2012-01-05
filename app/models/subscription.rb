@@ -72,7 +72,7 @@ class Subscription < ActiveRecord::Base
   end
 
   aasm_event :prolong do
-    transitions :from => [:normal, :lockup, :penalty, :cancelled, :non_cancelable], :to => :prolonged, :guard => :can_be_prolonged?
+    transitions :from => [:normal, :lockup, :penalty, :cancelled, :non_cancelable, :admin_changed], :to => :prolonged, :guard => :can_be_prolonged?
   end
 
   aasm_event :upgrade_from_penalty, :after => :perform_upgrade_from_penalty do
