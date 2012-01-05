@@ -136,7 +136,6 @@ Scenario: I can enable/disable email verification for procurement managers
     | user_member_last_name             | Lajoie          |
     | user_member_company_name          | Lajoie Inc      |
     | user_member_phone                 | 48928217272     |
-    | user_member_screen_name           | Normal Guy Verified      |
     | user_member_email                 | jon@lajoie.ca   |
     | user_member_password              | secret          |
     | user_member_password_confirmation | secret          |
@@ -160,7 +159,6 @@ Scenario: I can enable/disable email verification for procurement managers
     | user_member_last_name             | Lajoie          |
     | user_member_company_name          | Lajoie Inc      |
     | user_member_phone                 | 48928217272     |
-    | user_member_screen_name           | Normal Guy Non Verified      |
     | user_member_email                 | jon2@lajoie.ca   |
     | user_member_password              | secret          |
     | user_member_password_confirmation | secret          |

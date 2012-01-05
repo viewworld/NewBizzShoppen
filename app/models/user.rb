@@ -43,9 +43,11 @@ class User < ActiveRecord::Base
   # roles later, always append them at the end!
   roles :admin, :agent, :call_centre, :call_centre_agent, :supplier, :lead_supplier, :lead_user, :member, :category_supplier, :translator, :deal_maker
 
-  validates_presence_of :email, :screen_name
+  validates_presence_of :email
+  validates_presence_of :screen_name, :if => :validate_screen_name?
   validates_presence_of :first_name, :last_name, :if => :validate_first_and_last_name?
-  validates_uniqueness_of :email, :screen_name
+  validates_uniqueness_of :email
+  validates_uniqueness_of :screen_name, :if => :validate_screen_name?
   validate :payout_information_is_complete
 
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
@@ -157,6 +159,10 @@ class User < ActiveRecord::Base
   end
 
   def validate_first_and_last_name?
+    true
+  end
+
+  def validate_screen_name?
     true
   end
 
@@ -915,5 +921,13 @@ class User < ActiveRecord::Base
     has_one_of_roles?(:agent, :admin, :call_centre_agent, :call_centre) or
         (supplier? and !active_subscription.is_free? and (!active_subscription.is_today_in_free_period? or
             (active_subscription.is_today_in_free_period? and active_subscription.free_deals_in_free_period.to_i > 0)) )
+  end
+
+  def screen_name
+    if member?
+      "#{first_name}, #{company_name}"
+    else
+      read_attribute(:screen_name)
+    end
   end
 end

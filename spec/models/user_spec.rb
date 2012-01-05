@@ -3,6 +3,17 @@ require 'spec_helper'
 describe User do
   fixtures :all
 
+  context "Initialization and validations" do
+    it "should have screen name required except when member" do
+      User::Member.create.errors[:screen_name].should be_empty
+      User::Supplier.create.errors[:screen_name].should_not be_empty
+    end
+
+    it "should have screen_name composed of last name and company when member" do
+      User::Member.make!(:first_name => "Cenk", :company_name => "The Young Turks").screen_name.should == "Cenk, The Young Turks"
+      User::Supplier.make!(:screen_name => "Velvet revolver").screen_name.should == "Velvet revolver"
+    end
+  end
 
   context "Bought / Requested leads related methods" do
 

@@ -186,7 +186,6 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
-  screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
   agreement_read { true }
