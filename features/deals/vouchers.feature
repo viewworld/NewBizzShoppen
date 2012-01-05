@@ -88,7 +88,7 @@ Feature: Vouchers
     Then user "agent@nbs.com" has deal maker role enabled
     Then I enable voucher with role "agent"
 
-  @selenium @_done @_tested
+  @selenium @_done @_tested @faircalls
   Scenario: Call center with deal maker role can enable voucher for deal
     And I visit domain http://faircalls.eu
     And I sign in as translator_call_centre@nbs.com with password secret
@@ -98,7 +98,7 @@ Feature: Vouchers
     Then user "translator_call_centre@nbs.com" has deal maker role enabled
     Then I enable voucher with role "call_centre"
 
-  @selenium @_done @_tested
+  @selenium @_done @_tested @faircalls
   Scenario: Call center agent with deal maker role can enable voucher for deal
     And I visit domain http://faircalls.eu
     And I sign in as translator_call_centre_agent@nbs.com with password secret
