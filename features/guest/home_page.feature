@@ -75,5 +75,10 @@ Feature: Home page
     And I follow "Faircalls Terms & Conditions"
 
   #9564
-  @m26 @requested
+  @m26 @requested @tgn @_done @_tested
   Scenario: I should not see Browse leads from fairleads.com when I'm not logged in
+    Given I am on the homepage
+    And I am not sign in
+    Then I should not see translated "layout.main_menu.shared.browse_leads"
+    When I sign in as translator_customer@nbs.com with password secret
+    Then I should see translated "layout.main_menu.shared.browse_leads"

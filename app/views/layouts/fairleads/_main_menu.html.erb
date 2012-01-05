@@ -4,7 +4,7 @@
       <% if @home_category %>
           <%= main_menu_link_to(t("layout.main_menu.shared.browse_leads"), category_home_page_leads_path(@home_category.cached_slug), :tab => "browse_leads") unless @auto_buy_category %>
       <% else %>
-          <% unless user_signed_in? and current_user.has_role?(:member) %>
+          <% if user_signed_in? %>
             <%= main_menu_link_to t("layout.main_menu.shared.browse_leads"), categories_path, :tab => "browse_leads" %>
           <% end %>
       <% end %>
