@@ -93,13 +93,14 @@
             </div>
           </div>
           <%= hidden_field_tag :get_deal, params[:get_deal] %>
+          <div class="column_left">
+              <% unless params[:get_deal] == "1" %>
+                  <%= render :partial => "form1", :locals => {:form => form} %>
+              <% end %>
 
-          <% unless params[:get_deal] == "1" %>
-              <%= render :partial => "form1", :locals => {:form => form} %>
-          <% end %>
-
-
-          <%= render :partial => "form2", :locals => {:form => form} %>
+              <%= render :partial => "form2", :locals => {:form => form} %>
+          </div>
+          <clb/>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
