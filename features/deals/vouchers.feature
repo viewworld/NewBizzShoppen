@@ -8,7 +8,7 @@ Feature: Vouchers
   Scenario: When voucher is enabled for deal then 'get deal' request redirect to deal information request page, after click on "ok" user is redirected to paypal for payment
     And I visit domain http://fairdeals.eu
     And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
-    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL|voucher_enabled:true|voucher_until_type:1|deal_price:2|discounted_price:1|voucher_max_number:3"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL|voucher_enabled:true|voucher_until_type:1|deal_price:2|discounted_price:1|voucher_max_number:3|voucher_how_to_redeem:you can redeem it by calling me"
     Then voucher number with index "0" for deal "software components" has number "000000001" and state "new"
     And I am signed up and confirmed as user with email translator_purchase_manager@nbs.com and password supersecret and role member
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10,billing_cycle:10"
@@ -30,6 +30,7 @@ Feature: Vouchers
     And I visit domain http://fairdeals.eu
     Then I follow translated "layout.fairdeals.main_menu.member.my_requests"
     And I click hidden link by url regex "/members\/requests\/\d+\/edit/"
+  And I should see "you can redeem it by calling me"
     Then I should see translated "member.leads.edit.view.voucher_label"
     Then I follow translated "member.leads.edit.view.voucher_link"
 
