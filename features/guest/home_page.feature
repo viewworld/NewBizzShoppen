@@ -73,3 +73,7 @@ Feature: Home page
     And I follow "Fairdeals Terms & Conditions"
     Given I visit domain http://faircalls.eu
     And I follow "Faircalls Terms & Conditions"
+
+  #9564
+  @m26 @requested
+  Scenario: I should not see Browse leads from fairleads.com when I'm not logged in
