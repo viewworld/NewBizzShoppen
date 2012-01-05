@@ -82,7 +82,7 @@ en:
         tenders: "Tenders"
         search: "Search"
         member:
-          my_requests: "My requests"
+          my_requests: "My deals"
     main_menu:
       admin:
         users: "Users"
@@ -2145,6 +2145,8 @@ en:
           view_description_link: "See description..."
           voucher_label: "Voucher"
           voucher_link: "Download pdf"
+          confirmation_page_label: "How to get Your deal?"
+          deal_code_label: "Deal code"
     lead_templates:
       index:
         view:

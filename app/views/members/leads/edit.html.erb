@@ -1,6 +1,6 @@
 <column-mc:>
   <%= javascript_include_tag 'lead_template_functions.js' %>
-  <header back="true"><%= t("member.leads.edit.view.title", :name => @lead.header) %><%= image_tag_for_locale %></header>
+  <header back="true"><%= @lead.deal.header %><%= image_tag_for_locale %></header>
   <%= semantic_form_for [:members, @lead], :method => :put do |form| %>
       <frm title="Edit">
         <param:content>
@@ -8,6 +8,16 @@
             <div class="pdd_10 no_pdd_t">
               <fieldset class="inputs labels_ta_r labels_160">
                 <ol class="align_inputs">
+                  <% unless @lead.deal.deal_confirmation_page.blank?  %>
+                  <li class="string">
+                    <%= form.label t("member.leads.edit.view.confirmation_page_label") %>
+                    <div class="txt"><%= @lead.deal.deal_confirmation_page.to_s.html_safe %></div>
+                  </li>
+                  <% end %>
+                  <li class="string">
+                    <%= form.label t("member.leads.edit.view.deal_code_label") %>
+                    <div class="txt"><%= @lead.deal.deal_code_is_url? ? link_to(@lead.deal.deal_code, @lead.deal.deal_code_as_url) : @lead.deal.deal_code %></div>
+                  </li>
                   <li class="string">
                     <%= form.label t("member.leads.edit.view.company_name_label") %>
                     <div class="txt"><strong><%= @lead.deal.company_name %></strong></div>

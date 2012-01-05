@@ -158,4 +158,9 @@ class IntegrationTasks < Thor
       spl.save
     end
   end
+
+  desc "m26b", ""
+  def m26b
+     Translation.where(:key => "layout.fairdeals.main_menu.member.my_requests", :locale => "en").first.update_attribute(:value, "My deals")
+  end
 end
