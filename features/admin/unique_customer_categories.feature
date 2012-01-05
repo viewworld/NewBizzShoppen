@@ -10,7 +10,7 @@ Background:
   Then I sign in as bob@person.com with password supersecret
   And I go to browse leads
 
-@_tested @_done
+@_tested @_done @tc_file_mgmt
 Scenario: I can mark category as customer unique
   When I follow translated "administration.categories.index.view.edit_link"
   And I check "category_is_customer_unique"

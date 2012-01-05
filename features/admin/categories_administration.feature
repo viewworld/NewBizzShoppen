@@ -1,4 +1,4 @@
-@lead_catalog @$_admin @m1
+@lead_catalog @$_admin @m1 @tc_file_mgmt
 Feature: Categories administration
   Background: Set English locale and login
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin

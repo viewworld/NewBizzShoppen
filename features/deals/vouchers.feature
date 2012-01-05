@@ -4,7 +4,7 @@ Feature: Vouchers
   Background:
   Given I am on the homepage
 
-  @_done @_tested
+  @_done @_tested @tc_file_mgmt
   Scenario: When voucher is enabled for deal then 'get deal' request redirect to deal information request page, after click on "ok" user is redirected to paypal for payment
     And I visit domain http://fairdeals.eu
     And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
@@ -111,7 +111,7 @@ Feature: Vouchers
   @_done @_tested_elsewhere
   Scenario: When deal has enabled voucher then admin/agent can edit how_to_redeem and valid_until (fix date or number of weeks from procurement date) and number of vouchers
 
-  @_done @_tested
+  @_done @_tested @tc_file_mgmt
   Scenario: When deal has enabled voucher then admin/agent can edit heading picture
     Then I add picture for voucher with role "admin"
     Then I add picture for voucher with role "agent"

@@ -42,7 +42,7 @@ Feature: Invoices administration as customer
     When I follow translated "supplier.invoices.index.view.show_invoice"
     Then I should not see CSS path "div.status_data"
 
-  @_done
+  @_done @tc_file_mgmt
   Scenario: I can download invoice as PDF file
     When I follow translated "supplier.invoices.index.view.show_invoice"
     And I follow translated PDF link "supplier.invoices.show.view.download_pdf"
