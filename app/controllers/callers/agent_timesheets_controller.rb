@@ -17,8 +17,7 @@ class Callers::AgentTimesheetsController < Callers::CallerController
   end
 
   def collection
-    @overview = AgentTimesheet::Overview.new(:campaigns => Campaign.all.map(&:id), :agents => User::Agent.all)
-    @team_result_sheet = AgentTimesheet::TeamResultSheet.new(:campaigns => Campaign.all.map(&:id), :agents => User::Agent.all)
+    @timesheet = ::AgentTimesheet::General.new(params[:search])
   end
 
 end

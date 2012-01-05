@@ -3927,6 +3927,7 @@ en:
       week: "Week"
       total: "Total"
       overview:
+        header: "Overview"
         hours_header: "Hours"
         results_header: "Results"
         value_header: "Value"
@@ -3934,12 +3935,18 @@ en:
         results_total: "Total results"
         value_total: "Total value"
       team_result_sheet:
+        header: "Team result sheet"
         time: "Time"
         results: "Results"
         value: "Value"
     new:
       header: "Agent timesheets"
       time_period: "Select time period"
+      select_camapigns: "Select campaigns"
+      select_team: "Select team"
+      display: "Display"
+      generate: "Generate"
+      report_type: "Report type"
   advanced_import:
     show:
       view:
