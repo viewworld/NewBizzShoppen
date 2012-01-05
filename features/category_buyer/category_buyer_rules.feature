@@ -258,3 +258,15 @@ Feature: Category buyer rules
     Then I should not see "Kradziez" within "table.categories_table"
     And I should not see "WymuszeniePierwszenstwa" within "table.categories_table"
 
+  #9513
+  @m26 @requested
+  Scenario: I can see My deals tab only when I have deal maker role or I was marked by admin as Show my deals
+
+  #9513
+  @m26 @requested
+  Scenario: I can see Browse deals only when I was marked by admin as Show all deals
+
+  #9512
+  @m26 @requested
+  Scenario: I can be marked by admin as Auto buy enabled and then all my categories become auto buy by default if possible (Then I don't see Browse leads)
+
