@@ -6,6 +6,7 @@ Background:
   And I make sure current locale is "en"
   And Category named "Sample category" already exists
   And Category named "Another sample category" already exists within category named "Sample category"
+  And I sign in as buyer@nbs.com with password secret
   And I follow translated "layout.main_menu.shared.browse_leads"
 
 @_tested @bk @_done
@@ -115,34 +116,35 @@ Scenario: If I successfully login after requesting a lead being added to a cart,
 Scenario: When I browse a lead category, the lead category should be displayed very clear beside the "Leads flag" on the upper left side of the screen
   When I follow category "Sample category"
   Then I should see "Leads for Sample category"
-  
-@m5 @added @tgn @_tested @_done
+
+#Browse leads available after login
+@m5 @added @tgn @_tested @_done @_deprecated
 Scenario: I should be able to click "Add to cart button" that will redirect me to login page where I can create new account
-  Given lead Great marketing deal exists within category VariousLeads
-  And I go to browse leads
-  And I follow category "VariousLeads"
-  Then I click hidden translated link "leads.index.add_to_cart_link"
-  And I follow translated "supplier_home.show.view.create_new_supplier_account"
-  Then I fill in "user_supplier_first_name" with "John"
-  And I fill in "user_supplier_last_name" with "Doe"
-  And I fill in "user_supplier_company_name" with "Doe Ltd"
-  And I fill in "user_supplier_phone" with "31242342424234"
-  And I fill in "user_supplier_email" with "johndoecustomer@person.com"
-  And I fill in "user_supplier_screen_name" with "John D."
-  And I fill in "user_supplier_password" with "secret"
-  And I fill in "user_supplier_password_confirmation" with "secret"
-  And I fill in "user_supplier_address_attributes_address_line_1" with "Ferterds"
-  And I fill in "user_supplier_address_attributes_address_line_2" with "Boston"
-  And I fill in "user_supplier_address_attributes_address_line_3" with "Boston"
-  And I fill in "user_supplier_address_attributes_zip_code" with "12421S"
-  And I choose "user_supplier_subscription_plan_id"
-  And I select "Denmark" from "user_supplier_address_attributes_country_id"
-  And I check "user_supplier_agreement_read"
-  And I press translated "supplier_accounts.new.view.button_create_account"
-  And user "johndoecustomer@person.com" with role "supplier" is confirmed
-  And I sign in as johndoecustomer@person.com with password secret
-  And I click hidden translated link "layout.cart.show_cart"
-  Then I should see "Great marketing deal"
+#  Given lead Great marketing deal exists within category VariousLeads
+#  And I go to browse leads
+#  And I follow category "VariousLeads"
+#  Then I click hidden translated link "leads.index.add_to_cart_link"
+#  And I follow translated "supplier_home.show.view.create_new_supplier_account"
+#  Then I fill in "user_category_supplier_first_name" with "John"
+#  And I fill in "user_category_supplier_last_name" with "Doe"
+#  And I fill in "user_category_supplier_company_name" with "Doe Ltd"
+#  And I fill in "user_category_supplier_phone" with "31242342424234"
+#  And I fill in "user_category_supplier_email" with "johndoecustomer@person.com"
+#  And I fill in "user_category_supplier_screen_name" with "John D."
+#  And I fill in "user_category_supplier_password" with "secret"
+#  And I fill in "user_category_supplier_password_confirmation" with "secret"
+#  And I fill in "user_category_supplier_address_attributes_address_line_1" with "Ferterds"
+#  And I fill in "user_category_supplier_address_attributes_address_line_2" with "Boston"
+#  And I fill in "user_category_supplier_address_attributes_address_line_3" with "Boston"
+#  And I fill in "user_category_supplier_address_attributes_zip_code" with "12421S"
+#  And I choose "user_category_supplier_subscription_plan_id"
+#  And I select "Denmark" from "user_category_supplier_address_attributes_country_id"
+#  And I check "user_category_supplier_agreement_read"
+#  And I press translated "supplier_accounts.new.view.button_create_account"
+#  And user "johndoecustomer@person.com" with role "supplier" is confirmed
+#  And I sign in as johndoecustomer@person.com with password secret
+#  And I click hidden translated link "layout.cart.show_cart"
+#  Then I should see "Great marketing deal"
 
 @m5 @tgn @_tested @_done
 Scenario: If I successfully login after requesting a lead being added to a cart, that lead should be added to cart (or bought if I am big buyer)

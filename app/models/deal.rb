@@ -45,7 +45,7 @@ class Deal < AbstractLead
 
   validate :deal_admin_presence, :unless => Proc.new { |d| d.new_record? }
 
-  before_create :create_uniq_deal_category, :set_default_max_auto_buy
+  before_create :assign_uniq_deal_category, :set_default_max_auto_buy
   after_create :certify_for_unknown_email, :assign_deal_admin, :set_deal_unique_id
   before_save :set_dates, :check_deal_request_details_email_template, :set_enabled_from, :handle_max_auto_buy
   after_save :set_voucher_numbers
@@ -167,7 +167,7 @@ class Deal < AbstractLead
   end
 
   def supplier
-    creator.supplier? ? creator : User::Supplier.where(:email => email_address).first
+    creator.supplier? ? creator.with_role : User::Supplier.where(:email => email_address).first
   end
 
   def has_unread_comments_for_user?(user)
@@ -327,22 +327,12 @@ class Deal < AbstractLead
     update_attribute(:creator_name, creator.full_name) unless creator_name
   end
 
-  def create_uniq_deal_category
+  def assign_uniq_deal_category
     if (supplier and creator.supplier?) or ActiveRecord::ConnectionAdapters::Column.value_to_boolean(use_company_name_as_category)
       if supplier
-        lead_category = supplier.deal_category_id ? LeadCategory.find(supplier.deal_category_id) : LeadCategory.create(:name => supplier.company_name, :currency => Currency.default_currency)
-      else
-        lead_category = LeadCategory.create(:name => company_name, :currency => Currency.default_currency)
+        supplier.send(:create_or_update_company_unique_category)
       end
-
-      supplier.update_attribute(:deal_category_id, lead_category.id) if supplier and supplier.deal_category_id.blank?
-      lead_category.update_attribute(:is_customer_unique, true) unless lead_category.is_customer_unique
-      if supplier and !lead_category.customers.map(&:id).include?(supplier.id)
-        lead_category.customers << User.find(supplier.id)
-        lead_category.save
-      end
-      lead_category.update_attribute(:auto_buy, true) if !lead_category.auto_buy? and supplier and supplier.big_buyer?
-      self.lead_category_id = lead_category.id
+      self.lead_category_id = supplier.deal_category_id
     end
   end
 

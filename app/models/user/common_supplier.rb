@@ -4,7 +4,8 @@ module User::CommonSupplier
       has_many :category_customers, :foreign_key => "user_id"
       has_many :unique_categories, :through => :category_customers, :foreign_key => "user_id", :source => :category
       after_save :handle_auto_buy
-      after_create :create_company_unique_category
+      before_save :create_or_update_company_unique_category
+      after_create :add_supplier_to_category_unique_customers
     end
     base.send(:include, InstanceMethods)
   end
@@ -25,8 +26,31 @@ module User::CommonSupplier
       end
     end
 
-    def create_company_unique_category
+    def create_or_update_company_unique_category
+      unless parent
+        if company_unique_category.nil?
+          uniq_category = LeadCategory.where(:name => company_name).first || LeadCategory.create(:name => company_name, :currency => Currency.default_currency, :buyout_enabled => false)
+          self.company_unique_category = uniq_category
+        elsif company_name_changed?
+          company_unique_category.update_attribute(:name, company_name)
+        end
+        company_unique_category.update_attribute(:is_customer_unique, true) unless company_unique_category.is_customer_unique
 
+        add_supplier_to_category_unique_customers
+
+        if (has_role?(:category_supplier) or is_a?(User::CategorySupplier)) and !big_buyer?
+          self.big_buyer = true
+        end
+
+        company_unique_category.update_attribute(:auto_buy, true) if big_buyer? and !company_unique_category.auto_buy?
+      end
+      true
+    end
+
+    def add_supplier_to_category_unique_customers
+      if company_unique_category and !new_record? and !company_unique_category.customer_ids.include?(self.id)
+        CategoryCustomer.create(:user => self, :category => company_unique_category)
+      end
     end
 
     public

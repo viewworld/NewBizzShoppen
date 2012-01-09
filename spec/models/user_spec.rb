@@ -13,6 +13,18 @@ describe User do
       User::Member.make!(:first_name => "Cenk", :company_name => "The Young Turks").screen_name.should == "Cenk, The Young Turks"
       User::Supplier.make!(:screen_name => "Velvet revolver").screen_name.should == "Velvet revolver"
     end
+
+    it "should be created with unique company category when role is supplier" do
+      @supplier = User::Supplier.make!(:company_name => "TestCompany 77")
+      @supplier.company_unique_category.name.should == "TestCompany 77"
+      @supplier.company_unique_category.should_not be_auto_buy
+      @supplier.company_unique_category.customers.should include(User.find(@supplier.id))
+
+      @supplier = User::CategorySupplier.make!(:company_name => "TestCompany 88")
+      @supplier.company_unique_category.name.should == "TestCompany 88"
+      @supplier.company_unique_category.should be_auto_buy
+      @supplier.company_unique_category.customers.should include(User.find(@supplier.id))
+    end
   end
 
   context "Bought / Requested leads related methods" do

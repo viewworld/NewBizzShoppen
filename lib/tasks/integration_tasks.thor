@@ -161,7 +161,13 @@ class IntegrationTasks < Thor
 
   desc "m26b", ""
   def m26b
-     Translation.where(:key => "layout.fairdeals.main_menu.member.my_requests", :locale => "en").first.update_attribute(:value, "My deals")
-     Translation.where(:key => "formtastic.labels.subscription_plan.big_buyer", :locale => "en").first.update_attribute(:value, "Got credit enabled?")
+    Translation.where(:key => "layout.fairdeals.main_menu.member.my_requests", :locale => "en").first.update_attribute(:value, "My deals")
+    Translation.where(:key => "formtastic.labels.subscription_plan.big_buyer", :locale => "en").first.update_attribute(:value, "Got credit enabled?")
+    Translation.where(:key => "supplier_home.show.view.create_new_supplier_account", :locale => "en").first.update_attribute(:value, "Create new category supplier account")
+    Translation.where(:key => "supplier_accounts.new.view.title", :locale => "en").first.update_attribute(:value, "Category supplier signup")
+
+    User::Supplier.all.each do |user|
+      user.with_role.save
+    end
   end
 end

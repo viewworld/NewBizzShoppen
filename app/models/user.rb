@@ -72,6 +72,7 @@ class User < ActiveRecord::Base
   has_many :email_bounces, :class_name => "ArchivedEmail", :foreign_key => :to, :primary_key => :email, :conditions => "status = #{ArchivedEmail::BOUNCED}"
   has_many :subscriptions
   has_many :subscription_plans, :through => :subscriptions
+  belongs_to :company_unique_category, :class_name => "LeadCategory", :foreign_key => "deal_category_id"
 
   alias_method :parent, :user
 

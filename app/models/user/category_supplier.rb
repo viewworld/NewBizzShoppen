@@ -59,7 +59,7 @@ class ::User::CategorySupplier < ::User
   end
 
   def parent_buying_categories
-    parent ? parent.with_role.buying_categories : buying_categories
+    parent ? [company_unique_category].compact + parent.with_role.buying_categories : [company_unique_category].compact + buying_categories
   end
 
   def buying_categories_with_descendants
