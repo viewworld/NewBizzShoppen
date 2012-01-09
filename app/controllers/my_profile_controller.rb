@@ -22,7 +22,7 @@ class MyProfileController < SecuredController
           @user.deliver_welcome_email_for_upgraded_contact
           session[:user_confirmed_account_info] = "1"
         end
-        redirect_to @user.has_role?(:category_supplier) ? category_home_page_path(:slug => @user.buying_categories.first.cached_slug) : @user.has_role?(:supplier) ? supplier_home_path : purchase_manager_home_path
+        redirect_to @user.has_role?(:category_supplier) ? category_home_page_path(:slug => @user.buying_categories.first.cached_slug) : @user.has_role?(:supplier) ? supplier_home_path : root_path
       else
         redirect_to my_profile_path
       end
