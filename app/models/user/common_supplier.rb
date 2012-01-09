@@ -4,6 +4,7 @@ module User::CommonSupplier
       has_many :category_customers, :foreign_key => "user_id"
       has_many :unique_categories, :through => :category_customers, :foreign_key => "user_id", :source => :category
       after_save :handle_auto_buy
+      after_create :create_company_unique_category
     end
     base.send(:include, InstanceMethods)
   end
@@ -22,6 +23,10 @@ module User::CommonSupplier
           category.update_attribute(:auto_buy, false)
         end
       end
+    end
+
+    def create_company_unique_category
+
     end
 
     public
