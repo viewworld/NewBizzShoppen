@@ -37,25 +37,4 @@
   </table>
 
   <script type="text/javascript">
-    function sum_row(row) {
-        var sum = 0;
-        $(row).find("td.val").each(function() {
-          sum += Number($(this).html());
-        });
-        $(row).find("td.total_h").html(Math.round(sum*100)/100);
-    }
-
-    function sum_col(cell) {
-        var pos = $(cell).closest('td').prevAll().length;
-        var sum = 0;
-        $(cell).closest('table').find('tbody tr').find('td:eq(' + pos + ')').each(function() {
-            sum += Number($(this).html());
-        });
-        $(cell).html(Math.round(sum*100)/100);
-    }
-
-    $(document).ready(function(){
-        $('.total_h').each(function(){sum_row($(this).closest('tr'))});
-        $('.total_v').each(function(){sum_col($(this))});
-    });
   </script>

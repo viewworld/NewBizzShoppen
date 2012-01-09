@@ -138,32 +138,11 @@ class CreateAgentTimesheetsTimeView < ActiveRecord::Migration
         HAVING
           SUM(user_session_logs.hours_count) > 0
       }
-      execute %{
-        CREATE VIEW agent_timesheets_overview AS
-        SELECT
-          agent_timesheets.date,
-          agent_timesheets.year,
-          agent_timesheets.dow,
-          agent_timesheets.week,
-          agent_timesheets.campaign_id,
-          SUM(agent_timesheets.hours) as hours,
-          SUM(agent_timesheets.results) as results,
-          SUM(agent_timesheets.value) as value
-        FROM
-          agent_timesheets
-        GROUP BY
-          agent_timesheets.date,
-          agent_timesheets.year,
-          agent_timesheets.dow,
-          agent_timesheets.week,
-          agent_timesheets.campaign_id
-      }
     end
   end
 
   def self.down
     ActiveRecord::Base.transaction do
-      execute "DROP VIEW agent_timesheets_overview"
       execute "DROP VIEW agent_timesheets"
       execute "DROP VIEW agent_information"
       execute "DROP VIEW agent_timesheets_value"

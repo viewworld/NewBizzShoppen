@@ -29,8 +29,40 @@
   </div>
 
   <script type="text/javascript">
+    function sum_row(row, type) {
+        var sum = 0;
+        if (type == undefined) {
+            type = ""
+        } else {
+            type = "_" + type
+        }
+        $(row).find("td.val" + type).each(function() {
+          sum += Number($(this).html());
+        });
+        $(row).find("td.total_h" + type).html(Math.round(sum*100)/100);
+    }
+
+    function sum_col(cell) {
+        var pos = $(cell).closest('td').prevAll().length;
+        var sum = 0;
+        $(cell).closest('table').find('tbody tr').find('td:eq(' + pos + ')').each(function() {
+            sum += Number($(this).html());
+        });
+        $(cell).html(Math.round(sum*100)/100);
+    }
+
     $(document).ready(function(){
-      $("#tabs").tabs();
+        $("#tabs").tabs();
+        // overview
+        $('.total_h').each(function(){sum_row($(this).closest('tr'))});
+        $('.total_v').each(function(){sum_col($(this))});
+        // team result sheet
+        $('.total_h_h').each(function(){sum_row($(this).closest('tr'),'h')});
+        $('.total_h_r').each(function(){sum_row($(this).closest('tr'),'r')});
+        $('.total_h_v').each(function(){sum_row($(this).closest('tr'),'v')});
+        $('.total_v_h').each(function(){sum_col($(this))});
+        $('.total_v_r').each(function(){sum_col($(this))});
+        $('.total_v_v').each(function(){sum_col($(this))});
     });
   </script>
 </column-mc:>
