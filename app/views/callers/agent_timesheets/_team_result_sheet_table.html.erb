@@ -3,20 +3,32 @@
     <tr>
       <td><%= t("agent_timesheets.index.week") %> <%= cweek.to_s %></td>
       <% team_result_sheet.days_of_week.each do |dow| %>
-        <td colspan="3"><%= Date.commercial(2010,1,dow+1).strftime("%A") %></td>
+        <td colspan="<%= team_result_sheet.colspan %>"><%= Date.commercial(2010,1,dow+1).strftime("%A") %></td>
       <% end %>
-      <td colspan="3"><%= t("agent_timesheets.index.total") %></td>
+      <td colspan="<%= team_result_sheet.colspan %>"><%= t("agent_timesheets.index.total") %></td>
     </tr>
     <tr>
       <td></td>
       <% team_result_sheet.days_of_week.each do %>
+        <% if team_result_sheet.display_hours %>
+          <td><%= t("agent_timesheets.index.team_result_sheet.time") %></td>
+        <% end %>
+        <% if team_result_sheet.display_results %>
+          <td><%= t("agent_timesheets.index.team_result_sheet.results") %></td>
+        <% end %>
+        <% if team_result_sheet.display_value %>
+          <td><%= t("agent_timesheets.index.team_result_sheet.value") %></td>
+        <% end %>
+      <% end %>
+      <% if team_result_sheet.display_hours %>
         <td><%= t("agent_timesheets.index.team_result_sheet.time") %></td>
+      <% end %>
+      <% if team_result_sheet.display_results %>
         <td><%= t("agent_timesheets.index.team_result_sheet.results") %></td>
+      <% end %>
+      <% if team_result_sheet.display_value %>
         <td><%= t("agent_timesheets.index.team_result_sheet.value") %></td>
       <% end %>
-      <td><%= t("agent_timesheets.index.team_result_sheet.time") %></td>
-      <td><%= t("agent_timesheets.index.team_result_sheet.results") %></td>
-      <td><%= t("agent_timesheets.index.team_result_sheet.value") %></td>
     </tr>
     </thead>
     <tbody>
@@ -25,18 +37,36 @@
         <td><%= agent.screen_name %></td>
         <% team_result_sheet.days_of_week.each do |dow| %>
           <% if results[cweek.year] and results[cweek.year][cweek.cweek] and results[cweek.year][cweek.cweek][agent.id] and results[cweek.year][cweek.cweek][agent.id][dow] %>
-            <td class="val_h"><%= results[cweek.year][cweek.cweek][agent.id][dow].first.hours.to_f %></td>
-            <td class="val_r"><%= results[cweek.year][cweek.cweek][agent.id][dow].first.results.to_i %></td>
-            <td class="val_v"><%= results[cweek.year][cweek.cweek][agent.id][dow].first.value.to_f %></td>
+            <% if team_result_sheet.display_hours %>
+              <td class="val_h"><%= results[cweek.year][cweek.cweek][agent.id][dow].first.hours.to_f %></td>
+            <% end %>
+            <% if team_result_sheet.display_results %>
+              <td class="val_r"><%= results[cweek.year][cweek.cweek][agent.id][dow].first.results.to_i %></td>
+            <% end %>
+            <% if team_result_sheet.display_value %>
+              <td class="val_v"><%= results[cweek.year][cweek.cweek][agent.id][dow].first.value.to_f %></td>
+            <% end %>
           <% else %>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
+            <% if team_result_sheet.display_hours %>
+              <td>0</td>
+            <% end %>
+            <% if team_result_sheet.display_results %>
+              <td>0</td>
+            <% end %>
+            <% if team_result_sheet.display_value %>
+              <td>0</td>
+            <% end %>
           <% end %>
         <% end %>
-        <td class="total_h_h"></td>
-        <td class="total_h_r"></td>
+        <% if team_result_sheet.display_hours %>
+          <td class="total_h_h"></td>
+        <% end %>
+        <% if team_result_sheet.display_results %>
+          <td class="total_h_r"></td>
+        <% end %>
+        <% if team_result_sheet.display_value %>
         <td class="total_h_v"></td>
+        <% end %>
       </tr>
     <% end %>
     </tbody>
@@ -44,13 +74,25 @@
     <tr>
     <td><%= t("agent_timesheets.index.total") %></td>
     <% team_result_sheet.days_of_week.each do %>
+      <% if team_result_sheet.display_hours %>
         <td class="total_v_h"></td>
+      <% end %>
+      <% if team_result_sheet.display_results %>
         <td class="total_v_r"></td>
+      <% end %>
+      <% if team_result_sheet.display_value %>
         <td class="total_v_v"></td>
+      <% end %>
     <% end %>
-    <td class="total_v_h"></td>
-    <td class="total_v_r"></td>
-    <td class="total_v_v"></td>
+    <% if team_result_sheet.display_hours %>
+      <td class="total_v_h"></td>
+    <% end %>
+    <% if team_result_sheet.display_results %>
+      <td class="total_v_r"></td>
+    <% end %>
+    <% if team_result_sheet.display_value %>
+      <td class="total_v_v"></td>
+    <% end %>
     </tr>
     </tfoot>
   </table>

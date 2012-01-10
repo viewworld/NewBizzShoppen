@@ -28,13 +28,10 @@
     <tfoot>
     <tr>
     <td><%= t("agent_timesheets.index.total") %></td>
-    <% overview.days_of_week.each do |dow| %>
+    <% overview.days_of_week.each do %>
         <td class="total_v"></td>
     <% end %>
     <td class="total_v"></td>
     </tr>
     </tfoot>
   </table>
-
-  <script type="text/javascript">
-  </script>

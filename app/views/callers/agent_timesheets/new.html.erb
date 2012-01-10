@@ -7,8 +7,8 @@
 
   <%= semantic_form_for @search, :url => callers_agent_timesheets_path, :as => :search, :html => {:method => :get} do |f| %>
     <h3><%= t("agent_timesheets.new.time_period") %></h3>
-    <%= f.input :start_date, :as => :datepicker %>
-    <%= f.input :end_date, :as => :datepicker %>
+    <%= f.input :start_date, :as => :weekpicker %>
+    <%= f.input :end_date, :as => :weekpicker %>
     <%= f.input :show_weekends, :as => :boolean %>
 
     <h3><%= t("agent_timesheets.new.select_camapigns") %></h3>
@@ -18,7 +18,7 @@
     <%= f.input :agents, :as => :select, :include_blank => false, :collection => (current_user.admin? ? User.with_agents.all : current_user.subaccounts), :multiple => true, :input_html => {:size => 6, :style => "height:140px; width:200px;"} %>
 
     <h3><%= t("agent_timesheets.new.display") %></h3>
-    <%= f.input :display_time, :as => :boolean %>
+    <%= f.input :display_hours, :as => :boolean %>
     <%= f.input :display_results, :as => :boolean %>
     <%= f.input :display_value, :as => :boolean %>
 

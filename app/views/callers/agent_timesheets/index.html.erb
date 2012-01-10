@@ -9,12 +9,17 @@
 	<ul>
       <li><a href="#overview"><%= t("agent_timesheets.index.overview.header") %></a></li>
 	  <li><a href="#team_result_sheet"><%= t("agent_timesheets.index.team_result_sheet.header") %></a></li>
+      <% if @timesheet.agent_timesheet %>
+        <% @timesheet.agents.each do |agent| %>
+          <li><a href="#agent_time_sheet_<%= agent.id %>"><%= t("agent_timesheets.index.agent_time_sheet.header", :name => agent.screen_name) %></a></li>
+        <% end %>
+      <% end %>
 	</ul>
 
     <div id="overview">
       <% if @timesheet.overview %>
         <% [:hours,:results,:value].each do |k| %>
-          <%= render :partial => "overview_table", :locals => {:type => k, :overview => @timesheet, :results => @timesheet.overview_data} %>
+          <%= render :partial => "overview_table", :locals => {:type => k, :overview => @timesheet, :results => @timesheet.overview_data} if @timesheet.send("display_#{k}".to_sym) %>
         <% end %>
       <% end %>
     </div>
@@ -26,6 +31,16 @@
         <% end %>
       <% end %>
     </div>
+
+    <% if @timesheet.agent_timesheet %>
+      <% @timesheet.agents.each do |agent| %>
+        <div id="agent_time_sheet_<%= agent.id %>">
+          <% @timesheet.cweeks.each do |cweek| %>
+            <%= render :partial => "agent_time_sheet_table", :locals => {:cweek => cweek, :agent_time_sheet => @timesheet, :results => @timesheet.agent_time_sheet_data(agent)} %>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
   </div>
 
   <script type="text/javascript">

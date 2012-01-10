@@ -3939,6 +3939,14 @@ en:
         time: "Time"
         results: "Results"
         value: "Value"
+      agent_time_sheet:
+        header: "Agent timesheet: %{name}"
+        first_result: "First result"
+        last_result: "Last result"
+        log_out_time: "Log out time"
+        hours: "Hours worked"
+        results: "Number of results"
+        value: "Value created"
     new:
       header: "Agent timesheets"
       time_period: "Select time period"
