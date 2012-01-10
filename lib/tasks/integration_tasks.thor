@@ -170,7 +170,9 @@ class IntegrationTasks < Thor
     Translation.where(:key => "formtastic.labels.user/category_supplier.show_deals", :locale => "en").first.update_attribute(:value, "Show all deals")
 
     User::Supplier.all.each do |user|
-      user.with_role.save
+      user = user.with_role
+      user.auto_buy_enabled = true if user.has_role?(:category_supplier)
+      user.save
     end
   end
 end

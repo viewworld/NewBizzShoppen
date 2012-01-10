@@ -131,6 +131,7 @@ class User < ActiveRecord::Base
   before_update :check_vat_number
   validate :check_billing_rate, :check_subscription_plan
   before_validation :set_auto_generated_password_if_required, :set_role
+  after_initialize :set_auto_buy_enabled
 
   liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_supplier_category_home_url,
          :screen_name, :first_name, :last_name, :home_page_url
@@ -930,5 +931,12 @@ class User < ActiveRecord::Base
     else
       read_attribute(:screen_name)
     end
+  end
+
+  def set_auto_buy_enabled
+    if new_record? and auto_buy_enabled.nil?
+      self.auto_buy_enabled = (has_role?(:category_supplier) or is_a?(User::CategorySupplier))
+    end
+    true
   end
 end

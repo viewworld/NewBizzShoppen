@@ -13,7 +13,9 @@ describe User do
       User::Member.make!(:first_name => "Cenk", :company_name => "The Young Turks").screen_name.should == "Cenk, The Young Turks"
       User::Supplier.make!(:screen_name => "Velvet revolver").screen_name.should == "Velvet revolver"
     end
+  end
 
+  context "unique company category" do
     it "should be created with unique company category when role is supplier" do
       @supplier = User::Supplier.make!(:company_name => "TestCompany 77")
       @supplier.company_unique_category.name.should == "TestCompany 77"
@@ -24,6 +26,54 @@ describe User do
       @supplier.company_unique_category.name.should == "TestCompany 88"
       @supplier.company_unique_category.should be_auto_buy
       @supplier.company_unique_category.customers.should include(User.find(@supplier.id))
+    end
+
+    it "should not create new category when such exists already" do
+      @category = LeadCategory.for_company_name("TestCompany 88")
+
+      @supplier = User::CategorySupplier.make!(:company_name => "TestCompany 88")
+      @supplier.company_unique_category.name.should == "TestCompany 88"
+      @supplier.company_unique_category.should be_auto_buy
+      @supplier.company_unique_category.customers.should include(User.find(@supplier.id))
+      @supplier.company_unique_category.should == @category
+    end
+  end
+
+  context "category supplier auto buy enabled" do
+    it "auto buy enabled should be initialized as true only for category suppliers" do
+      @supplier = User::CategorySupplier.make.should be_auto_buy_enabled
+      @supplier = User::CategorySupplier.make(:auto_buy_enabled => false).should_not be_auto_buy_enabled
+      @supplier = User::Supplier.make.should_not be_auto_buy_enabled
+      @supplier = User::Supplier.make(:auto_buy_enabled => true).should be_auto_buy_enabled
+    end
+
+    it "should make all buying categories auto buy" do
+      @category1 = LeadCategory.make!
+      @category2 = LeadCategory.make!
+
+      @supplier = User::CategorySupplier.make!(:company_name => "TestCompany 88")
+      @supplier.buying_categories = [@category1, @category2]
+      @supplier.save
+      @supplier.should be_auto_buy_enabled
+      @supplier.should be_big_buyer
+      @supplier.reload
+
+      @supplier.company_unique_category.should be_auto_buy
+      @supplier.buying_categories.select { |c| c.auto_buy? }.size.should == 2
+      @supplier.buying_categories.select { |c| c.customer_ids.include?(@supplier.id) }.size.should == 2
+
+      @supplier.update_attribute(:auto_buy_enabled, false)
+      @supplier.reload
+
+      @supplier.company_unique_category.should_not be_auto_buy
+      @supplier.buying_categories.select { |c| !c.auto_buy? }.size.should == 2
+      @supplier.buying_categories.select { |c| c.customer_ids.include?(@supplier.id) }.size.should == 2
+
+      @supplier.update_attribute(:auto_buy_enabled, true)
+      @supplier.reload
+
+      @supplier.company_unique_category.should be_auto_buy
+      @supplier.buying_categories.select { |c| c.auto_buy? }.size.should == 2
     end
   end
 

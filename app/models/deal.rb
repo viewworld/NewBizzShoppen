@@ -329,10 +329,13 @@ class Deal < AbstractLead
 
   def assign_uniq_deal_category
     if (supplier and creator.supplier?) or ActiveRecord::ConnectionAdapters::Column.value_to_boolean(use_company_name_as_category)
-      if supplier
-        supplier.send(:create_or_update_company_unique_category)
+      company_unique_category = if supplier
+        supplier.save
+        supplier.company_unique_category
+      else
+        LeadCategory.for_company_name(company_name)
       end
-      self.lead_category_id = supplier.deal_category_id
+      self.lead_category_id = company_unique_category.id
     end
   end
 

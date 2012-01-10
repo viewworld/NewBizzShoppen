@@ -9,8 +9,8 @@ class CategoryCustomer < ActiveRecord::Base
   end
 
   def assign_category_to_supplier_interests
-    unless user.deal_category_id == category.id
-      supplier.categories << category unless supplier.categories.include?(category)
+    unless supplier.category_ids.include?(category.id)
+      supplier.categories << category
       supplier.save
     end
   end
