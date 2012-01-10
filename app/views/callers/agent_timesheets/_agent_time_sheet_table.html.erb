@@ -2,8 +2,8 @@
     <thead>
     <tr>
       <td><%= t("agent_timesheets.index.week") %> <%= cweek.to_s %></td>
-      <% agent_time_sheet.days_of_week.each do |dow| %>
-        <td><%= Date.commercial(2010,1,dow+1).strftime("%A") %></td>
+      <% agent_time_sheet.commercial_days_of_week.each do |dow| %>
+        <td><%= I18n.t("date.day_names")[dow] %></td>
       <% end %>
       <td><%= t("agent_timesheets.index.total") %></td>
     </tr>
@@ -15,18 +15,24 @@
         <td><%= t("agent_timesheets.index.agent_time_sheet.#{key}") %></td>
           <% agent_time_sheet.days_of_week.each do |dow| %>
             <td class="val">
-              <% if results[cweek.year] and results[cweek.year][cweek.cweek] and results[cweek.year][cweek.cweek][dow] %>
-                <% if [:first_result,:last_result].include?(key) and val = results[cweek.year][cweek.cweek][dow].first.send(key) and val.is_a?(ActiveSupport::TimeWithZone) %>
+              <% if result = results.dig(cweek.year, cweek.cweek, dow) %>
+                <% if [:first_result,:last_result].include?(key) and val = result.first.send(key) and val.is_a?(ActiveSupport::TimeWithZone) %>
                   <%= val.strftime("%H:%M") %>
-                <% elsif val = results[cweek.year][cweek.cweek][dow].first.send(key) %>
+                <% elsif val = result.first.send(key) %>
                   <%= val.to_f %>
+                <% else %>
+                  <%= 0 %>
                 <% end %>
               <% else %>
                 <%= 0 %>
               <% end %>
             </td>
           <% end %>
-        <td class="<%= "total_h" unless [:first_result,:last_result].include?(key) %>"></td>
+        <% if [:first_result,:last_result].include?(key) %>
+          <td><%= t("agent_timesheets.index.na") %></td>
+        <% else %>
+          <td class="total_h"></td>
+        <% end %>
         </tr>
         <% end %>
       <% end %>

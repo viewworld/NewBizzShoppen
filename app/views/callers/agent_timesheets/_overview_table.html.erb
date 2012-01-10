@@ -2,8 +2,8 @@
     <thead>
     <tr>
       <td><%= t("agent_timesheets.index.overview.#{type.to_s}_header") %></td>
-      <% overview.days_of_week.each do |dow| %>
-        <td><%= Date.commercial(2010,1,dow+1).strftime("%A") %></td>
+      <% overview.commercial_days_of_week.each do |dow| %>
+        <td><%= I18n.t("date.day_names")[dow] %></td>
       <% end %>
       <td><%= t("agent_timesheets.index.overview.#{type.to_s}_total") %></td>
     </tr>
@@ -14,8 +14,8 @@
         <td><%= t("agent_timesheets.index.week") %> <%= cweek.to_s %></td>
         <% overview.days_of_week.each do |dow| %>
           <td class="val">
-          <% if results[cweek.year] and results[cweek.year][cweek.cweek] and results[cweek.year][cweek.cweek][dow] %>
-            <%= results[cweek.year][cweek.cweek][dow].first.send(type).to_f %>
+          <% if result =  results.dig(cweek.year, cweek.cweek, dow) %>
+            <%= result.first.send(type).to_f %>
           <% else %>
             <%= 0 %>
           <% end %>

@@ -2,8 +2,8 @@
     <thead>
     <tr>
       <td><%= t("agent_timesheets.index.week") %> <%= cweek.to_s %></td>
-      <% team_result_sheet.days_of_week.each do |dow| %>
-        <td colspan="<%= team_result_sheet.colspan %>"><%= Date.commercial(2010,1,dow+1).strftime("%A") %></td>
+      <% team_result_sheet.commercial_days_of_week.each do |dow| %>
+        <td colspan="<%= team_result_sheet.colspan %>"><%= I18n.t("date.day_names")[dow] %></td>
       <% end %>
       <td colspan="<%= team_result_sheet.colspan %>"><%= t("agent_timesheets.index.total") %></td>
     </tr>
@@ -36,15 +36,15 @@
       <tr>
         <td><%= agent.screen_name %></td>
         <% team_result_sheet.days_of_week.each do |dow| %>
-          <% if results[cweek.year] and results[cweek.year][cweek.cweek] and results[cweek.year][cweek.cweek][agent.id] and results[cweek.year][cweek.cweek][agent.id][dow] %>
+          <% if result = results.dig(cweek.year, cweek.cweek, agent.id, dow) %>
             <% if team_result_sheet.display_hours %>
-              <td class="val_h"><%= results[cweek.year][cweek.cweek][agent.id][dow].first.hours.to_f %></td>
+              <td class="val_h"><%= result.first.hours.to_f %></td>
             <% end %>
             <% if team_result_sheet.display_results %>
-              <td class="val_r"><%= results[cweek.year][cweek.cweek][agent.id][dow].first.results.to_i %></td>
+              <td class="val_r"><%= result.first.results.to_i %></td>
             <% end %>
             <% if team_result_sheet.display_value %>
-              <td class="val_v"><%= results[cweek.year][cweek.cweek][agent.id][dow].first.value.to_f %></td>
+              <td class="val_v"><%= result.first.value.to_f %></td>
             <% end %>
           <% else %>
             <% if team_result_sheet.display_hours %>

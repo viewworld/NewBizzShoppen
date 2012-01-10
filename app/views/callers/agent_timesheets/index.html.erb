@@ -29,6 +29,7 @@
         <% @timesheet.cweeks.each do |cweek| %>
           <%= render :partial => "team_result_sheet_table", :locals => {:cweek => cweek, :team_result_sheet => @timesheet, :results => @timesheet.team_result_sheet_data} %>
         <% end %>
+        <%= render :partial => "team_result_sheet_totals_table", :locals => {:team_result_sheet => @timesheet, :results => @timesheet.team_result_sheet_data} %>
       <% end %>
     </div>
 
@@ -66,6 +67,15 @@
         $(cell).html(Math.round(sum*100)/100);
     }
 
+    function sum_totals(cell, type) {
+        var pos = $(cell).closest('td').prevAll().length;
+        var sum = 0;
+        $('div#team_result_sheet').find('tfoot tr').find('td:eq(' + pos + ')').each(function() {
+            sum += Number($(this).html());
+        });
+        $(cell).html(Math.round(sum*100)/100);
+    }
+
     $(document).ready(function(){
         $("#tabs").tabs();
         // overview
@@ -78,6 +88,10 @@
         $('.total_v_h').each(function(){sum_col($(this))});
         $('.total_v_r').each(function(){sum_col($(this))});
         $('.total_v_v').each(function(){sum_col($(this))});
+        // team result sheet totals
+        $('.total_val_h').each(function(){sum_totals($(this),'h')});
+        $('.total_val_r').each(function(){sum_totals($(this),'r')});
+        $('.total_val_v').each(function(){sum_totals($(this),'v')});
     });
   </script>
 </column-mc:>

@@ -1,0 +1,59 @@
+  <table class="generic">
+    <thead>
+    <tr>
+      <td><%= t("agent_timesheets.index.total") %></td>
+      <% team_result_sheet.commercial_days_of_week.each do |dow| %>
+        <td colspan="<%= team_result_sheet.colspan %>"><%= I18n.t("date.day_names")[dow] %></td>
+      <% end %>
+      <td colspan="<%= team_result_sheet.colspan %>"><%= t("agent_timesheets.index.total") %></td>
+    </tr>
+    <tr>
+      <td></td>
+      <% team_result_sheet.days_of_week.each do %>
+        <% if team_result_sheet.display_hours %>
+          <td><%= t("agent_timesheets.index.team_result_sheet.time") %></td>
+        <% end %>
+        <% if team_result_sheet.display_results %>
+          <td><%= t("agent_timesheets.index.team_result_sheet.results") %></td>
+        <% end %>
+        <% if team_result_sheet.display_value %>
+          <td><%= t("agent_timesheets.index.team_result_sheet.value") %></td>
+        <% end %>
+      <% end %>
+      <% if team_result_sheet.display_hours %>
+        <td><%= t("agent_timesheets.index.team_result_sheet.time") %></td>
+      <% end %>
+      <% if team_result_sheet.display_results %>
+        <td><%= t("agent_timesheets.index.team_result_sheet.results") %></td>
+      <% end %>
+      <% if team_result_sheet.display_value %>
+        <td><%= t("agent_timesheets.index.team_result_sheet.value") %></td>
+      <% end %>
+    </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= t("agent_timesheets.index.total") %></td>
+        <% team_result_sheet.days_of_week.each do %>
+          <% if team_result_sheet.display_hours %>
+            <td class="total_val_h"></td>
+          <% end %>
+          <% if team_result_sheet.display_results %>
+            <td class="total_val_r"></td>
+          <% end %>
+          <% if team_result_sheet.display_value %>
+            <td class="total_val_v"></td>
+          <% end %>
+        <% end %>
+        <% if team_result_sheet.display_hours %>
+          <td class="total_val_h"></td>
+        <% end %>
+        <% if team_result_sheet.display_results %>
+          <td class="total_val_r"></td>
+        <% end %>
+        <% if team_result_sheet.display_value %>
+        <td class="total_val_v"></td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>

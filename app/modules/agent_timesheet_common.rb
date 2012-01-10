@@ -19,7 +19,7 @@ module AgentTimesheetCommon
 
   def initialize(options = {})
     DEFAULT_OPTIONS.merge(options.symbolize_keys).each do |k,v|
-      if [:display_hours,:display_results,:display_value,:overview,:team_result_sheet,:agent_timesheet].include?(k)
+      if [:show_weekends,:display_hours,:display_results,:display_value,:overview,:team_result_sheet,:agent_timesheet].include?(k)
         instance_variable_set("@#{k}".to_sym, ActiveRecord::ConnectionAdapters::Column.value_to_boolean(v))
       elsif k == :agents
         instance_variable_set("@#{k}".to_sym, User.find(v))
@@ -45,7 +45,12 @@ module AgentTimesheetCommon
   end
 
   def days_of_week
-    @show_weekends ? 0..6 : 0..4
+    @days_of_week ||= @show_weekends ? 0..6 : 0..4
+  end
+
+  def commercial_days_of_week
+    days = days_of_week.to_a
+    @commercial_days_of_week ||= @show_weekends ? (days << days.shift) : (1..5).to_a
   end
 
 end
