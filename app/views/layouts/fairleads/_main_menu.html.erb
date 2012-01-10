@@ -8,10 +8,12 @@
             <%= main_menu_link_to t("layout.main_menu.shared.browse_leads"), categories_path, :tab => "browse_leads" %>
           <% end %>
       <% end %>
-      <% if current_user_has_role?(:admin) or (current_user and current_user.show_deals?) %>
-        <%= main_menu_link_to(t("layout.main_menu.shared.browse_deals"), deal_categories_path, :tab => "browse_deals") %>
-      <% end %>
   <% end %>
+
+  <% if current_user_has_role?(:admin) or (current_user and current_user.show_deals?) %>
+    <%= main_menu_link_to(t("layout.main_menu.shared.browse_deals"), deal_categories_path, :tab => "browse_deals") %>
+  <% end %>
+
   <% if current_user %>
       <% current_user.roles_sorted.each do |role| %>
           <%= render "/layouts/fairleads/menu_sections/#{role.to_s}" %>

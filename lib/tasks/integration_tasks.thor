@@ -167,6 +167,7 @@ class IntegrationTasks < Thor
     Translation.where(:key => "supplier_accounts.new.view.title", :locale => "en").first.update_attribute(:value, "Category supplier signup")
     Translation.where(:key => "deal_maker_users.index.view.new_supplier", :locale => "en").first.update_attribute(:value, "New category supplier")
     Translation.where(:key => "deal_maker_users.index.view.user_supplier", :locale => "en").first.update_attribute(:value, "Category supplier")
+    Translation.where(:key => "formtastic.labels.user/category_supplier.show_deals", :locale => "en").first.update_attribute(:value, "Show all deals")
 
     User::Supplier.all.each do |user|
       user.with_role.save
