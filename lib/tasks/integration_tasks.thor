@@ -165,6 +165,8 @@ class IntegrationTasks < Thor
     Translation.where(:key => "formtastic.labels.subscription_plan.big_buyer", :locale => "en").first.update_attribute(:value, "Got credit enabled?")
     Translation.where(:key => "supplier_home.show.view.create_new_supplier_account", :locale => "en").first.update_attribute(:value, "Create new category supplier account")
     Translation.where(:key => "supplier_accounts.new.view.title", :locale => "en").first.update_attribute(:value, "Category supplier signup")
+    Translation.where(:key => "deal_maker_users.index.view.new_supplier", :locale => "en").first.update_attribute(:value, "New category supplier")
+    Translation.where(:key => "deal_maker_users.index.view.user_supplier", :locale => "en").first.update_attribute(:value, "Category supplier")
 
     User::Supplier.all.each do |user|
       user.with_role.save

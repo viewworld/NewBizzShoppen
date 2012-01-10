@@ -27,7 +27,7 @@ Feature: Agent dealmaker
     Then I should see translated "deal_maker_users.create.flash.user_creation_successful"
 
   @_done @_tested @tgn
-  Scenario: I can create supplier (buyer) account
+  Scenario: I can create category supplier (buyer) account
     Then I follow translated "deal_maker_users.index.view.new_supplier"
     And I fill in "user_company_name" with "Anna Lee Inc."
     And I fill in "user_first_name" with "Anna"
