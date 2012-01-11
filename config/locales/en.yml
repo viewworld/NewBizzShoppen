@@ -3670,6 +3670,7 @@ en:
         show_deals: "Show deals"
         show_my_deals: "Show my deals"
         big_buyer: "Got credit"
+        auto_buy_enabled: "Auto buy enabled"
       country:
         name: "Country name"
       lead_template:
