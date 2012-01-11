@@ -140,13 +140,13 @@ class Deal < AbstractLead
     if supplier
       supplier
     else
-      existing_users_count = User::Supplier.where(:screen_name => contact_name).count
+      existing_users_count = User.where(:screen_name => contact_name).count
       contact_name_arr = contact_name.strip.split(" ")
       contact_name_arr = contact_name_arr.size == 1 ? contact_name_arr : [contact_name_arr.first, contact_name_arr[1..-1].join(' ')]
-      user = User::Supplier.new({:email => email_address, :company_name => company_name, :phone => phone_number,
+      user = User::CategorySupplier.new({:email => email_address, :company_name => company_name.strip, :phone => phone_number,
                                  :screen_name => "#{contact_name}#{existing_users_count.zero? ? '' : existing_users_count+1}",
                                  :agreement_read => true, :first_name => contact_name_arr.first, :last_name => contact_name_arr.last,
-                                 :assign_free_subscription_plan => true}.merge(params))
+                                 :assign_free_subscription_plan => true, :show_my_deals => true}.merge(params))
       user.skip_email_verification = "1"
       user.address = Address.new(:address_line_1 => address_line_1, :address_line_2 => address_line_2, :address_line_3 => address_line_3,
                                  :zip_code => zip_code, :country_id => country_id, :region_id => region_id)
@@ -167,7 +167,7 @@ class Deal < AbstractLead
   end
 
   def supplier
-    creator.supplier? ? creator.with_role : User::Supplier.where(:email => email_address).first
+    creator.supplier? ? creator.with_role : User.where(:email => email_address).first.nil? ? nil : User.where(:email => email_address).first.with_role
   end
 
   def has_unread_comments_for_user?(user)

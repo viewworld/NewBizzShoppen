@@ -281,7 +281,7 @@ Feature: Category buyer rules
   Scenario: I can see Browse deals only when I was marked by admin as Show all deals
 
   #9512
-  @m26 @requested @wip
+  @m26 @requested
   Scenario: I can be marked by admin as Auto buy enabled and then all my categories become auto buy by default if possible (Then I don't see Browse leads)
     Given I am not sign in
     And I am on the homepage

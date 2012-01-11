@@ -169,8 +169,11 @@ class IntegrationTasks < Thor
     Translation.where(:key => "deal_maker_users.index.view.user_supplier", :locale => "en").first.update_attribute(:value, "Category supplier")
     Translation.where(:key => "formtastic.labels.user/category_supplier.show_deals", :locale => "en").first.update_attribute(:value, "Show all deals")
 
-    email_template = EmailTemplate.where(:uniq_id => "deal_certification_request").first
-    email_template.update_attribute(:body, email_template.body.gsub("new_sales_manager_account_url", "login_url"))
+    [:da, :en].each do |locale|
+      I18n.locale = locale
+      email_template = EmailTemplate.where(:uniq_id => "deal_certification_request").first
+      email_template.update_attribute(:body, email_template.body.gsub("new_sales_manager_account_url", "login_url"))
+    end
 
     User::Supplier.all.each do |user|
       user = user.with_role
