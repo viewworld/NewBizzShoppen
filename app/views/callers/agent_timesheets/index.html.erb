@@ -86,6 +86,43 @@
         $(cell).html(Math.round(sum*100)/100);
     }
 
+    function agent_time_sheet_avg(cell, selector) {
+        var pos = $(cell).closest('td').prevAll().length;
+        var sum = 0;
+        var num = 0;
+        var res = 0;
+        $(selector).find('td:eq(' + pos + ')').each(function() {
+          num += 1;
+          sum += Number($(this).html());
+        });
+        if (num == 0) {
+            res = 0;
+        } else {
+            res = (sum/num)*100;
+        }
+        $(cell).html(Math.round(res)/100);
+    }
+
+    function agent_time_sheet_avg_time(cell, selector) {
+        var pos = $(cell).closest('td').prevAll().length;
+        var sum = 0;
+        var num = 0;
+        var res = 0;
+        $(selector).find('td:eq(' + pos + ')').each(function() {
+            temp = Number($(this).html().split(':')[0])*60 + Number($(this).html().split(':')[1]);
+            if (temp > 0) {
+                sum += temp;
+                num += 1;
+            }
+        });
+        if (num == 0) {
+            res = 0;
+        } else {
+            res = (sum/num)*100;
+        }
+        $(cell).html(Math.round(res)/100);
+    }
+
     $(document).ready(function(){
         $("#tabs").tabs();
         // overview
