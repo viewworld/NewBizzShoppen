@@ -1,6 +1,6 @@
 module AgentTimesheetCommon
 
-  attr_accessor :scoped, :agents, :overview, :team_result_sheet, :agent_timesheet, :display_hours, :display_results, :display_value
+  attr_accessor :scoped, :start_date, :end_date, :campaigns, :agents, :call_centres, :overview, :team_result_sheet, :agent_timesheet, :display_hours, :display_results, :display_value
 
   DEFAULT_OPTIONS = {
       :show_weekends     => true,
@@ -37,7 +37,7 @@ module AgentTimesheetCommon
         with_date_between(@start_date, @end_date).
         for_agents(@agents)
     @first ||= @scoped.order("year, week ASC").first
-    @last  ||= @scoped.order("year, week DESC").first
+    @last  ||= @scoped.order("year, week ASC").last
   end
 
   def cweeks
