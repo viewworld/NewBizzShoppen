@@ -281,6 +281,18 @@ Feature: Category buyer rules
   Scenario: I can see Browse deals only when I was marked by admin as Show all deals
 
   #9512
-  @m26 @requested
+  @m26 @requested @wip
   Scenario: I can be marked by admin as Auto buy enabled and then all my categories become auto buy by default if possible (Then I don't see Browse leads)
+    Given I am not sign in
+    And I am on the homepage
+    And I have user with email category_supplier@nbs.com and role category_supplier
+    And I sign in as category_supplier@nbs.com with password secret
+    And I should not see CSS path "a[tab='browse_leads']"
+    And user "category_supplier@nbs.com" with role "category_supplier" has attributes "auto_buy_enabled:false"
+    And I go to the homepage
+    And I should see CSS path "a[tab='browse_leads']"
+
+
+
+
 

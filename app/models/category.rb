@@ -69,7 +69,7 @@ class Category < ActiveRecord::Base
   scope :with_agent_unique, lambda { |agent| select("DISTINCT(categories.id), categories.*").where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id = ?)#{' or (is_agent_unique = \'t\' and category_agents.user_id = ' + agent.parent_id.to_s + ')' if agent.has_role?(:call_centre_agent)}", false, true, agent.id).joins("LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
   scope :with_buying, lambda { |user| joins(:buying_users).where(:users => {:id => user.id}) }
   scope :with_call_centre_unique, lambda { |call_centre| where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id IN (?))", false, true, [call_centre]+call_centre.subaccounts.map(&:id)).joins("LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
-  scope :category_supplier_accessible_categories, lambda { |user| joins("
+  scope :category_supplier_accessible_categories, lambda { |user| select("DISTINCT(categories.id), categories.*").joins("
     LEFT JOIN categories_users ON categories.id = categories_users.category_id
     LEFT JOIN users ON users.id = categories_users.user_id
     LEFT JOIN category_customers ON categories.id = category_customers.category_id
