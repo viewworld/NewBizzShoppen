@@ -449,3 +449,6 @@ When /^the date is "([^"]*)" days from now$/ do |num|
   date = Date.today
   Date.stubs(:today).returns(date+num.to_i.days)
 end
+When /^I click div "([^"]*)"$/ do |id|
+  page.first(:css, "div[id*='#{id}']").click()
+end
