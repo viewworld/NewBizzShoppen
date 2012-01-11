@@ -37,8 +37,9 @@
       <% @timesheet.agents.each do |agent| %>
         <div id="agent_time_sheet_<%= agent.id %>">
           <% @timesheet.cweeks.each do |cweek| %>
-            <%= render :partial => "agent_time_sheet_table", :locals => {:cweek => cweek, :agent_time_sheet => @timesheet, :results => @timesheet.agent_time_sheet_data(agent)} %>
+            <%= render :partial => "agent_time_sheet_table", :locals => {:agent => agent, :cweek => cweek, :agent_time_sheet => @timesheet, :results => @timesheet.agent_time_sheet_data(agent)} %>
           <% end %>
+          <%= render :partial => "agent_time_sheet_totals_table", :locals => {:agent => agent, :agent_time_sheet => @timesheet, :results => @timesheet.agent_time_sheet_data(agent)} %>
         </div>
       <% end %>
     <% end %>
@@ -67,10 +68,19 @@
         $(cell).html(Math.round(sum*100)/100);
     }
 
-    function sum_totals(cell, type) {
+    function team_result_sheet_sum_totals(cell) {
         var pos = $(cell).closest('td').prevAll().length;
         var sum = 0;
         $('div#team_result_sheet').find('tfoot tr').find('td:eq(' + pos + ')').each(function() {
+            sum += Number($(this).html());
+        });
+        $(cell).html(Math.round(sum*100)/100);
+    }
+
+    function agent_time_sheet_sum_totals(cell, selector) {
+        var pos = $(cell).closest('td').prevAll().length;
+        var sum = 0;
+        $(selector).find('td:eq(' + pos + ')').each(function() {
             sum += Number($(this).html());
         });
         $(cell).html(Math.round(sum*100)/100);
@@ -82,16 +92,10 @@
         $('.total_h').each(function(){sum_row($(this).closest('tr'))});
         $('.total_v').each(function(){sum_col($(this))});
         // team result sheet
-        $('.total_h_h').each(function(){sum_row($(this).closest('tr'),'h')});
-        $('.total_h_r').each(function(){sum_row($(this).closest('tr'),'r')});
-        $('.total_h_v').each(function(){sum_row($(this).closest('tr'),'v')});
-        $('.total_v_h').each(function(){sum_col($(this))});
-        $('.total_v_r').each(function(){sum_col($(this))});
-        $('.total_v_v').each(function(){sum_col($(this))});
+        $('.total_h_h, .total_h_v, .total_h_r').each(function(){sum_row($(this).closest('tr'),'h')});
+        $('.total_v_h, .total_v_r, .total_v_v').each(function(){sum_col($(this))});
         // team result sheet totals
-        $('.total_val_h').each(function(){sum_totals($(this),'h')});
-        $('.total_val_r').each(function(){sum_totals($(this),'r')});
-        $('.total_val_v').each(function(){sum_totals($(this),'v')});
+        $('.total_val_h, .total_val_r, .total_val_v').each(function(){team_result_sheet_sum_totals($(this))});
     });
   </script>
 </column-mc:>

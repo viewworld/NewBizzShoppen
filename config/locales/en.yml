@@ -3926,6 +3926,7 @@ en:
       header: "Agent timesheets"
       week: "Week"
       total: "Total"
+      total_average: "Total / average"
       na: "n/a"
       overview:
         header: "Overview"

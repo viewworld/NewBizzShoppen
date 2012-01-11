@@ -75,7 +75,7 @@ class CreateAgentTimesheetsTimeView < ActiveRecord::Migration
         HAVING
           SUM(agent_information.sum) > 0
       }
-      #execute "DROP VIEW agent_information"
+      execute "DROP VIEW agent_information"
       execute %{
         CREATE VIEW agent_information AS
         SELECT
