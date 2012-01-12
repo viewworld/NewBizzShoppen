@@ -1,6 +1,6 @@
 <column-mc:>
   <%= javascript_include_tag 'lead_template_functions.js' %>
-  <header back="true"><%= t("member.leads.edit.view.title", :name => @lead.header) %><%= image_tag_for_locale %></header>
+  <header back="true"><%= @lead.deal.header %><%= image_tag_for_locale %></header>
   <%= semantic_form_for [:members, @lead], :method => :put do |form| %>
       <frm title="Edit">
         <param:content>
@@ -8,6 +8,16 @@
             <div class="pdd_10 no_pdd_t">
               <fieldset class="inputs labels_ta_r labels_160">
                 <ol class="align_inputs">
+                  <% unless @lead.deal.deal_confirmation_page.blank?  %>
+                  <li class="string">
+                    <%= form.label t("member.leads.edit.view.confirmation_page_label") %>
+                    <div class="txt"><%= @lead.deal.deal_confirmation_page.to_s.html_safe %></div>
+                  </li>
+                  <% end %>
+                  <li class="string">
+                    <%= form.label t("member.leads.edit.view.deal_code_label") %>
+                    <div class="txt"><%= @lead.deal.deal_code_is_url? ? link_to(@lead.deal.deal_code, @lead.deal.deal_code_as_url) : @lead.deal.deal_code %></div>
+                  </li>
                   <li class="string">
                     <%= form.label t("member.leads.edit.view.company_name_label") %>
                     <div class="txt"><strong><%= @lead.deal.company_name %></strong></div>
@@ -29,7 +39,7 @@
                   <li class="string">
                     <%= form.label t("member.leads.edit.view.contact_email_label") %>
                     <div class="txt">
-                      <%= link_to @lead.deal.email_address, "mailto:#{@lead.deal.company_website}" %>
+                      <%= link_to @lead.deal.email_address, "mailto:#{@lead.deal.email_address}" %>
                     </div>
                   </li>
                   <li class="string">
@@ -64,6 +74,15 @@
                           <%= link_to t("member.leads.edit.view.voucher_link"), pdf_members_lead_path(@lead) %>
                         </div>
                       </li>
+
+                      <% unless @lead.deal.voucher_how_to_redeem.blank? %>
+                          <li class="string">
+                            <%= form.label t("member.leads.edit.view.voucher_how_to_redeem_label") %>
+                            <div class="txt">
+                              <%= @lead.deal.voucher_how_to_redeem.to_s.html_safe %>
+                            </div>
+                          </li>
+                      <% end %>
                   <% end %>
 
                   <% if params[:get_deal] == "1" %>
@@ -74,13 +93,14 @@
             </div>
           </div>
           <%= hidden_field_tag :get_deal, params[:get_deal] %>
+          <div class="column_left">
+              <% unless params[:get_deal] == "1" %>
+                  <%= render :partial => "form1", :locals => {:form => form} %>
+              <% end %>
 
-          <% unless params[:get_deal] == "1" %>
-              <%= render :partial => "form1", :locals => {:form => form} %>
-          <% end %>
-
-
-          <%= render :partial => "form2", :locals => {:form => form} %>
+              <%= render :partial => "form2", :locals => {:form => form} %>
+          </div>
+          <clb/>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">

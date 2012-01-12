@@ -6,11 +6,10 @@ class DealSupplierAccountsController < ApplicationController
   end
 
   def create
-    @user = @deal.build_supplier(params[:user_supplier])
+    @user = @deal.build_supplier(params[:user_category_supplier])
     if @user.save
       @deal.current_dcr.change_state("agreed")
-      @deal.assign_lead_category_to_supplier!
-      @deal.send_supplier_welcome_email(params[:user_supplier][:password], current_user)
+      @deal.send_supplier_welcome_email(params[:user_category_supplier][:password], current_user)
       flash[:notice] = t("supplier.deal_certification_requests.update.flash.certify_success")
       redirect_to root_path
     else

@@ -66,6 +66,9 @@
         <%= form.input :agreement_read, :as => :hidden %>
         <%= form.input :newsletter_on %>
         <%= form.input :test_account %>
+        <% if ['supplier', 'category_supplier'].include?(params[:role]) or @user.has_any_role?(:supplier, :category_supplier) %>
+            <%= form.input :big_buyer %>
+        <% end %>
         <% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
             <%= form.input :certification_level, :as => :select, :collection => User::CERTIFICATION_LEVELS.map { |c| [t("models.lead.certification.lvl#{c}"), c] }, :selected => @user.read_attribute(:certification_level) %>
         <% end %>
@@ -80,6 +83,8 @@
         <% end %>
         <% if ['category_supplier'].include?(params[:role]) or @user.has_any_role?(:category_supplier) %>
             <%= form.input :show_deals, :as => :boolean %>
+            <%= form.input :show_my_deals, :as => :boolean %>
+            <%= form.input :auto_buy_enabled, :as => :boolean %>
         <% end %>
         <% if ['agent', 'call_centre_agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:call_centre_agent, :call_centre, :agent) %>
             <%= form.input :billing_rate %>

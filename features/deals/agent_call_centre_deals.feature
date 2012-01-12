@@ -157,8 +157,8 @@ Feature: Deals from Call Centre/Agent perspective
     And I press translated "supplier.deal_certification_requests.edit.view.certify"
     Then the last deal should not be certified
     Then I should see translated "deal_supplier_accounts.new.view.header"
-    And I fill in "user_supplier_password" with "s3cr3t"
-    And I fill in "user_supplier_password_confirmation" with "s3cr3t"
+    And I fill in "user_category_supplier_password" with "s3cr3t"
+    And I fill in "user_category_supplier_password_confirmation" with "s3cr3t"
     And I press translated "deal_supplier_accounts.new.view.button_create_account"
     Then the last deal should be certified
     Then last email sent should have content "Password: s3cr3t"
