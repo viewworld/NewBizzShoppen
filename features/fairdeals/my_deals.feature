@@ -18,7 +18,6 @@ Background:
   And I press translated "member.leads.show.view.ok_confirmation"
   And I follow translated "layout.fairdeals.main_menu.member.my_requests"
   And I follow translated "member.leads.index.view.edit"
-  And I open page in browser
 
 
 #9481

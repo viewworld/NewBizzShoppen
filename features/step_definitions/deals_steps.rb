@@ -105,7 +105,6 @@ end
 
 Then /^I fill group deal edit form and submit with translated button "([^"]*)"$/ do |translation|
   Then %{I check "deal_group_deal"}
-  Then %{I open page in browser}
   Then %{I press translated "#{translation}"}
   Then %{I fill in "deal_social_media_description" with "face book is better then link ed in, are you agree?"}
   Then %{I fill in "deal_deal_price" with "-1"}

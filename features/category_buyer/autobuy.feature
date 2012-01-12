@@ -5,6 +5,7 @@ Background:
   When Category named "Best Leads" already exists
   When Category named "cb unique 01" already exists
   And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes ""
+  And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
   And User jon@lajoie.ca with role category_supplier is big buyer
   And I am on category home page for Best Leads
   And I sign in as jon@lajoie.ca with password secret

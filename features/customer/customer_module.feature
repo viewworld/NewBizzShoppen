@@ -125,6 +125,7 @@ Scenario: If customer is category buyer with assigned unique categories he can a
   And Category named "Best Leads" already exists
   And Category named "Unique Leads" already exists
   And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
+  And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
   And category "Unique Leads" is unique for user with email "jon@lajoie.ca" role "supplier"
   And lead Uniqlead exists within category Unique Leads
   And I am on the home page

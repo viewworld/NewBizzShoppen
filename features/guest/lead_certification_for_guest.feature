@@ -7,7 +7,7 @@ Background:
   Given there are no leads
   And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
   And lead BestLead is created by user agent007@nbs.com with role agent
-  And lead "BestLead" has attributes "email_address:james@bond.co.uk,company_name:JJJ"
+  And lead "BestLead" has attributes "email_address:james@bond.co.uk,company_name:JJJ,contact_name:James Bond"
 
 @_done @_tested
 Scenario: I can get access to a lead by hashed link without logging in

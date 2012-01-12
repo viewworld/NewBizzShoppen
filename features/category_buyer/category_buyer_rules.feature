@@ -62,6 +62,7 @@ Feature: Category buyer rules
   Scenario: Subaccounts should have access only to parents category
     When Category named "Best Leads" already exists
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes ""
+    And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
     And user "jon@lajoie.ca" has team buyers enabled
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret

@@ -9,6 +9,8 @@ Background: Set English locale
 Scenario: I can see all active categories
   Given Category named "Sample category" already exists
   And Category named "Another sample category" already exists within category named "Sample category"
+  And I am on the homepage
+  And I sign in as translator_customer@nbs.com with password secret
   When I follow translated "layout.main_menu.shared.browse_leads"
   Then I should see category named "Another sample category" within category named "Sample category"
 
@@ -18,6 +20,8 @@ Scenario: I can click on a category and go to appropriate lead listing
   And Category named "Another sample category" already exists within category named "Sample category"
   And Lead named "Super printers" exists within "Another sample category" category
   And Lead named "Ultra printers" exists within "Another sample category" category
+  And I am on the homepage
+  And I sign in as translator_customer@nbs.com with password secret
   And I follow translated "layout.main_menu.shared.browse_leads"
   And I follow "Another sample category"
   Then I should see "Super printers"
@@ -31,13 +35,12 @@ Scenario: I can see customised total number of leads on the browse categories pa
   Given lead "lead1" is created in category "Computers" by user "agent1@nbs.com" with role "agent"
   And lead "lead2" is created in category "Computers" by user "agent1@nbs.com" with role "agent"
   And lead "lead3" is created in category "Computers" by user "agent1@nbs.com" with role "agent"
-  Then I follow translated "layout.main_menu.shared.browse_leads"
-  And I should see "(3)"
   Given I am signed up and confirmed as user with email john@doe.com and password secret and role supplier
   And User john@doe.com with role supplier is big buyer
   And I am on the homepage
   And I sign in as john@doe.com with password secret
   Then I follow translated "layout.main_menu.shared.browse_leads"
+  And I should see "(3)"
   And I follow category "Computers"
   When I follow translated "leads.index.buy_lead"
   Then I follow translated "layout.main_menu.shared.browse_leads"

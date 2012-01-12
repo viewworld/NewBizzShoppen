@@ -59,7 +59,7 @@ Feature: Purchase Manager signup
     When I go to member sign up
     And I select "" from "user_member_address_attributes_country_id"
     And I press translated "supplier_accounts.new.view.button_create_account"
-    And I should see "12" occurrences of css class "inline-errors" for tag "p"
+    And I should see "11" occurrences of css class "inline-errors" for tag "p"
 
   # when on free subscription - get deal is displayed but informs that you have to upgrade - tested elsewhere
   @m21 @requested @subscriptions @_done @_tested @tgn

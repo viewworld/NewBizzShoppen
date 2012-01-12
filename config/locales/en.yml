@@ -164,7 +164,7 @@ en:
         leads: My leads
         tenders: My tenders
         lead_templates: "Lead templates"
-        my_requests: "My requests"
+        my_requests: "My deals"
     my_profile_link: My profile
     logout_link: "Logout %{user_email}"
     login_link: "Login"
