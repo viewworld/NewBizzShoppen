@@ -1,56 +1,60 @@
-  <table class="generic">
-    <thead>
-    <tr>
-      <td><%= t("agent_timesheets.index.total_average") %></td>
-      <% agent_time_sheet.commercial_days_of_week.each do |dow| %>
-        <td><%= I18n.t("date.day_names")[dow] %></td>
-      <% end %>
-      <td><%= t("agent_timesheets.index.total") %></td>
-    </tr>
-    </thead>
-    <tbody>
-      <% [:first_result, :last_result, :log_out_time, :value].each do |key| %>
-        <% unless [:hours, :results, :value].include?(key) and !agent_time_sheet.send("display_#{key}".to_sym) %>
-        <tr>
-        <td><%= t("agent_timesheets.index.agent_time_sheet.#{key}") %></td>
-          <% agent_time_sheet.days_of_week.each do %>
-            <td class="avg_val_<%= key %>"></td>
-          <% end %>
-        <% if [:first_result,:last_result].include?(key) %>
-          <td><%= t("agent_timesheets.index.na") %></td>
-        <% else %>
-          <td class="avg_val_<%= key %>"></td>
-        <% end %>
-        </tr>
-        <% end %>
-      <% end %>
-    </tbody>
-    <tfoot>
-    <% [:hours, :results, :value].each do |key| %>
-      <% unless [:hours, :results, :value].include?(key) and !agent_time_sheet.send("display_#{key}".to_sym) %>
-      <tr>
-      <td><%= t("agent_timesheets.index.agent_time_sheet.#{key}") %></td>
-        <% agent_time_sheet.days_of_week.each do %>
-          <td class="total_val_<%= key %>"></td>
-        <% end %>
-        <td class="total_val_<%= key %>"></td>
-      </tr>
-      <% end %>
+<table class="generic timesheet">
+  <thead>
+  <tr>
+    <th class="ta_l" style="width:250px"><%= t("agent_timesheets.index.total_average") %></th>
+    <% agent_time_sheet.commercial_days_of_week.each do |dow| %>
+        <th><%= I18n.t("date.day_names")[dow] %></th>
     <% end %>
-    </tfoot>
-  </table>
+    <th style="width:100px"><%= t("agent_timesheets.index.total") %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% [:first_result, :last_result, :log_out_time, :value].each do |key| %>
+      <% unless [:hours, :results, :value].include?(key) and !agent_time_sheet.send("display_#{key}".to_sym) %>
+          <tr>
+            <td class="cell_week"><%= t("agent_timesheets.index.agent_time_sheet.#{key}") %></td>
+            <% agent_time_sheet.days_of_week.each do %>
+                <td class="avg_val_<%= key %>"></td>
+            <% end %>
+            <% if [:first_result, :last_result].include?(key) %>
+                <td class="total_h"><%= t("agent_timesheets.index.na") %></td>
+            <% else %>
+                <td class="total_h avg_val_<%= key %>"></td>
+            <% end %>
+          </tr>
+      <% end %>
+  <% end %>
+  <% [:hours, :results, :value].each do |key| %>
+      <% unless [:hours, :results, :value].include?(key) and !agent_time_sheet.send("display_#{key}".to_sym) %>
+          <tr class="total_row bordered">
+            <td class="ta_l"><%= t("agent_timesheets.index.agent_time_sheet.#{key}") %></td>
+            <% agent_time_sheet.days_of_week.each do %>
+                <td class="total_val_<%= key %>"></td>
+            <% end %>
+            <td class="total_val_<%= key %>"></td>
+          </tr>
+      <% end %>
+  <% end %>
+  </tbody>
+</table>
 
-  <script type="text/javascript">
-      $(document).ready(function(){
+<script type="text/javascript">
+    $(document).ready(function() {
         // agent time sheet totals
         <% [:hours, :results, :value].each do |key| %>
-          $('div#agent_time_sheet_<%= agent.id %> .total_val_<%= key.to_s %>').each(function(){agent_time_sheet_sum_totals($(this),$('div#agent_time_sheet_<%= agent.id %>').find('tr.<%= key.to_s %>'))});
+        $('div#agent_time_sheet_<%= agent.id %> .total_val_<%= key.to_s %>').each(function() {
+            agent_time_sheet_sum_totals($(this), $('div#agent_time_sheet_<%= agent.id %>').find('tr.<%= key.to_s %>'))
+        });
         <% end %>
         <% [:log_out_time, :value].each do |key| %>
-          $('div#agent_time_sheet_<%= agent.id %> .avg_val_<%= key.to_s %>').each(function(){agent_time_sheet_avg($(this),$('div#agent_time_sheet_<%= agent.id %>').find('tr.<%= key.to_s %>'))});
+        $('div#agent_time_sheet_<%= agent.id %> .avg_val_<%= key.to_s %>').each(function() {
+            agent_time_sheet_avg($(this), $('div#agent_time_sheet_<%= agent.id %>').find('tr.<%= key.to_s %>'))
+        });
         <% end %>
         <% [:first_result, :last_result].each do |key| %>
-          $('div#agent_time_sheet_<%= agent.id %> .avg_val_<%= key.to_s %>').each(function(){agent_time_sheet_avg_time($(this),$('div#agent_time_sheet_<%= agent.id %>').find('tr.<%= key.to_s %>'))});
+        $('div#agent_time_sheet_<%= agent.id %> .avg_val_<%= key.to_s %>').each(function() {
+            agent_time_sheet_avg_time($(this), $('div#agent_time_sheet_<%= agent.id %>').find('tr.<%= key.to_s %>'))
+        });
         <% end %>
-      });
-  </script>
+    });
+</script>

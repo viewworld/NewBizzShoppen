@@ -1,39 +1,39 @@
-  <table class="generic">
+<table class="generic timesheet">
     <thead>
     <tr>
-      <td><%= t("agent_timesheets.index.total") %></td>
+      <th class="ta_l"><%= t("agent_timesheets.index.total") %></th>
       <% team_result_sheet.commercial_days_of_week.each do |dow| %>
-        <td colspan="<%= team_result_sheet.colspan %>"><%= I18n.t("date.day_names")[dow] %></td>
+        <th colspan="<%= team_result_sheet.colspan %>"><%= I18n.t("date.day_names")[dow] %></th>
       <% end %>
-      <td colspan="<%= team_result_sheet.colspan %>"><%= t("agent_timesheets.index.total") %></td>
+      <th colspan="<%= team_result_sheet.colspan %>"><%= t("agent_timesheets.index.total") %></th>
     </tr>
     <tr>
-      <td></td>
+      <th></th>
       <% team_result_sheet.days_of_week.each do %>
         <% if team_result_sheet.display_hours %>
-          <td><%= t("agent_timesheets.index.team_result_sheet.time") %></td>
+          <th><%= t("agent_timesheets.index.team_result_sheet.time") %></th>
         <% end %>
         <% if team_result_sheet.display_results %>
-          <td><%= t("agent_timesheets.index.team_result_sheet.results") %></td>
+          <th><%= t("agent_timesheets.index.team_result_sheet.results") %></th>
         <% end %>
         <% if team_result_sheet.display_value %>
-          <td><%= t("agent_timesheets.index.team_result_sheet.value") %></td>
+          <th><%= t("agent_timesheets.index.team_result_sheet.value") %></th>
         <% end %>
       <% end %>
       <% if team_result_sheet.display_hours %>
-        <td><%= t("agent_timesheets.index.team_result_sheet.time") %></td>
+        <th><%= t("agent_timesheets.index.team_result_sheet.time") %></th>
       <% end %>
       <% if team_result_sheet.display_results %>
-        <td><%= t("agent_timesheets.index.team_result_sheet.results") %></td>
+        <th><%= t("agent_timesheets.index.team_result_sheet.results") %></th>
       <% end %>
       <% if team_result_sheet.display_value %>
-        <td><%= t("agent_timesheets.index.team_result_sheet.value") %></td>
+        <th><%= t("agent_timesheets.index.team_result_sheet.value") %></th>
       <% end %>
     </tr>
     </thead>
     <tbody>
-      <tr>
-        <td><%= t("agent_timesheets.index.total") %></td>
+      <tr class="total_row">
+        <td class="ta_l"><%= t("agent_timesheets.index.total") %></td>
         <% team_result_sheet.days_of_week.each do %>
           <% if team_result_sheet.display_hours %>
             <td class="total_val_h"></td>

@@ -6,27 +6,67 @@
   </header>
 
   <%= semantic_form_for @search, :url => callers_agent_timesheets_path, :as => :search, :html => {:method => :get} do |f| %>
-    <h3><%= t("agent_timesheets.new.time_period") %></h3>
-    <%= f.input :start_date, :as => :weekpicker %>
-    <%= f.input :end_date, :as => :weekpicker %>
-    <%= f.input :show_weekends, :as => :boolean %>
+      <frm>
+        <param:content>
+          <div class="pdd_10">
+            <div class="column_left">
+              <h3><%= t("agent_timesheets.new.time_period") %></h3>
 
-    <h3><%= t("agent_timesheets.new.select_camapigns") %></h3>
-    <%= f.input :campaigns, :as => :select, :include_blank => false, :collection => (current_user.admin? ? Campaign.all : current_user.campaigns), :multiple => true, :input_html => {:size => 6, :style => "height:140px; width:200px;"} %>
+              <fiedlset class="inputs labels_ta_r">
+                <ol class="align_inputs">
+                  <%= f.input :start_date, :as => :weekpicker, :wrapper_html => {:class => "date"} %>
+                  <%= f.input :end_date, :as => :weekpicker, :wrapper_html => {:class => "date"} %>
+                  <%= f.input :show_weekends, :as => :boolean %>
+                </ol>
+              </fiedlset>
 
-    <h3><%= t("agent_timesheets.new.select_team") %></h3>
-    <%= f.input :agents, :as => :select, :include_blank => false, :collection => (current_user.admin? ? User.with_agents.all : current_user.subaccounts), :multiple => true, :input_html => {:size => 6, :style => "height:140px; width:200px;"} %>
 
-    <h3><%= t("agent_timesheets.new.display") %></h3>
-    <%= f.input :display_hours, :as => :boolean %>
-    <%= f.input :display_results, :as => :boolean %>
-    <%= f.input :display_value, :as => :boolean %>
+              <h3><%= t("agent_timesheets.new.select_camapigns") %></h3>
+              <fiedlset class="inputs labels_ta_r">
+                <ol>
+                  <%= f.input :campaigns, :as => :select, :include_blank => false, :collection => (current_user.admin? ? Campaign.all : current_user.campaigns), :multiple => true, :input_html => {:size => 6, :style => "height:140px; width:200px;"} %>
+                </ol>
+              </fiedlset>
+              <clb/>
 
-    <h3><%= t("agent_timesheets.new.report_type") %></h3>
-    <%= f.input :overview, :as => :boolean %>
-    <%= f.input :team_result_sheet, :as => :boolean %>
-    <%= f.input :agent_timesheet, :as => :boolean %>
+              <h3><%= t("agent_timesheets.new.select_team") %></h3>
+              <fiedlset class="inputs labels_ta_r">
+                <ol>
+                  <%= f.input :agents, :as => :select, :include_blank => false, :collection => (current_user.admin? ? User.with_agents.all : current_user.subaccounts), :multiple => true, :input_html => {:size => 6, :style => "height:140px; width:200px;"} %>
+                </ol>
+              </fiedlset>
+              <clb/>
+            </div>
+            <div class="column_right">
 
-    <%= f.commit_button t("agent_timesheets.new.generate") %>
+              <fiedlset class="inputs labels_ta_r">
+                <legend class="absolute"><%= t("agent_timesheets.new.display") %></legend>
+                <ol class="align_inputs">
+                  <%= f.input :display_hours, :as => :boolean %>
+                  <%= f.input :display_results, :as => :boolean %>
+                  <%= f.input :display_value, :as => :boolean %>
+                </ol>
+              </fiedlset>
+              <clb/>
+
+              <fiedlset class="inputs labels_ta_r">
+                <legend class="absolute"><%= t("agent_timesheets.new.report_type") %></legend>
+                <ol class="align_inputs">
+                  <%= f.input :overview, :as => :boolean %>
+                  <%= f.input :team_result_sheet, :as => :boolean %>
+                  <%= f.input :agent_timesheet, :as => :boolean %>
+                </ol>
+              </fiedlset>
+              <clb/>
+            </div>
+            <clb/>
+          </div>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri">
+            <%= f.submit t("agent_timesheets.new.generate") %>
+          </ibt>
+        </param:actions>
+      </frm>
   <% end %>
 </column-mc:>
