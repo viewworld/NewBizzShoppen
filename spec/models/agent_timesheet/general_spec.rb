@@ -176,6 +176,26 @@ describe AgentTimesheet::General do
                                        :agents            => @campaign.users.map(&:id))
       at.team_result_sheet_data.dig(2012,20,@call_centre_agent1.id,1).size.should == 1
     end
+
+    it "should sum time only for selected agents and campaigns" do
+      time_log(@call_centre_agent1, @campaign, '2011-05-15 12:00:00', 60)
+      time_log(@call_centre_agent1, @campaign2, '2011-05-15 12:00:00', 60)
+      time_log(@call_centre_agent2, @campaign, '2011-05-15 12:00:00', 60)
+      at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign],
+                                  :agents            => [@call_centre_agent1.id])
+      at.team_result_sheet_data.dig(2011,19,@call_centre_agent1.id,6).first.hours.should == 1.0
+      at.team_result_sheet_data.dig(2011,19,@call_centre_agent2.id,6).should be_nil
+
+      at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign],
+                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id])
+      at.team_result_sheet_data.dig(2011,19,@call_centre_agent1.id,6).first.hours.should == 1.0
+      at.team_result_sheet_data.dig(2011,19,@call_centre_agent2.id,6).first.hours.should == 1.0
+
+    end
   end
 
   context "Agent time sheet" do
