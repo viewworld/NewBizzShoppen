@@ -207,7 +207,7 @@ h4
 {
     display: block;
     float: left;
-    padding-right: 5px;
+    padding-right: 4px;
 }
 
 #user_menu ul.nav li a
@@ -226,7 +226,7 @@ h4
     display: block;
     height: 36px;
     line-height: 36px;
-    padding: 0 15px;
+    padding: 0 14px;
 }
 
 #user_menu ul.nav.admin_nav li a span
