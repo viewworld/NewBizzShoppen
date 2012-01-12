@@ -727,7 +727,7 @@ Scenario: I can enable deals for each category buyer
   And I am on the home page
   And I sign in as kategory_bajer@nbs.com with password secret
   Then I should see CSS path "a[tab='browse_deals']"
-  And I should see CSS path "a[tab='deals']"
+  And I should not see CSS path "a[tab='deals']"
 
 @m18 @create_buttons @_done @_tested @tgn
 Scenario: I can send welcome email to member / supplier
@@ -949,5 +949,12 @@ Scenario: I can remove user's scheduled subscriptions
   And I should see "Active subscription: Basic for supplier"
 
 #9400
-@m26 @requested
+@m26 @requested @tgn @_done @_tested
 Scenario: I can mark supplier or category supplier as big buyer (new name Got credit) (overrides subscription properties)
+  Given user "buyer@nbs.com" should not be big buyer
+  And I fill in "search_with_keyword" with "buyer@nbs.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
+  And I check "user_supplier_big_buyer"
+  When I press translated "administration.users.edit.view.button_update_user"
+  Then user "buyer@nbs.com" should be big buyer

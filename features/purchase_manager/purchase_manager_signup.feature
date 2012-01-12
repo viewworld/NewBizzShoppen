@@ -30,7 +30,6 @@ Feature: Purchase Manager signup
       | user_member_last_name             | Lajoie          |
       | user_member_company_name          | LajoieInc       |
       | user_member_phone                 | 48928217272     |
-      | user_member_screen_name           | Normal Guy      |
       | user_member_email                 | jon@lajoie.ca   |
       | user_member_password              | secret          |
       | user_member_password_confirmation | secret          |
@@ -87,13 +86,24 @@ Feature: Purchase Manager signup
     And I press translated "member.leads.show.view.ok_confirmation"
 
   #9532
-  @m26 @requested
+  @m26 @requested @tgn @_done @_tested
   Scenario: Remove screen name for member, use first name with company name
+    When I visit domain http://fairdeals.eu
+    And I follow translated "fairdeals_home.show.view.get_free_account"
+    And I should not see "Screen name"
 
   #9532
-  @m26 @requested
+  @m26 @requested @tgn @_done @_tested
   Scenario: On the signup page remove region select for DK language
+    When I visit domain http://fairdeals.eu
+    And I follow translated "fairdeals_home.show.view.get_free_account"
+    Then I should see "Region"
+    Then I should see "Time zone"
+    When I visit domain http://fairdeals.dk
+    And I follow translated "fairdeals_home.show.view.get_free_account"
+    Then I should not see "Region"
+    Then I should not see "Time zone"
 
   #9532
-  @m26 @requested
+  @m26 @requested @tgn @_done @_tested_elsewhere
   Scenario: Remove timezone for DK language and set it to +1 CPH

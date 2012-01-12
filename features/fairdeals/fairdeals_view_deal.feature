@@ -127,6 +127,9 @@ Feature: Fairdeals view deal
     And I follow "Abc group deal #1"
     And I follow translated "deals.index.view.contact_me"
     And I fill in "lead_hidden_description" with "my specific needs are following etc"
+    And I should not see "Company logo"
+    And I should not see "Company name"
+    And I should not see "Company description"
     And I press translated "member.leads.new.view.button_create"
     And I press translated "member.leads.show.view.ok_confirmation"
     Then I follow translated "layout.fairdeals.main_menu.deals"
@@ -137,5 +140,5 @@ Feature: Fairdeals view deal
     And I should see "to get your deal you need to ..."
 
   #9535
-  @m26 @requested
+  @m26 @requested @_done @_tested_elsewhere @tgn
   Scenario: When I click get deal then I should see company logo, name and description enclosed into styled box without any headers like company name, logo or description

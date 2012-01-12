@@ -133,9 +133,9 @@ Feature: Sign up feature
   Scenario: When I sign in and my recurring payment on my subscription failed but did not yet downgraded me then I should see flash msg "You recurring payment failed and you will be downgraded"
 
   #9514
-  @m26 @requested
+  @m26 @requested @tgn @_done @_tested_elsewhere
   Scenario: When I sign up from fairleads.com I should become a category supplier
 
   #9514
-  @m26 @requested
+  @m26 @requested @tgn @_done @_tested_elsewhere @rspec
   Scenario: Every newly created category supplier should have a unique category (no buyout, default price taken from settings)

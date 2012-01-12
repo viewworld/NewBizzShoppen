@@ -43,9 +43,11 @@ class User < ActiveRecord::Base
   # roles later, always append them at the end!
   roles :admin, :agent, :call_centre, :call_centre_agent, :supplier, :lead_supplier, :lead_user, :member, :category_supplier, :translator, :deal_maker
 
-  validates_presence_of :email, :screen_name
+  validates_presence_of :email
+  validates_presence_of :screen_name, :if => :validate_screen_name?
   validates_presence_of :first_name, :last_name, :if => :validate_first_and_last_name?
-  validates_uniqueness_of :email, :screen_name
+  validates_uniqueness_of :email
+  validates_uniqueness_of :screen_name, :if => :validate_screen_name?
   validate :payout_information_is_complete
 
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
@@ -70,6 +72,7 @@ class User < ActiveRecord::Base
   has_many :email_bounces, :class_name => "ArchivedEmail", :foreign_key => :to, :primary_key => :email, :conditions => "status = #{ArchivedEmail::BOUNCED}"
   has_many :subscriptions
   has_many :subscription_plans, :through => :subscriptions
+  belongs_to :company_unique_category, :class_name => "LeadCategory", :foreign_key => "deal_category_id"
 
   alias_method :parent, :user
 
@@ -128,6 +131,7 @@ class User < ActiveRecord::Base
   before_update :check_vat_number
   validate :check_billing_rate, :check_subscription_plan
   before_validation :set_auto_generated_password_if_required, :set_role
+  after_initialize :set_auto_buy_enabled
 
   liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_supplier_category_home_url,
          :screen_name, :first_name, :last_name, :home_page_url
@@ -157,6 +161,10 @@ class User < ActiveRecord::Base
   end
 
   def validate_first_and_last_name?
+    true
+  end
+
+  def validate_screen_name?
     true
   end
 
@@ -890,7 +898,7 @@ class User < ActiveRecord::Base
   end
 
   def big_buyer?
-    active_subscription ? active_subscription.big_buyer? : parent ? parent.big_buyer? : false
+    active_subscription ? (read_attribute(:big_buyer) ? true : active_subscription.big_buyer?) : parent ? parent.big_buyer? : false
   end
 
   def team_buyers?
@@ -915,5 +923,20 @@ class User < ActiveRecord::Base
     has_one_of_roles?(:agent, :admin, :call_centre_agent, :call_centre) or
         (supplier? and !active_subscription.is_free? and (!active_subscription.is_today_in_free_period? or
             (active_subscription.is_today_in_free_period? and active_subscription.free_deals_in_free_period.to_i > 0)) )
+  end
+
+  def screen_name
+    if member?
+      "#{first_name}, #{company_name}"
+    else
+      read_attribute(:screen_name)
+    end
+  end
+
+  def set_auto_buy_enabled
+    if new_record? and auto_buy_enabled.nil?
+      self.auto_buy_enabled = (has_role?(:category_supplier) or is_a?(User::CategorySupplier))
+    end
+    true
   end
 end

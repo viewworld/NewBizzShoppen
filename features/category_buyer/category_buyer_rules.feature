@@ -259,14 +259,40 @@ Feature: Category buyer rules
     And I should not see "WymuszeniePierwszenstwa" within "table.categories_table"
 
   #9513
-  @m26 @requested
+  @m26 @requested @_done @_tested @tgn
   Scenario: I can see My deals tab only when I have deal maker role or I was marked by admin as Show my deals
+    Given I am not sign in
+    And I have user with email category_supplier@nbs.com and role category_supplier
+    And user "category_supplier@nbs.com" with role "category_supplier" has attributes "show_my_deals:true"
+    And I sign in as category_supplier@nbs.com with password secret
+    Then I should not see CSS path "a[tab='browse_deals']"
+    And I should see CSS path "a[tab='deals']"
+
+    And user "category_supplier@nbs.com" with role "category_supplier" has attributes "show_my_deals:false"
+    Then I go to the homepage
+    And I should not see CSS path "a[tab='deals']"
+
+    And user "category_supplier@nbs.com" has deal maker role enabled
+    Then I go to the homepage
+    And I should see CSS path "a[tab='deals']"
 
   #9513
-  @m26 @requested
+  @m26 @requested @tgn @_done @_tested_elsewhere
   Scenario: I can see Browse deals only when I was marked by admin as Show all deals
 
   #9512
   @m26 @requested
   Scenario: I can be marked by admin as Auto buy enabled and then all my categories become auto buy by default if possible (Then I don't see Browse leads)
+    Given I am not sign in
+    And I am on the homepage
+    And I have user with email category_supplier@nbs.com and role category_supplier
+    And I sign in as category_supplier@nbs.com with password secret
+    And I should not see CSS path "a[tab='browse_leads']"
+    And user "category_supplier@nbs.com" with role "category_supplier" has attributes "auto_buy_enabled:false"
+    And I go to the homepage
+    And I should see CSS path "a[tab='browse_leads']"
+
+
+
+
 

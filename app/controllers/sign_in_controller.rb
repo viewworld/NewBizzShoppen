@@ -3,6 +3,7 @@ class SignInController < ApplicationController
 
   def new(user_class_name)
     @user = user_class_name.new(:newsletter_on => true, :time_zone => "UTC")
+    @user.time_zone = "Copenhagen" if @user.is_a?(User::Member) and I18n.locale == :da
     data = session[:rpx_data]
     @user.set_fields_for_rpx(data) unless data.blank?
   end

@@ -82,7 +82,7 @@ en:
         tenders: "Tenders"
         search: "Search"
         member:
-          my_requests: "My requests"
+          my_requests: "My deals"
     main_menu:
       admin:
         users: "Users"
@@ -2145,6 +2145,9 @@ en:
           view_description_link: "See description..."
           voucher_label: "Voucher"
           voucher_link: "Download pdf"
+          confirmation_page_label: "How to get Your deal?"
+          deal_code_label: "Deal code"
+          voucher_how_to_redeem_label: "How to redeem?"
     lead_templates:
       index:
         view:
@@ -3593,7 +3596,7 @@ en:
         title: "Title"
         time_zone: "Time zone"
         deal_maker_role_enabled: "Deal maker role enabled"
-        big_supplier: "Big supplier"
+        big_buyer: "Got credit"
       user/call_centre_agent:
         first_name: "First name"
         last_name: "Last name"
@@ -3665,7 +3668,9 @@ en:
         title: "Title"
         time_zone: "Time zone"
         show_deals: "Show deals"
-        big_supplier: "Big supplier"
+        show_my_deals: "Show my deals"
+        big_buyer: "Got credit"
+        auto_buy_enabled: "Auto buy enabled"
       country:
         name: "Country name"
       lead_template:
