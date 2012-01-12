@@ -1,37 +1,35 @@
-  <table class="generic">
-    <thead>
-    <tr>
-      <td><%= t("agent_timesheets.index.overview.#{type.to_s}_header") %></td>
-      <% overview.commercial_days_of_week.each do |dow| %>
-        <td><%= I18n.t("date.day_names")[dow] %></td>
-      <% end %>
-      <td><%= t("agent_timesheets.index.overview.#{type.to_s}_total") %></td>
-    </tr>
-    </thead>
-    <tbody>
-    <% overview.cweeks.each do |cweek| %>
+<table class="generic timesheet">
+  <thead>
+  <tr>
+    <th class="ta_l"><%= t("agent_timesheets.index.overview.#{type.to_s}_header") %></th>
+    <% overview.commercial_days_of_week.each do |dow| %>
+        <th><%= I18n.t("date.day_names")[dow] %></th>
+    <% end %>
+    <th style="width:100px"><%= t("agent_timesheets.index.overview.#{type.to_s}_total") %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% overview.cweeks.each do |cweek| %>
       <tr>
-        <td><%= t("agent_timesheets.index.week") %> <%= cweek.to_s %></td>
+        <td class="cell_week"><%= t("agent_timesheets.index.week") %> <%= cweek.to_s %></td>
         <% overview.days_of_week.each do |dow| %>
-          <td class="val">
-          <% if result =  results.dig(cweek.year, cweek.cweek, dow) %>
-            <%= result.first.send(type).to_f %>
-          <% else %>
-            <%= 0 %>
-          <% end %>
-          </td>
+            <td class="ta_r">
+              <% if result = results.dig(cweek.year, cweek.cweek, dow) %>
+                  <%= result.first.send(type).to_f %>
+              <% else %>
+                  <%= 0 %>
+              <% end %>
+            </td>
         <% end %>
         <td class="total_h"></td>
       </tr>
-    <% end %>
-    </tbody>
-    <tfoot>
-    <tr>
-    <td><%= t("agent_timesheets.index.total") %></td>
+  <% end %>
+  <tr class="total_row">
+    <td class="ta_l"><%= t("agent_timesheets.index.total") %></td>
     <% overview.days_of_week.each do %>
         <td class="total_v"></td>
     <% end %>
     <td class="total_v"></td>
-    </tr>
-    </tfoot>
-  </table>
+  </tr>
+  </tbody>
+</table>
