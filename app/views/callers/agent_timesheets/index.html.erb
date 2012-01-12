@@ -24,7 +24,7 @@
       <% end %>
     </div>
 
-    <div id="team_result_sheet">
+    <div id="team_result_sheet" style="overflow-x: auto;">
       <% if @timesheet.team_result_sheet %>
         <% @timesheet.cweeks.each do |cweek| %>
           <%= render :partial => "team_result_sheet_table", :locals => {:cweek => cweek, :team_result_sheet => @timesheet, :results => @timesheet.team_result_sheet_data} %>
