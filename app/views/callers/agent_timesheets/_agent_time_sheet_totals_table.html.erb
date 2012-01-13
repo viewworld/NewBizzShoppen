@@ -19,7 +19,7 @@
             <% if [:first_result, :last_result].include?(key) %>
                 <td class="total_h"><%= t("agent_timesheets.index.na") %></td>
             <% else %>
-                <td class="total_h avg_val_<%= key %>"></td>
+                <td class="total_h_<%= key.to_s.first %> avg_val_<%= key %>"></td>
             <% end %>
           </tr>
       <% end %>
@@ -37,24 +37,3 @@
   <% end %>
   </tbody>
 </table>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        // agent time sheet totals
-        <% [:hours, :results, :value].each do |key| %>
-        $('div#agent_time_sheet_<%= agent.id %> .total_val_<%= key.to_s %>').each(function() {
-            agent_time_sheet_sum_totals($(this), $('div#agent_time_sheet_<%= agent.id %>').find('tr.<%= key.to_s %>'))
-        });
-        <% end %>
-        <% [:log_out_time, :value].each do |key| %>
-        $('div#agent_time_sheet_<%= agent.id %> .avg_val_<%= key.to_s %>').each(function() {
-            agent_time_sheet_avg($(this), $('div#agent_time_sheet_<%= agent.id %>').find('tr.<%= key.to_s %>'))
-        });
-        <% end %>
-        <% [:first_result, :last_result].each do |key| %>
-        $('div#agent_time_sheet_<%= agent.id %> .avg_val_<%= key.to_s %>').each(function() {
-            agent_time_sheet_avg_time($(this), $('div#agent_time_sheet_<%= agent.id %>').find('tr.<%= key.to_s %>'))
-        });
-        <% end %>
-    });
-</script>
