@@ -528,6 +528,13 @@ div.pagination .disabled
     text-align: right;
 }
 
+.timesheet .subheader_row th
+{
+    font-size: 11px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
 .timesheet .total_row td
 {
     border-bottom: none;
@@ -555,4 +562,19 @@ div.pagination .disabled
     border-right: 1px solid #ddd;
     font-weight: bold;
     text-align: left;
+}
+
+.timesheet .val_h
+{
+    background: #eaeaea;
+}
+
+.timesheet .val_r
+{
+    background: #f0f0f0;
+}
+
+.timesheet .val_v
+{
+    border-right: 1px solid #ddd;
 }

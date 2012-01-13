@@ -1,13 +1,13 @@
 <table class="generic timesheet">
   <thead>
   <tr>
-    <th><%= t("agent_timesheets.index.week") %> <%= cweek.to_s %></th>
+    <th style="width: 180px"><%= t("agent_timesheets.index.week") %> <%= cweek.to_s %></th>
     <% team_result_sheet.commercial_days_of_week.each do |dow| %>
         <th colspan="<%= team_result_sheet.colspan %>"><%= I18n.t("date.day_names")[dow] %></th>
     <% end %>
     <th colspan="<%= team_result_sheet.colspan %>"><%= t("agent_timesheets.index.total") %></th>
   </tr>
-  <tr>
+  <tr class="subheader_row">
     <th></th>
     <% team_result_sheet.days_of_week.each do %>
         <% if team_result_sheet.display_hours %>
@@ -48,13 +48,13 @@
                 <% end %>
             <% else %>
                 <% if team_result_sheet.display_hours %>
-                    <td class="number_to_hours">0</td>
+                    <td class="val_h number_to_hours">0</td>
                 <% end %>
                 <% if team_result_sheet.display_results %>
-                    <td>0</td>
+                    <td class="val_r">0</td>
                 <% end %>
                 <% if team_result_sheet.display_value %>
-                    <td>0.00</td>
+                    <td class="val_v">0</td>
                 <% end %>
             <% end %>
         <% end %>
