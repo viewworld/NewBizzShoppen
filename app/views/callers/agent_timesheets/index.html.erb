@@ -71,7 +71,7 @@
     function team_result_sheet_sum_totals(cell) {
         var pos = $(cell).closest('td').prevAll().length;
         var sum = 0;
-        $('div#team_result_sheet').find('tfoot tr').find('td:eq(' + pos + ')').each(function() {
+        $('div#team_result_sheet tbody tr:last-of-type').find('td:eq(' + pos + ')').each(function() {
             sum += Number($(this).html());
         });
         $(cell).html(Math.round(sum*100)/100);
@@ -123,16 +123,64 @@
         $(cell).html(Math.round(res)/100);
     }
 
+    function number_to_hours(cell){
+        value = Number($(cell).html());
+        if (isNaN(value)) {
+            $(cell).html('0:00')
+        } else {
+            hours = Math.floor(value);
+            minutes = Math.round((value - hours) * 60);
+            if (minutes < 10) {
+                minutes = '0' + minutes
+            }
+            $(cell).html(hours + ':' + minutes)
+        }
+    }
+
+    function number_to_results(cell){
+        value = Number($(cell).html());
+        if (isNaN(value)) {
+            $(cell).html('0')
+        } else {
+            $(cell).html(Math.round(value))
+        }
+    }
+
+    function number_to_value(cell){
+        value = Number($(cell).html());
+        if (isNaN(value)) {
+            $(cell).html('0.00')
+        } else {
+            euros = Math.floor(value);
+            cents = Math.round(value - euros);
+            if (cents < 10) {
+                cents = cents + '0'
+            }
+            $(cell).html(euros + '.' + cents)
+        }
+    }
+
     $(document).ready(function(){
         $("#tabs").tabs();
+
         // overview
         $('.total_h').each(function(){sum_row($(this).closest('tr'))});
         $('.total_v').each(function(){sum_col($(this))});
+
         // team result sheet
-        $('.total_h_h, .total_h_v, .total_h_r').each(function(){sum_row($(this).closest('tr'),'h')});
+        $('.total_h_h').each(function(){sum_row($(this).closest('tr'),'h')});
+        $('.total_h_v').each(function(){sum_row($(this).closest('tr'),'v')});
+        $('.total_h_r').each(function(){sum_row($(this).closest('tr'),'r')});
         $('.total_v_h, .total_v_r, .total_v_v').each(function(){sum_col($(this))});
+
         // team result sheet totals
         $('.total_val_h, .total_val_r, .total_val_v').each(function(){team_result_sheet_sum_totals($(this))});
+
+        // formatting
+        $('.number_to_hours').each(function(){number_to_hours($(this))});
+        $('.number_to_results').each(function(){number_to_results($(this))});
+        $('.number_to_value').each(function(){number_to_value($(this))});
+        $('.number_to_log_out_time').each(function(){number_to_hours($(this))});
     });
   </script>
 </column-mc:>

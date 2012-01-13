@@ -27,7 +27,7 @@ Feature: Agent dealmaker
     Then I should see translated "deal_maker_users.create.flash.user_creation_successful"
 
   @_done @_tested @tgn
-  Scenario: I can create supplier (buyer) account
+  Scenario: I can create category supplier (buyer) account
     Then I follow translated "deal_maker_users.index.view.new_supplier"
     And I fill in "user_company_name" with "Anna Lee Inc."
     And I fill in "user_first_name" with "Anna"
@@ -39,6 +39,7 @@ Feature: Agent dealmaker
     And I fill in "user_email" with "annalee@nbs.com"
     And I fill in "user_password" with "secret"
     And I fill in "user_password_confirmation" with "secret"
+    And I select "Free category supplier subscription" from "user_subscription_plan_id"
     And the "user_skip_email_verification" checkbox should be checked
     And I press translated "deal_maker_users.new.view.button_create"
     Then I should see translated "deal_maker_users.create.flash.user_creation_successful"
@@ -165,3 +166,7 @@ Feature: Agent dealmaker
     And the "user_skip_email_verification" checkbox should be checked
     And I press translated "deal_maker_users.new.view.button_create"
     And I should see translated "deal_maker_users.create.flash.user_creation_successful"
+
+  #9605
+  @m26 @requested @added @tgn @_done @_tested_elsewhere
+  Scenario: I can select subscription plan for member and category supplier

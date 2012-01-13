@@ -1,5 +1,5 @@
 <div class="pdd_10 no_pdd_t rltv">
-  <fieldset class="inputs labels_ta_r labels_200">
+  <fieldset class="inputs labels_ta_r labels_<%= (user_signed_in? and current_user.member?) ? 160 : 180 %>">
     <% lead.lead_templates.each do |lead_template| %>
         <div id="lead_template_container_<%= lead_template.id %>" style="clear:both; position: relative;<%= "display: none;" if !lead_template.is_mandatory and !lead_template.is_filled_out_for(lead) %>">
           <ol class="align_inputs">

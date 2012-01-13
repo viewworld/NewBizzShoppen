@@ -5,11 +5,13 @@ class CategoryCustomer < ActiveRecord::Base
   after_create :assign_category_to_supplier_interests
 
   def supplier
-    user.send(:casted_class).find(user_id)
+    user.with_role
   end
 
   def assign_category_to_supplier_interests
-    supplier.categories << category unless supplier.categories.include?(category)
-    supplier.save
+    unless supplier.category_ids.include?(category.id)
+      supplier.categories << category
+      supplier.save
+    end
   end
 end

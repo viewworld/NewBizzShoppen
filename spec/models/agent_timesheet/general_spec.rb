@@ -3,6 +3,13 @@ require 'spec_helper'
 describe AgentTimesheet::General do
   fixtures :all
 
+  def time_log(agent,campaign,start,duration)
+    start_time = Time.parse(start)
+    UserSessionLog.make!(:user => agent, :campaign => campaign,
+                         :start_time => start_time,
+                         :end_time => start_time+duration.minutes)
+  end
+
   before(:each) do
     # create users
     @call_centre = User::CallCentre.make!
@@ -42,14 +49,6 @@ describe AgentTimesheet::General do
     @contact2 = Contact.make!(:campaign => @campaign)
     @contact3 = Contact.make!(:campaign => @campaign, :price => 130)
     @contact4 = Contact.make!(:campaign => @campaign, :price => 13)
-
-    # session logs
-    UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign,
-                         :start_time => Time.parse('2011-05-15 12:00:00'),
-                         :end_time => Time.parse('2011-05-15 13:00:00'))
-    UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign,
-                         :start_time => Time.parse('2012-05-15 12:00:00'),
-                         :end_time => Time.parse('2012-05-15 13:00:00'))
   end
 
   context "Initialization" do
@@ -79,6 +78,8 @@ describe AgentTimesheet::General do
     end
 
     it "should return all commercial weeks between start and end dates" do
+      time_log(@call_centre_agent1, @campaign, '2011-05-15 12:00:00', 60)
+      time_log(@call_centre_agent1, @campaign, '2012-05-15 12:00:00', 60)
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                        :end_date          => '2012-05-15',
                                        :campaigns         => [@campaign],
@@ -96,6 +97,7 @@ describe AgentTimesheet::General do
 
   context "Overview" do
     it "should group the results by year, week and day of week" do
+      time_log(@call_centre_agent1, @campaign, '2012-05-15 12:00:00', 60)
       at = AgentTimesheet::General.new(:start_date        => '2012-05-15',
                                        :end_date          => '2012-05-15',
                                        :campaigns         => [@campaign],
@@ -104,12 +106,9 @@ describe AgentTimesheet::General do
     end
 
     it "should sum time only for selected agents and campaigns" do
-      UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign2,
-                           :start_time => Time.parse('2011-05-15 12:00:00'),
-                           :end_time => Time.parse('2011-05-15 13:00:00'))
-      UserSessionLog.make!(:user => @call_centre_agent2, :campaign => @campaign,
-                           :start_time => Time.parse('2011-05-15 12:00:00'),
-                           :end_time => Time.parse('2011-05-15 13:00:00'))
+      time_log(@call_centre_agent1, @campaign, '2011-05-15 12:00:00', 60)
+      time_log(@call_centre_agent1, @campaign2, '2011-05-15 12:00:00', 60)
+      time_log(@call_centre_agent2, @campaign, '2011-05-15 12:00:00', 60)
       AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
@@ -128,20 +127,80 @@ describe AgentTimesheet::General do
                                   :agents            => [@call_centre_agent2.id]).overview_data.dig(2011,19,6).should be_nil
 
     end
+
+    it "should sum results only for selected agents and campaigns" do
+      time_log(@call_centre_agent1, @campaign, '2011-05-15 12:00:00', 60)
+      time_log(@call_centre_agent2, @campaign, '2011-05-15 12:00:00', 60)
+      AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign],
+                                  :agents            => [@call_centre_agent1.id]).overview_data.dig(2011,19,6).first.results.should == 0.0
+
+      CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.parse('2011-05-15 16:00:00'))
+      AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign],
+                                  :agents            => [@call_centre_agent1.id]).overview_data.dig(2011,19,6).first.results.should == 1.0
+
+      CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent2, :created_at => Time.parse('2011-05-15 16:00:00'))
+      AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign],
+                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id]).overview_data.dig(2011,19,6).first.results.should == 2.0
+    end
+
+    it "should sum value only for sleected agents and campaigns" do
+      time_log(@call_centre_agent1, @campaign, '2011-05-15 12:00:00', 60)
+      time_log(@call_centre_agent2, @campaign, '2011-05-15 12:00:00', 60)
+      CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.parse('2011-05-15 16:00:00'))
+      CallResult.make!(:contact => @contact2, :result => @result1, :creator => @call_centre_agent2, :created_at => Time.parse('2011-05-15 16:00:00'))
+      AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign],
+                                  :agents            => [@call_centre_agent1.id]).overview_data.dig(2011,19,6).first.value.should == 100.0
+      AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign],
+                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id]).overview_data.dig(2011,19,6).first.value.should == 200.0
+
+
+    end
   end
 
   context "Team result sheet" do
     it "should group the results by year, week, user_id and day of week" do
+      time_log(@call_centre_agent1, @campaign, '2012-05-15 12:00:00', 60)
       at = AgentTimesheet::General.new(:start_date        => '2012-05-15',
                                        :end_date          => '2012-05-15',
                                        :campaigns         => [@campaign],
                                        :agents            => @campaign.users.map(&:id))
       at.team_result_sheet_data.dig(2012,20,@call_centre_agent1.id,1).size.should == 1
     end
+
+    it "should sum time only for selected agents and campaigns" do
+      time_log(@call_centre_agent1, @campaign, '2011-05-15 12:00:00', 60)
+      time_log(@call_centre_agent1, @campaign2, '2011-05-15 12:00:00', 60)
+      time_log(@call_centre_agent2, @campaign, '2011-05-15 12:00:00', 60)
+      at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign],
+                                  :agents            => [@call_centre_agent1.id])
+      at.team_result_sheet_data.dig(2011,19,@call_centre_agent1.id,6).first.hours.should == 1.0
+      at.team_result_sheet_data.dig(2011,19,@call_centre_agent2.id,6).should be_nil
+
+      at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign],
+                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id])
+      at.team_result_sheet_data.dig(2011,19,@call_centre_agent1.id,6).first.hours.should == 1.0
+      at.team_result_sheet_data.dig(2011,19,@call_centre_agent2.id,6).first.hours.should == 1.0
+
+    end
   end
 
   context "Agent time sheet" do
     it "should group the results by year, week and day of week" do
+      time_log(@call_centre_agent1, @campaign, '2012-05-15 12:00:00', 60)
       at = AgentTimesheet::General.new(:start_date        => '2012-05-15',
                                        :end_date          => '2012-05-15',
                                        :campaigns         => [@campaign],

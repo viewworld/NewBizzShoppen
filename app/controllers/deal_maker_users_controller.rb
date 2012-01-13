@@ -11,14 +11,14 @@ class DealMakerUsersController < SecuredController
 
   def new
     @materials = []
-    @user = "User::#{params[:user_type] == "member" ? "Member" : "Supplier"}".constantize.new(:auto_generate_password => true, :assign_free_subscription_plan => true)
+    @user = "User::#{params[:user_type] == "member" ? "Member" : "CategorySupplier"}".constantize.new(:auto_generate_password => true, :assign_free_subscription_plan => true)
     @user.skip_email_verification = true
   end
 
   def create
     all_materials = eval(params[:serialized_materials_array_field].to_s).to_a
     @materials = current_user.materials.where(:id => all_materials.map{ |r| r.first })
-    @user = "User::#{params[:user_type] == "member" ? "Member" : "Supplier"}".constantize.new(params[:user])
+    @user = "User::#{params[:user_type] == "member" ? "Member" : "CategorySupplier"}".constantize.new(params[:user])
     @user.skip_email_verification = params[:user][:skip_email_verification]
     @user.created_by = current_user.id
     @user.email_materials = @materials.select { |m| !all_materials.detect{ |am| am.first.to_i == m.id and am.last.to_i == 1 }.nil? }

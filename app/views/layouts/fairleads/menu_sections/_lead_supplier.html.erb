@@ -1,6 +1,6 @@
 <% if current_user and current_user.has_role?(:supplier) %>
     <%= main_menu_link_to t("layout.main_menu.lead_supplier.lead_purchases"), suppliers_lead_purchases_path, :tab => "owned_leads" %>
-    <% if !current_user.has_role?(:category_supplier) or current_user.show_deals? %>
+    <% if (current_user.has_role?(:supplier) and !current_user.has_role?(:category_supplier)) or (current_user.deal_maker? or current_user.show_my_deals?) %>
         <%= main_menu_link_to t("layout.main_menu.lead_supplier.my_deals"), suppliers_deals_path, :tab => "deals" %>
     <% end %>
     <% unless current_user.has_role?(:category_supplier) %>

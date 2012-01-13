@@ -13,7 +13,7 @@
       <tr>
         <td class="cell_week"><%= t("agent_timesheets.index.week") %> <%= cweek.to_s %></td>
         <% overview.days_of_week.each do |dow| %>
-            <td class="ta_r">
+            <td class="ta_r val number_to_<%= type.to_s %>">
               <% if result = results.dig(cweek.year, cweek.cweek, dow) %>
                   <%= result.first.send(type).to_f %>
               <% else %>
@@ -21,15 +21,15 @@
               <% end %>
             </td>
         <% end %>
-        <td class="total_h"></td>
+        <td class="total_h val number_to_<%= type.to_s %>"></td>
       </tr>
   <% end %>
   <tr class="total_row">
     <td class="ta_l"><%= t("agent_timesheets.index.total") %></td>
     <% overview.days_of_week.each do %>
-        <td class="total_v"></td>
+        <td class="total_v val number_to_<%= type.to_s %>"></td>
     <% end %>
-    <td class="total_v"></td>
+    <td class="total_v val number_to_<%= type.to_s %>"></td>
   </tr>
   </tbody>
 </table>

@@ -45,7 +45,7 @@ class Deal < AbstractLead
 
   validate :deal_admin_presence, :unless => Proc.new { |d| d.new_record? }
 
-  before_create :create_uniq_deal_category, :set_default_max_auto_buy
+  before_create :assign_uniq_deal_category, :set_default_max_auto_buy
   after_create :certify_for_unknown_email, :assign_deal_admin, :set_deal_unique_id
   before_save :set_dates, :check_deal_request_details_email_template, :set_enabled_from, :handle_max_auto_buy
   after_save :set_voucher_numbers
@@ -140,13 +140,13 @@ class Deal < AbstractLead
     if supplier
       supplier
     else
-      existing_users_count = User::Supplier.where(:screen_name => contact_name).count
+      existing_users_count = User.where(:screen_name => contact_name).count
       contact_name_arr = contact_name.strip.split(" ")
       contact_name_arr = contact_name_arr.size == 1 ? contact_name_arr : [contact_name_arr.first, contact_name_arr[1..-1].join(' ')]
-      user = User::Supplier.new({:email => email_address, :company_name => company_name, :phone => phone_number,
+      user = User::CategorySupplier.new({:email => email_address, :company_name => company_name.strip, :phone => phone_number,
                                  :screen_name => "#{contact_name}#{existing_users_count.zero? ? '' : existing_users_count+1}",
                                  :agreement_read => true, :first_name => contact_name_arr.first, :last_name => contact_name_arr.last,
-                                 :assign_free_subscription_plan => true}.merge(params))
+                                 :assign_free_subscription_plan => true, :show_my_deals => true}.merge(params))
       user.skip_email_verification = "1"
       user.address = Address.new(:address_line_1 => address_line_1, :address_line_2 => address_line_2, :address_line_3 => address_line_3,
                                  :zip_code => zip_code, :country_id => country_id, :region_id => region_id)
@@ -167,7 +167,7 @@ class Deal < AbstractLead
   end
 
   def supplier
-    creator.supplier? ? creator : User::Supplier.where(:email => email_address).first
+    creator.supplier? ? creator.with_role : User.where(:email => email_address).first.nil? ? nil : User.where(:email => email_address).first.with_role
   end
 
   def has_unread_comments_for_user?(user)
@@ -327,22 +327,15 @@ class Deal < AbstractLead
     update_attribute(:creator_name, creator.full_name) unless creator_name
   end
 
-  def create_uniq_deal_category
+  def assign_uniq_deal_category
     if (supplier and creator.supplier?) or ActiveRecord::ConnectionAdapters::Column.value_to_boolean(use_company_name_as_category)
-      if supplier
-        lead_category = supplier.deal_category_id ? LeadCategory.find(supplier.deal_category_id) : LeadCategory.create(:name => supplier.company_name, :currency => Currency.default_currency)
+      company_unique_category = if supplier
+        supplier.save
+        supplier.company_unique_category
       else
-        lead_category = LeadCategory.create(:name => company_name, :currency => Currency.default_currency)
+        LeadCategory.for_company_name(company_name)
       end
-
-      supplier.update_attribute(:deal_category_id, lead_category.id) if supplier and supplier.deal_category_id.blank?
-      lead_category.update_attribute(:is_customer_unique, true) unless lead_category.is_customer_unique
-      if supplier and !lead_category.customers.map(&:id).include?(supplier.id)
-        lead_category.customers << User.find(supplier.id)
-        lead_category.save
-      end
-      lead_category.update_attribute(:auto_buy, true) if !lead_category.auto_buy? and supplier and supplier.big_buyer?
-      self.lead_category_id = lead_category.id
+      self.lead_category_id = company_unique_category.id
     end
   end
 

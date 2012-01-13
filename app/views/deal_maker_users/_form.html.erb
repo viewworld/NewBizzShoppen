@@ -29,6 +29,7 @@
         <%= form.input :screen_name %>
         <%= form.input :phone %>
         <%= form.input :email %>
+        <%= form.input :subscription_plan_id, :as => :select, :collection => SubscriptionPlan.active.for_role(params[:user_type].to_sym).without_paypal %>
 
 
         <%= form.input :agreement_read, :as => :hidden %>

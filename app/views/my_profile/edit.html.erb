@@ -13,7 +13,6 @@
       <frm title="#{t('my_profile.edit.view.edit_account')}">
         <param:header>
           <%= bt_link_to nil, t("my_profile.edit.view.change_password"), password_path, :class => "fltr" %>
-          <%= bt_link_to(nil, t("my_profile.edit.view.remove_category_supplier"), remove_category_supplier_my_profile_path, :method => :put, :class => "fltr", :confirm => "Are you sure? This action can not be undone.") if @user.has_role?(:category_supplier) and @user.has_role?(:supplier) %>
         </param:header>
         <param:content>
           <%= render :partial => "form", :locals => { :form => form } %>

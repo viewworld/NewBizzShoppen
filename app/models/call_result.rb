@@ -22,10 +22,10 @@ class CallResult < ActiveRecord::Base
   validates_presence_of :contact_company_name, :contact_phone_number, :contact_address_line_3, :if => Proc.new { |cr| cr.result.upgrades_to_member? }
   validate :validate_uniqueness_of_contact_email_address, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
 
-  after_create :process_side_effects, :update_contact_note, :set_last_call_result_in_contact, :update_contact_email, :update_contact_address
-  after_update :process_side_effects, :update_contact_email, :update_contact_address
-  after_destroy :update_completed_status, :update_pending_status
-  before_update :process_for_changed_result_type
+  after_create :process_side_effects, :update_contact_note, :set_last_call_result_in_contact, :update_contact_email, :update_contact_address, :unless => :save_without_callbacks
+  after_update :process_side_effects, :update_contact_email, :update_contact_address, :unless => :save_without_callbacks
+  after_destroy :update_completed_status, :update_pending_status, :unless => :save_without_callbacks
+  before_update :process_for_changed_result_type, :unless => :save_without_callbacks
 
   PENDING_RESULT_TYPES = [:call_back, :not_interested_now]
 

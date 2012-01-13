@@ -29,9 +29,9 @@
           <tr class="total_row bordered">
             <td class="ta_l"><%= t("agent_timesheets.index.agent_time_sheet.#{key}") %></td>
             <% agent_time_sheet.days_of_week.each do %>
-                <td class="total_val_<%= key %>"></td>
+                <td class="total_val_<%= key.to_s %> number_to_<%= key.to_s %>"></td>
             <% end %>
-            <td class="total_val_<%= key %>"></td>
+            <td class="total_val_<%= key %> number_to_<%= key.to_s %>"></td>
           </tr>
       <% end %>
   <% end %>
