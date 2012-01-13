@@ -117,6 +117,7 @@ Feature: Category buyer rules
     When Category named "Basic Leads" already exists
     And Category named "Worst Leads" already exists
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Basic Leads" with attributes ""
+    And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
     And user "jon@lajoie.ca" has team buyers enabled
     And user "jon@lajoie.ca" is assigned to category "Worst Leads" as category buyer
     And I am on the home page
@@ -143,6 +144,7 @@ Feature: Category buyer rules
     When Category named "Best Leads" already exists
     And Category named "Worst Leads" already exists
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes ""
+    And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
     And user "jon@lajoie.ca" has team buyers enabled
     And user "jon@lajoie.ca" is assigned to category "Worst Leads" as category buyer
     And I am on category home page for Best Leads
@@ -178,14 +180,15 @@ Feature: Category buyer rules
     And I am on category home page for Worst Leads
     Then I should be on category home page for Basic Leads
 
-  @m6 @added @_done @_tested @requested
+  #deprecated since every category supplier has company uniq category created
+  @m6 @added @_done @_tested @requested @_deprecated
   Scenario: I can't login when I have no categories assigned
-    When Category named "SampleCat" already exists
-    When I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "SampleCat"
-    And user "jon@lajoie.ca" has no buying categories
-    And I am on the home page
-    And I sign in as jon@lajoie.ca with password secret
-    Then I should see translated "common.no_categories_for_category_supplier"
+#    When Category named "SampleCat" already exists
+#    When I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "SampleCat"
+#    And user "jon@lajoie.ca" has no buying categories
+#    And I am on the home page
+#    And I sign in as jon@lajoie.ca with password secret
+#    Then I should see translated "common.no_categories_for_category_supplier"
 
   @m6 @added @ao @_done @_tested
   Scenario: I can edit lead buyer that belongs to my account

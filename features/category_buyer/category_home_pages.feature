@@ -40,11 +40,12 @@ Feature: Category home pages
     And I follow translated "category_home.show.view.complete_list_link" within "#news"
     Then I should see "1" rows in a table with headers within "table.generic"
 
-  @_done
+  @_done @_tested
   Scenario: I can see a list of most recent category leads on category home page
     When Category named "Best Leads" already exists
-    And lead LeadOne exists within category Best Leads
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
+    And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
+    And lead LeadOne exists within category Best Leads
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     Then I should see "1" items on a list within "#latest_leads"
@@ -60,13 +61,14 @@ Feature: Category home pages
     And I follow translated "agent_home.show.view.complete_list_link" within "#latest_leads"
     Then I should see translated "common.nothing_to_display"
 
-  @_done
+  @_done @_tested
   Scenario: I can't see leads from other categories on recent leads
     When Category named "Best Leads" already exists
-    And lead BestLead exists within category Best Leads
     And Category named "Worst Leads" already exists
-    And lead WorstLead exists within category Worst Leads
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
+    And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
+    And lead BestLead exists within category Best Leads
+    And lead WorstLead exists within category Worst Leads
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     Then I should see "1" items on a list within "#latest_leads"
@@ -76,8 +78,9 @@ Feature: Category home pages
   @_done
   Scenario: I can see complete list of category leads
     When Category named "Best Leads" already exists
-    And there are "11" leads in category "Best Leads"
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
+    And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
+    And there are "11" leads in category "Best Leads"
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     Then I should see "3" items on a list within "#latest_leads"
@@ -99,8 +102,9 @@ Feature: Category home pages
   @_done
   Scenario: I can buy selected leads from this category
     When Category named "Best Leads" already exists
-    And there are "11" leads in category "Best Leads"
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
+    And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false,big_buyer:false"
+    And there are "11" leads in category "Best Leads"
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
@@ -169,6 +173,7 @@ Feature: Category home pages
     When Category named "Best Leads" already exists
     And I am on the home page
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
+    And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
     And I sign in as jon@lajoie.ca with password secret
     Then I should see "Best Leads"
     And category "Best Leads" is unique for user with email "jon@lajoie.ca" role "category_supplier"

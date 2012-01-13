@@ -12,6 +12,7 @@ Background:
 
   @_done @_tested @tgn
   Scenario: I should not see browse leads tab when I have autobuy enabled for all my categories
+    Given user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:true"
     And category "Best Leads" is unique for user with email "jon@lajoie.ca" role "supplier"
     Given category "Best Leads" is unique for some customers users and is auto buy
     And I am on the home page

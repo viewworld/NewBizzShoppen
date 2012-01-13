@@ -198,10 +198,8 @@ class Category < ActiveRecord::Base
       if user.supplier? and (user.all_requested_lead_ids.any? or user.all_purchased_lead_ids.any?)
         leads_scope = leads_scope.with_ids_not_in(user.all_requested_lead_ids + user.all_purchased_lead_ids)
       end
-      if user.has_accessible_categories?
-        leads_scope = leads_scope.within_accessible_categories(user.accessible_categories_ids)
-      elsif user.has_role?(:supplier)
-        leads_scope = leads_scope.with_supplier_unique_categories(user.id)
+      if user.has_any_role?(:supplier, :lead_supplier, :lead_user)
+        leads_scope = leads_scope.with_supplier_unique_categories(user.parent ? user.parent_id : user.id)
       elsif user.agent?
         leads_scope = leads_scope.with_agent_unique_categories(user.id)
       end
@@ -225,8 +223,10 @@ class Category < ActiveRecord::Base
                           roots
                         elsif user.has_role?(:category_supplier)
                           user.parent_accessible_categories_without_auto_buy
+                        elsif user.has_any_role?(:supplier, :lead_supplier, :lead_user)
+                          roots.with_supplier_unique(user.parent ? user.parent.with_role : user)
                         else
-                          user.has_accessible_categories? ? roots.within_accessible(user) : user.has_role?(:supplier) ? roots.with_supplier_unique(user) : roots.with_agent_unique(user)
+                          roots.with_agent_unique(user)
                         end
                       else
                         roots.without_unique
@@ -239,9 +239,11 @@ class Category < ActiveRecord::Base
   def children_for(user)
     if user
       if user.admin?
-        children_categories = children
+         children_categories = children
+      elsif user.has_any_role?(:supplier, :lead_supplier, :lead_user)
+        children_categories = children.with_supplier_unique(user.parent ? user.parent.with_role : user)
       else
-        children_categories = user.has_accessible_categories? ? children.within_accessible(user) : user.has_role?(:supplier) ? children.with_supplier_unique(user) : children.with_agent_unique(user)
+        children_categories = children.with_agent_unique(user)
       end
     else
       children_categories = children.without_unique

@@ -951,10 +951,11 @@ Scenario: I can remove user's scheduled subscriptions
 #9400
 @m26 @requested @tgn @_done @_tested
 Scenario: I can mark supplier or category supplier as big buyer (new name Got credit) (overrides subscription properties)
-  Given user "buyer@nbs.com" should not be big buyer
+  Given I have user with email buyer2@nbs.com and role supplier
+  Given user "buyer2@nbs.com" should not be big buyer
   And I fill in "search_with_keyword" with "buyer@nbs.com"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
   And I check "user_supplier_big_buyer"
   When I press translated "administration.users.edit.view.button_update_user"
-  Then user "buyer@nbs.com" should be big buyer
+  Then user "buyer2@nbs.com" should be big buyer
