@@ -24,14 +24,44 @@ $(document).ready(function() {
    });
 });
 
+function append_element(dst, value, text){
+    $("#" + dst).
+            append($("<option></option>").
+            attr("value", value).
+            text(text));
+}
+
 function move_selected(src,dst){
 $("#" + src + " option:selected").each(function()
 {
-    $("#" + dst).
-            append($("<option></option>").
-            attr("value", $(this).val()).
-            text($(this).text()));
+    append_element(dst, $(this).val(), $(this).text());
     $(this).remove();
+});
+}
+
+function move_selected_unique(src,dst){
+$("#" + src + " option:selected").each(function()
+{
+    if( $("#" + dst + " option:contains('" + $(this).text() + "')").length == 0 ){
+        append_element(dst, $(this).val(), $(this).text());
+        $(this).remove();
+    }
+});
+}
+
+function copy_selected_unique(src,dst){
+$("#" + src + " option:selected").each(function(){
+    if( $("#" + dst + " option:contains('" + $(this).text() + "')").length == 0 ){
+        append_element(dst, $(this).val(), $(this).text());
+    }
+});
+}
+
+function remove_selected_unique(src,dst){
+$("#" + src + " option:selected").each(function(){
+    if( $("#" + dst + " option:contains('" + $(this).text() + "')").length > 0 ){
+        $("#" + dst + " option:contains('" + $(this).text() + "')").remove();
+    }
 });
 }
 
