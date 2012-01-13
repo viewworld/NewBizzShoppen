@@ -23,6 +23,8 @@ module AgentTimesheetCommon
         instance_variable_set("@#{k}".to_sym, ActiveRecord::ConnectionAdapters::Column.value_to_boolean(v))
       elsif k == :agents
         instance_variable_set("@#{k}".to_sym, User.find(v))
+      elsif k == :call_centres
+        instance_variable_set("@#{k}".to_sym, User.find(v).map{ |u| [u] + u.subaccounts }.flatten)
       elsif k == :campaigns
         instance_variable_set("@#{k}".to_sym, Campaign.find(v))
       elsif [:start_date,:end_date].include?(k) and v.is_a?(String)
@@ -31,6 +33,8 @@ module AgentTimesheetCommon
         instance_variable_set("@#{k}".to_sym, v)
       end
     end
+    @agents = (@agents + @call_centres).uniq
+
     @scoped = AgentTimesheet.
         show_weekends(@show_weekends).
         for_campaigns(@campaigns).
