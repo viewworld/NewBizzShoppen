@@ -37,7 +37,7 @@ Scenario: On deal request details page I should see header should set to deal's 
 Scenario: On deal request details page I should see Confirmation page field and deal code
 
 #9481
-@m26
+@m26 @_done @non_testable
 Scenario: On deal request details page I should see template forms aligned to right column - under Note field
 
 #9506

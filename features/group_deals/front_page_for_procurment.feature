@@ -357,5 +357,5 @@ Feature: Front page for procurment
     Then I should not see CSS path "div.news"
 
   #9437
-  @m26 @requested
+  @m26 @requested @ao @_done @non_testable
   Scenario: On fairdeals.dk and fairdeals.eu the certificate should be removed
