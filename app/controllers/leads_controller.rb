@@ -65,7 +65,7 @@ class LeadsController < ApplicationController
   def creators
     @with_created_by = params[:with_created_by]
     @with_selected_categories = params[:with_selected_categories]
-    @creators = (cu_or_user_from_rss_token and cu_or_user_from_rss_token.has_accessible_categories?) ? User.with_leads.within_accessible_categories(cu_or_user_from_rss_token) : User.screen_name_and_id_with_leads.with_leads_within_categories(@with_selected_categories)
+    @creators = User.screen_name_and_id_with_leads.with_leads_within_categories(@with_selected_categories)
   end
 
   protected

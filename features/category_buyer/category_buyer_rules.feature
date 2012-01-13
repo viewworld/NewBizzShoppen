@@ -103,6 +103,7 @@ Feature: Category buyer rules
     When Category named "Best Leads" already exists
     And Category named "Worst Leads" already exists
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes ""
+    And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
     And user "jon@lajoie.ca" has team buyers enabled
     And user "jon@lajoie.ca" is assigned to category "Worst Leads" as category buyer
     And I am on category home page for Best Leads

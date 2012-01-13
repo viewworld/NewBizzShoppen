@@ -24,11 +24,11 @@ module User::CommonSupplier
 
     def handle_auto_buy
       make_buying_categories_unique
-      if unique_categories.any? and big_buyer? and auto_buy_enabled?
+      if unique_categories.any? and big_buyer? and (!is_category_supplier? or (is_category_supplier? and auto_buy_enabled?))
         unique_categories.select{ |c| !c.auto_buy }.each do |category|
           category.update_attribute(:auto_buy, true) if category.customers.size == 1
         end
-      elsif unique_categories.any? and (!big_buyer? or !auto_buy_enabled?)
+      elsif unique_categories.any? and (!big_buyer? or (!is_category_supplier? or (is_category_supplier? and !auto_buy_enabled?)))
         unique_categories.select{ |c| c.auto_buy }.each do |category|
           category.update_attribute(:auto_buy, false)
         end
@@ -68,6 +68,10 @@ module User::CommonSupplier
     end
 
     public
+
+    def is_category_supplier?
+      (has_role?(:category_supplier) or is_a?(User::CategorySupplier))
+    end
 
     def accessible_categories
       unique_categories.any? ? unique_categories : LeadCategory.without_locked

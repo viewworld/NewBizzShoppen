@@ -81,3 +81,11 @@ When /^I follow category "([^"]*)"$/ do |category_name|
   regex = "/categories#{category.is_a?(LeadCategory) ? '' : '\/deals'}\\/#{category.cached_slug}#{"\\?search\\[with_category\\]=#{category.id}" if category.is_a?(LeadCategory)}/"
   Then %{I click hidden link by url regex "#{regex}" within "#{dom_id}"}
 end
+
+
+When /^I follow category for edit "([^"]*)"$/ do |category_name|
+  category = Category.where(:name => category_name).first
+  dom_id = "##{category.type.to_s.tableize.singularize}_#{category.id}"
+  regex = "/administration\\/categories\\/#{category.id}\\/edit/"
+  Then %{I click hidden link by url regex "#{regex}" within "#{dom_id}"}
+end
