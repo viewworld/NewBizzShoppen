@@ -452,3 +452,7 @@ end
 When /^I click div "([^"]*)"$/ do |id|
   page.first(:css, "div[id*='#{id}']").click()
 end
+When /^I set date "([^\"]*)" for field "([^\"]*)"$/ do |date, date_field|
+  date = date.to_s.include?("Date") ? eval(date) : date
+  Then %{I fill in "#{date_field}" with "#{date}"}
+end
