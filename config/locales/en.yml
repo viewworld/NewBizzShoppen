@@ -3945,7 +3945,7 @@ en:
       team_result_sheet:
         header: "Team result sheet"
         time: "Time"
-        results: "Results"
+        results: "Res"
         value: "Value"
       agent_time_sheet:
         header: "Agent timesheet: %{name}"
