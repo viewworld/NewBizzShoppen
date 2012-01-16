@@ -22,11 +22,11 @@ module AgentTimesheetCommon
       if [:show_weekends,:display_hours,:display_results,:display_value,:overview,:team_result_sheet,:agent_timesheet].include?(k)
         instance_variable_set("@#{k}".to_sym, ActiveRecord::ConnectionAdapters::Column.value_to_boolean(v))
       elsif k == :agents
-        instance_variable_set("@#{k}".to_sym, User.find(v))
+        instance_variable_set("@#{k}".to_sym, User.find_all_by_id(v))
       elsif k == :call_centres
-        instance_variable_set("@#{k}".to_sym, User.find(v).map{ |u| [u] + u.subaccounts }.flatten)
+        instance_variable_set("@#{k}".to_sym, User.find_all_by_id(v).map{ |u| [u] + u.subaccounts }.flatten)
       elsif k == :campaigns
-        instance_variable_set("@#{k}".to_sym, Campaign.find(v))
+        instance_variable_set("@#{k}".to_sym, Campaign.find_all_by_id(v))
       elsif [:start_date,:end_date].include?(k) and v.is_a?(String)
         instance_variable_set("@#{k}".to_sym, Date.parse(v))
       else

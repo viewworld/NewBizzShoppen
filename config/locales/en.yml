@@ -125,6 +125,7 @@ en:
         lead_templates: "Lead templates"
         campaigns: Campaigns
         reports: "Reports"
+        campaign_reports: "Campaign"
         agent_timesheets: "Timesheets"
         deals: "My deals"
       call_centre_agent:
