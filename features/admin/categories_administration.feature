@@ -176,8 +176,8 @@ Scenario: I can enable auto-buy option for big buyer for categories which are un
   Then I have user with email nbsbuyer3483434biz@nbs.com and role supplier
   Then User nbsbuyer3483434biz@nbs.com with role supplier is big buyer
   Then Category Computers is created
-  When I go to administration categories
-  Then I follow translated "administration.categories.index.view.edit_link"
+  When I go to browse leads
+  And I follow category for edit "Computers"
   Then I check "category_is_customer_unique"
   Then I select "nbsbuyer3483434biz@nbs.com" from "all_customers"
   Then I follow "move_right" within "#users_selection_customers_div"

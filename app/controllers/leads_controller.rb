@@ -65,7 +65,7 @@ class LeadsController < ApplicationController
   def creators
     @with_created_by = params[:with_created_by]
     @with_selected_categories = params[:with_selected_categories]
-    @creators = (cu_or_user_from_rss_token and cu_or_user_from_rss_token.has_accessible_categories?) ? User.with_leads.within_accessible_categories(cu_or_user_from_rss_token) : User.screen_name_and_id_with_leads.with_leads_within_categories(@with_selected_categories)
+    @creators = User.screen_name_and_id_with_leads.with_leads_within_categories(@with_selected_categories)
   end
 
   protected
@@ -74,9 +74,8 @@ class LeadsController < ApplicationController
     params[:search]||={}
     if cu_or_user_from_rss_token
       params[:search][:with_ids_not_in] = cu_or_user_from_rss_token.all_requested_lead_ids + cu_or_user_from_rss_token.all_purchased_lead_ids
-      params[:search][:within_accessible_categories] = cu_or_user_from_rss_token.accessible_categories_ids if cu_or_user_from_rss_token.has_accessible_categories?
-      if !cu_or_user_from_rss_token.has_accessible_categories? and cu_or_user_from_rss_token.has_role?(:supplier)
-        params[:search][:with_supplier_unique_categories] = cu_or_user_from_rss_token.id
+      if cu_or_user_from_rss_token.has_any_role?(:supplier, :lead_supplier, :lead_user)
+        params[:search][:with_supplier_unique_categories] = cu_or_user_from_rss_token.parent ? cu_or_user_from_rss_token.parent_id : cu_or_user_from_rss_token.id
       else
         params[:search][:with_supplier_unique_categories] = nil
       end
@@ -98,7 +97,7 @@ class LeadsController < ApplicationController
     if cu_or_user_from_rss_token and cu_or_user_from_rss_token.has_role?(:admin)
       @categories_scope = LeadCategory.scoped
     elsif cu_or_user_from_rss_token
-      @categories_scope = cu_or_user_from_rss_token.has_accessible_categories? ? LeadCategory.within_accessible(cu_or_user_from_rss_token).without_locked_and_not_published : cu_or_user_from_rss_token.has_role?(:supplier) ? LeadCategory.without_locked_and_not_published.with_supplier_unique(cu_or_user_from_rss_token).scoped : LeadCategory.without_locked_and_not_published.with_agent_unique(cu_or_user_from_rss_token).scoped
+      @categories_scope = cu_or_user_from_rss_token.has_any_role?(:supplier, :lead_supplier, :lead_user) ? LeadCategory.without_locked_and_not_published.with_supplier_unique(cu_or_user_from_rss_token).scoped : LeadCategory.without_locked_and_not_published.with_agent_unique(cu_or_user_from_rss_token).scoped
     else
       @categories_scope = LeadCategory.without_locked_and_not_published.without_unique.scoped
     end
@@ -119,7 +118,7 @@ class LeadsController < ApplicationController
       @nested_category = category ? category : nil
     end
     @categories = @category ? @categories_scope.with_leads.where("categories.id in (?)", @category.self_and_descendants.map(&:id)) : []
-    @countries = (cu_or_user_from_rss_token and cu_or_user_from_rss_token.has_accessible_categories?) ? Country.with_leads.within_accessible_categories(cu_or_user_from_rss_token) : Country.with_leads_in_categories(@search.with_category ? Category.find_by_id(@search.with_category).self_and_descendants.map(&:id) : @search.with_selected_categories )
+    @countries = Country.with_leads_in_categories(@search.with_category ? Category.find_by_id(@search.with_category).self_and_descendants.map(&:id) : @search.with_selected_categories)
   end
 
   private

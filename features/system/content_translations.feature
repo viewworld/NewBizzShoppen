@@ -86,5 +86,5 @@ Scenario: Content language is displayed on the basis of choosen language
 Scenario: Put a flag of language next to each field not only to translations when editing translatable content (for user to know in which language he is entering primary data)
 
 #9400
-@m26 @requested
+@m26 @requested @_done @non_testable @tgn
 Scenario: All big supplier labels should be changed to Got credit

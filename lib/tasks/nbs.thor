@@ -566,7 +566,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       klass = "User::#{role.to_s.camelize}".constantize
       unless klass.find_by_email("translator_#{name}@nbs.com")
         if name == :category_buyer
-          user = klass.make!(:email => "translator_#{name}@nbs.com", :password => "secret", :password_confirmation => "secret", :buying_categories => [LeadCategory.first])
+          user = klass.make!(:email => "translator_#{name}@nbs.com", :password => "secret", :password_confirmation => "secret", :auto_buy_enabled => false, :buying_categories => [LeadCategory.first])
         elsif name == :call_centre
           user = klass.make!(:email => "translator_#{name}@nbs.com", :password => "secret", :password_confirmation => "secret", :first_name => "Johnny", :last_name => "Mnemonic")
         else

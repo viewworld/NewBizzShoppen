@@ -73,7 +73,7 @@ Feature: Customer signup
   @tgn @m1 @_tested @added @_done
   Scenario: Newsletter checkbox should be selected by default
     When I go to supplier sign up
-    Then the "user_supplier_newsletter_on" checkbox should be checked
+    Then the "user_category_supplier_newsletter_on" checkbox should be checked
 
   @tgn @m1 @_tested @_done
   Scenario: Screen name has to be unique

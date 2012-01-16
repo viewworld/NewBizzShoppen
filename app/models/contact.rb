@@ -15,6 +15,7 @@ class Contact < AbstractLead
 
   belongs_to :agent, :class_name => "User"
   validates_presence_of :company_name, :company_phone_number, :creator_id, :category_id, :country_id, :campaign_id
+  validates_presence_of :price, :if => :process_for_lead_information?
 
   scope :with_keyword, lambda { |q| where("lower(company_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :only_completed, where(:completed => false)

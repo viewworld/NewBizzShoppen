@@ -245,6 +245,7 @@ Scenario: I can change regular buyer to category buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
   And I am signed up and confirmed as user with email "kategory_bajer@nbs.com" and password "secret" and role "category_supplier" for category "CategoryBuyerCategory"
+  And user "kategory_bajer@nbs.com" with role "category_supplier" has attributes "auto_buy_enabled:false"
   And I am signed up and confirmed as user with email kastomer@nbs.com and password secret and role supplier
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
@@ -252,7 +253,7 @@ Scenario: I can change regular buyer to category buyer
   Then I should see CSS path "#unique_categories"
   And I follow translated "administration.users.edit.view.change_supplier_interests_link"
   And I should see CSS path "#category_interests"
-  And I select "CategoryBuyerCategory" from "all_categories_for_interests"
+  And I select "Electronic" from "all_categories_for_interests"
   And I follow "move_right" within "#category_interests"
   And I press translated "administration.users.edit.view.button_update_user"
   When I follow translated "administration.users.edit.view.change_to_category_supplier"
@@ -334,24 +335,24 @@ Scenario: I can see a list of subaccounts and edit them when editing parent acco
   And I should see "lead_user29322biz@nbs.com"
 
 # When changing from regular buyer to category buyer, system should require that buyer to have category interests assigned (that will be migrated to category buyer’s assigned  categories)
-@requested @m7 @selenium @_done @_tested
+@requested @m7 @selenium @_done @_tested @_deprecated
 Scenario: I can change buyer to category buyer only if he has interests categories
-  When I follow translated "layout.main_menu.admin.users"
-  And Category CategoryBuyerCategory is created
-  And Category AnotherCategory is created
-  And I am signed up and confirmed as user with email kastomer@nbs.com and password secret and role supplier
-  And I fill in "search_with_keyword" with "kastomer"
-  And I press translated "administration.users.index.view.search_button"
-  And I click hidden link by url regex "/users\/\d+\/edit/"
-  And I follow translated "administration.users.edit.view.change_to_category_supplier"
-  Then I should see translated "activerecord.attributes.user.supplier.base.must_have_interests"
-  And I follow translated "administration.users.edit.view.change_supplier_interests_link"
-  And I select "CategoryBuyerCategory" from "all_categories_for_interests"
-  And I follow "move_right" within "#category_interests"
-  And I press translated "administration.users.edit.view.button_update_user"
-  And I press translated "administration.users.edit.view.button_update_user"
-  Then I should be on administration users page
-  And I should not see translated "activerecord.attributes.user.supplier.base.must_have_interests"
+#  When I follow translated "layout.main_menu.admin.users"
+#  And Category CategoryBuyerCategory is created
+#  And Category AnotherCategory is created
+#  And I am signed up and confirmed as user with email kastomer@nbs.com and password secret and role supplier
+#  And I fill in "search_with_keyword" with "kastomer"
+#  And I press translated "administration.users.index.view.search_button"
+#  And I click hidden link by url regex "/users\/\d+\/edit/"
+#  And I follow translated "administration.users.edit.view.change_to_category_supplier"
+#  Then I should see translated "activerecord.attributes.user.supplier.base.must_have_interests"
+#  And I follow translated "administration.users.edit.view.change_supplier_interests_link"
+#  And I select "CategoryBuyerCategory" from "all_categories_for_interests"
+#  And I follow "move_right" within "#category_interests"
+#  And I press translated "administration.users.edit.view.button_update_user"
+#  And I press translated "administration.users.edit.view.button_update_user"
+#  Then I should be on administration users page
+#  And I should not see translated "activerecord.attributes.user.supplier.base.must_have_interests"
 
 @requested @m7 @_tested @tgn @_done
 Scenario: I can filter users by Call center agents
@@ -694,10 +695,11 @@ Scenario: When I assign unique category to buyer the auto-buy option should be a
 Scenario: When user has unique category with auto-buy he should not be subscribed by email to that category any more
   Given there are no categories
   Then I have user with email nbsbuyer3483434biz@nbs.com and role supplier
+  And user "nbsbuyer3483434biz@nbs.com" with role "supplier" has attributes "company_name:ZZ Top"
   Then User nbsbuyer3483434biz@nbs.com with role supplier is big buyer
   Then Category Computers is created
-  When I go to administration categories
-  Then I follow translated "administration.categories.index.view.edit_link"
+  When I go to browse leads
+  And I follow category for edit "Computers"
   Then I check "category_is_customer_unique"
   Then I select "nbsbuyer3483434biz@nbs.com" from "all_customers"
   Then I follow "move_right" within "#users_selection_customers_div"
@@ -951,10 +953,11 @@ Scenario: I can remove user's scheduled subscriptions
 #9400
 @m26 @requested @tgn @_done @_tested
 Scenario: I can mark supplier or category supplier as big buyer (new name Got credit) (overrides subscription properties)
-  Given user "buyer@nbs.com" should not be big buyer
-  And I fill in "search_with_keyword" with "buyer@nbs.com"
+  Given I have user with email buyer2@nbs.com and role supplier
+  Given user "buyer2@nbs.com" should not be big buyer
+  And I fill in "search_with_keyword" with "buyer2@nbs.com"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
   And I check "user_supplier_big_buyer"
   When I press translated "administration.users.edit.view.button_update_user"
-  Then user "buyer@nbs.com" should be big buyer
+  Then user "buyer2@nbs.com" should be big buyer

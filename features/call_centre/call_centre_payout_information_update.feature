@@ -24,11 +24,13 @@ Scenario: I can update my payout information if I am a Call Center
   Then I fill in "user_call_centre_paypal_email" with "agentjim.jones.paypal@nbs.com"
   And I press translated "password.edit.view.button_update_user"
   Then I should see translated "my_profile.update.controller.successful_update_notice"
+  Given I go to my profile
   And the "user_call_centre_paypal_email" field should contain "agentjim.jones.paypal@nbs.com"
   When I fill in "user_call_centre_paypal_email" with ""
   And I fill in "user_call_centre_bank_swift_number" with "ABNAPLPW"
   And I fill in "user_call_centre_bank_iban_number" with "AT123456789012345678"
   And I press translated "password.edit.view.button_update_user"
+  Given I go to my profile
   And the "user_call_centre_bank_swift_number" field should contain "ABNAPLPW"
   And the "user_call_centre_bank_iban_number" field should contain "AT123456789012345678"
 
