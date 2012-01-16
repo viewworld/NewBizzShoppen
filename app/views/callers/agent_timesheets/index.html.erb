@@ -36,6 +36,15 @@
     <% if @timesheet.agent_timesheet %>
       <% @timesheet.agents.each do |agent| %>
         <div id="agent_time_sheet_<%= agent.id %>">
+          <div class="fltl">
+            <p><%= agent.screen_name %> (<%= agent.email %>)</p>
+            <p><%= agent.company_name %></p>
+          </div>
+          <div class="fltr">
+            <p><%= t("agent_timesheets.index.agent_time_sheet.avg_value_per_hour")%>: <span class="avg_value_per_hour"></span></p>
+            <p><%= t("agent_timesheets.index.agent_time_sheet.avg_result_per_hour")%>: <span class="avg_result_per_hour"></span></p>
+          </div>
+          <clb/>
           <% @timesheet.cweeks.each do |cweek| %>
             <%= render :partial => "agent_time_sheet_table", :locals => {:agent => agent, :cweek => cweek, :agent_time_sheet => @timesheet, :results => @timesheet.agent_time_sheet_data(agent)} %>
           <% end %>
@@ -217,12 +226,22 @@
             $(cell).html('0.00')
         } else {
             euros = Math.floor(value);
-            cents = Math.round(value - euros);
+            cents = Math.round((value - euros)*100);
             if (cents < 10) {
                 cents = cents + '0'
             }
             $(cell).html(euros + '.' + cents)
         }
+    }
+
+    function global_averages(scope) {
+        hours = (Number($(scope).find('.total_val_hours.last').html().split(':')[0])*60 + Number($(scope).find('.total_val_hours.last').html().split(':')[1]))/60;
+        value = Number($(scope).find('.total_val_value.last').html());
+        $(scope).find('.avg_value_per_hour').html(value/hours);
+        number_to_value($(scope).find('.avg_value_per_hour'));
+        results = Number($(scope).find('.total_val_results.last').html());
+        $(scope).find('.avg_result_per_hour').html(results/hours);
+        number_to_value($(scope).find('.avg_result_per_hour'));
     }
 
     $(document).ready(function(){
@@ -236,7 +255,6 @@
 
         // totals
         $('.total_h_h').each(function(){sum_row($(this).closest('tr'),'h')});
-        $('.total_h_l').each(function(){sum_row($(this).closest('tr'),'l')});
         $('.total_h_v').each(function(){sum_row($(this).closest('tr'),'v')});
         $('.total_h_r').each(function(){sum_row($(this).closest('tr'),'r')});
         $('.total_v_h').each(function(){sum_col($(this),'h')});
@@ -266,7 +284,9 @@
                 agent_time_sheet_avg_time($(this), $('div#agent_time_sheet_<%= agent.id %>').find('tr.<%= key.to_s %>'))
             });
             <% end %>
+            global_averages($('div#agent_time_sheet_<%= agent.id %>'));
           <% end %>
+          $('.total_h_l').each(function(){sum_row($(this).closest('tr'),'l')});
         <% end %>
 
     });

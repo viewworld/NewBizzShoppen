@@ -3955,6 +3955,8 @@ en:
         hours: "Hours worked"
         results: "Number of results"
         value: "Value created"
+        avg_value_per_hour: "Avg. Value / Hour"
+        avg_result_per_hour: "Avg. Result / Hour"
     new:
       header: "Agent timesheets"
       time_period: "Select time period"
