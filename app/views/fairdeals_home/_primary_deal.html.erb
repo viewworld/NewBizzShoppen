@@ -18,11 +18,15 @@
                  </p>
             <% else %>
                 <p class="b">
-                  <%= as_currency(primary_deal.deal_price, primary_deal.currency) %> - <%= t("deals.index.view.save") %> <%= primary_deal.saving %>
+                    <%= t("deals.index.view.normal_price") %>: <%= as_currency(primary_deal.deal_price, primary_deal.currency) %>
                 </p>
 
                 <p class="new_price">
-                  <%= as_currency(primary_deal.discounted_price, primary_deal.currency) %>
+                  <%= t("deals.index.view.fairdeals_price") %>: <%= as_currency(primary_deal.discounted_price, primary_deal.currency) %>
+                </p>
+
+                <p class="new_price">
+                  <%= t("deals.index.view.you_save") %>: <%= as_currency(primary_deal.deal_price - primary_deal.discounted_price, primary_deal.currency) %> <span class="b red">(<%= primary_deal.saving %>)</span>
                 </p>
             <% end %>
 
@@ -83,6 +87,7 @@
 
         <div class="frm_foot">
           <p>
+            <div style="float:left"><%= ratings_for(primary_deal, :force_static => !current_user_has_role?(:member)) %></div>
             <%= link_to_function image_tag("fairdeals/bt/social_email.png"), "$('#modal_for_share_deal_by_email_#{email_form_id}').dialog('open');" %>
             <%= link_to_function image_tag("fairdeals/bt/social_linkedin.png"), "window.open('https://www.linkedin.com/cws/share?url=#{escape_uri(deal_url(:id => primary_deal.slug))}&isFramed=true','', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>
             <%= link_to_function image_tag("fairdeals/bt/social_facebook.png"), "window.open('https://www.facebook.com/sharer.php?u=#{escape_uri(deal_url(:id => primary_deal.slug))}','', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>

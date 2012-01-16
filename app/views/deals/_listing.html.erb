@@ -1,5 +1,24 @@
 <%= javascript_include_tag "global_template_editor" %>
 <%= javascript_include_tag "global_field_validator" %>
+
+<% if session[:site] == "fairdeals" %>
+    <% collection.each do |deal| %>
+              <div class="primary_deals_wrapper">
+              <div id="primary_deals">
+                <div id="primary_group_deal">
+                  <%= render :partial => 'fairdeals_home/primary_deal', :locals => {:primary_deal => deal} %>
+                </div>
+              </div>
+            </div>
+    <% end %>
+
+    <% if will_paginate %>
+        <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+        <%= link_to_show_all_without_pagination "#deals_search_form" %>
+    <% end %>
+
+<% else %>
+
 <%
    cols = 5
    cols += 1 if show_checkboxes
@@ -191,6 +210,7 @@
   <% end %>
   </tbody>
 </table>
+<% end %>
 
 <% collection.each do |deal| %>
 <script type="text/javascript">
