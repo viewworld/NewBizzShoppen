@@ -3,7 +3,7 @@ class Subscription < ActiveRecord::Base
   include CommonSubscriptions
 
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
-  has_many :subscription_sub_periods, :order => "start_date ASC"
+  has_many :subscription_sub_periods, :order => "start_date ASC", :dependent => :destroy
   belongs_to :user
   belongs_to :subscription_plan
   belongs_to :currency
