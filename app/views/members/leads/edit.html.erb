@@ -14,10 +14,14 @@
                     <div class="txt"><%= @lead.deal.deal_confirmation_page.to_s.html_safe %></div>
                   </li>
                   <% end %>
+
+                  <% unless @lead.deal.deal_code.blank? %>
                   <li class="string">
                     <%= form.label t("member.leads.edit.view.deal_code_label") %>
                     <div class="txt"><%= @lead.deal.deal_code_is_url? ? link_to(@lead.deal.deal_code, @lead.deal.deal_code_as_url) : @lead.deal.deal_code %></div>
                   </li>
+                  <% end %>
+
                   <li class="string">
                     <%= form.label t("member.leads.edit.view.company_name_label") %>
                     <div class="txt"><strong><%= @lead.deal.company_name %></strong></div>
