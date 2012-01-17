@@ -11,6 +11,7 @@ Feature: Signing in
     When I sign in as kastomer@nbs.fake with password secret
     Then I should see "Update your billing information clicking" within "div.flash_alert"
 
+  @_done @_tested_elsewhere
   Scenario: When user cancels recurring billing in Paypal and has unpaid invoices issued he should be asked to pay for them every time he logs in
 
   @_done @_tested_elsewhere
