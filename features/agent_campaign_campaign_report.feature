@@ -26,7 +26,7 @@ Feature: Campaign report
     When I am not sign in
     Then I am on the homepage
     And I sign in as testreportscc@nbs.com with password secret
-    And I follow translated "layout.main_menu.call_centre.reports"
+    And I follow translated "layout.main_menu.call_centre.campaign_reports"
     And I press translated "campaign_reports.index.search_button"
     And I should see "TestCampaignReport1" within "#reports_table"
     And I should see "TestCampaignReport2" within "#reports_table"
