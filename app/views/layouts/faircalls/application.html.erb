@@ -157,6 +157,11 @@
         $('input.formtastic-ui-datepicker').datepicker({ dateFormat: '<%= I18n.t("date.formats.datepicker") %>' });
     });
 
+    $(document).ready(function() {
+        $('input.formtastic-ui-weekpicker').datepicker({ dateFormat: '<%= I18n.t("date.formats.datepicker") %>', showWeek: true });
+    });
+
+
     <% if !current_user.blank? and !Rails.env.development? and current_user.agent? %>
     TIME_OUT = <%= Settings.logout_time.to_i %> * 60;
 
