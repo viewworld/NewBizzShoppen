@@ -359,3 +359,19 @@ Feature: Front page for procurment
   #9437
   @m26 @requested @ao @_done @non_testable
   Scenario: On fairdeals.dk and fairdeals.eu the certificate should be removed
+
+  #9604
+  @m27 @requested
+  Scenario: I should see only 3 secondary deals on the front page instead of 9
+
+  #9604
+  @m27 @requested
+  Scenario: I should always see Normal price, Fairdeals price, You save with percent and rating in primary featured deal on the front page
+
+  #9604
+  @m27 @requested
+  Scenario: I should see featured description, rating and three prices in the secondary featured deal boxes on the front page
+
+  #9604
+  @m27 @requested
+  Scenario: I should see deals listed in browse deals as primary deal on the front page
