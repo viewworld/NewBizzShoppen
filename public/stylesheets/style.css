@@ -2162,3 +2162,17 @@ li.disabled
     margin: 8px 5px 8px 0;
     border-bottom: 1px dotted #bbb;
 }
+
+
+/* --- admin_agents_selection ---
+--------------------------------------------------------------------------------------------------------------------- */
+
+.admin_agents_selection
+{
+    padding-top: 130px;
+}
+
+.admin_agents_selection.grid_160
+{
+    padding-top: 185px;
+}

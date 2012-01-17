@@ -12,48 +12,48 @@
             <div class="column_left">
               <h3><%= t("agent_timesheets.new.time_period") %></h3>
 
-              <fiedlset class="inputs labels_ta_r">
+              <fieldset class="inputs labels_ta_r">
                 <ol class="align_inputs">
                   <%= f.input :start_date, :as => :weekpicker, :wrapper_html => {:class => "date"} %>
                   <%= f.input :end_date, :as => :weekpicker, :wrapper_html => {:class => "date"} %>
                   <%= f.input :show_weekends, :as => :boolean %>
                 </ol>
-              </fiedlset>
+              </fieldset>
 
 
-              <fiedlset class="inputs labels_ta_r">
+              <fieldset class="inputs labels_ta_r">
                 <ol>
                   <%#= f.input :agents, :as => :select, :include_blank => false, :collection => (current_user.admin? ? User.with_agents.all : current_user.subaccounts), :multiple => true, :input_html => {:size => 6, :style => "height:140px; width:200px;"} %>
                 </ol>
-              </fiedlset>
+              </fieldset>
               <clb/>
             </div>
             <div class="column_right">
 
-              <fiedlset class="inputs labels_ta_r">
+              <fieldset class="inputs labels_ta_r">
                 <legend class="absolute"><%= t("agent_timesheets.new.display") %></legend>
                 <ol class="align_inputs">
                   <%= f.input :display_hours, :as => :boolean %>
                   <%= f.input :display_results, :as => :boolean %>
                   <%= f.input :display_value, :as => :boolean %>
                 </ol>
-              </fiedlset>
+              </fieldset>
               <clb/>
 
-              <fiedlset class="inputs labels_ta_r">
+              <fieldset class="inputs labels_ta_r">
                 <legend class="absolute"><%= t("agent_timesheets.new.report_type") %></legend>
                 <ol class="align_inputs">
                   <%= f.input :overview, :as => :boolean %>
                   <%= f.input :team_result_sheet, :as => :boolean %>
                   <%= f.input :agent_timesheet, :as => :boolean %>
                 </ol>
-              </fiedlset>
+              </fieldset>
               <clb/>
             </div>
             <clb/>
-          </div>
 
-          <h3><%= t("agent_timesheets.new.select_camapigns") %></h3>
+            <h3><%= t("agent_timesheets.new.select_camapigns") %></h3>
+
             <div id="campaigns_selection_div">
               <div class="pdd_10">
                 <div class="grid_210 fltl">&nbsp;</div>
@@ -76,42 +76,41 @@
               </div>
             </div>
 
-          <h3><%= t("agent_timesheets.new.select_team") %></h3>
+            <h3><%= t("agent_timesheets.new.select_team") %></h3>
+
             <div id="agents_selection_div">
               <div class="pdd_10">
                 <div class="grid_210 fltl">&nbsp;</div>
                 <div class="grid_240 fltl">
                   <h3><%= t("agent_timesheets.new.agents_selection.all_agents") %></h3>
                   <%= select_tag "all_agents", options_for_select((current_user.admin? ? User.with_agents.with_roles_except([:member]) : current_user.subaccounts).map { |c| [c.screen_name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+
+                  <% if current_user.admin? %>
+                    <h3 style="padding-top:10px"><%= t("agent_timesheets.new.agents_selection.all_call_centres") %></h3>
+                    <%= select_tag "all_call_centres", options_for_select(User.with_call_centres.map { |c| [c.screen_name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                  <% end %>
                 </div>
 
-                <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
+                <div class="grid_160 fltl<%= " admin_agents_selection" if current_user.admin? %>" style="margin-right: 10px;margin-top:10px;">
                   <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("agent_timesheets.new.move_right"), "javascript:copy_selected_unique('all_agents','search_agents_');copy_selected_unique('all_call_centres','search_call_centres_');move_selected('all_agents','selected_agents');move_selected('all_call_centres','selected_agents')", :id => "move_right" %></p>
 
                   <p class="ta_c"><%= bt_link_to nil, t("agent_timesheets.new.move_left"), "javascript:remove_selected_unique('selected_agents','search_agents_');remove_selected_unique('selected_agents','search_call_centres_');move_selected_unique('selected_agents','all_agents');move_selected_unique('selected_agents','all_call_centres')", :id => "move_left" %></p>
                 </div>
 
-                <div class="grid_240 fltl">
+                <div class="grid_240 fltl<%= " admin_agents_selection" if current_user.admin? %>">
                   <h3><%= t("agent_timesheets.new.agents_selection.selected_agents") %></h3>
                   <%= select_tag "selected_agents", options_for_select(@search.agents.map { |c| [c.screen_name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
                 </div>
 
-                <% if current_user.admin? %>
-                <clb/>
-                <div class="grid_240 fltl">
-                  <h3><%= t("agent_timesheets.new.agents_selection.all_call_centres") %></h3>
-                  <%= select_tag "all_call_centres", options_for_select(User.with_call_centres.map { |c| [c.screen_name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
-                </div>
-                <% end %>
                 <clb/>
               </div>
             </div>
 
-          <div style="display:none;">
-          <%= select_tag "search[agents][]", [], {:multiple => true} %>
-          <%= select_tag "search[call_centres][]", [], {:multiple => true} %>
+            <div style="display:none;">
+              <%= select_tag "search[agents][]", [], {:multiple => true} %>
+              <%= select_tag "search[call_centres][]", [], {:multiple => true} %>
+            </div>
           </div>
-
         </param:content>
         <param:actions>
           <ibt c="fltri">
