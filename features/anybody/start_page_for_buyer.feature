@@ -1,4 +1,3 @@
-#This is almost the same as in Agent scope
 @start_pages @m2
 Feature: Start page for buyer
 
@@ -178,7 +177,6 @@ Scenario: I should see leads from customer unique categories I'm assigned to on 
 Scenario: Buyer can see link to Interests on supplier home page if he don't have set any interests yet
 #  Given I am on the homepage
 #  Then I sign in as buyer@nbs.com with password secret
-#  And I open page in browser
 #  Then I should not see translated "supplier_home.show.view.configure_interests_link"
 #  Then User with email buyer@nbs.com don't have interests
 #  Given I am on supplier home

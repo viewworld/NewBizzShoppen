@@ -210,6 +210,12 @@ Given /^campaign report data is generated$/ do
     LeadPurchase.make!(:lead => @contact1_4.lead, :quantity => 5)
 end
 
+Given /^additional timesheet report data is generated$/ do
+    CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset+2.day)
+    CallResult.make!(:contact => @contact1_3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset+2.day)
+    CallResult.make!(:contact => @contact1_4, :result => @result4, :creator => @call_centre_agent2, :created_at => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset+3.day)
+    CallResult.make!(:contact => @contact1_2, :result => @result2, :creator => @call_centre_agent2, :created_at => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset+4.day)
+end
 
 Given /^additional campaign report data is generated$/ do
   @contact2_1.update_attribute(:company_name, "Aaaaa company name")
@@ -221,6 +227,17 @@ Given /^additional campaign report data is generated$/ do
   call_result.save!
   ArchivedEmail.create(:to => "some.recipient@somewhere.com", :status => 1, :related => call_result, :sender_id => @call_centre_agent1.id,
                        :subject => "Additional materials sent", :body => "<p>Test body for additional materials</p>")
+end
+
+Given /^campaign report user session logs are generated$/ do
+  [@campaign1, @campaign2].each do |campaign|
+    campaign.users.each do |user|
+      (campaign.start_date..campaign.end_date).each do |d|
+      UserSessionLog.create(:start_time => Time.parse("#{d.to_s} 9:00"), :end_time => Time.parse("#{d.to_s} 17:00"),
+                            :user_id => user.id, :campaign_id => campaign.id, :log_type => 1, :skip_other_logs => true)
+      end
+    end
+  end
 end
 
 Then /^I can enable crm while create are edit campaign$/ do
@@ -318,4 +335,13 @@ Then /I can see call results from other campaign/ do
     Then I should not see "Email OK" within "#call_results"
     Then I should not see "VAT OK" within "#call_results"
     Then I should not see "Bon Jovi INC." within "#call_results"}
+end
+
+When /^campaign "([^"]*)" (should|should not) have contact named "([^"]*)"$/ do |campaign_name, should_have, contact_company_name|
+  contact = Contact.where(:company_name => contact_company_name, :campaign_id => Campaign.where(:name => campaign_name).first.id).first
+  if should_have == "should"
+    contact.should_not be_nil
+  else
+    contact.should be_nil
+  end
 end

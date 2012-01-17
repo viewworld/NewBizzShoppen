@@ -86,7 +86,7 @@
     </div>
     <hl/>
 
-    <% unless @lead.lead_templates.empty? %>
+    <% if @lead.category.present? and @lead.lead_templates.any? %>
         <%= render :partial => "/shared/leads/lead_template_fields", :locals => {:lead => @lead, :form => form} %>
         <hl/>
     <% end %>
@@ -186,10 +186,12 @@
         set_beginnings_of_urls(["lead_linkedin_url", "lead_facebook_url", "lead_company_website"]);
         <% end %>
 
-        <% lead_templates = @lead.lead_templates %>
-        <% if lead_templates.size == 1 and !lead_templates.first.is_mandatory %>
-        $('#optional_templates_picker').val('<%= lead_templates.first.id -%>');
-        add_template();
+        <% if @lead.category.present? %>
+            <% lead_templates = @lead.lead_templates %>
+            <% if lead_templates.size == 1 and !lead_templates.first.is_mandatory %>
+            $('#optional_templates_picker').val('<%= lead_templates.first.id -%>');
+            add_template();
+            <% end %>
         <% end %>
 
         var language_names = [];

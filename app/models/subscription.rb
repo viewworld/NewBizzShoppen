@@ -72,7 +72,7 @@ class Subscription < ActiveRecord::Base
   end
 
   aasm_event :prolong do
-    transitions :from => [:normal, :lockup, :penalty, :cancelled, :non_cancelable], :to => :prolonged, :guard => :can_be_prolonged?
+    transitions :from => [:normal, :lockup, :penalty, :cancelled, :non_cancelable, :admin_changed], :to => :prolonged, :guard => :can_be_prolonged?
   end
 
   aasm_event :upgrade_from_penalty, :after => :perform_upgrade_from_penalty do
@@ -243,6 +243,7 @@ class Subscription < ActiveRecord::Base
     cancel_paypal_profile if use_paypal?
     self.recalculate_subscription_plan_lines(next_subscription_plan_start_date-1, is_free_period_applied?)
     self.end_date = next_subscription_plan_start_date-1
+    self.prolongs_as_free = true
     self.class.clone_from_subscription_plan!(next_subscription_plan, user, next_subscription_plan_start_date)
   end
 

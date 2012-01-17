@@ -8,7 +8,9 @@
         <%= form.input :phone, :hint => hint_for("my_profile", :phone) %>
         <%= form.input :direct_phone_number, :hint => hint_for("my_profile", :direct_phone_number) %>
         <%= form.input :email, :hint => hint_for("my_profile", :email) %>
-        <%= form.input :screen_name, :hint => hint_for("my_profile", :screen_name) %>
+        <% unless @user.member? %>
+            <%= form.input :screen_name, :hint => hint_for("my_profile", :screen_name) %>
+        <% end %>
         <%= form.input :company_ean_number, :hint => hint_for("my_profile", :company_ean_number) %>
       </ol>
     </fieldset>

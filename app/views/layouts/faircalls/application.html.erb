@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Fairleads</title>
+  <link rel="shortcut icon" href="/images/favicon.ico"/>
+  <%= include_stylesheets :common %>
+  <%= include_javascripts :common %>
+  <%= ajaxful_rating_style %>
+  <%#= stylesheet_link_tag "ocss_core", "style", "jquery-ui-1.8.5.custom", "colorbox", "invoice", "invoice_lines_edit", "jquery.checkboxtree.min", "jquery.autocomplete" %>
+  <%#= javascript_include_tag :defaults %>
+  <%#= javascript_include_tag 'jquery.colorbox-min' %>
+  <%#= javascript_include_tag 'jquery.printElement' %>
+  <%#= javascript_include_tag 'jquery.qtip.min' %>
+  <%#= javascript_include_tag 'jquery.expander' %>
+  <%#= javascript_include_tag 'i18n' %>
+  <%#= javascript_include_tag 'translations' %>
+  <%#= javascript_include_tag 'custom' %>
+  <%#= javascript_include_tag 'comments' %>
+  <%#= javascript_include_tag 'jquery.form' %>
+  <%#= javascript_include_tag 'jquery.autocomplete.min' %>
+
+  <%= csrf_meta_tag %>
+
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="apple-touch-icon" href="/images/iOS/touch-icon-iphone.png"/>
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/iOS/touch-icon-ipad.png"/>
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/iOS/touch-icon-iphone4.png"/>
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="apple-touch-startup-image" href="/images/iOS/splash.png">
+
+  <head:/>
+
+</head>
+<body>
+
+<div id="global_loader"></div>
+
+<div id="head">
+  <div id="head_bg"></div>
+</div>
+
+<div id="container" class="c">
+  <div id="top">
+
+    <div id="user_panel">
+      <%= render '/layouts/locale_selection' %>
+      <% if user_signed_in? %>
+          <% unless current_user.hide_profile_page? %>
+              <%= link_to t("layout.my_profile_link"), my_profile_path, :class => "sl" %>
+          <% end %>
+          <%= link_to t("layout.logout_link", :user_email => current_user.email), '/logout', :class => "sl" %>
+      <% else %>
+          <%= link_to t("layout.login_link"), url_to_role_specific_home_page, :class => "sl" %>
+      <% end %>
+    </div>
+
+    <%= link_to image_tag("logo_fairleads.png"), root_path, :class => "logo" %>
+  </div>
+
+
+
+  <div id="user_menu">
+    <%= render "layouts/faircalls/main_menu" %>
+  </div>
+
+  <div id="modal_for_longer_session" style="display:none">
+    <%= t("layout.logout_warning_message") %>
+  </div>
+
+  <div id="content">
+
+    <search-box:/>
+
+    <div class="pdd_10 no_pdd_t">
+      <% unless notice.blank? %>
+          <div class="flash flash_notice">
+            <%= notice %>
+          </div>
+      <% end %>
+
+      <% unless alert.blank? %>
+          <div class="flash flash_alert">
+            <%= alert %>
+          </div>
+      <% end %>
+
+      <% if user_signed_in? and current_user.active_subscription and current_user.active_subscription.cancelled_in_paypal? %>
+          <div class="flash flash_alert">
+            <%= "#{t("subscriptions.active_subscription_is_canceled_in_paypal", :link => link_to(t("comments.shared.here"), paypal_renew_my_profile_subscription_plan_path(current_user.active_subscription)))}".html_safe %>
+          </div>
+      <% end %>
+
+      <column-mc:/>
+    </div>
+  </div>
+
+  <div id="footer">
+    <%= render "layouts/faircalls/footer" %>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+    I18n.defaultLocale = "<%= I18n.default_locale %>";
+    I18n.locale = "<%= I18n.locale %>";
+
+    <% if session[:show_cart_hint] == "1" %>
+    jQuery("#cart").qtip(
+    {
+        content: {
+            text: $("#cart_hint_div").html()
+        },
+        position: {
+            corner: {
+                target: 'leftMiddle',
+                tooltip: 'rightMiddle'
+            },
+            adjust: {
+                x: 5
+            }
+        },
+        hide: {
+            fixed: true,
+            when: {
+                event: "click"
+            }
+        },
+        show: {
+            ready: true
+        },
+        style: {
+            name: "cream",
+            border: {
+                radius: 3
+            },
+            tip: {
+                corner: 'rightMiddle',
+                size: {
+                    x: 8,
+                    y : 12
+                }
+            }
+        }
+    });
+
+    jQuery("#cart").qtip("show").bind("mouseover", function() {
+        $.post('<%= suppliers_cart_path(:show_cart_hint => 0) %>', {'_method':'put'});
+        $(this).qtip("destroy");
+    });
+    <% end %>
+
+    $(document).ready(function() {
+        $('input.formtastic-ui-datepicker').datepicker({ dateFormat: '<%= I18n.t("date.formats.datepicker") %>' });
+    });
+
+    <% if !current_user.blank? and !Rails.env.development? and current_user.agent? %>
+    TIME_OUT = <%= Settings.logout_time.to_i %> * 60;
+
+    function set_logout_time() {
+        return setTimeout("top.location='<%= logout_path %>'", TIME_OUT * 1000 + 20 * 1000);
+    }
+
+    function set_logout_dialog_time() {
+        return setTimeout("check_session()", TIME_OUT * 1000);
+    }
+
+    function check_session(){
+        $.post("/user_session_log.js")
+    }
+
+    function extend_session(){
+        clearTimeout(window.t);
+        window.t = set_logout_time();
+        window.t2 = set_logout_dialog_time();
+    }
+
+    var t = set_logout_time();
+    var t2 = set_logout_dialog_time();
+
+    $('#modal_for_longer_session').dialog({
+        autoOpen: false,
+        buttons: { "<%= t("layout.cancel_logout_button") %>": function() {
+            extend_session();
+            $(this).dialog("close");
+        }}
+    });
+
+    <% end %>
+
+</script>
+
+<% if Rails.env.production? %>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24542608-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<% end %>
+
+<js:/>
+
+</body>
+</html>

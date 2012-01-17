@@ -98,6 +98,10 @@ class Campaign < ActiveRecord::Base
 
   public
 
+  def to_i
+    id
+  end
+
   def cloned_email_templates
     CLONED_TEMPLATES.keys.map { |template_method| send(template_method) }
   end

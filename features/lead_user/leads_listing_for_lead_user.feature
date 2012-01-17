@@ -43,33 +43,33 @@ Scenario: I can click bulk request leads and I will see a notification “You ad
   Then I should not see "Printers ultimate deal"
   And I should not see "Another Printers ultimate deal"
 
-@m3 @__category_restrictions @tgn @_done @_tested @noguess
+@m3 @__category_restrictions @tgn @_done @_tested @noguess @_deprecated
 Scenario: I should not see categories that I have been restricted access to by customer in category listing
-  And lead Chairs ultimate deal exists within category Office
-  And lead Pipes ultimate deal exists within category Building
-  And lead AP ultimate deal exists within category Wireless Devices
-  And user "customer@person.com" with role "supplier" has interest in following categories "Office,Wireless Devices"
-  When I am not sign in
-  Then I sign in as lead_user2@person.com with password secret
-  Given I go to browse leads
-  Then I should see "Office"
-  Then I should see "Wireless Devices"
-  Then I should not see "Computers"
-  Then I should not see "Building"
+#  And lead Chairs ultimate deal exists within category Office
+#  And lead Pipes ultimate deal exists within category Building
+#  And lead AP ultimate deal exists within category Wireless Devices
+#  And user "customer@person.com" with role "supplier" has interest in following categories "Office,Wireless Devices"
+#  When I am not sign in
+#  Then I sign in as lead_user2@person.com with password secret
+#  Given I go to browse leads
+#  Then I should see "Office"
+#  Then I should see "Wireless Devices"
+#  Then I should not see "Computers"
+#  Then I should not see "Building"
  
-@m3 @__category_restrictions @tgn @_done @_tested @noguess
+@m3 @__category_restrictions @tgn @_done @_tested @noguess  @_deprecated
 Scenario: I should not see categories that I have been restricted access to by customer in filter
-    And lead Chairs ultimate deal exists within category Office
-  And lead Pipes ultimate deal exists within category Building
-  And lead AP ultimate deal exists within category Wireless Devices
-  And user "customer@person.com" with role "supplier" has interest in following categories "Office,Wireless Devices"
-  When I am not sign in
-  Then I sign in as lead_user2@person.com with password secret
-  Given I go to browse leads
-  And I should see "Office"
-  And I should see "Wireless Devices"
-  And I should not see "Building"
-  And I should not see "Computers"
+#    And lead Chairs ultimate deal exists within category Office
+#  And lead Pipes ultimate deal exists within category Building
+#  And lead AP ultimate deal exists within category Wireless Devices
+#  And user "customer@person.com" with role "supplier" has interest in following categories "Office,Wireless Devices"
+#  When I am not sign in
+#  Then I sign in as lead_user2@person.com with password secret
+#  Given I go to browse leads
+#  And I should see "Office"
+#  And I should see "Wireless Devices"
+#  And I should not see "Building"
+#  And I should not see "Computers"
 
 @_done @m3 @__category_restrictions @tgn @not_testable @noguess
 Scenario: I should not be able to request/buy leads from categories that I have been restricted access to by customer

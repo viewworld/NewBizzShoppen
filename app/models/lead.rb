@@ -170,7 +170,7 @@ class Lead < AbstractLead
   end
 
   def deliver_email_template(email, uniq_id)
-    TemplateMailer.delay.new(email, uniq_id.to_sym, Country.get_country_from_locale, {:lead => self, :sender_id => User.get_current_user_id})
+    TemplateMailer.delay.new(email, uniq_id.to_sym, Country.get_country_from_locale, {:lead => self, :sender_id => nil})
   end
 
   def auto_buy
@@ -201,7 +201,7 @@ class Lead < AbstractLead
 
   def send_email_with_deal_details_and_files
     if deal
-      TemplateMailer.delay.new(requestee.email, deal.deal_request_details_email_template || :deal_request_details, Country.get_country_from_locale, {:deal => deal, :sender_id => User.get_current_user_id},
+      TemplateMailer.delay.new(requestee.email, deal.deal_request_details_email_template || :deal_request_details, Country.get_country_from_locale, {:deal => deal, :sender_id => nil},
       (deal.images + deal.materials).map{ |material| material.full_local_path_for_current })
     end
   end

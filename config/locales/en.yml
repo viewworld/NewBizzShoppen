@@ -72,6 +72,7 @@ en:
     formats:
       default: "%d-%m-%Y"
       datepicker: "dd-mm-yy"
+      long: "%d %B %Y"
     format:
       standard: "%d-%m-%Y"
   layout:
@@ -81,7 +82,7 @@ en:
         tenders: "Tenders"
         search: "Search"
         member:
-          my_requests: "My requests"
+          my_requests: "My deals"
     main_menu:
       admin:
         users: "Users"
@@ -110,6 +111,7 @@ en:
         refunds: "Refunds"
         campaigns: Campaigns
         reports: "Reports"
+        agent_timesheets: "Timesheets"
         subscription_plans: "Subscriptions"
       agent:
         leads: My leads
@@ -123,6 +125,8 @@ en:
         lead_templates: "Lead templates"
         campaigns: Campaigns
         reports: "Reports"
+        campaign_reports: "Campaign"
+        agent_timesheets: "Timesheets"
         deals: "My deals"
       call_centre_agent:
         leads: "My leads"
@@ -163,7 +167,7 @@ en:
         leads: My leads
         tenders: My tenders
         lead_templates: "Lead templates"
-        my_requests: "My requests"
+        my_requests: "My deals"
     my_profile_link: My profile
     logout_link: "Logout %{user_email}"
     login_link: "Login"
@@ -536,6 +540,10 @@ en:
         successfully_removed: Contact has been successfully removed.
         successfully_deassigned: Contact has been successfully deassigned.
 
+    batch_move:
+      flash:
+        moved_successfully: "Selected contacts have been successfully moved to %{campaign}"
+        copied_successfully: "Selected contacts have been successfully copied to %{campaign}"
   call_results:
     table:
       date: Date
@@ -2140,6 +2148,9 @@ en:
           view_description_link: "See description..."
           voucher_label: "Voucher"
           voucher_link: "Download pdf"
+          confirmation_page_label: "How to get Your deal?"
+          deal_code_label: "Deal code"
+          voucher_how_to_redeem_label: "How to redeem?"
     lead_templates:
       index:
         view:
@@ -3588,7 +3599,7 @@ en:
         title: "Title"
         time_zone: "Time zone"
         deal_maker_role_enabled: "Deal maker role enabled"
-        big_supplier: "Big supplier"
+        big_buyer: "Got credit"
       user/call_centre_agent:
         first_name: "First name"
         last_name: "Last name"
@@ -3660,7 +3671,9 @@ en:
         title: "Title"
         time_zone: "Time zone"
         show_deals: "Show deals"
-        big_supplier: "Big supplier"
+        show_my_deals: "Show my deals"
+        big_buyer: "Got credit"
+        auto_buy_enabled: "Auto buy enabled"
       country:
         name: "Country name"
       lead_template:
@@ -3894,8 +3907,11 @@ en:
         number_of_contacts: "# of contacts"
         percent: "%"
         number_of_calls_made: "Number of calls made"
+        number_of_results_made: "Number of results made"
         avr_number_of_min_per_final_result: "Avr. # of min. pr final result"
         avr_number_of_calls_per_finished_contacts: "Avr. # of calls / finished contact"
+        avr_number_of_results_per_finished_contacts: "Avr. # of results / finished contact"
+        number_of_results_per_minute: "# of results / min"
         value_created: "Value created"
         leads_sold: "Leads sold (value / number)"
         hours_used: "Hours used"
@@ -3911,7 +3927,53 @@ en:
         active: "Active"
         inactive: "Inactive"
         all: "All"
-
+  agent_timesheets:
+    index:
+      header: "Agent timesheets"
+      week: "Week"
+      total: "Total"
+      total_average: "Total / average"
+      na: "n/a"
+      overview:
+        header: "Overview"
+        hours_header: "Hours"
+        results_header: "Results"
+        value_header: "Value"
+        hours_total: "Total hours"
+        results_total: "Total results"
+        value_total: "Total value"
+      team_result_sheet:
+        header: "Team result sheet"
+        time: "Time"
+        results: "Res"
+        value: "Value"
+      agent_time_sheet:
+        header: "Agent timesheet: %{name}"
+        first_result: "First result"
+        last_result: "Last result"
+        log_out_time: "Log out time"
+        hours: "Hours worked"
+        results: "Number of results"
+        value: "Value created"
+        avg_value_per_hour: "Avg. Value / Hour"
+        avg_result_per_hour: "Avg. Result / Hour"
+    new:
+      header: "Agent timesheets"
+      time_period: "Select time period"
+      select_camapigns: "Select campaigns"
+      select_team: "Select team"
+      display: "Display"
+      generate: "Generate"
+      report_type: "Report type"
+      campaigns_selection:
+        all_campaigns: "All available campaigns"
+        selected_campaigns: "Selected campaigns"
+      move_right: "Add >"
+      move_left: "< Remove"
+      agents_selection:
+        all_agents: "All available agents"
+        selected_agents: "Selected agents"
+        all_call_centres: "All available call centres"
   advanced_import:
     show:
       view:

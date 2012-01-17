@@ -12,19 +12,19 @@ Scenario: I create account through signup
   Given I am not sign in
   And I am on the supplier home page
   When I follow translated "supplier_home.show.view.create_new_supplier_account"
-  And I fill in "user_supplier_first_name" with "Bob"
-  And I fill in "user_supplier_last_name" with "Geldof"
-  And I fill in "user_supplier_phone" with "244224242424"
-  And I fill in "user_supplier_email" with "bob1@person.com"
-  And I fill in "user_supplier_screen_name" with "Bob Geldof"
-  And I fill in "user_supplier_password" with "secret"
-  And I fill in "user_supplier_password_confirmation" with "secret"
-  And I fill in "user_supplier_address_attributes_address_line_1" with "Street 333"
-  And I fill in "user_supplier_address_attributes_address_line_2" with "London"
-  And I fill in "user_supplier_address_attributes_zip_code" with "390333"
-  And I fill in "user_supplier_address_attributes_address_line_3" with "Geldow"
-  And I select "Denmark" from "user_supplier_address_attributes_country_id"
-  And I check "user_supplier_agreement_read"
+  And I fill in "user_category_supplier_first_name" with "Bob"
+  And I fill in "user_category_supplier_last_name" with "Geldof"
+  And I fill in "user_category_supplier_phone" with "244224242424"
+  And I fill in "user_category_supplier_email" with "bob1@person.com"
+  And I fill in "user_category_supplier_screen_name" with "Bob Geldof"
+  And I fill in "user_category_supplier_password" with "secret"
+  And I fill in "user_category_supplier_password_confirmation" with "secret"
+  And I fill in "user_category_supplier_address_attributes_address_line_1" with "Street 333"
+  And I fill in "user_category_supplier_address_attributes_address_line_2" with "London"
+  And I fill in "user_category_supplier_address_attributes_zip_code" with "390333"
+  And I fill in "user_category_supplier_address_attributes_address_line_3" with "Geldow"
+  And I select "Denmark" from "user_category_supplier_address_attributes_country_id"
+  And I check "user_category_supplier_agreement_read"
   Then I press translated "supplier_accounts.new.view.button_create_account"
 
 Scenario: I can follow "What do you want to do today?" links and they take me to appropriate places
@@ -125,6 +125,7 @@ Scenario: If customer is category buyer with assigned unique categories he can a
   And Category named "Best Leads" already exists
   And Category named "Unique Leads" already exists
   And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
+  And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
   And category "Unique Leads" is unique for user with email "jon@lajoie.ca" role "supplier"
   And lead Uniqlead exists within category Unique Leads
   And I am on the home page

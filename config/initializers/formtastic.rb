@@ -68,5 +68,20 @@ module Formtastic
       datepicker_options = {:label_html =>  {:class => "date"}, :input_html => {:id => "datepicker", :class => 'formtastic-ui-datepicker datepicker', :value => value.try(:strftime, format)}}
     end
   end
+  module WeekPicker
+    protected
+
+    def weekpicker_input(method, options = {})
+      format = options[:format] || I18n.t("date.formats.default") || '%d-%m-%Y'
+      string_input(method, weekpicker_options(format, method, object.send(method)).deep_merge(options))
+    end
+
+    # Generate html input options for the datepicker_input
+    #
+    def weekpicker_options(format, method, value = nil)
+      weekpicker_options = {:label_html =>  {:class => "date"}, :input_html => {:id => "weekpicker", :class => 'formtastic-ui-weekpicker weekpicker', :value => value.try(:strftime, format)}}
+    end
+  end
 end
 Formtastic::SemanticFormBuilder.send(:include, Formtastic::DatePicker)
+Formtastic::SemanticFormBuilder.send(:include, Formtastic::WeekPicker)

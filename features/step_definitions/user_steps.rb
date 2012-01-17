@@ -370,7 +370,7 @@ Then /^user "([^"]*)" has profile copied from lead "([^"]*)"$/ do |email, lead_h
     assert u.address.send(field) == lead.send(field)
   end
   assert u.full_name == lead.contact_name
-  assert u.screen_name == "#{lead.contact_name} (#{lead.email_address})"
+  assert u.screen_name == "#{lead.contact_name.split(' ').first}, #{lead.company_name}"
 end
 
 Then /^user "([^"]*)" is no longer category buyer as all his subaccounts$/ do |email|

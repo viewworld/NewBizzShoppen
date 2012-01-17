@@ -24,7 +24,7 @@ class MyProfileController < SecuredController
         end
         redirect_to @user.has_role?(:category_supplier) ? category_home_page_path(:slug => @user.buying_categories.first.cached_slug) : @user.has_role?(:supplier) ? supplier_home_path : root_path
       else
-        redirect_to my_profile_path
+        redirect_to root_path
       end
     else
       render :action => 'edit'

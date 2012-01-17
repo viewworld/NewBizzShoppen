@@ -509,3 +509,72 @@ div.pagination .disabled
 {
     font-size: 11px;
 }
+
+
+/* --- timesheet table ---
+------------------------------------------------------------------------------------------ */
+
+.timesheet
+{
+    border: 1px solid #ccc;
+    -moz-box-shadow: 0 0 5px rgba(0,0,0,.1);
+    -webkit-box-shadow: 0 0 5px rgba(0,0,0,.1);
+    box-shadow: 0 0 5px rgba(0,0,0,.1);
+}
+
+.timesheet thead th,
+.timesheet tbody td
+{
+    text-align: right;
+}
+
+.timesheet .subheader_row th
+{
+    font-size: 11px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.timesheet .total_row td
+{
+    border-bottom: none;
+    background: #fff;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.timesheet .total_row.bordered
+{
+    border-bottom: 1px solid #E3E3E3;
+}
+
+.timesheet .total_h
+{
+    background: #fff;
+    font-weight: bold;
+    font-size: 14px;
+
+}
+
+.timesheet .cell_week
+{
+    background: #eee;
+    border-right: 1px solid #ddd;
+    font-weight: bold;
+    text-align: left;
+}
+
+.timesheet .val_h
+{
+    background: #eaeaea;
+}
+
+.timesheet .val_r
+{
+    background: #f0f0f0;
+}
+
+.timesheet .val_v
+{
+    border-right: 1px solid #ddd;
+}

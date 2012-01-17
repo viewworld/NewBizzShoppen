@@ -68,7 +68,7 @@ Scenario: I can edit category specific email template to be sent when lead is bo
   Then I should see translated "administration.category_email_templates.update.controller.successful_update_notice"
   Then category "Electronics" has email template - "Yes"
 
-@m17 @requested @email_signature @is @_done @_tested
+@m17 @requested @email_signature @is @_done @_tested @tc_file_mgmt
 Scenario: For each country I can specify email signature
   Then I follow translated "layout.main_menu.admin.countries"
   Then I follow translated "administration.countries.index.view.edit" within "#country_actions_td_United_Kingdom"

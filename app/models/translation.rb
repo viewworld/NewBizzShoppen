@@ -5,4 +5,13 @@ class Translation < ActiveRecord::Base
   include ScopedSearch::Model
 
   scope :with_keyword, lambda{|keyword| where("LOWER(key) LIKE :keyword", {:keyword => "%#{keyword.downcase}%"})}
+  scope :without_proc, where(:is_proc => false)
+
+  def self.create_or_update!(attrs)
+    if translation = Translation.where(:key => attrs[:key], :locale => attrs[:locale]).first
+      translation.update_attributes(attrs)
+    else
+      Translation.create(attrs)
+    end
+  end
 end

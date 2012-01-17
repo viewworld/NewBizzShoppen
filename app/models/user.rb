@@ -43,9 +43,11 @@ class User < ActiveRecord::Base
   # roles later, always append them at the end!
   roles :admin, :agent, :call_centre, :call_centre_agent, :supplier, :lead_supplier, :lead_user, :member, :category_supplier, :translator, :deal_maker
 
-  validates_presence_of :email, :screen_name
+  validates_presence_of :email
+  validates_presence_of :screen_name, :if => :validate_screen_name?
   validates_presence_of :first_name, :last_name, :if => :validate_first_and_last_name?
-  validates_uniqueness_of :email, :screen_name
+  validates_uniqueness_of :email
+  validates_uniqueness_of :screen_name, :if => :validate_screen_name?
   validate :payout_information_is_complete
 
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
@@ -70,6 +72,7 @@ class User < ActiveRecord::Base
   has_many :email_bounces, :class_name => "ArchivedEmail", :foreign_key => :to, :primary_key => :email, :conditions => "status = #{ArchivedEmail::BOUNCED}"
   has_many :subscriptions
   has_many :subscription_plans, :through => :subscriptions
+  belongs_to :company_unique_category, :class_name => "LeadCategory", :foreign_key => "deal_category_id"
 
   alias_method :parent, :user
 
@@ -99,7 +102,7 @@ class User < ActiveRecord::Base
   scope :with_leads, select("DISTINCT(email), users.*").joins("RIGHT JOIN leads on users.id=leads.creator_id")
   scope :within_accessible_categories, lambda { |supplier| where("leads.category_id NOT IN (?)", supplier.accessible_categories_ids) }
   scope :right_join_leads, joins("RIGHT JOIN leads on users.id=leads.creator_id")
-  scope :screen_name_and_id_with_leads, right_join_leads.select("DISTINCT(users.screen_name),users.id")
+  scope :screen_name_and_id_with_leads, right_join_leads.select("DISTINCT(users.screen_name),users.id, users.roles_mask, users.first_name, users.company_name")
   scope :with_leads_within_categories, lambda { |category_ids| right_join_leads.where("leads.category_id IN (?)", category_ids.to_a) }
 
   scope :assigned_to_campaigns, select("DISTINCT(users.id), users.*").joins("inner join campaigns_users on users.id=campaigns_users.user_id")
@@ -128,6 +131,7 @@ class User < ActiveRecord::Base
   before_update :check_vat_number
   validate :check_billing_rate, :check_subscription_plan
   before_validation :set_auto_generated_password_if_required, :set_role
+  after_initialize :set_auto_buy_enabled
 
   liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_supplier_category_home_url,
          :screen_name, :first_name, :last_name, :home_page_url
@@ -157,6 +161,10 @@ class User < ActiveRecord::Base
   end
 
   def validate_first_and_last_name?
+    true
+  end
+
+  def validate_screen_name?
     true
   end
 
@@ -213,7 +221,7 @@ class User < ActiveRecord::Base
   end
 
   def deliver_email_template(uniq_id)
-    TemplateMailer.delay.new(email, uniq_id.to_sym, country, {:user => self.with_role, :sender_id => User.get_current_user_id})
+    TemplateMailer.delay.new(email, uniq_id.to_sym, country, {:user => self.with_role, :sender_id => nil})
   end
 
   def check_billing_rate
@@ -283,10 +291,6 @@ class User < ActiveRecord::Base
   end
 
   public
-
-  def self.get_current_user_id
-    Thread.current[:current_user_id]
-  end
 
   def domain
     Domain.where(:site => with_role.site, :locale => I18n.locale).first || Domain.where(:site => with_role.site).with_default.first
@@ -624,7 +628,7 @@ class User < ActiveRecord::Base
       unless subscribed_categories.empty?
         uniq_id = "lead_notification_#{lead_notification_type == LEAD_NOTIFICATION_ONCE_PER_DAY ? 'daily' : 'weekly'}"
         leads = Lead.for_notification(subscribed_categories, lead_notification_type)
-        TemplateMailer.delay.new(email, uniq_id.to_sym, user.with_role.address.country, {:user => self, :leads => leads, :sender_id => User.get_current_user_id})
+        TemplateMailer.delay.new(email, uniq_id.to_sym, user.with_role.address.country, {:user => self, :leads => leads, :sender_id => nil})
       end
     end
   end
@@ -673,7 +677,7 @@ class User < ActiveRecord::Base
     template = EmailTemplate.find_by_uniq_id("#{has_role?(:member) ? 'member' : 'supplier'}_invitation")
     template = customize_email_template(template)
     TemplateMailer.delay.new(email, template, with_role.address.present? ? with_role.address.country : Country.get_country_from_locale,
-                             {:user => self.with_role, :new_password => new_password, :sender_id => User.get_current_user_id}, assets_to_path_names(email_materials))
+                             {:user => self.with_role, :new_password => new_password, :sender_id => nil}, assets_to_path_names(email_materials))
   end
 
   def country
@@ -707,7 +711,7 @@ class User < ActiveRecord::Base
   end
 
   def deliver_welcome_email_for_upgraded_contact
-    TemplateMailer.delay.new(email, "upgraded_contact_to_#{role_to_campaign_template_name}_welcome".to_sym, with_role.address.country, {:user => self, :sender_id => User.get_current_user_id})
+    TemplateMailer.delay.new(email, "upgraded_contact_to_#{role_to_campaign_template_name}_welcome".to_sym, with_role.address.country, {:user => self, :sender_id => nil})
   end
 
   def active_subscription
@@ -894,7 +898,7 @@ class User < ActiveRecord::Base
   end
 
   def big_buyer?
-    active_subscription ? active_subscription.big_buyer? : parent ? parent.big_buyer? : false
+    active_subscription ? (read_attribute(:big_buyer) ? true : active_subscription.big_buyer?) : parent ? parent.big_buyer? : false
   end
 
   def team_buyers?
@@ -919,5 +923,20 @@ class User < ActiveRecord::Base
     has_one_of_roles?(:agent, :admin, :call_centre_agent, :call_centre) or
         (supplier? and !active_subscription.is_free? and (!active_subscription.is_today_in_free_period? or
             (active_subscription.is_today_in_free_period? and active_subscription.free_deals_in_free_period.to_i > 0)) )
+  end
+
+  def screen_name
+    if member?
+      "#{first_name}, #{company_name}"
+    else
+      read_attribute(:screen_name)
+    end
+  end
+
+  def set_auto_buy_enabled
+    if new_record? and auto_buy_enabled.nil?
+      self.auto_buy_enabled = (has_role?(:category_supplier) or is_a?(User::CategorySupplier))
+    end
+    true
   end
 end

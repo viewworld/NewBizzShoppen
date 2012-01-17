@@ -1,0 +1,37 @@
+<table class="generic timesheet">
+  <thead>
+  <tr>
+    <th class="ta_l" style="width:250px"><%= t("agent_timesheets.index.total_average") %></th>
+    <% agent_time_sheet.commercial_days_of_week.each do |dow| %>
+        <th><%= I18n.t("date.day_names")[dow] %></th>
+    <% end %>
+    <th style="width:100px"><%= t("agent_timesheets.index.total") %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% [:first_result, :last_result, :log_out_time].each do |key| %>
+      <tr>
+        <td class="cell_week"><%= t("agent_timesheets.index.agent_time_sheet.#{key}") %></td>
+        <% agent_time_sheet.days_of_week.each do %>
+            <td class="avg_val_<%= key %> val_<%= key.to_s.first %>"></td>
+        <% end %>
+        <% if [:first_result, :last_result].include?(key) %>
+            <td class="total_h"><%= t("agent_timesheets.index.na") %></td>
+        <% else %>
+            <td class="total_h_<%= key.to_s.first %>"></td>
+        <% end %>
+      </tr>
+  <% end %>
+  <% [:hours, :results, :value].each do |key| %>
+      <% if agent_time_sheet.send("display_#{key}".to_sym) %>
+          <tr class="total_row bordered">
+            <td class="ta_l"><%= t("agent_timesheets.index.agent_time_sheet.#{key}") %></td>
+            <% agent_time_sheet.days_of_week.each do %>
+                <td class="total_val_<%= key.to_s %> number_to_<%= key.to_s %>"></td>
+            <% end %>
+            <td class="total_val_<%= key %> number_to_<%= key.to_s %> last"></td>
+          </tr>
+      <% end %>
+  <% end %>
+  </tbody>
+</table>

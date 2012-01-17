@@ -8,7 +8,7 @@ Background: Sign in user and set English locale
   And I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
   Then I sign in as bob@person.com with password supersecret
 
-@_tested @_done
+@_tested @_done @tc_file_mgmt
 Scenario: I should be able to lock category
   Then I go to administration categories
   And I follow translated "administration.categories.index.view.edit_link"
@@ -17,7 +17,7 @@ Scenario: I should be able to lock category
   And I press translated "administration.categories.edit.view.button_update"
   Then I should see translated "flash.categories.update.notice"
 
-@_tested @_done
+@_tested @_done @tc_file_mgmt
 Scenario: I should be able to unlock category
   Given category named "Electronics" is locked
   Then I go to administration categories

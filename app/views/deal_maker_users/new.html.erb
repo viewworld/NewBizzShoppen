@@ -2,7 +2,7 @@
   <%= javascript_include_tag :ckeditor %>
   <%= javascript_include_tag "popup_email_template_editor" %>
 
-  <header back="true"><%= t("deal_maker_users.new.view.new_account", :role => params[:user_type]) %></header>
+  <header back="true"><%= t("deal_maker_users.new.view.new_account", :role => params[:user_type].humanize.downcase) %></header>
 
   <%= semantic_form_for @user, :url => deal_maker_users_path(:user_type => params[:user_type]), :as => :user do |form| %>
       <frm>

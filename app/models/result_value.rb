@@ -6,7 +6,7 @@ class ResultValue < ActiveRecord::Base
   validates_presence_of :value, :if => Proc.new { |rv| rv.result_field.is_mandatory }
   validate :value_format
 
-  before_create :duplicate_field_type
+  before_create :duplicate_field_type, :unless => :save_without_callbacks
 
   scope :for_result_field, lambda {|result_field| where(:result_field_id => result_field)}
 

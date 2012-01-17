@@ -76,9 +76,13 @@ class Callers::ContactsController < Callers::CallerController
     if params[:contact_ids].blank?
       flash[:notice] = t('contacts.batch_remove.flash.no_contacts_selected')
     else
-      @target_campaign = current_user.admin? ? Campaign.find(params[:target_campaign_id]) : current_user.campaigns.find(params[:target_campaign_id])
+      @target_campaign = current_user.admin? ? Campaign.find(params[:target_campaign_id]) : Campaign.available_for_user(current_user).find(params[:target_campaign_id])
       Contact.batch_move(params[:contact_ids], @target_campaign, params[:action_type] == "copy")
-      flash[:notice] = t('contacts.batch_remove.flash.removed_successfully')
+      if params[:action_type] == "copy"
+        flash[:notice] = t('contacts.batch_move.flash.copied_successfully', :campaign => @target_campaign.name)
+      else
+        flash[:notice] = t('contacts.batch_move.flash.moved_successfully', :campaign => @target_campaign.name)
+      end
     end
     redirect_to edit_callers_campaign_path(@campaign)
   end

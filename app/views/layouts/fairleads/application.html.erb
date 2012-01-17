@@ -115,7 +115,7 @@
   </div>
 
   <div id="footer">
-    <%= render "layouts/footer" %>
+    <%= render "/layouts/fairleads/footer" %>
   </div>
 </div>
 
@@ -171,6 +171,10 @@
 
     $(document).ready(function() {
         $('input.formtastic-ui-datepicker').datepicker({ dateFormat: '<%= I18n.t("date.formats.datepicker") %>' });
+    });
+
+    $(document).ready(function() {
+        $('input.formtastic-ui-weekpicker').datepicker({ dateFormat: '<%= I18n.t("date.formats.datepicker") %>', showWeek: true });
     });
 
     <% if !current_user.blank? and !Rails.env.development? and current_user.agent? %>

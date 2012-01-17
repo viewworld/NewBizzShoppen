@@ -8,7 +8,7 @@ Feature: Sign up feature
     Then "user_agent_address_attributes_country_id" should be selected for value "United Kingdom"
     When I make sure current locale is "da"
     And I am on supplier sign up page
-    Then "user_supplier_address_attributes_country_id" should be selected for value "Denmark"
+    Then "user_category_supplier_address_attributes_country_id" should be selected for value "Denmark"
 
   # 5779
   @m12 @$_guest @requested @tgn @_done @_tested @selenium @faircalls
@@ -81,11 +81,11 @@ Feature: Sign up feature
     | def  | 11.0  |
     When I am on the supplier home page
     And I follow translated "supplier_home.show.view.create_new_supplier_account"
-    And I choose "user_supplier_subscription_plan_id"
+    And I choose "user_category_supplier_subscription_plan_id"
 
   @m21 @requested @subscriptions @tgn @_done @_tested
   Scenario: I can select only subscription types which are active and match my role
-    Given subscription plan exists with attributes "name:Premium supplier,assigned_roles:supplier,big_buyer:1"
+    Given subscription plan exists with attributes "name:Premium supplier,assigned_roles:category_supplier,big_buyer:1"
     And subscription plan has following lines
     | name | price |
     | abc  | 23.0  |
@@ -131,3 +131,11 @@ Feature: Sign up feature
 
   @backlog @requested @subscriptions
   Scenario: When I sign in and my recurring payment on my subscription failed but did not yet downgraded me then I should see flash msg "You recurring payment failed and you will be downgraded"
+
+  #9514
+  @m26 @requested @tgn @_done @_tested_elsewhere
+  Scenario: When I sign up from fairleads.com I should become a category supplier
+
+  #9514
+  @m26 @requested @tgn @_done @_tested_elsewhere @rspec
+  Scenario: Every newly created category supplier should have a unique category (no buyout, default price taken from settings)

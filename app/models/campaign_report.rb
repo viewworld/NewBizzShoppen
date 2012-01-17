@@ -115,6 +115,34 @@ class CampaignReport
     leads_sold_total_value - production_cost
   end
 
+  def number_of_call_results
+    all_call_results.count
+  end
+
+  def average_number_of_minutes_per_final_result
+    if frc = final_results.count and frc.zero?
+      "-"
+    else
+      ((total_hours * 60) / frc).round
+    end
+  end
+
+  def average_number_of_call_results_per_finished_contact
+    if fcc = finished_contacts.count and fcc.zero?
+      "-"
+    else
+      (number_of_call_results.to_f / fcc).round(2)
+    end
+  end
+
+  def number_of_results_per_minute
+    if th = total_hours and th.zero?
+      "-"
+    else
+      (number_of_call_results.to_f / (th * 60)).round(2)
+    end
+  end
+
   def self.store_pdf(report_cache)
     pdf_path = Rails.root.join "public/html2pdf/campaign_reports_cache/#{report_cache}.pdf"
     html_path = Rails.root.join "public/html2pdf/campaign_reports_cache/#{report_cache}.html"
@@ -138,6 +166,16 @@ class CampaignReport
   end
 
   private
+
+  def all_call_results
+    crs = CallResult.joins(:result).for_campaign(campaign).where("call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported
+    if selected_users?
+      crs = crs.where("call_results.creator_id in (?)", user.map(&:id))
+    elsif user
+      crs = crs.where("call_results.creator_id = ?", user.id)
+    end
+    selected_result_ids ? crs.where("results.id IN (?)", selected_result_ids) : crs
+  end
 
   def final_results(result=nil)
     rsp = CallResult.final_for_campaign(campaign).where("call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported

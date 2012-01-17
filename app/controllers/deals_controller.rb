@@ -41,7 +41,7 @@ class DealsController < ApplicationController
     @category = categories_scope.where(:id => @search.with_category).first
     @categories = (params[:slag].present? and @category) ? categories_scope.where("categories.id in (?)", @category.self_and_descendants.map(&:id)) : categories_scope.all
 
-    @search.with_selected_categories = @categories
+    @search.with_selected_categories = (params[:slag].present? and @category) ? @categories.all : nil
   end
 
   def index

@@ -1,0 +1,40 @@
+<table class="generic timesheet">
+  <thead>
+  <tr>
+    <th class="ta_l" style="width:250px"><%= t("agent_timesheets.index.week") %> <%= cweek.to_s %></th>
+    <% agent_time_sheet.commercial_days_of_week.each do |dow| %>
+        <th><%= I18n.t("date.day_names")[dow] %></th>
+    <% end %>
+    <th style="width:100px"><%= t("agent_timesheets.index.total") %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% [:first_result, :last_result, :log_out_time, :hours, :results, :value].each do |key| %>
+      <% unless [:hours, :results, :value].include?(key) and !agent_time_sheet.send("display_#{key}".to_sym) %>
+          <tr class="<%= key.to_s %>">
+            <td class="cell_week"><%= t("agent_timesheets.index.agent_time_sheet.#{key}") %></td>
+            <% agent_time_sheet.days_of_week.each do |dow| %>
+                <td class="val_<%= key.to_s.first %> number_to_<%= key.to_s %>">
+                  <% if result = results.dig(cweek.year, cweek.cweek, dow) %>
+                      <% if [:first_result, :last_result].include?(key) and val = result.first.send(key) and val.is_a?(ActiveSupport::TimeWithZone) %>
+                          <%= val.strftime("%H:%M") %>
+                      <% elsif val = result.first.send(key) %>
+                          <%= val.to_f %>
+                      <% else %>
+                          <%= 0 %>
+                      <% end %>
+                  <% else %>
+                      <%= 0 %>
+                  <% end %>
+                </td>
+            <% end %>
+            <% if [:first_result, :last_result].include?(key) %>
+                <td><%= t("agent_timesheets.index.na") %></td>
+            <% else %>
+                <td class="total_h_<%= key.to_s.first %> number_to_<%= key.to_s %>"></td>
+            <% end %>
+          </tr>
+      <% end %>
+  <% end %>
+  </tbody>
+</table>

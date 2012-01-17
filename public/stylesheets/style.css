@@ -207,7 +207,7 @@ h4
 {
     display: block;
     float: left;
-    padding-right: 5px;
+    padding-right: 4px;
 }
 
 #user_menu ul.nav li a
@@ -226,7 +226,7 @@ h4
     display: block;
     height: 36px;
     line-height: 36px;
-    padding: 0 15px;
+    padding: 0 14px;
 }
 
 #user_menu ul.nav.admin_nav li a span
@@ -2127,4 +2127,52 @@ li.disabled
     -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 12px rgba(0,0,0,.4) inset;
     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 12px rgba(0,0,0,.4) inset;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 12px rgba(0,0,0,.4) inset;
+}
+
+/* --- member request ----
+------------------------------------------------------------------------------------ */
+
+.company_frame
+{
+    background: #fff;
+    border: 1px solid #CCC;
+    padding: 13px 12px;
+    margin-right: 5px;
+
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+
+    -webkit-box-shadow: 0 1px 0 #fff, 0 0 5px #ddd inset;
+    -moz-box-shadow: 0 1px 0 #fff, 0 0 5px #ddd inset;
+    box-shadow: 0 1px 0 #fff, 0 0 5px #ddd inset;
+}
+
+.company_frame .company_frame_logo
+{
+    text-align: center;
+}
+
+.company_frame .company_frame_name
+{
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    padding-bottom: 8px;
+    margin: 8px 5px 8px 0;
+    border-bottom: 1px dotted #bbb;
+}
+
+
+/* --- admin_agents_selection ---
+--------------------------------------------------------------------------------------------------------------------- */
+
+.admin_agents_selection
+{
+    padding-top: 130px;
+}
+
+.admin_agents_selection.grid_160
+{
+    padding-top: 185px;
 }

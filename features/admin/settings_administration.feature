@@ -136,7 +136,6 @@ Scenario: I can enable/disable email verification for procurement managers
     | user_member_last_name             | Lajoie          |
     | user_member_company_name          | Lajoie Inc      |
     | user_member_phone                 | 48928217272     |
-    | user_member_screen_name           | Normal Guy Verified      |
     | user_member_email                 | jon@lajoie.ca   |
     | user_member_password              | secret          |
     | user_member_password_confirmation | secret          |
@@ -160,7 +159,6 @@ Scenario: I can enable/disable email verification for procurement managers
     | user_member_last_name             | Lajoie          |
     | user_member_company_name          | Lajoie Inc      |
     | user_member_phone                 | 48928217272     |
-    | user_member_screen_name           | Normal Guy Non Verified      |
     | user_member_email                 | jon2@lajoie.ca   |
     | user_member_password              | secret          |
     | user_member_password_confirmation | secret          |
@@ -181,21 +179,21 @@ Scenario: I can enable/disable email verification for sales managers
   And I sign out
   When I go to supplier sign up
   And I fill in the following:
-      | user_supplier_first_name            | Bob             |
-      | user_supplier_last_name             | Taker           |
-      | user_supplier_company_name          | LeadsInt Ltd    |
-      | user_supplier_phone                 | 48928217272     |
-      | user_supplier_screen_name           | Bob T Verified          |
-      | user_supplier_email                 | user@domain.dom |
-      | user_supplier_password              | secret          |
-      | user_supplier_password_confirmation | secret          |
-      | user_supplier_address_attributes_address_line_1        | Sunset Blv 32   |
-      | user_supplier_address_attributes_address_line_2        | London          |
-      | user_supplier_address_attributes_zip_code              | 43-270          |
-      | user_supplier_address_attributes_address_line_3        | Wesley             |
-  And I select "Denmark" from "user_supplier_address_attributes_country_id"
-  And I check "user_supplier_agreement_read"
-  And I choose "user_supplier_subscription_plan_id"
+      | user_category_supplier_first_name            | Bob             |
+      | user_category_supplier_last_name             | Taker           |
+      | user_category_supplier_company_name          | LeadsInt Ltd    |
+      | user_category_supplier_phone                 | 48928217272     |
+      | user_category_supplier_screen_name           | Bob T Verified          |
+      | user_category_supplier_email                 | user@domain.dom |
+      | user_category_supplier_password              | secret          |
+      | user_category_supplier_password_confirmation | secret          |
+      | user_category_supplier_address_attributes_address_line_1        | Sunset Blv 32   |
+      | user_category_supplier_address_attributes_address_line_2        | London          |
+      | user_category_supplier_address_attributes_zip_code              | 43-270          |
+      | user_category_supplier_address_attributes_address_line_3        | Wesley             |
+  And I select "Denmark" from "user_category_supplier_address_attributes_country_id"
+  And I check "user_category_supplier_agreement_read"
+  And I choose "user_category_supplier_subscription_plan_id"
   And I press translated "supplier_accounts.new.view.button_create_account"
   Then I should see translated "flash.accounts.create.no_verification"
   And I sign in as lead_user2@person.com with password supersecret
@@ -205,21 +203,21 @@ Scenario: I can enable/disable email verification for sales managers
   And I sign out
   When I go to supplier sign up
   And I fill in the following:
-      | user_supplier_first_name            | Bob             |
-      | user_supplier_last_name             | Taker           |
-      | user_supplier_company_name          | LeadsInt Ltd    |
-      | user_supplier_phone                 | 48928217272     |
-      | user_supplier_screen_name           | Bob T Not Verified          |
-      | user_supplier_email                 | user2@domain.dom |
-      | user_supplier_password              | secret          |
-      | user_supplier_password_confirmation | secret          |
-      | user_supplier_address_attributes_address_line_1        | Sunset Blv 32   |
-      | user_supplier_address_attributes_address_line_2        | London          |
-      | user_supplier_address_attributes_zip_code              | 43-270          |
-      | user_supplier_address_attributes_address_line_3        | Wesley             |
-  And I select "Denmark" from "user_supplier_address_attributes_country_id"
-  And I check "user_supplier_agreement_read"
-  And I choose "user_supplier_subscription_plan_id"
+      | user_category_supplier_first_name            | Bob             |
+      | user_category_supplier_last_name             | Taker           |
+      | user_category_supplier_company_name          | LeadsInt Ltd    |
+      | user_category_supplier_phone                 | 48928217272     |
+      | user_category_supplier_screen_name           | Bob T Not Verified          |
+      | user_category_supplier_email                 | user2@domain.dom |
+      | user_category_supplier_password              | secret          |
+      | user_category_supplier_password_confirmation | secret          |
+      | user_category_supplier_address_attributes_address_line_1        | Sunset Blv 32   |
+      | user_category_supplier_address_attributes_address_line_2        | London          |
+      | user_category_supplier_address_attributes_zip_code              | 43-270          |
+      | user_category_supplier_address_attributes_address_line_3        | Wesley             |
+  And I select "Denmark" from "user_category_supplier_address_attributes_country_id"
+  And I check "user_category_supplier_agreement_read"
+  And I choose "user_category_supplier_subscription_plan_id"
   And I press translated "supplier_accounts.new.view.button_create_account"
   Then I should see translated "flash.supplier_accounts.create.notice"
 

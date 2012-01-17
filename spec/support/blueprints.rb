@@ -186,7 +186,6 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
-  screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
   agreement_read { true }
@@ -395,6 +394,11 @@ end
 
 Result.blueprint(:final_reported) do
   final { true }
+  is_reported { true }
+end
+
+Result.blueprint(:not_final_reported) do
+  final { false }
   is_reported { true }
 end
 

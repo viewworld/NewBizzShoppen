@@ -62,6 +62,7 @@ Feature: Category buyer rules
   Scenario: Subaccounts should have access only to parents category
     When Category named "Best Leads" already exists
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes ""
+    And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
     And user "jon@lajoie.ca" has team buyers enabled
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
@@ -102,6 +103,7 @@ Feature: Category buyer rules
     When Category named "Best Leads" already exists
     And Category named "Worst Leads" already exists
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes ""
+    And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
     And user "jon@lajoie.ca" has team buyers enabled
     And user "jon@lajoie.ca" is assigned to category "Worst Leads" as category buyer
     And I am on category home page for Best Leads
@@ -116,6 +118,7 @@ Feature: Category buyer rules
     When Category named "Basic Leads" already exists
     And Category named "Worst Leads" already exists
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Basic Leads" with attributes ""
+    And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
     And user "jon@lajoie.ca" has team buyers enabled
     And user "jon@lajoie.ca" is assigned to category "Worst Leads" as category buyer
     And I am on the home page
@@ -142,6 +145,7 @@ Feature: Category buyer rules
     When Category named "Best Leads" already exists
     And Category named "Worst Leads" already exists
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes ""
+    And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
     And user "jon@lajoie.ca" has team buyers enabled
     And user "jon@lajoie.ca" is assigned to category "Worst Leads" as category buyer
     And I am on category home page for Best Leads
@@ -177,14 +181,15 @@ Feature: Category buyer rules
     And I am on category home page for Worst Leads
     Then I should be on category home page for Basic Leads
 
-  @m6 @added @_done @_tested @requested
+  #deprecated since every category supplier has company uniq category created
+  @m6 @added @_done @_tested @requested @_deprecated
   Scenario: I can't login when I have no categories assigned
-    When Category named "SampleCat" already exists
-    When I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "SampleCat"
-    And user "jon@lajoie.ca" has no buying categories
-    And I am on the home page
-    And I sign in as jon@lajoie.ca with password secret
-    Then I should see translated "common.no_categories_for_category_supplier"
+#    When Category named "SampleCat" already exists
+#    When I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "SampleCat"
+#    And user "jon@lajoie.ca" has no buying categories
+#    And I am on the home page
+#    And I sign in as jon@lajoie.ca with password secret
+#    Then I should see translated "common.no_categories_for_category_supplier"
 
   @m6 @added @ao @_done @_tested
   Scenario: I can edit lead buyer that belongs to my account
@@ -257,4 +262,42 @@ Feature: Category buyer rules
     And I am on category home leads page for Electronics
     Then I should not see "Kradziez" within "table.categories_table"
     And I should not see "WymuszeniePierwszenstwa" within "table.categories_table"
+
+  #9513
+  @m26 @requested @_done @_tested @tgn
+  Scenario: I can see My deals tab only when I have deal maker role or I was marked by admin as Show my deals
+    Given I am not sign in
+    And I have user with email category_supplier@nbs.com and role category_supplier
+    And user "category_supplier@nbs.com" with role "category_supplier" has attributes "show_my_deals:true"
+    And I sign in as category_supplier@nbs.com with password secret
+    Then I should not see CSS path "a[tab='browse_deals']"
+    And I should see CSS path "a[tab='deals']"
+
+    And user "category_supplier@nbs.com" with role "category_supplier" has attributes "show_my_deals:false"
+    Then I go to the homepage
+    And I should not see CSS path "a[tab='deals']"
+
+    And user "category_supplier@nbs.com" has deal maker role enabled
+    Then I go to the homepage
+    And I should see CSS path "a[tab='deals']"
+
+  #9513
+  @m26 @requested @tgn @_done @_tested_elsewhere
+  Scenario: I can see Browse deals only when I was marked by admin as Show all deals
+
+  #9512
+  @m26 @requested @tgn @_done @_tested
+  Scenario: I can be marked by admin as Auto buy enabled and then all my categories become auto buy by default if possible (Then I don't see Browse leads)
+    Given I am not sign in
+    And I am on the homepage
+    And I have user with email category_supplier@nbs.com and role category_supplier
+    And I sign in as category_supplier@nbs.com with password secret
+    And I should not see CSS path "a[tab='browse_leads']"
+    And user "category_supplier@nbs.com" with role "category_supplier" has attributes "auto_buy_enabled:false"
+    And I go to the homepage
+    And I should see CSS path "a[tab='browse_leads']"
+
+
+
+
 

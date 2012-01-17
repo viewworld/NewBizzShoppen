@@ -13,9 +13,9 @@ Feature: Customer signup
   Scenario: User signs up with invalid data
     When I go to supplier sign up
     And I fill in the following:
-      | user_supplier_email                 | invalidemail |
-      | user_supplier_password              | secret       |
-      | user_supplier_password_confirmation |              |
+      | user_category_supplier_email                 | invalidemail |
+      | user_category_supplier_password              | secret       |
+      | user_category_supplier_password_confirmation |              |
     And I press translated "supplier_accounts.new.view.button_create_account"
     Then I should see translated "activerecord.errors.messages.invalid"
     And I should see translated "activerecord.errors.models.user.supplier.attributes.password.confirmation"
@@ -25,21 +25,21 @@ Feature: Customer signup
     Given setting for "email_verification_for_suppliers" is set to "1"
     When I go to supplier sign up
     And I fill in the following:
-      | user_supplier_first_name            | Bob             |
-      | user_supplier_last_name             | Taker           |
-      | user_supplier_company_name          | LeadsInt Ltd    |
-      | user_supplier_phone                 | 48928217272     |
-      | user_supplier_screen_name           | Bob T           |
-      | user_supplier_email                 | user@domain.dom |
-      | user_supplier_password              | secret          |
-      | user_supplier_password_confirmation | secret          |
-      | user_supplier_address_attributes_address_line_1        | Sunset Blv 32   |
-      | user_supplier_address_attributes_address_line_2        | London          |
-      | user_supplier_address_attributes_zip_code              | 43-270          |
-      | user_supplier_address_attributes_address_line_3        | Wesley          |
-    And I select "Denmark" from "user_supplier_address_attributes_country_id"
-    And I choose "user_supplier_subscription_plan_id"
-    And I check "user_supplier_agreement_read"
+      | user_category_supplier_first_name            | Bob             |
+      | user_category_supplier_last_name             | Taker           |
+      | user_category_supplier_company_name          | LeadsInt Ltd    |
+      | user_category_supplier_phone                 | 48928217272     |
+      | user_category_supplier_screen_name           | Bob T           |
+      | user_category_supplier_email                 | user@domain.dom |
+      | user_category_supplier_password              | secret          |
+      | user_category_supplier_password_confirmation | secret          |
+      | user_category_supplier_address_attributes_address_line_1        | Sunset Blv 32   |
+      | user_category_supplier_address_attributes_address_line_2        | London          |
+      | user_category_supplier_address_attributes_zip_code              | 43-270          |
+      | user_category_supplier_address_attributes_address_line_3        | Wesley          |
+    And I select "Denmark" from "user_category_supplier_address_attributes_country_id"
+    And I choose "user_category_supplier_subscription_plan_id"
+    And I check "user_category_supplier_agreement_read"
     And I press translated "supplier_accounts.new.view.button_create_account"
     Then I should see translated "flash.supplier_accounts.create.notice"
     And a confirmation message should be sent to user@domain.dom
@@ -73,7 +73,7 @@ Feature: Customer signup
   @tgn @m1 @_tested @added @_done
   Scenario: Newsletter checkbox should be selected by default
     When I go to supplier sign up
-    Then the "user_supplier_newsletter_on" checkbox should be checked
+    Then the "user_category_supplier_newsletter_on" checkbox should be checked
 
   @tgn @m1 @_tested @_done
   Scenario: Screen name has to be unique
@@ -81,20 +81,20 @@ Feature: Customer signup
     Then user buyer2jimconnor@person.com with role supplier exists with attributes "screen_name:Jim Connor"
     When I go to supplier sign up
     And I fill in the following:
-      | user_supplier_first_name            | Bob             |
-      | user_supplier_last_name             | Taker           |
-      | user_supplier_company_name          | LeadsInt Ltd    |
-      | user_supplier_phone                 | 48928217272     |
-      | user_supplier_screen_name           | Jim Connor      |
-      | user_supplier_email                 | user@domain.dom |
-      | user_supplier_password              | secret          |
-      | user_supplier_password_confirmation | secret          |
-      | user_supplier_address_attributes_address_line_1        | Sunset Blv 32   |
-      | user_supplier_address_attributes_address_line_2        | London          |
-      | user_supplier_address_attributes_zip_code              | 43-270          |
-      | user_supplier_address_attributes_address_line_3        | Wesley          |
-    And I select "Denmark" from "user_supplier_address_attributes_country_id"
-    And I check "user_supplier_agreement_read"
+      | user_category_supplier_first_name            | Bob             |
+      | user_category_supplier_last_name             | Taker           |
+      | user_category_supplier_company_name          | LeadsInt Ltd    |
+      | user_category_supplier_phone                 | 48928217272     |
+      | user_category_supplier_screen_name           | Jim Connor      |
+      | user_category_supplier_email                 | user@domain.dom |
+      | user_category_supplier_password              | secret          |
+      | user_category_supplier_password_confirmation | secret          |
+      | user_category_supplier_address_attributes_address_line_1        | Sunset Blv 32   |
+      | user_category_supplier_address_attributes_address_line_2        | London          |
+      | user_category_supplier_address_attributes_zip_code              | 43-270          |
+      | user_category_supplier_address_attributes_address_line_3        | Wesley          |
+    And I select "Denmark" from "user_category_supplier_address_attributes_country_id"
+    And I check "user_category_supplier_agreement_read"
     And I press translated "supplier_accounts.new.view.button_create_account"
     Then I should see translated "activerecord.errors.messages.taken"
 

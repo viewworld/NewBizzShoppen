@@ -15,7 +15,7 @@ Feature: Categories rules
     And I go to agents leads
     Then select "category_id" should have option "Computers" disabled
 
-  @_done @_tested @tgn
+  @_done @_tested @tgn @tc_file_mgmt
   Scenario: When first subcategory is created for root, all leads from root are moved to this new category
     Given Category Computers is created
     And lead Laptop Toshiba exists within category Computers

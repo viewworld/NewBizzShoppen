@@ -1,7 +1,7 @@
 class CallResult < ActiveRecord::Base
   attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_2,
                 :contact_address_line_3, :contact_zip_code, :contact_country_id, :contact_phone_number,
-                :contact_company_name, :buying_category_ids, :result_id_changed, :user_not_charge_vat
+                :contact_company_name, :buying_category_ids, :result_id_changed, :user_not_charge_vat, :current_user
 
   belongs_to :contact
   belongs_to :result
@@ -22,17 +22,18 @@ class CallResult < ActiveRecord::Base
   validates_presence_of :contact_company_name, :contact_phone_number, :contact_address_line_3, :if => Proc.new { |cr| cr.result.upgrades_to_member? }
   validate :validate_uniqueness_of_contact_email_address, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
 
-  after_create :process_side_effects, :update_contact_note, :set_last_call_result_in_contact, :update_contact_email, :update_contact_address
-  after_update :process_side_effects, :update_contact_email, :update_contact_address
-  after_destroy :update_completed_status, :update_pending_status
-  before_update :process_for_changed_result_type
+  after_create :process_side_effects, :update_contact_note, :set_last_call_result_in_contact, :update_contact_email, :update_contact_address, :unless => :save_without_callbacks
+  after_update :process_side_effects, :update_contact_email, :update_contact_address, :unless => :save_without_callbacks
+  after_destroy :update_completed_status, :update_pending_status, :unless => :save_without_callbacks
+  before_update :process_for_changed_result_type, :unless => :save_without_callbacks
 
   PENDING_RESULT_TYPES = [:call_back, :not_interested_now]
 
   scope :call_log_results, joins(:result).where(:results => {:final => false})
   scope :final_results, joins(:result).where(:results => {:final => true})
   scope :with_creator, lambda { |agent_id| where(:creator_id => agent_id) if agent_id.present? }
-  scope :final_for_campaign, lambda { |campaign| final_results.where("campaigns_results.campaign_id = ? and contacts.type = 'Contact' and contacts.campaign_id = ?", campaign.id, campaign.id).joins("INNER JOIN campaigns_results ON results.id = campaigns_results.result_id").joins("INNER JOIN leads as contacts ON call_results.contact_id=contacts.id") }
+  scope :for_campaign, lambda { |campaign| where("campaigns_results.campaign_id = ? and contacts.type = 'Contact' and contacts.campaign_id = ?", campaign.id, campaign.id).joins("INNER JOIN campaigns_results ON results.id = campaigns_results.result_id").joins("INNER JOIN leads as contacts ON call_results.contact_id=contacts.id") }
+  scope :final_for_campaign, lambda { |campaign| final_results.for_campaign(campaign) }
   scope :with_success, where("results.is_success is true")
   scope :with_reported, where("results.is_reported is true")
   default_scope :order => 'call_results.created_at DESC'
@@ -240,7 +241,7 @@ class CallResult < ActiveRecord::Base
     TemplateMailer.delay.new(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.body,
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc,
-                                        :sender_id => User.get_current_user_id, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
+                                        :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
                                         assets_to_path_names(send_material_result_value.materials))
   end
 
@@ -252,7 +253,7 @@ class CallResult < ActiveRecord::Base
     TemplateMailer.delay.new(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.render({:user => user, :password => password}),
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc,
-                                        :sender_id => User.get_current_user_id, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
+                                        :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
                                         assets_to_path_names(send_material_result_value.materials))
   end
   

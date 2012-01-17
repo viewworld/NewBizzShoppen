@@ -566,7 +566,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       klass = "User::#{role.to_s.camelize}".constantize
       unless klass.find_by_email("translator_#{name}@nbs.com")
         if name == :category_buyer
-          user = klass.make!(:email => "translator_#{name}@nbs.com", :password => "secret", :password_confirmation => "secret", :buying_categories => [LeadCategory.first])
+          user = klass.make!(:email => "translator_#{name}@nbs.com", :password => "secret", :password_confirmation => "secret", :auto_buy_enabled => false, :buying_categories => [LeadCategory.first])
         elsif name == :call_centre
           user = klass.make!(:email => "translator_#{name}@nbs.com", :password => "secret", :password_confirmation => "secret", :first_name => "Johnny", :last_name => "Mnemonic")
         else
@@ -590,7 +590,9 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     [
         'About us',
         'Privacy',
-        'Terms & Conditions'
+        'Terms & Conditions',
+        'Fairdeals Terms & Conditions',
+        'Faircalls Terms & Conditions'
     ].each do |title|
       unless Article::Cms::MainPageArticle.includes(:translations).where(:article_translations => {:title => title}).first
         article = Article::Cms::MainPageArticle.make!(:title => title, :content => title, :key => title.parameterize('_'))
@@ -735,6 +737,20 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         Locale.create!(:code => attrs[:code], :language => lang, :enabled => attrs[:enabled], :symbol => attrs[:symbol])
       end
     end
+
+    #create proc translations
+    #based on https://github.com/rails/rails/blob/master/activesupport/lib/active_support/locale/en.yml
+    Translation.create_or_update!(:locale => "en", :key => "date.month_names", :is_proc => true, :value => "%w{nil January February March April May June July August September October November December}")
+    Translation.create_or_update!(:locale => "da", :key => "date.month_names", :is_proc => true, :value => "%w{nil januar februar marts april maj juni juli august september oktober november december}")
+
+    Translation.create_or_update!(:locale => "en", :key => "date.abbr_month_names", :is_proc => true, :value => "%w{nil Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec}")
+    Translation.create_or_update!(:locale => "da", :key => "date.abbr_month_names", :is_proc => true, :value => "%w{nil jan feb mar apr maj jun jul aug sep okt nov dec}")
+
+    Translation.create_or_update!(:locale => "en", :key => "date.day_names", :is_proc => true, :value => "%w{Sunday Monday Tuesday Wednesday Thursday Friday Saturday}")
+    Translation.create_or_update!(:locale => "da", :key => "date.day_names", :is_proc => true, :value => "%w{søndag mandag tirsdag onsdag torsdag fredag lørdag}")
+
+    Translation.create_or_update!(:locale => "en", :key => "date.abbr_day_names", :is_proc => true, :value => "%w{Sun Mon Tue Wed Thu Fri Sat}")
+    Translation.create_or_update!(:locale => "da", :key => "date.abbr_day_names", :is_proc => true, :value => "%w{søn man tir ons tor fre lør}")
   end
 
   desc "recalculate_leads_average_ratings", ""

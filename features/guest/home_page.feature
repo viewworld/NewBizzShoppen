@@ -52,7 +52,7 @@ Feature: Home page
   @m8 @requested @tgn @_tested @_done
   Scenario: Make year automatically change in footer
     Given I go to the homepage
-    Then I should see "2011 Fairleads Ltd"
+    Then I should see "2012 Fairleads Ltd"
 
   #7638
   @m20 @requested @ao @_done @_tested
@@ -65,5 +65,20 @@ Feature: Home page
   Scenario: Integration with User Voice
 
   #9269
-  @m26 @requested
+  @m26 @requested @tgn @_done @_tested
   Scenario: I can see different terms and conditions page for fairleads,fairdeals and faircalls
+    Given I am on the homepage
+    And I follow "Terms & Conditions"
+    Given I visit domain http://fairdeals.eu
+    And I follow "Fairdeals Terms & Conditions"
+    Given I visit domain http://faircalls.eu
+    And I follow "Faircalls Terms & Conditions"
+
+  #9564
+  @m26 @requested @tgn @_done @_tested
+  Scenario: I should not see Browse leads from fairleads.com when I'm not logged in
+    Given I am on the homepage
+    And I am not sign in
+    Then I should not see translated "layout.main_menu.shared.browse_leads"
+    When I sign in as translator_customer@nbs.com with password secret
+    Then I should see translated "layout.main_menu.shared.browse_leads"

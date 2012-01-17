@@ -21,6 +21,7 @@ Feature: Deals
     And I press translated "administration.users.index.view.search_button"
     And I follow translated "administration.users.index.view.edit"
     And I check "user_category_supplier_show_deals"
+    And I check "user_category_supplier_show_my_deals"
     And I press translated "administration.users.edit.view.button_update_user"
     Given I am not sign in
     And I sign in as kategory_bajer@nbs.com with password secret

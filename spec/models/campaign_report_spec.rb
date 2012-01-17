@@ -27,10 +27,11 @@ describe CampaignReport do
     @result_final_reported = Result.make!(:final_reported)
     @result_final = Result.make!(:final)
     @result_not_final = Result.make!
+    @result_not_final_reported = Result.make!(:not_final_reported)
 
     # assign results to campaign
-    @campaign1.results = [@result1,@result2,@result3,@result4,@result_final_reported,@result_final]
-    @campaign2.results = [@result1,@result2,@result3,@result4,@result_final_reported,@result_final]
+    @campaign1.results = [@result1,@result2,@result3,@result4,@result_final_reported,@result_final,@result_not_final_reported]
+    @campaign2.results = [@result1,@result2,@result3,@result4,@result_final_reported,@result_final,@result_not_final_reported]
     @result1.campaigns_results.first.update_attributes(:value => 100, :expected_completed_per_hour => 5)
     @result2.campaigns_results.first.update_attributes(:value => 10, :expected_completed_per_hour => 10)
     @result1.campaigns_results.last.update_attributes(:value => 100, :expected_completed_per_hour => 5)
@@ -172,6 +173,61 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
       cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
       cr.value_created.should == 253.0
+    end
+
+    it "should return correct number of call results" do
+      CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset) #this
+      CallResult.make!(:contact => @contact1_3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset) #this
+      CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset-1.day)
+      CallResult.make!(:contact => @contact1_2, :result => @result_final_reported, :creator => @call_centre_agent1) #this
+      CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
+      CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
+      cr.number_of_call_results.should == 3
+    end
+
+    it "should return average number of minutes per final result" do
+      (1..4).each do |i| # total 1 hour
+        UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
+      end
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
+      cr.average_number_of_minutes_per_final_result.should == "-"
+      CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset) # this
+      CallResult.make!(:contact => @contact1_3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset) # this
+      CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset-1.day)
+      CallResult.make!(:contact => @contact1_2, :result => @result_final_reported, :creator => @call_centre_agent1) # this
+      CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
+      CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
+      cr.average_number_of_minutes_per_final_result.should == 20.0
+    end
+
+    it "should return average number of call results per finished contact" do
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
+      cr.average_number_of_call_results_per_finished_contact.should == "-"
+      CallResult.make!(:contact => @contact1_1, :result => @result_not_final_reported, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_1, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_3, :result => @result_not_final_reported, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_3, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_2, :result => @result_not_final_reported, :creator => @call_centre_agent1)
+      CallResult.make!(:contact => @contact1_2, :result => @result_final_reported, :creator => @call_centre_agent1)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
+      cr.average_number_of_call_results_per_finished_contact.should == 2.0
+    end
+
+    it "should return number of call results per minute" do
+      CallResult.make!(:contact => @contact1_1, :result => @result_not_final_reported, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_1, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_3, :result => @result_not_final_reported, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_3, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_2, :result => @result_not_final_reported, :creator => @call_centre_agent1)
+      CallResult.make!(:contact => @contact1_2, :result => @result_final_reported, :creator => @call_centre_agent1)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
+      cr.number_of_results_per_minute.should == "-"
+
+      (1..4).each do |i| # total 1 hour
+        UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
+      end
+      cr.number_of_results_per_minute.should == 0.1
     end
 
     it "should return correct leads sold total value" do

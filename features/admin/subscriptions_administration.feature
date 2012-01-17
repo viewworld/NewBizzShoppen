@@ -143,7 +143,7 @@ Scenario: I can enter a "Subscription text" as rich text
   And I fill in "subscription_plan_subscription_text_editor" ckeditor with "Sample Subscription Text"
   And I select "EUR" from "subscription_plan_currency_id"
   And I select "ADannyTheSeller" from "subscription_plan_seller_id"
-  And I select "Supplier" from "subscription_plan_assigned_roles"
+  And I select "Category supplier" from "subscription_plan_assigned_roles"
   And I check "subscription_plan_is_active"
   And I check "subscription_plan_can_be_upgraded"
   And I check "subscription_plan_can_be_downgraded"

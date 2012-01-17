@@ -54,19 +54,20 @@ class ApplicationController < ActionController::Base
       other_user_id = params[:other_user_id] || session[:other_user_id]
       logged_as_other_user = ( (current_user and (current_user.admin? or current_user.call_centre?)) and (other_user_id and (other_user_id.to_i != current_user.id)) )
       if self.class.name.match(/::AgentWorkScreen/) and params[:campaign_id] and !logged_as_other_user
-        if session[:current_usl_campaigns].blank? or UserSessionLog.find(session[:current_usl_campaigns]).campaign_id != params[:campaign_id].to_i
+        if active_usl = UserSessionLog.active_for_user_and_campaign(current_user, params[:campaign_id])
+          session[:current_usl_campaigns] = active_usl.id
+          UserSessionLog.update_end_time(session[:current_usl_campaigns], Settings.logout_time.to_i)
+        else
           usl_campaign = UserSessionLog.create(:user_id => current_user.id, :start_time => Time.now,
                                                :end_time => (Time.now + Settings.logout_time.to_i.minutes),
                                                :log_type => UserSessionLog::TYPE_CAMPAIGN,
                                                :euro_billing_rate => current_user.euro_billing_rate,
                                                :campaign_id => params[:campaign_id])
           session[:current_usl_campaigns] = usl_campaign.id
-        else
-          UserSessionLog.update_end_time(session[:current_usl_campaigns], Settings.logout_time.to_i)
         end
       else
         unless session[:current_usl_campaigns].blank?
-          UserSessionLog.update_end_time(session[:current_usl_campaigns])
+          UserSessionLog.close_all_campaign_logs_for_user(current_user)
           session[:current_usl_campaigns] = nil
         end
       end
@@ -150,7 +151,6 @@ class ApplicationController < ActionController::Base
     session[:locale_code] = locale_code || session[:locale_code] || I18n.locale.to_s
     I18n.locale = @locales.map(&:code).include?(session[:locale_code]) ? session[:locale_code] : @locales.first.code
     Thread.current[:globalize_detailed_locale] = ((user_signed_in? and current_user) and current_user.with_role.address.present?) ? current_user.with_role.address.country.detailed_locale : browser_locale
-    Thread.current[:current_user_id] = current_user.id if user_signed_in? and current_user
   end
 
   def locale

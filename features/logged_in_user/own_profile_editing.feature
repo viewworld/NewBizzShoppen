@@ -87,4 +87,20 @@ Feature: User Account - Profile edit
   Scenario: Only one Facebook/Google/Linkedin account can be connected to fairleads account
     
   @m12 @$_all @is
-  Scenario: I can see time zone for user    
+  Scenario: I can see time zone for user
+
+  #9509
+  @m26 @requested @tgn @_done @_tested
+  Scenario: As category supplier I should not see Change account to normal supplier
+    Given I am not sign in
+    And I have user with email category_supplier@nbs.com and role category_supplier
+    And I sign in as category_supplier@nbs.com with password secret
+    Then I follow translated "layout.my_profile_link"
+    And I should not see translated "my_profile.edit.view.remove_category_supplier"
+
+  #9503
+  @m26 @requested @tgn @_done @_tested
+  Scenario: The OK button on my profile should redirect to main page
+    When I go to my profile page
+    Then I press translated "password.edit.view.button_update_user"
+    And I should be on the homepage

@@ -178,6 +178,20 @@ describe Subscription do
       @customer.deal_maker?.should_not == @subscription_plan.deal_maker?
 
     end
+
+    it "should override the user's big buyer property if not set for user by admin" do
+      @subscription_plan.update_attributes(:big_buyer => true)
+      setup_customer(@subscription_plan)
+      @customer.update_attribute(:big_buyer, false)
+      @customer.big_buyer?.should == true
+    end
+
+    it "should NOT override the big buyer property if set for user by admin" do
+      @subscription_plan.update_attributes(:big_buyer => false)
+      setup_customer(@subscription_plan)
+      @customer.update_attribute(:big_buyer, true)
+      @customer.big_buyer?.should == true
+    end
   end
 
   context "subscription transitions" do

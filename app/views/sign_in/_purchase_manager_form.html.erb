@@ -17,7 +17,9 @@
                     <%= address_form.input :address_line_3, :hint => hint_for(user, :address_address_line_3) %>
                     <%= address_form.input :zip_code, :hint => hint_for(user, :address_zip_code) %>
                     <%= address_form.input :country_id, :as => :select, :hint => hint_for(user, :address_country_id), :collection => Country.all, :required => true, :input_html => {:onchange => "refresh_regions_list('user_member_address_attributes');"} %>
-                    <%= address_form.input :region_id, :as => :select, :hint => hint_for(user, :address_region_id), :collection => regions_collection_for(user.address.country) %>
+                    <% unless I18n.locale == :da %>
+                        <%= address_form.input :region_id, :as => :select, :hint => hint_for(user, :address_region_id), :collection => regions_collection_for(user.address.country) %>
+                    <% end %>
                 <% end %>
               </ol>
             </fieldset>
@@ -28,13 +30,16 @@
           <div class="pdd_10 no_pdd_t">
             <fieldset class="inputs labels_ta_r">
               <ol class="align_inputs">
-                <%= form.input :screen_name, :hint => hint_for(user, :screen_name) %>
                 <%= form.input :phone, :hint => hint_for(user, :phone) %>
                 <%= form.input :direct_phone_number, :hint => hint_for(user, :direct_phone_number) %>
                 <%= form.input :email, :hint => hint_for(user, :email) %>
                 <%= form.input :password, :hint => hint_for(user, :password), :as => user.rpx_identifier.blank? ? :password : :hidden %>
                 <%= form.input :password_confirmation, :hint => hint_for(user, :password_confirmation), :as => user.rpx_identifier.blank? ? :password : :hidden, :required => true %>
-                <%= form.input :time_zone, :wrapper_html => {:class => "select"}, :input_html => {:style => "width: 240px"} %>
+                <% unless I18n.locale == :da %>
+                    <%= form.input :time_zone, :wrapper_html => {:class => "select"}, :input_html => {:style => "width: 240px"} %>
+                <% else %>
+                    <%= form.input :time_zone, :as => :hidden %>
+                <% end %>
                 <%= form.input :agreement_read, :as => :boolean, :hint => hint_for(user, :agreement_read), :label => "#{t("common.agree_to")} #{link_to_main_page_article('terms_conditions', {:popup => true}, {:id => 'agreement_modal_box'})}".html_safe, :required => true %>
                 <%= form.input :newsletter_on, :as => :boolean, :hint => hint_for(user, :newsletter_on) %>
                 <%= form.input :rpx_identifier, :as => :hidden %>
