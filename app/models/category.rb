@@ -221,8 +221,8 @@ class Category < ActiveRecord::Base
     root_categories = if user
                         if user.admin?
                           roots
-                        elsif user.has_role?(:category_supplier)
-                          user.parent_accessible_categories_without_auto_buy
+                        elsif user.has_role?(:category_supplier) and is_a?(LeadCategory)
+                          user.parent_accessible_categories_without_auto_buy and  is_a?(LeadCategory)
                         elsif user.has_any_role?(:supplier, :lead_supplier, :lead_user)
                           roots.with_supplier_unique(user.parent ? user.parent.with_role : user)
                         else
@@ -240,7 +240,7 @@ class Category < ActiveRecord::Base
     if user
       if user.admin?
          children_categories = children
-      elsif user.has_any_role?(:supplier, :lead_supplier, :lead_user)
+      elsif user.has_any_role?(:supplier, :lead_supplier, :lead_user) and is_a?(LeadCategory)
         children_categories = children.with_supplier_unique(user.parent ? user.parent.with_role : user)
       else
         children_categories = children.with_agent_unique(user)
