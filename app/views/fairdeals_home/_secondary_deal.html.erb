@@ -13,16 +13,24 @@
               <% if featured.general_discount? %>
                 <%= t("deals.index.view.save") %> <span class="b red"><%= featured.saving %></span>
               <% else %>
-              <%= t("deals.index.view.price") %>
-              <span class="b green"><%= as_currency(featured.discounted_price, featured.currency) %></span>
+              <%= t("deals.index.view.normal_price") %>: <%= as_currency(featured.deal_price, featured.currency) %>
+              <%= t("deals.index.view.fairdeals_price") %>:<span class="b green"><%= as_currency(featured.discounted_price, featured.currency) %></span>
               <br/>
-              <%= t("deals.index.view.save") %> <span class="b red"><%= featured.saving %></span>
+              <%= t("deals.index.view.you_save") %>: <%= as_currency(featured.deal_price - featured.discounted_price, featured.currency) %> <span class="b red">(<%= featured.saving %>)</span>
               <% end %>
+
+              <div style="float:left"><%= ratings_for(featured, :force_static => !current_user_has_role?(:member)) %></div>
+
               <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(featured.slug), :class => 'default_action' %>
               <br />
               <%= group_deal_leads_created_and_missing(featured) %>
               <clb/>
             </p>
+
+            <p>
+              <%= featured.featured_description.to_s.html_safe %>
+            </p>
+
           </div>
         </param:content>
       </frm>
