@@ -961,3 +961,7 @@ Scenario: I can mark supplier or category supplier as big buyer (new name Got cr
   And I check "user_supplier_big_buyer"
   When I press translated "administration.users.edit.view.button_update_user"
   Then user "buyer2@nbs.com" should be big buyer
+
+#9394
+@m27 @requested
+Scenario: I edit user's ean number, vat number and direct phone for member
