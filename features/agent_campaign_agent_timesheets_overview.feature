@@ -22,7 +22,6 @@ Feature: Agent timesheets - overview
     And I press translated "agent_timesheets.new.generate"
     And I should see "48:00"
     And I should see "96:00"
-    And I should see "336:00"
     And I should see "384:00"
     And I should see "4"
     And I should see "14"
