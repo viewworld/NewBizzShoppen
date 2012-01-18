@@ -53,3 +53,30 @@ Feature: Agent timesheets
   @_done @_tested_elsewhere
   Scenario: I can use checkbox to select overview / team results / agent timesheets as report type (all on by default)
 
+  #9787
+  @m27 @requested
+  Scenario: Generated timesheet should be displayed in popup window to use full size of screen
+
+  #9787
+  @m27 @requested
+  Scenario: I should see dropdown with list of agents and "show" button instead of separate tabs for each agent
+
+  #9787
+  @m27 @requested
+  Scenario: Timesheets should be generated in background
+
+  #9787
+  @m27 @requested
+  Scenario: I should get an email when my report is generated
+
+  #9787
+  @m27 @requested
+  Scenario: I should see queue / generated reports on the bottom of new timesheets screen
+
+  #9787
+  @m27 @requested
+  Scenario: I can select only user(s) to generate report for all campaigns for this user(s)
+
+  #9787
+  @m27 @requested
+  Scenario: I can select only campaign(s) to generate report for all users on this campaign(s)

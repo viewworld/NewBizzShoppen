@@ -108,3 +108,7 @@ Feature: User Account - Profile edit
   #9396
   @m27 @requested
   Scenario: When I succesfully update my profile I should be redirected to the front page
+
+  #9782
+  @m27 @requested
+  Scenario: There should not be screen name for any role in the system
