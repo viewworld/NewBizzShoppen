@@ -1,5 +1,5 @@
 class ValidateVoucherController < ApplicationController
-
+  set_tab "validate_voucher"
   def show
   end
 
