@@ -3,7 +3,9 @@ class SignInController < ApplicationController
 
   def new(user_class_name)
     @user = user_class_name.new(:newsletter_on => true, :time_zone => "UTC")
-    @user.time_zone = "Copenhagen" if @user.is_a?(User::Member) and I18n.locale == :da
+    @user.time_zone = "Copenhagen" if I18n.locale == :da
+
+    @user.subscription_plan_id = SubscriptionPlan.active.for_role(@user.is_a?(User::Member) ? :member : "#{'category_' if @user.is_a?(User::CategorySupplier)}supplier".to_sym).free.first.id if @user.is_a?(User::Member) or @user.is_a?(User::Supplier) or @user.is_a?(User::CategorySupplier)
     data = session[:rpx_data]
     @user.set_fields_for_rpx(data) unless data.blank?
   end

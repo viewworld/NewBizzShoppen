@@ -181,4 +181,13 @@ class IntegrationTasks < Thor
       user.save
     end
   end
+
+  desc "m27", ""
+  def m27
+    LeadCategory.all.each do |category|
+      [:refresh_leads_count_cache!, :refresh_published_leads_count_cache!].each do |method|
+        category.send(method)
+      end
+    end
+  end
 end

@@ -407,3 +407,7 @@ function reset_class_cycle_for_table(name) {
         css_class = css_class == 'odd' ? 'even' : 'odd';
     })
 }
+
+function select_subscription_radio_button(user_class, subscription_plan_id){
+    $('input[name=' + user_class + '[subscription_plan_id]][value=' + subscription_plan_id.toString() + ']').click();
+}
