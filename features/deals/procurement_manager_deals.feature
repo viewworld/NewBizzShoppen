@@ -361,3 +361,24 @@ Feature: Deals from procurement manager perspective
   #9606
   @m27 @requested
   Scenario: I should be redirected to paypal or view deal after completing the modal window form
+
+  #9410
+  @m27 @requested
+  Scenario: I can get deal when I have free subscription and I didn't used up my limit of free deals
+
+  #9397
+  @m27 @requested
+  Scenario: When I get the deal with voucher and my payment from paypal haven't come yet then I should not see that deal under my deals
+
+  #9397
+  @m27 @requested
+  Scenario: When I get the deal with voucher and my payment from paypal was successful then my request should be visible under My deals
+
+  #9397
+  @m27 @requested
+  Scenario: When my request is cancelled I get email "Sorry your voucher is canceled since the payment did not go through.Please try again or contact fairleads if the problem persists"
+
+  #9367
+  @m27 @requested
+  Scenario: When I get the deal on the page for deal request I should not see linkedin/facebook urls but see company name
+
