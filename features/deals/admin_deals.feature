@@ -105,3 +105,7 @@ Feature: Deals from admin perspective
     Then I should see translated "layout.main_menu.admin.deals"
     And I am on the administration deal edit page for super
     Then I should see "Saving: 75.00 (75%)"
+
+  #9414
+  @m27 @requested
+  Scenario: Deals awaiting approval should be marked

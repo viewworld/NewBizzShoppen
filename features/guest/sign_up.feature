@@ -116,3 +116,7 @@ Feature: Sign up feature
   #9563
   @m27 @requested
   Scenario: I should be automatically signed in when I sign up and email confirmation is turned off
+
+  #9411
+  @m27 @requested
+  Scenario: I can select only subscription plan which is active and public

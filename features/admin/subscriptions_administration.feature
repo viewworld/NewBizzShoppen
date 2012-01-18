@@ -161,3 +161,7 @@ Scenario: I can enter a "Subscription text" as rich text
 #8338
 @m22 @requested @_done @non_testable @tgn
 Scenario: I can upload images for "Subscription text"
+
+#9411
+@m27 @requested
+Scenario: I can mark subscription plan as public

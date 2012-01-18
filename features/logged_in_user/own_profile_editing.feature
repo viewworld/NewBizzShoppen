@@ -104,3 +104,7 @@ Feature: User Account - Profile edit
     When I go to my profile page
     Then I press translated "password.edit.view.button_update_user"
     And I should be on the homepage
+
+  #9396
+  @m27 @requested
+  Scenario: When I succesfully update my profile I should be redirected to the front page
