@@ -182,6 +182,3 @@ Feature: Vouchers
 
   @_done @_tested_elsewhere
   Scenario: user can use voucher after successful validation
-
-  @m27 @requested
-  Scenario:
