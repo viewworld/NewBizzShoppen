@@ -21,10 +21,17 @@ class LeadPurchase < LeadPurchaseBase
   after_save :deliver_about_to_expire_email
   before_create :assign_to_purchaser
   after_save :deliver_bought_notification
+  after_create :refresh_lead_category
 
   liquid :id, :header, :rating_level_as_text, :rating_reason, :url
 
   private
+
+  def refresh_lead_category
+    [:refresh_leads_count_cache!, :refresh_published_leads_count_cache!].each do |method|
+      lead.category.send(method)
+    end
+  end
 
   def assign_to_proper_owner_if_accessible
     if (u = User.find(owner_id)) && u.parent
