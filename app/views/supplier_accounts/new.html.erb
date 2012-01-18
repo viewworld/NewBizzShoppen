@@ -82,4 +82,11 @@
         </param:actions>
       </frm>
   <% end %>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+        select_subscription_radio_button('<%= @user.class.to_s.underscore.gsub('/', '_') -%>', <%= @user.subscription_plan_id -%>)
+    });
+  </script>
+
 </column-mc:>
