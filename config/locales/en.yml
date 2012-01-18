@@ -4206,6 +4206,7 @@ en:
         title: "Leads created by deal"
         sold: "Sold?"
       max_auto_buy_limit_reached: "Max auto buy limit has been reached."
+      default_confirmation_page_msg: "Vi har sendt en mail til leverandøren med dine kontaktinformationer. Du er også velkommen til at kontakte leverandøren direkte, du skal huske at oplyse at du er medlem af fairdeals så du får din rabat."
     new:
       view:
         frame_header: "Get deal"

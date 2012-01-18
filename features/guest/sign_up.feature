@@ -105,33 +105,6 @@ Feature: Sign up feature
     And I should not see "Premium supplier"
     And I should see "Ultra member"
 
-  @backlog @requested @subscriptions
-  Scenario: When I choose the subscription that is handled by Paypal and requires entering billing information then I am redirected to paypal
-
-  @backlog @requested @subscriptions
-  Scenario: When I choose the subscription that is handled by Paypal and requires entering billing information and I confirm my billing then I return to signup
-
-  @backlog @requested @subscriptions
-  Scenario: When I choose the subscription that is handled by Paypal and requires entering billing information and I confirm my billing then I return to signup and can still sign up via third party service
-
-  @backlog @requested @subscriptions
-  Scenario: After I successfully create my account then my Paypal profile is created
-
-  @backlog @requested @subscriptions
-  Scenario: When I fail to create my account then my Paypal profile is not created
-
-  @backlog @requested @subscriptions
-  Scenario: When I choose the subscription that is handled by Paypal and requires entering billing information and I fail to confirm my billing then I return to signup and have to choose other subscription
-
-  @backlog @requested @subscriptions
-  Scenario: When I choose subscription that is either free or not handled by paypal I can proceed with signup without interruptions
-
-  @backlog @requested @subscriptions
-  Scenario: When I sign in and my recurring payment on my subscription failed but did not yet downgraded me then I cannot get full access to my account (I can get access to my profile only)
-
-  @backlog @requested @subscriptions
-  Scenario: When I sign in and my recurring payment on my subscription failed but did not yet downgraded me then I should see flash msg "You recurring payment failed and you will be downgraded"
-
   #9514
   @m26 @requested @tgn @_done @_tested_elsewhere
   Scenario: When I sign up from fairleads.com I should become a category supplier
@@ -139,3 +112,7 @@ Feature: Sign up feature
   #9514
   @m26 @requested @tgn @_done @_tested_elsewhere @rspec
   Scenario: Every newly created category supplier should have a unique category (no buyout, default price taken from settings)
+
+  #9563
+  @m27 @requested
+  Scenario: I should be automatically signed in when I sign up and email confirmation is turned off

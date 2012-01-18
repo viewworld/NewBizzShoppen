@@ -656,3 +656,19 @@ Feature: Agent campaign - calling session
       Then I am not sign in
       And I am on the homepage
       And contact "ABC Ltd" should be assigned to user "translator_call_centre_agent@nbs.com"
+
+  #9603
+  @m27 @requested
+  Scenario: When upgrading to member I can insert links to deals from CKEDITORs popup
+
+  #9603
+  @m27 @requested
+  Scenario: Popup from CKEDITOR allows to select multiple deals and insert then to email template editor
+
+  #9602
+  @m27 @requested
+  Scenario: When upgrading contact to member / supplier / cat supplier I can select subscription type
+
+  #9602
+  @m27 @requested
+  Scenario: I can enable a newsletter for user upgraded from contact

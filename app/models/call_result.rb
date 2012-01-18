@@ -58,7 +58,7 @@ class CallResult < ActiveRecord::Base
   def custom_fields_for_csv(size)
     result = []
     size.times { result << "" }
-    result_values.each_with_index { |result_value, index| result[index] = "#{result_value.result_field.name}: #{result_value.value}" }
+    result_values.select { |rv| !rv.result_field.nil? }.each_with_index { |result_value, index| result[index] = "#{result_value.result_field.name}: #{result_value.value}" }
     result
   end
 

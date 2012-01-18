@@ -517,3 +517,8 @@ Scenario: I can see language or country name when adding translation
   And I follow translated "agent.leads.index.view.new_lead"
   And I select translated "models.locale.da" from "locale_picker"
   And I should see translated "models.locale.da" within "#lead_translation_form_lead_lead_translations_attributes_0"
+
+#9706
+@m27 @requested
+Scenario: I should see datepicker when template field is of date type
+

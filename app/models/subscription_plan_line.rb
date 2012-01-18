@@ -12,7 +12,7 @@ class SubscriptionPlanLine < ActiveRecord::Base
   private
 
   def cache_prices
-    resource.cache_prices!
+    resource.cache_prices! if resource
   end
 
   public
