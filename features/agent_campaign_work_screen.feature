@@ -80,6 +80,7 @@ Feature: Agent campaign - calling session
       And I should see translated "call_results.new.form_title"
       And I fill in "Call back date" field with future datetime
       And I follow translated "call_results.new.save_button"
+      And I wait 1 second
       Then I should see translated "call_results.create.flash.successfully_added"
       Then I wait 4 second
       When I follow translated "agent_work_screen.index.show_pending_calls"
@@ -338,6 +339,7 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
       And I follow translated "call_results.new.save_button"
+      And I wait 1 second
       Then I should see translated "call_results.create.flash.successfully_added"
 
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
@@ -352,6 +354,7 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
       And I follow translated "call_results.new.save_button"
+      And I wait 1 second
       Then I should see translated "call_results.create.flash.successfully_added"
       And category "Business" is in interests of user "newcategory_buyer888@nbs.com" "true"
 
@@ -369,6 +372,7 @@ Feature: Agent campaign - calling session
       And I select "Leisure" from "all_categories"
       And I follow translated "administration.categories.form.move_users_right"
       And I follow translated "call_results.new.save_button"
+      And I wait 1 second
       Then I should see translated "call_results.create.flash.successfully_added"
       And category "Business" is in interests of user "newcategory_buyer888@nbs.com" "true"
       And category "Leisure" is in interests of user "newcategory_buyer888@nbs.com" "true"
@@ -387,11 +391,11 @@ Feature: Agent campaign - calling session
       And I select "Leisure" from "all_categories"
       And I follow translated "administration.categories.form.move_users_right"
       And I follow translated "call_results.new.save_button"
+      And I wait 1 second
       Then I should see translated "call_results.create.flash.successfully_added"
       And last email sent should have been sent to recipient "newcategory_buyer888@nbs.com"
       And last email sent should have content "/business"
       And last email sent should have content "Fairleads password: testin"
-      And last email sent should have content "Screen name: Dohn"
       And last email sent should have content "Fairleads username: newcategory_buyer888@nbs.com"
 
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
@@ -410,6 +414,7 @@ Feature: Agent campaign - calling session
       And I wait 1 second
       And I follow "sample.jpg"
       And I follow translated "call_results.new.save_button"
+      And I wait 1 second
       Then I should see translated "call_results.create.flash.successfully_added"
 
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_done @not_testable
@@ -427,6 +432,7 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
       And I follow translated "call_results.new.save_button"
+      And I wait 1 second
       Then I should see translated "call_results.create.flash.successfully_added"
       Given I am not sign in
       And I am on the homepage
@@ -447,6 +453,7 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
       And I follow translated "call_results.new.save_button"
+      And I wait 1 second
       Then I should see translated "call_results.create.flash.successfully_added"
       Given I am not sign in
       And I am on the homepage
@@ -472,6 +479,7 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
       And I follow translated "call_results.new.save_button"
+      And I wait 1 second
       Then I should see translated "call_results.create.flash.successfully_added"
       Given I am not sign in
       And I am on the homepage
@@ -494,6 +502,7 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
       And I follow translated "call_results.new.save_button"
+      And I wait 1 second
       Then I should see translated "call_results.create.flash.successfully_added"
       Given I am not sign in
       And I am on the homepage
@@ -527,6 +536,7 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_email_address" with "new_buyer888@nbs.com"
       And I check "call_result_user_not_charge_vat"
       And I follow translated "call_results.new.save_button"
+      And I wait 1 second
       Then I should see translated "call_results.create.flash.successfully_added"
       And last email sent should have been sent to recipient "new_buyer888@nbs.com"
       And user "new_buyer888@nbs.com" with role "supplier" should have attributes "not_charge_vat:true"
@@ -592,11 +602,11 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "new_buyer888@nbs.com"
       And I follow translated "call_results.new.save_button"
+      And I wait 1 second
       Then I should see translated "call_results.create.flash.successfully_added"
       And last email sent should have been sent to recipient "new_buyer888@nbs.com"
       And last email sent should have content "/supplier_home"
       And last email sent should have content "Fairleads password: testin"
-      And last email sent should have content "Screen name: Dohn"
       And last email sent should have content "Fairleads username: new_buyer888@nbs.com"
       Then I am not sign in
       And I am on the homepage
@@ -625,11 +635,11 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_phone_number" with "+44 92423423232"
       And I fill in "call_result_contact_email_address" with "new_member888@nbs.com"
       And I follow translated "call_results.new.save_button"
+      And I wait 1 second
       Then I should see translated "call_results.create.flash.successfully_added"
       And last email sent should have been sent to recipient "new_member888@nbs.com"
       And last email sent should have content "fairdeals"
       And last email sent should have content "Fairdeals password: testin"
-      And last email sent should have content "Screen name: Dohn"
       And last email sent should have content "Fairdeals username: new_member888@nbs.com"
       Then I am not sign in
       And I am on the homepage
