@@ -519,6 +519,13 @@ Scenario: I can see language or country name when adding translation
   And I should see translated "models.locale.da" within "#lead_translation_form_lead_lead_translations_attributes_0"
 
 #9706
-@m27 @requested
+@m27 @requested @selenium @tgn @_done @_tested
 Scenario: I should see datepicker when template field is of date type
+  Given template named "Computers details" for category "Computers" is created by user "bob@person.com" with role "agent"
+  And template named "Computers details" is mandatory
+  And template named "Computers details" has following fields "production date:false:true:2"
+  And I go to agents leads
+  And I select "Computers" from "category_id"
+  And I follow translated "agent.leads.index.view.new_lead"
+  And element "input" with id "lead_lead_template_values_attributes_0_value" has class "datepicker"
 
