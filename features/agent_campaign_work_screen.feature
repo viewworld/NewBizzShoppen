@@ -635,6 +635,7 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_phone_number" with "+44 92423423232"
       And I fill in "call_result_contact_email_address" with "new_member888@nbs.com"
       And I select "Free member subscription" from "call_result_contact_subscription_plan_id"
+      And I check "call_result_contact_newsletter_on"
       And I follow translated "call_results.new.save_button"
       And I wait 1 second
       Then I should see translated "call_results.create.flash.successfully_added"
@@ -677,9 +678,9 @@ Feature: Agent campaign - calling session
   Scenario: Popup from CKEDITOR allows to select multiple deals and insert then to email template editor
 
   #9602
-  @m27 @requested
+  @m27 @requested @tgn @_done @_tested_elsewhere
   Scenario: When upgrading contact to member / supplier / cat supplier I can select subscription type
 
   #9602
-  @m27 @requested
+  @m27 @requested @tgn @_done @_tested_elsewhere
   Scenario: I can enable a newsletter for user upgraded from contact
