@@ -16,26 +16,28 @@
           </div>
           <div class="column_right">
             <div class="pdd_10">
-              <div class="element_description">
+              <div class="element_description members_leads">
                 <h3><%= t("deals.show.view.short_description_label") %></h3>
 
-                <p class="i expandable"><%= @deal.description %></p>
-
+                <%= @deal.description %>
+              </div>
+              <div class="element_description members_leads">
                 <h3><%= t("deals.show.view.detailed_description_label") %></h3>
 
-                <p class="i expandable"><%= @deal.hidden_description.to_s.html_safe %></p>
+                <%= @deal.hidden_description.to_s.html_safe %>
+              </div>
 
+              <div class="element_description members_leads">
                 <h3><%= t("deals.show.view.fine_print_label") %></h3>
 
-                <p class="i expandable"><%= @deal.fine_print.to_s.html_safe %></p>
-
-                <div class="company_frame">
-                    <% if @deal.logo %>
-                        <p class="company_frame_logo"><%= image_tag(@deal.logo.url) %></p>
-                    <% end %>
-                    <p class="company_frame_name"><%= @deal.company_name %></p>
-                    <%= @deal.company_description.to_s.html_safe %>
-                </div>
+                <%= @deal.fine_print.to_s.html_safe %>
+              </div>
+              <div class="company_frame">
+                <% if @deal.logo %>
+                    <p class="company_frame_logo"><%= image_tag(@deal.logo.url) %></p>
+                <% end %>
+                <p class="company_frame_name"><%= @deal.company_name %></p>
+                <%= @deal.company_description.to_s.html_safe %>
               </div>
             </div>
           </div>

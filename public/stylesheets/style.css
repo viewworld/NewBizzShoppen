@@ -2152,8 +2152,15 @@ li.disabled
 /* --- member request ----
 ------------------------------------------------------------------------------------ */
 
+.members_leads
+{
+    padding: 10px 0 15px;
+}
+
+
 .company_frame
 {
+    margin: 10px 0 15px;
     background: #fff;
     border: 1px solid #CCC;
     padding: 13px 12px;
