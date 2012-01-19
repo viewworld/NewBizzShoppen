@@ -24,7 +24,7 @@
   <% end %>
 
   <% if !user_signed_in? or !current_user.has_role?(:admin) %>
-  <%= main_menu_link_to t("supplier_home.show.view.validate_voucher_button"), validate_voucher_path, :tab => "validate_voucher" %>
+  <%= main_menu_link_to t("supplier_home.show.view.validate_voucher_button"), validate_voucher_path, :tab => "validate_voucher", :class => "voucher" %>
   <% end %>
 </ul>
 
