@@ -84,8 +84,8 @@
           </div>
           <!-- end / main deal -->
           <% if defined? comments_enbaled and comments_enbaled %>
-            <%= link_to primary_deal.comment_threads.count.zero? ? !user_signed_in? ? t("deals.listing.no_comments") : t("deals.listing.create_comment") : t("deals.listing.show_comments"), "javascript:void(0)", :class => "toggle_row show_comments#{' toggle_row_unread' if primary_deal.has_unread_comments_for_user?(current_user)}", :onclick => "if(#{user_signed_in? ? 'true' : 'false'}){deal_mark_comments_as_read(#{primary_deal.id}); mark_row_as_read('#{dom_id(primary_deal)}')}" %>
-            <%= link_to t("deals.listing.hide_comments"), "javascript:void(0)", :class => "toggle_row hide_comments", :style => "display:none" %>
+            <%= link_to primary_deal.comment_threads.count.zero? ? !user_signed_in? ? t("deals.listing.no_comments") : t("deals.listing.create_comment") : t("deals.listing.show_comments"), "javascript:void(0)", :class => "toggle_comments show_comments#{' toggle_row_unread' if primary_deal.has_unread_comments_for_user?(current_user)}", :onclick => "if(#{user_signed_in? ? 'true' : 'false'}){deal_mark_comments_as_read(#{primary_deal.id}); mark_row_as_read('#{dom_id(primary_deal)}')}" %>
+            <%= link_to t("deals.listing.hide_comments"), "javascript:void(0)", :class => "toggle_comments hide_comments", :style => "display:none" %>
           <% end %>
         </div>
 
