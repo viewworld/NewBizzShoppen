@@ -99,7 +99,7 @@
               <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_remove" %>
           <% end %>
 
-          <% if target_campaigns = (current_user.admin? ? Campaign.all : Campaign.available_for_user(current_user)).except(@campaign) %>
+          <% if target_campaigns = (current_user.admin? ? Campaign.all.except(@campaign) : Campaign.available_for_user(current_user)).except(@campaign) %>
               <%= form_tag batch_move_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_move_form" do %>
                   <%= select_tag "target_campaign_id", options_for_select(target_campaigns.map { |u| [u.name, u.id] }) %>
                   <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_move_form" %>

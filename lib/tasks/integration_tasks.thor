@@ -170,7 +170,7 @@ class IntegrationTasks < Thor
     Translation.where(:key => "formtastic.labels.user/category_supplier.show_deals", :locale => "en").first.update_attribute(:value, "Show all deals")
 
     [:da, :en].each do |locale|
-      I18n.locale = locale
+      ::I18n.locale = locale
       email_template = EmailTemplate.where(:uniq_id => "deal_certification_request").first
       email_template.update_attribute(:body, email_template.body.gsub("new_sales_manager_account_url", "login_url"))
     end
@@ -179,6 +179,15 @@ class IntegrationTasks < Thor
       user = user.with_role
       user.auto_buy_enabled = true if user.has_role?(:category_supplier)
       user.save
+    end
+  end
+
+  desc "m27", ""
+  def m27
+    LeadCategory.all.each do |category|
+      [:refresh_leads_count_cache!, :refresh_published_leads_count_cache!].each do |method|
+        category.send(method)
+      end
     end
   end
 end

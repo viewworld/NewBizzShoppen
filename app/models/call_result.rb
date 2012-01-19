@@ -32,7 +32,8 @@ class CallResult < ActiveRecord::Base
   scope :call_log_results, joins(:result).where(:results => {:final => false})
   scope :final_results, joins(:result).where(:results => {:final => true})
   scope :with_creator, lambda { |agent_id| where(:creator_id => agent_id) if agent_id.present? }
-  scope :final_for_campaign, lambda { |campaign| final_results.where("campaigns_results.campaign_id = ? and contacts.type = 'Contact' and contacts.campaign_id = ?", campaign.id, campaign.id).joins("INNER JOIN campaigns_results ON results.id = campaigns_results.result_id").joins("INNER JOIN leads as contacts ON call_results.contact_id=contacts.id") }
+  scope :for_campaign, lambda { |campaign| where("campaigns_results.campaign_id = ? and contacts.type = 'Contact' and contacts.campaign_id = ?", campaign.id, campaign.id).joins("INNER JOIN campaigns_results ON results.id = campaigns_results.result_id").joins("INNER JOIN leads as contacts ON call_results.contact_id=contacts.id") }
+  scope :final_for_campaign, lambda { |campaign| final_results.for_campaign(campaign) }
   scope :with_success, where("results.is_success is true")
   scope :with_reported, where("results.is_reported is true")
   default_scope :order => 'call_results.created_at DESC'
@@ -57,7 +58,7 @@ class CallResult < ActiveRecord::Base
   def custom_fields_for_csv(size)
     result = []
     size.times { result << "" }
-    result_values.each_with_index { |result_value, index| result[index] = "#{result_value.result_field.name}: #{result_value.value}" }
+    result_values.select { |rv| !rv.result_field.nil? }.each_with_index { |result_value, index| result[index] = "#{result_value.result_field.name}: #{result_value.value}" }
     result
   end
 

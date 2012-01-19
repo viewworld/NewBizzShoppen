@@ -111,6 +111,7 @@ en:
         refunds: "Refunds"
         campaigns: Campaigns
         reports: "Reports"
+        agent_timesheets: "Timesheets"
         subscription_plans: "Subscriptions"
       agent:
         leads: My leads
@@ -124,6 +125,8 @@ en:
         lead_templates: "Lead templates"
         campaigns: Campaigns
         reports: "Reports"
+        campaign_reports: "Campaign"
+        agent_timesheets: "Timesheets"
         deals: "My deals"
       call_centre_agent:
         leads: "My leads"
@@ -3904,8 +3907,11 @@ en:
         number_of_contacts: "# of contacts"
         percent: "%"
         number_of_calls_made: "Number of calls made"
+        number_of_results_made: "Number of results made"
         avr_number_of_min_per_final_result: "Avr. # of min. pr final result"
         avr_number_of_calls_per_finished_contacts: "Avr. # of calls / finished contact"
+        avr_number_of_results_per_finished_contacts: "Avr. # of results / finished contact"
+        number_of_results_per_minute: "# of results / min"
         value_created: "Value created"
         leads_sold: "Leads sold (value / number)"
         hours_used: "Hours used"
@@ -3921,7 +3927,53 @@ en:
         active: "Active"
         inactive: "Inactive"
         all: "All"
-
+  agent_timesheets:
+    index:
+      header: "Agent timesheets"
+      week: "Week"
+      total: "Total"
+      total_average: "Total / average"
+      na: "n/a"
+      overview:
+        header: "Overview"
+        hours_header: "Hours"
+        results_header: "Results"
+        value_header: "Value"
+        hours_total: "Total hours"
+        results_total: "Total results"
+        value_total: "Total value"
+      team_result_sheet:
+        header: "Team result sheet"
+        time: "Time"
+        results: "Res"
+        value: "Value"
+      agent_time_sheet:
+        header: "Agent timesheet: %{name}"
+        first_result: "First result"
+        last_result: "Last result"
+        log_out_time: "Log out time"
+        hours: "Hours worked"
+        results: "Number of results"
+        value: "Value created"
+        avg_value_per_hour: "Avg. Value / Hour"
+        avg_result_per_hour: "Avg. Result / Hour"
+    new:
+      header: "Agent timesheets"
+      time_period: "Select time period"
+      select_camapigns: "Select campaigns"
+      select_team: "Select team"
+      display: "Display"
+      generate: "Generate"
+      report_type: "Report type"
+      campaigns_selection:
+        all_campaigns: "All available campaigns"
+        selected_campaigns: "Selected campaigns"
+      move_right: "Add >"
+      move_left: "< Remove"
+      agents_selection:
+        all_agents: "All available agents"
+        selected_agents: "Selected agents"
+        all_call_centres: "All available call centres"
   advanced_import:
     show:
       view:
@@ -4157,6 +4209,7 @@ en:
         title: "Leads created by deal"
         sold: "Sold?"
       max_auto_buy_limit_reached: "Max auto buy limit has been reached."
+      default_confirmation_page_msg: "Vi har sendt en mail til leverandøren med dine kontaktinformationer. Du er også velkommen til at kontakte leverandøren direkte, du skal huske at oplyse at du er medlem af fairdeals så du får din rabat."
     new:
       view:
         frame_header: "Get deal"

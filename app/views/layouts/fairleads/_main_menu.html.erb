@@ -22,6 +22,10 @@
         <%= main_menu_link_to(t("layout.main_menu.shared.deal_maker_users"), deal_maker_users_path, :tab => "deal_maker_users") %>
       <% end %>
   <% end %>
+
+  <% if !user_signed_in? or !current_user.has_role?(:admin) %>
+  <%= main_menu_link_to t("supplier_home.show.view.validate_voucher_button"), validate_voucher_path, :tab => "validate_voucher", :class => "voucher" %>
+  <% end %>
 </ul>
 
 <script type="text/javascript">

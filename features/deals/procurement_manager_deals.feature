@@ -345,3 +345,40 @@ Feature: Deals from procurement manager perspective
     And I follow translated "deals.index.view.contact_me"
     And I press translated "member.leads.new.view.button_create"
     And I should see "Blurb voucher confirmation page"
+
+  #9606
+  @m27 @requested
+  Scenario: When I am not signed in and I click get deal button then modal window should appear
+
+  #9606
+  @m27 @requested
+  Scenario: It should be possible to sign in or sign up on the modal window view
+
+  #9606
+  @m27 @requested
+  Scenario: After sign in/up I should see another modal windows where I can enter template information and note
+
+  #9606
+  @m27 @requested
+  Scenario: I should be redirected to paypal or view deal after completing the modal window form
+
+  #9410
+  @m27 @requested
+  Scenario: I can get deal when I have free subscription and I didn't used up my limit of free deals
+
+  #9397
+  @m27 @requested
+  Scenario: When I get the deal with voucher and my payment from paypal haven't come yet then I should not see that deal under my deals
+
+  #9397
+  @m27 @requested
+  Scenario: When I get the deal with voucher and my payment from paypal was successful then my request should be visible under My deals
+
+  #9397
+  @m27 @requested
+  Scenario: When my request is cancelled I get email "Sorry your voucher is canceled since the payment did not go through.Please try again or contact fairleads if the problem persists"
+
+  #9367
+  @m27 @requested
+  Scenario: When I get the deal on the page for deal request I should not see linkedin/facebook urls but see company name
+

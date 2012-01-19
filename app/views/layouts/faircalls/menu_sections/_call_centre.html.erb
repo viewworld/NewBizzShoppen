@@ -7,7 +7,10 @@
 <%= main_menu_link_to t("layout.main_menu.shared.comments"), comments_threads_path, :tab => "comments" %>
 <%= main_menu_link_to t("layout.main_menu.call_centre_agent.campaigns"), callers_campaigns_path, :tab =>"campaigns" %>
 <%= main_menu_link_to t("layout.main_menu.call_centre_agent.news"), call_centres_news_index_path, :tab =>"news" %>
-<%= main_menu_link_to t("layout.main_menu.call_centre.reports"), callers_campaign_reports_path, :tab =>"financial" %>
+<%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.call_centre.reports"), :tab =>"financial" do %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.call_centre.campaign_reports")), callers_campaign_reports_path, :tab => "campaigns_reports" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.call_centre.agent_timesheets")), callers_agent_timesheets_path, :tab =>"agent_timesheets" %>
+<% end %>
 <%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.shared.import"), :tab => "import" do  %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.shared.import_contacts")), contacts_advanced_import_path, :tab => "import_contacts" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.shared.import_leads")), leads_advanced_import_path, :tab => "import_leads" %>

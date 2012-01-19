@@ -1,4 +1,3 @@
-#This is almost the same as in Agent scope
 @start_pages @m2
 Feature: Start page for buyer
 

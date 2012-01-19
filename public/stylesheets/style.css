@@ -207,7 +207,7 @@ h4
 {
     display: block;
     float: left;
-    padding-right: 5px;
+    padding-right: 4px;
 }
 
 #user_menu ul.nav li a
@@ -217,7 +217,7 @@ h4
     font-size: 13px;
     color: #fff;
     text-decoration: none;
-    text-shadow: 1px 1px 0 #4d7019;
+    text-shadow: 1px 1px 0 rgba(0,0,0,.5);
 }
 
 #user_menu ul.nav li a span
@@ -226,7 +226,7 @@ h4
     display: block;
     height: 36px;
     line-height: 36px;
-    padding: 0 15px;
+    padding: 0 14px;
 }
 
 #user_menu ul.nav.admin_nav li a span
@@ -280,6 +280,26 @@ h4
 #user_menu ul.nav li.has_child.active span
 {
     background-position: right -370px;
+}
+
+#user_menu ul.nav li a.voucher
+{
+    background-position: 0 -408px;
+}
+
+#user_menu ul.nav li a.voucher span
+{
+    background-position: right -444px;
+}
+
+#user_menu ul.nav li a.voucher:hover
+{
+    background-position: 0 -480px;
+}
+
+#user_menu ul.nav li a.voucher:hover span
+{
+    background-position: right -516px;
 }
 
 #user_menu ul.subnav
@@ -2132,8 +2152,15 @@ li.disabled
 /* --- member request ----
 ------------------------------------------------------------------------------------ */
 
+.members_leads
+{
+    padding: 10px 0 15px;
+}
+
+
 .company_frame
 {
+    margin: 10px 0 15px;
     background: #fff;
     border: 1px solid #CCC;
     padding: 13px 12px;
@@ -2161,4 +2188,18 @@ li.disabled
     padding-bottom: 8px;
     margin: 8px 5px 8px 0;
     border-bottom: 1px dotted #bbb;
+}
+
+
+/* --- admin_agents_selection ---
+--------------------------------------------------------------------------------------------------------------------- */
+
+.admin_agents_selection
+{
+    padding-top: 130px;
+}
+
+.admin_agents_selection.grid_160
+{
+    padding-top: 185px;
 }

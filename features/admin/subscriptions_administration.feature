@@ -162,38 +162,6 @@ Scenario: I can enter a "Subscription text" as rich text
 @m22 @requested @_done @non_testable @tgn
 Scenario: I can upload images for "Subscription text"
 
-@backlog @requested
-Scenario: I should be able to define subscription period
-
-@backlog @requested
-Scenario: I should be able to define billing period (which indicates the smaller periods of the parts of whole payment)
-
-@backlog @requested
-Scenario: I can check "Use PayPal to handle subscription"
-
-@backlog @requested
-Scenario: I can check "Must enter billing information (paypal) at start"
-
-@backlog @requested
-Scenario: I can check "Must enter billing information (paypal) at end of free period"
-
-@backlog @requested
-Scenario: I can check "Automatic downgrading"
-
-@backlog @requested
-Scenario: I can select subscription name from dropdown to which it should be downgraded by default (list should include payable subscriptions without paypal) if payment fails
-
-@backlog @requested
-Scenario: I should not be able to check "Automatic downgrading" if subscription is not handled by Paypal
-
-@backlog @requested
-Scenario: I can enter number of Billing retries before subscription will be downgraded
-
-@backlog @requested
-Scenario: I can check "Auto generate and send invoice for successful Paypal billing"
-
-@backlog @requested
-Scenario: I can set "Number of free deals in free period" for suppliers
-
-@backlog @requested
-Scenario: I should not be able to set "Number of free deals in free period" for other role than suppliers
+#9411
+@m27 @requested
+Scenario: I can mark subscription plan as public

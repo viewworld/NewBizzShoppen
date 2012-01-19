@@ -68,5 +68,38 @@ module Formtastic
       datepicker_options = {:label_html =>  {:class => "date"}, :input_html => {:id => "datepicker", :class => 'formtastic-ui-datepicker datepicker', :value => value.try(:strftime, format)}}
     end
   end
+  module WeekPicker
+    protected
+
+    def weekpicker_input(method, options = {})
+      format = options[:format] || I18n.t("date.formats.default") || '%d-%m-%Y'
+      string_input(method, weekpicker_options(format, method, object.send(method)).deep_merge(options))
+    end
+
+    # Generate html input options for the datepicker_input
+    #
+    def weekpicker_options(format, method, value = nil)
+      weekpicker_options = {:label_html =>  {:class => "date"}, :input_html => {:id => "weekpicker", :class => 'formtastic-ui-weekpicker weekpicker', :value => value.try(:strftime, format)}}
+    end
+  end
 end
 Formtastic::SemanticFormBuilder.send(:include, Formtastic::DatePicker)
+Formtastic::SemanticFormBuilder.send(:include, Formtastic::WeekPicker)
+
+module Formtastic
+  class SemanticFormBuilder
+      def find_collection_for_column(column, options) #:nodoc:
+        collection = find_raw_collection_for_column(column, options)
+        options[:sort] ||= true
+
+        # Return if we have an Array of strings, fixnums or arrays
+        return collection if (collection.instance_of?(Array) || collection.instance_of?(Range)) &&
+                             [Array, Fixnum, String, Symbol].include?(collection.first.class) &&
+                             !(options.include?(:label_method) || options.include?(:value_method))
+
+        label, value = detect_label_and_value_method!(collection, options)
+        collection = collection.sort_by(&label.to_sym) if options[:sort]
+        collection.map { |o| [send_or_call(label, o), send_or_call(value, o)] }
+      end
+  end
+end
