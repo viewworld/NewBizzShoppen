@@ -6,8 +6,8 @@ describe TopAgent do
   before(:each) do
     # create users
     @call_centre = User::CallCentre.make!
-    @call_centre_agent1 = User::CallCentreAgent.make!(:screen_name => 'CCA1')
-    @call_centre_agent2 = User::CallCentreAgent.make!(:screen_name => 'CCA2')
+    @call_centre_agent1 = User::CallCentreAgent.make!(:first_name => "Tom", :company_name => 'CCA1')
+    @call_centre_agent2 = User::CallCentreAgent.make!(:first_name => "Anna", :company_name => 'CCA2')
     @call_centre.children << @call_centre_agent
 
     # create campaign
@@ -71,7 +71,7 @@ describe TopAgent do
       CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact2, :result => @result2, :creator => @call_centre_agent1, :created_at => Time.now-1.day)
       ta = TopAgent.today
-      ta.value_created.should == 110.0 and ta.user.screen_name.should == "CCA1"
+      ta.value_created.should == 110.0 and ta.user.screen_name.should == "Tom, CCA1"
     end
 
     it "should return correct value for week when there are no upgraded to lead results" do
@@ -80,7 +80,7 @@ describe TopAgent do
       CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact2, :result => @result2, :creator => @call_centre_agent1, :created_at => Time.now-2.weeks)
       ta = TopAgent.week
-      ta.value_created.should == 110.0 and ta.user.screen_name.should == "CCA1"
+      ta.value_created.should == 110.0 and ta.user.screen_name.should == "Tom, CCA1"
     end
 
     it "should return correct value for quarter when there are no upgraded to lead results" do
@@ -89,7 +89,7 @@ describe TopAgent do
       CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact2, :result => @result2, :creator => @call_centre_agent1, :created_at => Time.now-4.months)
       ta = TopAgent.quarter
-      ta.value_created.should == 110.0 and ta.user.screen_name.should == "CCA1"
+      ta.value_created.should == 110.0 and ta.user.screen_name.should == "Tom, CCA1"
     end
 
     it "should return correct value for year when there are no upgraded to lead results" do
@@ -98,7 +98,7 @@ describe TopAgent do
       CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact2, :result => @result2, :creator => @call_centre_agent1, :created_at => Time.now-2.years)
       ta = TopAgent.year
-      ta.value_created.should == 110.0 and ta.user.screen_name.should == "CCA1"
+      ta.value_created.should == 110.0 and ta.user.screen_name.should == "Tom, CCA1"
     end
   end
 
@@ -109,7 +109,7 @@ describe TopAgent do
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-1.day)
       ta = TopAgent.today
-      ta.value_created.should == 143.0 and ta.user.screen_name.should == "CCA1"
+      ta.value_created.should == 143.0 and ta.user.screen_name.should == "Tom, CCA1"
     end
 
     it "should return correct value for week when there are upgraded to lead results" do
@@ -118,7 +118,7 @@ describe TopAgent do
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-2.week)
       ta = TopAgent.week
-      ta.value_created.should == 143.0 and ta.user.screen_name.should == "CCA1"
+      ta.value_created.should == 143.0 and ta.user.screen_name.should == "Tom, CCA1"
     end
 
     it "should return correct value for quarter when there are upgraded to lead results" do
@@ -127,7 +127,7 @@ describe TopAgent do
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-4.months)
       ta = TopAgent.quarter
-      ta.value_created.should == 143.0 and ta.user.screen_name.should == "CCA1"
+      ta.value_created.should == 143.0 and ta.user.screen_name.should == "Tom, CCA1"
     end
 
     it "should return correct value for year when there are upgraded to lead results" do
@@ -136,7 +136,7 @@ describe TopAgent do
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-2.years)
       ta = TopAgent.year
-      ta.value_created.should == 143.0 and ta.user.screen_name.should == "CCA1"
+      ta.value_created.should == 143.0 and ta.user.screen_name.should == "Tom, CCA1"
     end
   end
 
@@ -151,7 +151,7 @@ describe TopAgent do
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-1.day)
       ta = TopAgent.today
-      ta.value_created.should == 253.0 and ta.user.screen_name.should == "CCA1"
+      ta.value_created.should == 253.0 and ta.user.screen_name.should == "Tom, CCA1"
     end
 
     it "should return correct value for week when there are both upgraded and not upgraded to lead results" do
@@ -164,7 +164,7 @@ describe TopAgent do
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-2.week)
       ta = TopAgent.week
-      ta.value_created.should == 253.0 and ta.user.screen_name.should == "CCA1"
+      ta.value_created.should == 253.0 and ta.user.screen_name.should == "Tom, CCA1"
     end
 
     it "should return correct value for quarter when there are both upgraded and not upgraded to lead results" do
@@ -177,7 +177,7 @@ describe TopAgent do
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-4.months)
       ta = TopAgent.quarter
-      ta.value_created.should == 253.0 and ta.user.screen_name.should == "CCA1"
+      ta.value_created.should == 253.0 and ta.user.screen_name.should == "Tom, CCA1"
     end
 
     it "should return correct value for year when there are both upgraded and not upgraded to lead results" do
@@ -190,7 +190,7 @@ describe TopAgent do
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-2.years)
       ta = TopAgent.year
-      ta.value_created.should == 253.0 and ta.user.screen_name.should == "CCA1"
+      ta.value_created.should == 253.0 and ta.user.screen_name.should == "Tom, CCA1"
     end
   end
 

@@ -6,8 +6,8 @@ describe CampaignReport do
   before(:each) do
     # create users
     @call_centre = User::CallCentre.make!
-    @call_centre_agent1 = User::CallCentreAgent.make!(:screen_name => 'CCA1')
-    @call_centre_agent2 = User::CallCentreAgent.make!(:screen_name => 'CCA2')
+    @call_centre_agent1 = User::CallCentreAgent.make!(:company_name => 'CCA1')
+    @call_centre_agent2 = User::CallCentreAgent.make!(:company_name => 'CCA2')
     @call_centre.children << @call_centre_agent
 
     # create campaign
