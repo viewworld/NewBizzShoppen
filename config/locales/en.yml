@@ -3958,6 +3958,8 @@ en:
         value: "Value created"
         avg_value_per_hour: "Avg. Value / Hour"
         avg_result_per_hour: "Avg. Result / Hour"
+        select_agent: "Select agent"
+        show_all: "Show all agents on one page"
     new:
       header: "Agent timesheets"
       time_period: "Select time period"

@@ -14,8 +14,8 @@
 
               <fieldset class="inputs labels_ta_r">
                 <ol class="align_inputs">
-                  <%= f.input :start_date, :as => :weekpicker, :wrapper_html => {:class => "date"} %>
-                  <%= f.input :end_date, :as => :weekpicker, :wrapper_html => {:class => "date"} %>
+                  <%= f.input :start_date, :as => :weekpicker, :input_html => {:id => 'search_start_date'}, :wrapper_html => {:class => "date"} %>
+                  <%= f.input :end_date, :as => :weekpicker, :input_html => {:id => 'search_end_date'}, :wrapper_html => {:class => "date"} %>
                   <%= f.input :show_weekends, :as => :boolean %>
                 </ol>
               </fieldset>
