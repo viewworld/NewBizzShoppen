@@ -171,3 +171,17 @@
       }
 
   }
+
+  function setup_jquery_deal_links_dialog(){
+      $('#modal_for_deal_links').dialog({
+          autoOpen: false,
+          width: 700,
+          title: 'Insert deal links',
+          modal: true
+      });
+  }
+
+  function open_deal_links_dialog(){
+     $.post('/deals/show_all.js');
+     $('#modal_for_deal_links').dialog('open');
+  }

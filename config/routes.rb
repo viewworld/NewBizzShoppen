@@ -282,6 +282,9 @@ Nbs::Application.routes.draw do
     member do
       post 'rate'
     end
+    collection do
+      get 'show_all'
+    end
   end
 
   resources :group_deals, :only => [:show]
