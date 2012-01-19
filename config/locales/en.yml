@@ -579,6 +579,8 @@ en:
       user_not_charge_vat: "Not charge vat"
       user_team_suppliers: "Team supplier"
       user_deal_maker_role_enabled: "Deal maker role enabled"
+      contact_subscription_plan: "Subscription plan"
+      contact_newsletter_on: "Newsletter on"
     edit:
       title: Edit result
       form_title: Edit
