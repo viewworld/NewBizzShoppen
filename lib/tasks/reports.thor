@@ -19,13 +19,13 @@ class Reports < Thor
     @country = Country.first || Country.make!
 
     email = "call_centre_test#{Time.now.to_i}@nbs.com"
-    @call_centre = User::CallCentre.make!(:email => email, :screen_name => email, :password => "secret", :password_confirmation => "secret", :currency => @currency, :billing_rate => 10.0)
+    @call_centre = User::CallCentre.make!(:email => email, :password => "secret", :password_confirmation => "secret", :currency => @currency, :billing_rate => 10.0)
 
     puts "Generating users..."
 
     1.upto(options[:users]) do |i|
       email = "cca_test#{i}_#{@call_centre.email}"
-      @call_centre_agent = User::CallCentreAgent.make!(:email => email, :screen_name => email, :password => "secret", :password_confirmation => "secret", :currency => @currency, :billing_rate => 10.0, :parent_id => @call_centre.id)
+      @call_centre_agent = User::CallCentreAgent.make!(:email => email, :password => "secret", :password_confirmation => "secret", :currency => @currency, :billing_rate => 10.0, :parent_id => @call_centre.id)
     end
 
     @result = Result.where(:is_reported => true, :is_success => true, :upgrades_to_lead => false, :final => true).first || Result.make!(:final_reported_success)
