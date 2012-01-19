@@ -183,7 +183,6 @@ Scenario: I can enable/disable email verification for sales managers
       | user_category_supplier_last_name             | Taker           |
       | user_category_supplier_company_name          | LeadsInt Ltd    |
       | user_category_supplier_phone                 | 48928217272     |
-      | user_category_supplier_screen_name           | Bob T Verified          |
       | user_category_supplier_email                 | user@domain.dom |
       | user_category_supplier_password              | secret          |
       | user_category_supplier_password_confirmation | secret          |
@@ -207,7 +206,6 @@ Scenario: I can enable/disable email verification for sales managers
       | user_category_supplier_last_name             | Taker           |
       | user_category_supplier_company_name          | LeadsInt Ltd    |
       | user_category_supplier_phone                 | 48928217272     |
-      | user_category_supplier_screen_name           | Bob T Not Verified          |
       | user_category_supplier_email                 | user2@domain.dom |
       | user_category_supplier_password              | secret          |
       | user_category_supplier_password_confirmation | secret          |

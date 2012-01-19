@@ -3,8 +3,8 @@ Feature: Agent timesheets
 
   @selenium @_done @_tested
   Scenario: I can select start and end date or week
-    Given user translator_call_centre@nbs.com with role call_centre exists with attributes "screen_name:Russia Today"
-    Given user translator_call_centre_agent@nbs.com with role call_centre_agent exists with attributes "screen_name:Alyona"
+    Given user translator_call_centre@nbs.com with role call_centre exists with attributes "first_name: Ted, company_name:Russia Today"
+    Given user translator_call_centre_agent@nbs.com with role call_centre_agent exists with attributes "first_name:Alyona"
     Given I am on the homepage
     And I sign in as blazejek@gmail.com with password secret
     And I click hidden link by url regex "/callers\/agent_timesheets$/"
@@ -20,8 +20,8 @@ Feature: Agent timesheets
     And I check "search_overview"
     And I check "search_team_result_sheet"
     And I check "search_agent_timesheet"
-    And I select "Russia Today" from "all_call_centres"
-    And I select "Alyona" from "all_agents"
+    And I select "Ted, Russia Today" from "all_call_centres"
+    And I select "Alyona, Russia Today" from "all_agents"
     And I follow translated "agent_timesheets.new.move_right" within "#agents_selection_div"
     And I am not sign in
     Given I am on the homepage

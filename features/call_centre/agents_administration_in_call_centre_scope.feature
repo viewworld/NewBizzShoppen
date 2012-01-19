@@ -242,7 +242,6 @@ Scenario: Call centers is able to skip email confirmation when creating new agen
   Then I should see "Don't verify email address"
   Then I fill in "user_call_centre_agent_first_name" with "Johnny"
   Then I fill in "user_call_centre_agent_last_name" with "Cage"
-  Then I fill in "user_call_centre_agent_screen_name" with "Movie Star"
   Then I fill in "user_call_centre_agent_password" with "secret"
   Then I fill in "user_call_centre_agent_password_confirmation" with "secret"
   Then I fill in "user_call_centre_agent_email" with "johnny_cage@mk.com"

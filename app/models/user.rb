@@ -44,10 +44,8 @@ class User < ActiveRecord::Base
   roles :admin, :agent, :call_centre, :call_centre_agent, :supplier, :lead_supplier, :lead_user, :member, :category_supplier, :translator, :deal_maker
 
   validates_presence_of :email
-  validates_presence_of :screen_name, :if => :validate_screen_name?
   validates_presence_of :first_name, :last_name, :if => :validate_first_and_last_name?
   validates_uniqueness_of :email
-  validates_uniqueness_of :screen_name, :if => :validate_screen_name?
   validate :payout_information_is_complete
 
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
@@ -102,7 +100,7 @@ class User < ActiveRecord::Base
   scope :with_leads, select("DISTINCT(email), users.*").joins("RIGHT JOIN leads on users.id=leads.creator_id")
   scope :within_accessible_categories, lambda { |supplier| where("leads.category_id NOT IN (?)", supplier.accessible_categories_ids) }
   scope :right_join_leads, joins("RIGHT JOIN leads on users.id=leads.creator_id")
-  scope :screen_name_and_id_with_leads, right_join_leads.select("DISTINCT(users.screen_name),users.id, users.roles_mask, users.first_name, users.company_name")
+  scope :screen_name_and_id_with_leads, right_join_leads.select("DISTINCT(users.id),users.company_name, users.first_name, users.company_name")
   scope :with_leads_within_categories, lambda { |category_ids| right_join_leads.where("leads.category_id IN (?)", category_ids.to_a) }
 
   scope :assigned_to_campaigns, select("DISTINCT(users.id), users.*").joins("inner join campaigns_users on users.id=campaigns_users.user_id")
@@ -161,10 +159,6 @@ class User < ActiveRecord::Base
   end
 
   def validate_first_and_last_name?
-    true
-  end
-
-  def validate_screen_name?
     true
   end
 
@@ -926,11 +920,14 @@ class User < ActiveRecord::Base
   end
 
   def screen_name
-    if member?
-      "#{first_name}, #{company_name}"
+    tmp_screen_name = ["#{first_name}"]
+    if parent and company_name.to_s.strip.blank?
+      tmp_screen_name << "#{parent.company_name.to_s.strip}"
     else
-      read_attribute(:screen_name)
+      tmp_screen_name << "#{company_name.to_s.strip}"
     end
+
+    tmp_screen_name.select { |s| !s.blank? }.join(", ")
   end
 
   def set_auto_buy_enabled

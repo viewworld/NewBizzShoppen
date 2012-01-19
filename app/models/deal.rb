@@ -141,11 +141,9 @@ class Deal < AbstractLead
     if supplier
       supplier
     else
-      existing_users_count = User.where(:screen_name => contact_name).count
       contact_name_arr = contact_name.strip.split(" ")
       contact_name_arr = contact_name_arr.size == 1 ? contact_name_arr : [contact_name_arr.first, contact_name_arr[1..-1].join(' ')]
       user = User::CategorySupplier.new({:email => email_address, :company_name => company_name.strip, :phone => phone_number,
-                                 :screen_name => "#{contact_name}#{existing_users_count.zero? ? '' : existing_users_count+1}",
                                  :agreement_read => true, :first_name => contact_name_arr.first, :last_name => contact_name_arr.last,
                                  :assign_free_subscription_plan => true, :show_my_deals => true}.merge(params))
       user.skip_email_verification = "1"

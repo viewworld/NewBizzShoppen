@@ -26,7 +26,6 @@
                   <%= form.input :company_name, :as => :hidden %>
                   <%= form.input :first_name, :as => :hidden %>
                   <%= form.input :last_name, :as => :hidden %>
-                  <%= form.input :screen_name, :as => :hidden %>
                   <%= form.input :phone, :as => :hidden %>
                   <%= form.input :password, :hint => hint_for(@user, :password), :as => @user.rpx_identifier.blank? ? :password : :hidden %>
                   <%= form.input :password_confirmation, :hint => hint_for(@user, :password_confirmation), :as => @user.rpx_identifier.blank? ? :password : :hidden %>

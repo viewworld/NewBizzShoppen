@@ -6,8 +6,8 @@ Feature: Reassigning lead purchases
     And I make sure current locale is "en"
     And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
     And an user with role lead_user and email lead_user44@person.com exists as subaccount for customer customer@person.com
-    And user lead_user2@person.com with role lead_user exists with attributes "screen_name:John McCoy,first_name:John,last_name:McCoy"
-    And user lead_user44@person.com with role lead_user exists with attributes "screen_name:Martin Gleesse,first_name:Martin,last_name:Gleesse"
+    And user lead_user2@person.com with role lead_user exists with attributes "company_name:John McCoy,first_name:John,last_name:McCoy"
+    And user lead_user44@person.com with role lead_user exists with attributes "company_name:Martin Gleesse,first_name:Martin,last_name:Gleesse"
     And lead Printers ultimate deal exists within category Computers
     And lead Monitors LCD deal exists within category Computers
     And lead Keyboards deal exists within category Office

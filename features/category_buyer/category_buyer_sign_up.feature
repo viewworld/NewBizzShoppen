@@ -13,7 +13,6 @@ Feature: Category buyer sign up
     And I fill in "user_category_supplier_phone" with "123123123"
     And I fill in "user_category_supplier_company_name" with "eXtreme Ltd"
     And I fill in "user_category_supplier_email" with "cb@nbs.fake"
-    And I fill in "user_category_supplier_screen_name" with "Normal Guy"
     And I fill in "user_category_supplier_password" with "secret"
     And I fill in "user_category_supplier_password_confirmation" with "secret"
     And I fill in "user_category_supplier_address_attributes_address_line_1" with "Kaminskiego 19"

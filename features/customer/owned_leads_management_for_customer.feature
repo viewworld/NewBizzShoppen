@@ -6,12 +6,12 @@ Background:
   And I make sure current locale is "en"
   Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role supplier
   And user "customer@person.com" has team buyers enabled
-  And user customer@person.com with role supplier exists with attributes "screen_name:Liane Young,first_name:Liane,last_name:Young"
+  And user customer@person.com with role supplier exists with attributes "company_name:Liane Young,first_name:Liane,last_name:Young"
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_user and email lead_user3@person.com exists as subaccount for customer customer@person.com
-  And user lead_user2@person.com with role lead_user exists with attributes "screen_name:John McCoy,first_name:John,last_name:McCoy"
-  And user lead_user3@person.com with role lead_user exists with attributes "screen_name:Martin Gleesse,first_name:Martin,last_name:Gleesse"
-  And someone is signed up and confirmed as user with email someagent@nbs.com and password secret and role agent with attributes "screen_name:SomeAgent Joe"
+  And user lead_user2@person.com with role lead_user exists with attributes "company_name:John McCoy,first_name:John,last_name:McCoy"
+  And user lead_user3@person.com with role lead_user exists with attributes "company_name:Martin Gleesse,first_name:Martin,last_name:Gleesse"
+  And someone is signed up and confirmed as user with email someagent@nbs.com and password secret and role agent with attributes "company_name:SomeAgent Joe"
   And lead Printers ultimate deal is created by user someagent@nbs.com with role agent
   And a lead Printers ultimate deal exists within category Computers and is bought by user customer@person.com with role supplier
   And lead "Printers ultimate deal" has attributes "purchase_value:89.93,hidden_description:Lorem ipsum dolor sit amet consectetur adipiscing elit Suspendisse posuere turpis eget lorem sollicitudin ac volutpat Suspendisse posuere turpis eget lorem sollicitudin ac volutpat desc_end"

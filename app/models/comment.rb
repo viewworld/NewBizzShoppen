@@ -22,8 +22,8 @@ class Comment < ActiveRecord::Base
   scope :ascend_by_created_at, order("created_at ASC")
   scope :descend_by_header, joins("INNER JOIN leads ON leads.id = comments.commentable_id").order("leads.header DESC")
   scope :ascend_by_header, joins("INNER JOIN leads ON leads.id = comments.commentable_id").order("leads.header ASC")
-  scope :descend_by_user, joins("INNER JOIN users ON users.id = comments.user_id").order("users.screen_name DESC")
-  scope :ascend_by_user, joins("INNER JOIN users ON users.id = comments.user_id").order("users.screen_name ASC")
+  scope :descend_by_user, joins("INNER JOIN users ON users.id = comments.user_id").order("(users.first_name, users.company_name) DESC")
+  scope :ascend_by_user, joins("INNER JOIN users ON users.id = comments.user_id").order("(users.first_name, users.company_name) ASC")
   scope :descend_by_last_thread_created_at, order("last_thread_created_at DESC")
   scope :ascend_by_last_thread_created_at, order("last_thread_created_at ASC")
   scope :with_keyword, lambda { |keyword| where("lower(leads.header) like :q", {:q => "%#{keyword.to_s.downcase}%"}) }
@@ -33,7 +33,7 @@ class Comment < ActiveRecord::Base
   scope :with_leads_created_by, lambda {|user| with_leads.where(:leads => {:creator_id => user.id})}
   scope :with_category, lambda { |category_id| category_id.blank? ? where("") : with_leads.where(:leads => { :category_id => Category.find_by_id(category_id).self_and_descendants.map(&:id) }) }
   scope :with_leads, joins("INNER JOIN leads ON leads.id = comments.commentable_id")
-  scope :with_user, lambda { |q| select("distinct(roots.id), roots.*").where("roots.lft <= comments.lft and roots.rgt >= comments.rgt and roots.parent_id is null and (users.email like :q or users.screen_name like :q or users.company_name like :q)", {:q => "%#{q.to_s.downcase}%"}).joins("inner join users on comments.user_id=users.id inner join comments as roots on roots.commentable_id = comments.commentable_id ") }
+  scope :with_user, lambda { |q| select("distinct(roots.id), roots.*").where("roots.lft <= comments.lft and roots.rgt >= comments.rgt and roots.parent_id is null and (users.email like :q or users.company_name like :q)", {:q => "%#{q.to_s.downcase}%"}).joins("inner join users on comments.user_id=users.id inner join comments as roots on roots.commentable_id = comments.commentable_id ") }
   scope :unread_by_user, lambda { |user| select("DISTINCT(comments.id), comments.*").where("comment_readers.user_id IS NULL", user.id).joins("LEFT JOIN comment_readers ON comments.id=comment_readers.comment_id AND comment_readers.user_id=#{user.id}") }
   scope :without_blocked, where("is_blocked = ?", false)
 

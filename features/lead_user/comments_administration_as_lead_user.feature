@@ -5,8 +5,8 @@ Background:  Sign in user and set locale
   Given I am on the homepage
   And I make sure current locale is "en"
   And an user with role lead_user and email lead_user.customer1@nbs.com exists as subaccount for customer customer1@nbs.com
-  And user "lead_user.customer1@nbs.com" with role "lead_user" has attributes "screen_name: John Doe"
-  And user "customer1@nbs.com" with role "supplier" has attributes "screen_name: Customer1@Nbs"
+  And user "lead_user.customer1@nbs.com" with role "lead_user" has attributes "company_name: John Doe"
+  And user "customer1@nbs.com" with role "supplier" has attributes "company_name: Customer1@Nbs"
   And lead Lead#1 is bought by user customer1@nbs.com with role supplier and is assigned to user lead_user.customer1@nbs.com with role lead_user
   And lead Lead#2 is bought by user customer1@nbs.com with role supplier and is assigned to user lead_user.customer1@nbs.com with role lead_user
   And lead Lead#3 is bought by user customer1@nbs.com with role supplier and is assigned to user lead_user.customer1@nbs.com with role lead_user

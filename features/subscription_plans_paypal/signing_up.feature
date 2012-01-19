@@ -17,7 +17,6 @@ Feature: Signing up with PayPal
       | user_category_supplier_last_name             | Taker           |
       | user_category_supplier_company_name          | LeadsInt Ltd    |
       | user_category_supplier_phone                 | 48928217272     |
-      | user_category_supplier_screen_name           | Bob T           |
       | user_category_supplier_email                 | kastomer@nbs.fake |
       | user_category_supplier_password              | secret          |
       | user_category_supplier_password_confirmation | secret          |
@@ -47,7 +46,6 @@ Feature: Signing up with PayPal
       | user_category_supplier_last_name             | Taker           |
       | user_category_supplier_company_name          | LeadsInt Ltd    |
       | user_category_supplier_phone                 | 48928217272     |
-      | user_category_supplier_screen_name           | Bob T           |
       | user_category_supplier_email                 | kastomer@nbs.fake |
       | user_category_supplier_password              | secret          |
       | user_category_supplier_password_confirmation | secret          |

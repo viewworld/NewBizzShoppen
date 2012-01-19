@@ -4,7 +4,7 @@ Feature: Comments administration as category buyer
 Background:
   When Category named "Computers" already exists
   And I am signed up and confirmed as user with email "catbuyer@nbs.com" and password "secret" and role "category_supplier" for category "Computers"
-  And user "catbuyer@nbs.com" with role "category_supplier" has attributes "first_name: Mark, last_name: Driscoll, screen_name: Mark Driscoll"
+  And user "catbuyer@nbs.com" with role "category_supplier" has attributes "first_name: Mark, last_name: Driscoll, company_name: Mark Driscoll"
   And a lead Lead#1 exists within category Computers and is bought by user catbuyer@nbs.com with role category_supplier
   And a lead Lead#2 exists within category Computers and is bought by user catbuyer@nbs.com with role category_supplier
   And a lead Lead#3 exists within category Computers and is bought by user catbuyer@nbs.com with role category_supplier

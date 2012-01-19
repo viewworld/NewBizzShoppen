@@ -6,9 +6,9 @@ Background:
   And I make sure current locale is "en"
   And I am signed up and confirmed as user with email admin1@nbs.com and password supersecret and role admin
   And I have user with email customer1@nbs.com and role supplier
-  And user "customer1@nbs.com" with role "supplier" has attributes "screen_name: Mark Driscoll"
+  And user "customer1@nbs.com" with role "supplier" has attributes "first_name: Mark, company_name: Mark Driscoll"
   And I have user with email customer2@nbs.com and role supplier
-  And user "customer2@nbs.com" with role "supplier" has attributes "screen_name: Adam Savage"
+  And user "customer2@nbs.com" with role "supplier" has attributes "first_name: Adam, company_name: Adam Savage"
 
   And a lead Lead#1 exists within category Computers and is bought by user customer2@nbs.com with role supplier
   And a lead Lead#2 exists within category Computers and is bought by user customer1@nbs.com with role supplier
@@ -63,7 +63,7 @@ Scenario: I can go to account edit page
   Given I follow translated "layout.main_menu.shared.comments"
   And I follow "Lead#1"
   And I follow "Adam Savage"
-  And I should see "Editing Supplier: Adam Savage"
+  And I should see "Editing Supplier: Adam, Adam Savage"
 
 @_tested @selenium @_done
 Scenario: I can edit the comment
