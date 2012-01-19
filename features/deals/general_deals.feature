@@ -290,3 +290,7 @@ Feature: General deals
 
   @m24 @requested @auto_buy_max @_done @_tested_elsewhere @tgn
   Scenario: Deals with auto buy max are monitored in order to warrant 4 weeks period of inactivity
+
+  #9811
+  @m27 @requested
+  Scenario: Deals can be marked as Premium by admin or dealmaker

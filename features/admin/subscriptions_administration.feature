@@ -165,3 +165,7 @@ Scenario: I can upload images for "Subscription text"
 #9411
 @m27 @requested
 Scenario: I can mark subscription plan as public
+
+#9811
+@m27 @requested
+Scenario: I can check "Allows getting Premium Deals" for each Member subscription

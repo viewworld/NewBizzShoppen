@@ -35,11 +35,18 @@ module AgentTimesheetCommon
     end
     @agents = (@agents + @call_centres).uniq
 
+    if @agents.empty?
+      @agents = User.find_all_by_id((UserSessionLog.for_campaigns(@campaigns).select("DISTINCT(user_id)").map(&:user_id) + CampaignsUser.for_campaigns(@campaigns).select("DISTINCT(user_id)").map(&:user_id)).uniq)
+    elsif @campaigns.empty?
+      @campaigns = Campaign.find_all_by_id((UserSessionLog.for_users(@agents).select("DISTINCT(campaign_id)").map(&:campaign_id) + CampaignsUser.for_users(@agents).select("DISTINCT(campaign_id)").map(&:campaign_id)).uniq)
+    end
+
     @scoped = AgentTimesheet.
         show_weekends(@show_weekends).
         for_campaigns(@campaigns).
         with_date_between(@start_date, @end_date).
         for_agents(@agents)
+
     @first ||= @scoped.order("year, week ASC").first
     @last  ||= @scoped.order("year, week ASC").last
   end
