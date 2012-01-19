@@ -29,7 +29,7 @@ table th
 }
 
 table thead th
-{    
+{
     background: #ccc;
     vertical-align: middle;
 }
@@ -39,6 +39,8 @@ table tbody tr:first-child td
     background: #f0f0f0;
     font-weight: bold;
     vertical-align: middle;
+    font-size: 10px;
+    -pdf-keep-in-frame-mode: overflow;
 }
 
 
