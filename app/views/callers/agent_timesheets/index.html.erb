@@ -12,7 +12,7 @@
 	  <li><a href="#agent_time_sheet"><%= t("agent_timesheets.index.agent_time_sheet.header_wo_name") %></a></li>
 	</ul>
 
-    <div id="overview">
+    <div id="overview" style="page-break-before:always;page-break-after:always;">
       <% if @timesheet.overview %>
         <% [:hours,:results,:value].each do |k| %>
           <%= render :partial => "overview_table", :locals => {:type => k, :overview => @timesheet, :results => @timesheet.overview_data} if @timesheet.send("display_#{k}".to_sym) %>
@@ -20,7 +20,7 @@
       <% end %>
     </div>
 
-    <div id="team_result_sheet" style="overflow-x: auto;">
+    <div id="team_result_sheet" style="overflow-x: auto;page-break-after:always;">
       <% if @timesheet.team_result_sheet %>
         <% @timesheet.cweeks.each do |cweek| %>
           <%= render :partial => "team_result_sheet_table", :locals => {:cweek => cweek, :team_result_sheet => @timesheet, :results => @timesheet.team_result_sheet_data} %>
@@ -30,30 +30,45 @@
     </div>
 
     <div id="agent_time_sheet">
+      <%= t("agent_timesheets.index.agent_time_sheet.select_agent") %>: <%= select_tag "agent_timesheet_agent_id", options_for_select(@timesheet.agents.map{|a| [a.screen_name, a.id]}), :onchange => "show_timesheet($(this).attr('value'))" %>
+      <%= t("agent_timesheets.index.agent_time_sheet.show_all") %> <%= check_box_tag "show_all_agents", "1", false, :onchange => "show_all_timesheets($(this).is(':checked'))" %>
+      <% if @timesheet.agent_timesheet %>
+        <% @timesheet.agents.each do |agent| %>
+          <div id="agent_time_sheet_<%= agent.id %>" style="display:none;page-break-after:always;">
+            <hr/>
+            <div class="fltl">
+              <p><%= agent.screen_name %> (<%= agent.email %>)</p>
+              <p><%= agent.company_name %></p>
+            </div>
+            <div class="fltr">
+              <p><%= t("agent_timesheets.index.agent_time_sheet.avg_value_per_hour")%>: <span class="avg_value_per_hour"></span></p>
+              <p><%= t("agent_timesheets.index.agent_time_sheet.avg_result_per_hour")%>: <span class="avg_result_per_hour"></span></p>
+            </div>
+            <clb/>
+            <% @timesheet.cweeks.each do |cweek| %>
+              <%= render :partial => "agent_time_sheet_table", :locals => {:agent => agent, :cweek => cweek, :agent_time_sheet => @timesheet, :results => @timesheet.agent_time_sheet_data(agent)} %>
+            <% end %>
+            <%= render :partial => "agent_time_sheet_totals_table", :locals => {:agent => agent, :agent_time_sheet => @timesheet, :results => @timesheet.agent_time_sheet_data(agent)} %>
+          </div>
+        <% end %>
+      <% end %>
     </div>
   </div>
 
-    <% if @timesheet.agent_timesheet %>
-      <% @timesheet.agents.each do |agent| %>
-        <div id="agent_time_sheet_<%= agent.id %>" style="display:none">
-          <div class="fltl">
-            <p><%= agent.screen_name %> (<%= agent.email %>)</p>
-            <p><%= agent.company_name %></p>
-          </div>
-          <div class="fltr">
-            <p><%= t("agent_timesheets.index.agent_time_sheet.avg_value_per_hour")%>: <span class="avg_value_per_hour"></span></p>
-            <p><%= t("agent_timesheets.index.agent_time_sheet.avg_result_per_hour")%>: <span class="avg_result_per_hour"></span></p>
-          </div>
-          <clb/>
-          <% @timesheet.cweeks.each do |cweek| %>
-            <%= render :partial => "agent_time_sheet_table", :locals => {:agent => agent, :cweek => cweek, :agent_time_sheet => @timesheet, :results => @timesheet.agent_time_sheet_data(agent)} %>
-          <% end %>
-          <%= render :partial => "agent_time_sheet_totals_table", :locals => {:agent => agent, :agent_time_sheet => @timesheet, :results => @timesheet.agent_time_sheet_data(agent)} %>
-        </div>
-      <% end %>
-    <% end %>
-
   <script type="text/javascript">
+    function show_timesheet(agent_id) {
+        $("div[id^='agent_time_sheet_']").hide();
+        $("div#agent_time_sheet_" + agent_id).show();
+    }
+
+    function show_all_timesheets(visible) {
+        if (visible) {
+            $("div[id^='agent_time_sheet_']").show();
+        } else {
+            show_timesheet($('#agent_timesheet_agent_id').attr('value'));
+        }
+    }
+
     function sum_row(row, type) {
         var sum = 0;
         if (type == undefined) {
@@ -288,6 +303,7 @@
           $('.total_h_l').each(function(){sum_row($(this).closest('tr'),'l')});
         <% end %>
 
+        show_timesheet($('#agent_timesheet_agent_id').val());
     });
   </script>
 </column-mc:>
