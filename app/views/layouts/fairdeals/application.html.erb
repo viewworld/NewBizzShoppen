@@ -7,7 +7,6 @@
   <% if controller.class.to_s == "FairdealsHomeController" or  controller.class.to_s == "DealsController" %>
       <%= include_stylesheets :fairdeals %>
       <%= include_javascripts :fairdeals %>
-      <%= include_javascripts :common %>
   <% else %>
       <%= include_stylesheets :common %>
       <%= include_stylesheets :fairdeals_thin %>
