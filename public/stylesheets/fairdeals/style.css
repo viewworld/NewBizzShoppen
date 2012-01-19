@@ -1421,6 +1421,7 @@ span.cke_skin_kama
     background: #f8f8f8;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
+    position: relative;
 
     -moz-box-shadow: 0 1px 0 #fff inset;
     -webkit-box-shadow: 0 1px 0 #fff inset;
@@ -1437,11 +1438,23 @@ span.cke_skin_kama
     text-align: center;      
 }
 
+.primary_deal .deal_info .ajaxful-rating-wrapper
+{
+    margin-top: 10px;
+}
+
 .primary_deal .deal_info .new_price
 {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
     color: #5cbf1a;
+    padding: 4px 0 10px;
+}
+
+.primary_deal .deal_info .you_save
+{
+    font-weight: bold;
+    font-size: 16px;
     padding: 4px 0 10px;
 }
 
@@ -1456,6 +1469,18 @@ span.cke_skin_kama
 .deal_featured_desc div[style],p[style]
 {
     background-color: #F8F8F8 !important;
+}
+
+.primary_deal .frm_foot
+{
+    position: relative;
+}
+
+.primary_deal .frm_foot .ajaxful-rating-wrapper
+{
+    position: absolute;
+    top: 5px;
+    left: 5px;
 }
 
 .primary_deal .frm_foot p
@@ -1476,8 +1501,65 @@ span.cke_skin_kama
     margin-top: 15px;
 }
 
+/* --- comments ----------------------------------------------------------------------------------------------------- */
 
-/* --- other deals --- */
+a.toggle_comments
+{
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 55px;
+    height: 22px;
+    line-height: 22px;
+    padding: 0 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    border-top-color: #ccc;
+    white-space: nowrap;
+
+    -moz-border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+
+    -moz-box-shadow: 0 -1px 3px #ddd;
+    -webkit-box-shadow: 0 -1px 3px #ddd;
+    box-shadow: 0 -1px 3px #ddd;
+
+    text-decoration: none;
+    color: #666;
+}
+
+.frm_comments
+{
+    border-bottom: 1px solid #eee;
+}
+
+.comment_container
+{
+    padding: 5px 0 5px 10px;
+    border-left: 2px solid #eee;
+    margin-top: 5px;
+    margin-bottom: 6px;
+}
+
+.comment_container .comment_title
+{
+    font-weight: bold;
+    line-height: 16px;
+    font-size: 13px;
+}
+
+.comment_container .comment_info
+{
+    font-size: 11px;
+    color: #7a7a7a;
+    line-height: 16px;
+    padding-bottom: 5px;
+}
+
+
+/* --- other deals -------------------------------------------------------------------------------------------------- */
 
 .other_deals .col
 {
@@ -1515,16 +1597,18 @@ span.cke_skin_kama
 .other_deals .deal_thumb
 {
     float: left;
-    width: 70px;
+    width: 140px;
     height: 20px;
     text-align: center;
+    padding-bottom: 15px;
 }
 
-.other_deals .deal_price
+.other_deals .deal_info
 {
     float: right;
-    width: 120px;
+    width: 500px;
     font-size: 13px;
+    padding-bottom: 15px;
 }
 
 .other_deals .deal_price a.bt

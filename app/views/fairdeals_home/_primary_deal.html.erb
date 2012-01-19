@@ -22,11 +22,11 @@
                 </p>
 
                 <p class="new_price">
-                  <%= t("deals.index.view.fairdeals_price") %>: <%= as_currency(primary_deal.discounted_price, primary_deal.currency) %>
+                  <%= t("deals.index.view.fairdeals_price") %>:<br/><%= as_currency(primary_deal.discounted_price, primary_deal.currency) %>
                 </p>
 
-                <p class="new_price">
-                  <%= t("deals.index.view.you_save") %>: <%= as_currency(primary_deal.deal_price - primary_deal.discounted_price, primary_deal.currency) %> <span class="b red">(<%= primary_deal.saving %>)</span>
+                <p class="you_save">
+                  <%= t("deals.index.view.you_save") %>:<br/><%= as_currency(primary_deal.deal_price - primary_deal.discounted_price, primary_deal.currency) %> <span class="b red">(<%= primary_deal.saving %>)</span>
                 </p>
             <% end %>
 
@@ -83,11 +83,87 @@
             </div>
           </div>
           <!-- end / main deal -->
+
+          <%= link_to "show comments (0)", "#", :class => "toggle_comments show_comments", :style => "display: none" %>
+          <%= link_to "hide comments", "#", :class => "toggle_comments hide_comments" %>
+        </div>
+
+        <div class="frm_comments">
+
+          <div class="row_tooltip_content pdd_10" style="display: block; ">
+            <p></p>
+
+            <div class="deal_threads_container_div">
+            </div>
+
+            <div class="lead_new_thread_container_div">
+              <div id="truncated_thread_10" style="display: none;">
+                <div class="comment_container">
+                  <p class="comment_title">Test</p>
+
+                  <p class="comment_info">
+                    <a href="#" onclick="show_hide_thread(10); return false;">Show thread</a>
+                  </p>
+                </div>
+
+              </div>
+              <div id="thread_10">
+                <div id="comment_10" class="comment_container" style="margin-left:0px">
+                  <p class="comment_title">Test</p>
+
+                  <p class="comment_info">
+                    <a href="/administration/users/1/edit">root</a> at 19-01-2012 12:00
+                    (<a href="#" onclick="deal_reply_to(10,10,11379,'Test'); return false;">reply</a>)
+                    <a href="#" onclick="edit_comment(10); return false;">Edit</a>
+
+                    <a href="#" onclick="destroy_comment(10); return false;">Destroy</a>
+                    <a href="#" onclick="block_comment(10, 1); return false;">Block comment</a>
+                  </p>
+
+                  <div class="hidden" id="lead_comment_readers_11379"></div>
+                  <p></p>
+
+                  <p><span id="body">asdasd asda sd</span></p>
+                </div>
+
+              </div>
+              <div id="new_comment_div_11379"></div>
+              <form accept-charset="UTF-8" action="/deal_comments/deals/11379/threads" class="formtastic comment" data-remote="true" id="new_comment_11379" method="post">
+                <div style="margin:0;padding:0;display:inline">
+                  <input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="rmmFUkyY8unnAhAOK37p6CbZVGv0f7ewYCZeZHoN7/c=">
+                </div>
+                <fieldset class="inputs labels_ta_r labels_80">
+                  <ol class="align_inputs">
+                    <li class="header">
+                      <h3>Start new thread</h3>
+                    </li>
+                    <li class="string required" id="comment_title_input">
+                      <label for="comment_title">Title<abbr title="required">*</abbr></label><input id="comment_title" maxlength="255" name="comment[title]" size="50" type="text" value="">
+                    </li>
+                    <li class="text required" id="comment_body_input">
+                      <label for="comment_body">Body<abbr title="required">*</abbr></label><textarea cols="50" id="comment_body" name="comment[body]" rows="20" style="width:380px;height: 100px;"></textarea>
+                    </li>
+                    <li class="commit">
+                      <div class="bt bt_icon">
+            <span>
+                  <input onclick="validate_form('#new_comment_11379');" type="button" value="Create comment">
+        <img alt="Plus" src="/images/bt_icons/plus.png?1290761932">
+    </span>
+                      </div>
+                    </li>
+                  </ol>
+                </fieldset>
+              </form>
+            </div>
+            <p></p>
+
+          </div>
+
         </div>
 
         <div class="frm_foot">
+          <%= ratings_for(primary_deal, :force_static => !current_user_has_role?(:member)) %>
           <p>
-            <div style="float:left"><%= ratings_for(primary_deal, :force_static => !current_user_has_role?(:member)) %></div>
             <%= link_to_function image_tag("fairdeals/bt/social_email.png"), "$('#modal_for_share_deal_by_email_#{email_form_id}').dialog('open');" %>
             <%= link_to_function image_tag("fairdeals/bt/social_linkedin.png"), "window.open('https://www.linkedin.com/cws/share?url=#{escape_uri(deal_url(:id => primary_deal.slug))}&isFramed=true','', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>
             <%= link_to_function image_tag("fairdeals/bt/social_facebook.png"), "window.open('https://www.facebook.com/sharer.php?u=#{escape_uri(deal_url(:id => primary_deal.slug))}','', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>
