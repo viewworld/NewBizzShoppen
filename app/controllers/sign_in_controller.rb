@@ -5,7 +5,10 @@ class SignInController < ApplicationController
     @user = user_class_name.new(:newsletter_on => true, :time_zone => "UTC")
     @user.time_zone = "Copenhagen" if I18n.locale == :da
 
-    @user.subscription_plan_id = SubscriptionPlan.active.for_role(@user.is_a?(User::Member) ? :member : "#{'category_' if @user.is_a?(User::CategorySupplier)}supplier".to_sym).free.first.id if @user.is_a?(User::Member) or @user.is_a?(User::Supplier) or @user.is_a?(User::CategorySupplier)
+    if @user.is_a?(User::Member) or @user.is_a?(User::Supplier) or @user.is_a?(User::CategorySupplier)
+      free_subscription = SubscriptionPlan.active.for_role(@user.is_a?(User::Member) ? :member : "#{'category_' if @user.is_a?(User::CategorySupplier)}supplier".to_sym).free.first
+      @user.subscription_plan_id = free_subscription.id if free_subscription
+    end
     data = session[:rpx_data]
     @user.set_fields_for_rpx(data) unless data.blank?
   end

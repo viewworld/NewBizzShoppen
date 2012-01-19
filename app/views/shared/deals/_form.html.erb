@@ -16,7 +16,7 @@
                                      DealCategory.without_locked.all
                                  end
             %>
-            <%= form.input :category_id, :disabled => deal_categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(deal_categories), :include_blank => false, :label => t("shared.deals.form.deal_category_label") %>
+            <%= form.input :category_id, :disabled => deal_categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(deal_categories), :include_blank => false, :label => t("shared.deals.form.deal_category_label"), :input_html => {:style => "width: 245px"} %>
         <% end %>
 
         <% if user_signed_in? and current_user.has_any_role?(:agent, :call_centre, :call_centre_agent, :admin) %>
@@ -29,7 +29,7 @@
 
             %>
 
-            <%= form.input :lead_category_id, :disabled => lead_categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(lead_categories), :include_blank => false %>
+            <%= form.input :lead_category_id, :disabled => lead_categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(lead_categories), :include_blank => false, :input_html => {:style => "width: 245px"} %>
             <% if deal.new_record? %>
                 <%= form.input :use_company_name_as_category, :as => :boolean %>
             <% end %>
