@@ -1,7 +1,7 @@
 class ::User::CategorySupplier < ::User
   ROLES = [:category_supplier, :lead_supplier, :supplier]
-  CSV_ATTRS = %w{email first_name last_name company_name screen_name address_line_1 address_line_2 address_line_3 zip_code country region  phone vat_number}
-  REQUIRED_FIELDS = %w{email first_name last_name company_name screen_name address_line_1 address_line_3 zip_code}
+  CSV_ATTRS = %w{email first_name last_name company_name address_line_1 address_line_2 address_line_3 zip_code country region  phone vat_number}
+  REQUIRED_FIELDS = %w{email first_name last_name company_name address_line_1 address_line_3 zip_code}
 
   after_save :set_interests
 

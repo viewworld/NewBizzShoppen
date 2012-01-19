@@ -155,9 +155,9 @@ Given /^there are no campaigns/ do
 end
 
 Given /^campaign report data is generated$/ do
-  @call_centre = User::CallCentre.make!(:screen_name => 'test report user CC', :email => "testreportscc@nbs.com", :password => "secret", :password_confirmation => "secret")
-  @call_centre_agent1 = User::CallCentreAgent.make!(:screen_name => 'test report user CCA1', :email => "testreportscca01@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => @call_centre.id)
-  @call_centre_agent2 = User::CallCentreAgent.make!(:screen_name => 'test report user CCA2', :email => "testreportscca02@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => @call_centre.id)
+  @call_centre = User::CallCentre.make!(:company_name => 'test report user CC', :email => "testreportscc@nbs.com", :password => "secret", :password_confirmation => "secret")
+  @call_centre_agent1 = User::CallCentreAgent.make!(:company_name => 'test report user CCA1', :email => "testreportscca01@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => @call_centre.id)
+  @call_centre_agent2 = User::CallCentreAgent.make!(:company_name => 'test report user CCA2', :email => "testreportscca02@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => @call_centre.id)
   [@call_centre_agent1, @call_centre_agent1].each(&:confirm!)
   @call_centre.save
   @call_centre.confirm!

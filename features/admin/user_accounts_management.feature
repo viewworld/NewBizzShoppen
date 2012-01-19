@@ -103,7 +103,7 @@ Scenario: I can perform a bulk block action
 Scenario: I can perform a bulk invoice action
   Given I have user with email bigbuyer1@person.com and role supplier
   And User bigbuyer1@person.com with role supplier is big buyer
-  And user bigbuyer1@person.com with role supplier exists with attributes "screen_name:John von Buyer"
+  And user bigbuyer1@person.com with role supplier exists with attributes "company_name:John von Buyer"
   And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role supplier
   When I go to administration users
   Then I fill in "search_with_keyword" with "bigbuyer1@person.com"
@@ -377,7 +377,7 @@ Scenario: When editing a call centre agent I can see it's name in format "fullna
 
 @ao @requested @m7 @_done @_tested
 Scenario: When editing call center agent I can navigate to call center's edit page
-  Given I am signed up and confirmed as user with email kol_senter@nbs.com and password secret and role call_centre with attributes "company_name:Selleo,screen_name:Opeth"
+  Given I am signed up and confirmed as user with email kol_senter@nbs.com and password secret and role call_centre with attributes "company_name:Selleo"
   And an user with role call_centre_agent and email sab@nbs.com belongs to call centre kol_senter@nbs.com
   And I go to administration users
   And I select "Call centre agent" from "search_with_role"
@@ -411,7 +411,6 @@ Scenario: I should have 'Don't verify email address' for every user I create
   And I fill in "user_supplier_company_name" with "Selleo"
   And I fill in "user_supplier_phone" with "0297272341235"
   And I fill in "user_supplier_email" with "alex.nova@person.com"
-  And I fill in "user_supplier_screen_name" with "Alex N"
   And I fill in "user_supplier_address_attributes_address_line_1" with "Typical 23"
   And I fill in "user_supplier_address_attributes_address_line_2" with "Paris"
   And I fill in "user_supplier_address_attributes_zip_code" with "22-232"
@@ -432,7 +431,6 @@ Scenario: I can login without confirmation when 'Don't verify email address' is 
   And I fill in "user_supplier_company_name" with "Selleo"
   And I fill in "user_supplier_phone" with "0297272341235"
   And I fill in "user_supplier_email" with "alex.nova@person.com"
-  And I fill in "user_supplier_screen_name" with "Alex N"
   And I fill in "user_supplier_address_attributes_address_line_1" with "Typical 23"
   And I fill in "user_supplier_address_attributes_address_line_2" with "Paris"
   And I fill in "user_supplier_address_attributes_zip_code" with "22-232"
@@ -458,7 +456,6 @@ Scenario: I can login without confirmation when 'Don't verify email address' is 
   And I fill in "user_supplier_company_name" with "Selleo"
   And I fill in "user_supplier_phone" with "0297272341235"
   And I fill in "user_supplier_email" with "alex.nova@person.com"
-  And I fill in "user_supplier_screen_name" with "Alex N"
   And I fill in "user_supplier_address_attributes_address_line_1" with "Typical 23"
   And I fill in "user_supplier_address_attributes_address_line_2" with "Paris"
   And I fill in "user_supplier_address_attributes_zip_code" with "22-232"
@@ -635,7 +632,6 @@ Scenario: Category buyer created by admin should have buying categories assigned
   And I fill in "user_category_supplier_company_name" with "Selleo"
   And I fill in "user_category_supplier_phone" with "0297272341235"
   And I fill in "user_category_supplier_email" with "category@buyer.fake"
-  And I fill in "user_category_supplier_screen_name" with "Category Buyer"
   And I fill in "user_category_supplier_address_attributes_address_line_1" with "Typical 23"
   And I fill in "user_category_supplier_address_attributes_address_line_2" with "Paris"
   And I fill in "user_category_supplier_address_attributes_zip_code" with "22-232"
@@ -914,7 +910,7 @@ Scenario: I can select start date when I change user's subscription plan
   And I press translated "administration.users.edit.view.change"
   Then I should see translated "flash.change_subscription.create.successful"
   And I should see "Active subscription: Free supplier subscription"
-  And I should see translated "administration.users.edit.view.next_subscription_plan" with options "next_plan_name:Basic for supplier,next_plan_active_from:2020-01-01"
+  And I should see translated "administration.users.edit.view.next_subscription_plan" with options "next_plan_name:Basic for supplier;next_plan_active_from:2020-01-01"
 
 #8605
 @m23 @subscriptions @requested @_done @tested_elsewhere

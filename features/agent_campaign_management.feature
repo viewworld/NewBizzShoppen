@@ -803,15 +803,15 @@ Feature: Agent campaign - management
         Scenario: As call centre I can go to agent work screen from campaign edit
           Given I add user "translator_call_centre@nbs.com" to campaign "Testing Two"
           And I add user "translator_call_centre_agent@nbs.com" to campaign "Testing Two"
-          And user translator_call_centre@nbs.com with role call_centre exists with attributes "screen_name:translator_call_centre@nbs.com"
-          And user translator_call_centre_agent@nbs.com with role call_centre_agent exists with attributes "screen_name:translator_call_centre_agent@nbs.com"
+          And user translator_call_centre@nbs.com with role call_centre exists with attributes "first_name: Ted, company_name:translator_call_centre"
+          And user translator_call_centre_agent@nbs.com with role call_centre_agent exists with attributes "first_name: Ted2, company_name:translator_call_centre"
           And I follow translated "layout.main_menu.admin.campaigns"
           And I fill in "search_with_keyword" with "Testing Two"
           And I press translated "campaigns.filter.search_button"
           When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
-          And I select "translator_call_centre_agent@nbs.com" from "user_id"
+          And I select "Ted2, translator_call_centre" from "user_id"
           And I follow translated "campaigns.edit.agent_work_screen_as"
-          Then I should see translated "agent_work_screen.index.logged_as_other_user" with options "user:translator_call_centre_agent@nbs.com"
+          Then I should see translated "agent_work_screen.index.logged_as_other_user" with options "user:Ted2, translator_call_centre"
 
 
         #9143
@@ -828,17 +828,17 @@ Feature: Agent campaign - management
         Scenario: As admin I can go to agent work screen from campaign edit
           Given I add user "translator_call_centre@nbs.com" to campaign "Testing Two"
           And I add user "translator_call_centre_agent@nbs.com" to campaign "Testing Two"
-          And user translator_call_centre@nbs.com with role call_centre exists with attributes "screen_name:translator_call_centre@nbs.com"
-          And user translator_call_centre_agent@nbs.com with role call_centre_agent exists with attributes "screen_name:translator_call_centre_agent@nbs.com"
+          And user translator_call_centre@nbs.com with role call_centre exists with attributes "first_name: Ted, company_name:translator_call_centre"
+          And user translator_call_centre_agent@nbs.com with role call_centre_agent exists with attributes "first_name: Ted2, company_name:translator_call_centre"
           Given I am not sign in
           And I sign in as blazejek@gmail.com with password secret
           And I follow translated "layout.main_menu.admin.campaigns"
           And I fill in "search_with_keyword" with "Testing Two"
           And I press translated "campaigns.filter.search_button"
           When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
-          And I select "translator_call_centre_agent@nbs.com" from "user_id"
+          And I select "Ted2, translator_call_centre" from "user_id"
           And I follow translated "campaigns.edit.agent_work_screen_as"
-          Then I should see translated "agent_work_screen.index.logged_as_other_user" with options "user:translator_call_centre_agent@nbs.com"
+          Then I should see translated "agent_work_screen.index.logged_as_other_user" with options "user:Ted2, translator_call_centre"
 
         #9143
         @m25 @requested @_tested @_done @tgn

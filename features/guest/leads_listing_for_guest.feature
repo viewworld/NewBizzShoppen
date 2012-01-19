@@ -133,7 +133,6 @@ Scenario: I should be able to click "Add to cart button" that will redirect me t
   And I fill in "user_category_supplier_company_name" with "Doe Ltd"
   And I fill in "user_category_supplier_phone" with "31242342424234"
   And I fill in "user_category_supplier_email" with "johndoecustomer@person.com"
-  And I fill in "user_category_supplier_screen_name" with "John D."
   And I fill in "user_category_supplier_password" with "secret"
   And I fill in "user_category_supplier_password_confirmation" with "secret"
   And I fill in "user_category_supplier_address_attributes_address_line_1" with "Ferterds"

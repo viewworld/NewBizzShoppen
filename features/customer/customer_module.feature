@@ -16,7 +16,6 @@ Scenario: I create account through signup
   And I fill in "user_category_supplier_last_name" with "Geldof"
   And I fill in "user_category_supplier_phone" with "244224242424"
   And I fill in "user_category_supplier_email" with "bob1@person.com"
-  And I fill in "user_category_supplier_screen_name" with "Bob Geldof"
   And I fill in "user_category_supplier_password" with "secret"
   And I fill in "user_category_supplier_password_confirmation" with "secret"
   And I fill in "user_category_supplier_address_attributes_address_line_1" with "Street 333"
@@ -158,7 +157,7 @@ Scenario: I can use "Advanced search" in Browse leads with following fields: Dea
   And lead Super printers #1 exists with attributes "hotness_counter:0, sale_limit:9, purchase_value:5200"
 
   Given lead Super printers #2 is created by user agent02@nbs.com with role agent
-  And user "agent02@nbs.com" with role "agent" has attributes "screen_name:Xerox2 Agent02"
+  And user "agent02@nbs.com" with role "agent" has attributes "first_name: Ted, company_name:Xerox2 Agent02"
   And a lead Super printers #2 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role supplier
   And lead Super printers #2 exists with attributes "hotness_counter:1, sale_limit:2, purchase_value:5900"
 
@@ -170,7 +169,7 @@ Scenario: I can use "Advanced search" in Browse leads with following fields: Dea
   And I follow category "Computers"
   And I follow translated "common.advanced_search"
   And I wait 1 second
-  Then I select "Xerox2 Agent02" from "search_with_created_by"
+  Then I select "Ted, Xerox2 Agent02" from "search_with_created_by"
   And I press translated "leads.index.search.search_button"
   Then I should see "Super printers #2"
   And I should not see "Super printers #1"

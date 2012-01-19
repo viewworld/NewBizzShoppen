@@ -220,8 +220,6 @@ class CallResult < ActiveRecord::Base
 
     user = "User::#{role.camelize}".constantize.new(user_params)
 
-    users_count = User.where("last_name = ?", contact_last_name).count
-    user.screen_name = "#{contact_last_name}#{' ' + users_count.to_s if users_count > 0}"
     new_password = contact.campaign.name.downcase.gsub(' ', '').gsub('-', '').first(6)
     user.password = new_password
     user.password_confirmation = new_password

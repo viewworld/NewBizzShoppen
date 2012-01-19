@@ -1,7 +1,7 @@
 class User::Member < ::User
   ROLES = [:member]
-  CSV_ATTRS = %w{email first_name last_name company_name screen_name address_line_1 address_line_2 address_line_3 zip_code country region  phone vat_number}
-  REQUIRED_FIELDS = %w{email first_name last_name company_name screen_name address_line_1 address_line_3 zip_code}
+  CSV_ATTRS = %w{email first_name last_name company_name address_line_1 address_line_2 address_line_3 zip_code country region  phone vat_number}
+  REQUIRED_FIELDS = %w{email first_name last_name company_name address_line_1 address_line_3 zip_code}
 
   include User::RegistrationValidations
   include User::CommonAgent
@@ -23,7 +23,6 @@ class User::Member < ::User
                   :phone => lead.direct_phone_number.blank? ? lead.phone_number : lead.direct_phone_number,
                   :first_name => contact_name_arr.first,
                   :last_name => contact_name_arr.last,
-                  :screen_name => "#{lead.contact_name}#{' ' unless lead.contact_name.blank?}(#{lead.email_address})",
                   :time_zone => "UTC", :company_name => lead.company_name}
     self.attributes = lead_attrs
     [:address_line_1, :address_line_2, :address_line_3, :zip_code, :country_id, :region_id].each do |field|
@@ -55,11 +54,5 @@ class User::Member < ::User
   end
 
 ########################################################################################################################
-
-  private
-
-  def validate_screen_name?
-    false
-  end
 
 end

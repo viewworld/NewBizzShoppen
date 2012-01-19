@@ -17,7 +17,6 @@ Scenario: I can create a user account by seleceting its type and filling in the 
   And I fill in "user_agent_last_name" with "Nova"
   And I fill in "user_agent_phone" with "0297272341235"
   And I fill in "user_agent_email" with "alex.nova@person.com"
-  And I fill in "user_agent_screen_name" with "Alex N"
   And I fill in "user_agent_address_attributes_address_line_1" with "Typical 23"
   And I fill in "user_agent_address_attributes_address_line_2" with "Paris"
   And I fill in "user_agent_address_attributes_zip_code" with "22-232"

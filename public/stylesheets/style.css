@@ -217,7 +217,7 @@ h4
     font-size: 13px;
     color: #fff;
     text-decoration: none;
-    text-shadow: 1px 1px 0 #4d7019;
+    text-shadow: 1px 1px 0 rgba(0,0,0,.5);
 }
 
 #user_menu ul.nav li a span
@@ -280,6 +280,26 @@ h4
 #user_menu ul.nav li.has_child.active span
 {
     background-position: right -370px;
+}
+
+#user_menu ul.nav li a.voucher
+{
+    background-position: 0 -408px;
+}
+
+#user_menu ul.nav li a.voucher span
+{
+    background-position: right -444px;
+}
+
+#user_menu ul.nav li a.voucher:hover
+{
+    background-position: 0 -480px;
+}
+
+#user_menu ul.nav li a.voucher:hover span
+{
+    background-position: right -516px;
 }
 
 #user_menu ul.subnav
@@ -2132,8 +2152,15 @@ li.disabled
 /* --- member request ----
 ------------------------------------------------------------------------------------ */
 
+.members_leads
+{
+    padding: 10px 0 15px;
+}
+
+
 .company_frame
 {
+    margin: 10px 0 15px;
     background: #fff;
     border: 1px solid #CCC;
     padding: 13px 12px;

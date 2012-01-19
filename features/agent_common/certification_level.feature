@@ -8,7 +8,6 @@ Feature: Certification levels
       | user_agent_first_name                                | Bob             |
       | user_agent_last_name                                 | Taker           |
       | user_agent_phone                                     | 48928217272     |
-      | user_agent_screen_name                               | Bob T           |
       | user_agent_email                                     | user@domain.dom |
       | user_agent_password                                  | secret          |
       | user_agent_password_confirmation                     | secret          |

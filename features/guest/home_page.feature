@@ -36,11 +36,11 @@ Feature: Home page
     And I should see "Blurb call centre home"
     Given I am not sign in
     Given I am signed up and confirmed as user with email bob2@person.com and password supersecret and role call_centre_agent
-    And user "bob2@person.com" with role "call_centre_agent" has attributes "screen_name: Yudkowsky"
+    And user "bob2@person.com" with role "call_centre_agent" has attributes "first_name:Elizer, company_name: Yudkowsky"
     And an user with role call_centre_agent and email bob2@person.com belongs to call centre bob@person.com
     And I sign in as bob2@person.com with password supersecret
     And I go to agent home
-    And I should see "Welcome Yudkowsky @ Xerox"
+    And I should see "Welcome Elizer, Yudkowsky @ Xerox"
     And I should see "Blurb call centre home"
     Given I am not sign in
     Given I am signed up and confirmed as user with email bob3@person.com and password supersecret and role agent
