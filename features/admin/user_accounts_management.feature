@@ -910,7 +910,7 @@ Scenario: I can select start date when I change user's subscription plan
   And I press translated "administration.users.edit.view.change"
   Then I should see translated "flash.change_subscription.create.successful"
   And I should see "Active subscription: Free supplier subscription"
-  And I should see translated "administration.users.edit.view.next_subscription_plan" with options "next_plan_name:Basic for supplier,next_plan_active_from:2020-01-01"
+  And I should see translated "administration.users.edit.view.next_subscription_plan" with options "next_plan_name:Basic for supplier;next_plan_active_from:2020-01-01"
 
 #8605
 @m23 @subscriptions @requested @_done @tested_elsewhere
