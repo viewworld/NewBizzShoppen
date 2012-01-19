@@ -22,7 +22,7 @@ Feature: Subscription management for user
     And I follow translated "layout.my_profile_link"
     Then I should see translated "subscriptions.current_subscription" within "#current_subscription"
     And I should see "Basic for supplier" within ".subscription_plans"
-    And I should see translated "subscriptions.will_prolong_on" with options "prolong_date:{Date.today+4.weeks},localize:long"
+    And I should see translated "subscriptions.will_prolong_on" with options "prolong_date:{Date.today+4.weeks};localize:long"
 
   @selenium @_done @_tested @_deprecated
   Scenario: I can cancel my subscription any time after the change of subscription plan
@@ -53,8 +53,8 @@ Feature: Subscription management for user
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.downgrade"
-    Then I should see translated "subscriptions.next_subscription_plan" with options "next_plan_name:Basic for supplier,next_plan_active_from:{Date.today+4.weeks},localize:long"
-    And I should see translated "subscriptions.can_be_canceled_at" with options "cancel_date:{Date.today+4.weeks},localize:long"
+    Then I should see translated "subscriptions.next_subscription_plan" with options "next_plan_name:Basic for supplier;next_plan_active_from:{Date.today+4.weeks};localize:long"
+    And I should see translated "subscriptions.can_be_canceled_at" with options "cancel_date:{Date.today+4.weeks};localize:long"
     And I should see translated "subscriptions.cant_be_upgraded_nor_downgraded"
 
   @selenium @_done @_tested
@@ -161,11 +161,11 @@ Feature: Subscription management for user
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
     Then I should see "Basic for supplier" within ".subscription_plans"
-    And I should see translated "subscriptions.will_prolong_on" with options "prolong_date:{Date.today+14.days},localize:long"
+    And I should see translated "subscriptions.will_prolong_on" with options "prolong_date:{Date.today+14.days};localize:long"
     When the date is "14" days from now
     And I follow translated "layout.my_profile_link"
     Then I should see "Basic for supplier" within ".subscription_plans"
-    And I should see translated "subscriptions.will_prolong_on" with options "prolong_date:{Date.today+14.days},localize:long"
+    And I should see translated "subscriptions.will_prolong_on" with options "prolong_date:{Date.today+14.days};localize:long"
 
   @added @selenium @_done @_tested
   Scenario: When I cancel my subscription during lockup period then the current subscirption should prolong one more time and then become free
@@ -180,7 +180,7 @@ Feature: Subscription management for user
     Then I should see translated "subscriptions.lockup_period_notification"
     When I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.cancel"
-    Then I should see translated "subscriptions.next_subscription_plan" with options "next_plan_name:Basic for supplier,next_plan_active_from:{Date.today+6},localize:long"
+    Then I should see translated "subscriptions.next_subscription_plan" with options "next_plan_name:Basic for supplier;next_plan_active_from:{Date.today+6};localize:long"
 
   @selenium @_done @_tested
   Scenario: I can use free period only once, when registered with other email but the same CVR number then I should not be able to use free period with warning: 'Sorry you company has already used its free subscription period'
@@ -189,7 +189,7 @@ Feature: Subscription management for user
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
     And I follow translated "layout.my_profile_link"
-    Then I should see translated "subscriptions.free_period_notification" with options "free_period_date:{Date.today+7.days},localize:long"
+    Then I should see translated "subscriptions.free_period_notification" with options "free_period_date:{Date.today+7.days};localize:long"
     When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:2,lockup_period:1,billing_period:0,free_period:1" and price "200"
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
