@@ -14,7 +14,9 @@ class UserSessionLog < ActiveRecord::Base
   scope :regular_type, where(:log_type => TYPE_REGULAR).order("id ASC")
   scope :campaign_type, where(:log_type => TYPE_CAMPAIGN).order("id ASC")
   scope :for_user, lambda{|u| where(:user_id => u.to_i)}
+  scope :for_users, lambda{|u| where(:user_id => u.to_a)}
   scope :for_campaign, lambda{|c| where(:campaign_id => c.to_i)}
+  scope :for_campaigns, lambda{|c| where(:campaign_id => c.to_a)}
   scope :started_between, lambda{|start_date, end_date| where("start_time BETWEEN ? and ?", start_date.to_datetime, end_date.to_datetime) }
   scope :active, lambda{ where("end_time > ?", Time.now) }
   scope :without_campaign, lambda{|c| where("campaign_id <> ?", c.to_i)}

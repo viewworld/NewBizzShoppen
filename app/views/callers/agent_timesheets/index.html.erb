@@ -9,11 +9,7 @@
 	<ul>
       <li><a href="#overview"><%= t("agent_timesheets.index.overview.header") %></a></li>
 	  <li><a href="#team_result_sheet"><%= t("agent_timesheets.index.team_result_sheet.header") %></a></li>
-      <% if @timesheet.agent_timesheet %>
-        <% @timesheet.agents.each do |agent| %>
-          <li><a href="#agent_time_sheet_<%= agent.id %>"><%= t("agent_timesheets.index.agent_time_sheet.header", :name => agent.screen_name) %></a></li>
-        <% end %>
-      <% end %>
+	  <li><a href="#agent_time_sheet"><%= t("agent_timesheets.index.agent_time_sheet.header_wo_name") %></a></li>
 	</ul>
 
     <div id="overview">
@@ -33,9 +29,13 @@
       <% end %>
     </div>
 
+    <div id="agent_time_sheet">
+    </div>
+  </div>
+
     <% if @timesheet.agent_timesheet %>
       <% @timesheet.agents.each do |agent| %>
-        <div id="agent_time_sheet_<%= agent.id %>">
+        <div id="agent_time_sheet_<%= agent.id %>" style="display:none">
           <div class="fltl">
             <p><%= agent.screen_name %> (<%= agent.email %>)</p>
             <p><%= agent.company_name %></p>
@@ -52,7 +52,6 @@
         </div>
       <% end %>
     <% end %>
-  </div>
 
   <script type="text/javascript">
     function sum_row(row, type) {

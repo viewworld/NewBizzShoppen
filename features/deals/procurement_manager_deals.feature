@@ -382,3 +382,6 @@ Feature: Deals from procurement manager perspective
   @m27 @requested
   Scenario: When I get the deal on the page for deal request I should not see linkedin/facebook urls but see company name
 
+  #9811
+  @m27 @requested
+  Scenario: I can get a Premium deal only if I am signed in as member and have subscription that allows getting Premium deals

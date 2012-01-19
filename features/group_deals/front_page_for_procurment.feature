@@ -375,3 +375,7 @@ Feature: Front page for procurment
   #9604
   @m27 @requested
   Scenario: I should see deals listed in browse deals as primary deal on the front page
+
+  #9811
+  @m27 @requested
+  Scenario: I should see splash saying Premium Deal when premium for this deal is enabled by admin or dealmaker
