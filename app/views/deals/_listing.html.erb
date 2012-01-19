@@ -3,7 +3,7 @@
 
 <% if session[:site] == "fairdeals" %>
     <% collection.each do |deal| %>
-              <div class="primary_deals_wrapper">
+              <div class="primary_deals_wrapper primary_deals_wide">
               <div id="primary_deals">
                 <div id="primary_group_deal">
                   <%= render :partial => 'fairdeals_home/primary_deal', :locals => {:primary_deal => deal, :comments_enbaled => true} %>
@@ -16,6 +16,21 @@
         <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
         <%= link_to_show_all_without_pagination "#deals_search_form" %>
     <% end %>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            $(".toggle_comments.show_comments").bind("click", function() {
+                $(this).parent().next().slideDown();
+                $(this).hide().next().show();
+            });
+
+            $(".toggle_comments.hide_comments").bind("click", function() {
+                $(this).parent().next().slideUp();
+                $(this).hide().prev().show();
+            });
+        });
+
+    </script>
 
 <% else %>
 

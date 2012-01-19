@@ -59,9 +59,11 @@
 <% end %>
 
 <column-mc:>
-  <header back="true">
 
+  <% unless session[:site] == "fairdeals" %>
+  <header back="true">
     <param:content>
+
       <% if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(@search.latest) %>
           <%= t("deals.index.view.header_latest_leads") %>
       <% elsif @category %>
@@ -70,11 +72,13 @@
           <%= t("deals.index.view.header_for_all_deals") %>
       <% end %>
     </param:content>
-
-    <param:actions>
-    </param:actions>
-
   </header>
+
+  <% else %>
+      <h1>
+        <%= " #{t("deals.index.view.header_for")} #{@category.name}" %>
+      </h1>
+  <% end %>
 
   <% if @deals.empty? %>
       <%= blank_state_message %>

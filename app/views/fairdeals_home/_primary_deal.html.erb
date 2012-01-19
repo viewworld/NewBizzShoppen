@@ -89,7 +89,7 @@
           <% end %>
         </div>
 
-        <div class="frm_comments">
+        <div class="frm_comments" style="display: none;">
           <% if defined? comments_enbaled and comments_enbaled %>
           <div class="row_tooltip_content comments_details">
             <%= render :partial => "/shared/deal_comments/deal_threads", :locals => {:deal => primary_deal, :threads => primary_deal.comment_threads.roots.order("created_at DESC")} %>
