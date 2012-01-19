@@ -624,6 +624,7 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_phone_number" with "+44 92423423232"
       And I fill in "call_result_contact_email_address" with "new_member888@nbs.com"
+      And I select "Free member subscription" from "call_result_contact_subscription_plan_id"
       And I follow translated "call_results.new.save_button"
       Then I should see translated "call_results.create.flash.successfully_added"
       And last email sent should have been sent to recipient "new_member888@nbs.com"

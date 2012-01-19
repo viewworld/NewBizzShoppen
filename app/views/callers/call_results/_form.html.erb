@@ -36,12 +36,12 @@
           </li>
           <li class="select">
             <%= label_tag "call_result[contact_subscription_plan_id]", "#{t("call_results.new.contact_subscription_plan")}<abbr>*</abbr>".html_safe %>
-            <%= select_tag "call_result[contact_subscription_plan_id]", options_for_select(SubscriptionPlan.active.for_role(call_result.result.upgrades_to_user_role).without_paypal.map{ |s| [s.name, s.id] }) %>
+            <%= select_tag "call_result[contact_subscription_plan_id]", options_for_select(SubscriptionPlan.active.for_role(call_result.result.upgrades_to_user_role).without_paypal.map{ |s| [s.name, s.id] }, call_result.contact_subscription_plan_id) %>
             <%= custom_error_for_object_and_field(call_result, :contact_subscription_plan_id) %>
           </li>
           <li class="boolean">
             <%= label_tag "call_result[contact_newsletter_on]", t("call_results.new.contact_newsletter_on") %>
-            <%= check_box_tag "call_result[contact_newsletter_on]" %>
+            <%= check_box_tag "call_result[contact_newsletter_on]", 1, call_result.contact_newsletter_on %>
           </li>
 
           <% if (call_result.result.upgrades_to_category_supplier? or call_result.result.upgrades_to_supplier?) and call_result.new_record? %>
