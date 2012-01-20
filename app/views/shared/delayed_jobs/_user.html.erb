@@ -1,0 +1,14 @@
+<table class="generic">
+  <thead>
+    <tr>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% user.delayed_jobs.each do |dj| %>
+      <tr>
+        <td><%= dj.created_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

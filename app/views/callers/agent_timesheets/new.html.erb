@@ -120,6 +120,9 @@
       </frm>
   <% end %>
 
+  <h2><%= t("agent_timesheets.new.scheduled_actions") %></h2>
+  <%= render :partial => 'shared/delayed_jobs/user', :locals => {:user => current_user} %>
+
   <h2><%= t("agent_timesheets.new.cached_timesheets") %></h2>
   <ul>
     <% @search.cached_timesheets.each do |cached| %>

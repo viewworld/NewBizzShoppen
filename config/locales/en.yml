@@ -3973,6 +3973,7 @@ en:
       display: "Display"
       generate: "Generate"
       cached_timesheets: "Cached Agent Timesheet reports"
+      scheduled_actions: "Your scheduled actions"
       report_type: "Report type"
       campaigns_selection:
         all_campaigns: "All available campaigns"

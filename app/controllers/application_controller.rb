@@ -224,7 +224,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user_queue
-    (user_signed_in? and current_user) ? "user_#{current_user.id}" : "guest"
+    (user_signed_in? and current_user) ? current_user.queue : "guest"
   end
 
 

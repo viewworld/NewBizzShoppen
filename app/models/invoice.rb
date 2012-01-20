@@ -326,7 +326,7 @@ class Invoice < ActiveRecord::Base
 
   def send_by_email(user)
     invoice_path = Pathname.new(File.join(::Rails.root.to_s,'public/html2pdf/invoice_cache', store_pdf(user).basename))
-    TemplateMailer.delay(:queue => 'emails').new(user.email, paid? ? :invoice : :unpaid_invoice, Country.get_country_from_locale, {:invoice => self}, Array(invoice_path))
+    TemplateMailer.new(user.email, paid? ? :invoice : :unpaid_invoice, Country.get_country_from_locale, {:invoice => self}, Array(invoice_path)).deliver!
   end
 
   def pay_via_paypal_link

@@ -763,25 +763,25 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
   desc "recalculate_leads_average_ratings", ""
 
   def recalculate_leads_average_ratings
-    CommonStats.recalculate_leads_average_ratings
+    CommonStats.new.recalculate_leads_average_ratings
   end
 
   desc "refresh_subaccounts_counters", ""
 
   def refresh_subaccounts_counters
-    CommonStats.refresh_subaccounts_counters
+    CommonStats.new.refresh_subaccounts_counters
   end
 
   desc "refresh_agent_counters", ""
 
   def refresh_agent_counters
-    CommonStats.refresh_agent_counters
+    CommonStats.new.refresh_agent_counters
   end
 
   desc "refresh_buyer_counters", ""
 
   def refresh_buyer_counters
-    CommonStats.refresh_buyer_counters
+    CommonStats.new.refresh_buyer_counters
   end
 
   desc "refresh_exchange_rates", ""

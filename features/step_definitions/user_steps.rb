@@ -234,7 +234,7 @@ end
 
 Given /^all users have refreshed cache counters$/ do
   [:refresh_subaccounts_counters, :refresh_agent_counters, :refresh_supplier_counters].each do |method|
-    CommonStats.send(method)
+    CommonStats.new.send(method)
   end
 end
 

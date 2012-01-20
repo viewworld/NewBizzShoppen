@@ -170,7 +170,7 @@ class Lead < AbstractLead
   end
 
   def deliver_email_template(email, uniq_id)
-    TemplateMailer.delay(:queue => 'emails').new(email, uniq_id.to_sym, Country.get_country_from_locale, {:lead => self, :sender_id => nil})
+    TemplateMailer.new(email, uniq_id.to_sym, Country.get_country_from_locale, {:lead => self, :sender_id => nil}).deliver!
   end
 
   def auto_buy
@@ -201,8 +201,8 @@ class Lead < AbstractLead
 
   def send_email_with_deal_details_and_files
     if deal
-      TemplateMailer.delay(:queue => 'emails').new(requestee.email, deal.deal_request_details_email_template || :deal_request_details, Country.get_country_from_locale, {:deal => deal, :sender_id => nil},
-      (deal.images + deal.materials).map{ |material| material.full_local_path_for_current })
+      TemplateMailer.new(requestee.email, deal.deal_request_details_email_template || :deal_request_details, Country.get_country_from_locale, {:deal => deal, :sender_id => nil},
+      (deal.images + deal.materials).map{ |material| material.full_local_path_for_current }).deliver!
     end
   end
 
@@ -321,7 +321,7 @@ class Lead < AbstractLead
 
   def send_instant_notification_to_subscribers
     if published and published_changed?
-      self.delay(:queue => 'emails').deliver_instant_notification_to_subscribers
+      self.deliver_instant_notification_to_subscribers
     end
   end
 
@@ -332,6 +332,7 @@ class Lead < AbstractLead
       end
     end
   end
+  handle_asynchronously :deliver_instant_notification_to_subscribers
 
   def show_lead_details_url
     "http://#{mailer_host}/leads/#{self.id}"
