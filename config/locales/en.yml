@@ -2903,6 +2903,7 @@ en:
         likes: Likes
         published: Published/waiting approval
         actions: Actions
+        awaiting_approval: "Awaiting approval"
       form:
         name_label: "Name"
         short_description_label: "Short description"

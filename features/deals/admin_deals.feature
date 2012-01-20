@@ -107,5 +107,20 @@ Feature: Deals from admin perspective
     Then I should see "Saving: 75.00 (75%)"
 
   #9414
-  @m27 @requested
+  @m27 @requested @selenium @tgn @_done @_tested
   Scenario: Deals awaiting approval should be marked
+    Given I am not sign in
+    And user "translator_call_centre@nbs.com" has deal maker role enabled
+    And I am on the homepage
+    Given I visit domain http://faircalls.eu
+    And I sign in as translator_call_centre@nbs.com with password secret
+    Then I follow translated "layout.main_menu.call_centre.deals"
+    Then I follow translated "deals.common.listing.view.new_deal"
+    Then I follow translated "call_centre.deals.new.view.certify"
+    Then I certify deal with translation "call_centre.deals.new.view.create_button"
+    And I sign out
+    And I visit domain http://localhost
+    Given I am on the homepage
+    And I sign in as admin@nbs.com with password secret
+    And I follow translated "layout.main_menu.admin.deals"
+    Then I should see translated "shared.deals.table.awaiting_approval"

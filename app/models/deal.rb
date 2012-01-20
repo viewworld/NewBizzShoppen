@@ -186,6 +186,10 @@ class Deal < AbstractLead
     !deal_certification_requests.blank? and current_dcr.approved?
   end
 
+  def awaiting_approval?
+    current_dcr.present? and current_dcr.active?
+  end
+
   def saving
     if (deal_price.to_f > 0 and discounted_price.to_f > 0 and deal_price > discounted_price)
       "#{(100 - discounted_price * 100 / deal_price).to_i}%"
