@@ -75,6 +75,10 @@ en:
       long: "%d %B %Y"
     format:
       standard: "%d-%m-%Y"
+  time:
+    formats:
+      default: "%d-%m-%Y %H:%M"
+      long: "%d %B %Y %H:%M:%S"
   layout:
     fairdeals:
       main_menu:
@@ -3934,6 +3938,7 @@ en:
       total: "Total"
       total_average: "Total / average"
       na: "n/a"
+      timesheet_queued: "Requested Agent Timesheet report has been queued. You will be notified by email when it's generated."
       overview:
         header: "Overview"
         hours_header: "Hours"
@@ -3967,6 +3972,7 @@ en:
       select_team: "Select team"
       display: "Display"
       generate: "Generate"
+      cached_timesheets: "Cached Agent Timesheet reports"
       report_type: "Report type"
       campaigns_selection:
         all_campaigns: "All available campaigns"

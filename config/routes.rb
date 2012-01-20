@@ -246,7 +246,7 @@ Nbs::Application.routes.draw do
         post 'load_agents'
       end
     end
-    resources :agent_timesheets, :only => [:index]
+    resources :agent_timesheets, :only => [:index,:show]
   end
 
   namespace :comments do

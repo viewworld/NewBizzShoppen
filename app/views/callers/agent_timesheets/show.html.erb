@@ -5,6 +5,6 @@
     </param:content>
   </header>
 
-  <h2><%= t("agent_timesheets.index.timesheet_queued") %></h2>
+  <%= render(:text => AgentTimesheet::General.load(params[:id], current_user)).html_safe %>
 
 </column-mc:>

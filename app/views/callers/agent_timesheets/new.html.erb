@@ -119,4 +119,11 @@
         </param:actions>
       </frm>
   <% end %>
+
+  <h2><%= t("agent_timesheets.new.cached_timesheets") %></h2>
+  <ul>
+    <% @search.cached_timesheets.each do |cached| %>
+        <li><%= link_to "#{cached}.html", callers_agent_timesheet_path(cached, :format => :html), :target => '_new' %> (<%= l Time.at(cached.to_i/100000), :format => :long %>)</li>
+    <% end %>
+  </ul>
 </column-mc:>

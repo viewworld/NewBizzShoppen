@@ -377,6 +377,13 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                  :body => "<p>You have unpaid invoice {{invoice.full_number}}. Click <a href=\"{{invoice.pay_via_paypal_link}}\">here to pay the invoice via Paypal</a></p>"},
          :da => {:subject => "[DK] Invoice",
                  :body => "<p><p>You have unpaid invoice {{invoice.full_number}}. Click <a href=\"{{invoice.pay_via_paypal_link}}\">here to pay the invoice via Paypal</a></p></p>"}
+        },
+        {:name => "agent timesheet",
+         :uniq_id => "agent_timesheet",
+         :en => {:subject => "Agent Timesheet is ready",
+                 :body => "<p>Welcome {{user.email}}!</p><p>The Agent TImesheet report you've requested is now ready. To view it, follow this link:</p><p><a href=\"{{timesheet_url}}\">Agent Timesheet report</a></p>"},
+         :da => {:subject => "[DK] Agent Timesheet is ready",
+                 :body => "<p>Welcome {{user.email}}!</p><p>The Agent TImesheet report you've requested is now ready. To view it, follow this link:</p><p><a href=\"{{timesheet_url}}\">Agent Timesheet report</a></p>"},
         }
     ]
 
