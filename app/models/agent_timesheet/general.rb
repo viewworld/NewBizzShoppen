@@ -70,7 +70,7 @@ class ::AgentTimesheet::General
 
   def notify!
     if @current_user and url
-      TemplateMailer.delay.new(@current_user.email, :agent_timesheet, Country.get_country_from_locale, {:user => @current_user, :timesheet_url => url, :sender_id => nil})
+      TemplateMailer.delay(:queue => 'emails').new(@current_user.email, :agent_timesheet, Country.get_country_from_locale, {:user => @current_user, :timesheet_url => url, :sender_id => nil})
     end
   end
 

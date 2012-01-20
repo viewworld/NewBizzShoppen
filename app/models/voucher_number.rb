@@ -75,7 +75,7 @@ class VoucherNumber < ActiveRecord::Base
     invoice = Invoice.create(:user_id => user_id, :paid_at => Time.now, :seller => user.active_subscription.seller, :currency => deal.currency, :voucher_number => self)
     PaypalTransaction.create(:invoice => invoice, :payment_notification => payment_notification, :amount => deal.discounted_price, :paid_at => Time.now)
     invoice_path = Pathname.new(File.join(::Rails.root.to_s, 'public/html2pdf/invoice_cache', invoice.store_pdf(user).basename))
-    TemplateMailer.delay.new(user.email, :voucher_notification, Country.get_country_from_locale, {}, [to_pdf, invoice_path])
+    TemplateMailer.delay(:queue => 'emails').new(user.email, :voucher_notification, Country.get_country_from_locale, {}, [to_pdf, invoice_path])
   end
 
   class << self

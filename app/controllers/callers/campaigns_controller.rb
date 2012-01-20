@@ -41,7 +41,7 @@ class Callers::CampaignsController < Callers::CallerController
   def duplicate
     @campaign = Campaign.find(params[:id])
     if current_user.admin?
-      @campaign.delay.duplicate!
+      @campaign.delay(:queue => 'duplications').duplicate!
       flash[:notice] = I18n.t("flash.campaigns.duplicate.notice")
     else
       raise CanCan::AccessDenied

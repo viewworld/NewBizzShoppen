@@ -223,5 +223,10 @@ class ApplicationController < ActionController::Base
     session[:logout_user_role] = user.role if user
   end
 
+  def current_user_queue
+    (user_signed_in? and current_user) ? "user_#{current_user.id}" : "guest"
+  end
+
+
 end
 

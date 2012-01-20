@@ -391,7 +391,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def send_paypal_profile_reactivation_link
-    TemplateMailer.delay.new(user.email, :subscription_cancelled_through_paypal, Country.get_country_from_locale, {:subscription => self})
+    TemplateMailer.delay(:queue => 'emails').new(user.email, :subscription_cancelled_through_paypal, Country.get_country_from_locale, {:subscription => self})
   end
 
   def next_billing_cycle_for_recurring_payment_renewal
@@ -404,7 +404,7 @@ class Subscription < ActiveRecord::Base
 
 
   def send_end_of_free_period_email
-    TemplateMailer.delay.new(user.email, :subscription_free_period_ended_for_paypal, Country.get_country_from_locale, {:subscription => self})
+    TemplateMailer.delay(:queue => 'emails').new(user.email, :subscription_free_period_ended_for_paypal, Country.get_country_from_locale, {:subscription => self})
   end
 
   def self.send_reminder_about_end_of_free_period

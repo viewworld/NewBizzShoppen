@@ -11,7 +11,7 @@ class Administration::Invoicing::BulkMailingsController < Administration::Admini
     @invoices.each do |invoice|
       invoice_filename = invoice.store_pdf(current_user).basename
       invoice_path = Pathname.new(File.join(::Rails.root.to_s,'public/html2pdf/invoice_cache', invoice_filename))
-      TemplateMailer.delay.new(invoice.user.email, @email_template, invoice.user.country,
+      TemplateMailer.delay(:queue => 'emails').new(invoice.user.email, @email_template, invoice.user.country,
                                        {:invoice => invoice, :sender_id => user_signed_in? ? current_user.id : nil}, Array(invoice_path))
       invoice.update_attribute(:emailed_at, Time.now)
     end

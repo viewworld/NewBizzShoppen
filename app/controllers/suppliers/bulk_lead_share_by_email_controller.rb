@@ -7,7 +7,7 @@ class Suppliers::BulkLeadShareByEmailController < Suppliers::BasicSupplierContro
   def create
     @email_template_preview = EmailTemplatePreview.new(:share_leads_by_email_message)
     params[:email_template_preview].tap do |email_params|
-      TemplateMailer.delay.new(email_params[:recipients], :blank_template, Country.get_country_from_locale,
+      TemplateMailer.delay(:queue => 'emails').new(email_params[:recipients], :blank_template, Country.get_country_from_locale,
                                        {:subject_content => email_params[:subject], :body_content => email_params[:body],
                                         :bcc_recipients => @email_template_preview.bcc, :cc_recipients => @email_template_preview.cc,
                                         :sender_id => user_signed_in? ? current_user.id : nil, :email_template_uniq_id => "share_leads_by_email_message"})

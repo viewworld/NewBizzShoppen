@@ -14,8 +14,8 @@ class Callers::AgentTimesheetsController < Callers::CallerController
       @search = AgentTimesheet::Search.new(:current_user => current_user)
       render :action => :new
     else
-      if Rails.env.production?
-        ::AgentTimesheet::General.new(params[:search].merge(:current_user => current_user)).delay.to_file
+      if true
+        ::AgentTimesheet::General.new(params[:search].merge(:current_user => current_user)).delay(:queue => current_user_queue).to_file
         super do |format|
           format.html
         end

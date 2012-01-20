@@ -5,7 +5,7 @@ module EmailTemplatesActions
 
       disclaimer = I18n.t("models.email_template.test_send_disclaimer")
 
-      TemplateMailer.delay.new(params[:email], :blank_template, Country.where(:locale => I18n.locale.to_s).first,
+      TemplateMailer.delay(:queue => 'emails').new(params[:email], :blank_template, Country.where(:locale => I18n.locale.to_s).first,
                                { :subject_content => StringUtils.replace_template_variables(params[:subject] || @email_template.subject),
                                  :body_content => StringUtils.replace_template_variables(params[:body] || @email_template.body) + "<h3>#{disclaimer}</h3>" })
     end

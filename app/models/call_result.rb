@@ -236,7 +236,7 @@ class CallResult < ActiveRecord::Base
     template = contact.campaign.send_material_email_template || EmailTemplate.global.where(:uniq_id => 'result_send_material').first
     template = customize_email_template(template)
 
-    TemplateMailer.delay.new(contact_email_address, :blank_template, Country.get_country_from_locale,
+    TemplateMailer.delay(:queue => 'emails').new(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.body,
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc,
                                         :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
@@ -248,7 +248,7 @@ class CallResult < ActiveRecord::Base
     template = contact.campaign.send("upgrade_contact_to_#{role}_email_template".to_sym) || EmailTemplate.global.where(:uniq_id => "upgrade_contact_to_#{role}").first
     template = customize_email_template(template)
 
-    TemplateMailer.delay.new(contact_email_address, :blank_template, Country.get_country_from_locale,
+    TemplateMailer.delay(:queue => 'emails').new(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.render({:user => user, :password => password}),
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc,
                                         :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
