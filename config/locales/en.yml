@@ -3346,7 +3346,7 @@ en:
         country_default: "Country default"
         global_default: "Global default"
       lead:
-        company_name: "Name"
+        company_name: "Company name"
         contact_title: "Contact title"
         company_phone_number: "Company phone number"
         company_website: "Company website"

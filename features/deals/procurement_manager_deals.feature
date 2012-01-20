@@ -201,7 +201,11 @@ Feature: Deals from procurement manager perspective
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
+    And I fill in "lead_company_name" with "The Young Turks"
+    And I fill in "lead_contact_name" with "Ana Kasparian"
     And I fill in "lead_hidden_description" with "some hidden note"
+    And I should not see "Facebook"
+    And I should not see "Linkedin"
     And I press translated "member.leads.new.view.button_create"
     And I press translated "member.leads.show.view.ok_confirmation"
     And last email sent should have been sent to recipient "purchase_manager101@nbs.com"
@@ -379,7 +383,7 @@ Feature: Deals from procurement manager perspective
   Scenario: When my request is cancelled I get email "Sorry your voucher is canceled since the payment did not go through.Please try again or contact fairleads if the problem persists"
 
   #9367
-  @m27 @requested
+  @m27 @requested @tgn @_done @_tested_elsewhere
   Scenario: When I get the deal on the page for deal request I should not see linkedin/facebook urls but see company name
 
   #9811

@@ -190,4 +190,10 @@ class IntegrationTasks < Thor
       end
     end
   end
+
+  desc "m27b", ""
+  def m27b
+    Translation.where(:key => "formtastic.labels.lead.company_name", :locale => "en").first.update_attribute(:value, "Company name")
+    Translation.where(:key => "formtastic.labels.lead.company_name", :locale => "da").first.update_attribute(:value, "Firmanavn")
+  end
 end
