@@ -194,7 +194,10 @@ Scenario: I can enable/disable email verification for sales managers
   And I check "user_category_supplier_agreement_read"
   And I choose "user_category_supplier_subscription_plan_id"
   And I press translated "supplier_accounts.new.view.button_create_account"
-  Then I should see translated "flash.accounts.create.no_verification"
+  Then I should see translated "devise.sessions.new.controller.successfully_logged_in"
+  And I should be signed in
+  And I should be on the home page
+  And I sign out
   And I sign in as lead_user2@person.com with password supersecret
   Then I go to administration settings
   When I check "settings[15]"
