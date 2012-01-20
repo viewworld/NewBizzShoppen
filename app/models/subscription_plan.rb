@@ -45,6 +45,7 @@ class SubscriptionPlan < ActiveRecord::Base
 
   scope :with_keyword, lambda { |q| where("lower(name) like ?", "%#{q.downcase}%") }
   scope :active, where(:is_active => true)
+  scope :only_public, where(:is_public => true)
   scope :exclude_free, lambda{ |exclude| exclude ? where("billing_price > 0.0") : where("") }
   scope :include_paypal, lambda{ |include| include ? where("") : where("use_paypal IS FALSE") }
   scope :exclude_current_plan, lambda{ |plan| where("billing_price <> ? and id <> ?", plan.billing_price.to_f, plan.id)}

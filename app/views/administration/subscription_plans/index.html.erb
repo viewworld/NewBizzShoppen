@@ -51,6 +51,7 @@
           <th><%= t("administration.subscription_plans.index.view.total_amount") %></th>
           <th><%= t("administration.subscription_plans.index.view.use_paypal") %></th>
           <th><%= t("administration.subscription_plans.index.view.is_active") %></th>
+          <th><%= t("administration.subscription_plans.index.view.is_public") %></th>
           <th class="ta_r"><%= t("administration.subscription_plans.index.view.actions") %></th>
           <th class="hr"></th>
         </tr>
@@ -58,7 +59,7 @@
         <tfoot>
         <tr>
           <td class="fl"></td>
-          <td colspan="6"></td>
+          <td colspan="7"></td>
           <td class="fr"></td>
         </tr>
         </tfoot>
@@ -72,6 +73,7 @@
               <td><%= as_currency(subscription_plan.total_billing, subscription_plan.currency, 2)  %></td>
               <td><%= subscription_plan.use_paypal? ? t("common.yes_label") : t("common.no_label") %></td>
               <td><%= subscription_plan.is_active? ? t("common.yes_label") : t("common.no_label") %></td>
+              <td><%= subscription_plan.is_public? ? t("common.yes_label") : t("common.no_label") %></td>
 
               <td class="tda ta_r">
                 <ul-actions>
@@ -84,7 +86,7 @@
         <% end %>
         <% if will_paginate %>
             <tr class="pagination">
-              <td colspan="8" class="ta_c">
+              <td colspan="9" class="ta_c">
                 <%= will_paginate @subscription_plans, :previous_label => '&laquo;', :next_label => '&raquo;' %>
               </td>
             </tr>
