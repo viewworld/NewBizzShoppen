@@ -1,3 +1,7 @@
 <div id="modal_for_deal_links" style="display:none;">
-  FUKKKKKKKKKKKKKKKKKKKKKKKK
+  <%= button_to_function t("email_templates.common.insert_deal_link"),
+                         "insert_deal_links_into_ckeditor('#{instance_name}', '#{Domain.for_site("fairdeals").for_locale(I18n.locale).with_default.first.name_for_env}')" %>
+  <div id="deal_links_container">
+    None.
+  </div>
 </div>

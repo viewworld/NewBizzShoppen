@@ -670,11 +670,11 @@ Feature: Agent campaign - calling session
       And contact "ABC Ltd" should be assigned to user "translator_call_centre_agent@nbs.com"
 
   #9603
-  @m27 @requested
+  @m27 @requested @tgn @_done @_non_tested
   Scenario: When upgrading to member I can insert links to deals from CKEDITORs popup
 
   #9603
-  @m27 @requested
+  @m27 @requested @tgn @_done @_non_tested
   Scenario: Popup from CKEDITOR allows to select multiple deals and insert then to email template editor
 
   #9602

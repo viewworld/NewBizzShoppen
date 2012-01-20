@@ -68,7 +68,7 @@ class DealsController < ApplicationController
   end
 
   def show_all
-    @deals = Deal.without_inactive
+    @deals = Deal.without_inactive.with_id_and_header.order("header")
 
     respond_to do |format|
       format.js {  }

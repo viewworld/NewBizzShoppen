@@ -176,12 +176,35 @@
       $('#modal_for_deal_links').dialog({
           autoOpen: false,
           width: 700,
+          height: 500,
           title: 'Insert deal links',
           modal: true
       });
   }
 
   function open_deal_links_dialog(){
-     $.post('/deals/show_all.js');
+      $('#deal_links_container').html(I18n.t("common.js.loading"));
+     $.get('/deals/show_all.js');
      $('#modal_for_deal_links').dialog('open');
+  }
+
+  function check_uncheck_deal_link(id){
+      checkbox_selector = "input[type=checkbox][name^=deal_links][value^='" + id + "']";
+      if($(checkbox_selector).attr("checked")){
+          $(checkbox_selector).attr("checked", "");
+      }
+      else
+      {
+          $(checkbox_selector).attr("checked", "true")
+      }
+  }
+
+  function insert_deal_links_into_ckeditor(instance_name, domain_name){
+    $('input[type=checkbox][id^=deal_links]:checked').each(function(){
+
+        link_tmp = " <a href=\"http://" + domain_name + "/deals/" + $(this).val() + "\">" + $("#" + $(this).attr("id") + "_header").val() + "</a>&nbsp;";
+
+        CKEDITOR.instances[instance_name].insertHtml(link_tmp);
+    });
+    $('#modal_for_deal_links').dialog('close');
   }

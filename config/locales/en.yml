@@ -32,6 +32,7 @@ en:
       field_cant_be_blank: "can't be blank"
       field_incorrect_format: "incorrect value"
       enter_email_address: "Enter email address"
+      loading: "Loading..."
     no_categories_for_category_supplier: "Your Category Supplier account has no associated categories. You can't sign in."
     edit_hint: "Edit hint"
     agree_to: "Agree to"
@@ -4266,6 +4267,8 @@ en:
         title: "Editing email template %{name}"
         button_cancel: "Cancel"
         test_send_email: "Test send email"
+    common:
+      insert_deal_link: "Insert deal links"
   deal_requests:
     create:
       flash:

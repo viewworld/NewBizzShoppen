@@ -24,6 +24,7 @@ class Deal < AbstractLead
   scope :for_user, lambda { |q| where("creator_id = ?", q.id) }
   scope :group_deals, where(:group_deal => true)
   scope :not_blocked_by_sold_out_vouchers, where("leads.voucher_enabled = false OR (leads.voucher_enabled = true and leads.voucher_max_number > (select count(*) from voucher_numbers where voucher_numbers.deal_id = leads.id and voucher_numbers.state <> 'new'))")
+  scope :with_id_and_header, select("id, header")
 
   scoped_order :header, :end_date, :published, :created_at, :company_name
 
