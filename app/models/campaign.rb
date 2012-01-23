@@ -196,7 +196,7 @@ class Campaign < ActiveRecord::Base
       contact = contacts.build
       Campaign.import_fields.each_with_index { |field, index| contact = assign_field(contact, field, spreadsheet.cell(line, index+1), spreadsheet.celltype(line, index+1)) }
       contact = Campaign.assign_current_user(contact, current_user, self)
-      unless only_unique and !Contact.where("id IS NOT NULL AND campaign_id = #{contact.campaign_id} AND company_name = '#{contact.company_name}' AND company_vat_no = '#{contact.company_vat_no}' AND email_address = '#{contact.email_address}'").blank?
+      unless only_unique and !Contact.where("id IS NOT NULL AND campaign_id = #{contact.campaign_id} AND company_name LIKE '#{contact.company_name.to_s.gsub("'", "_")}' AND company_vat_no = '#{contact.company_vat_no}' AND email_address = '#{contact.email_address}'").blank?
         contact.save
       end
     end
@@ -222,7 +222,7 @@ class Campaign < ActiveRecord::Base
           import_fields.each { |field| contact = assign_field(contact, field, spreadsheet.cell(line, merged_fields[field]), spreadsheet.celltype(line, merged_fields[field])) }
           contact = assign_current_user(contact, current_user, campaign)
           #contact.last_import = true
-          if only_unique and !Contact.where("id IS NOT NULL AND campaign_id = #{contact.campaign_id} AND company_name = '#{contact.company_name}' AND company_vat_no = '#{contact.company_vat_no}' AND email_address = '#{contact.email_address}'").blank?
+          if only_unique and !Contact.where("id IS NOT NULL AND campaign_id = #{contact.campaign_id} AND company_name LIKE '#{contact.company_name.to_s.gsub("'", "_")}' AND company_vat_no = '#{contact.company_vat_no}' AND email_address = '#{contact.email_address}'").blank?
             not_unique_counter += 1
           elsif contact.save
             counter += 1
