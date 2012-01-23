@@ -19,3 +19,4 @@
 /db/snapshots/cucumber.sql
 /public/html2pdf/invoice_cache
 /public/javascripts/translations.js
+/public/system/agent_timesheets_cache/*
