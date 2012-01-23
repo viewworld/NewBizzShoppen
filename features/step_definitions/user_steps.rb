@@ -59,6 +59,17 @@ Given /^user "([^"]*)" has team buyers enabled$/ do |email|
   end
 end
 
+Given /^user "([^"]*)" has premium deals enabled$/ do |email|
+  user = User.where(:email => email).first.with_role
+  if user.active_subscription.payable?
+    user.active_subscription.update_attribute(:premium_deals, true)
+  else
+    subscription_plan = SubscriptionPlan.make!(:assigned_roles => [user.role.to_sym], :subscription_period => 12, :premium_deals => true)
+    subscription_plan.subscription_plan_lines.make!
+    user.upgrade_subscription!(subscription_plan)
+  end
+end
+
 Given /^user "([^"]*)" has deal maker role enabled$/ do |email|
   user = User.where(:email => email).first.with_role
   if user.has_any_role?(:agent, :call_centre, :call_centre_agent)

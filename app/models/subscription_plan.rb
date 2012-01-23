@@ -96,6 +96,8 @@ class SubscriptionPlan < ActiveRecord::Base
       self.team_buyers = false
       self.big_buyer = false
       self.deal_maker = false
+    elsif has_any_role?(:supplier, :category_supplier)
+      self.premium_deals = false
     end
     true
   end
