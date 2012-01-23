@@ -1,5 +1,7 @@
 <search-box:>
   <div class="search_box">
+    <div class="search_left"></div>
+    <div class="search_right"></div>
     <div class="fltr">
       <% if @category %>
           <%= link_to I18n.t("leads.index.subscribe_to_rss"), "/categories/#{@category.cached_slug}?search[with_category]=#{@category.id}&format=rss#{"&user_token=#{current_user.rss_token}" if current_user}" %>
