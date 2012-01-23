@@ -45,6 +45,10 @@
         <td><%= deal.created_at %></td>
         <td>
           <%= deal.header %>
+          <%if deal.awaiting_approval? %>
+              <br/>
+              (<%= t("shared.deals.table.awaiting_approval") %>)
+          <% end %>
         </td>
         <td>
           <%= deal.company_name %>

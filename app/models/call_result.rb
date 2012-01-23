@@ -1,7 +1,8 @@
 class CallResult < ActiveRecord::Base
   attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_2,
                 :contact_address_line_3, :contact_zip_code, :contact_country_id, :contact_phone_number,
-                :contact_company_name, :buying_category_ids, :result_id_changed, :user_not_charge_vat, :current_user
+                :contact_company_name, :buying_category_ids, :result_id_changed, :user_not_charge_vat, :current_user, :contact_subscription_plan_id,
+                :contact_newsletter_on
 
   belongs_to :contact
   belongs_to :result
@@ -212,7 +213,8 @@ class CallResult < ActiveRecord::Base
                                              :address_line_3 => contact_address_line_3, :region_id => contact.region_id},
                    :agreement_read => true, :company_name => contact.company_name, :phone => contact_phone_number,
                    :contact => contact, :vat_number => contact.company_vat_no,
-                   :company_ean_number => contact.company_ean_number, :assign_free_subscription_plan => true}
+                   :company_ean_number => contact.company_ean_number, :assign_free_subscription_plan => false, :subscription_plan_id => contact_subscription_plan_id,
+                   :newsletter_on => contact_newsletter_on}
 
     if ["category_supplier", "supplier"].include?(role)
       user_params.merge!(:not_charge_vat => user_not_charge_vat)

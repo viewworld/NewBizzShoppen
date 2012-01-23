@@ -938,8 +938,11 @@ class User < ActiveRecord::Base
     true
   end
 
+  def can_request?(deal)
+    (!active_subscription.is_free? and !deal.premium_deal?) or (!active_subscription.is_free? and deal.premium_deal? and active_subscription.premium_deals?)
+  end
+  
   def queue
     "user_#{id}"
-  end
-
+  end  
 end

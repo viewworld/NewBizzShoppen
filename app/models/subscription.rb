@@ -163,7 +163,7 @@ class Subscription < ActiveRecord::Base
 
   def self.clone_from_subscription_plan!(subscription_plan, user, start_date=nil, paypal_invoice_id=nil)
     subscription = Subscription.new(:user => user, :vat_rate => !user.not_charge_vat? ? subscription_plan.seller.vat_rate : 0)
-    subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price", "is_active", "aasm_state", "paypal_retires_counter"]).each do |method|
+    subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price", "is_active", "is_public", "aasm_state", "paypal_retires_counter"]).each do |method|
       subscription.send("#{method}=".to_sym, subscription_plan.send(method.to_sym))
     end
     subscription.subscription_plan = subscription_plan.is_a?(Subscription) ? subscription_plan.subscription_plan : subscription_plan

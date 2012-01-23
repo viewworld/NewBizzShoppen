@@ -101,5 +101,4 @@ Feature: Sellers
     When bank account for country "United Kingdom" has attributes "global_default:1"
     And I click hidden link by url regex "/administration\/sellers$/"
     And I follow translated "administration.sellers.index.view.add_seller"
-    And I open page in browser
     Then "seller_bank_account_id" should be selected for "1"

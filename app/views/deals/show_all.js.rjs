@@ -1,0 +1,1 @@
+page << "$('#deal_links_container').html('#{escape_javascript(render(:partial => 'shared/deals/deal_link_row', :locals => {:deals => @deals}))}')"
