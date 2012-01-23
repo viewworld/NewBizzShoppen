@@ -936,4 +936,8 @@ class User < ActiveRecord::Base
     end
     true
   end
+
+  def can_request?(deal)
+    (!active_subscription.is_free? and !deal.premium_deal?) or (!active_subscription.is_free? and deal.premium_deal? and active_subscription.premium_deals?)
+  end
 end

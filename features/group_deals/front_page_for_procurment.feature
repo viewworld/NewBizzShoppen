@@ -377,5 +377,10 @@ Feature: Front page for procurment
   Scenario: I should see deals listed in browse deals as primary deal on the front page
 
   #9811
-  @m27 @requested
+  @m27 @requested @tgn @_done @_tested
   Scenario: I should see splash saying Premium Deal when premium for this deal is enabled by admin or dealmaker
+    Given a deal named "PrimaryDeal" exists within category "Electronics deals"
+    And a deal named "PrimaryDeal" exists with attributes "published:1,premium_deal:1"
+    And deal named "PrimaryDeal" is a primary featured deal
+    Given I visit domain http://fairdeals.dk
+    And I should see translated "deals.index.view.premium_deal_splash_label"

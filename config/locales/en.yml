@@ -3421,6 +3421,7 @@ en:
         group_deal: "Group deal"
         deal_admin_email: "Deal admin email"
         deal_code: "Deal code"
+        premium_deal: "Premium deal"
       contact:
         company_name: "Name"
         company_phone_number: "Company phone number"
@@ -3759,6 +3760,7 @@ en:
         paypal_retries: "PayPal payment retries"
         paypal_billing_at_start: "Billing type"
         free_deals_in_free_period: "Number of free deals in free period"
+        premium_deals: "Allow premium deals"
   users:
     passwords:
       edit:
@@ -4108,6 +4110,7 @@ en:
         group_deal_splash_label: "Group deal"
         fair_deal_splash_label: "Fair deal"
         back_to_front_page: "Back to front page"
+        premium_deal_splash_label: "Premium deal"
       search:
         keyword_label: "Keyword"
         search_button: "Search"

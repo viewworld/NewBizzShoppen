@@ -168,5 +168,8 @@ Scenario: I can upload images for "Subscription text"
 Scenario: I can mark subscription plan as public
 
 #9811
-@m27 @requested
+@m27 @requested @selenium @tgn @_done @_tested
 Scenario: I can check "Allows getting Premium Deals" for each Member subscription
+  When I follow translated "administration.subscription_plans.index.view.new_subscription_plan"
+  And I select "Member" from "subscription_plan_assigned_roles"
+  And I check "subscription_plan_premium_deals"

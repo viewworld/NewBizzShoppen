@@ -387,5 +387,20 @@ Feature: Deals from procurement manager perspective
   Scenario: When I get the deal on the page for deal request I should not see linkedin/facebook urls but see company name
 
   #9811
-  @m27 @requested
+  @m27 @requested @tgn @_done @_tested
   Scenario: I can get a Premium deal only if I am signed in as member and have subscription that allows getting Premium deals
+    Given I am on the homepage
+    Given a deal named "PrimaryDeal" exists within category "Electronics deals"
+    And a deal named "PrimaryDeal" exists with attributes "published:1,premium_deal:1"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow category "Electronics deals"
+    And I follow translated "deals.index.view.view_deal"
+    And I follow translated "deals.index.view.contact_me"
+    And I should be on my profile
+    Given user "procurment@nbs.com" has premium deals enabled
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow category "Electronics deals"
+    And I follow translated "deals.index.view.view_deal"
+    And I follow translated "deals.index.view.contact_me"
+    And I press translated "member.leads.new.view.button_create"
+    And I should see "Blurb voucher confirmation page"
