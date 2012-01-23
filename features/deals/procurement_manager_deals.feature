@@ -110,7 +110,7 @@ Feature: Deals from procurement manager perspective
   @_done @tgn @tested_elsewhere
   Scenario: When I click "Contact me" I can enter "Additional" template information and note field
 
-  @_done @_tested @tgn @added @m18  @wip
+  @_done @_tested @tgn @added @m18
   Scenario: When I sign up on fairdeals.dk/eu and confirmation is turned off I should still get email and be signed in afterword
   Given setting for "email_verification_for_members" is set to "0"
   Given I visit domain http://fairdeals.dk
