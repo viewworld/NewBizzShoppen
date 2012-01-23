@@ -5,6 +5,9 @@
     </param:content>
   </header>
 
-  <h2><%= t("agent_timesheets.index.timesheet_queued") %></h2>
+  <h2><%= t("agent_timesheets.index.timesheet_queued") %></h2><br/>
+
+  <header><%= t("agent_timesheets.new.scheduled_actions") %></header>
+  <%= render :partial => 'shared/delayed_jobs/user', :locals => {:user => current_user} %>
 
 </column-mc:>

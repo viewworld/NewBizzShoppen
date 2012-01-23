@@ -32,3 +32,18 @@ class NilClass
     self
   end
 end
+
+class Delayed::Backend::ActiveRecord::Job
+  def human_name
+    klass = YAML.load(handler).object.class
+    klass.respond_to?(:human_name) ? klass.human_name : klass.name
+  end
+
+  def status
+    if last_error.nil? and attempts == 0
+      :not_yet_processed
+    elsif last_error.present?
+      :error
+    end
+  end
+end

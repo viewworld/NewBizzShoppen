@@ -74,4 +74,8 @@ class ::AgentTimesheet::General
     end
   end
 
+  def self.human_name
+    "Agent Timesheet"
+  end
+
 end

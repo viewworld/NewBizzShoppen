@@ -1,14 +1,29 @@
 <table class="generic">
   <thead>
     <tr>
-      <th></th>
+      <th class="hl"></th>
+      <th><%= t("delayed_jobs.shared.view.created_at") %></th>
+      <th><%= t("delayed_jobs.shared.view.name") %></th>
+      <th><%= t("delayed_jobs.shared.view.status") %></th>
+      <th class="hr"></th>
     </tr>
   </thead>
   <tbody>
-    <% user.delayed_jobs.each do |dj| %>
+    <% user.delayed_jobs.limit(5).each do |dj| %>
       <tr>
-        <td><%= dj.created_at %></td>
+        <td class="cl"></td>
+        <td><%= l dj.created_at, :format => :long %></td>
+        <td><%= dj.human_name %></td>
+        <td><%= t("delayed_jobs.shared.view.statuses.#{dj.status}")  %></td>
+        <td class="cr"></td>
       </tr>
     <% end %>
   </tbody>
+  <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="3"><div style="text-align:center"><%= link_to t("common.view_all")  %></div></td>
+      <td class="fr"></td>
+    </tr>
+  </tfoot>
 </table>

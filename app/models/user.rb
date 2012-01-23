@@ -71,7 +71,7 @@ class User < ActiveRecord::Base
   has_many :subscriptions
   has_many :subscription_plans, :through => :subscriptions
   belongs_to :company_unique_category, :class_name => "LeadCategory", :foreign_key => "deal_category_id"
-  has_many :delayed_jobs, :class_name => '::Delayed::Job', :foreign_key => :queue, :primary_key => :queue
+  has_many :delayed_jobs, :class_name => '::Delayed::Job', :foreign_key => :queue, :primary_key => :queue, :order => "created_at DESC"
 
   alias_method :parent, :user
 

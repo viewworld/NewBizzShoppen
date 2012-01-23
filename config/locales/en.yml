@@ -5,6 +5,15 @@ en:
   support:
     array:
       two_words_connector: " and "
+  delayed_jobs:
+    shared:
+      view:
+        created_at: "Created at"
+        name: "Name"
+        status: "Status"
+        statuses:
+          error: "Error"
+          not_yet_processed: "Not yet processed"
   cart:
     vat_line_title: "VAT %{percentage}"
   common:
@@ -23,6 +32,7 @@ en:
     clear_filter: "Clear filter"
     fewer: Fewer
     more: More
+    view_all: "View all"
     js:
       read_more: "read more"
       collapse_expanded_text: "[collapse expanded text]"
@@ -3973,6 +3983,8 @@ en:
       display: "Display"
       generate: "Generate"
       cached_timesheets: "Cached Agent Timesheet reports"
+      created_at: "Created at"
+      link_to_report: "Link to report"
       scheduled_actions: "Your scheduled actions"
       report_type: "Report type"
       campaigns_selection:
