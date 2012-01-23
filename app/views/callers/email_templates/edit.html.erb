@@ -24,11 +24,13 @@
 
   <%= hidden_field_tag :uniq_id, @email_template.uniq_id, {:id => "email_template_editor_uniq_id"} %>
   <%= render :partial => "shared/email_template_popup/template_vars_popup", :locals => { :instance_name => "email_template_body_editor" } %>
+  <%= render :partial => "shared/email_template_popup/template_deal_links", :locals => {:instance_name => "email_template_body_editor"} %>
 
 </column-mc:>
 
 <js:>
   <script type="text/javascript">
       setup_jquery_vars_popup_dialog();
+      setup_jquery_deal_links_dialog();
   </script>
 </js:>

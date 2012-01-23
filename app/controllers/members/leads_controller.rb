@@ -39,7 +39,7 @@ class Members::LeadsController < Members::MemberController
   end
 
   def check_if_deal_is_already_requested
-    if (@deal = Deal.find_by_id(params[:deal_id]) and @deal.requested_by?(current_user)) or current_user.active_subscription.is_free?
+    if (@deal = Deal.find_by_id(params[:deal_id]) and @deal.requested_by?(current_user)) or !current_user.can_request?(@deal)
       redirect_to deal_path(:id => @deal.slug)
     end
   end
@@ -59,6 +59,7 @@ class Members::LeadsController < Members::MemberController
     session[:selected_category] = @lead.category_id
 
     @lead.creation_step = 3
+    current_user.decrement_free_deal_requests_in_free_period! if @lead.valid?
     create! do |success, failure|
       success.html {
         redirect_to members_lead_path(@lead)

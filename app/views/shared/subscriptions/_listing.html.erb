@@ -14,7 +14,7 @@
         <% if current_user and current_user.has_active_subscription? %>
             <%= render :partial => 'shared/subscriptions/current_subscription', :locals => {:subscription_plan => current_user.active_subscription_plan} %>
         <% end %>
-        <% @subscriptions = SubscriptionPlan.active.exclude_free(true).include_paypal((!SubscriptionPlan::DISABLE_PAYPAL_SUBSCRIPTIONS or current_user.test_account?)).exclude_current_plan(current_user.active_subscription_plan).for_role(role).ascend_by_billing_price.select { |sp| current_user.subscription_can_be_changed_to?(sp) } %>
+        <% @subscriptions = SubscriptionPlan.active.only_public.exclude_free(true).include_paypal((!SubscriptionPlan::DISABLE_PAYPAL_SUBSCRIPTIONS or current_user.test_account?)).exclude_current_plan(current_user.active_subscription_plan).for_role(role).ascend_by_billing_price.select { |sp| current_user.subscription_can_be_changed_to?(sp) } %>
         <% if @subscriptions.any? %>
             <% @subscriptions.each do |subscription_plan| %>
                 <%= render :partial => 'shared/subscriptions/subscription', :locals => {:subscription_plan => subscription_plan, :role => role} %>

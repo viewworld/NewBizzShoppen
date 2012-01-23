@@ -292,5 +292,13 @@ Feature: General deals
   Scenario: Deals with auto buy max are monitored in order to warrant 4 weeks period of inactivity
 
   #9811
-  @m27 @requested
+  @m27 @requested @selenium @tgn @_done @_tested
   Scenario: Deals can be marked as Premium by admin or dealmaker
+    Given I am not sign in
+    And I make sure current locale is "da"
+    And I am on the homepage
+    And user "buyer@nbs.com" has deal maker role enabled
+    And I sign in as buyer@nbs.com with password secret
+    And I follow translated "layout.main_menu.lead_supplier.my_deals"
+    And I follow translated "deals.common.listing.view.new_deal"
+    And I check "deal_premium_deal"

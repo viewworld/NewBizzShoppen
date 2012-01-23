@@ -10,7 +10,7 @@ class Subscription < ActiveRecord::Base
   belongs_to :seller
   belongs_to :automatic_downgrade_subscription_plan, :class_name => "SubscriptionPlan"
   after_create :handle_user_privileges
-  after_create :create_subscription_sub_periods
+  after_create :create_subscription_sub_periods, :apply_limits_to_user_for_free_subscription
   after_save :check_if_paypal_retries_exceeded
 
   acts_as_list :scope => :user_id
@@ -163,7 +163,7 @@ class Subscription < ActiveRecord::Base
 
   def self.clone_from_subscription_plan!(subscription_plan, user, start_date=nil, paypal_invoice_id=nil)
     subscription = Subscription.new(:user => user, :vat_rate => !user.not_charge_vat? ? subscription_plan.seller.vat_rate : 0)
-    subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price", "is_active", "aasm_state", "paypal_retires_counter"]).each do |method|
+    subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price", "is_active", "is_public", "aasm_state", "paypal_retires_counter"]).each do |method|
       subscription.send("#{method}=".to_sym, subscription_plan.send(method.to_sym))
     end
     subscription.subscription_plan = subscription_plan.is_a?(Subscription) ? subscription_plan.subscription_plan : subscription_plan
@@ -331,13 +331,6 @@ class Subscription < ActiveRecord::Base
     (end_date - start_date + 1).to_i
   end
 
-  def decrement_free_deals_in_free_period!
-    if free_deals_in_free_period.to_i > 0
-      self.free_deals_in_free_period = free_deals_in_free_period-1
-      save
-    end
-  end
-
   def big_buyer?
     if unconfirmed_paypal? and !is_today_in_free_period?
       false
@@ -359,6 +352,14 @@ class Subscription < ActiveRecord::Base
       false
     else
       read_attribute(:deal_maker)
+    end
+  end
+
+  def premium_deals?
+    if unconfirmed_paypal? and !is_today_in_free_period?
+      false
+    else
+      read_attribute(:premium_deals)
     end
   end
 
@@ -391,7 +392,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def send_paypal_profile_reactivation_link
-    TemplateMailer.delay.new(user.email, :subscription_cancelled_through_paypal, Country.get_country_from_locale, {:subscription => self})
+    TemplateMailer.new(user.email, :subscription_cancelled_through_paypal, Country.get_country_from_locale, {:subscription => self}).deliver!
   end
 
   def next_billing_cycle_for_recurring_payment_renewal
@@ -404,7 +405,7 @@ class Subscription < ActiveRecord::Base
 
 
   def send_end_of_free_period_email
-    TemplateMailer.delay.new(user.email, :subscription_free_period_ended_for_paypal, Country.get_country_from_locale, {:subscription => self})
+    TemplateMailer.new(user.email, :subscription_free_period_ended_for_paypal, Country.get_country_from_locale, {:subscription => self}).deliver!
   end
 
   def self.send_reminder_about_end_of_free_period
@@ -442,6 +443,23 @@ class Subscription < ActiveRecord::Base
     if use_paypal? and paypal_retries_counter_changed? and paypal_retries == paypal_retries_counter
       subscription_sub_periods.without_invoice.billable.each { |sp| sp.send(:create_and_send_invoice!) }
       downgrade_paypal! if automatic_downgrading? and may_downgrade_paypal?
+    end
+  end
+
+  def apply_limits_to_user_for_free_subscription
+    apply_free_deal_requests_in_free_period!
+    apply_free_deals_in_free_period!
+  end
+
+  def apply_free_deal_requests_in_free_period!
+    if is_free? and user.member? and user.free_deal_requests_in_free_period.nil? and free_deal_requests_in_free_period > 0
+      user.update_attribute(:free_deal_requests_in_free_period, free_deal_requests_in_free_period)
+    end
+  end
+
+  def apply_free_deals_in_free_period!
+    if is_free? and (user.supplier? or user.category_supplier?) and user.free_deals_in_free_period.nil? and free_deals_in_free_period > 0
+      user.update_attribute(:free_deals_in_free_period, free_deals_in_free_period)
     end
   end
 end

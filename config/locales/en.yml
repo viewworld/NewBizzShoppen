@@ -5,6 +5,15 @@ en:
   support:
     array:
       two_words_connector: " and "
+  delayed_jobs:
+    shared:
+      view:
+        created_at: "Created at"
+        name: "Name"
+        status: "Status"
+        statuses:
+          error: "Error"
+          not_yet_processed: "Not yet processed"
   cart:
     vat_line_title: "VAT %{percentage}"
   common:
@@ -23,6 +32,7 @@ en:
     clear_filter: "Clear filter"
     fewer: Fewer
     more: More
+    view_all: "View all"
     js:
       read_more: "read more"
       collapse_expanded_text: "[collapse expanded text]"
@@ -32,6 +42,7 @@ en:
       field_cant_be_blank: "can't be blank"
       field_incorrect_format: "incorrect value"
       enter_email_address: "Enter email address"
+      loading: "Loading..."
     no_categories_for_category_supplier: "Your Category Supplier account has no associated categories. You can't sign in."
     edit_hint: "Edit hint"
     agree_to: "Agree to"
@@ -75,6 +86,10 @@ en:
       long: "%d %B %Y"
     format:
       standard: "%d-%m-%Y"
+  time:
+    formats:
+      default: "%d-%m-%Y %H:%M"
+      long: "%d %B %Y %H:%M:%S"
   layout:
     fairdeals:
       main_menu:
@@ -579,6 +594,8 @@ en:
       user_not_charge_vat: "Not charge vat"
       user_team_suppliers: "Team supplier"
       user_deal_maker_role_enabled: "Deal maker role enabled"
+      contact_subscription_plan: "Subscription plan"
+      contact_newsletter_on: "Newsletter on"
     edit:
       title: Edit result
       form_title: Edit
@@ -1729,6 +1746,7 @@ en:
           roles: "Roles"
           total_amount: "Total amount"
           is_active: "Active?"
+          is_public: "Public?"
           actions: "Actions"
           new_subscription_plan: "New subscription plan"
           edit: "Edit"
@@ -2899,6 +2917,7 @@ en:
         likes: Likes
         published: Published/waiting approval
         actions: Actions
+        awaiting_approval: "Awaiting approval"
       form:
         name_label: "Name"
         short_description_label: "Short description"
@@ -3342,7 +3361,7 @@ en:
         country_default: "Country default"
         global_default: "Global default"
       lead:
-        company_name: "Name"
+        company_name: "Company name"
         contact_title: "Contact title"
         company_phone_number: "Company phone number"
         company_website: "Company website"
@@ -3416,6 +3435,7 @@ en:
         group_deal: "Group deal"
         deal_admin_email: "Deal admin email"
         deal_code: "Deal code"
+        premium_deal: "Premium deal"
       contact:
         company_name: "Name"
         company_phone_number: "Company phone number"
@@ -3740,6 +3760,7 @@ en:
         free_period: "Free period (weeks)"
         currency_id: "Currency"
         is_active: "Active?"
+        is_public: "Public?"
         can_be_upgraded: "Can be upgraded?"
         can_be_downgraded: "Can be downgraded?"
         team_buyer: "Team buyer enabled?"
@@ -3753,6 +3774,8 @@ en:
         paypal_retries: "PayPal payment retries"
         paypal_billing_at_start: "Billing type"
         free_deals_in_free_period: "Number of free deals in free period"
+        free_deal_requests_in_free_period: "Number of free deal requests in free period"
+        premium_deals: "Allow premium deals"
   users:
     passwords:
       edit:
@@ -3934,6 +3957,7 @@ en:
       total: "Total"
       total_average: "Total / average"
       na: "n/a"
+      timesheet_queued: "Requested Agent Timesheet report has been queued. You will be notified by email when it's generated."
       overview:
         header: "Overview"
         hours_header: "Hours"
@@ -3967,6 +3991,10 @@ en:
       select_team: "Select team"
       display: "Display"
       generate: "Generate"
+      cached_timesheets: "Cached Agent Timesheet reports"
+      created_at: "Created at"
+      link_to_report: "Link to report"
+      scheduled_actions: "Your scheduled actions"
       report_type: "Report type"
       campaigns_selection:
         all_campaigns: "All available campaigns"
@@ -4102,6 +4130,7 @@ en:
         group_deal_splash_label: "Group deal"
         fair_deal_splash_label: "Fair deal"
         back_to_front_page: "Back to front page"
+        premium_deal_splash_label: "Premium deal"
       search:
         keyword_label: "Keyword"
         search_button: "Search"
@@ -4264,6 +4293,8 @@ en:
         title: "Editing email template %{name}"
         button_cancel: "Cancel"
         test_send_email: "Test send email"
+    common:
+      insert_deal_link: "Insert deal links"
   deal_requests:
     create:
       flash:

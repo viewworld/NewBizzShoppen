@@ -834,6 +834,7 @@ Scenario: I can select user's new subscription plan
   And I fill in "subscription[start_date]" with today's date
   And I press translated "administration.users.edit.view.change"
   Then I should see translated "flash.change_subscription.create.successful"
+  Then I should see translated "flash.change_subscription.create.successful"
   And I should see "Active subscription: Medium for supplier"
 
 #8605
@@ -959,5 +960,18 @@ Scenario: I can mark supplier or category supplier as big buyer (new name Got cr
   Then user "buyer2@nbs.com" should be big buyer
 
 #9394
-@m27 @requested
+@m27 @requested @selenium @tgn @_done @_tested
 Scenario: I edit user's ean number, vat number and direct phone for member
+  And I select "Member" from "role"
+  And I follow translated "administration.users.index.view.new_user"
+  And I fill in "user_member_company_ean_number" with "124234324324244"
+  And I fill in "user_member_direct_phone_number" with "+49 234124234324324"
+  And I fill in "user_member_vat_number" with "V234234234"
+  Given I have user with email member_1@nbs.com and role member
+  And I go to administration users
+  And I fill in "search_with_keyword" with "member_1@nbs.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
+  And I fill in "user_member_company_ean_number" with "124234324324244"
+  And I fill in "user_member_direct_phone_number" with "+49 234124234324324"
+  And I fill in "user_member_vat_number" with "V234234234"

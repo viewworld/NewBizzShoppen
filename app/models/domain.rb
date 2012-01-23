@@ -28,4 +28,15 @@ class Domain < ActiveRecord::Base
 
   public
 
+  def name_for_env
+    if Rails.env.staging?
+      "beta.#{name}"
+    elsif Rails.env.testing?
+      "testing.#{name}"
+    elsif Rails.env.development?
+      "#{name}:3000"
+    else
+      name
+    end
+  end
 end

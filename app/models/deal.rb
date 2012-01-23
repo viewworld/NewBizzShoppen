@@ -24,6 +24,7 @@ class Deal < AbstractLead
   scope :for_user, lambda { |q| where("creator_id = ?", q.id) }
   scope :group_deals, where(:group_deal => true)
   scope :not_blocked_by_sold_out_vouchers, where("leads.voucher_enabled = false OR (leads.voucher_enabled = true and leads.voucher_max_number > (select count(*) from voucher_numbers where voucher_numbers.deal_id = leads.id and voucher_numbers.state <> 'new'))")
+  scope :with_id_and_header, select("id, header")
 
   scoped_order :header, :end_date, :published, :created_at, :company_name
 
@@ -185,6 +186,10 @@ class Deal < AbstractLead
     !deal_certification_requests.blank? and current_dcr.approved?
   end
 
+  def awaiting_approval?
+    current_dcr.present? and current_dcr.active?
+  end
+
   def saving
     if (deal_price.to_f > 0 and discounted_price.to_f > 0 and deal_price > discounted_price)
       "#{(100 - discounted_price * 100 / deal_price).to_i}%"
@@ -219,10 +224,10 @@ class Deal < AbstractLead
 
   def send_supplier_welcome_email(password, current_user=nil)
     template = EmailTemplate.find_by_uniq_id("deal_certification_buyer_welcome")
-    TemplateMailer.delay.new(supplier.email, :blank_template, Country.get_country_from_locale,
+    TemplateMailer.new(supplier.email, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.render({:user => supplier, :password => password}),
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc,
-                                        :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id})
+                                        :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id}).deliver!
   end
 
   def slug

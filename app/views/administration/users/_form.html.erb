@@ -2,7 +2,10 @@
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_200">
       <ol class="align_inputs">
-        <%= form.input :company_name if @user.has_any_role?(:supplier, :category_supplier, :call_centre, :member, :call_centre_agent, :agent) or ["supplier", "category_supplier", "call_centre", "member", "call_centre_agent", "agent"].include?((params[:role])) %>
+        <% if @user.has_any_role?(:supplier, :category_supplier, :call_centre, :member, :call_centre_agent, :agent) or ["supplier", "category_supplier", "call_centre", "member", "call_centre_agent", "agent"].include?((params[:role])) %>
+            <%= form.input :company_name %>
+            <%= form.input :company_ean_number %>
+        <% end %>
         <% unless @user.has_role?(:call_centre) or ["call_centre"].include?((params[:role])) %>
             <%= form.input :first_name %>
             <%= form.input :last_name %>
@@ -21,7 +24,7 @@
             <% end %>
             <%= form.input :time_zone, :wrapper_html => { :class => "select"}, :input_html => {:style => "width: 240px"} %>
         <% end %>
-        <% if ['lead_supplier', 'supplier'].include?(params[:role]) or @user.has_any_role?(:lead_supplier, :supplier) %>
+        <% if ['lead_supplier', 'supplier', 'member'].include?(params[:role]) or @user.has_any_role?(:lead_supplier, :supplier, :member) %>
             <%= form.input :vat_number %>
         <% end %>
         <% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
@@ -54,6 +57,7 @@
     <fieldset class="inputs labels_ta_r">
       <ol class="align_inputs">
         <%= form.input :phone %>
+        <%= form.input :direct_phone_number %>
         <%= form.input :email %>
         <% if @user.big_buyer? %>
             <%= form.input :big_buyer_purchase_limit %>
@@ -71,7 +75,7 @@
         <% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
             <%= form.input :certification_level, :as => :select, :collection => User::CERTIFICATION_LEVELS.map { |c| [t("models.lead.certification.lvl#{c}"), c] }, :selected => @user.read_attribute(:certification_level) %>
         <% end %>
-        <% if @user.vat_number.present? and (['lead_supplier', 'supplier'].include?(params[:role]) or @user.has_any_role?(:lead_supplier, :supplier)) %>
+        <% if @user.vat_number.present? and (['lead_supplier', 'supplier', 'member'].include?(params[:role]) or @user.has_any_role?(:lead_supplier, :supplier, :member)) %>
             <%= form.input :not_charge_vat, :as => :boolean %>
         <% end %>
         <% if @user.new_record? %>

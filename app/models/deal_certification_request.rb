@@ -26,7 +26,7 @@ class DealCertificationRequest < ActiveRecord::Base
     self.state = STATE_SENT
     self.email = contact_email
     self.save!
-    TemplateMailer.delay.new(contact_email, :deal_certification_request, Country.get_country_from_locale, {:deal_certification_request => self, :sender_id => nil})
+    TemplateMailer.new(contact_email, :deal_certification_request, Country.get_country_from_locale, {:deal_certification_request => self, :sender_id => nil}).deliver!
   end
 
   def generate_token(size=40)

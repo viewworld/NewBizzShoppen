@@ -66,4 +66,12 @@ class DealsController < ApplicationController
       page << %{$('##{@deal.wrapper_dom_id(params)}').effect('highlight', {}, 3000);}.html_safe
     end
   end
+
+  def show_all
+    @deals = Deal.without_inactive.with_id_and_header.order("header")
+
+    respond_to do |format|
+      format.js {  }
+    end
+  end
 end

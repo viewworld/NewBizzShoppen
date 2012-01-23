@@ -123,6 +123,7 @@ Scenario: When I browse a lead category, the lead category should be displayed v
 @m5 @added @tgn @_tested @_done @selenium
 Scenario: I should be able to click "Add to cart button" that will redirect me to login page where I can create new account
   Given I am not sign in
+  Given setting for "email_verification_for_suppliers" is set to "1"
   And I am on the homepage
   Given lead Great marketing deal exists within category VariousLeads
   And I follow "GPS receivers required"

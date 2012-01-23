@@ -95,11 +95,16 @@ Feature: Sign up feature
     | name | price |
     | abc  | 99.0  |
     | def  | 11.0  |
+    Given subscription plan exists with attributes "name:Secret category supplier,assigned_roles:category_supplier,big_buyer:1,team_buyers:1,is_public:0"
+    And subscription plan has following lines
+    | name | price |
+    | abc  | 99.0  |
+    | def  | 11.0  |
     When I am on the supplier home page
     And I follow translated "supplier_home.show.view.create_new_supplier_account"
     And I should see "Premium supplier"
     And I should not see "Ultra member"
-
+    And I should not see "Secret category supplier"
     Given I visit domain http://fairdeals.dk
     When I follow translated "fairdeals_home.show.view.get_free_account"
     And I should not see "Premium supplier"
@@ -118,5 +123,5 @@ Feature: Sign up feature
   Scenario: I should be automatically signed in when I sign up and email confirmation is turned off
 
   #9411
-  @m27 @requested
+  @m27 @requested @tgn @_done @_tested_elsewhere
   Scenario: I can select only subscription plan which is active and public

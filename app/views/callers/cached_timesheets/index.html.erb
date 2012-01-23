@@ -1,0 +1,7 @@
+<column-mc:>
+
+    <header back="true"><%= t("agent_timesheets.new.cached_timesheets") %></header>
+
+    <%= render :partial => 'shared/cached_timesheets/list', :locals => {:cached_timesheets => @cached_timesheets} %>
+
+</column-mc:>

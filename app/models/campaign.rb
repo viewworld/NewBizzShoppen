@@ -303,6 +303,7 @@ class Campaign < ActiveRecord::Base
     end
     campaign
   end
+  handle_asynchronously :duplicate!, :queue => 'duplications'
 
   def pending_contacts_for(user)
     contacts.where(:agent_id => user.id).with_pending_status(true)

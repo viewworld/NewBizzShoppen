@@ -1,7 +1,8 @@
 class CallResult < ActiveRecord::Base
   attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_2,
                 :contact_address_line_3, :contact_zip_code, :contact_country_id, :contact_phone_number,
-                :contact_company_name, :buying_category_ids, :result_id_changed, :user_not_charge_vat, :current_user
+                :contact_company_name, :buying_category_ids, :result_id_changed, :user_not_charge_vat, :current_user, :contact_subscription_plan_id,
+                :contact_newsletter_on
 
   belongs_to :contact
   belongs_to :result
@@ -212,7 +213,8 @@ class CallResult < ActiveRecord::Base
                                              :address_line_3 => contact_address_line_3, :region_id => contact.region_id},
                    :agreement_read => true, :company_name => contact.company_name, :phone => contact_phone_number,
                    :contact => contact, :vat_number => contact.company_vat_no,
-                   :company_ean_number => contact.company_ean_number, :assign_free_subscription_plan => true}
+                   :company_ean_number => contact.company_ean_number, :assign_free_subscription_plan => false, :subscription_plan_id => contact_subscription_plan_id,
+                   :newsletter_on => contact_newsletter_on}
 
     if ["category_supplier", "supplier"].include?(role)
       user_params.merge!(:not_charge_vat => user_not_charge_vat)
@@ -236,11 +238,11 @@ class CallResult < ActiveRecord::Base
     template = contact.campaign.send_material_email_template || EmailTemplate.global.where(:uniq_id => 'result_send_material').first
     template = customize_email_template(template)
 
-    TemplateMailer.delay.new(contact_email_address, :blank_template, Country.get_country_from_locale,
+    TemplateMailer.new(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.body,
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc,
                                         :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
-                                        assets_to_path_names(send_material_result_value.materials))
+                                        assets_to_path_names(send_material_result_value.materials)).deliver!
   end
 
   def deliver_email_for_upgraded_user(user, password)
@@ -248,11 +250,11 @@ class CallResult < ActiveRecord::Base
     template = contact.campaign.send("upgrade_contact_to_#{role}_email_template".to_sym) || EmailTemplate.global.where(:uniq_id => "upgrade_contact_to_#{role}").first
     template = customize_email_template(template)
 
-    TemplateMailer.delay.new(contact_email_address, :blank_template, Country.get_country_from_locale,
+    TemplateMailer.new(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.render({:user => user, :password => password}),
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc,
                                         :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
-                                        assets_to_path_names(send_material_result_value.materials))
+                                        assets_to_path_names(send_material_result_value.materials)).deliver!
   end
   
   def set_last_call_result_in_contact

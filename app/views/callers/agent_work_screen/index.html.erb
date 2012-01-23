@@ -134,6 +134,7 @@
 
   <%= render "shared/email_template_popup/template_editor" %>
   <%= render :partial => "shared/email_template_popup/template_vars_popup", :locals => {:instance_name => "body_editor"} %>
+  <%= render :partial => "shared/email_template_popup/template_deal_links", :locals => {:instance_name => "body_editor"} %>
 
 </column-mc:>
 
@@ -157,6 +158,7 @@
 
       setup_jquery_dialog("call_result");
       setup_jquery_vars_popup_dialog();
+      setup_jquery_deal_links_dialog();
 
       $(document).ready(function() {
           $.get('<%= callers_campaign_agent_work_screen_call_sheet_path(@campaign, :other_user_id => params[:other_user_id]) %>')

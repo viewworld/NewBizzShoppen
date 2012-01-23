@@ -14,7 +14,9 @@ module AgentTimesheetCommon
       :display_value     => true,
       :overview          => true,
       :team_result_sheet => true,
-      :agent_timesheet   => true
+      :agent_timesheet   => true,
+      :current_user      => nil,
+      :filename          => nil
   }
 
   def initialize(options = {})
@@ -41,18 +43,26 @@ module AgentTimesheetCommon
       @campaigns = Campaign.find_all_by_id((UserSessionLog.for_users(@agents).select("DISTINCT(campaign_id)").map(&:campaign_id) + CampaignsUser.for_users(@agents).select("DISTINCT(campaign_id)").map(&:campaign_id)).uniq)
     end
 
-    @scoped = AgentTimesheet.
+  end
+
+  def scoped
+    @scoped ||= AgentTimesheet.
         show_weekends(@show_weekends).
         for_campaigns(@campaigns).
         with_date_between(@start_date, @end_date).
         for_agents(@agents)
+  end
 
-    @first ||= @scoped.order("year, week ASC").first
-    @last  ||= @scoped.order("year, week ASC").last
+  def first
+    @first ||= scoped.order("year, week ASC").first
+  end
+
+  def last
+    @last  ||= scoped.order("year, week ASC").last
   end
 
   def cweeks
-    @weeks ||= @first ? (CWeek.new(@first.week, @first.year)..CWeek.new(@last.week, @last.year)).map : []
+    @weeks ||= first ? (CWeek.new(first.week, first.year)..CWeek.new(last.week, last.year)).map : []
   end
 
   def days_of_week
@@ -62,6 +72,14 @@ module AgentTimesheetCommon
   def commercial_days_of_week
     days = days_of_week.to_a
     @commercial_days_of_week ||= @show_weekends ? (days << days.shift) : (1..5).to_a
+  end
+
+  def cached_timesheets
+    begin
+      Dir.new(Rails.root.join("public/system/agent_timesheets_cache/#{@current_user.id}")).entries.sort.reverse.except(['.','..']).map{|filename| filename.split('.').first}
+    rescue
+      []
+    end
   end
 
 end

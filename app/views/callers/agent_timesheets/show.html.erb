@@ -1,0 +1,19 @@
+<head:>
+  <style type="text/css">
+    .c
+    {
+        width: 1300px;
+    }
+  </style>
+</head:>
+
+<column-mc:>
+  <header back="true">
+    <param:content>
+      <%= t("agent_timesheets.index.header") %>
+    </param:content>
+  </header>
+
+  <%= render(:text => AgentTimesheet::General.load(params[:id], current_user)).html_safe %>
+
+</column-mc:>

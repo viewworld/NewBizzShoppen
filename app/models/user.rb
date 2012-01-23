@@ -71,6 +71,7 @@ class User < ActiveRecord::Base
   has_many :subscriptions
   has_many :subscription_plans, :through => :subscriptions
   belongs_to :company_unique_category, :class_name => "LeadCategory", :foreign_key => "deal_category_id"
+  has_many :delayed_jobs, :class_name => '::Delayed::Job', :foreign_key => :queue, :primary_key => :queue, :order => "created_at DESC"
 
   alias_method :parent, :user
 
@@ -215,7 +216,7 @@ class User < ActiveRecord::Base
   end
 
   def deliver_email_template(uniq_id)
-    TemplateMailer.delay.new(email, uniq_id.to_sym, country, {:user => self.with_role, :sender_id => nil})
+    TemplateMailer.new(email, uniq_id.to_sym, country, {:user => self.with_role, :sender_id => nil}).deliver!
   end
 
   def check_billing_rate
@@ -622,7 +623,7 @@ class User < ActiveRecord::Base
       unless subscribed_categories.empty?
         uniq_id = "lead_notification_#{lead_notification_type == LEAD_NOTIFICATION_ONCE_PER_DAY ? 'daily' : 'weekly'}"
         leads = Lead.for_notification(subscribed_categories, lead_notification_type)
-        TemplateMailer.delay.new(email, uniq_id.to_sym, user.with_role.address.country, {:user => self, :leads => leads, :sender_id => nil})
+        TemplateMailer.new(email, uniq_id.to_sym, user.with_role.address.country, {:user => self, :leads => leads, :sender_id => nil}).deliver!
       end
     end
   end
@@ -670,8 +671,8 @@ class User < ActiveRecord::Base
     end
     template = EmailTemplate.find_by_uniq_id("#{has_role?(:member) ? 'member' : 'supplier'}_invitation")
     template = customize_email_template(template)
-    TemplateMailer.delay.new(email, template, with_role.address.present? ? with_role.address.country : Country.get_country_from_locale,
-                             {:user => self.with_role, :new_password => new_password, :sender_id => nil}, assets_to_path_names(email_materials))
+    TemplateMailer.new(email, template, with_role.address.present? ? with_role.address.country : Country.get_country_from_locale,
+                             {:user => self.with_role, :new_password => new_password, :sender_id => nil}, assets_to_path_names(email_materials)).deliver!
   end
 
   def country
@@ -705,7 +706,7 @@ class User < ActiveRecord::Base
   end
 
   def deliver_welcome_email_for_upgraded_contact
-    TemplateMailer.delay.new(email, "upgraded_contact_to_#{role_to_campaign_template_name}_welcome".to_sym, with_role.address.country, {:user => self, :sender_id => nil})
+    TemplateMailer.new(email, "upgraded_contact_to_#{role_to_campaign_template_name}_welcome".to_sym, with_role.address.country, {:user => self, :sender_id => nil}).deliver!
   end
 
   def active_subscription
@@ -936,4 +937,27 @@ class User < ActiveRecord::Base
     end
     true
   end
+
+  def can_request?(deal)
+    (active_subscription.is_free? and free_deal_requests_in_free_period.to_i > 0) or (!active_subscription.is_free? and !deal.premium_deal?) or
+        (!active_subscription.is_free? and deal.premium_deal? and active_subscription.premium_deals?)
+  end
+
+  def decrement_free_deals_in_free_period!
+    if free_deals_in_free_period.to_i > 0
+      self.free_deals_in_free_period = free_deals_in_free_period-1
+      save(:validate => false)
+    end
+  end
+
+  def decrement_free_deal_requests_in_free_period!
+    if free_deal_requests_in_free_period.to_i > 0
+      self.free_deal_requests_in_free_period = free_deal_requests_in_free_period-1
+      save(:validate => false)
+    end
+  end
+  
+  def queue
+    "user_#{id}"
+  end  
 end
