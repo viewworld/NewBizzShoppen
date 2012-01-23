@@ -3,15 +3,63 @@ require 'spec_helper'
 describe Subscription do
   fixtures :all
 
+  def setup_subscription(user, subscription_plan)
+    user.active_subscription.subscription_plan.should == subscription_plan
+    @prev_subscription = user.active_subscription
+  end
+
   def setup_customer(subscription_plan, attributes={})
-    attrs_hash = { :subscription_plan_id => subscription_plan.id }.merge!(attributes)
-    @customer = User::Supplier.make!(attrs_hash)
-    @customer.active_subscription.subscription_plan.should == subscription_plan
-    @prev_subscription = @customer.active_subscription
+    @customer = User::Supplier.make!({:subscription_plan_id => subscription_plan.id }.merge!(attributes))
+    setup_subscription(@customer, subscription_plan)
+  end
+
+  def setup_member(subscription_plan, attributes={})
+    @member = User::Member.make!({:subscription_plan_id => subscription_plan.id }.merge!(attributes))
+    setup_subscription(@member, subscription_plan)
   end
 
   def set_date_today_to(date)
     Date.stubs(:today).returns(date)
+  end
+
+  context "limits in free subscription" do
+    it "should apply limit of free deal requests to member after upgrade" do
+      User::Member.new.free_deal_requests_in_free_period.should be_nil
+      free_subscription = SubscriptionPlan.active.free.for_role(:member).first
+      free_subscription.update_attribute(:free_deal_requests_in_free_period, 5)
+      setup_member(free_subscription)
+
+      @member.reload
+      @member.free_deal_requests_in_free_period.should == 5
+
+      4.times { @member.decrement_free_deal_requests_in_free_period! }
+
+      @member.reload
+      @member.free_deal_requests_in_free_period.should == 1
+
+      2.times { @member.decrement_free_deal_requests_in_free_period! }
+
+      @member.free_deal_requests_in_free_period.should == 0
+    end
+
+    it "should apply limit of free deal requests to supplier after upgrade" do
+      User::Supplier.new.free_deals_in_free_period.should be_nil
+      free_subscription = SubscriptionPlan.active.free.for_role(:supplier).first
+      free_subscription.update_attribute(:free_deals_in_free_period, 5)
+      setup_customer(free_subscription)
+
+      @customer.reload
+      @customer.free_deals_in_free_period.should == 5
+
+      4.times { @customer.decrement_free_deals_in_free_period! }
+
+      @customer.reload
+      @customer.free_deals_in_free_period.should == 1
+
+      2.times { @customer.decrement_free_deals_in_free_period! }
+
+      @customer.free_deals_in_free_period.should == 0
+    end
   end
 
   context "calculations" do

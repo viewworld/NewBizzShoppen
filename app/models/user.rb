@@ -938,6 +938,21 @@ class User < ActiveRecord::Base
   end
 
   def can_request?(deal)
-    (!active_subscription.is_free? and !deal.premium_deal?) or (!active_subscription.is_free? and deal.premium_deal? and active_subscription.premium_deals?)
+    (active_subscription.is_free? and free_deal_requests_in_free_period.to_i > 0) or (!active_subscription.is_free? and !deal.premium_deal?) or
+        (!active_subscription.is_free? and deal.premium_deal? and active_subscription.premium_deals?)
+  end
+
+  def decrement_free_deals_in_free_period!
+    if free_deals_in_free_period.to_i > 0
+      self.free_deals_in_free_period = free_deals_in_free_period-1
+      save(:validate => false)
+    end
+  end
+
+  def decrement_free_deal_requests_in_free_period!
+    if free_deal_requests_in_free_period.to_i > 0
+      self.free_deal_requests_in_free_period = free_deal_requests_in_free_period-1
+      save(:validate => false)
+    end
   end
 end
