@@ -3774,6 +3774,7 @@ en:
         paypal_retries: "PayPal payment retries"
         paypal_billing_at_start: "Billing type"
         free_deals_in_free_period: "Number of free deals in free period"
+        free_deal_requests_in_free_period: "Number of free deal requests in free period"
         premium_deals: "Allow premium deals"
   users:
     passwords:

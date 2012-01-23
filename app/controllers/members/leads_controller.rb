@@ -59,6 +59,7 @@ class Members::LeadsController < Members::MemberController
     session[:selected_category] = @lead.category_id
 
     @lead.creation_step = 3
+    current_user.decrement_free_deal_requests_in_free_period! if @lead.valid?
     create! do |success, failure|
       success.html {
         redirect_to members_lead_path(@lead)

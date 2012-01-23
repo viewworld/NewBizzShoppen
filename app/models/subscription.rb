@@ -10,7 +10,7 @@ class Subscription < ActiveRecord::Base
   belongs_to :seller
   belongs_to :automatic_downgrade_subscription_plan, :class_name => "SubscriptionPlan"
   after_create :handle_user_privileges
-  after_create :create_subscription_sub_periods
+  after_create :create_subscription_sub_periods, :apply_limits_to_user_for_free_subscription
   after_save :check_if_paypal_retries_exceeded
 
   acts_as_list :scope => :user_id
@@ -331,13 +331,6 @@ class Subscription < ActiveRecord::Base
     (end_date - start_date + 1).to_i
   end
 
-  def decrement_free_deals_in_free_period!
-    if free_deals_in_free_period.to_i > 0
-      self.free_deals_in_free_period = free_deals_in_free_period-1
-      save
-    end
-  end
-
   def big_buyer?
     if unconfirmed_paypal? and !is_today_in_free_period?
       false
@@ -359,6 +352,14 @@ class Subscription < ActiveRecord::Base
       false
     else
       read_attribute(:deal_maker)
+    end
+  end
+
+  def premium_deals?
+    if unconfirmed_paypal? and !is_today_in_free_period?
+      false
+    else
+      read_attribute(:premium_deals)
     end
   end
 
@@ -442,6 +443,23 @@ class Subscription < ActiveRecord::Base
     if use_paypal? and paypal_retries_counter_changed? and paypal_retries == paypal_retries_counter
       subscription_sub_periods.without_invoice.billable.each { |sp| sp.send(:create_and_send_invoice!) }
       downgrade_paypal! if automatic_downgrading? and may_downgrade_paypal?
+    end
+  end
+
+  def apply_limits_to_user_for_free_subscription
+    apply_free_deal_requests_in_free_period!
+    apply_free_deals_in_free_period!
+  end
+
+  def apply_free_deal_requests_in_free_period!
+    if is_free? and user.member? and user.free_deal_requests_in_free_period.nil? and free_deal_requests_in_free_period > 0
+      user.update_attribute(:free_deal_requests_in_free_period, free_deal_requests_in_free_period)
+    end
+  end
+
+  def apply_free_deals_in_free_period!
+    if is_free? and (user.supplier? or user.category_supplier?) and user.free_deals_in_free_period.nil? and free_deals_in_free_period > 0
+      user.update_attribute(:free_deals_in_free_period, free_deals_in_free_period)
     end
   end
 end
