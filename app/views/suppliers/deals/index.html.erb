@@ -2,7 +2,7 @@
 <column-mc:>
   <%= render :partial => "shared/deals/actions", :locals => {:path => new_suppliers_deal_path} %>
 
- <% if current_user.has_free_subscription? %>
+ <% unless current_user.can_create_deals? %>
     <div class="flash flash_notice"><%= t("supplier.deals.index.view.you_need_to_upgrade_subscription_warning") %></div>
  <% end %>
 

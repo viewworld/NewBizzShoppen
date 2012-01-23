@@ -110,7 +110,7 @@ Feature: Deals from procurement manager perspective
   @_done @tgn @tested_elsewhere
   Scenario: When I click "Contact me" I can enter "Additional" template information and note field
 
-  @_done @_tested @tgn @added @m18
+  @_done @_tested @tgn @added @m18  @wip
   Scenario: When I sign up on fairdeals.dk/eu and confirmation is turned off I should still get email and be signed in afterword
   Given setting for "email_verification_for_members" is set to "0"
   Given I visit domain http://fairdeals.dk
@@ -367,8 +367,44 @@ Feature: Deals from procurement manager perspective
   Scenario: I should be redirected to paypal or view deal after completing the modal window form
 
   #9410
-  @m27 @requested
+  @m27 @requested @tgn @_done @_tested
   Scenario: I can get deal when I have free subscription and I didn't used up my limit of free deals
+    And subscription plan named "Free member subscription" exists with attributes "free_deal_requests_in_free_period:2"
+    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
+    And I sign out
+    Then I sign in as purchase_manager101@nbs.com with password supersecret
+    Given a deal named "FreeDeal001" exists within category "Electronics deals"
+    And a deal named "FreeDeal001" exists with attributes "published:1,premium_deal:0"
+    Given a deal named "FreeDeal002" exists within category "Electronics deals"
+    And a deal named "FreeDeal002" exists with attributes "published:1,premium_deal:0"
+    Given a deal named "FreeDeal003" exists within category "Electronics deals"
+    And a deal named "FreeDeal003" exists with attributes "published:1,premium_deal:0"
+    Given a deal named "PremiumDeal001" exists within category "Electronics deals"
+    And a deal named "PremiumDeal001" exists with attributes "published:1,premium_deal:1"
+
+    And I fill in "search_with_keyword" with "PremiumDeal001"
+    And I press translated "layout.fairdeals.main_menu.search"
+    And I follow translated "deals.index.view.view_deal"
+    And I follow translated "deals.index.view.contact_me"
+    And I should be on my profile
+    And I fill in "search_with_keyword" with "FreeDeal001"
+    And I press translated "layout.fairdeals.main_menu.search"
+    And I follow translated "deals.index.view.view_deal"
+    And I follow translated "deals.index.view.contact_me"
+    And I press translated "member.leads.new.view.button_create"
+    And I should see "Blurb voucher confirmation page"
+    And I fill in "search_with_keyword" with "FreeDeal002"
+    And I press translated "layout.fairdeals.main_menu.search"
+    And I follow translated "deals.index.view.view_deal"
+    And I follow translated "deals.index.view.contact_me"
+    And I press translated "member.leads.new.view.button_create"
+    And I should see "Blurb voucher confirmation page"
+    And I fill in "search_with_keyword" with "FreeDeal003"
+    And I press translated "layout.fairdeals.main_menu.search"
+    And I follow translated "deals.index.view.view_deal"
+    And I follow translated "deals.index.view.contact_me"
+    And I should be on my profile
+
 
   #9397
   @m27 @requested

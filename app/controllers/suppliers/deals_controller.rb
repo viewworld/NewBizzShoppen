@@ -13,7 +13,7 @@ class Suppliers::DealsController < Suppliers::BasicSupplierController
     @deal = current_user.deals.build(params[:deal])
     @deal.min_created_leads = Settings.default_group_deal_min_leads_created.to_i
     if @deal.save
-      current_user.active_subscription.decrement_free_deals_in_free_period!
+      current_user.decrement_free_deals_in_free_period!
       @deal.reload
       @deal.deal_template_ids = params[:deal][:deal_template_ids]
       @deal.save

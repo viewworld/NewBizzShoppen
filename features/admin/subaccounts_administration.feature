@@ -146,7 +146,3 @@ Scenario: I can go back to the propper page of the accounts listing
 @tgn @_done @_tested
 Scenario: I can see the name of an account I am browsing the subaccounts for
   Then I should see translated "administration.users.index.view.subaccounts_for_user" with options "user_name:Steven Colbert"
-
-#9410
-@m27 @requested
-Scenario: I can set number of free deals for member free subscription

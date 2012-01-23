@@ -915,8 +915,7 @@ class User < ActiveRecord::Base
 
   def can_create_deals?
     has_one_of_roles?(:agent, :admin, :call_centre_agent, :call_centre) or
-        (supplier? and !active_subscription.is_free? and (!active_subscription.is_today_in_free_period? or
-            (active_subscription.is_today_in_free_period? and active_subscription.free_deals_in_free_period.to_i > 0)) )
+        supplier? and (!active_subscription.is_free? or (active_subscription.is_free? and free_deals_in_free_period.to_i > 0))
   end
 
   def screen_name
@@ -938,19 +937,19 @@ class User < ActiveRecord::Base
   end
 
   def can_request?(deal)
-    (active_subscription.is_free? and free_deal_requests_in_free_period.to_i > 0) or (!active_subscription.is_free? and !deal.premium_deal?) or
+    (!deal.premium_deal? and (active_subscription.is_free? and free_deal_requests_in_free_period.to_i > 0) or !active_subscription.is_free?) or
         (!active_subscription.is_free? and deal.premium_deal? and active_subscription.premium_deals?)
   end
 
   def decrement_free_deals_in_free_period!
-    if free_deals_in_free_period.to_i > 0
+    if active_subscription.is_free? and free_deals_in_free_period.to_i > 0
       self.free_deals_in_free_period = free_deals_in_free_period-1
       save(:validate => false)
     end
   end
 
   def decrement_free_deal_requests_in_free_period!
-    if free_deal_requests_in_free_period.to_i > 0
+    if active_subscription.is_free? and free_deal_requests_in_free_period.to_i > 0
       self.free_deal_requests_in_free_period = free_deal_requests_in_free_period-1
       save(:validate => false)
     end

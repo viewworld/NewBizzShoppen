@@ -119,7 +119,7 @@ Feature: Sign up feature
   Scenario: Every newly created category supplier should have a unique category (no buyout, default price taken from settings)
 
   #9563
-  @m27 @requested
+  @m27 @requested @tgn @_tested_elsewhere @_done
   Scenario: I should be automatically signed in when I sign up and email confirmation is turned off
 
   #9411
