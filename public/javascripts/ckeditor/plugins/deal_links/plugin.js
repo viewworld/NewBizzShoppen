@@ -8,7 +8,7 @@ CKEDITOR.plugins.add( 'deal_links',
         {
             label: 'Insert deal links',
             command: 'dealLinksDialog',
-            icon: this.path + 'images/_icon.gif'
+            icon: this.path + 'images/icon.png'
         } );
 	}
 } );
