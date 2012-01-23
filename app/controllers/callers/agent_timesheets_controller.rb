@@ -3,7 +3,7 @@ class Callers::AgentTimesheetsController < Callers::CallerController
   set_tab "financial"
   set_subtab "agent_timesheets"
 
-  before_filter lambda {authorize_role(:call_centre, :admin, :call_centre_agent, :agent)}
+  before_filter lambda {authorize_role(:call_centre, :admin)}
 
   def show
 

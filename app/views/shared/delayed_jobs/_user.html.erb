@@ -1,29 +1,39 @@
-<table class="generic">
-  <thead>
-    <tr>
-      <th class="hl"></th>
-      <th><%= t("delayed_jobs.shared.view.created_at") %></th>
-      <th><%= t("delayed_jobs.shared.view.name") %></th>
-      <th><%= t("delayed_jobs.shared.view.status") %></th>
-      <th class="hr"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% user.delayed_jobs.limit(5).each do |dj| %>
-      <tr>
-        <td class="cl"></td>
-        <td><%= l dj.created_at, :format => :long %></td>
-        <td><%= dj.human_name %></td>
-        <td><%= t("delayed_jobs.shared.view.statuses.#{dj.status}")  %></td>
-        <td class="cr"></td>
-      </tr>
-    <% end %>
-  </tbody>
-  <tfoot>
-    <tr>
-      <td class="fl"></td>
-      <td colspan="3"><div style="text-align:center"><%= link_to t("common.view_all")  %></div></td>
-      <td class="fr"></td>
-    </tr>
-  </tfoot>
-</table>
+<% if delayed_jobs.any? %>
+    <table class="generic">
+      <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= t("delayed_jobs.shared.view.created_at") %></th>
+          <th><%= t("delayed_jobs.shared.view.name") %></th>
+          <th><%= t("delayed_jobs.shared.view.status") %></th>
+          <th class="hr"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% delayed_jobs.each do |dj| %>
+          <tr>
+            <td class="cl"></td>
+            <td><%= l dj.created_at, :format => :long %></td>
+            <td><%= dj.human_name %></td>
+            <td><%= t("delayed_jobs.shared.view.statuses.#{dj.status}")  %></td>
+            <td class="cr"></td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="3">
+            <% if delayed_jobs.is_a?(WillPaginate::Collection) %>
+              <div style="text-align:center"><%= will_paginate delayed_jobs %></div>
+            <% else %>
+              <div style="text-align:center"><%= link_to t("common.view_all"), users_delayed_jobs_path  %></div>
+            <% end %>
+          </td>
+          <td class="fr"></td>
+        </tr>
+      </tfoot>
+    </table>
+<% else %>
+    <%= blank_state_message %>
+<% end %>

@@ -76,7 +76,7 @@ module AgentTimesheetCommon
 
   def cached_timesheets
     begin
-      Dir.new(Rails.root.join("public/system/agent_timesheets_cache/#{@current_user.id}")).entries.sort.reverse.except(['.','..']).first(5).map{|filename| filename.split('.').first}
+      Dir.new(Rails.root.join("public/system/agent_timesheets_cache/#{@current_user.id}")).entries.sort.reverse.except(['.','..']).map{|filename| filename.split('.').first}
     rescue
       []
     end

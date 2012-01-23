@@ -1,0 +1,5 @@
+<column-mc:>
+  <header back="true"><%= t("agent_timesheets.new.scheduled_actions") %></header>
+
+  <%= render :partial => 'shared/delayed_jobs/user', :locals => {:user => current_user, :delayed_jobs => @delayed_jobs} %>
+</column-mc:>

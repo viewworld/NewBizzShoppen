@@ -121,34 +121,9 @@
   <% end %>
 
   <header><%= t("agent_timesheets.new.scheduled_actions") %></header>
-  <%= render :partial => 'shared/delayed_jobs/user', :locals => {:user => current_user} %>
+  <%= render :partial => 'shared/delayed_jobs/user', :locals => {:user => current_user, :delayed_jobs => current_user.delayed_jobs.limit(5)} %>
 
   <header><%= t("agent_timesheets.new.cached_timesheets") %></header>
-  <table class="generic">
-    <thead>
-      <tr>
-        <th class="hl"></th>
-        <th><%= t("agent_timesheets.new.created_at") %></th>
-        <th><%= t("agent_timesheets.new.link_to_report") %></th>
-        <th class="hr"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @search.cached_timesheets.each do |cached| %>
-        <tr>
-          <td class="cl"></td>
-          <td><%= l Time.at(cached.to_i/100000), :format => :long  %></td>
-          <td><%= link_to "#{cached}.html", callers_agent_timesheet_path(cached, :format => :html), :target => '_new'  %></td>
-          <td class="cr"></td>
-        </tr>
-      <% end %>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td class="fl"></td>
-        <td colspan="2"><div style="text-align:center"><%= link_to t("common.view_all")  %></div></td>
-        <td class="fr"></td>
-      </tr>
-    </tfoot>
-  </table>
+  <%= render :partial => 'shared/cached_timesheets/list', :locals => {:cached_timesheets => @search.cached_timesheets.first(5)} %>
+
 </column-mc:>

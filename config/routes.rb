@@ -246,7 +246,10 @@ Nbs::Application.routes.draw do
         post 'load_agents'
       end
     end
+
     resources :agent_timesheets, :only => [:index,:show]
+
+    resources :cached_timesheets, :only => [:index]
   end
 
   namespace :comments do
@@ -266,6 +269,10 @@ Nbs::Application.routes.draw do
     end
     resources :replies
     resources :comment_readers, :only => [:create]
+  end
+
+  namespace :users do
+    resources :delayed_jobs
   end
 
   match 'supplier_home' => 'supplier_home#show', :as => "supplier_home"
