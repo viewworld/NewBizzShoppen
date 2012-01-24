@@ -1633,9 +1633,21 @@ a.toggle_comments
     padding-bottom: 15px;
 }
 
+.other_deals .deal_price
+{
+    float: left;
+    width: 200px;
+}
+
 .other_deals .deal_price a.bt
 {
     margin-top: 5px;
+}
+
+.other_deals .deal_description
+{
+    float: right;
+    width: 295px;
 }
 
 
