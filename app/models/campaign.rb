@@ -32,6 +32,7 @@ class Campaign < ActiveRecord::Base
         where("")
     end }
 
+  default_scope where(:deleted_at => nil)
   scoped_order :name, :start_date, :end_date
   scope :joins_on_category, joins("INNER JOIN categories ON campaigns.category_id=categories.id")
   scope :joins_on_country, joins("INNER JOIN countries ON campaigns.country_id=countries.id")
@@ -318,5 +319,15 @@ class Campaign < ActiveRecord::Base
       ActiveRecord::Migration.execute "UPDATE leads SET position = NULL WHERE position IS NOT NULL AND type = 'Contact' AND campaign_id = #{self.id}"
       self.destroy
     end
+  end
+
+  def set_as_deleted!
+    self.deleted_at = Time.now
+    self.save(:validate => false)
+  end
+
+  def set_as_retrieved!
+    self.deleted_at = nil
+    self.save(:validate => false)
   end
 end

@@ -40,11 +40,12 @@ class Callers::CampaignsController < Callers::CallerController
 
   def destroy
     @campaign = Campaign.find(params[:id])
-    flash[:notice] = I18n.t("flash.campaigns.destroy.notice")
-    @campaign.delay(:priority => -1).delayed_destroy
+    if @campaign.set_as_deleted!
+      flash[:notice] = I18n.t("flash.campaigns.destroy.notice")
+      @campaign.delay(:priority => -1).delayed_destroy
+    end
     redirect_to :back
   end
-
 
   def duplicate
     @campaign = Campaign.find(params[:id])
