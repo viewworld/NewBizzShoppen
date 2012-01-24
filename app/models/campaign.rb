@@ -311,4 +311,11 @@ class Campaign < ActiveRecord::Base
   def call_back_call_results_for(user)
     CallResult.where("leads.campaign_id = ? and call_results.creator_id = ? and call_results.result_id = ?", id, user.id, Result.where(:generic => true, :name => "Call back").first.id).joins(:contact)
   end
+
+  def delayed_destroy
+    ActiveRecord::Base.transaction do
+      ActiveRecord::Migration.execute "UPDATE leads SET position = NULL WHERE position IS NOT NULL AND type = 'Contact' AND campaign_id = #{self.id}"
+      self.destroy
+    end
+  end
 end
