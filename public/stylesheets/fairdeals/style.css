@@ -648,6 +648,7 @@ h1
 .header_actions li.bt_back a.bt_grey_small
 {
     padding: 0;
+    display: none;
 }
 
 /* --- footer ---
