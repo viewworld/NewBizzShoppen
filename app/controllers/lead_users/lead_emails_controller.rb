@@ -9,10 +9,10 @@ class LeadUsers::LeadEmailsController < LeadUsers::LeadUserController
 
   def create
     params[:email_template_preview].tap do |email_params|
-      TemplateMailer.delay.new(email_params[:recipients], :blank_template, Country.get_country_from_locale,
+      TemplateMailer.new(email_params[:recipients], :blank_template, Country.get_country_from_locale,
                                        {:subject_content => email_params[:subject], :body_content => email_params[:body],
                                         :reply_to => current_user.email, :sender_id => user_signed_in? ? current_user.id : nil,
-                                        :email_template_uniq_id => "contact_lead_by_email_message"})
+                                        :email_template_uniq_id => "contact_lead_by_email_message"}).deliver!
     end
     flash[:notice] = I18n.t("flash.contact_lead_by_email.create.notice")
     redirect_to lead_users_lead_purchases_path

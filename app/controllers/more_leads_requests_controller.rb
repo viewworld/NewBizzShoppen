@@ -22,10 +22,10 @@ class MoreLeadsRequestsController < ApplicationController
 
       if @email_template_preview.valid?
         flash[:notice] = I18n.t("more_leads_requests.create.flash.request_sent")
-        TemplateMailer.delay.new(Settings.contact_us_email, :blank_template, Country.get_country_from_locale,
+        TemplateMailer.new(Settings.contact_us_email, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => @email_template_preview.subject, :body_content => @email_template_preview.body,
                                         :bcc_recipients => @email_template_preview.bcc, :cc_recipients => @email_template_preview.cc, :reply_to => @email_template_preview.contact_email,
-                                        :sender_id => user_signed_in? ? current_user.id : nil, :email_template_uniq_id => "more_leads_request"})
+                                        :sender_id => user_signed_in? ? current_user.id : nil, :email_template_uniq_id => "more_leads_request"}).deliver!
 
         if current_user
           redirect_to current_user.has_any_role?(:agent, :call_centre_agent, :member) ? agent_home_path : supplier_home_path

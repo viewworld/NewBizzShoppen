@@ -29,7 +29,7 @@ Feature: Signing up with PayPal
     And I check "user_category_supplier_agreement_read"
     And I choose "user_category_supplier_subscription_plan_id"
     And I press translated "supplier_accounts.new.view.button_create_account"
-    And I sign in as kastomer@nbs.fake with password secret
+    And I should be signed in
     Then I should see translated "unconfirmed_paypal_subscriptions.show.view.message" with options "subscription:Supplier Paypal"
 
   @_done @_non_testable
@@ -59,7 +59,7 @@ Feature: Signing up with PayPal
     And I check "user_category_supplier_agreement_read"
     And I choose "user_category_supplier_subscription_plan_id"
     And I press translated "supplier_accounts.new.view.button_create_account"
-    And I sign in as kastomer@nbs.fake with password secret
+    And I should be signed in
     And I should not see translated "unconfirmed_paypal_subscriptions.show.view.header"
     And I am not sign in
     And subscriptions are checked if any of them has ending free period

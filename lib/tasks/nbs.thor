@@ -377,6 +377,13 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                  :body => "<p>You have unpaid invoice {{invoice.full_number}}. Click <a href=\"{{invoice.pay_via_paypal_link}}\">here to pay the invoice via Paypal</a></p>"},
          :da => {:subject => "[DK] Invoice",
                  :body => "<p><p>You have unpaid invoice {{invoice.full_number}}. Click <a href=\"{{invoice.pay_via_paypal_link}}\">here to pay the invoice via Paypal</a></p></p>"}
+        },
+        {:name => "agent timesheet",
+         :uniq_id => "agent_timesheet",
+         :en => {:subject => "Agent Timesheet is ready",
+                 :body => "<p>Welcome {{user.email}}!</p><p>The Agent TImesheet report you've requested is now ready. To view it, follow this link:</p><p><a href=\"{{timesheet_url}}\">Agent Timesheet report</a></p>"},
+         :da => {:subject => "[DK] Agent Timesheet is ready",
+                 :body => "<p>Welcome {{user.email}}!</p><p>The Agent TImesheet report you've requested is now ready. To view it, follow this link:</p><p><a href=\"{{timesheet_url}}\">Agent Timesheet report</a></p>"},
         }
     ]
 
@@ -756,25 +763,25 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
   desc "recalculate_leads_average_ratings", ""
 
   def recalculate_leads_average_ratings
-    CommonStats.recalculate_leads_average_ratings
+    CommonStats.new.recalculate_leads_average_ratings
   end
 
   desc "refresh_subaccounts_counters", ""
 
   def refresh_subaccounts_counters
-    CommonStats.refresh_subaccounts_counters
+    CommonStats.new.refresh_subaccounts_counters
   end
 
   desc "refresh_agent_counters", ""
 
   def refresh_agent_counters
-    CommonStats.refresh_agent_counters
+    CommonStats.new.refresh_agent_counters
   end
 
   desc "refresh_buyer_counters", ""
 
   def refresh_buyer_counters
-    CommonStats.refresh_buyer_counters
+    CommonStats.new.refresh_buyer_counters
   end
 
   desc "refresh_exchange_rates", ""

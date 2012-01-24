@@ -12,7 +12,8 @@ gem 'will_paginate', '3.0.pre2', :branch => "rails3"
 gem 'formtastic', '1.1.0'
 gem 'liquid'
 gem 'devise', '1.1.3'
-gem 'delayed_job', '2.1.4'
+gem 'delayed_job_active_record'
+gem 'delayed_job', '>= 3.0.0'
 gem 'aasm'
 gem 'paperclip', "2.3.6"
 gem 'scoped-search', '0.7.1', :require => "scoped_search"

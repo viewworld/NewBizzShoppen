@@ -3,6 +3,8 @@
   <%= raw f.label :value, h(f.object.lead_template_field.name)+(abbr) %>
   <% if f.object.lead_template_field.field_type.to_i == LeadTemplateField::NOTE %>
     <%= f.text_area :value, :style => "height: 100px; width: 230px" %>
+  <% elsif f.object.lead_template_field.field_type.to_i == LeadTemplateField::DATE %>
+      <%= f.text_field :value, :class => "date datepicker", :style => "width:70px;" %>
   <% else %>
     <%= f.text_field :value %>
   <% end %>
@@ -16,3 +18,9 @@
 <%= f.fields_for :lead_template_value_translations, f.object.all_lead_template_value_translations(I18n.locale.to_s) do |builder| %>
     <%= render :partial => "/shared/leads/lead_template_value_translation_fields", :locals => {:f => builder} %>
 <% end %>
+
+<script type="text/javascript">
+      $(function() {
+        $(".datepicker").datepicker({ dateFormat: '<%= t("date.formats.datepicker") -%>' });
+    });
+</script>

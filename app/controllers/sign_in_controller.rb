@@ -38,8 +38,8 @@ class SignInController < ApplicationController
       if @user.save
         success_notice = I18n.t("flash.accounts.create.no_verification") if @user.confirmed?
 
-        if session[:site] == "fairdeals" and @user.has_role?(:member) and @user.confirmed? and @user.rpx_identifier.blank?
-          @user.send_invitation_email(params[param_key][:password])
+        if ["fairdeals", "fairleads"].include?(session[:site]) and @user.has_any_role?(:member, :category_supplier, :supplier) and @user.confirmed? and @user.rpx_identifier.blank?
+          @user.send_invitation_email(params[param_key][:password]) if @user.member?
           path = session[:user_return_to] if session[:user_return_to]
           success_notice = I18n.t("devise.sessions.new.controller.successfully_logged_in")
           sign_in(@user)

@@ -28,4 +28,19 @@ class Domain < ActiveRecord::Base
 
   public
 
+  def self.for_site_and_locale(site,locale)
+    Domain.where(:site => site, :locale => locale).first || Domain.where(:site => site).with_default.first
+  end
+
+  def name_for_env
+    if Rails.env.staging?
+      "beta.#{name}"
+    elsif Rails.env.testing?
+      "testing.#{name}"
+    elsif Rails.env.development?
+      "#{name}:3000"
+    else
+      name
+    end
+  end
 end

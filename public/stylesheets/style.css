@@ -192,10 +192,14 @@ h4
 
 #user_menu
 {
-    background: url(/images/bg_nav.png) no-repeat top left;
+    background: url(/images/bg_nav.png) repeat-x top left;
     height: 45px;
     position: relative;
     z-index: 1000;
+
+    -moz-border-radius: 15px 15px 0 0;
+    -webkit-border-radius: 15px 15px 0 0;
+    border-radius: 15px 15px 0 0;
 }
 
 #user_menu ul.nav
@@ -683,9 +687,30 @@ h4
 
 #content
 {
-    background: url(/images/bg_content_head.png) no-repeat 0 0 #fff;
+    background: url(/images/bg_content_head.png) repeat-x 0 0 #fff;
     position: relative;
     padding: 15px 0 0;
+}
+
+#content .content_left,
+#content .content_right
+{
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 0;
+}
+
+#content .content_left
+{
+    background: url(/images/bg_content_left.png) no-repeat 0 0;
+    left: 0;
+}
+
+#content .content_right
+{
+    background: url(/images/bg_content_right.png) no-repeat 0 0;
+    right: 0;
 }
 
 /* --- header  + ribbon ---
@@ -837,8 +862,30 @@ h4
 {
     width: 100%;
     height: 30px;
-    background: url(/images/bg_footer.png) no-repeat 0 0 transparent;
+    background: url(/images/bg_footer.jpg) repeat-x 0 0 transparent;
     padding: 26px 0 20px;
+    position: relative;
+}
+
+#footer .footer_left,
+#footer .footer_right
+{
+    width: 15px;
+    height: 55px;
+    position: absolute;
+    top: 0;
+}
+
+#footer .footer_left
+{
+    background: url(/images/bg_footer_left.jpg) no-repeat 0 0 transparent;
+    left: 0;
+}
+
+#footer .footer_right
+{
+    background: url(/images/bg_footer_right.jpg) no-repeat 0 0 transparent;
+    right: 0;
 }
 
 #footer ul
@@ -941,11 +988,33 @@ h4
 
 .search_box
 {
-    background: url(/images/bg_search.png) no-repeat 0 0 #f0f0f0;
+    background: url(/images/bg_search.png) repeat-x 0 0 #f0f0f0;
     margin-top: -15px;
     padding: 12px 10px;
     border-bottom: 1px solid #cfcfcf;
     -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+.search_box .search_left,
+.search_box .search_right
+{
+    position: absolute;
+    top: 0;
+    width: 16px;
+    height: 20px;
+    z-index: 1;
+}
+
+.search_box .search_left
+{
+    background:  url(/images/bg_search_left.png) no-repeat 0 0;
+    left: 0;
+}
+
+.search_box .search_right
+{
+    background:  url(/images/bg_search_right.png) no-repeat 0 0;
+    right: 0;
 }
 
 .search_box h2

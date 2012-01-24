@@ -105,10 +105,6 @@ Feature: User Account - Profile edit
     Then I press translated "password.edit.view.button_update_user"
     And I should be on the homepage
 
-  #9396
-  @m27 @requested
-  Scenario: When I succesfully update my profile I should be redirected to the front page
-
   #9782
   @m27 @requested @tgn @_done @_tested_elsewhere
   Scenario: There should not be screen name for any role in the system

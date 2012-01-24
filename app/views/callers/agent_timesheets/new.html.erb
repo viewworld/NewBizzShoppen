@@ -119,4 +119,11 @@
         </param:actions>
       </frm>
   <% end %>
+
+  <header><%= t("agent_timesheets.new.scheduled_actions") %></header>
+  <%= render :partial => 'shared/delayed_jobs/user', :locals => {:user => current_user, :delayed_jobs => current_user.delayed_jobs.limit(5)} %>
+
+  <header><%= t("agent_timesheets.new.cached_timesheets") %></header>
+  <%= render :partial => 'shared/cached_timesheets/list', :locals => {:cached_timesheets => @search.cached_timesheets.first(5)} %>
+
 </column-mc:>

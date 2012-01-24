@@ -36,7 +36,7 @@ CKEDITOR.editorConfig = function( config )
   //config.startupFocus = true;
   
   // works only with en, ru, uk languages
-  config.extraPlugins = "embed,attachment,email_template_vars";
+  config.extraPlugins = "embed,attachment,email_template_vars,deal_links";
   
   config.toolbar = 'Easy';
   
@@ -79,7 +79,7 @@ CKEDITOR.editorConfig = function( config )
         ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
         ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
         ['Link','Unlink','Anchor'],
-        ['Table','HorizontalRule','Smiley','SpecialChar','PageBreak', 'insertEmailTemplVars']
+        ['Table','HorizontalRule','Smiley','SpecialChar','PageBreak', 'insertEmailTemplVars', 'insertDealLinks']
     ];
 
     config.toolbar_Lite =

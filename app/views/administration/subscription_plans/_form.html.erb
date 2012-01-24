@@ -31,8 +31,13 @@
     <fieldset class="inputs labels_ta_r labels_200">
       <ol class="align_inputs">
         <%= form.input :is_active, :as => :boolean %>
+        <%= form.input :is_public, :as => :boolean %>
         <%= form.input :can_be_upgraded, :as => :boolean %>
         <%= form.input :can_be_downgraded, :as => :boolean %>
+        <span id="additional_features_member">
+          <%= form.input :premium_deals %>
+          <%= form.input :free_deal_requests_in_free_period %>
+        </span>
         <span id="additional_features">
         <%= form.input :team_buyers, :as => :boolean %>
         <%= form.input :big_buyer, :as => :boolean %>
@@ -101,8 +106,10 @@
         if($('#subscription_plan_assigned_roles').val() != null){
             if($.inArray("member", $('#subscription_plan_assigned_roles').val()) >= 0){
                 $('#additional_features').hide();
+                $('#additional_features_member').show();
             }
             else  {
+                $('#additional_features_member').hide();
                 $('#additional_features').show();
             }
         }
