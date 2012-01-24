@@ -2973,6 +2973,7 @@ en:
         type2: Date
         type3: Note
         type4: Date & Time
+        type5: Material
       date_format: "format: yyyy-mm-dd"
       datetime_format: "format: yyyy-mm-dd hh:mm"
       is_reported_cannot_be_disabled: "cannot be disabled because call results are generated for that result"
