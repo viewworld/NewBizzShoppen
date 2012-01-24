@@ -93,6 +93,21 @@ describe AgentTimesheet::General do
       AgentTimesheet::General.new(:show_weekends => true).commercial_days_of_week.should == [1,2,3,4,5,6,0]
       AgentTimesheet::General.new(:show_weekends => false).commercial_days_of_week.should == [1,2,3,4,5]
     end
+
+    it "should initialize with all campaigns users when only campaign is specified" do
+      at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                       :end_date          => '2012-05-15',
+                                       :campaigns         => [@campaign])
+      at.agents =~ @campaign.users
+    end
+
+    it "should initialize with all users campaigns when only user is specified" do
+      at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                       :end_date          => '2012-05-15',
+                                       :agents            => @call_centre_agent1)
+      at.campaigns =~ @call_centre_agent1.campaigns
+    end
+
   end
 
   context "Overview" do
