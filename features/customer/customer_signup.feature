@@ -115,10 +115,9 @@ Feature: Customer signup
 
   @subscriptions @m24 @tgn @selenium @_done @_tested
   Scenario: As supplier I cannot create new deals if I used my free deals limit
-    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper,vat_number:3947DF4738DF937824"
-    And I sign in as buyer@nbs.com with password secret
-    When subscription plan exists with attributes "name:Premium supplier,deal_maker:1,big_buyer:1,assigned_roles:supplier,free_period:1,free_deals_in_free_period:2"
-    And user with email "buyer@nbs.com" upgrades to subscription named "Premium supplier"
+    Given subscription plan named "Free supplier subscription" exists with attributes "free_deals_in_free_period:2"
+    And I am signed up and confirmed as user with email buyer_free_deals@nbs.com and password supersecret and role supplier
+    And I sign in as buyer_free_deals@nbs.com with password supersecret
     Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     And I follow translated "deals.common.listing.view.new_deal"
     Then I fill deal creation form

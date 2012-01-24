@@ -173,3 +173,10 @@ Scenario: I can check "Allows getting Premium Deals" for each Member subscriptio
   When I follow translated "administration.subscription_plans.index.view.new_subscription_plan"
   And I select "Member" from "subscription_plan_assigned_roles"
   And I check "subscription_plan_premium_deals"
+
+#9410
+@m27 @requested @selenium @tgn @_done @_tested
+Scenario: I can set number of free deal requests for member free subscription
+  When I follow translated "administration.subscription_plans.index.view.new_subscription_plan"
+  And I select "Member" from "subscription_plan_assigned_roles"
+  And I fill in "subscription_plan_free_deal_requests_in_free_period" with "70"

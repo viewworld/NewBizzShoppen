@@ -71,26 +71,9 @@
 
 
     <div class="grid_300 fltr">
-      <div class="frm_tiny company_info">
-
-        <% if @deal.logo %>
-            <p><%= image_tag(@deal.logo.url) %></p>
-        <% end %>
-
-
-        <h3><%= @deal.company_name %></h3>
-
-        <p class="ta_l"><%= @deal.company_description.to_s.html_safe %></p>
-
-      </div>
-
-      <div class="frm_tiny">
+       <div class="frm_tiny">
         <div class="pdd_10">
           <ul class="elements_list">
-            <%= deal_show_li(format_date(@deal.start_date), t("deals.show.view.start_date_label")) %>
-            <%= deal_show_li(format_date(@deal.end_date), t("deals.show.view.end_date_label")) %>
-            <%= deal_show_li(@deal.category.name, t("deals.show.view.category_label")) %>
-
             <% if @deal.general_discount? %>
                 <li>
                   <div>
@@ -112,7 +95,26 @@
                   </div>
                 </li>
             <% end %>
+          </ul>
+        </div>
+       </div>
 
+      <div class="frm_tiny company_info">
+
+        <% if @deal.logo %>
+            <p><%= image_tag(@deal.logo.url) %></p>
+        <% end %>
+
+
+        <h3><%= @deal.company_name %></h3>
+
+        <p class="ta_l"><%= @deal.company_description.to_s.html_safe %></p>
+
+      </div>
+
+      <div class="frm_tiny">
+        <div class="pdd_10">
+          <ul class="elements_list">
             <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) %>
                 <%= deal_show_li(@deal.contact_name, t("deals.show.view.contact_name_label")) %>
                 <%= deal_show_li(@deal.email_address, t("deals.show.view.email_address_label")) %>
