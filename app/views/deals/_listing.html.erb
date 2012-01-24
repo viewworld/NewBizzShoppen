@@ -14,7 +14,9 @@
 
     <% if will_paginate %>
         <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
-        <%= link_to_show_all_without_pagination "#deals_search_form" %>
+        <p class="ta_c">
+          <%= link_to_show_all_without_pagination "#deals_search_form" %>
+        </p>
     <% end %>
 
     <script type="text/javascript">
