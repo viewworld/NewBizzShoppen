@@ -18,7 +18,7 @@ class AgentInformation
   end
 
   def time
-    UserSessionLog.for_user(user).started_between(date_from, date_to+1.day).sum(:hours_count)
+    UserSessionLog.campaign_type.for_user(user).started_between(date_from, date_to+1.day).sum(:hours_count)
   end
 
   # helper initializers
