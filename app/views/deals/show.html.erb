@@ -112,10 +112,10 @@
 
       </div>
 
+      <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) %>
       <div class="frm_tiny">
         <div class="pdd_10">
           <ul class="elements_list">
-            <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) %>
                 <%= deal_show_li(@deal.contact_name, t("deals.show.view.contact_name_label")) %>
                 <%= deal_show_li(@deal.email_address, t("deals.show.view.email_address_label")) %>
                 <%= deal_show_li(link_to(@deal.company_website_with_protocol, @deal.company_website_with_protocol), t("deals.show.view.company_website_label")) unless @deal.company_website.blank? %>
@@ -125,12 +125,10 @@
                 <%= deal_show_li(@deal.address_line_3, t("deals.show.view.address_line_3_label")) %>
                 <%= deal_show_li(@deal.zip_code, t("deals.show.view.zip_code_label")) %>
                 <%= deal_show_li(@deal.country, t("deals.show.view.country_label")) %>
-                <%= deal_show_li(@deal.region, t("deals.show.view.region_label")) %>
-                <%= deal_show_li(@deal.deal_code_is_url? ? link_to(@deal.deal_code, @deal.deal_code_as_url) : @deal.deal_code, t("deals.show.view.deal_code_label")) %>
-            <% end %>
           </ul>
         </div>
       </div>
+      <% end %>
 
       <% if !user_signed_in? or (user_signed_in? and current_user.has_role?(:member) and !@deal.requested_by?(current_user)) and @deal.active? %>
           <%= bt_link_to nil, t("deals.index.view.contact_me"), (!user_signed_in? or current_user.can_request?(@deal)) ? new_members_lead_path(:deal_id => @deal.id) : my_profile_path(:deal_id => @deal.id), :confirm => ((!user_signed_in? or current_user.can_request?(@deal)) ? t("deals.show.view.get_deal_confirmation_msg") : t("deals.show.view.get_deal_confirmation_for_free_subscription_msg")), :class => "bt_max bt_big" %>
