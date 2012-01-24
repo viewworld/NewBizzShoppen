@@ -287,41 +287,41 @@ Feature: Deals from procurement manager perspective
     And I follow translated "deals.index.view.contact_me"
     Then the "lead_direct_phone_number" field should contain "48601101101"
 
-  @m21 @requested @_done @_tested @ao
+  @m21 @requested @_done @_tested @ao @wip @_deprecated
   Scenario: When I get deal the facebook url should contain profile link if my account is linked to facebook
-    Given I visit domain http://fairdeals.dk
-    And I am not sign in
-    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
-    And user "buyer@nbs.com" has deal maker role enabled
-    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL"
-    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
-    And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
-    And user "purchase_manager101@nbs.com" with role "member" has attributes "rpx_identifier:www.facebook.com/profile/123"
-    Then I sign in as purchase_manager101@nbs.com with password supersecret
-    Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow category "Business deals"
-    And I follow translated "deals.index.view.view_deal"
-    And I follow translated "deals.index.view.contact_me"
-    Then the "lead_facebook_url" field should contain "www.facebook.com/profile/123"
+#    Given I visit domain http://fairdeals.dk
+#    And I am not sign in
+#    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
+#    And user "buyer@nbs.com" has deal maker role enabled
+#    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL"
+#    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
+#    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
+#    And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
+#    And user "purchase_manager101@nbs.com" with role "member" has attributes "rpx_identifier:www.facebook.com/profile/123"
+#    Then I sign in as purchase_manager101@nbs.com with password supersecret
+#    Then I follow translated "layout.fairdeals.main_menu.deals"
+#    And I follow category "Business deals"
+#    And I follow translated "deals.index.view.view_deal"
+#    And I follow translated "deals.index.view.contact_me"
+#    Then the "lead_facebook_url" field should contain "www.facebook.com/profile/123"
 
-  @m21 @requested @_done @_tested @ao
+  @m21 @requested @_done @_tested @ao @_deprecated
   Scenario: When I get deal the linkedin url should contain profile link if my account is linked to linkedin
-    Given I visit domain http://fairdeals.dk
-    And I am not sign in
-    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
-    And user "buyer@nbs.com" has deal maker role enabled
-    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL"
-    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
-    And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
-    And user "purchase_manager101@nbs.com" with role "member" has attributes "rpx_identifier:www.linkedin.com/profile/123"
-    Then I sign in as purchase_manager101@nbs.com with password supersecret
-    Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow category "Business deals"
-    And I follow translated "deals.index.view.view_deal"
-    And I follow translated "deals.index.view.contact_me"
-    Then the "lead_linkedin_url" field should contain "www.linkedin.com/profile/123"
+#    Given I visit domain http://fairdeals.dk
+#    And I am not sign in
+#    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
+#    And user "buyer@nbs.com" has deal maker role enabled
+#    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL"
+#    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
+#    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
+#    And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
+#    And user "purchase_manager101@nbs.com" with role "member" has attributes "rpx_identifier:www.linkedin.com/profile/123"
+#    Then I sign in as purchase_manager101@nbs.com with password supersecret
+#    Then I follow translated "layout.fairdeals.main_menu.deals"
+#    And I follow category "Business deals"
+#    And I follow translated "deals.index.view.view_deal"
+#    And I follow translated "deals.index.view.contact_me"
+#    Then the "lead_linkedin_url" field should contain "www.linkedin.com/profile/123"
 
   #8339
   @m22 @requested @ao @_done @_tested
