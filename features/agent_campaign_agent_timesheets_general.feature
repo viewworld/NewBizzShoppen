@@ -107,13 +107,21 @@ Feature: Agent timesheets
     Then last email sent should have been sent to recipient "blazejek@gmail.com"
 
   #9787
-  @m27 @requested
+  @m27 @requested @_done @_tested
   Scenario: I should see queue / generated reports on the bottom of new timesheets screen
+    Given campaign report data is generated
+    And campaign report user session logs are generated
+    And additional timesheet report data is generated
+    Given I am on the homepage
+    And I sign in as blazejek@gmail.com with password secret
+    And I click hidden link by url regex "/callers\/agent_timesheets$/"
+    And I should see translated "agent_timesheets.new.scheduled_actions"
+    And I should see translated "agent_timesheets.new.cached_timesheets"
 
   #9787
-  @m27 @requested
+  @m27 @requested @_done @_tested_elsewhere
   Scenario: I can select only user(s) to generate report for all campaigns for this user(s)
 
   #9787
-  @m27 @requested
+  @m27 @requested @_done @_tested_elsewhere
   Scenario: I can select only campaign(s) to generate report for all users on this campaign(s)
