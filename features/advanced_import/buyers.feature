@@ -3,6 +3,7 @@ Feature: Buyers advanced import (buyer specific)
 
   Background:
     Given I am on the homepage
+    And I visit domain http://fairleads.eu
 
   @added @selenium @_done @_tested
   Scenario: Admin can import buyers from spreadsheet (ods, xls, xlsx) with advanced import

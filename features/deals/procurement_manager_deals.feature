@@ -287,7 +287,7 @@ Feature: Deals from procurement manager perspective
     And I follow translated "deals.index.view.contact_me"
     Then the "lead_direct_phone_number" field should contain "48601101101"
 
-  @m21 @requested @_done @_tested @ao @wip @_deprecated
+  @m21 @requested @_done @_tested @ao @_deprecated
   Scenario: When I get deal the facebook url should contain profile link if my account is linked to facebook
 #    Given I visit domain http://fairdeals.dk
 #    And I am not sign in
