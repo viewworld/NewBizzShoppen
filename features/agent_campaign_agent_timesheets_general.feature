@@ -54,20 +54,57 @@ Feature: Agent timesheets
   Scenario: I can use checkbox to select overview / team results / agent timesheets as report type (all on by default)
 
   #9787
-  @m27 @requested
+  @m27 @requested @_done @_nontestable
   Scenario: Generated timesheet should be displayed in popup window to use full size of screen
 
   #9787
-  @m27 @requested
+  @m27 @requested @_done @_nontestable
   Scenario: I should see dropdown with list of agents and "show" button instead of separate tabs for each agent
 
   #9787
-  @m27 @requested
+  @m27 @requested @_done @selenium @_tested
   Scenario: Timesheets should be generated in background
+    Given campaign report data is generated
+    And campaign report user session logs are generated
+    And additional timesheet report data is generated
+    Given I am on the homepage
+    And I sign in as blazejek@gmail.com with password secret
+    And I click hidden link by url regex "/callers\/agent_timesheets$/"
+    And I set date "Date.today-1" for field "search[start_date]"
+    And I set date "Date.today+7" for field "search[end_date]"
+    And I uncheck "search_overview"
+    And I uncheck "search_team_result_sheet"
+    And I check "search_agent_timesheet"
+    And I select "TestCampaignReport1" from "all_campaigns"
+    And I select "TestCampaignReport2" from "all_campaigns"
+    And I follow translated "agent_timesheets.new.move_right" within "#campaigns_selection_div"
+    And I select "test report user CC" from "all_call_centres"
+    And I follow translated "agent_timesheets.new.move_right" within "#agents_selection_div"
+    And I press translated "agent_timesheets.new.generate"
+    Then I should see translated "agent_timesheets.index.timesheet_queued"
+    And I should see translated "agent_timesheets.new.scheduled_actions"
 
   #9787
-  @m27 @requested
+  @m27 @requested @selenium @_done @_tested
   Scenario: I should get an email when my report is generated
+    Given campaign report data is generated
+    And campaign report user session logs are generated
+    And additional timesheet report data is generated
+    Given I am on the homepage
+    And I sign in as blazejek@gmail.com with password secret
+    And I click hidden link by url regex "/callers\/agent_timesheets$/"
+    And I set date "Date.today-1" for field "search[start_date]"
+    And I set date "Date.today+7" for field "search[end_date]"
+    And I uncheck "search_overview"
+    And I uncheck "search_team_result_sheet"
+    And I check "search_agent_timesheet"
+    And I select "TestCampaignReport1" from "all_campaigns"
+    And I select "TestCampaignReport2" from "all_campaigns"
+    And I follow translated "agent_timesheets.new.move_right" within "#campaigns_selection_div"
+    And I select "test report user CC" from "all_call_centres"
+    And I follow translated "agent_timesheets.new.move_right" within "#agents_selection_div"
+    And I press translated "agent_timesheets.new.generate"
+    Then last email sent should have been sent to recipient "blazejek@gmail.com"
 
   #9787
   @m27 @requested
