@@ -65,4 +65,12 @@ class UserSessionLog < ActiveRecord::Base
     campaign_type.for_user(user).without_campaign(campaign).active
   end
 
+  def regular?
+    log_type == TYPE_REGULAR
+  end
+
+  def campaign?
+    log_type == TYPE_CAMPAIGN
+  end
+
 end

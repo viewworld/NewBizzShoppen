@@ -1,11 +1,11 @@
-<% total_columns = 15 + CampaignReport.final_results(result_ids).count %>
+<% total_columns = 16 + CampaignReport.final_results(result_ids).count %>
 <table id="reports_table" class="generic">
   <thead>
   <tr>
     <th class="hl"></th>
     <th><%= t("campaign_reports.index.table.campaign_name") %></th>
     <th colspan="<%= 4 + CampaignReport.final_results(result_ids).count %>" class="ta_r pointer"><%= t("campaign_reports.index.table.campaign_targets") %></th>
-    <th colspan="5" class="ta_r pointer"><%= t("campaign_reports.index.table.completion") %></th>
+    <th colspan="6" class="ta_r pointer"><%= t("campaign_reports.index.table.completion") %></th>
     <th colspan="3" class="ta_r pointer"><%= t("campaign_reports.index.table.campaign_results") %></th>
     <th colspan="1" class="ta_r pointer"><%= t("campaign_reports.index.table.predicted_results") %></th>
     <th colspan="1" class="ta_r pointer"><%= t("campaign_reports.index.table.realised_results") %></th>
