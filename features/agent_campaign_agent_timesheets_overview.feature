@@ -20,6 +20,8 @@ Feature: Agent timesheets - overview
     And I select "test report user CC" from "all_call_centres"
     And I follow translated "agent_timesheets.new.move_right" within "#agents_selection_div"
     And I press translated "agent_timesheets.new.generate"
+    And I click hidden link by url regex "/callers\/agent_timesheets$/"
+    And I click hidden link by url regex "/callers\/agent_timesheets\/1/"
     And I should see "48:00"
     And I should see "96:00"
     And I should see "384:00"
