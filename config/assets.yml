@@ -36,11 +36,13 @@ javascripts:
     - public/javascripts/i18n.js
     - public/javascripts/translations.js
     - public/javascripts/custom.js
+    - public/javascripts/comments.js
     - public/javascripts/jquery.lwtCountdown-1.0.js
     - public/javascripts/global_template_editor.js
     - public/javascripts/global_field_validator.js
     - public/javascripts/jquery.cycle.all.js
     - public/javascripts/jquery.timers.js
+    - public/javascripts/jquery.qtip.min.js
 
 
 stylesheets:
