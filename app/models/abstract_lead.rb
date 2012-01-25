@@ -11,6 +11,7 @@ class AbstractLead < ActiveRecord::Base
   belongs_to :category
   belongs_to :currency
   belongs_to :deal
+  belongs_to :requestee, :class_name => "User::Member", :foreign_key => :requested_by
   has_many :lead_translations, :foreign_key => :lead_id, :dependent => :destroy
   has_many :lead_purchases, :foreign_key => :lead_id
   has_many :lead_template_values, :foreign_key => :lead_id
@@ -27,6 +28,7 @@ class AbstractLead < ActiveRecord::Base
   attr_accessor :current_user
   attr_accessor :notify_suppliers_after_update
   attr_accessor :validate_contact_email
+  attr_accessor :creation_step
 
   validates_presence_of :header, :description, :company_name, :contact_name, :phone_number, :country_id, :currency, :address_line_1, :address_line_3, :zip_code, :if => :process_for_lead_information?
   validates_presence_of :hidden_description, :unless => Proc.new { |l| l.created_by?('Member') }, :if => :process_for_lead_information?
@@ -47,6 +49,7 @@ class AbstractLead < ActiveRecord::Base
   scope :with_selected_categories, lambda { |q| where(:category_id => q) }
   scope :published_only, where(:published => true)
   scope :latest, order("created_at DESC")
+  scope :requested_by_member, lambda { |user| where("leads.creator_id = ? or leads.requested_by = ?", user.id, user.id) }
 
   accepts_nested_attributes_for :lead_translations, :allow_destroy => true
   accepts_nested_attributes_for :lead_template_values, :allow_destroy => true
@@ -162,4 +165,50 @@ class AbstractLead < ActiveRecord::Base
     end
   end
 
+  public
+
+  def based_on_deal(deal, user)
+    {:current_user => User.find_by_email(deal.deal_admin_email).with_role, :category => deal.lead_category, :sale_limit => 1, :price => deal.price.blank? ? 0 : deal.price,
+     :purchase_decision_date => deal.end_date+7, :currency => deal.currency, :published => true, :requestee => user, :deal_id => deal.id
+    }.each_pair do |key, value|
+      self.send("#{key}=", value)
+    end
+
+    copy_user_profile(user)
+
+    fill_social_media_link(user)
+
+    current_locale = I18n.locale
+    (deal.lead_translations.count > 1 ? ::Locale.enabled.map(&:code) : [current_locale]).each do |locale_code|
+      I18n.locale = locale_code
+      self.header = "#{I18n.t("models.lead.field_prefixes.header")} #{deal.header}"
+      self.description = "#{I18n.t("models.lead.field_prefixes.description")} #{deal.description}"
+    end
+    I18n.locale = current_locale
+  end
+
+
+  def copy_user_profile(user)
+    [
+        [:contact_name, :full_name], [:phone_number, :phone], [:email_address, :email],
+        [:company_name], [:address_line_1, nil, :address], [:address_line_2, nil, :address],
+        [:address_line_3, nil, :address], [:zip_code, nil, :address], [:country_id, nil, :address],
+        [:region_id, nil, :address], [:direct_phone_number, :direct_phone_number]
+    ].each do |field1, field2, field3|
+      field2 = field1 if field2.nil?
+      if field3
+        self.send("#{field1}=".to_sym, user.send(field3.to_sym).send(field2.to_sym)) if self.send(field1.to_sym).blank?
+      else
+        self.send("#{field1}=".to_sym, user.send(field2.to_sym)) if self.send(field1.to_sym).blank?
+      end
+    end
+  end
+
+  def fill_social_media_link(user)
+    if user.rpx_identifier.to_s[/facebook/]
+      self.facebook_url = user.rpx_identifier
+    elsif user.rpx_identifier.to_s[/linkedin/]
+      self.linkedin_url = user.rpx_identifier
+    end
+  end
 end

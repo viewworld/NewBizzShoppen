@@ -54,7 +54,7 @@ class Members::LeadsController < Members::MemberController
 
   def create
     @deal = Deal.find_by_id(params[:deal_id])
-    @lead = Lead.new(params[:lead])
+    @lead = (@deal.voucher_enabled? ? UnconfirmedLead : Lead).new(params[:lead])
     @lead.based_on_deal(@deal, current_user)
     session[:selected_category] = @lead.category_id
 
@@ -108,7 +108,7 @@ class Members::LeadsController < Members::MemberController
   end
 
   def get_lead
-    @lead = Lead.requested_by_member(current_user).find(params[:id])
+    @lead = Lead.requested_by_member(current_user).find_by_id(params[:id]) || UnconfirmedLead.requested_by_member(current_user).find_by_id(params[:id])
   end
 
 end

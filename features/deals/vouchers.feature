@@ -23,7 +23,7 @@ Feature: Vouchers
     Then I press translated "member.leads.show.view.go_to_paypal"
     Then I should see "redirecting to paypal, please wait..."
     #check paypal response
-    Then paypal voucher payment for deal "software components" and user with email "translator_purchase_manager@nbs.com" and role "member"
+    Then paypal voucher payment succeeded for deal "software components" and user with email "translator_purchase_manager@nbs.com" and role "member"
     Then last email sent should have been sent to recipient "translator_purchase_manager@nbs.com"
     Then last email sent should have subject "You have new voucher"
     #check displaying
