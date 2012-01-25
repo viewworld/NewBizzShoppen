@@ -10,6 +10,7 @@ class Deal < AbstractLead
   has_many :images, :class_name => "Asset::DealImage", :as => :resource, :conditions => "asset_type = 'Asset::DealImage'", :dependent => :destroy
   has_many :materials, :class_name => "Asset::DealMaterial", :as => :resource, :conditions => "asset_type = 'Asset::DealMaterial'", :dependent => :destroy
   has_many :leads, :class_name => "Lead", :foreign_key => "deal_id"
+  has_many :unconfirmed_leads, :class_name => "UnconfirmedLead", :foreign_key => "deal_id"
   has_many :comment_threads, :class_name => "Comment", :foreign_key => :commentable_id, :conditions => {:commentable_type => 'AbstractLead'}
   has_many :deal_certification_requests, :dependent => :destroy
   has_many :featured_deals
@@ -176,6 +177,10 @@ class Deal < AbstractLead
 
   def requested_by?(user)
     leads.where(:requested_by => user.id).any?
+  end
+
+  def awaiting_payment_requested_by?(user)
+    unconfirmed_leads.where(:requested_by => user.id, :voucher_confirmed_at => nil, :voucher_cancelled_at => nil).any?
   end
 
   def current_dcr

@@ -384,7 +384,14 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                  :body => "<p>Welcome {{user.email}}!</p><p>The Agent TImesheet report you've requested is now ready. To view it, follow this link:</p><p><a href=\"{{timesheet_url}}\">Agent Timesheet report</a></p>"},
          :da => {:subject => "[DK] Agent Timesheet is ready",
                  :body => "<p>Welcome {{user.email}}!</p><p>The Agent TImesheet report you've requested is now ready. To view it, follow this link:</p><p><a href=\"{{timesheet_url}}\">Agent Timesheet report</a></p>"},
-        }
+        },
+        {:name => "Voucher payment failed",
+         :uniq_id => "voucher_payment_failed_notification",
+         :en => {:subject => "Payment failed for voucher from deal {{deal.header}}",
+                 :body => "<p>Sorry Your voucher has been cancelled since the payment did not go through. Please try again or contact Fairdeals if the problem persists.</p>"},
+         :da => {:subject => "[DK] Payment failed for voucher from deal {{deal.header}}",
+                 :body => "<p>Sorry Your voucher has been cancelled since the payment did not go through. Please try again or contact Fairdeals if the problem persists.</p>"}
+        }    
     ]
 
 

@@ -72,10 +72,17 @@ class VoucherNumber < ActiveRecord::Base
 
   def activate!(payment_notification)
     update_attribute(:state, STATE_ACTIVE)
+    deal.unconfirmed_leads.where(:requested_by => user.id).first.confirm!
     invoice = Invoice.create(:user_id => user_id, :paid_at => Time.now, :seller => user.active_subscription.seller, :currency => deal.currency, :voucher_number => self)
     PaypalTransaction.create(:invoice => invoice, :payment_notification => payment_notification, :amount => deal.discounted_price, :paid_at => Time.now)
     invoice_path = Pathname.new(File.join(::Rails.root.to_s, 'public/html2pdf/invoice_cache', invoice.store_pdf(user).basename))
     TemplateMailer.new(user.email, :voucher_notification, Country.get_country_from_locale, {}, [to_pdf, invoice_path]).deliver!
+  end
+
+  def cancel!
+    deal.unconfirmed_leads.where(:requested_by => user.id).first.cancel!
+    update_attributes(:user_id => nil, :reserved_until => nil)
+    TemplateMailer.delay.new(user.email, :voucher_payment_failed_notification, Country.get_country_from_locale, {:deal => deal})
   end
 
   class << self

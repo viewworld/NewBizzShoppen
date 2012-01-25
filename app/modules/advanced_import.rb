@@ -20,7 +20,7 @@ module AdvancedImport
       merged_fields = advanced_import_merged_fields(headers, model_fields, spreadsheet_fields)
 
       rows = []
-      2.upto(spreadsheet.last_row) do |line|
+      2.upto(10) do |line|
         row = {}
         import_fields.each do |field|
           value = spreadsheet.cell(line, merged_fields[field])

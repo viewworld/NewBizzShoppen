@@ -5,77 +5,81 @@
     <div class="search_right"></div>
     <h2><%= t("common.search") %></h2>
 
-    <div class="search_content">
-      <%= form_for @search, :url => (params[:slag].present? ? deals_index_path : deals_path), :html => { :id => "deals_search_form" } do |f| %>
-          <%= hidden_field_tag :show_all, params[:show_all] %>
-          <fieldset class="inputs_vertical">
-            <ol class="no_pdd">
-              <li class="string">
-                <%= f.label :with_keyword, t("deals.index.search.keyword_label") %>
-                <%= f.text_field :with_keyword %>
-              </li>
-            </ol>
-            <div id="advanced_search_1_div" style="<%= 'display: none;' unless advanced_search_active?(params[:search]) -%>;">
-              <ol class="no_pdd">
-                <li class="string">
-                  <%= f.label t("deals.index.search.zip_code") %>
-                  <%= f.text_field :with_zip_code, :style => "width: 90px" %>
-                </li>
-                <li class="select">
-                  <%= f.label t("deals.index.search.country_label") %>
-                  <%= f.select :with_country, @countries.map { |c| [c.name, c.id] }, {:include_blank => true}, :onchange => "refresh_regions_list_custom('search_with_country', 'search_with_region');" %>
-                </li>
-                <li class="select">
-                  <%= f.label t("deals.index.search.region_label") %>
-                  <%= f.select :with_region, regions_collection_for(Country.find_by_id(@search.with_country)).map { |r| [r.name, r.id] }, :include_blank => true %>
-                </li>
-              </ol>
-            </div>
-            <ol>
-              <li class="commit">
-                <ibt c="bt_green" icon="magnify">
-                  <%= submit_tag t("deals.index.search.search_button"), :id => "search_new" %>
-                </ibt>
-                <p>
-                  <%= bt_clear_filter_safe %>
-                  <%= link_to_function t("common.advanced_search"), "$('#advanced_search_1_div').toggle();" %>
-                  <% if @nested_category.present? or @category.present? %>
-                      <%
-                          category = @nested_category.present? ? @nested_category : @category
-                          subcategories_for_select = [[' ', category.id]] + category.children.select{ |c| c.deals_count_for_user(current_user) > 0 }.map{|c| [c.name, c.cached_slug]}
-                      %>
-                      <% if subcategories_for_select.size > 1 %>
-                          <%= select_tag :category_selector, options_for_select(subcategories_for_select), {:include_blank => false, :onchange => "redirect_to_subcategory()"} %>
+        <div class="search_content">
+          <%= form_for @search, :url => (params[:slag].present? ? deals_index_path : deals_path), :html => {:id => "deals_search_form"} do |f| %>
+              <%= hidden_field_tag :show_all, params[:show_all] %>
+              <fieldset class="inputs_vertical">
+                <ol class="no_pdd">
+                  <li class="string">
+                    <%= f.label :with_keyword, t("deals.index.search.keyword_label") %>
+                    <%= f.text_field :with_keyword %>
+                  </li>
+                </ol>
+                <div id="advanced_search_1_div" style="<%= 'display: none;' unless advanced_search_active?(params[:search]) -%>;">
+                  <ol class="no_pdd">
+                    <li class="string">
+                      <%= f.label t("deals.index.search.zip_code") %>
+                      <%= f.text_field :with_zip_code, :style => "width: 90px" %>
+                    </li>
+                    <li class="select">
+                      <%= f.label t("deals.index.search.country_label") %>
+                      <%= f.select :with_country, @countries.map { |c| [c.name, c.id] }, {:include_blank => true}, :onchange => "refresh_regions_list_custom('search_with_country', 'search_with_region');" %>
+                    </li>
+                    <li class="select">
+                      <%= f.label t("deals.index.search.region_label") %>
+                      <%= f.select :with_region, regions_collection_for(Country.find_by_id(@search.with_country)).map { |r| [r.name, r.id] }, :include_blank => true %>
+                    </li>
+                  </ol>
+                </div>
+                <ol>
+                  <li class="commit">
+                    <ibt c="bt_green" icon="magnify">
+                      <%= submit_tag t("deals.index.search.search_button"), :id => "search_new" %>
+                    </ibt>
+                    <p>
+                      <%= bt_clear_filter_safe %>
+                      <%= link_to_function t("common.advanced_search"), "$('#advanced_search_1_div').toggle();" %>
+                      <% if @nested_category.present? or @category.present? %>
+                          <%
+                             category = @nested_category.present? ? @nested_category : @category
+                             subcategories_for_select = [[' ', category.id]] + category.children.select { |c| c.deals_count_for_user(current_user) > 0 }.map { |c| [c.name, c.cached_slug] }
+                          %>
+                          <% if subcategories_for_select.size > 1 %>
+                              <%= select_tag :category_selector, options_for_select(subcategories_for_select), {:include_blank => false, :onchange => "redirect_to_subcategory()"} %>
+                          <% end %>
                       <% end %>
-                  <% end %>
-                </p>
-              </li>
-            </ol>
-          </fieldset>
-          <%= hidden_field_tag :slag, params[:slag] if params[:slag] %>
-          <%= f.hidden_field :with_category, :value => @search.with_category if params[:slag] %>
-      <% end %>
-    </div>
-  </div>
-</search-box:>
+                    </p>
+                  </li>
+                </ol>
+              </fieldset>
+              <%= hidden_field_tag :slag, params[:slag] if params[:slag] %>
+              <%= f.hidden_field :with_category, :value => @search.with_category if params[:slag] %>
+          <% end %>
+        </div>
+      </div>
+    </search-box:>
 <% end %>
 
 <column-mc:>
-  <header back="true">
 
+  <% if session[:site] == "fairdeals" %>
+    <div class="frm_plain pdd_10">
+  <% end %>
+
+  <header back="true">
     <param:content>
-      <% if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(@search.latest) %>
-          <%= t("deals.index.view.header_latest_leads") %>
-      <% elsif @category %>
-          <%= " #{t("deals.index.view.header_for")} #{@category.name}" %>
+      <% unless session[:site] == "fairdeals" %>
+          <% if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(@search.latest) %>
+              <%= t("deals.index.view.header_latest_leads") %>
+          <% elsif @category %>
+              <%= " #{t("deals.index.view.header_for")} #{@category.name}" %>
+          <% else %>
+              <%= t("deals.index.view.header_for_all_deals") %>
+          <% end %>
       <% else %>
-          <%= t("deals.index.view.header_for_all_deals") %>
+          <%= " #{t("deals.index.view.header_for")} #{@category.name}" %>
       <% end %>
     </param:content>
-
-    <param:actions>
-    </param:actions>
-
   </header>
 
   <% if @deals.empty? %>
@@ -84,11 +88,16 @@
       <%= deals_listing @deals, :show_checkboxes => false do |blocks| %>
 
           <% blocks.tools do |deal| %>
-            <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(deal.slug) %>
+              <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(deal.slug) %>
           <% end %>
 
       <% end %>
   <% end %>
+
+<% if session[:site] == "fairdeals" %>
+    </div>
+  <% end %>
+
 </column-mc:>
 <js:>
   <%= javascript_include_tag 'deal_comments' %>

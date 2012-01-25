@@ -242,7 +242,7 @@ module ApplicationHelper
 
   def link_to_show_all_without_pagination(form_id)
     show_all_enabled = params[:show_all] == "1"
-    link_to show_all_enabled ? t("common.show_paginated") : t("common.show_all"), "javascript:show_all_pages('#{form_id}', '#{show_all_enabled ? 0 : 1}')", :class => "show_all_link"
+    link_to show_all_enabled ? t("common.show_paginated") : t("common.show_all"), "javascript:show_all_pages('#{form_id}', '#{show_all_enabled ? 0 : 1}')", :class => "show_all_link", :class => "bt"
   end
 
   def st_lite(text)

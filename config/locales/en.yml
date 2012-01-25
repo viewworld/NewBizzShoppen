@@ -2992,6 +2992,7 @@ en:
         type2: Date
         type3: Note
         type4: Date & Time
+        type5: Material
       date_format: "format: yyyy-mm-dd"
       datetime_format: "format: yyyy-mm-dd hh:mm"
       is_reported_cannot_be_disabled: "cannot be disabled because call results are generated for that result"
@@ -3335,6 +3336,8 @@ en:
     campaigns:
       duplicate:
         notice: "Campaign duplication task has been successfully added to queue. It will be finished in few seconds."
+      destroy:
+        notice: "Campaign has been successfully queued. It will be destroyed in few minutes."
     subscription_plans:
       destroy:
         notice: "Subscription plan has been destroyed successfully."
@@ -4131,6 +4134,9 @@ en:
         fair_deal_splash_label: "Fair deal"
         back_to_front_page: "Back to front page"
         premium_deal_splash_label: "Premium deal"
+        fairdeals_price: "Fairdeals price"
+        normal_price: "Normal price"
+        you_save: "You save"        
       search:
         keyword_label: "Keyword"
         search_button: "Search"
