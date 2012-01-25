@@ -489,7 +489,7 @@ Feature: Deals from procurement manager perspective
   Scenario: When I get the deal on the page for deal request I should not see linkedin/facebook urls but see company name
 
   #9811
-  @m27 @requested @tgn @_done @_tested @wip
+  @m27 @requested @tgn @_done @_tested
   Scenario: I can get a Premium deal only if I am signed in as member and have subscription that allows getting Premium deals
     Given I am on the homepage
     Given a deal named "PrimaryDeal" exists within category "Electronics deals"
