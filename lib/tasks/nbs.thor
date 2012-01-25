@@ -377,6 +377,13 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                  :body => "<p>You have unpaid invoice {{invoice.full_number}}. Click <a href=\"{{invoice.pay_via_paypal_link}}\">here to pay the invoice via Paypal</a></p>"},
          :da => {:subject => "[DK] Invoice",
                  :body => "<p><p>You have unpaid invoice {{invoice.full_number}}. Click <a href=\"{{invoice.pay_via_paypal_link}}\">here to pay the invoice via Paypal</a></p></p>"}
+        },
+        {:name => "Voucher payment failed",
+         :uniq_id => "voucher_payment_failed_notification",
+         :en => {:subject => "Payment failed for voucher from deal {{deal.header}}",
+                 :body => "<p>Sorry Your voucher has been cancelled since the payment did not go through. Please try again or contact Fairdeals if the problem persists.</p>"},
+         :da => {:subject => "[DK] Payment failed for voucher from deal {{deal.header}}",
+                 :body => "<p>Sorry Your voucher has been cancelled since the payment did not go through. Please try again or contact Fairdeals if the problem persists.</p>"}
         }
     ]
 

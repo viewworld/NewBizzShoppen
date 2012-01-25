@@ -17,7 +17,6 @@ class Lead < AbstractLead
   belongs_to :country
   belongs_to :currency
   belongs_to :region
-  belongs_to :requestee, :class_name => "User::Member", :foreign_key => :requested_by
   belongs_to :deal, :class_name => "Deal", :foreign_key => "deal_id"
   has_many :lead_certification_requests, :dependent => :destroy
   has_many :lead_translations, :dependent => :destroy
@@ -75,8 +74,6 @@ class Lead < AbstractLead
   scope :with_hotness, lambda { |hotness| where("hotness_counter = ?", hotness) }
   scope :for_notification, lambda { |categories, notification_type| where("category_id in (?) and DATE(published_at) between ? and ?", categories.map(&:id), notification_type == User::LEAD_NOTIFICATION_ONCE_PER_DAY ? Date.today : Date.today-7, Date.today).published_only.without_inactive.without_outdated.order("category_id") }
 
-  scope :requested_by_member, lambda { |user| where("leads.creator_id = ? or leads.requested_by = ?", user.id, user.id) }
-
   scope :descend_by_leads_id, order("leads.id DESC")
 
   delegate :certification_level, :to => :creator
@@ -96,7 +93,6 @@ class Lead < AbstractLead
   after_update :send_instant_notification_to_subscribers
   after_save :auto_buy
   after_create :update_deal_created_leads_count
-  attr_accessor :creation_step
   attr_protected :published
 
   private
@@ -347,50 +343,6 @@ class Lead < AbstractLead
 
   def lead_purchase_for(user)
     lead_purchases.where("purchased_by = #{user.id} and accessible_from IS NOT NULL").first
-  end
-
-  def copy_user_profile(user)
-    [
-        [:contact_name, :full_name], [:phone_number, :phone], [:email_address, :email],
-        [:company_name], [:address_line_1, nil, :address], [:address_line_2, nil, :address],
-        [:address_line_3, nil, :address], [:zip_code, nil, :address], [:country_id, nil, :address],
-        [:region_id, nil, :address], [:direct_phone_number, :direct_phone_number]
-    ].each do |field1, field2, field3|
-      field2 = field1 if field2.nil?
-      if field3
-        self.send("#{field1}=".to_sym, user.send(field3.to_sym).send(field2.to_sym)) if self.send(field1.to_sym).blank?
-      else
-        self.send("#{field1}=".to_sym, user.send(field2.to_sym)) if self.send(field1.to_sym).blank?
-      end
-    end
-  end
-
-  def fill_social_media_link(user)
-    if user.rpx_identifier.to_s[/facebook/]
-      self.facebook_url = user.rpx_identifier
-    elsif user.rpx_identifier.to_s[/linkedin/]
-      self.linkedin_url = user.rpx_identifier
-    end
-  end
-
-  def based_on_deal(deal, user)
-    {:current_user => User.find_by_email(deal.deal_admin_email).with_role, :category => deal.lead_category, :sale_limit => 1, :price => deal.price.blank? ? 0 : deal.price,
-     :purchase_decision_date => deal.end_date+7, :currency => deal.currency, :published => true, :requestee => user, :deal_id => deal.id
-    }.each_pair do |key, value|
-      self.send("#{key}=", value)
-    end
-
-    copy_user_profile(user)
-
-    fill_social_media_link(user)
-
-    current_locale = I18n.locale
-    (deal.lead_translations.count > 1 ? ::Locale.enabled.map(&:code) : [current_locale]).each do |locale_code|
-      I18n.locale = locale_code
-      self.header = "#{I18n.t("models.lead.field_prefixes.header")} #{deal.header}"
-      self.description = "#{I18n.t("models.lead.field_prefixes.description")} #{deal.description}"
-    end
-    I18n.locale = current_locale
   end
 
   def can_be_shown_to?(cu)
