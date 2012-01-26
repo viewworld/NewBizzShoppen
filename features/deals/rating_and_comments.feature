@@ -14,7 +14,7 @@ Background:
 @selenium @_tested @_done
 Scenario: I can rate a a deal as a procurement manager
   When I follow category "Electronics deals"
-  And I should see translated "deals.listing.rating_label"
+  Then I should see CSS path "div.ajaxful-rating-wrapper"
   Then a deal named "Electrical deal" has rating set to "0"
   Then I click xpath "(//ul[@class='ajaxful-rating']//li)[5]/a"
   And I wait 2 second

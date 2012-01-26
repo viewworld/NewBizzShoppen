@@ -27,15 +27,16 @@ Feature: Agent timesheets - agent timesheet
     And I should see translated "agent_timesheets.index.agent_time_sheet.last_result"
     And I should see translated "agent_timesheets.index.agent_time_sheet.log_out_time"
     And I should see translated "agent_timesheets.index.agent_time_sheet.value"
+    When I check "show_all_agents"
     And I should see "16:00"
     And I should see "10"
     And I should see "130.00"
-    And I should see "96:00"
     And I should see "260.00"
     And I should see "32:00"
     And I should see "128:00"
     And I should see "14"
     And I should see "260.00"
+    And I should see "26.00"
 
   @_done @_tested_elsewhere
   Scenario: I should see average result per hour
