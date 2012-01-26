@@ -1,4 +1,4 @@
-<%= semantic_form_for user, :url => url do |form| %>
+<%= semantic_form_for user, :url => url, :remote => modal_box do |form| %>
     <frm title="#{t('member_accounts.new.view.header')}" c="no_marg">
       <param:content>
         <div>
@@ -61,7 +61,7 @@
         <ibt c="fltri" icon="plus">
           <%= form.submit t("member_accounts.new.view.button_create_account") %>
         </ibt>
-        <%= bt_link_to nil, t("shared.accounts.new_account_form.button_cancel"), root_path, :class => "bt_grey fltr" %>
+        <%= bt_link_to nil, t("shared.accounts.new_account_form.button_cancel"), modal_box ? "javascript:$.colorbox.close()" : root_path, :class => "bt_grey fltr" %>
       </param:actions>
     </frm>
 <% end %>

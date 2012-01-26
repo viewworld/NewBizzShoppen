@@ -51,8 +51,10 @@ class SignInController < ApplicationController
 
         flash[:notice] = @user.rpx_identifier.blank? ? success_notice : I18n.t("devise.sessions.new.controller.successfully_logged_in")
         format.html { redirect_to(path) }
+        format.js {  }
       else
         format.html { render("new") }
+        format.js {  }
       end
     end
   end

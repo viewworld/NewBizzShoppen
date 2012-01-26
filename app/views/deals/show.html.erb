@@ -128,7 +128,9 @@
       </div>
       <% end %>
 
-      <% if !user_signed_in? or (user_signed_in? and current_user.has_role?(:member) and !@deal.requested_by?(current_user) and !@deal.awaiting_payment_requested_by?(current_user)) and @deal.active? %>
+      <% if !user_signed_in? and @deal.active? %>
+          <%= bt_link_to nil, t("deals.index.view.contact_me"), "#", :onclick => "javascript:show_sign_up_or_sign_in_modal()", :class => "bt_max bt_big" %>
+      <% elsif (user_signed_in? and current_user.has_role?(:member) and !@deal.requested_by?(current_user) and !@deal.awaiting_payment_requested_by?(current_user)) and @deal.active? %>
           <%= bt_link_to nil, t("deals.index.view.contact_me"), (!user_signed_in? or current_user.can_request?(@deal)) ? new_members_lead_path(:deal_id => @deal.id) : my_profile_path(:deal_id => @deal.id), :confirm => ((!user_signed_in? or current_user.can_request?(@deal)) ? t("deals.show.view.get_deal_confirmation_msg") : t("deals.show.view.get_deal_confirmation_for_free_subscription_msg")), :class => "bt_max bt_big" %>
       <% end %>
 
@@ -209,6 +211,18 @@
     </div>
     <div style="width: 300px;"><%= link_to t("deals.index.view.back_to_front_page"), root_path %></div>
   </div>
+
+  <% unless user_signed_in? %>
+      <div id="modal_sign_in_or_sign_up_container_blinder" style="display:none;">
+          <div id="modal_sign_in_or_sign_up_container">
+              <div class="frm_tiny">
+                <div class="pdd_10">
+                  <%= render :partial => "sign_in/purchase_manager_form", :locals => {:user => User::Member.new, :url => member_accounts_path(:format => :js), :modal_box => true} %>
+                </div>
+              </div>
+          </div>
+      </div>
+  <% end %>
 </column-mc:>
 
 <js:>
@@ -250,5 +264,13 @@
               }
           }
       });
+
+     function show_sign_up_or_sign_in_modal(){
+         $.colorbox({overlayClose: false, width:1300, height: 800,inline: true, href:'#modal_sign_in_or_sign_up_container' });
+     }
+
+    $(document).ready(function() {
+        select_subscription_radio_button('user_member', <%= SubscriptionPlan.free.active.for_role(:member).first.id -%>)
+    });
   </script>
 </js:>
