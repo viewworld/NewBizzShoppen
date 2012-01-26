@@ -522,9 +522,9 @@ Feature: Agent campaign - management
       Then I execute js for display action block for "campaigns"
       Then I follow translated "campaigns.index.result"
       Then I fill in "date_from" with "2011-01-01"
-      Then I press translated "campaigns.show.search_button"
+      Then I follow translated "campaigns.show.search_button"
       Then I fill in "date_to" with "2011-01-03"
-      Then I press translated "campaigns.show.search_button"
+      Then I follow translated "campaigns.show.search_button"
       Then I should see "01.01" within "#call_results"
       Then I should see "02.01" within "#call_results"
       Then I should see "03.01" within "#call_results"
@@ -535,16 +535,16 @@ Feature: Agent campaign - management
       Then I follow translated "campaigns.index.result"
       Then I should see "Testing One"
       Then I follow translated "campaigns.show.ranges.whole_campaign"
-      Then I press translated "campaigns.show.search_button"
+      Then I follow translated "campaigns.show.search_button"
       Then I should see whole campaign dates in results table for campaign "Testing One"
       Then I follow translated "campaigns.show.ranges.this_month"
-      Then I press translated "campaigns.show.search_button"
+      Then I follow translated "campaigns.show.search_button"
       Then I should see start month date and and month date in results table
       Then I follow translated "campaigns.show.ranges.this_week"
-      Then I press translated "campaigns.show.search_button"
+      Then I follow translated "campaigns.show.search_button"
       Then I should see start week date and and week date in results table
       Then I follow translated "campaigns.show.ranges.today"
-      Then I press translated "campaigns.show.search_button"
+      Then I follow translated "campaigns.show.search_button"
       Then I should see today date in results table
 
     @is @__campaign_statistics @_tested @selenium @_done
@@ -571,11 +571,11 @@ Feature: Agent campaign - management
       Then I wait 4 second
       Then I select "John Smith" from "agent_ids"
       Then I execute js for select agent_ids "1" to set selected as "false"
-      Then I press translated "campaigns.show.search_button"
+      Then I follow translated "campaigns.show.search_button"
       Then I should see "1" within "#all_result_row"
       Then I execute js for select agent_ids "0" to set selected as "false"
       Then I execute js for select agent_ids "1" to set selected as "true"
-      Then I press translated "campaigns.show.search_button"
+      Then I follow translated "campaigns.show.search_button"
       Then I should see "1" within "#all_result_row"
       Then I wait 4 second
 

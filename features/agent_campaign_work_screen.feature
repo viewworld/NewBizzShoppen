@@ -584,7 +584,7 @@ Feature: Agent campaign - calling session
     And I wait 2 second
     And I select "Upgrade to category supplier" from "call_result_result_id"
     And I wait 2 second
-    And I press translated "call_results.edit.save_button"
+    And I follow translated "call_results.edit.save_button"
     And I am not sign in
     And I go to the homepage
 
