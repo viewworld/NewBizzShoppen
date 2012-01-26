@@ -340,11 +340,11 @@ Feature: Front page for procurment
 
   #8882
   @m25 @requested @_done @_tested
-  Scenario: When See all deals is clicked then instead of featured deals first six deals are loaded
+  Scenario: When See all deals is clicked then instead of featured deals first 15 deals are loaded
     When there are "20" existing deals
     And I visit domain http://fairdeals.dk
     And I follow translated "fairdeals_home.show.view.see_all_deals"
-    Then I should see "5" elements within CSS path "div.other_deals"
+    Then I should see "15" elements within CSS path "div.other_deals"
 
   #8882
   @m25 @requested @_done @nontestable
