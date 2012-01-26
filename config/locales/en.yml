@@ -4126,6 +4126,7 @@ en:
         header_for: "Deals for"
         header_latest_leads: "Latest deals"
         header_for_all_deals: "Browse deals"
+        header_for_search: "Search results"
         request_information: "Request information"
         contact_me: "Get deal"
         price: "Price"
