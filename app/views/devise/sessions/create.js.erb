@@ -19,5 +19,5 @@
         <% end %>
     <% end %>
 <% else %>
-   alert("incorrect name or password");
+   alert("<%= I18n.t("devise.failure.invalid") %>");
 <% end %>
