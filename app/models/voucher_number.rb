@@ -82,7 +82,7 @@ class VoucherNumber < ActiveRecord::Base
   def cancel!
     deal.unconfirmed_leads.where(:requested_by => user.id).first.cancel!
     update_attributes(:user_id => nil, :reserved_until => nil)
-    TemplateMailer.delay.new(user.email, :voucher_payment_failed_notification, Country.get_country_from_locale, {:deal => deal})
+    TemplateMailer.new(user.email, :voucher_payment_failed_notification, Country.get_country_from_locale, {:deal => deal}).deliver!
   end
 
   class << self
