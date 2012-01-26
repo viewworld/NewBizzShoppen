@@ -46,7 +46,7 @@ Then /^I change result for current contact to "([^\"]*)"$/ do |result|
   Then I select "#{result}" from "call_result_result_id"
   Then I wait 3 second
   #{"Then contact result date value is set to Time.now plus 4.days" if result == "Call back"}
-  Then I press translated "call_results.edit.save_button"
+  Then I follow translated "call_results.edit.save_button"
   Then I wait 3 second
 }
 end
