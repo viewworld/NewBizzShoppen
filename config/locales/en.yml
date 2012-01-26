@@ -3338,7 +3338,7 @@ en:
       duplicate:
         notice: "Campaign duplication task has been successfully added to queue. It will be finished in few seconds."
       destroy:
-        notice: "Campaign has been successfully queued. It will be destroyed in few minutes."
+        notice: "Campaign has been deleted."
     subscription_plans:
       destroy:
         notice: "Subscription plan has been destroyed successfully."

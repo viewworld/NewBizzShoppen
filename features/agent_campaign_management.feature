@@ -64,7 +64,7 @@ Feature: Agent campaign - management
     Scenario: I can remove selected campaign
       Then I follow translated "campaigns.index.destroy"
       Then I should not see "Testing One"
-      Then I should see "Campaign was successfully destroyed"
+      Then I should see translated "flash.campaigns.destroy.notice"
       Then I should see "Testing Two"
 
     @is @__campaigns_listing @_tested @_done @selenium
