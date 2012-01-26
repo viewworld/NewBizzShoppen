@@ -1,10 +1,23 @@
+var ajax_in_progress = false;
+
 $(document).ajaxStart(function(){
   $('#global_loader').show();
+    ajax_in_progress = true;
 });
 
 $(document).ajaxStop(function(){
   $('#global_loader').hide();
+    ajax_in_progress = false;
 });
+
+function no_ajax_in_progress() {
+    if (ajax_in_progress) {
+        alert(I18n.t("common.js.ajax_in_progress"));
+        return false;
+    } else {
+        return true;
+    }
+}
 
 $(document).ready(function() {
    $('*.expandable').expander({

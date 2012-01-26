@@ -9,9 +9,7 @@
         <%= render :partial => '/callers/call_results/form', :locals => {:form => form, :contact => @contact, :call_result => @call_result, :reload_path => reload_path, :agent_work_screen => agent_work_screen} %>
       </param:content>
       <param:actions>
-        <ibt c="fltri" icon="save">
-          <%= form.submit t("call_results.edit.save_button"), :name => "commit_create", :onclick => "#{'serialize_materials_array_onsubmit(); ' if current_user.has_role?(:admin)}select_options_to_submit('call_result_buying_category_ids_')" %>
-        </ibt>
+        <%= bt_link_to :save, t("call_results.edit.save_button"), "javascript:void(0)", :id => "commit_update_call_result", :class => "fltr" %>
         <%= bt_link_to(nil, t("call_results.edit.cancel_button"), back_path, :class => "bt_grey fltr") if back_path %>
       </param:actions>
     </frm>
@@ -36,4 +34,12 @@
      $('#serialized_materials_array_field').val(serialize_material_repository_array());
  }
 $('#call_result_result_id_changed').val('0');
+
+$("#commit_update_call_result").click(function(){
+    if (no_ajax_in_progress()) {
+        <%= 'serialize_materials_array_onsubmit(); ' if current_user.has_role?(:admin) %>
+        select_options_to_submit('call_result_buying_category_ids_');
+        $(this).parents("form").callRemote();
+    }
+});
 </script>
