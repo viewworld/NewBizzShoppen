@@ -218,7 +218,7 @@
               <div class="frm_tiny">
                 <div class="pdd_10">
                   <% @_user = User::Member.new(:agreement_read => true, :password => "secret", :password_confirmation => "secret" ,:company_name => "TestCompany00", :first_name => "Alyona", :last_name => "Minkovsky", :phone => "+49 34234324", :email => "member_#{Time.now.to_f.to_s.gsub('.','')}@nbs.com", :address => Address.new( :address_line_1 => "d", :address_line_3 => "d", :zip_code => "1222" ,  :country_id => Country.first.id)) %>
-                  <%= render :partial => "sign_in/purchase_manager_form", :locals => {:user => @_user, :url => member_accounts_path(:deal_request_id => @deal.id, :format => :js), :modal_box => true} %>
+                  <%= render :partial => "sign_in/purchase_manager_form", :locals => {:deal => @deal, :user => @_user, :url => member_accounts_path(:deal_request_id => @deal.id, :format => :js), :modal_box => true} %>
                 </div>
               </div>
           </div>
@@ -270,7 +270,7 @@
       });
 
      function show_sign_up_or_sign_in_modal(){
-         $.colorbox({overlayClose: false, width:1300, height: 800,inline: true, href:'#modal_sign_in_or_sign_up_container' });
+         $.colorbox({overlayClose: false, width:false, height: false, inline: true, href:'#modal_sign_in_or_sign_up_container' });
      }
 
     $(document).ready(function() {
