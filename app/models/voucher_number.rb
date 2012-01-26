@@ -44,6 +44,7 @@ class VoucherNumber < ActiveRecord::Base
   end
 
   def file_path(extension)
+    FileUtils.mkdir_p(Rails.root.join("public/system/voucher_cache"))
     Rails.root.join "public/system/voucher_cache/voucher_#{deal_unique_id}_#{number}.#{extension}"
   end
 
