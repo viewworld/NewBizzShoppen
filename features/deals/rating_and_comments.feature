@@ -44,7 +44,7 @@ Scenario: I can see rating when I am not logged in or my role is not purchase ma
   And I am on the home page
   And I follow translated "layout.fairdeals.main_menu.deals"
   And I follow category "Electronics deals"
-  Then I should see translated "deals.listing.rating_label"
+  Then I should see CSS path "div.ajaxful-rating-wrapper"
   When I follow "Electrical deal"
   Then I should see CSS path "div.ajaxful-rating-wrapper"
   And I visit domain http://localhost
@@ -52,6 +52,6 @@ Scenario: I can see rating when I am not logged in or my role is not purchase ma
   And I sign in as blazejek@gmail.com with password secret
   And I follow translated "layout.main_menu.shared.browse_deals"
   And I follow category "Electronics deals"
-  Then I should see translated "deals.listing.rating_label"
+  Then I should see CSS path "div.ajaxful-rating-wrapper"
   When I follow "Electrical deal"
   Then I should see CSS path "div.ajaxful-rating-wrapper"
