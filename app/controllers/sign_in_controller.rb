@@ -49,6 +49,11 @@ class SignInController < ApplicationController
           sign_in(@user)
         end
 
+        if @deal = Deal.find_by_id(params[:deal_request_id])
+          @lead = Lead.new
+          @lead.based_on_deal(@deal, @user)
+        end
+
         flash[:notice] = @user.rpx_identifier.blank? ? success_notice : I18n.t("devise.sessions.new.controller.successfully_logged_in")
         format.html { redirect_to(path) }
         format.js {  }

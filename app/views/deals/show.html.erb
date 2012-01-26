@@ -217,7 +217,8 @@
           <div id="modal_sign_in_or_sign_up_container">
               <div class="frm_tiny">
                 <div class="pdd_10">
-                  <%= render :partial => "sign_in/purchase_manager_form", :locals => {:user => User::Member.new, :url => member_accounts_path(:format => :js), :modal_box => true} %>
+                  <% @_user = User::Member.new(:agreement_read => true, :password => "secret", :password_confirmation => "secret" ,:company_name => "TestCompany00", :first_name => "Alyona", :last_name => "Minkovsky", :phone => "+49 34234324", :email => "member_#{Time.now.to_f.to_s.gsub('.','')}@nbs.com", :address => Address.new( :address_line_1 => "d", :address_line_3 => "d", :zip_code => "1222" ,  :country_id => Country.first.id)) %>
+                  <%= render :partial => "sign_in/purchase_manager_form", :locals => {:user => @_user, :url => member_accounts_path(:deal_request_id => @deal.id, :format => :js), :modal_box => true} %>
                 </div>
               </div>
           </div>
@@ -227,6 +228,8 @@
 
 <js:>
   <script type="text/javascript">
+
+    <% if @deal.group_deal? %>
       jQuery(document).ready(function() {
           d = new Date();
           seconds = (<%= @deal.end_date.to_i %> - parseInt(d.getTime() / 1000));
@@ -242,6 +245,7 @@
               omitWeeks: true
           });
       });
+    <% end %>
 
       jQuery(document).ready(function() {
           $('a[rel=colorbox]').colorbox();

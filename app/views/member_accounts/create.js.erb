@@ -1,6 +1,20 @@
 <% unless @user.valid? %>
-    $("#modal_sign_in_or_sign_up_container").html("<%= escape_javascript(render :partial => "sign_in/purchase_manager_form", :locals => {:user => @user, :url => member_accounts_path(:format => :js), :modal_box => true}) %>");
+    $("#modal_sign_in_or_sign_up_container").html("<%= escape_javascript(render :partial => "sign_in/purchase_manager_form", :locals => {:user => @user, :url => member_accounts_path(:deal_request_id => params[:deal_request_id], :format => :js), :modal_box => true}) %>");
     select_subscription_radio_button('user_member', <%= @user.subscription_plan_id -%>);
 <% else %>
-    alert("ok")
+    <% if @deal.requested_by?(@user) %>
+        alert("already requested");
+    <% elsif !@user.can_request?(@deal) %>
+        $.colorbox.close();
+        alert("<%= I18n.t("deals.common.upgrade_necessary_to_request_deal") %>");
+        window.location.href = "<%= my_profile_path %>";
+    <% else %>
+        <% if @deal.deal_templates.empty? %>
+            $.colorbox.close();
+        <% end %>
+        $("#modal_sign_in_or_sign_up_container").html("<%= escape_javascript(render :partial => "members/leads/templates_for_modal", :locals => {:lead => @lead, :url => members_leads_path(:deal_id => @deal.id, :format => :js)}) %>");
+        <% if @deal.deal_templates.empty? %>
+           $('#new_lead').submit();
+        <% end %>
+    <% end %>
 <% end %>

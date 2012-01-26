@@ -68,7 +68,6 @@
 
   <header back="true">
     <param:content>
-      <% unless session[:site] == "fairdeals" %>
           <% if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(@search.latest) %>
               <%= t("deals.index.view.header_latest_leads") %>
           <% elsif @category %>
@@ -76,9 +75,6 @@
           <% else %>
               <%= t("deals.index.view.header_for_all_deals") %>
           <% end %>
-      <% else %>
-          <%= " #{t("deals.index.view.header_for")} #{@category.name}" %>
-      <% end %>
     </param:content>
   </header>
 

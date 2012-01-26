@@ -64,6 +64,8 @@ class Members::LeadsController < Members::MemberController
       success.html {
         redirect_to members_lead_path(@lead)
       }
+      success.js {  }
+      failure.js { }
     end
   end
 
