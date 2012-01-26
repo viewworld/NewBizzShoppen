@@ -585,7 +585,7 @@ Feature: Agent campaign - management
       Then I follow translated "campaigns.index.result"
       Then I should see "Call back" within "#call_results"
       Then I check "final"
-      Then I press translated "campaigns.show.search_button"
+      Then I follow translated "campaigns.show.search_button"
       Then I should not see "Call back" within "#call_results"
       
       
