@@ -61,7 +61,7 @@ class Asset < ActiveRecord::Base
   end
 
   def stored_local_temp_path(url, prefix=nil)
-    tmp_file = open(url)
+    tmp_file = open(URI.escape(url))
     tmp_filename = tmp_file.path.split('/').last
     url_filename = "#{prefix + '-' if prefix}#{url.split('/').last}"
     dest_path = tmp_file.path.gsub(tmp_filename, url_filename)
