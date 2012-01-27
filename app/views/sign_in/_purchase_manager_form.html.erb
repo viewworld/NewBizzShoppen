@@ -74,10 +74,12 @@
       </param:content>
       <param:actions>
         <div style="position: absolute;left: 142px;">
+          <% unless modal_box %>
           <%= t("member_accounts.new.view.janrain_sign_up_label") %>
-          <% unless Rails.env.test? %>
-              <%= link_to_rpx image_tag("icons/social_login.png"), member_accounts_url %>
-              <%= javascript_include_rpx member_accounts_url %>
+              <% unless Rails.env.test? %>
+                  <%= link_to_rpx image_tag("icons/social_login.png"), member_accounts_url %>
+                  <%= javascript_include_rpx member_accounts_url %>
+              <% end %>
           <% end %>
         </div>
         <ibt c="fltri" icon="plus">
