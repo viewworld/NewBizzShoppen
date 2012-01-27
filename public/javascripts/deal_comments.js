@@ -19,17 +19,21 @@ function deal_reply_to(thread_id,comment_id,commentable_id,comment_title) {
   var MarkAsReadCallbacks = [];
 
   function deal_mark_comments_as_read(lead_id){
-      if($.inArray(lead_id, MarkAsReadCallbacks) == -1){
-          MarkAsReadCallbacks.push(lead_id);
-          $.post('/deal_comments/comment_readers.js', 'lead_id='+lead_id);
-      }
+      $.post('/deal_comments/comment_readers.js', 'lead_id='+lead_id);
   }
 
-  function load_deal_comments(lead_id){
-        $.ajax({
+  function load_deal_comments(lead_id,user_signed_in){
+      if($.inArray(lead_id, MarkAsReadCallbacks) == -1){
+          MarkAsReadCallbacks.push(lead_id);
+
+          $.ajax({
             url: '/deal_comments/deals/' + lead_id + '.js',
             type: 'GET'
-        });
-      deal_mark_comments_as_read(lead_id);
-      mark_row_as_read('lead_' + lead_id);
+          });
+
+          if(user_signed_in){
+            deal_mark_comments_as_read(lead_id);
+            mark_row_as_read('lead_' + lead_id);
+          }
+      }
   }
