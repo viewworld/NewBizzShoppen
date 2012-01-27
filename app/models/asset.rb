@@ -59,6 +59,16 @@ class Asset < ActiveRecord::Base
   def full_local_path_for_current
     Pathname.new(File.join([::Rails.root, 'public', self.url.gsub("https://fairleads.s3.amazonaws.com/production", "")]).gsub(/(releases\/\d+)/, "current"))
   end
+
+  def stored_local_temp_path(url, prefix=nil)
+    tmp_file = open(URI.escape(url))
+    tmp_filename = tmp_file.path.split('/').last
+    url_filename = "#{prefix + '-' if prefix}#{url.split('/').last}"
+    dest_path = tmp_file.path.gsub(tmp_filename, url_filename)
+    FileUtils.mv(tmp_file.path, dest_path)
+
+    dest_path
+  end
 end
 
 class Asset::CategoryImage < Asset

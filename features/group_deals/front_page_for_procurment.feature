@@ -71,6 +71,10 @@ Feature: Front page for procurment
     And deal named "PrimaryGroupDeal" is a primary featured deal
     Given I visit domain http://fairdeals.dk
     Then I should see "PrimaryGroupDeal" within "div#primary_group_deal"
+    And I should see "$100"
+    And I should see "$25"
+    And I should see "$75"
+    And I should see "75%"
 
   @added @_done @_tested
   Scenario: I should not see one primary group deal when it has been disabled or expired
@@ -361,19 +365,19 @@ Feature: Front page for procurment
   Scenario: On fairdeals.dk and fairdeals.eu the certificate should be removed
 
   #9604
-  @m27 @requested
+  @m27 @requested @rb @_done @_non_testable
   Scenario: I should see only 3 secondary deals on the front page instead of 9
 
   #9604
-  @m27 @requested
+  @m27 @requested @tgn @_done @_tested_elsewhere
   Scenario: I should always see Normal price, Fairdeals price, You save with percent and rating in primary featured deal on the front page
 
   #9604
-  @m27 @requested
+  @m27 @requested @rb @_done @_non_testable
   Scenario: I should see featured description, rating and three prices in the secondary featured deal boxes on the front page
 
   #9604
-  @m27 @requested
+  @m27 @requested @rb @_done @_non_testable
   Scenario: I should see deals listed in browse deals as primary deal on the front page
 
   #9811

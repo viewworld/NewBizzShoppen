@@ -215,11 +215,7 @@
   <% unless user_signed_in? %>
       <div id="modal_sign_in_or_sign_up_container_blinder" style="display:none;">
           <div id="modal_sign_in_or_sign_up_container">
-              <div class="frm_tiny">
-                <div class="pdd_10">
-                  <%= render :partial => "sign_in/purchase_manager_form", :locals => {:deal => @deal, :user => User::Member.new, :url => member_accounts_path(:deal_request_id => @deal.id, :format => :js), :modal_box => true} %>
-                </div>
-              </div>
+              <%= render :partial => "sign_in/purchase_manager_form", :locals => {:deal => @deal, :user => User::Member.new, :url => member_accounts_path(:deal_request_id => @deal.id, :format => :js), :modal_box => true} %>
           </div>
       </div>
   <% end %>
@@ -269,11 +265,11 @@
       });
 
      function show_sign_up_or_sign_in_modal(){
-         $.colorbox({overlayClose: false, width:false, height: false, inline: true, href:'#modal_sign_in_or_sign_up_container' });
+         $.colorbox({overlayClose: false, width: 980, height: false, inline: true, href:'#modal_sign_in_or_sign_up_container' });
      }
 
     $(document).ready(function() {
-        select_subscription_radio_button('user_member', <%= SubscriptionPlan.free.active.for_role(:member).first.id -%>)
+        select_subscription_radio_button('user_member', <%= SubscriptionPlan.free.active.only_public.for_role(:member).first.id -%>)
     });
   </script>
 </js:>
