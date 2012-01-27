@@ -24,3 +24,12 @@ function deal_reply_to(thread_id,comment_id,commentable_id,comment_title) {
           $.post('/deal_comments/comment_readers.js', 'lead_id='+lead_id);
       }
   }
+
+  function load_deal_comments(lead_id){
+        $.ajax({
+            url: '/deal_comments/deals/' + lead_id + '.js',
+            type: 'GET'
+        });
+      deal_mark_comments_as_read(lead_id);
+      mark_row_as_read('lead_' + lead_id);
+  }
