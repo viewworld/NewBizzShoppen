@@ -71,9 +71,9 @@ Feature: Front page for procurment
     And deal named "PrimaryGroupDeal" is a primary featured deal
     Given I visit domain http://fairdeals.dk
     Then I should see "PrimaryGroupDeal" within "div#primary_group_deal"
-    And I should see "$100"
-    And I should see "$25"
-    And I should see "$75"
+    And I should see "100"
+    And I should see "25"
+    And I should see "75"
     And I should see "75%"
 
   @added @_done @_tested
