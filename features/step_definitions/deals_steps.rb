@@ -208,3 +208,9 @@ Given /^deal named "([^"]*)" has been unpublished$/ do |deal_header|
   deal.published = false
   deal.save
 end
+
+Given /^deal named "([^"]*)" has deal template "([^"]*)" assigned$/ do |deal_header, deal_template_name|
+  deal = Deal.where(:header => deal_header).first
+  deal.deal_templates << LeadTemplate.where(:name => deal_template_name).first
+  deal.save
+end

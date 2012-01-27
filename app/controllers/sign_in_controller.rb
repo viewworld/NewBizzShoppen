@@ -34,6 +34,11 @@ class SignInController < ApplicationController
       @user.assign_free_subscription_plan = true
     end
 
+    if @deal = Deal.find_by_id(params[:deal_request_id])
+      @lead = Lead.new
+      @lead.based_on_deal(@deal, @user)
+    end
+
     respond_to do |format|
       if @user.save
         success_notice = I18n.t("flash.accounts.create.no_verification") if @user.confirmed?
@@ -47,11 +52,6 @@ class SignInController < ApplicationController
         unless @user.rpx_identifier.blank?
           @user.confirm!
           sign_in(@user)
-        end
-
-        if @deal = Deal.find_by_id(params[:deal_request_id])
-          @lead = Lead.new
-          @lead.based_on_deal(@deal, @user)
         end
 
         flash[:notice] = @user.rpx_identifier.blank? ? success_notice : I18n.t("devise.sessions.new.controller.successfully_logged_in")
