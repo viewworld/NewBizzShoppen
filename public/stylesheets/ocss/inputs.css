@@ -970,6 +970,7 @@ input.date.hasDatepicker
 /* --- labels --------------------------------------------------------------- */
 
 .inputs_vertical li.string label,
+.inputs_vertical li.password label,
 .inputs_vertical li.select label,
 .inputs_vertical li.date label,
 .inputs_vertical li.text label
@@ -990,7 +991,8 @@ input.date.hasDatepicker
 }
 
 
-.inputs_vertical li.string input
+.inputs_vertical li.string input,
+.inputs_vertical li.password input
 {
     width: 160px;
     margin: 0;
