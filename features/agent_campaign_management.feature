@@ -225,7 +225,7 @@ Feature: Agent campaign - management
       Then I should see "Johnny Mnemonic" within "#call_results"
       When I click hidden link by url regex "/callers\/contacts\/\d+\/call_results\/\d+\/edit/"
       Then I fill in "call_result_note" with "this NOT COOL!!!!"
-      Then I press translated "call_results.edit.save_button"
+      Then I follow translated "call_results.edit.save_button"
       Then I should see "Call result was successfully updated"
       Then I execute js for display action block for "call_results"
       Then I confirm a js popup on the next step
