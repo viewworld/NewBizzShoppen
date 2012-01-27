@@ -3,8 +3,8 @@
 
   <div class="txt">
     <% unless Rails.env.test? %>
-        <%= link_to_rpx image_tag("icons/social_login.png"), user_session_url %>
-        <%= javascript_include_rpx user_session_url %>
+        <%= link_to_rpx image_tag("icons/social_login.png"), user_session_url(:deal_request_id => (defined?(deal_request_id) ? deal_request_id : nil)) %>
+        <%= javascript_include_rpx user_session_url(:deal_request_id => (defined?(deal_request_id) ? deal_request_id : nil) ) %>
     <% end %>
   </div>
 </li>
