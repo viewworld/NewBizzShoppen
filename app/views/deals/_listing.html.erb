@@ -185,7 +185,7 @@
 
         <td class="cr va_b">
           <div class="row_tooltip_actions">
-            <%= link_to deal.comment_threads.count.zero? ? !user_signed_in? ? t("deals.listing.no_comments") : t("deals.listing.create_comment") : t("deals.listing.show_comments"), "javascript:void(0)", :class => "toggle_row show_comments#{' toggle_row_unread' if deal.has_unread_comments_for_user?(current_user)}", :onclick => "if(#{user_signed_in? ? 'true' : 'false'}){deal_mark_comments_as_read(#{deal.id}); mark_row_as_read('#{dom_id(deal)}')}" %>
+            <%= link_to deal.comment_threads.count.zero? ? !user_signed_in? ? t("deals.listing.no_comments") : t("deals.listing.create_comment") : t("deals.listing.show_comments"), "javascript:void(0)", :class => "toggle_row show_comments#{' toggle_row_unread' if deal.has_unread_comments_for_user?(current_user)}", :onclick => "load_deal_comments(#{deal.id},#{user_signed_in?})" %>
             <%= link_to t("deals.listing.hide_comments"), "javascript:void(0)", :class => "toggle_row hide_comments", :style => "display:none" %>
           </div>
         </td>
@@ -194,8 +194,8 @@
       <tr class="row_tooltip">
         <td class="cl"></td>
         <td colspan="6">
-          <div class="row_tooltip_content comments_details">
-            <%= render :partial => "/shared/deal_comments/deal_threads", :locals => {:deal => deal, :threads => deal.comment_threads.roots.order("created_at DESC")} %>
+          <div class="row_tooltip_content comments_details" id="comments_for_deal_<%= deal.id %>">
+            <%#= render :partial => "/shared/deal_comments/deal_threads", :locals => {:deal => deal, :threads => deal.comment_threads.roots.order("created_at DESC")} %>
           </div>
         </td>
         <td class="cr"></td>

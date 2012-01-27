@@ -1,2 +1,2 @@
 content = escape_javascript(render(:partial => "/shared/deal_comments/deal_threads", :locals => { :deal => @deal, :threads => @threads }))
-page << "$('p#comments_for_deal_#{@deal.id}').html('#{content}');"
+page << "$('#comments_for_deal_#{@deal.id}').html('#{content}');"

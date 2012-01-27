@@ -264,7 +264,7 @@ Nbs::Application.routes.draw do
 
   namespace :deal_comments do
     resources :threads
-    resources :deals do
+    resources :deals, :only => [:show] do
       resources :threads
     end
     resources :replies

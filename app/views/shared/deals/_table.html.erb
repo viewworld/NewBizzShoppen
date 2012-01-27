@@ -71,7 +71,7 @@
         <% end %>
         <td class="cr va_b">
           <div class="row_tooltip_actions">
-            <%= link_to t("comments.shared.show_comments")+" (#{deal.comments_count_for(current_user)})", "javascript:void(0);", :class => "toggle_row show_comments#{' toggle_row_unread' if deal.has_unread_comments_for_user?(current_user)}", :onclick => "load_deal_comments(#{deal.id})" %>
+            <%= link_to t("comments.shared.show_comments")+" (#{deal.comments_count_for(current_user)})", "javascript:void(0);", :class => "toggle_row show_comments#{' toggle_row_unread' if deal.has_unread_comments_for_user?(current_user)}", :onclick => "load_deal_comments(#{deal.id},#{user_signed_in?})" %>
             <%= link_to t("comments.shared.hide_comments"), "javascript:void(0);", :class => "toggle_row hide_comments", :style => "display:none" %>
           </div>
         </td>

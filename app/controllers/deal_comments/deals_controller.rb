@@ -1,4 +1,4 @@
-class DealComments::DealsController < DealComments::DealCommentsController
+class DealComments::DealsController < ApplicationController
   respond_to :js
 
   before_filter :fetch_deal
