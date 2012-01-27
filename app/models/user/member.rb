@@ -8,6 +8,8 @@ class User::Member < ::User
   include Addresses
   include BankAccounts
 
+  has_many :requested_deals, :class_name => "Deal", :foreign_key => "requested_by"
+
   validates_presence_of :company_name, :phone
 
   public

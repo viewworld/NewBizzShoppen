@@ -1,0 +1,23 @@
+<% if @user %>
+    <% if @deal.requested_by?(@user) %>
+        $.colorbox.close();
+        alert("<%= I18n.t("deals.common.deal_already_requested", :header => @deal.header) %>");
+        window.location.href = "<%= deal_path(@lead.deal.slug) %>";
+    <% elsif !@user.can_request?(@deal) %>
+        $.colorbox.close();
+        alert("<%= I18n.t("deals.common.upgrade_necessary_to_request_deal") %>");
+        window.location.href = "<%= my_profile_path %>";
+    <% else %>
+        <% if @deal.deal_templates.empty? %>
+            $.colorbox.close();
+        <% end %>
+        $("#modal_sign_in_or_sign_up_container").html("<%= escape_javascript(render :partial => "members/leads/templates_for_modal", :locals => {:lead => @lead, :url => members_leads_path(:deal_id => @deal.id, :format => :js)}) %>");
+        <% if @deal.deal_templates.empty? %>
+           $('#new_lead').submit();
+        <% else %>
+           $.colorbox.resize();
+        <% end %>
+    <% end %>
+<% else %>
+   alert("<%= I18n.t("devise.failure.invalid") %>");
+<% end %>
