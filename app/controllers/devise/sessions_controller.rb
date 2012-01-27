@@ -38,8 +38,17 @@ class Devise::SessionsController < ApplicationController
       end
     end
 
+    deal = params[:deal_request_id] ? Deal.without_inactive.find_by_id(params[:deal_request_id]) : nil
+
     respond_to do |format|
-      format.html { sign_in_and_redirect(resource_name, resource) }
+      format.html {
+        if deal
+          sign_in(resource)
+          redirect_to deal_path(deal)
+        else
+          sign_in_and_redirect(resource_name, resource)
+        end
+      }
       format.js { sign_in(resource) if resource }
     end
   end

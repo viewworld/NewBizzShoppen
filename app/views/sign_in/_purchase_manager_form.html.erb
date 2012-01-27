@@ -4,7 +4,7 @@
             <%= semantic_form_for(:user, :url => session_path(:user, :deal_request_id => deal.id, :format => :js), :remote => true) do |f| %>
                 <fieldset class="inputs_vertical labels_90 inputs_130 no_pdd">
                   <ol class="align_inputs no_pdd">
-                    <li> <%= render :partial => "shared/accounts/social_login_for_sign_in" %></li>
+                    <li> <%= render :partial => "shared/accounts/social_login_for_sign_in", :locals => { :deal_request_id => deal.id } %></li>
                     <%= f.input :email, :input_html => {:tabindex => 1} %>
                     <%= f.input :password, :input_html => {:tabindex => 2} %>
                     <%= f.input :remember_me, :as => :boolean, :required => false, :input_html => {:tabindex => 3} %>
