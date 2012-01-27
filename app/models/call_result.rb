@@ -114,7 +114,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def update_pending_status
-    return true if contact.current_call_result.nil? or (contact.current_call_result.present? and contact.current_call_result.result.nil?)
+    return true if contact.current_call_result.present? and contact.current_call_result.result.nil?
     pending_status = contact.current_call_result.present? ? (PENDING_RESULT_TYPES.include?(contact.current_call_result.result.label) and contact.should_be_pending?(contact.agent)) : false
     contact.update_attributes :pending => pending_status
   end
