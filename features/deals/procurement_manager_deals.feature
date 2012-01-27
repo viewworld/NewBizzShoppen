@@ -133,18 +133,22 @@ Feature: Deals from procurement manager perspective
   And last email sent should have been sent to recipient "anakasparian@tyt.com"
 
   ##7659
-  @m19 @requested @_done @_tested @tgn
+  @m19 @requested @_done @_tested @tgn @selenium
   Scenario: When I am not logged in I should still see Get deal button and when click I should be prompted to log in or create new account and return to the get deal
     Given I visit domain http://fairdeals.dk
-    And subscription plan named "Free member subscription" exists with attributes "is_active:0"
+    And subscription plan named "Free member subscription" exists with attributes "free_deal_requests_in_free_period:100"
     Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
+    Given template named "Xeper details" for category "Xeper" is created by user "buyer@nbs.com" with role "supplier"
+    And template named "Xeper details" is mandatory
+    And template named "Xeper details" has following fields "field #1:true:true,field #2:true:true"
     And user "buyer@nbs.com" has assigned role "deal_maker"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
+    And deal named "super" has deal template "Xeper details" assigned
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
-    And I follow translated "supplier_home.show.view.create_new_membership_account"
+    And I wait 2 second
     And I fill in "user_member_company_name" with "The Young Turks"
     And I fill in "user_member_first_name" with "Ana"
     And I fill in "user_member_last_name" with "Kasparian"
@@ -156,10 +160,32 @@ Feature: Deals from procurement manager perspective
     And I fill in "user_member_password" with "secret"
     And I fill in "user_member_password_confirmation" with "secret"
     And I fill in "user_member_email" with "anakasparian@tyt.com"
-    And I choose "user_member_subscription_plan_id"
     And I check "user_member_agreement_read"
     And I press translated "supplier_accounts.new.view.button_create_account"
-    And I should see translated "deals.new.view.frame_header"
+    And I wait 2 second
+    And I fill in "lead_lead_template_values_attributes_0_value" with "some value1"
+    And I fill in "lead_lead_template_values_attributes_1_value" with "some value2"
+    And I press translated "member.leads.new.view.button_create"
+    And I wait 1 second
+    And I should see "super"
+    And I am not sign in
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:ultradeal|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
+    And deal named "ultradeal" has deal template "Xeper details" assigned
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow category "Business deals"
+    And I follow "ultradeal"
+    And I follow translated "deals.index.view.contact_me"
+    And I wait 2 second
+    And I fill in "user_email" with "anakasparian@tyt.com"
+    And I fill in "user_password" with "secret"
+    And I press translated "home.show.view.sign_in"
+    And I wait 2 second
+    And I fill in "lead_lead_template_values_attributes_0_value" with "some value1"
+    And I fill in "lead_lead_template_values_attributes_1_value" with "some value2"
+    And I press translated "member.leads.new.view.button_create"
+    And I wait 1 second
+    And I should see "ultradeal"
+
 
   #8340
   @m22 @requested @tgn @_done @_tested
@@ -351,19 +377,19 @@ Feature: Deals from procurement manager perspective
     And I should see "Blurb voucher confirmation page"
 
   #9606
-  @m27 @requested
+  @m27 @requested @tgn @_done @_tested_elsewhere
   Scenario: When I am not signed in and I click get deal button then modal window should appear
 
   #9606
-  @m27 @requested
+  @m27 @requested @tgn @_done @_tested_elsewhere
   Scenario: It should be possible to sign in or sign up on the modal window view
 
   #9606
-  @m27 @requested
+  @m27 @requested @tgn @_done @_tested_elsewhere
   Scenario: After sign in/up I should see another modal windows where I can enter template information and note
 
   #9606
-  @m27 @requested
+  @m27 @requested @tgn @_done @_tested_elsewhere
   Scenario: I should be redirected to paypal or view deal after completing the modal window form
 
   #9410

@@ -15,7 +15,7 @@
       </div>
   <% end %>
 
-  <%= render :partial => "sign_in/purchase_manager_form", :locals => {:user => @user, :url => member_accounts_path} %>
+  <%= render :partial => "sign_in/purchase_manager_form", :locals => {:user => @user, :url => member_accounts_path, :modal_box => false} %>
     <script type="text/javascript">
     $(document).ready(function() {
         select_subscription_radio_button('<%= @user.class.to_s.underscore.gsub('/', '_') -%>', <%= @user.subscription_plan_id -%>)

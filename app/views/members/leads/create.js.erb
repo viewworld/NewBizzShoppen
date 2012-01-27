@@ -1,0 +1,10 @@
+<% if @lead.valid? %>
+    $.colorbox.close();
+    <% if @lead.deal.voucher_enabled and !@lead.deal.voucher_numbers.available_for_now(Time.now).blank? %>
+        window.location.href = "<%= redirect_to_paypal_members_lead_path(@lead) %>";
+    <% else %>
+        window.location.href = "<%= deal_path(@lead.deal.slug) %>";
+    <% end %>
+<% else %>
+    $("#modal_sign_in_or_sign_up_container").html("<%= escape_javascript(render :partial => "members/leads/templates_for_modal", :locals => {:lead => @lead, :url => members_leads_path(:deal_id => @deal.id, :format => :js)}) %>");
+<% end %>

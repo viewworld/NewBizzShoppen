@@ -26,10 +26,22 @@ class Devise::SessionsController < ApplicationController
 
   # POST /resource/sign_in
   def create
-    resource = warden.authenticate!(:scope => resource_name, :recall => "new")
+    resource = request.xhr? ? warden.authenticate(:scope => resource_name) : warden.authenticate!(:scope => resource_name, :recall => "new")
     set_flash_message :notice, :signed_in
     session[:rpx_data] = nil
-    sign_in_and_redirect(resource_name, resource)
+
+    if request.xhr? and resource
+      @user = resource.with_role
+      if @deal = Deal.find_by_id(params[:deal_request_id])
+        @lead = Lead.new
+        @lead.based_on_deal(@deal, @user)
+      end
+    end
+
+    respond_to do |format|
+      format.html { sign_in_and_redirect(resource_name, resource) }
+      format.js { sign_in(resource) if resource }
+    end
   end
 
   # GET /resource/sign_out
