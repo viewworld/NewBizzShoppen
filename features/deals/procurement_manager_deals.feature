@@ -377,19 +377,19 @@ Feature: Deals from procurement manager perspective
     And I should see "Blurb voucher confirmation page"
 
   #9606
-  @m27 @requested
+  @m27 @requested @tgn @_done @_tested_elsewhere
   Scenario: When I am not signed in and I click get deal button then modal window should appear
 
   #9606
-  @m27 @requested
+  @m27 @requested @tgn @_done @_tested_elsewhere
   Scenario: It should be possible to sign in or sign up on the modal window view
 
   #9606
-  @m27 @requested
+  @m27 @requested @tgn @_done @_tested_elsewhere
   Scenario: After sign in/up I should see another modal windows where I can enter template information and note
 
   #9606
-  @m27 @requested
+  @m27 @requested @tgn @_done @_tested_elsewhere
   Scenario: I should be redirected to paypal or view deal after completing the modal window form
 
   #9410
