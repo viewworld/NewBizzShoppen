@@ -10,8 +10,6 @@
               <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(featured.slug), :class => 'default_action' %>
             </div>
             <div class="deal_info">
-              <p class="deal_desc"><%= featured.short_featured_description.to_s.truncate_letters(55) %></p>
-
               <div class="deal_price">
                 <p>
                 <% if featured.general_discount? %>
@@ -33,7 +31,7 @@
               </div>
 
               <div class="deal_description">
-                <p><%= featured.featured_description.to_s.html_safe %></p>
+                <p><%= featured.short_featured_description.to_s.html_safe %></p>
               </div>
 
               <clb/>
