@@ -62,6 +62,14 @@ class ::AgentTimesheet::General
     end
   end
 
+  def self.destroy(filename, current_user)
+    begin
+      File.delete(Rails.root.join("public/system/agent_timesheets_cache/#{current_user.id}/#{filename}.html"))
+    rescue
+      "Agent Timesheet not found!"
+    end
+  end
+
   def url
     if @current_user and @filename
       "http://#{@current_user.domain_name}/callers/agent_timesheets/#{@filename}.html"

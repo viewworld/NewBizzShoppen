@@ -5,6 +5,7 @@
         <th class="hl"></th>
         <th><%= t("agent_timesheets.new.created_at") %></th>
         <th><%= t("agent_timesheets.new.link_to_report") %></th>
+        <th><%= t("agent_timesheets.new.actions") %></th>
         <th class="hr"></th>
       </tr>
     </thead>
@@ -14,6 +15,7 @@
           <td class="cl"></td>
           <td><%= l Time.at(cached.to_i/100000), :format => :long  %></td>
           <td><%= link_to "#{cached}.html", callers_agent_timesheet_path(cached, :format => :html), :target => '_new'  %></td>
+          <td><%= bt_link_to :remove, t("agent_timesheets.new.delete"), callers_agent_timesheet_path(cached, :format => :html), :method => :delete  %></td>
           <td class="cr"></td>
         </tr>
       <% end %>
@@ -21,7 +23,7 @@
     <tfoot>
       <tr>
         <td class="fl"></td>
-        <td colspan="2">
+        <td colspan="3">
         <% if cached_timesheets.is_a?(WillPaginate::Collection) %>
           <div style="text-align:center"><%= will_paginate cached_timesheets %></div>
         <% else %>

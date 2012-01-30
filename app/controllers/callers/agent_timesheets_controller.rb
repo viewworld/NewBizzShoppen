@@ -25,4 +25,10 @@ class Callers::AgentTimesheetsController < Callers::CallerController
     end
   end
 
+  def destroy
+    AgentTimesheet::General.destroy(params[:id], current_user)
+    flash[:notice] = t("agent_timesheets.flashes.file_deleted")
+    redirect_to :back
+  end
+
 end
