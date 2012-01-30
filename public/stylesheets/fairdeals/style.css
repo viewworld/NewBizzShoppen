@@ -1606,7 +1606,7 @@ a.toggle_comments
 
 .other_deals .frm_content
 {
-    min-height: 130px;
+    min-height: 110px;
 }
 
 .other_deals .deal_desc
@@ -1625,12 +1625,21 @@ a.toggle_comments
     padding-bottom: 15px;
 }
 
+.other_deals .deal_thumb img
+{
+    margin-bottom: 15px;
+}
+
 .other_deals .deal_info
 {
     float: right;
     width: 500px;
     font-size: 13px;
-    padding-bottom: 15px;
+}
+
+.other_deals .deal_info .ajaxful-rating-wrapper
+{
+    margin-top: 10px;
 }
 
 .other_deals .deal_price

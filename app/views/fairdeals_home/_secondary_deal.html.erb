@@ -26,7 +26,6 @@
 
                 <%= ratings_for(featured, :force_static => !current_user_has_role?(:member)) %>
 
-                <br/>
                 <%= group_deal_leads_created_and_missing(featured) %>
               </div>
 
