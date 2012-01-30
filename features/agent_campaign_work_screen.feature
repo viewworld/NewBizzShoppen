@@ -699,4 +699,8 @@ Feature: Agent campaign - calling session
 
   #9995
   @m28 @requested
+  Scenario: When upgrading contact to member I can change subscription after I selected deals but they will be lost
+
+  #9995
+  @m28 @requested
   Scenario: When contact is upgraded to member the e-mails for each request won't be sent out
