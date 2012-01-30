@@ -61,3 +61,15 @@ Feature: Result values
   # no matter what currency is selected
   @_done @non_testable
   Scenario: All result values should be stored additionally in Euro
+
+  #9889
+  @m28 @requested
+  Scenario: I can check if the field for any given result should be used for dynamic value calculation if it is of the number type
+
+  #9889
+  @m28 @requested
+  Scenario: I can enter amount in Euro for dynamic value calculation if type is selected for calculation
+
+  #9889
+  @m28 @requested
+  Scenario: I can check that value for result should be calculated dynamically based on the sum of fields' values

@@ -95,3 +95,15 @@ Feature: Agent timesheets - agent timesheet
 
   @_done @_tested_elsewhere
   Scenario: I should see total value created
+
+  #9877
+  @m28 @requested
+  Scenario: I should see first log in / last log in instead of first value / last value
+
+  #9877
+  @m28 @requested
+  Scenario: I should see cost the same way as value created
+
+  #9877
+  @m28 @requested
+  Scenario: I should see total cost percent calculated as ((value created / Cost)-1)*100

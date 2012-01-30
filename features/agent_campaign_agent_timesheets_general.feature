@@ -125,3 +125,11 @@ Feature: Agent timesheets
   #9787
   @m27 @requested @_done @_tested_elsewhere
   Scenario: I can select only campaign(s) to generate report for all users on this campaign(s)
+
+  #9877
+  @m28 @requested
+  Scenario: I can use checkbox to display cost
+
+  #9889
+  @m28 @requested
+  Scenario: Dynamic result value should be included into agent timesheets
