@@ -684,3 +684,23 @@ Feature: Agent campaign - calling session
   #9602
   @m27 @requested @tgn @_done @_tested_elsewhere
   Scenario: I can enable a newsletter for user upgraded from contact
+
+  #9995
+  @m28 @requested
+  Scenario: When upgrading contact to member I can choose deals that will be requested after the account creation
+
+  #9995
+  @m28 @requested
+  Scenario: When upgrading contact to member I can fill out the templates
+
+  #9995
+  @m28 @requested
+  Scenario: When upgrading contact to member I can choose only deals that are allowed by the subscription type
+
+  #9995
+  @m28 @requested
+  Scenario: When upgrading contact to member I can change subscription after I selected deals but they will be lost
+
+  #9995
+  @m28 @requested
+  Scenario: When contact is upgraded to member the e-mails for each request won't be sent out

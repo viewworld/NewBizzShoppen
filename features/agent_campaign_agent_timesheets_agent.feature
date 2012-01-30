@@ -102,7 +102,7 @@ Feature: Agent timesheets - agent timesheet
 
   #9877
   @m28 @requested
-  Scenario: I should see cost the same way as value created
+  Scenario: I should see cost the same way as value created (for fixed value ((cost/completion rate)/total time spent)*agent's time spent)
 
   #9877
   @m28 @requested
