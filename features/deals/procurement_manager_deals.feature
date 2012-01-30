@@ -532,3 +532,30 @@ Feature: Deals from procurement manager perspective
     And I follow translated "deals.index.view.contact_me"
     And I press translated "member.leads.new.view.button_create"
     And I should see "Blurb voucher confirmation page"
+
+  #9988
+  @m28 @requested
+  Scenario: I should not see short description when getting a deal
+
+  #9987
+  @m28 @requested
+  Scenario: I should see splash image when getting premium deal
+
+  #9976
+  @m28 @requested
+  Scenario: I should see the amount of secondary deals specified by admin on fairdeals home page
+
+  #9981
+  @m28 @requested
+  Scenario: I should not see JS dialog when I try to get a deal and dont have permission
+
+  #9981
+  @m28 @requested
+  Scenario: If I dont have permission to get deal the button should state "Upgrade subscription" instead of "Get deal"
+
+  #9981
+  @m28 @requested
+  Scenario: When I got redirected to my profile after clicking "Upgrade subscription" I should be advised which subscription to choose in order to get deal
+
+
+

@@ -704,3 +704,7 @@ Feature: Agent campaign - calling session
   #9995
   @m28 @requested
   Scenario: When contact is upgraded to member the e-mails for each request won't be sent out
+
+  #9989
+  @m28 @requested
+  Scenario: A free subscription should be selected by default when upgrading contact to account

@@ -272,6 +272,10 @@ Feature: General deals
     And I wait 1 second
     Then I should see CSS path "textarea#deal_short_featured_description"
 
+  #9975
+  @m28 @requested
+  Scenario: I can enter "Short featured description" as rich text
+
   #8329
   @m22 @requested @selenium @non_testable @_done @ao
   Scenario: I can upload images in every rich text editor
