@@ -69,32 +69,14 @@
     </div>
 
     <div class="grid_300 fltr">
-       <div class="frm_tiny">
-        <div class="pdd_10">
-          <ul class="elements_list">
-            <% if @deal.general_discount? %>
-                <li>
-                  <div>
-                    <span class="label"><%= t("deals.show.view.saving_label") %></span>
-                    <%= @deal.saving %>
-                  </div>
-                </li>
-            <% else %>
-                <li>
-                  <div>
-                    <span class="label"><%= t("deals.show.view.price_label") %></span>
-                    <%= as_currency(@deal.deal_price, @deal.currency) %>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <span class="label"><%= t("deals.show.view.discounted_price_label") %></span>
-                    <%= as_currency(@deal.discounted_price, @deal.currency) %> (<%= t("deals.show.view.saving_label") %> <%= @deal.saving %>)
-                  </div>
-                </li>
-            <% end %>
-          </ul>
-        </div>
+
+       <div class="frm_ribbon_right">
+          <% if @deal.general_discount? %>
+            <p><%= t("deals.show.view.saving_label") %> <em><%= @deal.saving %></em></p>
+          <% else %>
+            <p><%= t("deals.show.view.price_label") %>: <em><%= as_currency(@deal.deal_price, @deal.currency) %></em></p>
+            <p><%= t("deals.show.view.discounted_price_label") %>: <em><%= as_currency(@deal.discounted_price, @deal.currency) %></em><br/>(<%= t("deals.show.view.saving_label") %> <%= @deal.saving %>)</p>
+          <% end %>
        </div>
 
       <div class="frm_tiny company_info">
