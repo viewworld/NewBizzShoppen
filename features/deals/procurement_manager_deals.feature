@@ -166,7 +166,7 @@ Feature: Deals from procurement manager perspective
     And I fill in "lead_lead_template_values_attributes_0_value" with "some value1"
     And I fill in "lead_lead_template_values_attributes_1_value" with "some value2"
     And I press translated "member.leads.new.view.button_create"
-    And I wait 1 second
+    And I press translated "member.leads.show.view.ok_confirmation"
     And I should see "super"
     And I am not sign in
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:ultradeal|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
@@ -183,7 +183,7 @@ Feature: Deals from procurement manager perspective
     And I fill in "lead_lead_template_values_attributes_0_value" with "some value1"
     And I fill in "lead_lead_template_values_attributes_1_value" with "some value2"
     And I press translated "member.leads.new.view.button_create"
-    And I wait 1 second
+    And I press translated "member.leads.show.view.ok_confirmation"
     And I should see "ultradeal"
 
 
