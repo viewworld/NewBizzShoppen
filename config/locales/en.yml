@@ -4004,6 +4004,7 @@ en:
       delete: "Delete"
       scheduled_actions: "Your scheduled actions"
       report_type: "Report type"
+      new_timesheet: "New agent timesheet"
       campaigns_selection:
         all_campaigns: "All available campaigns"
         selected_campaigns: "Selected campaigns"

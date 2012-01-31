@@ -1,13 +1,26 @@
 <column-mc:>
-  <header back="true">
+  <header refresh="true">
     <param:content>
-      <%= t("agent_timesheets.index.header") %>
+      <%= t("agent_timesheets.new.scheduled_actions") %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to nil, t("agent_timesheets.new.new_timesheet"), new_callers_agent_timesheet_path %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
+
+  <%= render :partial => 'shared/delayed_jobs/user', :locals => {:user => current_user, :delayed_jobs => current_user.delayed_jobs.limit(5)} %>
+
+  <header refresh="true">
+    <param:content>
+      <%= t("agent_timesheets.new.cached_timesheets") %>
     </param:content>
   </header>
 
-  <h2><%= t("agent_timesheets.index.timesheet_queued") %></h2><br/>
-
-  <header><%= t("agent_timesheets.new.scheduled_actions") %></header>
-  <%= render :partial => 'shared/delayed_jobs/user', :locals => {:user => current_user, :delayed_jobs => current_user.delayed_jobs} %>
+  <%= render :partial => 'shared/cached_timesheets/list', :locals => {:cached_timesheets => AgentTimesheet::Search.new(:current_user => current_user).cached_timesheets.first(5)} %>
 
 </column-mc:>

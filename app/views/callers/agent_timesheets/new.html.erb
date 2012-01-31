@@ -5,7 +5,7 @@
     </param:content>
   </header>
 
-  <%= semantic_form_for @search, :url => callers_agent_timesheets_path, :as => :search, :html => {:method => :get} do |f| %>
+  <%= semantic_form_for @search, :url => callers_agent_timesheets_path, :as => :search, :html => {:method => :post} do |f| %>
       <frm>
         <param:content>
           <div class="pdd_10">
