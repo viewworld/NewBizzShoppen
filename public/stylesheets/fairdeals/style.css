@@ -1671,50 +1671,6 @@ a.toggle_comments
 }
 
 
-
-.splash 
-{
-    width: 83px;
-    height: 60px;
-    padding-top: 24px;
-    position: absolute;
-    top: -5px;
-    right: 0;
-    text-align:center;
-    text-shadow: 0 1px 0 rgba(255,255,255,.4);
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 16px;
-    z-index: 10;
-}
-
-.splash span
-{
-    width: 60px;
-    display: block;
-    margin-left: 11px;
-}
-
-.splash.splash_premium
-{
-    font-size: 14px;
-    background: url("/images/fairdeals/icons/splash_orange.png") no-repeat 0 0;
-    color: #8f470b;
-}
-
-.splash.splash_group
-{
-    background: url("/images/fairdeals/icons/splash_red.png") no-repeat 0 0;
-    color: #782300;
-}
-
-.splash.splash_fair
-{
-    background: url("/images/fairdeals/icons/splash_green.png") no-repeat 0 0;
-    color: #316c03;
-}
-
-
 /* --- other styles ----
 ------------------------------------------------------------------------------------ */
 

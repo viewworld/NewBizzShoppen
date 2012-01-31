@@ -25,6 +25,7 @@ javascripts:
     - public/javascripts/comments.js
     - public/javascripts/jquery.form.js
     - public/javascripts/jquery.autocomplete.min.js
+    - public/stylesheets/shared/shared.css
 
   fairdeals:
     - public/javascripts/jquery-1.4.2.min.js
@@ -61,6 +62,7 @@ stylesheets:
     - public/stylesheets/jquery.checkboxtree.min.css
     - public/stylesheets/jquery.autocomplete.css
     - public/stylesheets/ajaxful_rating.css
+    - public/stylesheets/shared/shared.css
 
   fairdeals:
     - public/stylesheets/fairdeals/ocss/reset.css
