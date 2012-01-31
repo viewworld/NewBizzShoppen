@@ -1,5 +1,5 @@
 <% if cached_timesheets.any? %>
-  <table class="generic">
+  <table class="generic" id="cached_timesheets">
     <thead>
       <tr>
         <th class="hl"></th>
@@ -11,7 +11,7 @@
     </thead>
     <tbody>
       <% cached_timesheets.each do |cached| %>
-        <tr>
+        <tr id="cached_timesheet_<%= cached %>">
           <td class="cl"></td>
           <td><%= l Time.at(cached.to_i/100000), :format => :long  %></td>
           <td><%= link_to "#{cached}.html", callers_agent_timesheet_path(cached, :format => :html), :target => '_new'  %></td>

@@ -1,5 +1,5 @@
 <% if delayed_jobs.any? %>
-    <table class="generic">
+    <table class="generic" id="delayed_jobs">
       <thead>
         <tr>
           <th class="hl"></th>
@@ -11,7 +11,7 @@
       </thead>
       <tbody>
         <% delayed_jobs.each do |dj| %>
-          <tr>
+          <tr id="delayed_job_<%= dj.id %>">
             <td class="cl"></td>
             <td><%= l dj.created_at, :format => :long %></td>
             <td><%= dj.human_name %></td>
