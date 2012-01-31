@@ -14,13 +14,10 @@ class Callers::AgentTimesheetsController < Callers::CallerController
       @search = AgentTimesheet::Search.new(:current_user => current_user)
       render :action => :new
     else
-      if true
-        ::AgentTimesheet::General.new(params[:search].merge(:current_user => current_user)).delay(:queue => current_user_queue).to_file
-        super do |format|
-          format.html
-        end
-      else
-        redirect_to callers_agent_timesheet_path(::AgentTimesheet::General.new(params[:search].merge(:current_user => current_user)).to_file(false))
+      ::AgentTimesheet::General.new(params[:search].merge(:current_user => current_user)).delay(:queue => current_user_queue).to_file
+#      redirect_to callers_agent_timesheet_path(::AgentTimesheet::General.new(params[:search].merge(:current_user => current_user)).to_file(false))
+      super do |format|
+        format.html
       end
     end
   end
