@@ -70,21 +70,10 @@
             class_addon = "_" + type
         }
         $(row).find("td.val" + class_addon).each(function() {
-          if ((type == 'h')||(type == 'l')) {
-            sum += Number($(this).html().split(':')[0])*60 + Number($(this).html().split(':')[1]);
-          } else {
             sum += Number($(this).html());
-          }
         });
         res_cell = $(row).find("td.total_h" + class_addon);
         res_cell.html(Math.round(sum*100)/100);
-        if ((type == 'h')||(type == 'l')) {
-            minutes_to_hours(res_cell);
-        } else if (type == 'r') {
-            number_to_results(res_cell);
-        } else {
-            number_to_value(res_cell);
-        }
     }
 
     function sum_col(cell, type) {
@@ -96,60 +85,27 @@
             class_addon = "_" + type
         }
         $(cell).closest('table').find('tbody tr').find('td:eq(' + pos + ')').each(function() {
-            if (type == 'h') {
-              sum += Number($(this).html().split(':')[0])*60 + Number($(this).html().split(':')[1]);
-            } else {
-              sum += Number($(this).html());
-            }
+            sum += Number($(this).html());
         });
         $(cell).html(Math.round(sum*100)/100);
-        if (type == 'h') {
-            minutes_to_hours($(cell));
-        } else if (type == 'r') {
-            number_to_results($(cell));
-        } else {
-            number_to_value($(cell));
-        }
     }
 
     function team_result_sheet_sum_totals(cell, type) {
         var pos = $(cell).closest('td').prevAll().length;
         var sum = 0;
         $('div#team_result_sheet tbody tr:last-of-type').find('td:eq(' + pos + ')').each(function() {
-            if (type == 'h') {
-              sum += Number($(this).html().split(':')[0])*60 + Number($(this).html().split(':')[1]);
-            } else {
-              sum += Number($(this).html());
-            }
+            sum += Number($(this).html());
         });
         $(cell).html(Math.round(sum*100)/100);
-        if (type == 'h') {
-            minutes_to_hours($(cell));
-        } else if (type == 'r') {
-            number_to_results($(cell));
-        } else {
-            number_to_value($(cell));
-        }
     }
 
     function agent_time_sheet_sum_totals(cell, selector, type) {
         var pos = $(cell).closest('td').prevAll().length;
         var sum = 0;
         $(selector).find('td:eq(' + pos + ')').each(function() {
-            if (type == 'h') {
-              sum += Number($(this).html().split(':')[0])*60 + Number($(this).html().split(':')[1]);
-            } else {
-              sum += Number($(this).html());
-            }
+            sum += Number($(this).html());
         });
         $(cell).html(Math.round(sum*100)/100);
-        if (type == 'h') {
-            minutes_to_hours($(cell));
-        } else if (type == 'r') {
-            number_to_results($(cell));
-        } else {
-            number_to_value($(cell));
-        }
     }
 
     function agent_time_sheet_avg(cell, selector) {
@@ -254,12 +210,6 @@
     $(document).ready(function(){
         $("#tabs").tabs();
 
-        // formatting
-        $('.number_to_hours').each(function(){number_to_hours($(this))});
-        $('.number_to_results').each(function(){number_to_results($(this))});
-        $('.number_to_value').each(function(){number_to_value($(this))});
-        $('.number_to_log_out_time').each(function(){number_to_hours($(this))});
-
         // totals
         $('.total_h_h').each(function(){sum_row($(this).closest('tr'),'h')});
         $('.total_h_v').each(function(){sum_row($(this).closest('tr'),'v')});
@@ -281,20 +231,29 @@
                 agent_time_sheet_sum_totals($(this), $('div#agent_time_sheet_<%= agent.id %>').find('tr.<%= key.to_s %>'),'<%= key.to_s.first %>')
             });
             <% end %>
+
             <% [:value].each do |key| %>
             $('div#agent_time_sheet_<%= agent.id %> .avg_val_<%= key.to_s %>').each(function() {
                 agent_time_sheet_avg($(this), $('div#agent_time_sheet_<%= agent.id %>').find('tr.<%= key.to_s %>'))
             });
             <% end %>
-            <% [:log_out_time, :first_result, :last_result].each do |key| %>
+
+            <% [:log_out_time, :log_in, :log_out].each do |key| %>
             $('div#agent_time_sheet_<%= agent.id %> .avg_val_<%= key.to_s %>').each(function() {
                 agent_time_sheet_avg_time($(this), $('div#agent_time_sheet_<%= agent.id %>').find('tr.<%= key.to_s %>'))
             });
             <% end %>
+
             global_averages($('div#agent_time_sheet_<%= agent.id %>'));
           <% end %>
           $('.total_h_l').each(function(){sum_row($(this).closest('tr'),'l')});
         <% end %>
+
+        // formatting
+        $('.number_to_hours').each(function(){number_to_hours($(this))});
+        $('.number_to_results').each(function(){number_to_results($(this))});
+        $('.number_to_value').each(function(){number_to_value($(this))});
+        $('.number_to_log_out_time').each(function(){number_to_hours($(this))});
 
         show_timesheet($('#agent_timesheet_agent_id').val());
     });

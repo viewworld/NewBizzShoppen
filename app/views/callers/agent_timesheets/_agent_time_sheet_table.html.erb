@@ -9,14 +9,14 @@
   </tr>
   </thead>
   <tbody>
-  <% [:first_result, :last_result, :log_out_time, :hours, :results, :value].each do |key| %>
+  <% [:log_in, :log_out, :log_out_time, :hours, :results, :value].each do |key| %>
       <% unless [:hours, :results, :value].include?(key) and !agent_time_sheet.send("display_#{key}".to_sym) %>
           <tr class="<%= key.to_s %>">
             <td class="cell_week"><%= t("agent_timesheets.index.agent_time_sheet.#{key}") %></td>
             <% agent_time_sheet.days_of_week.each do |dow| %>
                 <td class="val_<%= key.to_s.first %> number_to_<%= key.to_s %>">
                   <% if result = results.dig(cweek.year, cweek.cweek, dow) %>
-                      <% if [:first_result, :last_result].include?(key) and val = result.first.send(key) and val.is_a?(ActiveSupport::TimeWithZone) %>
+                      <% if [:log_in, :log_out].include?(key) and val = result.first.send(key) and val.is_a?(ActiveSupport::TimeWithZone) %>
                           <%= val.strftime("%H:%M") %>
                       <% elsif val = result.first.send(key) %>
                           <%= val.to_f %>
@@ -28,7 +28,7 @@
                   <% end %>
                 </td>
             <% end %>
-            <% if [:first_result, :last_result].include?(key) %>
+            <% if [:log_in, :log_out].include?(key) %>
                 <td><%= t("agent_timesheets.index.na") %></td>
             <% else %>
                 <td class="total_h_<%= key.to_s.first %> number_to_<%= key.to_s %>"></td>

@@ -9,13 +9,13 @@
   </tr>
   </thead>
   <tbody>
-  <% [:first_result, :last_result, :log_out_time].each do |key| %>
+  <% [:log_in, :log_out, :log_out_time].each do |key| %>
       <tr>
         <td class="cell_week"><%= t("agent_timesheets.index.agent_time_sheet.#{key}") %></td>
         <% agent_time_sheet.days_of_week.each do %>
             <td class="avg_val_<%= key %> val_<%= key.to_s.first %>"></td>
         <% end %>
-        <% if [:first_result, :last_result].include?(key) %>
+        <% if [:log_in, :log_out].include?(key) %>
             <td class="total_h"><%= t("agent_timesheets.index.na") %></td>
         <% else %>
             <td class="total_h_<%= key.to_s.first %>"></td>

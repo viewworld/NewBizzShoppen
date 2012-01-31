@@ -18,10 +18,13 @@ class Callers::AgentTimesheetsController < Callers::CallerController
   end
 
   def create
-    ::AgentTimesheet::General.new(params[:search].merge(:current_user => current_user)).delay(:queue => current_user_queue).to_file
-    flash[:notice] = t("agent_timesheets.index.timesheet_queued")
-    redirect_to callers_agent_timesheets_path
-#      redirect_to callers_agent_timesheet_path(::AgentTimesheet::General.new(params[:search].merge(:current_user => current_user)).to_file(false))
+    if Rails.env.development?
+      redirect_to callers_agent_timesheet_path(::AgentTimesheet::General.new(params[:search].merge(:current_user => current_user)).to_file(false))
+    else
+      ::AgentTimesheet::General.new(params[:search].merge(:current_user => current_user)).delay(:queue => current_user_queue).to_file
+      flash[:notice] = t("agent_timesheets.index.timesheet_queued")
+      redirect_to callers_agent_timesheets_path
+    end
   end
 
   def new

@@ -21,7 +21,7 @@ class ::AgentTimesheet::General
   end
 
   def agent_time_sheet_data(agent)
-    grp = [:first_result, :last_result, :log_out_time, :week, :dow, :year, :user_id]
+    grp = [:log_in, :log_out, :log_out_time, :week, :dow, :year, :user_id]
     scoped.select(build_select(grp)).group(grp.join(",")).where(:user_id => agent.to_i).group_by_multiple([:year, :week, :dow])
   end
 
