@@ -546,15 +546,57 @@ Feature: Deals from procurement manager perspective
   Scenario: I should see the amount of secondary deals specified by admin on fairdeals home page
 
   #9981
-  @m28 @requested
+  @m28 @requested @tgn @_done @_non_testable
   Scenario: I should not see JS dialog when I try to get a deal and dont have permission
 
   #9981
-  @m28 @requested
+  @m28 @requested @tgn @_done @_tested
   Scenario: If I dont have permission to get deal the button should state "Upgrade subscription" instead of "Get deal"
+    Given I visit domain http://fairdeals.dk
+    And subscription plan named "Free member subscription" exists with attributes "free_deal_requests_in_free_period:1"
+    And I am signed up with email member001@nbs.com and password secret and role member
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:deal001|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
+    And I sign in as member001@nbs.com with password secret
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow category "Business deals"
+    And I follow translated "deals.index.view.view_deal"
+    And I follow translated "deals.index.view.contact_me"
+    And I fill in "lead_hidden_description" with "something"
+    And I press translated "member.leads.new.view.button_create"
+    And I press translated "member.leads.show.view.ok_confirmation"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:deal002|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow category "Business deals"
+    And I follow "deal002"
+    And I follow translated "deals.index.view.upgrade_subscription_to_get_deal"
+    And I should be on my profile
+    And I should see translated "subscriptions.subscription_upgrade_to_payable" with options "header: deal002"
+    And I follow translated "subscriptions.listing.upgrade"
+    And I follow translated "deals.index.view.contact_me"
+    And I fill in "lead_hidden_description" with "something"
+    And I press translated "member.leads.new.view.button_create"
+    And I press translated "member.leads.show.view.ok_confirmation"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:deal003|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|premium_deal:1"
+    When subscription plan exists with attributes "name:Premium deals member,assigned_roles:member,subscription_period:10,premium_deals:1"
+    And subscription plan has following lines
+      | name                 | price |
+      | subscr premium line1 |  1000 |
+      | subscr premium line2 |  2000 |
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow category "Business deals"
+    And I follow "deal003"
+    And I follow translated "deals.index.view.upgrade_subscription_to_get_deal"
+    And I should be on my profile
+    And I should see translated "subscriptions.subscription_upgrade_to_premium_deals" with options "header: deal003"
+    And I follow translated "subscriptions.listing.upgrade"
+    And I follow translated "deals.index.view.contact_me"
+    And I fill in "lead_hidden_description" with "something"
+    And I press translated "member.leads.new.view.button_create"
+    And I press translated "member.leads.show.view.ok_confirmation"
+
 
   #9981
-  @m28 @requested
+  @m28 @requested @tgn @_done @_tested_elsewhere
   Scenario: When I got redirected to my profile after clicking "Upgrade subscription" I should be advised which subscription to choose in order to get deal
 
 
