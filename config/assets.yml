@@ -25,7 +25,6 @@ javascripts:
     - public/javascripts/comments.js
     - public/javascripts/jquery.form.js
     - public/javascripts/jquery.autocomplete.min.js
-    - public/stylesheets/shared/shared.css
 
   fairdeals:
     - public/javascripts/jquery-1.4.2.min.js
@@ -75,6 +74,7 @@ stylesheets:
     - public/stylesheets/jquery-ui-1.8.5.custom.css
     - public/stylesheets/colorbox.css
     - public/stylesheets/countdown.css
+    - public/stylesheets/shared/shared.css
 
   fairdeals_thin:
     - public/stylesheets/fairdeals/style_thin.css
