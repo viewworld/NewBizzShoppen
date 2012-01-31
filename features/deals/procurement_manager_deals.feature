@@ -534,8 +534,14 @@ Feature: Deals from procurement manager perspective
     And I should see "Blurb voucher confirmation page"
 
   #9988
-  @m28 @requested
+  @m28 @requested @tgn @_done @_tested
   Scenario: I should not see short description when getting a deal
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "description:short description1|published:1|header:deal001|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow category "Business deals"
+    And I follow "deal001"
+    And I follow translated "deals.index.view.contact_me"
+    And I should not see "short description1"
 
   #9987
   @m28 @requested
