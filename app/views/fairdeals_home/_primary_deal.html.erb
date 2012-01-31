@@ -4,15 +4,21 @@
         <div class="frm_head">
             <h2><%= link_to primary_deal.header, deal_path(primary_deal.slug) %></h2>
             <% if primary_deal.premium_deal? %>
-              <div class="splash splash_red splash_premium">
+              <div class="splash splash_premium">
                 <span>
                   <%= t("deals.index.view.premium_deal_splash_label") %>
                 </span>
               </div>
-            <% else %>
-              <div class="splash splash_red">
+            <% elsif primary_deal.group_deal? %>
+              <div class="splash splash_group">
                 <span>
-                  <%= primary_deal.group_deal? ? t("deals.index.view.group_deal_splash_label") : t("deals.index.view.fair_deal_splash_label") %>
+                  <%= t("deals.index.view.group_deal_splash_label") %>
+                </span>
+              </div>
+            <% else %>
+              <div class="splash splash_fair">
+                <span>
+                  <%= t("deals.index.view.fair_deal_splash_label") %>
                 </span>
               </div>
             <% end %>

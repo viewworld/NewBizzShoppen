@@ -3955,6 +3955,8 @@ en:
         inactive: "Inactive"
         all: "All"
   agent_timesheets:
+    flashes:
+      file_deleted: "File has been deleted"
     index:
       header: "Agent timesheets"
       week: "Week"
@@ -3998,6 +4000,8 @@ en:
       cached_timesheets: "Cached Agent Timesheet reports"
       created_at: "Created at"
       link_to_report: "Link to report"
+      actions: "Actions"
+      delete: "Delete"
       scheduled_actions: "Your scheduled actions"
       report_type: "Report type"
       campaigns_selection:
