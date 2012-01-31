@@ -369,6 +369,7 @@
     font-weight: bold;
     color: #fff;
     text-shadow: -1px -1px 0 #62951c;
+    position: relative;
 }
 
 .frm_ribbon_right p
