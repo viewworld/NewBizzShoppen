@@ -550,8 +550,27 @@ Feature: Deals from procurement manager perspective
   Scenario: I should see splash image when getting premium deal
 
   #9976
-  @m28 @requested
+  @m28 @requested @tgn @_done @_tested
   Scenario: I should see the amount of secondary deals specified by admin on fairdeals home page
+  Given a deal named "deal000" exists within category "Electronics deals"
+  Given a deal named "deal001" exists within category "Electronics deals"
+  And a deal named "deal002" exists within category "Electronics deals"
+  And a deal named "deal003" exists within category "Electronics deals"
+  And a deal named "deal004" exists within category "Electronics deals"
+  And a deal named "deal005" exists within category "Electronics deals"
+  Given deal named "deal000" is a primary featured deal
+  And deal named "deal001" is "1" secondary featured deal
+  And deal named "deal002" is "2" secondary featured deal
+  And deal named "deal003" is "3" secondary featured deal
+  And deal named "deal004" is "4" secondary featured deal
+  And deal named "deal005" is "5" secondary featured deal
+  And setting for "number_of_secondary_featured_deals" is set to "4"
+  And I am on the homepage
+  And I should see "deal001"
+  And I should see "deal002"
+  And I should see "deal003"
+  And I should see "deal004"
+  And I should see "4" occurrences of css class "secondary_featured_deal" for tag "div"
 
   #9981
   @m28 @requested @tgn @_done @_non_testable

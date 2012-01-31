@@ -1053,6 +1053,7 @@ en:
             contact_us_phone: "Contact us phone number"
             contact_us_skype: "Contact us Skype username"
             default_group_deal_min_leads_created: "Group deal min leads created"
+            number_of_secondary_featured_deals: "Number of secondary featured deals"
       edit:
         view:
           title: "Settings"
