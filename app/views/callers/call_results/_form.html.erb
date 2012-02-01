@@ -36,7 +36,7 @@
           </li>
           <li class="select">
             <%= label_tag "call_result[contact_subscription_plan_id]", "#{t("call_results.new.contact_subscription_plan")}<abbr>*</abbr>".html_safe %>
-            <%= select_tag "call_result[contact_subscription_plan_id]", options_for_select(SubscriptionPlan.active.for_role(call_result.result.upgrades_to_user_role).without_paypal.map{ |s| [s.name, s.id] }, call_result.contact_subscription_plan_id) %>
+            <%= select_tag "call_result[contact_subscription_plan_id]", options_for_select(SubscriptionPlan.active.for_role(call_result.result.upgrades_to_user_role).without_paypal.map{ |s| [s.name, s.id] }, call_result.contact_subscription_plan_id.nil? ? SubscriptionPlan.active.free.for_role(call_result.result.upgrades_to_user_role).first.id : call_result.contact_subscription_plan_id) %>
             <%= custom_error_for_object_and_field(call_result, :contact_subscription_plan_id) %>
           </li>
           <li class="boolean">

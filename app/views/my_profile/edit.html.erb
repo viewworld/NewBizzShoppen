@@ -4,7 +4,7 @@
   <% if SubscriptionPlan.valid_roles.include?(current_user.with_role.role) and current_user.parent.nil? %>
   <frm title="#{t('my_profile.edit.view.subscription_management')}">
     <div class="pdd_10">
-        <%= render :partial => "shared/subscriptions/listing", :locals => { :role => current_user.with_role.role, :form => form} %>
+        <%= render :partial => "shared/subscriptions/listing", :locals => { :role => current_user.with_role.role, :form => form, :deal => @deal} %>
     </div>
   </frm>
   <% end %>

@@ -36,11 +36,6 @@
           <div class="column_right">
             <div class="pdd_10">
               <div class="element_description members_leads">
-                <h3><%= t("deals.show.view.short_description_label") %></h3>
-
-                <%= @deal.description %>
-              </div>
-              <div class="element_description members_leads">
                 <h3><%= t("deals.show.view.detailed_description_label") %></h3>
 
                 <%= @deal.hidden_description.to_s.html_safe %>

@@ -27,11 +27,13 @@
     <% end %>
 
     <!--- other deals --->
-    <% [(1..3).to_a].each do |array| %>
+    <% [(1..Settings.number_of_secondary_featured_deals.to_i).to_a].each do |array| %>
         <div class="other_deals">
           <% array.each do |position| %>
-              <%= render :partial => 'secondary_deal', :locals => {:position => position, :featured => @featured_deals[position], :middle => nil} %>
-              <clb/>
+              <% if @featured_deals[position] %>
+                <%= render :partial => 'secondary_deal', :locals => {:position => position, :featured => @featured_deals[position], :middle => nil} %>
+                <clb/>
+              <% end %>
           <% end %>
         </div>
         <br/>

@@ -1053,6 +1053,7 @@ en:
             contact_us_phone: "Contact us phone number"
             contact_us_skype: "Contact us Skype username"
             default_group_deal_min_leads_created: "Group deal min leads created"
+            number_of_secondary_featured_deals: "Number of secondary featured deals"
       edit:
         view:
           title: "Settings"
@@ -4145,7 +4146,8 @@ en:
         premium_deal_splash_label: "Premium deal"
         fairdeals_price: "Fairdeals price"
         normal_price: "Normal price"
-        you_save: "You save"        
+        you_save: "You save"
+        upgrade_subscription_to_get_deal: "Upgrade subscription to get deal"
       search:
         keyword_label: "Keyword"
         search_button: "Search"
@@ -4360,6 +4362,8 @@ en:
     paypal_subscription_not_confirmed: "Paypal subscription has not been confirmed!"
     active_subscription_is_canceled_in_paypal: "Update your billing information clicking %{link}!"
 
+    subscription_upgrade_to_payable: "You need to upgrade to any payable subscription in order to get the deal %{header}"
+    subscription_upgrade_to_premium_deals: "You need to upgrade to subscription that allows premium deals in order to get deal %{header}"
   unconfirmed_paypal_subscriptions:
     show:
       view:
