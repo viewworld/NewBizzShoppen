@@ -8,7 +8,7 @@ module AdvancedImport
 
     def advanced_import_from_xls_headers(spreadsheet)
       headers = advanced_import_headers(spreadsheet)[0].uniq.compact()
-      headers.join.match(/[^\d\w ]/) ? false : headers
+      headers.join.match(/[^\d\w -]/) ? false : headers
     end
 
     def advanced_import_from_xls_preview(spreadsheet, model_fields, spreadsheet_fields)
