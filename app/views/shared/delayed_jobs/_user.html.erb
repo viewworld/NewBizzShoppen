@@ -1,38 +1,34 @@
 <% if delayed_jobs.any? %>
-    <table class="generic">
+    <table class="generic" id="delayed_jobs">
       <thead>
-        <tr>
-          <th class="hl"></th>
-          <th><%= t("delayed_jobs.shared.view.created_at") %></th>
-          <th><%= t("delayed_jobs.shared.view.name") %></th>
-          <th><%= t("delayed_jobs.shared.view.status") %></th>
-          <th class="hr"></th>
-        </tr>
+      <tr>
+        <th class="hl"></th>
+        <th><%= t("delayed_jobs.shared.view.created_at") %></th>
+        <th><%= t("delayed_jobs.shared.view.name") %></th>
+        <th><%= t("delayed_jobs.shared.view.status") %></th>
+        <th class="hr"></th>
+      </tr>
       </thead>
       <tbody>
-        <% delayed_jobs.each do |dj| %>
-          <tr>
+      <% delayed_jobs.each do |dj| %>
+          <tr id="delayed_job_<%= dj.id %>">
             <td class="cl"></td>
             <td><%= l dj.created_at, :format => :long %></td>
             <td><%= dj.human_name %></td>
-            <td><%= t("delayed_jobs.shared.view.statuses.#{dj.status}")  %></td>
+            <td><%= t("delayed_jobs.shared.view.statuses.#{dj.status}") %></td>
             <td class="cr"></td>
           </tr>
-        <% end %>
+      <% end %>
+      <tr class="pagination">
+        <td colspan="5" class="ta_c" style="padding-top:5px;">
+          <% if delayed_jobs.is_a?(WillPaginate::Collection) %>
+              <%= will_paginate delayed_jobs %>
+          <% else %>
+              <%= bt_link_to :arrow_down, t("common.view_all"), callers_cached_timesheets_path %>
+          <% end %>
+        </td>
+      </tr>
       </tbody>
-      <tfoot>
-        <tr>
-          <td class="fl"></td>
-          <td colspan="3">
-            <% if delayed_jobs.is_a?(WillPaginate::Collection) %>
-              <div style="text-align:center"><%= will_paginate delayed_jobs %></div>
-            <% else %>
-              <div style="text-align:center"><%= link_to t("common.view_all"), users_delayed_jobs_path  %></div>
-            <% end %>
-          </td>
-          <td class="fr"></td>
-        </tr>
-      </tfoot>
     </table>
 <% else %>
     <%= blank_state_message %>

@@ -262,7 +262,7 @@ Feature: Front page for procurment
     And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "PrimaryGroupDeal" is a primary featured deal
     Given I visit domain http://fairdeals.dk
-    And I should see "1" occurrences of css class "splash_red" for tag "div"
+    And I should see "1" occurrences of css class "splash_group" for tag "div"
     And I should see translated "deals.index.view.group_deal_splash_label" within ".splash span"
 
   #7630
@@ -328,7 +328,7 @@ Feature: Front page for procurment
     And a deal named "PrimaryDeal" exists with attributes "published:1,group_deal:0,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "PrimaryDeal" is a primary featured deal
     Given I visit domain http://fairdeals.dk
-    And I should see "1" occurrences of css class "splash_red" for tag "div"
+    And I should see "1" occurrences of css class "splash_fair" for tag "div"
     And I should see translated "deals.index.view.fair_deal_splash_label" within ".splash span"
 
   #8883

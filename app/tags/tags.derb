@@ -11,7 +11,7 @@
 </def>
 
 
-<def tag="header" attrs="title,back,backurl">
+<def tag="header" attrs="title,back,backurl,refresh">
   <div class="header_ribbon">
     <h1>
       <span>
@@ -26,6 +26,13 @@
             <% else %>
                 <%= bt_link_to nil, "Back", backurl, :class => "bt_grey_small" %>
             <% end %>
+          </li>
+        </ul>
+    <% end %>
+    <% unless refresh.blank? %>
+        <ul class="header_actions">
+          <li class="bt_refresh">
+            <%= bt_link_to nil, "Refresh", "javascript:location.reload(true)", :class => "bt_grey_small" %>
           </li>
         </ul>
     <% end %>

@@ -8,7 +8,7 @@ Feature: Agent timesheets - agent timesheet
     And additional timesheet report data is generated
     Given I am on the homepage
     And I sign in as blazejek@gmail.com with password secret
-    And I click hidden link by url regex "/callers\/agent_timesheets$/"
+    And I click hidden link by url regex "/callers\/agent_timesheets\/new$/"
     And I set date "Date.today-1" for field "search[start_date]"
     And I set date "Date.today+7" for field "search[end_date]"
     And I uncheck "search_overview"
@@ -20,11 +20,11 @@ Feature: Agent timesheets - agent timesheet
     And I select "test report user CC" from "all_call_centres"
     And I follow translated "agent_timesheets.new.move_right" within "#agents_selection_div"
     And I press translated "agent_timesheets.new.generate"
-    And I click hidden link by url regex "/callers\/agent_timesheets$/"
+    And I click hidden link by url regex "/callers\/agent_timesheets\/new$/"
     And I click hidden link by url regex "/callers\/agent_timesheets\/1/"
     And I follow "Agent timesheet"
-    And I should see translated "agent_timesheets.index.agent_time_sheet.first_result"
-    And I should see translated "agent_timesheets.index.agent_time_sheet.last_result"
+    And I should see translated "agent_timesheets.index.agent_time_sheet.log_in"
+    And I should see translated "agent_timesheets.index.agent_time_sheet.log_out"
     And I should see translated "agent_timesheets.index.agent_time_sheet.log_out_time"
     And I should see translated "agent_timesheets.index.agent_time_sheet.value"
     When I check "show_all_agents"
@@ -95,3 +95,15 @@ Feature: Agent timesheets - agent timesheet
 
   @_done @_tested_elsewhere
   Scenario: I should see total value created
+
+  #9877
+  @m28 @requested
+  Scenario: I should see first log in / last log in instead of first value / last value
+
+  #9877
+  @m28 @requested
+  Scenario: I should see cost the same way as value created (for fixed value ((cost/completion rate)/total time spent)*agent's time spent)
+
+  #9877
+  @m28 @requested
+  Scenario: I should see total cost percent calculated as ((value created / Cost)-1)*100

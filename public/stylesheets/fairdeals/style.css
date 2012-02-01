@@ -1606,7 +1606,7 @@ a.toggle_comments
 
 .other_deals .frm_content
 {
-    min-height: 130px;
+    min-height: 110px;
 }
 
 .other_deals .deal_desc
@@ -1625,12 +1625,21 @@ a.toggle_comments
     padding-bottom: 15px;
 }
 
+.other_deals .deal_thumb img
+{
+    margin-bottom: 15px;
+}
+
 .other_deals .deal_info
 {
     float: right;
     width: 500px;
     font-size: 13px;
-    padding-bottom: 15px;
+}
+
+.other_deals .deal_info .ajaxful-rating-wrapper
+{
+    margin-top: 10px;
 }
 
 .other_deals .deal_price
@@ -1661,39 +1670,6 @@ a.toggle_comments
     vertical-align: middle;
 }
 
-
-
-.splash 
-{
-    background: url("/images/fairdeals/icons/splash_red.png") no-repeat 0 0;
-    width: 83px;
-    height: 60px;
-    padding-top: 24px;
-    position: absolute;
-    top: -5px;
-    right: 0px;
-
-    text-align:center;
-    text-shadow: 0 1px 0 #e77b6d;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 16px;
-
-    color: #782300;
-    z-index: 10;
-}
-
-.splash span
-{
-    width: 60px;
-    display: block;
-    margin-left: 11px;
-}
-
-.splash.splash_premium
-{
-    font-size: 14px;
-}
 
 /* --- other styles ----
 ------------------------------------------------------------------------------------ */

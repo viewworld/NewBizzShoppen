@@ -634,6 +634,7 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_phone_number" with "+44 92423423232"
       And I fill in "call_result_contact_email_address" with "new_member888@nbs.com"
+      And "call_result_contact_subscription_plan_id" should be selected for value "Free member subscription"
       And I select "Free member subscription" from "call_result_contact_subscription_plan_id"
       And I check "call_result_contact_newsletter_on"
       And I follow translated "call_results.new.save_button"
@@ -684,3 +685,27 @@ Feature: Agent campaign - calling session
   #9602
   @m27 @requested @tgn @_done @_tested_elsewhere
   Scenario: I can enable a newsletter for user upgraded from contact
+
+  #9995
+  @m28 @requested
+  Scenario: When upgrading contact to member I can choose deals that will be requested after the account creation
+
+  #9995
+  @m28 @requested
+  Scenario: When upgrading contact to member I can fill out the templates
+
+  #9995
+  @m28 @requested
+  Scenario: When upgrading contact to member I can choose only deals that are allowed by the subscription type
+
+  #9995
+  @m28 @requested
+  Scenario: When upgrading contact to member I can change subscription after I selected deals but they will be lost
+
+  #9995
+  @m28 @requested
+  Scenario: When contact is upgraded to member the e-mails for each request won't be sent out
+
+  #9989
+  @m28 @requested @tgn @_done @_tested_elsewhere
+  Scenario: A free subscription should be selected by default when upgrading contact to account

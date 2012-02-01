@@ -1,4 +1,4 @@
-<div id="secondary_featured_deal_<%= position %>">
+<div id="secondary_featured_deal_<%= position %>" class="secondary_featured_deal">
   <% if featured.present? %>
       <frm title="#{link_to featured.header, deal_path(featured.slug)}">
         <param:content>
@@ -10,8 +10,6 @@
               <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(featured.slug), :class => 'default_action' %>
             </div>
             <div class="deal_info">
-              <p class="deal_desc"><%= featured.short_featured_description.to_s.truncate_letters(55) %></p>
-
               <div class="deal_price">
                 <p>
                 <% if featured.general_discount? %>
@@ -28,12 +26,11 @@
 
                 <%= ratings_for(featured, :force_static => !current_user_has_role?(:member)) %>
 
-                <br/>
                 <%= group_deal_leads_created_and_missing(featured) %>
               </div>
 
               <div class="deal_description">
-                <p><%= featured.featured_description.to_s.html_safe %></p>
+                <p><%= featured.short_featured_description.to_s.html_safe %></p>
               </div>
 
               <clb/>

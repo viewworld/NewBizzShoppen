@@ -238,3 +238,9 @@ Scenario: I can set contact info for home page like Phone number, Email, Skype
 @m20 @requested @is @_done @_tested
 Scenario: Contact settings should be renamed to fairdeals contact settings
   Then I should see "Fairdeals contact settings"
+
+#9976
+@m28 @requested @tgn @_done @_tested
+Scenario: I should be able to set the number of secondary featured deals show on fairdeals home page
+  And I fill in "settings[18]" with "4"
+  And I press translated "administration.settings.edit.view.button_update_settings"

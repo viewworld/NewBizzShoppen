@@ -71,6 +71,9 @@ class MyProfileController < SecuredController
   end
 
   def cache_referer_deal_id
-    session[:deal_id] = params[:deal_id] if params[:deal_id]
+    if params[:deal_id]
+      @deal = Deal.without_inactive.find_by_id(params[:deal_id])
+      session[:deal_id] = @deal.id if @deal
+    end
   end
 end

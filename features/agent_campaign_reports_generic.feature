@@ -42,3 +42,7 @@ Feature: Reports
 
   @m18 @admin_reports @_done @tested_elsewhere @tgn
   Scenario: As admin I can generate report for one or more selected agents
+
+  #9889
+  @m28 @requested
+  Scenario: Dynamic result value should be included into reports

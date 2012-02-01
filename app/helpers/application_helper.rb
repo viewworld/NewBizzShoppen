@@ -73,7 +73,7 @@ module ApplicationHelper
 
   def custom_error_for_field(form, field)
     if form.object.errors[field].present?
-      content_tag(:div, form.object.errors[field].join(", "), :class => "flash flash_alert") + tag("br")
+      content_tag(:p, form.object.errors[field].join(", "), :class => "inline-errors") + tag("br")
     end
   end
 

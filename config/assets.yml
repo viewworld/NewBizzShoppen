@@ -61,6 +61,7 @@ stylesheets:
     - public/stylesheets/jquery.checkboxtree.min.css
     - public/stylesheets/jquery.autocomplete.css
     - public/stylesheets/ajaxful_rating.css
+    - public/stylesheets/shared/shared.css
 
   fairdeals:
     - public/stylesheets/fairdeals/ocss/reset.css
@@ -73,6 +74,7 @@ stylesheets:
     - public/stylesheets/jquery-ui-1.8.5.custom.css
     - public/stylesheets/colorbox.css
     - public/stylesheets/countdown.css
+    - public/stylesheets/shared/shared.css
 
   fairdeals_thin:
     - public/stylesheets/fairdeals/style_thin.css

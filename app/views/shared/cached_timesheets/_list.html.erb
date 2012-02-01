@@ -1,36 +1,34 @@
 <% if cached_timesheets.any? %>
-  <table class="generic">
+  <table class="generic" id="cached_timesheets">
     <thead>
       <tr>
         <th class="hl"></th>
         <th><%= t("agent_timesheets.new.created_at") %></th>
         <th><%= t("agent_timesheets.new.link_to_report") %></th>
+        <th><%= t("agent_timesheets.new.actions") %></th>
         <th class="hr"></th>
       </tr>
     </thead>
     <tbody>
       <% cached_timesheets.each do |cached| %>
-        <tr>
+        <tr id="cached_timesheet_<%= cached %>">
           <td class="cl"></td>
           <td><%= l Time.at(cached.to_i/100000), :format => :long  %></td>
           <td><%= link_to "#{cached}.html", callers_agent_timesheet_path(cached, :format => :html), :target => '_new'  %></td>
+          <td><%= bt_link_to :remove, t("agent_timesheets.new.delete"), callers_agent_timesheet_path(cached, :format => :html), :method => :delete  %></td>
           <td class="cr"></td>
         </tr>
       <% end %>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td class="fl"></td>
-        <td colspan="2">
+      <tr class="pagination">
+        <td colspan="5" class="ta_c" style="padding-top:5px;">
         <% if cached_timesheets.is_a?(WillPaginate::Collection) %>
-          <div style="text-align:center"><%= will_paginate cached_timesheets %></div>
+          <%= will_paginate cached_timesheets %>
         <% else %>
-          <div style="text-align:center"><%= link_to t("common.view_all"), callers_cached_timesheets_path  %></div>
+          <%= bt_link_to :arrow_down, t("common.view_all"), callers_cached_timesheets_path %>
         <% end %>
         </td>
-        <td class="fr"></td>
       </tr>
-    </tfoot>
+    </tbody>
   </table>
 <% else %>
     <%= blank_state_message %>

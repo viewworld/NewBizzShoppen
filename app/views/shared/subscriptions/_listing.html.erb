@@ -2,7 +2,13 @@
     <div id="available_subscriptions">
       <!--<h2><%= t("subscriptions.available_subscriptions") %>:</h2>-->
       <!--<br/>-->
-
+      <% if defined?(deal) and deal %>
+          <% if current_user.active_subscription.is_free? and current_user.free_deal_requests_in_free_period.to_i == 0 and !deal.premium_deal? %>
+              <b><%= t("subscriptions.subscription_upgrade_to_payable", :header => deal.header) %></b>
+          <% elsif !current_user.active_subscription.is_free? and !current_user.active_subscription.premium_deals? %>
+              <b><%= t("subscriptions.subscription_upgrade_to_premium_deals", :header => deal.header) %></b>
+          <% end %>
+      <% end %>
       <p>
         <%= blurb(:blurb_subscription_select) %>
       </p>

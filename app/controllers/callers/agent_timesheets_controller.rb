@@ -6,23 +6,29 @@ class Callers::AgentTimesheetsController < Callers::CallerController
   before_filter lambda {authorize_role(:call_centre, :admin)}
 
   def show
-
   end
 
   def index
-    unless params[:search]
-      @search = AgentTimesheet::Search.new(:current_user => current_user)
-      render :action => :new
+  end
+
+  def destroy
+    AgentTimesheet::General.destroy(params[:id], current_user)
+    flash[:notice] = t("agent_timesheets.flashes.file_deleted")
+    redirect_to :back
+  end
+
+  def create
+    if Rails.env.development?
+      redirect_to callers_agent_timesheet_path(::AgentTimesheet::General.new(params[:search].merge(:current_user => current_user)).to_file(false))
     else
-      if true
-        ::AgentTimesheet::General.new(params[:search].merge(:current_user => current_user)).delay(:queue => current_user_queue).to_file
-        super do |format|
-          format.html
-        end
-      else
-        redirect_to callers_agent_timesheet_path(::AgentTimesheet::General.new(params[:search].merge(:current_user => current_user)).to_file(false))
-      end
+      ::AgentTimesheet::General.new(params[:search].merge(:current_user => current_user)).delay(:queue => current_user_queue).to_file
+      flash[:notice] = t("agent_timesheets.index.timesheet_queued")
+      redirect_to callers_agent_timesheets_path
     end
+  end
+
+  def new
+    @search = AgentTimesheet::Search.new(:current_user => current_user)
   end
 
 end

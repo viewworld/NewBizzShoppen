@@ -3,8 +3,27 @@
   <header back="true"><%= @deal.header %><%= image_tag_for_locale %></header>
 
   <%= semantic_form_for [:members, @lead], :method => :post do |form| %>
-      <frm title="#{t('deals.new.view.frame_header')}">
+      <frm title="#{t('deals.new.view.frame_header')}" c="rltv">
         <param:content>
+          <% if @deal.premium_deal? %>
+              <div class="splash splash_premium">
+            <span>
+              <%= t("deals.index.view.premium_deal_splash_label") %>
+            </span>
+              </div>
+          <% elsif @deal.group_deal? %>
+              <div class="splash splash_group">
+            <span>
+              <%= t("deals.index.view.group_deal_splash_label") %>
+            </span>
+              </div>
+          <% else %>
+              <div class="splash splash_fair">
+            <span>
+              <%= t("deals.index.view.fair_deal_splash_label") %>
+            </span>
+              </div>
+          <% end %>
           <div class="column_left">
             <div id="step_1">
               <%= render :partial => "form1", :locals => {:form => form} %>
@@ -16,11 +35,13 @@
           </div>
           <div class="column_right">
             <div class="pdd_10">
-              <div class="element_description members_leads">
-                <h3><%= t("deals.show.view.short_description_label") %></h3>
 
-                <%= @deal.description %>
+              <div class="frm_ribbon_wrapper">
+                <div class="frm_ribbon_right">
+                  <p>Saving: <em>100%</em></p>
+                </div>
               </div>
+
               <div class="element_description members_leads">
                 <h3><%= t("deals.show.view.detailed_description_label") %></h3>
 

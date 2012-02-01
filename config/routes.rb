@@ -247,7 +247,7 @@ Nbs::Application.routes.draw do
       end
     end
 
-    resources :agent_timesheets, :only => [:index,:show]
+    resources :agent_timesheets, :only => [:index,:show,:destroy,:create,:new]
 
     resources :cached_timesheets, :only => [:index]
   end
