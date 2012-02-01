@@ -45,3 +45,15 @@
     right: 15px;
     top: -15px;
 }
+
+.frm_ribbon_wrapper
+{
+    height: 85px;
+    position: relative;
+}
+
+.frm_ribbon_wrapper .frm_ribbon_right
+{
+    position: absolute;
+    right: -45px;
+}
