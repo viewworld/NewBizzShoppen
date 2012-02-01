@@ -200,8 +200,8 @@ Feature: Deals from procurement manager perspective
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
-    Then I should see translated "deals.index.view.contact_me"
-    And I follow translated "deals.index.view.contact_me"
+    Then I should see translated "deals.index.view.upgrade_subscription_to_get_deal"
+    And I follow translated "deals.index.view.upgrade_subscription_to_get_deal"
     And I should be on my profile
     Then I follow translated "subscriptions.listing.upgrade"
     And I should see "ultimate some funky deal"
@@ -411,7 +411,7 @@ Feature: Deals from procurement manager perspective
     And I fill in "search_with_keyword" with "PremiumDeal001"
     And I press translated "layout.fairdeals.main_menu.search"
     And I follow translated "deals.index.view.view_deal"
-    And I follow translated "deals.index.view.contact_me"
+    And I follow translated "deals.index.view.upgrade_subscription_to_get_deal"
     And I should be on my profile
     And I fill in "search_with_keyword" with "FreeDeal001"
     And I press translated "layout.fairdeals.main_menu.search"
@@ -428,7 +428,7 @@ Feature: Deals from procurement manager perspective
     And I fill in "search_with_keyword" with "FreeDeal003"
     And I press translated "layout.fairdeals.main_menu.search"
     And I follow translated "deals.index.view.view_deal"
-    And I follow translated "deals.index.view.contact_me"
+    And I follow translated "deals.index.view.upgrade_subscription_to_get_deal"
     And I should be on my profile
 
 
@@ -523,7 +523,7 @@ Feature: Deals from procurement manager perspective
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Electronics deals"
     And I follow translated "deals.index.view.view_deal"
-    And I follow translated "deals.index.view.contact_me"
+    And I follow translated "deals.index.view.upgrade_subscription_to_get_deal"
     And I should be on my profile
     Given user "procurment@nbs.com" has premium deals enabled
     Then I follow translated "layout.fairdeals.main_menu.deals"
