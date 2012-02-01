@@ -147,21 +147,14 @@
     }
 
     function number_to_hours(cell){
-        value = Number($(cell).html());
-        if (isNaN(value)) {
-            $(cell).html('0:00')
-        } else {
-            hours = Math.floor(value);
-            minutes = Math.round((value - hours) * 60);
-            if (minutes < 10) {
-                minutes = '0' + minutes
-            }
-            $(cell).html(hours + ':' + minutes)
-        }
+        to_hours(Number($(cell).html()), cell)
     }
 
     function minutes_to_hours(cell){
-        value = Number($(cell).html())/60;
+        to_hours(Number($(cell).html())/60, cell)
+    }
+
+    function to_hours(value,cell) {
         if (isNaN(value)) {
             $(cell).html('0:00')
         } else {
@@ -232,13 +225,13 @@
             });
             <% end %>
 
-            <% [:value].each do |key| %>
+            <% [:log_out_time, :value].each do |key| %>
             $('div#agent_time_sheet_<%= agent.id %> .avg_val_<%= key.to_s %>').each(function() {
                 agent_time_sheet_avg($(this), $('div#agent_time_sheet_<%= agent.id %>').find('tr.<%= key.to_s %>'))
             });
             <% end %>
 
-            <% [:log_out_time, :log_in, :log_out].each do |key| %>
+            <% [:log_in, :log_out].each do |key| %>
             $('div#agent_time_sheet_<%= agent.id %> .avg_val_<%= key.to_s %>').each(function() {
                 agent_time_sheet_avg_time($(this), $('div#agent_time_sheet_<%= agent.id %>').find('tr.<%= key.to_s %>'))
             });

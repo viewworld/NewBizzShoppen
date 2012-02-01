@@ -13,12 +13,12 @@
       <tr>
         <td class="cell_week"><%= t("agent_timesheets.index.agent_time_sheet.#{key}") %></td>
         <% agent_time_sheet.days_of_week.each do %>
-            <td class="avg_val_<%= key %> val_<%= key.to_s.first %>"></td>
+            <td class="avg_val_<%= key %> val_<%= key.to_s.first %> number_to_<%= key.to_s %>"></td>
         <% end %>
         <% if [:log_in, :log_out].include?(key) %>
             <td class="total_h"><%= t("agent_timesheets.index.na") %></td>
         <% else %>
-            <td class="total_h_<%= key.to_s.first %>"></td>
+            <td class="total_h_<%= key.to_s.first %> number_to_<%= key.to_s %>"></td>
         <% end %>
       </tr>
   <% end %>
