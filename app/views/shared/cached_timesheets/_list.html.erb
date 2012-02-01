@@ -19,20 +19,16 @@
           <td class="cr"></td>
         </tr>
       <% end %>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td class="fl"></td>
-        <td colspan="3">
+      <tr class="pagination">
+        <td colspan="5" class="ta_c" style="padding-top:5px;">
         <% if cached_timesheets.is_a?(WillPaginate::Collection) %>
-          <div style="text-align:center"><%= will_paginate cached_timesheets %></div>
+          <%= will_paginate cached_timesheets %>
         <% else %>
-          <div style="text-align:center"><%= link_to t("common.view_all"), callers_cached_timesheets_path  %></div>
+          <%= bt_link_to :arrow_down, t("common.view_all"), callers_cached_timesheets_path %>
         <% end %>
         </td>
-        <td class="fr"></td>
       </tr>
-    </tfoot>
+    </tbody>
   </table>
 <% else %>
     <%= blank_state_message %>
