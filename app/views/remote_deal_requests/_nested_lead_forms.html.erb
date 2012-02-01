@@ -1,4 +1,4 @@
-  <%= semantic_form_for nested_lead, :url => remote_deal_requests_path(:user_id => user.id), :method => :post do |form| %>
+  <%= semantic_form_for nested_lead, :url => remote_deal_requests_path(:user_id => user.id, :format => (remote ? :js : :html )), :remote => remote, :method => :post do |form| %>
       <%= render :partial => "form", :locals => { :form => form, :nested_lead => nested_lead } %>
       <%= form.submit t("remote_deal_requests.new.view.create_button") %>
   <% end %>

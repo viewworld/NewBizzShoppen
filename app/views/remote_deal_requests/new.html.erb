@@ -2,5 +2,5 @@
   <header>testme deals</header>
 
   <br/>
-  <%= render :partial => "nested_lead_forms", :locals => { :nested_lead => @nested_lead, :user => @user } %>
+  <%= render :partial => "nested_lead_forms", :locals => {:remote => false, :nested_lead => @nested_lead, :user => @user } %>
 </column-mc:>

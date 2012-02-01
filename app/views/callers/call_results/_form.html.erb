@@ -36,7 +36,7 @@
           </li>
           <li class="select">
             <%= label_tag "call_result[contact_subscription_plan_id]", "#{t("call_results.new.contact_subscription_plan")}<abbr>*</abbr>".html_safe %>
-            <%= select_tag "call_result[contact_subscription_plan_id]", options_for_select(SubscriptionPlan.active.for_role(call_result.result.upgrades_to_user_role).without_paypal.map{ |s| [s.name, s.id] }, call_result.contact_subscription_plan_id.nil? ? SubscriptionPlan.active.free.for_role(call_result.result.upgrades_to_user_role).first.id : call_result.contact_subscription_plan_id) %>
+            <%= select_tag "call_result[contact_subscription_plan_id]", options_for_select(SubscriptionPlan.active.for_role(call_result.result.upgrades_to_user_role).without_paypal.map{ |s| [s.name, s.id] }, call_result.contact_subscription_plan_id.nil? ? SubscriptionPlan.active.free.for_role(call_result.result.upgrades_to_user_role).first.id : call_result.contact_subscription_plan_id), :onchange => "if($('#call_result_contact_requested_deal_ids').val()) { select_deals_for_request_from_upgrade_panel(); }" %>
             <%= custom_error_for_object_and_field(call_result, :contact_subscription_plan_id) %>
           </li>
           <li class="boolean">
@@ -91,9 +91,12 @@
             </script>
           <% end %>
 
+          <% if call_result.result.upgrades_to_member? %>
           <li class="commit" style="padding-top:10px">
-            <%= bt_link_to_function nil, t("call_results.new.select_deals_for_request"), "javascript:select_deals_for_request($('#call_result_contact_subscription_plan_id option:selected').val(), $('#call_result_contact_requested_deal_ids').val(), 'call_result_contact_requested_deal_ids')" %>
+            <%= bt_link_to_function nil, t("call_results.new.select_deals_for_request"), "javascript:select_deals_for_request_from_upgrade_panel()" %>
+            <b><span id="request_deal_ids_span"><%= t("call_results.new.no_deals_selected_for_request") %></span></b>
           </li>
+          <% end %>
 
           <script type="text/javascript">
             set_email_variables_for_popup(<%= "[#{call_result.result.email_template_variables_for_type.map{ |v| "'#{v}'" }.join(',')}]" %>);

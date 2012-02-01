@@ -15,10 +15,14 @@ function set_deals_as_requested(dest_field){
         selected_deal_ids.push($(this).val())
     });
 
+
+    $('#request_deal_ids_span').html(selected_deal_ids.length.toString() + " " +I18n.t("common.js.deals_chosen"));
+
     $('#' + dest_field).val(selected_deal_ids);
 }
 
 function display_deals_info_forms(user_id, requested_deal_ids){
+    $('#modal_remote_deal_requests_info_container').html(I18n.t("common.js.loading"));
     $.get('/remote_deal_requests/new.js', { user_id: user_id, requested_deal_ids: requested_deal_ids.toString().split(",") } );
     $('#modal_remote_deal_requests_info').dialog('open');
 }

@@ -202,6 +202,10 @@
               custom_clear_form("#new_contact_form", window.fields_array)
           }
       }
+
+      function select_deals_for_request_from_upgrade_panel(){
+          select_deals_for_request($('#call_result_contact_subscription_plan_id option:selected').val(), $('#call_result_contact_requested_deal_ids').val(), 'call_result_contact_requested_deal_ids')
+      }
   </script>
 </js:>
 

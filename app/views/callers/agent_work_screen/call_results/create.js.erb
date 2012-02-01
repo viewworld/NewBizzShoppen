@@ -1,3 +1,6 @@
+<% if @call_result.result.upgrades_to_member? and @call_result.contact_requested_deal_ids.present? %>
+   display_deals_info_forms(<%= @call_result.upgraded_user.id %>, [<%= @call_result.contact_requested_deal_ids %>]);
+<% end %>
 display_notice("<%= escape_javascript(t("call_results.create.flash.successfully_added")) %>", true);
 $.get("<%= url_for(:controller => "callers/agent_work_screen/contacts", :action => :show, :campaign_id => @campaign, :id => 0, :fast => "true") %>");
 show_agent_work_screen_dashboard();

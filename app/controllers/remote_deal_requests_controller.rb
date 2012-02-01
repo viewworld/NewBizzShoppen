@@ -44,6 +44,7 @@ class RemoteDealRequestsController < SecuredController
     respond_to do |format|
       if @nested_lead.save
         format.html { redirect_to root_path }
+        format.js { }
       else
         format.html { render 'new' }
         format.js { }
