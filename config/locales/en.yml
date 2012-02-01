@@ -597,6 +597,7 @@ en:
       user_deal_maker_role_enabled: "Deal maker role enabled"
       contact_subscription_plan: "Subscription plan"
       contact_newsletter_on: "Newsletter on"
+      select_deals_for_request: "Select deals for request"
     edit:
       title: Edit result
       form_title: Edit

@@ -1,0 +1,9 @@
+<column-mc:>
+  <header>testme deals</header>
+
+  <br/>
+  <%= semantic_form_for @nested_lead, :url => remote_deal_requests_path(:user_id => @user.id), :method => :post do |form| %>
+      <%= render :partial => "form", :locals => { :form => form, :nested_lead => @nested_lead } %>
+      <%= form.submit "GO" %>
+  <% end %>
+</column-mc:>

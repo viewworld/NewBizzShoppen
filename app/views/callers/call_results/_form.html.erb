@@ -48,6 +48,10 @@
               <%= form.input :user_not_charge_vat, :as => :boolean, :label => t("call_results.new.user_not_charge_vat") %>
           <% end %>
 
+          <% if call_result.result.upgrades_to_member? %>
+              <%= form.input :contact_requested_deal_ids, :as => :hidden %>
+          <% end %>
+
           <% if call_result.result.upgrades_to_category_supplier? %>
           <li>
             <div id="category_supplier_categories">
@@ -86,6 +90,10 @@
             window.materials_repository_files = deserialize_material_repository_array($('#serialized_materials_array_field').val());
             </script>
           <% end %>
+
+          <li class="commit" style="padding-top:10px">
+            <%= bt_link_to_function nil, t("call_results.new.select_deals_for_request"), "javascript:select_deals_for_request($('#call_result_contact_subscription_plan_id option:selected').val(), $('#call_result_contact_requested_deal_ids').val(), 'call_result_contact_requested_deal_ids')" %>
+          </li>
 
           <script type="text/javascript">
             set_email_variables_for_popup(<%= "[#{call_result.result.email_template_variables_for_type.map{ |v| "'#{v}'" }.join(',')}]" %>);
