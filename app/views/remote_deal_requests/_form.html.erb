@@ -1,7 +1,7 @@
 <%= form.fields_for :leads, nested_lead.leads do |builder| %>
   <fieldset class="inputs labels_ta_r labels_200">
   <%= builder.object.header %>
-  <%= builder.input :based_on_deal_id %>
+  <%= builder.input :deal_id, :as => :hidden %>
   <%= builder.input :hidden_description, :label => t("member.leads.new.view.lead_note"), :input_html => {:style => "height: 150px;width:230px;"} %>
    <% unless builder.object.lead_templates.empty? %>
       <%= render :partial => "/shared/leads/lead_template_fields", :locals => {:lead => builder.object, :form => builder } %>

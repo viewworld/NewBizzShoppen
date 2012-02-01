@@ -4379,3 +4379,7 @@ en:
         pay_invoice: "Pay invoice"
         message: "Go to Paypal to pay for the invoice %{number}"
         amount: "Amount:"
+  remote_deal_requests:
+    new:
+      view:
+        create_button: "Create"

@@ -15,7 +15,7 @@ class NestedLead
       self.user = User::Member.find(params[:user_id])
       params[:nested_lead][:leads_attributes].each_pair do |key, attributes|
         lead = Lead.new(attributes)
-        lead.based_on_deal(Deal.find(lead.based_on_deal_id), user)
+        lead.based_on_deal(lead.deal, user)
         self.leads << lead
       end
     end
@@ -31,6 +31,6 @@ class NestedLead
   end
 
   def leads_valid?
-    leads.detect { |l| !l.valid? }.nil?
+    leads.select { |l| !l.valid? }.empty?
   end
 end

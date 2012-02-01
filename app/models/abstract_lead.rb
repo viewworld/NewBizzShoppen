@@ -29,7 +29,6 @@ class AbstractLead < ActiveRecord::Base
   attr_accessor :notify_suppliers_after_update
   attr_accessor :validate_contact_email
   attr_accessor :creation_step
-  attr_accessor :based_on_deal_id
 
   validates_presence_of :header, :description, :company_name, :contact_name, :phone_number, :country_id, :currency, :address_line_1, :address_line_3, :zip_code, :if => :process_for_lead_information?
   validates_presence_of :hidden_description, :unless => Proc.new { |l| l.created_by?('Member') }, :if => :process_for_lead_information?
@@ -170,7 +169,7 @@ class AbstractLead < ActiveRecord::Base
 
   def based_on_deal(deal, user)
     {:current_user => User.find_by_email(deal.deal_admin_email).with_role, :category => deal.lead_category, :sale_limit => 1, :price => deal.price.blank? ? 0 : deal.price,
-     :purchase_decision_date => deal.end_date+7, :currency => deal.currency, :published => true, :requestee => user, :deal_id => deal.id, :based_on_deal_id => deal.id
+     :purchase_decision_date => deal.end_date+7, :currency => deal.currency, :published => true, :requestee => user, :deal_id => deal.id
     }.each_pair do |key, value|
       self.send("#{key}=", value)
     end

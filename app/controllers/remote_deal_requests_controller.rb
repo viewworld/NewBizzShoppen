@@ -39,11 +39,15 @@ class RemoteDealRequestsController < SecuredController
 
   def create
     @nested_lead = NestedLead.new(params)
+    @user = @nested_lead.user
 
-    throw @nested_lead.save
-    throw params
     respond_to do |format|
-      format.js { }
+      if @nested_lead.save
+        format.html { redirect_to root_path }
+      else
+        format.html { render 'new' }
+        format.js { }
+      end
     end
   end
 
