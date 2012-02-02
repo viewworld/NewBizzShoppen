@@ -91,7 +91,7 @@
             </script>
           <% end %>
 
-          <% if call_result.result.upgrades_to_member? %>
+          <% if call_result.result.upgrades_to_member? and agent_work_screen %>
           <li class="commit" style="padding-top:10px">
             <%= bt_link_to_function nil, t("call_results.new.select_deals_for_request"), "javascript:select_deals_for_request_from_upgrade_panel()" %>
             <b><span id="request_deal_ids_span"><%= call_result.contact_requested_deal_ids.present? ? "#{call_result.contact_requested_deal_ids.to_s.split(",").size} " + t("common.js.deals_chosen") : t("call_results.new.no_deals_selected_for_request") %></span></b>

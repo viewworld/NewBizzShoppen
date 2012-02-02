@@ -55,6 +55,6 @@ class RemoteDealRequestsController < SecuredController
   protected
 
   def check_role
-    raise CanCan::AccessDenied unless user_signed_in? and current_user.has_any_role?(:call_centre, :call_centre_agent, :agent)
+    raise CanCan::AccessDenied unless user_signed_in? and current_user.has_any_role?(:call_centre, :call_centre_agent, :agent, :admin)
   end
 end
