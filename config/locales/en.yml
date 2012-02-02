@@ -4385,3 +4385,5 @@ en:
     new:
       view:
         create_button: "Create"
+    common:
+      request_deals: "Request deals"
