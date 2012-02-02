@@ -210,7 +210,7 @@ class Lead < AbstractLead
   end
 
   def set_deal_code
-    self.hidden_description = "#{I18n.t("models.lead.hidden_description_prefix_for_deal_code")} #{deal.deal_code}. #{hidden_description}" if deal
+    self.hidden_description = "#{I18n.t("models.lead.hidden_description_prefix_for_deal_code")} #{deal.deal_code}. #{hidden_description}" if deal and deal.deal_code.present?
   end
 
   public
