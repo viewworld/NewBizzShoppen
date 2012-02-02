@@ -6,6 +6,10 @@
           <%= f.text_field :value %>
           <p class="inline-hints">&euro;</p>
         </li>
+        <li class="boolean">
+          <%= f.label :is_dynamic_value %>
+          <%= f.check_box :is_dynamic_value, :onclick => "enable_dynamic_value()" %>
+        </li>
         <li class="string">
           <%= f.label :expected_completed_per_hour %>
           <%= f.text_field :expected_completed_per_hour %>
