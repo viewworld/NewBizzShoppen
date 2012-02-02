@@ -184,7 +184,7 @@
             euros = Math.floor(value);
             cents = Math.round((value - euros)*100);
             if (cents < 10) {
-                cents = cents + '0'
+                cents = '0' + cents
             }
             $(cell).html(euros + '.' + cents)
         }
