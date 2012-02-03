@@ -233,6 +233,10 @@ class CampaignReport
     not_upgraded.with_dynamic_value(false)
   end
 
+  def total_not_upgraded_dynamic
+
+  end
+
   def total_value_upgraded
     upgraded = CallResult.final_for_campaign(campaign).where("results.upgrades_to_lead is true and call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported.
         joins(:contact => :lead)
@@ -247,6 +251,8 @@ class CampaignReport
 
   def total_value
     not_upgraded = total_value_not_upgraded
+
+    not_upgraded_dynamic = total_not_upgraded_dynamic
 
     upgraded = total_value_upgraded
 
