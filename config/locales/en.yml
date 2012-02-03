@@ -4054,6 +4054,7 @@ en:
       flash:
         error_wrong_fields: "Sorry. There is problem with chosen fields."
         error_wrong_file: "Sorry. There is problem with your uploaded file."
+        import_queued: "Import has been queued to be run in the background. You will be notified by email when it's done."
       view:
     destroy:
       flash:
