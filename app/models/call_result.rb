@@ -37,6 +37,7 @@ class CallResult < ActiveRecord::Base
   scope :final_for_campaign, lambda { |campaign| final_results.for_campaign(campaign) }
   scope :with_success, where("results.is_success is true")
   scope :with_reported, where("results.is_reported is true")
+  scope :with_dynamic_value, lambda { |is_dynamic| where("campaigns_results.is_dynamic_value = ?", is_dynamic) }
   default_scope :order => 'call_results.created_at DESC'
 
   def called?
