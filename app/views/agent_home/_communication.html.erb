@@ -1,3 +1,4 @@
+<% unless communication.related.nil? %>
 <li>
   <div class="news_content">
     <h4><%= link_to communication.title,
@@ -16,3 +17,4 @@
                 send("#{current_user.role.to_s.pluralize}_leads_path".to_sym, :unfold_comment_id => communication.related_id, :search => {:with_keyword => communication.related.header, :without_inactive => "false", :without_outdated => "false"}), :class => "read_more" %>
   </div>
 </li>
+<% end %>
