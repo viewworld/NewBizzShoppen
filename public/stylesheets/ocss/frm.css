@@ -355,31 +355,3 @@
 .frm_hc h2 a {
     font-size: 12px;
 }
-
-/* --- frm ribbon ---
---------------------------------------------------------------------------------------------------------------------- */
-
-.frm_ribbon_right
-{
-    background:  url(/images/bg_ribbon_right.png) no-repeat 0 0;
-    width: 275px;
-    height: 65px;
-    padding: 10px 30px;
-    margin-bottom: 20px;
-    font-weight: bold;
-    color: #fff;
-    text-shadow: -1px -1px 0 #62951c;
-    position: relative;
-}
-
-.frm_ribbon_right p
-{
-    padding:  2px 0;
-}
-
-.frm_ribbon_right em
-{
-    font-style: normal;
-    padding-left: 4px;
-    font-size: 16px;
-}
