@@ -452,13 +452,13 @@ class Subscription < ActiveRecord::Base
   end
 
   def apply_free_deal_requests_in_free_period!
-    if is_free? and user.member? and user.free_deal_requests_in_free_period.nil? and free_deal_requests_in_free_period > 0
+    if is_free? and user.member? and user.free_deal_requests_in_free_period.nil? and free_deal_requests_in_free_period.to_i > 0
       user.update_attribute(:free_deal_requests_in_free_period, free_deal_requests_in_free_period)
     end
   end
 
   def apply_free_deals_in_free_period!
-    if is_free? and (user.supplier? or user.category_supplier?) and user.free_deals_in_free_period.nil? and free_deals_in_free_period > 0
+    if is_free? and (user.supplier? or user.category_supplier?) and user.free_deals_in_free_period.nil? and free_deals_in_free_period.to_i > 0
       user.update_attribute(:free_deals_in_free_period, free_deals_in_free_period)
     end
   end
