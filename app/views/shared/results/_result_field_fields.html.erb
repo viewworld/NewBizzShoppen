@@ -27,11 +27,11 @@
             <%= f.fields_for :campaigns_result_fields, f.object.campaigns_result_field_for(@campaign) do |builder| %>
             <li class="boolean">
               <%= builder.check_box :is_dynamic_value %>
-              <%= builder.label :is_dynamic_value %>
+              <%= builder.label :is_dynamic_value, t("shared.results.form.result_fields.is_dynamic_value") %>
             </li>
             <li class="string<%= ' error' if builder.object.errors[:dynamic_euro_value].present?%>">
-              <%= builder.label :dynamic_euro_value %>
-              <%= builder.text_field :dynamic_euro_value %>
+              <%= builder.label :dynamic_euro_value, t("shared.results.form.result_fields.dynamic_euro_value") %>
+              <%= builder.text_field :dynamic_euro_value %>&nbsp;&euro;
               <%= custom_error_for_field(builder, :dynamic_euro_value) %>
             </li>
             <li class="hidden">

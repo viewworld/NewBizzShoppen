@@ -2889,6 +2889,10 @@ en:
         remove_lead_template_field: Remove
         template_name: Template name
         field_name: Field name
+        result_fields:
+          is_dynamic_value: "Is dynamically calculated"
+          dynamic_euro_value: "Value"
+        is_dynamic_value: "Value dynamically calculated"
     leads:
       form:
         country_local_label: Local
