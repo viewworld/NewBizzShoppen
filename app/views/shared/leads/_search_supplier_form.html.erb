@@ -48,7 +48,7 @@
       <ol class="no_pdd">
         <li class="select" style="float:right">
           <%= label "category", t("leads.index.search.category_label") %>
-          <%= select_tag "category", options_for_select(current_user.parent_accessible_categories_without_auto_buy.map { |c| [c.name, c.cached_slug] }, @home_category.cached_slug),
+          <%= select_tag "category", options_for_select(current_user.parent_accessible_categories_without_auto_buy.with_leads.without_locked_and_not_published.map { |c| [c.name, c.cached_slug] }, @home_category.cached_slug),
                          :include_blank => false,
                          :onchange => "uncheck_category_checkboxes();this.form.action='/'+this.value+'/leads';this.form.submit();"
           %>
@@ -68,11 +68,16 @@
         <%= f.label :with_deal_value_to, t("leads.index.search.deal_value_to_label") %>
         <%= f.select :with_deal_value_to, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
       </li>
+
+      <% unless user_signed_in? and current_user.has_role?(:category_supplier) %>
       <li class="select">
         <%= f.label :with_created_by, t("leads.index.search.created_by") %>
         <%= f.select :with_created_by, [], {:include_blank => true} %>
       </li>
+      <% end %>
+
       <script>
+        <% unless user_signed_in? and current_user.has_role?(:category_supplier) %>
         $.post('/leads/creators', {
             with_created_by: <%= @search.with_created_by.to_i %>,
             <% if @search.with_category %>
@@ -81,6 +86,7 @@
             with_selected_categories: [<%= @search.with_selected_categories.to_a.join(',') %>]
             <% end %>
         });
+        <% end %>
       </script>
       <li class="select">
         <%= f.label :with_certification_level, t("leads.index.search.certification") %>
