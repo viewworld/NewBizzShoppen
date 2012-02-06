@@ -88,5 +88,5 @@ Feature: Result values
   Scenario: I can enter amount in Euro for dynamic value calculation if type is selected for calculation
 
   #9889
-  @m28 @requested
+  @m28 @requested @tgn @_done @_tested_elsewhere
   Scenario: I can check that value for result should be calculated dynamically based on the sum of fields' values

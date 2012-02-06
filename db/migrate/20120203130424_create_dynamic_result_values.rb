@@ -4,7 +4,7 @@ class CreateDynamicResultValues < ActiveRecord::Migration
     execute %{
               CREATE VIEW dynamic_result_values AS
               SELECT distinct(result_values.id) AS id,
-              result_values.value AS VALUE,
+              result_values.value::FLOAT AS VALUE,
               campaigns_result_fields.dynamic_euro_value AS euro_value,
               call_results.creator_id,
               results.id AS result_id,
@@ -19,7 +19,7 @@ class CreateDynamicResultValues < ActiveRecord::Migration
               INNER JOIN campaigns_result_fields ON campaigns_result_fields.result_field_id=result_fields.id
               WHERE
               result_values.field_type like '1' AND campaigns_result_fields.is_dynamic_value = 't' AND campaigns_results.is_dynamic_value = 't'
-              AND contacts.type = 'Contact' AND (results.upgrades_to_lead is false) AND (results.is_reported is true)
+              AND contacts.type = 'Contact' AND (results.upgrades_to_lead is false) AND (results.is_reported is true) AND (results.final is true)
              }
   end
 

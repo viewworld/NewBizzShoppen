@@ -98,7 +98,7 @@ describe CampaignReport do
     end
 
     it "should return all reported result types" do
-      CampaignReport.final_results.size.should == 5
+      CampaignReport.final_results.size.should == 6
     end
 
     it "should return correct target final results of given type per hour" do
@@ -169,11 +169,19 @@ describe CampaignReport do
     end
 
     it "should return correct value created" do
-      @campaign1.results << @result_dyn_value
-      @campaign1.save
-      @result_dyn_value.campaigns_results.first.update_attributes(:value => 100, :expected_completed_per_hour => 5, :is_dynamic_value => true)
-      @result_dyn_value.result_fields.each do |result_field|
-        result_field.campaigns_result_fields.create(:campaign => @campaign1, :is_dynamic_value => result_field.name != "test field 3" ? true : false, :dynamic_euro_value => 17)
+      [@campaign1, @campaign2].each do |campaign|
+        campaign.results << @result_dyn_value
+        campaign.save
+        @result_dyn_value.reload
+        @result_dyn_value.campaigns_results.detect{ |cr| cr.campaign == campaign }.update_attributes(:value => 100, :expected_completed_per_hour => 5, :is_dynamic_value => true)
+        @result_dyn_value.result_fields.each do |result_field|
+          result_field.campaigns_result_fields.create(:campaign => campaign, :is_dynamic_value => result_field.name != "test field 3" ? true : false, :dynamic_euro_value => 17)
+        end
+        result_values = []
+        @result_dyn_value.result_fields.sort{ |x,y| x.name <=> y.name }.each_with_index do  |result_field, i|
+          result_values << ResultValue.new(:result_field => result_field, :field_type => result_field.field_type, :value => (i+1).to_s)
+        end
+        CallResult.make!(:contact => (campaign == @campaign1) ? @contact1_4 : @contact2_1, :result => @result_dyn_value, :creator => @call_centre_agent1, :result_values => result_values)
       end
 
       CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
@@ -182,13 +190,13 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact1_2, :result => @result_final_reported, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
-#      result_values = []
-#      @result_dyn_value.result_fields.each_with_index do  |result_field, i|
-#        result_values << ResultValue.new(:result_field => result_field, :field_type => result_field.field_type, :value => (i+1).to_s)
-#      end
-#      CallResult.make!(:contact => @contact1_4, :result => @result_dyn_value, :creator => @call_centre_agent1, :result_values => result_values)
+
+
+#      throw  DynamicResultValue.for_campaign(@campaign1).between_dates(Time.new.beginning_of_week, Time.new.end_of_week).all
+#      throw xx.map { |x| ResultValue.find(x.id) }.map { |z| z.result_field }
+
       cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
-      cr.value_created.should == 253.0   #304
+      cr.value_created.should == 304.0
     end
 
     it "should return correct number of call results" do

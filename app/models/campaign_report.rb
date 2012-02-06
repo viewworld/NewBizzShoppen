@@ -233,8 +233,15 @@ class CampaignReport
     not_upgraded.with_dynamic_value(false)
   end
 
-  def total_not_upgraded_dynamic
-
+  def total_value_not_upgraded_dynamic
+    not_upgraded_dynamic = DynamicResultValue.for_campaign(campaign).between_dates(date_from, date_to)
+    if selected_users?
+      not_upgraded_dynamic = not_upgraded_dynamic.where("creator_id in (?)", user.map(&:id))
+    elsif user
+      not_upgraded_dynamic = not_upgraded_dynamic.where("creator_id = ?", user.id)
+      not_upgraded_dynamic = not_upgraded_dynamic.where("result_id IN (?)", selected_result_ids) if selected_result_ids
+    end
+    not_upgraded_dynamic
   end
 
   def total_value_upgraded
@@ -252,11 +259,11 @@ class CampaignReport
   def total_value
     not_upgraded = total_value_not_upgraded
 
-    not_upgraded_dynamic = total_not_upgraded_dynamic
+    not_upgraded_dynamic = total_value_not_upgraded_dynamic
 
     upgraded = total_value_upgraded
 
-    not_upgraded.sum("campaigns_results.euro_value").to_f + upgraded.sum("leads_leads.euro_price").to_f
+    not_upgraded.sum("campaigns_results.euro_value").to_f + not_upgraded_dynamic.sum("value * euro_value").to_f + upgraded.sum("leads_leads.euro_price").to_f
   end
 
   def leads_sold
