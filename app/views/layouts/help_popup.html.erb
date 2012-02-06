@@ -4,7 +4,9 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <title>Fairleads</title>
   <%= stylesheet_link_tag "ocss_core", "ocss/popup", "style", "jquery-ui-1.8.5.custom" %>
-  <%= javascript_include_tag :defaults %>
+  <% unless params[:modal_box] == "1" %>
+    <%= javascript_include_tag :defaults %>
+  <% end %>
   <%= csrf_meta_tag %>
 </head>
 <body>

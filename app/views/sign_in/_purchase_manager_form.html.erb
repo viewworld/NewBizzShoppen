@@ -62,7 +62,7 @@
                 <% else %>
                     <%= form.input :time_zone, :as => :hidden %>
                 <% end %>
-                <%= form.input :agreement_read, :as => :boolean, :hint => hint_for(user, :agreement_read), :label => "#{t("common.agree_to")} #{link_to_main_page_article('terms_conditions', {:popup => true}, {:id => 'agreement_modal_box'})}".html_safe, :required => true %>
+                <%= form.input :agreement_read, :as => :boolean, :hint => hint_for(user, :agreement_read), :label => "#{t("common.agree_to")} #{modal_box ? link_to_function(Article::Cms::MainPageArticle.where(:key => "terms_conditions").first.title, "javascript:show_terms_and_conditions();") : link_to_main_page_article('terms_conditions', {:popup => true}, {:id => 'agreement_modal_box'})}".html_safe, :required => true %>
                 <%= form.input :newsletter_on, :as => :boolean, :hint => hint_for(user, :newsletter_on) %>
                 <%= form.input :rpx_identifier, :as => :hidden %>
               </ol>

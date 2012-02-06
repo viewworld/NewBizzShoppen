@@ -1,5 +1,8 @@
 <popup:>
   <div class="c_help">
+    <% if params[:modal_box] == "1" %>
+        <%= bt_link_to nil, t("common.back_link"), "#", :onclick => "$.colorbox.close()", :class => "fltr" %>
+    <% end %>
     <%= bt_link_to nil, t("common.edit_link"), edit_administration_article_path(@article), :class => "fltr" if current_user_has_role? :admin %>
     <h1><%= @article.title %></h1>
     <%= raw @article.content %>

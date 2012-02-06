@@ -255,6 +255,10 @@
          $.colorbox({overlayClose: false, width: 980, height: false, inline: true, href:'#modal_sign_in_or_sign_up_container' });
      }
 
+    function show_terms_and_conditions(){
+        $.colorbox({overlayClose: false, width: false, height: "100%", inline: false, href:'<%= article_path(Article::Cms::MainPageArticle.where(:key => "terms_conditions").first, :popup => true, :modal_box => "1") %>', onClosed:function(){show_sign_up_or_sign_in_modal()} });
+    }
+
     $(document).ready(function() {
         select_subscription_radio_button('user_member', <%= SubscriptionPlan.free.active.only_public.for_role(:member).first.id -%>)
     });
