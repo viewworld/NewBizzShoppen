@@ -41,7 +41,7 @@ class AbstractLead < ActiveRecord::Base
   before_save :set_published_at
   before_validation :strip_email_address
 
-  scope :with_category, lambda { |q| where(:category_id => Category.find_by_id(q).self_and_descendants.map(&:id)) }
+  scope :with_category, lambda { |q| where(:category_id => (Category.find_by_id(q) ? Category.find_by_id(q).self_and_descendants.map(&:id) : []) ) }
   scope :with_keyword, lambda { |q| where("lower(header) like :keyword OR lower(leads.description) like :keyword OR lower(creator_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :with_country, lambda { |country_id| where(:country_id => country_id) }
   scope :with_zip_code, lambda { |zip_code| where(:zip_code => zip_code) }
