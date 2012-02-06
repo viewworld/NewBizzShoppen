@@ -38,7 +38,16 @@
 
               <div class="frm_ribbon_wrapper">
                 <div class="frm_ribbon_right">
-                  <p>Saving: <em>100%</em></p>
+                    <% if @deal.general_discount? %>
+                        <p><%= t("deals.show.view.saving_label") %> <em><%= @deal.saving %></em></p>
+                    <% else %>
+                        <p><%= t("deals.show.view.price_label") %>: <em><%= as_currency(@deal.deal_price, @deal.currency) %></em>
+                        </p>
+
+                        <p><%= t("deals.show.view.discounted_price_label") %>:<em><%= as_currency(@deal.discounted_price, @deal.currency) %></em></p>
+
+                        <p><%= t("deals.show.view.saving_label") %> <%= @deal.saving %></p>
+                    <% end %>
                 </div>
               </div>
 

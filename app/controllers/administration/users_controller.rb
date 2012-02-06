@@ -5,7 +5,9 @@ class Administration::UsersController < Administration::AdministrationController
   set_tab "users"
 
   def new
-    @user = "User::#{params[:role].to_s.camelize}".constantize.new(:agreement_read => true, :certification_level => ["agent", "call_centre_agent", "purchase_manager", "call_centre"].include?(params[:role]) ? User::BRONZE_CERTIFICATION : nil)
+    @user = "User::#{params[:role].to_s.camelize}".constantize.new(:agreement_read => true,
+             :certification_level => ["agent", "call_centre_agent", "purchase_manager", "call_centre"].include?(params[:role]) ? User::BRONZE_CERTIFICATION : nil,
+             :subscription_plan_id => ["supplier", "category_supplier", "member"].include?(params[:role]) ? SubscriptionPlan.free.active.for_role(params[:role]).first.id : nil)
   end
 
   def create

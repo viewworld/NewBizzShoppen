@@ -44,27 +44,27 @@ Scenario: I can add new lead user that belongs to my account
   And I press translated "supplier.subaccounts.new.view.button_create"
   Then I should see translated "supplier.subaccounts.create.flash.subaccount_creation_successful"
 
-@_tested @noguess @_done
+@_tested @noguess @_done @_deprecated
 Scenario: Lead buyer have to be activated through activation email
-  When I follow translated "supplier.subaccounts.index.view.new_lead_supplier"
-  And I fill in "user_lead_supplier_first_name" with "Mark"
-  And I fill in "user_lead_supplier_last_name" with "Driscoll"
-  And I fill in "user_lead_supplier_email" with "driscoll@person.noserver.com"
-  And I fill in "user_lead_supplier_password" with "secret"
-  And I fill in "user_lead_supplier_password_confirmation" with "secret"
-  And I press translated "supplier.subaccounts.new.view.button_create"
-  Then a confirmation message should be sent to driscoll@person.noserver.com
+#  When I follow translated "supplier.subaccounts.index.view.new_lead_supplier"
+#  And I fill in "user_lead_supplier_first_name" with "Mark"
+#  And I fill in "user_lead_supplier_last_name" with "Driscoll"
+#  And I fill in "user_lead_supplier_email" with "driscoll@person.noserver.com"
+#  And I fill in "user_lead_supplier_password" with "secret"
+#  And I fill in "user_lead_supplier_password_confirmation" with "secret"
+#  And I press translated "supplier.subaccounts.new.view.button_create"
+#  Then a confirmation message should be sent to driscoll@person.noserver.com
 
-@_tested @_done
+@_tested @_done @_deprecated
 Scenario: Lead user have to be activated through activation email
-  When I follow translated "supplier.subaccounts.index.view.new_lead_user"
-  And I fill in "user_lead_user_first_name" with "Mark"
-  And I fill in "user_lead_user_last_name" with "Driscoll"
-  And I fill in "user_lead_user_email" with "driscoll@person.noserver.com"
-  And I fill in "user_lead_user_password" with "secret"
-  And I fill in "user_lead_user_password_confirmation" with "secret"
-  And I press translated "supplier.subaccounts.new.view.button_create"
-  Then a confirmation message should be sent to driscoll@person.noserver.com
+#  When I follow translated "supplier.subaccounts.index.view.new_lead_user"
+#  And I fill in "user_lead_user_first_name" with "Mark"
+#  And I fill in "user_lead_user_last_name" with "Driscoll"
+#  And I fill in "user_lead_user_email" with "driscoll@person.noserver.com"
+#  And I fill in "user_lead_user_password" with "secret"
+#  And I fill in "user_lead_user_password_confirmation" with "secret"
+#  And I press translated "supplier.subaccounts.new.view.button_create"
+#  Then a confirmation message should be sent to driscoll@person.noserver.com
 
 @_tested @noguess @_done
 Scenario: I can remove lead buyer role from lead buyer (leaving him lead user role)
