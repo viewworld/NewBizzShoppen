@@ -222,7 +222,7 @@ class CampaignReport
     fc
   end
 
-  def total_value
+  def total_value_not_upgraded
     not_upgraded = CallResult.final_for_campaign(campaign).where("results.upgrades_to_lead is false and call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported
     if selected_users?
       not_upgraded = not_upgraded.where("call_results.creator_id in (?)", user.map(&:id))
@@ -230,7 +230,21 @@ class CampaignReport
       not_upgraded = not_upgraded.where("call_results.creator_id = ?", user.id)
     end
     not_upgraded = not_upgraded.where("results.id IN (?)", selected_result_ids) if selected_result_ids
+    not_upgraded.with_dynamic_value(false)
+  end
 
+  def total_value_not_upgraded_dynamic
+    not_upgraded_dynamic = DynamicResultValue.for_campaign(campaign).between_dates(date_from, date_to)
+    if selected_users?
+      not_upgraded_dynamic = not_upgraded_dynamic.where("creator_id in (?)", user.map(&:id))
+    elsif user
+      not_upgraded_dynamic = not_upgraded_dynamic.where("creator_id = ?", user.id)
+      not_upgraded_dynamic = not_upgraded_dynamic.where("result_id IN (?)", selected_result_ids) if selected_result_ids
+    end
+    not_upgraded_dynamic
+  end
+
+  def total_value_upgraded
     upgraded = CallResult.final_for_campaign(campaign).where("results.upgrades_to_lead is true and call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported.
         joins(:contact => :lead)
     if selected_users?
@@ -239,8 +253,17 @@ class CampaignReport
       upgraded = upgraded.where("call_results.creator_id = ?", user.id)
     end
     upgraded = upgraded.where("results.id IN (?)", selected_result_ids) if selected_result_ids
+    upgraded
+  end
 
-    not_upgraded.sum("campaigns_results.euro_value").to_f + upgraded.sum("leads_leads.euro_price").to_f
+  def total_value
+    not_upgraded = total_value_not_upgraded
+
+    not_upgraded_dynamic = total_value_not_upgraded_dynamic
+
+    upgraded = total_value_upgraded
+
+    not_upgraded.sum("campaigns_results.euro_value").to_f + not_upgraded_dynamic.sum("value * euro_value").to_f + upgraded.sum("leads_leads.euro_price").to_f
   end
 
   def leads_sold

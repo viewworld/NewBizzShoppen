@@ -345,3 +345,14 @@ When /^campaign "([^"]*)" (should|should not) have contact named "([^"]*)"$/ do 
     contact.should be_nil
   end
 end
+
+When /^I follow edit page for result named "([^"]*)" for campaign "([^"]*)"$/ do |result_name, campaign_name|
+  campaign = Campaign.where(:name => campaign_name).first
+  result = Result.find_by_name(result_name)
+  visit "/callers/campaigns/#{campaign.id}/results/#{result.id}/edit"
+end
+
+When /^result named "([^"]*)" has field with attributes "([^"]*)"$/ do |result_name, result_field_attrs|
+  result = Result.find_by_name(result_name)
+  result.result_fields << ResultField.create(Hash[*result_field_attrs.split(/[,:]/).map(&:strip)].symbolize_keys)
+end
