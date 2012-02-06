@@ -158,5 +158,5 @@ Feature: Agent timesheets
   Scenario: I can use checkbox to display cost
 
   #9889
-  @m28 @requested
+  @m28 @requested @tgn @_done @_tested_elsewhere
   Scenario: Dynamic result value should be included into agent timesheets
