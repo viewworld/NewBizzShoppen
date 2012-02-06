@@ -1,7 +1,7 @@
 <li>
   <div class="lead_content">
     <h4>
-      <%= link_to lead.header, send((current_user.has_role?(:supplier) ? 'suppliers_lead_purchase_path' : 'lead_users_lead_purchase_path').to_sym, (lead.lead_purchases.detect{ |lp| lp.owner == current_user or lp.assignee_id == current_user.id })) %>
+      <%= link_to lead.header, send((current_user.has_role?(:supplier) ? 'suppliers_lead_purchase_path' : 'lead_users_lead_purchase_path').to_sym, (lead.lead_purchases.detect{ |lp| lp.owner_id == current_user.id or lp.assignee_id == current_user.id })) %>
       <%= link_to_edit_lead(lead) %>
     </h4>
 
@@ -33,6 +33,6 @@
     <h3><%= t("lead_purchases.listing.hidden_description_label") %></h3>
     <p class="element"><%= lead.hidden_description %></p>
 
-    <%= link_to t("supplier_home.show.view.read_more_link"), send((current_user.has_role?(:supplier) ? 'suppliers_lead_purchase_path' : 'lead_users_lead_purchase_path').to_sym, (lead.lead_purchases.detect{ |lp| lp.owner == current_user or lp.assignee_id == current_user.id })), :class => "read_more" %>
+    <%= link_to t("supplier_home.show.view.read_more_link"), send((current_user.has_role?(:supplier) ? 'suppliers_lead_purchase_path' : 'lead_users_lead_purchase_path').to_sym, (lead.lead_purchases.detect{ |lp| lp.owner_id == current_user.id or lp.assignee_id == current_user.id })), :class => "read_more" %>
   </div>
 </li>
