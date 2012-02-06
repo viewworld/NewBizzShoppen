@@ -191,10 +191,6 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
 
-
-#      throw  DynamicResultValue.for_campaign(@campaign1).between_dates(Time.new.beginning_of_week, Time.new.end_of_week).all
-#      throw xx.map { |x| ResultValue.find(x.id) }.map { |z| z.result_field }
-
       cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
       cr.value_created.should == 304.0
     end
