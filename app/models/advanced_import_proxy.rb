@@ -1,25 +1,26 @@
 class AdvancedImportProxy
 
-  def initialize(object, uploaded_file_path, object_field, spreadsheet_field, current_user, unique_only)
+  def initialize(object, object_id, method, uploaded_file_path, notify_user, options={})
+    @object_id = object_id
+    if object.instance_of?(Class)
+      @target_class = object.to_s
+    else
+      @target_object = object
+    end
+    @method = method
+    @uploaded_file_path = uploaded_file_path
+    @notify_user = notify_user
+    @options = options
     @temp_dir = "public/system/import_temp"
-    @temp_file = "#{Pathname(uploaded_file_path).basename.to_s}"
+    @temp_file = "#{Pathname(@uploaded_file_path).basename.to_s}"
     @temp_file_path = "#{@temp_dir}/#{@temp_file}"
     FileUtils.mkdir_p(Rails.root.join(@temp_dir))
-    FileUtils.cp(uploaded_file_path, @temp_file_path)
-    @object = object
-    @object_field = object_field
-    @spreadsheet_field = spreadsheet_field
-    @current_user = current_user
-    @unique_only = unique_only
+    FileUtils.cp(@uploaded_file_path, @temp_file_path)
   end
 
   def import!
-    @result = @object.class.advanced_import_contacts_from_xls(Sheet.new(@temp_file_path, true).roo_instance,
-                                              @object_field,
-                                              @spreadsheet_field,
-                                              @current_user,
-                                              @object.id,
-                                              @unique_only)
+    @target = @target_class.present? ? @target_class.constantize : @target_object
+    @result = @target.send(@method.to_sym, @options.merge(:spreadsheet => Sheet.new(@temp_file_path, true).roo_instance))
     if !@result
       notify!(:advanced_import_fail)
     elsif !@result[:errors].blank?
@@ -30,11 +31,19 @@ class AdvancedImportProxy
   end
 
   def notify!(template, params={})
+    target_class = @target_class.present? ? @target_class : @target_object.class.name
+    target_name = if @target_class.present? and @object_id.present?
+      @target_class.constantize.find(@object_id).name
+    elsif @target_object
+      @target_object.name
+    else
+      @target_class
+    end
     TemplateMailer.new(
-        @current_user.email,
+        @notify_user.email,
         template.to_sym,
         Country.get_country_from_locale,
-        {:user => @current_user, :target_class => @object.class.to_s, :target_name => @object.name, :sender_id => nil}.merge(params)).deliver!
+        {:user => @notify_user, :target_class => target_class, :target_name => target_name, :sender_id => nil}.merge(params)).deliver!
   end
 
 end

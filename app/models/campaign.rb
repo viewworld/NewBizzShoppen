@@ -205,15 +205,15 @@ class Campaign < ActiveRecord::Base
 
   class << self
 
-    def advanced_import_contacts_from_xls(spreadsheet, contact_fields, spreadsheet_fields, current_user, object_id, only_unique)
-      return false unless advanced_import_field_blank_validation(contact_fields, spreadsheet_fields)
-      contact_fields, spreadsheet_fields = contact_fields.split(","), spreadsheet_fields.split(",")
+    def advanced_import_contacts_from_xls(options)
+      return false unless advanced_import_field_blank_validation(options[:contact_fields], options[:spreadsheet_fields])
+      contact_fields, spreadsheet_fields = options[:contact_fields].split(","), options[:spreadsheet_fields].split(",")
       return false unless advanced_import_field_size_validation(contact_fields, spreadsheet_fields)
 
-      campaign = Campaign.find(object_id)
+      campaign = Campaign.find(options[:object_id])
 
       #contacts_from_last_import_ids = campaign.contacts.from_last_import.map(&:id)
-      headers, spreadsheet = advanced_import_headers(spreadsheet)
+      headers, spreadsheet = advanced_import_headers(options[:spreadsheet])
       merged_fields = advanced_import_merged_fields(headers, contact_fields, spreadsheet_fields)
       counter, errors, not_unique_counter = 0, [], 0
 
@@ -221,9 +221,9 @@ class Campaign < ActiveRecord::Base
         2.upto(spreadsheet.last_row) do |line|
           contact = campaign.contacts.build
           import_fields.each { |field| contact = assign_field(contact, field, spreadsheet.cell(line, merged_fields[field]), spreadsheet.celltype(line, merged_fields[field])) }
-          contact = assign_current_user(contact, current_user, campaign)
+          contact = assign_current_user(contact, options[:current_user], campaign)
           #contact.last_import = true
-          if only_unique and !Contact.where("id IS NOT NULL AND campaign_id = #{contact.campaign_id} AND company_name LIKE '#{contact.company_name.to_s.gsub("'", "_")}' AND company_vat_no = '#{contact.company_vat_no}' AND email_address = '#{contact.email_address}'").blank?
+          if options[:only_unique] and !Contact.where("id IS NOT NULL AND campaign_id = #{contact.campaign_id} AND company_name LIKE '#{contact.company_name.to_s.gsub("'", "_")}' AND company_vat_no = '#{contact.company_vat_no}' AND email_address = '#{contact.email_address}'").blank?
             not_unique_counter += 1
           elsif contact.save
             counter += 1

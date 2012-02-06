@@ -4,7 +4,18 @@ class ContactsAdvancedImportsController < SecuredController
   def create
     @attachment_file = params["attachment"]
     if Sheet.validate_attachment(@attachment_file)
-      AdvancedImportProxy.new(@model.find(@object_id), @attachment_file, params[:object_field], params[:spreadsheet_field], current_user, params[:unique_only]=="1").delay(:queue => current_user_queue).import!
+      AdvancedImportProxy.new(@model,
+                              @object_id,
+                              :advanced_import_contacts_from_xls,
+                              @attachment_file,
+                              current_user,
+                              {
+                                  :contact_fields => params[:object_field],
+                                  :spreadsheet_fields => params[:spreadsheet_field],
+                                  :current_user => current_user,
+                                  :unique_only => params[:unique_only]=="1",
+                                  :object_id => @object_id
+                              }).delay(:queue => current_user_queue).import!
       flash[:notice] = t("advanced_import.create.flash.import_queued")
       redirect_to contacts_advanced_import_path
     else
