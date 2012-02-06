@@ -94,6 +94,7 @@ class Lead < AbstractLead
   after_save :auto_buy
   after_create :update_deal_created_leads_count
   attr_protected :published
+  attr_accessor :dont_send_email_with_deal_details_and_files
 
   private
 
@@ -196,7 +197,7 @@ class Lead < AbstractLead
   end
 
   def send_email_with_deal_details_and_files
-    if deal
+    if deal and !dont_send_email_with_deal_details_and_files
       TemplateMailer.new(requestee.email, deal.deal_request_details_email_template || :deal_request_details, Country.get_country_from_locale, {:deal => deal, :sender_id => nil},
       (deal.images + deal.materials).map{ |material| (Rails.env.staging? or Rails.env.production?) ? material.stored_local_temp_path(material.url, deal.id.to_s) : material.url }).deliver!
     end
@@ -209,7 +210,7 @@ class Lead < AbstractLead
   end
 
   def set_deal_code
-    self.hidden_description = "#{I18n.t("models.lead.hidden_description_prefix_for_deal_code")} #{deal.deal_code}. #{hidden_description}" if deal
+    self.hidden_description = "#{I18n.t("models.lead.hidden_description_prefix_for_deal_code")} #{deal.deal_code}. #{hidden_description}" if deal and deal.deal_code.present?
   end
 
   public
