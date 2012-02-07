@@ -32,18 +32,11 @@ class AdvancedImportProxy
 
   def notify!(template, params={})
     target_class = @target_class.present? ? @target_class : @target_object.class.name
-    target_name = if @target_class.present? and @object_id.present?
-      @target_class.constantize.find(@object_id).name
-    elsif @target_object
-      @target_object.name
-    else
-      @target_class
-    end
     TemplateMailer.new(
         @notify_user.email,
         template.to_sym,
         Country.get_country_from_locale,
-        {:user => @notify_user, :target_class => target_class, :target_name => target_name, :sender_id => nil}.merge(params)).deliver!
+        {:user => @notify_user, :target_class => target_class, :sender_id => nil}.merge(params)).deliver!
   end
 
 end
