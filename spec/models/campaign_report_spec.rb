@@ -28,6 +28,10 @@ describe CampaignReport do
     @result_final = Result.make!(:final)
     @result_not_final = Result.make!
     @result_not_final_reported = Result.make!(:not_final_reported)
+    @result_dyn_value = Result.make!(:final_reported_success)
+    @result_dyn_value.result_fields.create(:name => "test field 1", :field_type => ResultField::INTEGER)
+    @result_dyn_value.result_fields.create(:name => "test field 2", :field_type => ResultField::INTEGER)
+    @result_dyn_value.result_fields.create(:name => "test field 3", :field_type => ResultField::INTEGER)
 
     # assign results to campaign
     @campaign1.results = [@result1,@result2,@result3,@result4,@result_final_reported,@result_final,@result_not_final_reported]
@@ -94,7 +98,7 @@ describe CampaignReport do
     end
 
     it "should return all reported result types" do
-      CampaignReport.final_results.size.should == 5
+      CampaignReport.final_results.size.should == 6
     end
 
     it "should return correct target final results of given type per hour" do
@@ -165,14 +169,30 @@ describe CampaignReport do
     end
 
     it "should return correct value created" do
+      [@campaign1, @campaign2].each do |campaign|
+        campaign.results << @result_dyn_value
+        campaign.save
+        @result_dyn_value.reload
+        @result_dyn_value.campaigns_results.detect{ |cr| cr.campaign == campaign }.update_attributes(:value => 100, :expected_completed_per_hour => 5, :is_dynamic_value => true)
+        @result_dyn_value.result_fields.each do |result_field|
+          result_field.campaigns_result_fields.create(:campaign => campaign, :is_dynamic_value => result_field.name != "test field 3" ? true : false, :dynamic_euro_value => 17)
+        end
+        result_values = []
+        @result_dyn_value.result_fields.sort{ |x,y| x.name <=> y.name }.each_with_index do  |result_field, i|
+          result_values << ResultValue.new(:result_field => result_field, :field_type => result_field.field_type, :value => (i+1).to_s)
+        end
+        CallResult.make!(:contact => (campaign == @campaign1) ? @contact1_4 : @contact2_1, :result => @result_dyn_value, :creator => @call_centre_agent1, :result_values => result_values)
+      end
+
       CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
       CallResult.make!(:contact => @contact1_3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
       CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset-1.day)
       CallResult.make!(:contact => @contact1_2, :result => @result_final_reported, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
+
       cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
-      cr.value_created.should == 253.0
+      cr.value_created.should == 304.0
     end
 
     it "should return correct number of call results" do

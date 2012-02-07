@@ -1,0 +1,16 @@
+<%= form.fields_for :leads, nested_lead.leads do |builder| %>
+
+    <h3 class="locale_title"><%= builder.object.deal.header %></h3>
+    <fieldset class="inputs labels_ta_r labels_200">
+      <ol>
+        <%= builder.input :deal_id, :as => :hidden %>
+        <%= builder.input :hidden_description, :label => t("member.leads.new.view.lead_note"), :input_html => {:style => "height: 70px;width:330px;"} %>
+        <% unless builder.object.lead_templates.empty? %>
+            <%= render :partial => "/shared/leads/lead_template_fields", :locals => {:lead => builder.object, :form => builder} %>
+            <hl/>
+        <% end %>
+      </ol>
+      <div class="nested_locale_container"></div>
+    </fieldset>
+    <br/>
+<% end %>

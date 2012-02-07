@@ -1,4 +1,4 @@
-<div id="result_field_form_<%= f.object.new_record? ? 'result_result_fields_attributes_0' : f.object.id %>">
+<div id="result_field_form_<%= f.object.new_record? ? 'result_result_fields_attributes_0' : f.object.id %>" class="result_field_row">
   <hl/>
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs_vertical">
@@ -10,7 +10,7 @@
         </li>
         <li class="select">
           <%= f.label :field_type %>
-          <%= f.select :field_type, options_for_select(ResultField::FIELD_TYPES.map { |ft| [t("models.result_field.field_type.type#{ft}"), ft] }, f.object.field_type) %>
+          <%= f.select :field_type, options_for_select(ResultField::FIELD_TYPES.map { |ft| [t("models.result_field.field_type.type#{ft}"), ft] }, f.object.field_type), {}, {:onchange => "enable_dynamic_value()"} %>
           <%= custom_error_for_field(f, :field_type) %>
         </li>
         <li class="boolean">
@@ -22,6 +22,24 @@
               <%= f.hidden_field :_destroy, :id => "destroy_hidden_field_#{f.object.id}" %>
           <% end %>
         </li>
+        <% if !@result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id }.nil? %>
+            <span class="campaign_dynamic_value_span" style="display:none;">
+            <%= f.fields_for :campaigns_result_fields, f.object.campaigns_result_field_for(@campaign) do |builder| %>
+            <li class="boolean">
+              <%= builder.check_box :is_dynamic_value %>
+              <%= builder.label :is_dynamic_value, t("shared.results.form.result_fields.is_dynamic_value") %>
+            </li>
+            <li class="string<%= ' error' if builder.object.errors[:dynamic_euro_value].present?%>">
+              <%= builder.label :dynamic_euro_value, t("shared.results.form.result_fields.dynamic_euro_value") %>
+              <%= builder.text_field :dynamic_euro_value %>&nbsp;&euro;
+              <%= custom_error_for_field(builder, :dynamic_euro_value) %>
+            </li>
+            <li class="hidden">
+              <%= builder.hidden_field :campaign_id %>
+            </li>
+            <% end %>
+             </span>
+        <% end %>
         <li class="commit">
           <%= bt_link_to :remove, t("shared.lead_templates.form.remove_lead_template_field"), "javascript:void(0)", :onclick => "remove_result_field('#{f.object.new_record? ? 'result_result_fields_attributes_0' : f.object.id}', #{f.object.new_record? ? 'null' : f.object.id})" %>
         </li>
