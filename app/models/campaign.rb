@@ -223,7 +223,7 @@ class Campaign < ActiveRecord::Base
           import_fields.each { |field| contact = assign_field(contact, field, spreadsheet.cell(line, merged_fields[field]), spreadsheet.celltype(line, merged_fields[field])) }
           contact = assign_current_user(contact, options[:current_user], campaign)
           #contact.last_import = true
-          if options[:only_unique] and !Contact.where("id IS NOT NULL AND campaign_id = #{contact.campaign_id} AND company_name LIKE '#{contact.company_name.to_s.gsub("'", "_")}' AND company_vat_no = '#{contact.company_vat_no}' AND email_address = '#{contact.email_address}'").blank?
+          if options[:unique_only] and !Contact.where("id IS NOT NULL AND campaign_id = #{contact.campaign_id} AND company_name LIKE '#{contact.company_name.to_s.gsub("'", "_")}' AND company_vat_no = '#{contact.company_vat_no}' AND email_address = '#{contact.email_address}'").blank?
             not_unique_counter += 1
           elsif contact.save
             counter += 1
