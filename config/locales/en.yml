@@ -43,6 +43,7 @@ en:
       field_incorrect_format: "incorrect value"
       enter_email_address: "Enter email address"
       loading: "Loading..."
+      deals_chosen: "deals chosen"
       ajax_in_progress: "The requested action cannot be performed because other action is still in progress. Please try again in a while."
     no_categories_for_category_supplier: "Your Category Supplier account has no associated categories. You can't sign in."
     edit_hint: "Edit hint"
@@ -597,6 +598,8 @@ en:
       user_deal_maker_role_enabled: "Deal maker role enabled"
       contact_subscription_plan: "Subscription plan"
       contact_newsletter_on: "Newsletter on"
+      select_deals_for_request: "Select deals for request"
+      no_deals_selected_for_request: "No deals selected for request."
     edit:
       title: Edit result
       form_title: Edit
@@ -2889,6 +2892,10 @@ en:
         remove_lead_template_field: Remove
         template_name: Template name
         field_name: Field name
+        result_fields:
+          is_dynamic_value: "Is dynamically calculated"
+          dynamic_euro_value: "Value"
+        is_dynamic_value: "Value dynamically calculated"
     leads:
       form:
         country_local_label: Local
@@ -4054,6 +4061,7 @@ en:
       flash:
         error_wrong_fields: "Sorry. There is problem with chosen fields."
         error_wrong_file: "Sorry. There is problem with your uploaded file."
+        import_queued: "Import has been queued to be run in the background. You will be notified by email when it's done."
       view:
     destroy:
       flash:
@@ -4381,3 +4389,9 @@ en:
         pay_invoice: "Pay invoice"
         message: "Go to Paypal to pay for the invoice %{number}"
         amount: "Amount:"
+  remote_deal_requests:
+    new:
+      view:
+        create_button: "Create"
+    common:
+      request_deals: "Request deals"

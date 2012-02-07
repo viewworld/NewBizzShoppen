@@ -261,12 +261,12 @@ class Category < ActiveRecord::Base
 
   include AdvancedImport
 
-  def advanced_import_leads_from_xls(spreadsheet, lead_fields, spreadsheet_fields, current_user)
-    return false unless advanced_import_field_blank_validation(lead_fields, spreadsheet_fields)
-    lead_fields, spreadsheet_fields = lead_fields.split(","), spreadsheet_fields.split(",")
+  def advanced_import_leads_from_xls(options)
+    return false unless advanced_import_field_blank_validation(options[:lead_fields], options[:spreadsheet_fields])
+    lead_fields, spreadsheet_fields = options[:lead_fields].split(","), options[:spreadsheet_fields].split(",")
     return false unless advanced_import_field_size_validation(lead_fields, spreadsheet_fields)
 
-    headers, spreadsheet = advanced_import_headers(spreadsheet)
+    headers, spreadsheet = advanced_import_headers(options[:spreadsheet])
     merged_fields = advanced_import_merged_fields(headers, lead_fields, spreadsheet_fields)
     counter, errors, publish_hash = 0, [], {}
 
@@ -274,7 +274,7 @@ class Category < ActiveRecord::Base
       2.upto(spreadsheet.last_row) do |line|
         lead = Lead.new
         import_fields.each { |field| lead = assign_field(lead, field, spreadsheet.cell(line, merged_fields[field]), spreadsheet.celltype(line, merged_fields[field])) }
-        lead = assign_current_user(lead, current_user)
+        lead = assign_current_user(lead, options[:current_user])
         temp_published = lead.published
         lead.published = false
         if lead.save

@@ -5,9 +5,19 @@ class SuppliersAdvancedImportsController < SecuredController
   def create
     @attachment_file = params["attachment"]
     if Sheet.validate_attachment(@attachment_file)
-      result = @model.advanced_import_objects_from_xls(Sheet.new(@attachment_file, true).roo_instance, params[:object_field], params[:spreadsheet_field], current_user, @object_id)
-      something_went_wrong(t("advanced_import.create.flash.error_wrong_fields")) if result == false
-      success("#{t("suppliers_advanced_import.create.flash.success", :counter => result[:counter])}.#{"<br/>Errors:<br/>#{result[:errors]}" unless result[:errors].blank?}".html_safe)
+      AdvancedImportProxy.new(@model,
+                              @object_id,
+                              :advanced_import_objects_from_xls,
+                              @attachment_file,
+                              current_user,
+                              {
+                                  :object_fields => params[:object_field],
+                                  :spreadsheet_fields => params[:spreadsheet_field],
+                                  :current_user => current_user,
+                                  :category_id => @object_id
+                              }).delay(:queue => current_user_queue).import!
+      flash[:notice] = t("advanced_import.create.flash.import_queued")
+      redirect_to suppliers_advanced_import_path
     else
       something_went_wrong(t("advanced_import.create.flash.error_wrong_file"))
     end

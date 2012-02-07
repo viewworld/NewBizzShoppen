@@ -6,12 +6,12 @@ module AdvancedUserImport
 
   module ClassMethods
 
-    def advanced_import_objects_from_xls(spreadsheet, object_fields, spreadsheet_fields, current_user, category_id = nil)
-      return false unless advanced_import_field_blank_validation(object_fields, spreadsheet_fields)
-      object_fields, spreadsheet_fields = object_fields.split(","), spreadsheet_fields.split(",")
+    def advanced_import_objects_from_xls(options)
+      return false unless advanced_import_field_blank_validation(options[:object_fields], options[:spreadsheet_fields])
+      object_fields, spreadsheet_fields = options[:object_fields].split(","), options[:spreadsheet_fields].split(",")
       return false unless advanced_import_field_size_validation(object_fields, spreadsheet_fields)
 
-      headers, spreadsheet = advanced_import_headers(spreadsheet)
+      headers, spreadsheet = advanced_import_headers(options[:spreadsheet])
       merged_fields = advanced_import_merged_fields(headers, object_fields, spreadsheet_fields)
       counter, errors, new_users = 0, [], []
 
@@ -19,7 +19,7 @@ module AdvancedUserImport
         2.upto(spreadsheet.last_row) do |line|
           object = self.new
           import_fields.each { |field| object = assign_field(object, field, spreadsheet.cell(line, merged_fields[field]), spreadsheet.celltype(line, merged_fields[field])) }
-          object.created_by = current_user.id
+          object.created_by = options[:current_user].id
           object.password = object.send(:generate_token, 10)
           object.password_confirmation = object.password
           object.agreement_read = true
@@ -37,7 +37,7 @@ module AdvancedUserImport
 
       #sending emails and add categories if
       if counter > 0
-        category = category_id.blank? ? nil : LeadCategory.find(category_id)
+        category = options[:category_id].blank? ? nil : LeadCategory.find(options[:category_id])
         new_users.each do |new_user|
           new_user.send_invitation_email
           if category

@@ -1,0 +1,16 @@
+<div id="modal_remote_deal_requests" style="display: none;">
+  <div id="modal_remote_deal_requests_container">
+
+  </div>
+</div>
+
+<script type="text/javascript">
+      $('#modal_remote_deal_requests').dialog({
+          autoOpen: false,
+          width: 700,
+          height: 500,
+          title: 'Select deals for request',
+          modal: true,
+          beforeClose: function(event, ui) { set_deals_as_requested('<%= dest_field -%>'); return true; }
+      });
+</script>

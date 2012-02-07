@@ -28,7 +28,7 @@ Then /^I use advanced import for contacts (unique|not unique)$/ do |unique|
     And I press translated "advanced_import.show.view.button" within "#advanced_import_form"
     And I press translated "advanced_import.choose.view.next_button"
     And I press translated "advanced_import.preview.view.import_button"
-    And I should see translated "contacts_advanced_import.create.flash.success" with options "counter:0 / 4"
+    And last email sent should have content "0 / 4 items had been imported"
     And campaign "Testing Two" should have "0" contacts
     And attach the file "contact3allgood_adv_import" to "attachment" within "#advanced_import_form"
     And I select "Testing Two" from "object_id"
@@ -44,7 +44,7 @@ Then /^I use advanced import for contacts (unique|not unique)$/ do |unique|
     And I follow translated "advanced_import.preview.view.first_object_button"
     And I should see "1/2"
     And I press translated "advanced_import.preview.view.import_button"
-    And I should see translated "contacts_advanced_import.create.flash.success" with options "counter:2 / 2"
+    And last email sent should have content "2 / 2 items had been imported"
     And campaign "Testing Two" should have "2" contacts}
   if unique == "unique"
 #second correct import - but unique is on and there is only unique contacts
@@ -57,8 +57,7 @@ And I press translated "advanced_import.choose.view.next_button"
 And I follow translated "advanced_import.preview.view.cancel_button"
 And I press translated "advanced_import.choose.view.next_button"
 And I press translated "advanced_import.preview.view.import_button"
-And I should see translated "contacts_advanced_import.create.flash.success" with options "counter:0 / 2"
-And I should see translated "contacts_advanced_import.create.flash.success_with_not_unique" with options "counter:2"
+And last email sent should have content "0 / 2 items had been imported"
 And campaign "Testing Two" should have "2" contacts
 }
 #third correct import
@@ -68,7 +67,7 @@ And I select "Testing Two" from "object_id"
 And I press translated "advanced_import.show.view.button" within "#advanced_import_form"
 And I press translated "advanced_import.choose.view.next_button"
 And I press translated "advanced_import.preview.view.import_button"
-And I should see translated "contacts_advanced_import.create.flash.success" with options "counter:2 / 2"
+And last email sent should have content "2 / 2 items had been imported"
 And campaign "Testing Two" should have "4" contacts}
   end
 end
@@ -104,7 +103,7 @@ Then /^I use advanced import for users "(suppliers|members)"$/ do |name|
   And %{I follow translated "advanced_import.preview.view.last_object_button"}
   And %{I should see "4/4"}
   And %{I press translated "advanced_import.preview.view.import_button"}
-  And %{I should see translated "#{name}_advanced_import.create.flash.success" with options "counter:0 / 4"}
+  And %{last email sent should have content "0 / 4 items had been imported"}
   And %{there should be #{number} #{name}}
   And %{attach the file "usert3allgood_adv_import" to "attachment" within "#advanced_import_form"}
   And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
@@ -112,7 +111,7 @@ Then /^I use advanced import for users "(suppliers|members)"$/ do |name|
   And %{I should see "Email *"}
   And %{I press translated "advanced_import.choose.view.next_button"}
   And %{I press translated "advanced_import.preview.view.import_button"}
-  And %{I should see translated "#{name}_advanced_import.create.flash.success" with options "counter:2 / 2"}
+  And %{last email sent should have content "2 / 2 items had been imported"}
   And %{there should be #{number+2} #{name}}
   And %{user should exist with email "liu@mk.com" and role "#{name == "suppliers" ? "supplier" : "member"}"}
   And %{user should exist with email "kung@mk.com" and role "#{name == "suppliers" ? "supplier" : "member"}"}
@@ -179,7 +178,7 @@ Then /^I use advanced import for category suppliers$/ do
   And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
   And %{I press translated "advanced_import.choose.view.next_button"}
   And %{I press translated "advanced_import.preview.view.import_button"}
-  And %{I should see translated "suppliers_advanced_import.create.flash.success" with options "counter:0 / 4"}
+  And %{last email sent should have content "0 / 4 items had been imported"}
   And %{there should be 1 category suppliers}
   And %{attach the file "usert3allgood_adv_import" to "attachment" within "#advanced_import_form"}
   And %{I check "category_supplier_enabled"}
@@ -196,7 +195,7 @@ Then /^I use advanced import for category suppliers$/ do
   And %{I follow translated "advanced_import.preview.view.first_object_button"}
   And %{I should see "1/2"}
   And %{I press translated "advanced_import.preview.view.import_button"}
-  And %{I should see translated "suppliers_advanced_import.create.flash.success" with options "counter:2 / 2"}
+  And %{last email sent should have content "2 / 2 items had been imported"}
   And %{there should be 3 category suppliers}
   And %{lead category "Leisure" has "2" suppliers}
   And %{user should exist with email "liu@mk.com" and role "category_supplier"}
@@ -229,7 +228,7 @@ Then /^I use advanced import for leads as "(admin|user)"$/ do |role|
   And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
   And %{I press translated "advanced_import.choose.view.next_button"}
   And %{I press translated "advanced_import.preview.view.import_button"}
-  And %{I should see translated "leads_advanced_import.create.flash.success" with options "counter:0 / 4"}
+  And %{last email sent should have content "0 / 4 items had been imported"}
   And %{lead category "Business" has "0" leads}
   And %{attach the file "lead3allgood_adv_import" to "attachment" within "#advanced_import_form"}
   if role == "admin"
@@ -247,6 +246,6 @@ Then /^I use advanced import for leads as "(admin|user)"$/ do |role|
   And %{I follow translated "advanced_import.preview.view.first_object_button"}
   And %{I should see "1/2"}
   And %{I press translated "advanced_import.preview.view.import_button"}
-  And %{I should see translated "leads_advanced_import.create.flash.success" with options "counter:2 / 2"}
+  And %{last email sent should have content "2 / 2 items had been imported"}
   And %{lead category "Business" has "2" leads}
 end

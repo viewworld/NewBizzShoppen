@@ -24,6 +24,9 @@ describe AgentInformation do
     @result2 = Result.make!(:final_reported_success)
     @result3 = Result.make!(:upgrades_to_lead)
     @result4 = Result.make!(:upgrades_to_lead)
+    @result_dyn_value = Result.make!(:final_reported_success)
+    @result_dyn_value.result_fields.create(:name => "test field 1", :field_type => ResultField::INTEGER)
+    @result_dyn_value.result_fields.create(:name => "test field 2", :field_type => ResultField::INTEGER)
 
     # assign results to campaign
     @campaign.results = [@result1,@result2,@result3,@result4]
@@ -95,6 +98,61 @@ describe AgentInformation do
       CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact2, :result => @result2, :creator => @call_centre_agent1, :created_at => Time.now-2.years)
       AgentInformation.year(@call_centre_agent1).value_created.should == 110.0
+    end
+  end
+
+  context "Created value for results not upgraded to lead with dynamic values" do
+    before(:each) do
+      @campaign.results << @result_dyn_value
+      @campaign.save
+      @result_dyn_value.reload
+      @result_dyn_value.campaigns_results.first.update_attributes(:value => 100, :expected_completed_per_hour => 5, :is_dynamic_value => true)
+      @result_dyn_value.result_fields.sort{ |x,y| x.name <=> y.name }.each_with_index do |result_field, i|
+        result_field.campaigns_result_fields.create(:campaign => @campaign, :is_dynamic_value => true, :dynamic_euro_value => 17+i)
+      end
+    end
+
+    def result_values_array(result_dyn_value)
+      result_values = []
+      result_dyn_value.result_fields.sort{ |x,y| x.name <=> y.name }.each_with_index do  |result_field, i|
+        result_values << ResultValue.new(:result_field => result_field, :field_type => result_field.field_type, :value => (i+1).to_s)
+      end
+      result_values
+    end
+
+    it "should return correct value for today" do
+      CallResult.make!(:contact => @contact1, :result => @result_dyn_value, :creator => @call_centre_agent1, :result_values => result_values_array(@result_dyn_value)) #1*17+2*18 = 53
+      AgentInformation.today(@call_centre_agent1).value_created.should == 53.0
+
+      CallResult.make!(:contact => @contact2, :result => @result1, :creator => @call_centre_agent1) #100
+      AgentInformation.today(@call_centre_agent1).value_created.should == 153.0
+    end
+
+    it "should return correct value for week" do
+      CallResult.make!(:contact => @contact1, :result => @result_dyn_value, :creator => @call_centre_agent1, :result_values => result_values_array(@result_dyn_value), :created_at => Time.now.end_of_week+Time.now.end_of_week.utc_offset) #1*17+2*18 = 53
+      CallResult.make!(:contact => @contact2, :result => @result_dyn_value, :creator => @call_centre_agent1, :result_values => result_values_array(@result_dyn_value), :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset) #1*17+2*18 = 53
+      AgentInformation.week(@call_centre_agent1).value_created.should == 106.0
+
+      CallResult.make!(:contact => @contact3, :result => @result1, :creator => @call_centre_agent1) #100
+      AgentInformation.week(@call_centre_agent1).value_created.should == 206.0
+    end
+
+     it "should return correct value for quarter" do
+      CallResult.make!(:contact => @contact1, :result => @result_dyn_value, :creator => @call_centre_agent1, :result_values => result_values_array(@result_dyn_value), :created_at => Time.now.beginning_of_quarter+Time.now.beginning_of_quarter.utc_offset) #1*17+2*18 = 53
+      CallResult.make!(:contact => @contact2, :result => @result_dyn_value, :creator => @call_centre_agent1, :result_values => result_values_array(@result_dyn_value), :created_at => Time.now.end_of_quarter+Time.now.end_of_quarter.utc_offset) #1*17+2*18 = 53
+      AgentInformation.quarter(@call_centre_agent1).value_created.should == 106.0
+
+      CallResult.make!(:contact => @contact3, :result => @result1, :creator => @call_centre_agent1) #100
+      AgentInformation.quarter(@call_centre_agent1).value_created.should == 206.0
+     end
+
+    it "should return correct value for year" do
+      CallResult.make!(:contact => @contact1, :result => @result_dyn_value, :creator => @call_centre_agent1, :result_values => result_values_array(@result_dyn_value), :created_at => Time.now.beginning_of_year+Time.now.beginning_of_year.utc_offset) #1*17+2*18 = 53
+      CallResult.make!(:contact => @contact2, :result => @result_dyn_value, :creator => @call_centre_agent1, :result_values => result_values_array(@result_dyn_value), :created_at => Time.now.end_of_year+Time.now.end_of_year.utc_offset) #1*17+2*18 = 53
+      AgentInformation.year(@call_centre_agent1).value_created.should == 106.0
+
+      CallResult.make!(:contact => @contact3, :result => @result1, :creator => @call_centre_agent1) #100
+      AgentInformation.year(@call_centre_agent1).value_created.should == 206.0
     end
   end
 

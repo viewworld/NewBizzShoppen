@@ -1,0 +1,5 @@
+<%= bt_link_to_function nil, t("remote_deal_requests.common.request_deals"), "javascript:$('#modal_remote_deal_requests').dialog('close');" %><br />
+<% deals.each do |deal| %>
+    <%= check_box_tag("deal_links_#{deal.id}", deal.id, selected_deal_ids.include?(deal.id.to_s))%>
+    <%= link_to_function deal.header, "check_uncheck_deal_link('#{deal.id}')" %><br />
+<% end %>

@@ -2,7 +2,7 @@ class CallResult < ActiveRecord::Base
   attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_2,
                 :contact_address_line_3, :contact_zip_code, :contact_country_id, :contact_phone_number,
                 :contact_company_name, :buying_category_ids, :result_id_changed, :user_not_charge_vat, :current_user, :contact_subscription_plan_id,
-                :contact_newsletter_on
+                :contact_newsletter_on, :contact_requested_deal_ids, :upgraded_user
 
   belongs_to :contact
   belongs_to :result
@@ -37,6 +37,7 @@ class CallResult < ActiveRecord::Base
   scope :final_for_campaign, lambda { |campaign| final_results.for_campaign(campaign) }
   scope :with_success, where("results.is_success is true")
   scope :with_reported, where("results.is_reported is true")
+  scope :with_dynamic_value, lambda { |is_dynamic| where("campaigns_results.is_dynamic_value = ?", is_dynamic) }
   default_scope :order => 'call_results.created_at DESC'
 
   def called?
@@ -232,6 +233,7 @@ class CallResult < ActiveRecord::Base
       user.buying_category_ids = buying_category_ids
       user.save
     end
+    self.upgraded_user = user
     deliver_email_for_upgraded_user(user, new_password)
   end
   

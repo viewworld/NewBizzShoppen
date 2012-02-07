@@ -687,23 +687,68 @@ Feature: Agent campaign - calling session
   Scenario: I can enable a newsletter for user upgraded from contact
 
   #9995
-  @m28 @requested
+  @m28 @requested @tgn @_done @_tested
   Scenario: When upgrading contact to member I can choose deals that will be requested after the account creation
+    Given a deal named "SomeDeal001" exists within category "Electronics deals"
+    And a deal named "SomeDeal003" exists within category "Electronics deals"
+    Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
+    Given template named "Xeper details" for category "Xeper" is created by user "buyer@nbs.com" with role "supplier"
+    And template named "Xeper details" is mandatory
+    And template named "Xeper details" has following fields "field #1:true:true,field #2:true:true"
+    And user "buyer@nbs.com" has assigned role "deal_maker"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:SomeDeal002|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
+    And deal named "SomeDeal002" has deal template "Xeper details" assigned
+    When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+    And I select "Upgrade to member" from "selected_result_id"
+    And I follow translated "call_results.edit.button_new_result"
+    And I fill in "call_result_contact_company_name" with "Custom company"
+    And I fill in "call_result_contact_first_name" with "John"
+    And I fill in "call_result_contact_last_name" with "Dohn"
+    And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+    And I fill in "call_result_contact_address_line_3" with "NY"
+    And I fill in "call_result_contact_zip_code" with "21-221"
+    And I fill in "call_result_contact_phone_number" with "+44 92423423232"
+    And I fill in "call_result_contact_email_address" with "new_member888@nbs.com"
+    And "call_result_contact_subscription_plan_id" should be selected for value "Free member subscription"
+    And I select "Free member subscription" from "call_result_contact_subscription_plan_id"
+    And I follow translated "call_results.new.select_deals_for_request"
+    And I wait 2 second
+    And I follow "SomeDeal001"
+    And I follow "SomeDeal002"
+    And I follow translated "remote_deal_requests.common.request_deals"
+    And I wait 1 second
+    And I check "call_result_contact_newsletter_on"
+    And I follow translated "call_results.new.save_button"
+    And I wait 3 second
+    And I fill in "nested_lead_leads_attributes_0_hidden_description" with "note 001"
+    And I fill in "nested_lead_leads_attributes_1_hidden_description" with "note 002"
+    And I fill in "nested_lead_leads_attributes_1_lead_template_values_attributes_0_value" with "template 001"
+    And I fill in "nested_lead_leads_attributes_1_lead_template_values_attributes_1_value" with "template 002"
+    And I press translated "remote_deal_requests.new.view.create_button"
+    And I wait 1 second
+    Then I am not sign in
+    And I am on the homepage
+    And I visit domain http://fairdeals.eu
+    And I sign in as new_member888@nbs.com with password testin
+    Then I should see translated "my_profile.edit.view.header_contact_confirmation"
+    And I follow translated "layout.fairdeals.main_menu.member.my_requests"
+    And I should see "SomeDeal001"
+    And I should see "SomeDeal002"
 
   #9995
-  @m28 @requested
+  @m28 @requested @tgn @_done @_tested_elsewhere
   Scenario: When upgrading contact to member I can fill out the templates
 
   #9995
-  @m28 @requested
+  @m28 @requested @tgn @_done @_tested_elsewhere
   Scenario: When upgrading contact to member I can choose only deals that are allowed by the subscription type
 
   #9995
-  @m28 @requested
+  @m28 @requested @tgn @_done @_tested_elsewhere
   Scenario: When upgrading contact to member I can change subscription after I selected deals but they will be lost
 
   #9995
-  @m28 @requested
+  @m28 @requested @tgn @_done @_tested_elsewhere
   Scenario: When contact is upgraded to member the e-mails for each request won't be sent out
 
   #9989
