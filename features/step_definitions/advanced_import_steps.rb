@@ -57,7 +57,7 @@ And I press translated "advanced_import.choose.view.next_button"
 And I follow translated "advanced_import.preview.view.cancel_button"
 And I press translated "advanced_import.choose.view.next_button"
 And I press translated "advanced_import.preview.view.import_button"
-And last email sent should have content "2 / 2 items had been imported"
+And last email sent should have content "0 / 2 items had been imported"
 And campaign "Testing Two" should have "2" contacts
 }
 #third correct import
@@ -67,7 +67,7 @@ And I select "Testing Two" from "object_id"
 And I press translated "advanced_import.show.view.button" within "#advanced_import_form"
 And I press translated "advanced_import.choose.view.next_button"
 And I press translated "advanced_import.preview.view.import_button"
-And I should see translated "contacts_advanced_import.create.flash.success" with options "counter:2 / 2"
+And last email sent should have content "2 / 2 items had been imported"
 And campaign "Testing Two" should have "4" contacts}
   end
 end
