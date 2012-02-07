@@ -1,6 +1,6 @@
 module AgentTimesheetCommon
 
-  attr_accessor :scoped, :start_date, :end_date, :campaigns, :agents, :call_centres, :overview, :team_result_sheet, :agent_timesheet, :display_hours, :display_results, :display_value
+  attr_accessor :scoped, :start_date, :end_date, :campaigns, :agents, :call_centres, :overview, :team_result_sheet, :agent_timesheet, :display_hours, :display_results, :display_value, :display_cost
 
   DEFAULT_OPTIONS = {
       :show_weekends     => true,
@@ -12,6 +12,7 @@ module AgentTimesheetCommon
       :display_hours     => true,
       :display_results   => true,
       :display_value     => true,
+      :display_cost      => true,
       :overview          => true,
       :team_result_sheet => true,
       :agent_timesheet   => true,
@@ -21,7 +22,7 @@ module AgentTimesheetCommon
 
   def initialize(options = {})
     DEFAULT_OPTIONS.merge(options.symbolize_keys).each do |k,v|
-      if [:show_weekends,:display_hours,:display_results,:display_value,:overview,:team_result_sheet,:agent_timesheet].include?(k)
+      if [:show_weekends,:display_hours,:display_results,:display_value,:display_cost,:overview,:team_result_sheet,:agent_timesheet].include?(k)
         instance_variable_set("@#{k}".to_sym, ActiveRecord::ConnectionAdapters::Column.value_to_boolean(v))
       elsif k == :agents
         instance_variable_set("@#{k}".to_sym, User.find_all_by_id(v))

@@ -19,6 +19,9 @@
         <% if team_result_sheet.display_value %>
             <th><%= t("agent_timesheets.index.team_result_sheet.value") %></th>
         <% end %>
+        <% if team_result_sheet.display_cost %>
+            <th><%= t("agent_timesheets.index.team_result_sheet.cost") %></th>
+        <% end %>
     <% end %>
     <% if team_result_sheet.display_hours %>
         <th><%= t("agent_timesheets.index.team_result_sheet.time") %></th>
@@ -28,6 +31,9 @@
     <% end %>
     <% if team_result_sheet.display_value %>
         <th><%= t("agent_timesheets.index.team_result_sheet.value") %></th>
+    <% end %>
+    <% if team_result_sheet.display_cost %>
+        <th><%= t("agent_timesheets.index.team_result_sheet.cost") %></th>
     <% end %>
   </tr>
   </thead>
@@ -46,6 +52,9 @@
                 <% if team_result_sheet.display_value %>
                     <td class="val_v number_to_value"><%= result.first.value.to_f %></td>
                 <% end %>
+                <% if team_result_sheet.display_cost %>
+                    <td class="val_c number_to_cost"><%= result.first.cost.to_f %></td>
+                <% end %>
             <% else %>
                 <% if team_result_sheet.display_hours %>
                     <td class="val_h number_to_hours">0</td>
@@ -55,6 +64,9 @@
                 <% end %>
                 <% if team_result_sheet.display_value %>
                     <td class="val_v">0</td>
+                <% end %>
+                <% if team_result_sheet.display_cost %>
+                    <td class="val_c">0</td>
                 <% end %>
             <% end %>
         <% end %>
@@ -66,6 +78,9 @@
         <% end %>
         <% if team_result_sheet.display_value %>
             <td class="total_h total_h_v number_to_value"></td>
+        <% end %>
+        <% if team_result_sheet.display_cost %>
+            <td class="total_c total_h_c number_to_cost"></td>
         <% end %>
       </tr>
   <% end %>
@@ -82,6 +97,9 @@
         <% if team_result_sheet.display_value %>
             <td class="total_v_v number_to_value"></td>
         <% end %>
+        <% if team_result_sheet.display_cost %>
+            <td class="total_v_c number_to_cost"></td>
+        <% end %>
     <% end %>
     <% if team_result_sheet.display_hours %>
         <td class="total_v_h number_to_hours"></td>
@@ -91,6 +109,9 @@
     <% end %>
     <% if team_result_sheet.display_value %>
         <td class="total_v_v number_to_value"></td>
+    <% end %>
+    <% if team_result_sheet.display_cost %>
+        <td class="total_v_c number_to_cost"></td>
     <% end %>
   </tr>
 

@@ -19,6 +19,9 @@
         <% if team_result_sheet.display_value %>
           <th><%= t("agent_timesheets.index.team_result_sheet.value") %></th>
         <% end %>
+          <% if team_result_sheet.display_cost %>
+            <th><%= t("agent_timesheets.index.team_result_sheet.cost") %></th>
+          <% end %>
       <% end %>
       <% if team_result_sheet.display_hours %>
         <th><%= t("agent_timesheets.index.team_result_sheet.time") %></th>
@@ -28,6 +31,9 @@
       <% end %>
       <% if team_result_sheet.display_value %>
         <th><%= t("agent_timesheets.index.team_result_sheet.value") %></th>
+      <% end %>
+      <% if team_result_sheet.display_cost %>
+        <th><%= t("agent_timesheets.index.team_result_sheet.cost") %></th>
       <% end %>
     </tr>
     </thead>
@@ -44,6 +50,9 @@
           <% if team_result_sheet.display_value %>
             <td class="total_val_v number_to_value"></td>
           <% end %>
+            <% if team_result_sheet.display_cost %>
+              <td class="total_val_c number_to_cost"></td>
+            <% end %>
         <% end %>
         <% if team_result_sheet.display_hours %>
           <td class="total_val_h number_to_hours"></td>
@@ -53,6 +62,9 @@
         <% end %>
         <% if team_result_sheet.display_value %>
         <td class="total_val_v number_to_value"></td>
+        <% end %>
+        <% if team_result_sheet.display_cost %>
+        <td class="total_val_c number_to_cost"></td>
         <% end %>
       </tr>
     </tbody>
