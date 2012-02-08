@@ -27,6 +27,7 @@ Feature: Agent timesheets - agent timesheet
     And I should see translated "agent_timesheets.index.agent_time_sheet.log_out"
     And I should see translated "agent_timesheets.index.agent_time_sheet.log_out_time"
     And I should see translated "agent_timesheets.index.agent_time_sheet.value"
+    And I should see translated "agent_timesheets.index.agent_time_sheet.total_db"
     When I check "show_all_agents"
     And I should see "16:00"
     And I should see "10"
@@ -37,6 +38,7 @@ Feature: Agent timesheets - agent timesheet
     And I should see "14"
     And I should see "260.00"
     And I should see "26.00"
+    And I should see "0%"
 
   @_done @_tested_elsewhere
   Scenario: I should see average result per hour
@@ -126,5 +128,5 @@ Feature: Agent timesheets - agent timesheet
   Scenario: I should see cost the same way as value created (for fixed value ((cost/completion rate)/total time spent)*agent's time spent)
 
   #9877
-  @m28 @requested
+  @m28 @requested @tgn @_done @_tested_elsewhere
   Scenario: I should see total cost percent calculated as ((value created / Cost)-1)*100
