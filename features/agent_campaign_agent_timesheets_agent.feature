@@ -128,5 +128,5 @@ Feature: Agent timesheets - agent timesheet
   Scenario: I should see cost the same way as value created (for fixed value ((cost/completion rate)/total time spent)*agent's time spent)
 
   #9877
-  @m28 @requested @tgn @_done @_tested
+  @m28 @requested @tgn @_done @_tested_elsewhere
   Scenario: I should see total cost percent calculated as ((value created / Cost)-1)*100
