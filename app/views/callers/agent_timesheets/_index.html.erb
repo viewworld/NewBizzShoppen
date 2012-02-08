@@ -257,15 +257,15 @@
             global_averages($('div#agent_time_sheet_<%= agent.id %>'));
             $('div#agent_time_sheet_<%= agent.id %> .total_val_db').each(function() {  agent_time_sheet_db($(this))  });
           <% end %>
-//          $('.total_h_l').each(function(){sum_row($(this).closest('tr'),'l')});
+          $('.total_h_l').each(function(){sum_row($(this).closest('tr'),'l')});
         <% end %>
 
         // formatting
-//        $('.number_to_hours').each(function(){number_to_hours($(this))});
-//        $('.number_to_results').each(function(){number_to_results($(this))});
-//        $('.number_to_value').each(function(){number_to_value($(this))});
-//        $('.number_to_cost').each(function(){number_to_value($(this))});
-//        $('.number_to_log_out_time').each(function(){number_to_hours($(this))});
+        $('.number_to_hours').each(function(){number_to_hours($(this))});
+        $('.number_to_results').each(function(){number_to_results($(this))});
+        $('.number_to_value').each(function(){number_to_value($(this))});
+        $('.number_to_cost').each(function(){number_to_value($(this))});
+        $('.number_to_log_out_time').each(function(){number_to_hours($(this))});
 
         show_timesheet($('#agent_timesheet_agent_id').val());
     });

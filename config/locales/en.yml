@@ -4004,7 +4004,7 @@ en:
         show_all: "Show all agents on one page"
         log_in: "First log in"
         log_out: "Last log out"
-      total_db: "Total DB %"
+        total_db: "Total DB %"
     new:
       header: "Agent timesheets"
       time_period: "Select time period"
