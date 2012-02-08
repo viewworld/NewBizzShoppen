@@ -90,6 +90,20 @@
         $(cell).html(Math.round(sum*100)/100);
     }
 
+    function agent_time_sheet_db(cell){
+        var pos = $(cell).closest('td').prevAll().length;
+	    cost = Number($(cell).closest('table').find('tbody tr').find('td.total_val_cost').eq(pos-1).html());
+	    value = Number($(cell).closest('table').find('tbody tr').find('td.total_val_value').eq(pos-1).html());
+
+        db = 0;
+
+        if(value >= cost && cost > 0){
+            db = Math.ceil(((value / cost)-1) * 100);
+        }
+
+        $(cell).html(db + "%");
+    }
+
     function team_result_sheet_sum_totals(cell, type) {
         var pos = $(cell).closest('td').prevAll().length;
         var sum = 0;
@@ -241,16 +255,17 @@
             <% end %>
 
             global_averages($('div#agent_time_sheet_<%= agent.id %>'));
+            $('div#agent_time_sheet_<%= agent.id %> .total_val_db').each(function() {  agent_time_sheet_db($(this))  });
           <% end %>
-          $('.total_h_l').each(function(){sum_row($(this).closest('tr'),'l')});
+//          $('.total_h_l').each(function(){sum_row($(this).closest('tr'),'l')});
         <% end %>
 
         // formatting
-        $('.number_to_hours').each(function(){number_to_hours($(this))});
-        $('.number_to_results').each(function(){number_to_results($(this))});
-        $('.number_to_value').each(function(){number_to_value($(this))});
-        $('.number_to_cost').each(function(){number_to_value($(this))});
-        $('.number_to_log_out_time').each(function(){number_to_hours($(this))});
+//        $('.number_to_hours').each(function(){number_to_hours($(this))});
+//        $('.number_to_results').each(function(){number_to_results($(this))});
+//        $('.number_to_value').each(function(){number_to_value($(this))});
+//        $('.number_to_cost').each(function(){number_to_value($(this))});
+//        $('.number_to_log_out_time').each(function(){number_to_hours($(this))});
 
         show_timesheet($('#agent_timesheet_agent_id').val());
     });
