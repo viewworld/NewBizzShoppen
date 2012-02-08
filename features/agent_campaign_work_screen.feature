@@ -691,6 +691,7 @@ Feature: Agent campaign - calling session
   Scenario: When upgrading contact to member I can choose deals that will be requested after the account creation
     Given a deal named "SomeDeal001" exists within category "Electronics deals"
     And a deal named "SomeDeal003" exists within category "Electronics deals"
+    Given subscription plan named "Free member subscription" exists with attributes "free_deal_requests_in_free_period:2"
     Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     Given template named "Xeper details" for category "Xeper" is created by user "buyer@nbs.com" with role "supplier"
     And template named "Xeper details" is mandatory
@@ -725,6 +726,7 @@ Feature: Agent campaign - calling session
     And I fill in "nested_lead_leads_attributes_1_lead_template_values_attributes_0_value" with "template 001"
     And I fill in "nested_lead_leads_attributes_1_lead_template_values_attributes_1_value" with "template 002"
     And I press translated "remote_deal_requests.new.view.create_button"
+    And I run ruby "puts User.last.inspect"
     And I wait 1 second
     Then I am not sign in
     And I am on the homepage
