@@ -3,8 +3,8 @@ class CreateAgentTimesheetsTimeView < ActiveRecord::Migration
     ActiveRecord::Base.transaction do
       add_column :user_session_logs, :end_date, :date
       execute "UPDATE user_session_logs SET end_date = end_time::DATE"
-#      execute "DROP LANGUAGE IF EXISTS PLPGSQL"
-#      execute "CREATE LANGUAGE PLPGSQL"
+      execute "DROP LANGUAGE IF EXISTS PLPGSQL"
+      execute "CREATE LANGUAGE PLPGSQL"
       execute %{
         CREATE FUNCTION set_user_session_logs_end_date() RETURNS trigger
         AS $set_user_session_logs_end_date$
