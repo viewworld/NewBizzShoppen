@@ -191,7 +191,7 @@
     }
 
     function global_averages(scope) {
-        hours = (Number($(scope).find('.total_val_hours.last').html().split(':')[0])*60 + Number($(scope).find('.total_val_hours.last').html().split(':')[1]))/60;
+        hours = Number($(scope).find('.total_val_hours.last').html());
         value = Number($(scope).find('.total_val_value.last').html());
         $(scope).find('.avg_value_per_hour').html(value/hours);
         number_to_value($(scope).find('.avg_value_per_hour'));
