@@ -1,6 +1,5 @@
 class Ckeditor::Picture < ::Asset
-  has_attached_file :asset,
-	                  :styles => { :content => '575>', :thumb => '80x80#' }
+  has_attached_file :asset, attachment_options.merge(:styles => { :content => '575>', :thumb => '80x80#' })
 	
 	validates_attachment_size :asset, :less_than=>2.megabytes
 	
