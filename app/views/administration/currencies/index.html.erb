@@ -66,9 +66,6 @@
                   <li>
                     <%= link_to t("administration.currencies.index.view.edit"), edit_administration_currency_path(currency), :class => "default_action" %>
                   </li>
-                  <li>
-                    <%= link_to t("administration.currencies.index.view.delete"), administration_currency_path(currency), {:method => :delete, :confirm => t("administration.currencies.index.view.delete_confirmation_message")} %>
-                  </li>
                 </ul-actions>
               </td>
               <td class="cr"></td>
