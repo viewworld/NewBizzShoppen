@@ -196,11 +196,11 @@
             $(cell).html('0.00')
         } else {
             euros = Math.floor(value);
-            cents = Math.round((value - euros)*100);
-            if (cents < 10) {
-                cents = '0' + cents
-            }
-            $(cell).html(euros + '.' + cents)
+//            cents = Math.round((value - euros)*100);
+//            if (cents < 10) {
+//                cents = '0' + cents
+//            }
+            $(cell).html(euros)
         }
     }
 
