@@ -99,6 +99,8 @@ Feature: Category buyer rules
   Scenario: If category buyer has more than one category assigned, when browsing leads he should see "Category dropdown" which will redirect him to correct category scope when filtering
     When Category named "Best Leads" already exists
     And Category named "Worst Leads" already exists
+    And lead test01 exists within category Best Leads
+    And lead test02 exists within category Worst Leads
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes ""
     And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
     And user "jon@lajoie.ca" has team buyers enabled
@@ -106,6 +108,7 @@ Feature: Category buyer rules
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.shared.browse_leads"
+    And I open page in browser
     Then "category" dropdown should have values "Best Leads,Worst Leads"
     And I select "Worst Leads" from "category"
     Then I should be on category leads page for Worst Leads
