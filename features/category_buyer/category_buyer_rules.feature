@@ -108,7 +108,6 @@ Feature: Category buyer rules
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.shared.browse_leads"
-    And I open page in browser
     Then "category" dropdown should have values "Best Leads,Worst Leads"
     And I select "Worst Leads" from "category"
     Then I should be on category leads page for Worst Leads
