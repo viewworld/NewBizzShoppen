@@ -6,7 +6,7 @@ class Campaign < ActiveRecord::Base
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
   belongs_to :currency
   has_and_belongs_to_many :users
-  has_many :campaigns_results, :foreign_key => "campaign_id"
+  has_many :campaigns_results, :foreign_key => "campaign_id", :dependent => :destroy
   has_many :results, :through => :campaigns_results
   has_many :contacts, :dependent => :destroy
   has_many :materials, :as => :resource, :class_name => "Material", :dependent => :destroy
@@ -14,7 +14,7 @@ class Campaign < ActiveRecord::Base
   has_one :upgrade_contact_to_category_buyer_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_category_buyer'", :dependent => :destroy
   has_one :upgrade_contact_to_buyer_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_buyer'", :dependent => :destroy
   has_one :upgrade_contact_to_member_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_member'", :dependent => :destroy
-  has_many :user_session_logs
+  has_many :user_session_logs, :dependent => :destroy
 
   validates_uniqueness_of :name
   validates_presence_of :name, :max_contact_number, :category_id, :country_id, :start_date, :end_date, :cost_type
