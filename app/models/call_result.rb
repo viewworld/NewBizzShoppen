@@ -225,6 +225,9 @@ class CallResult < ActiveRecord::Base
     user = "User::#{role.camelize}".constantize.new(user_params)
 
     new_password = contact.campaign.name.downcase.gsub(' ', '').gsub('-', '').first(6)
+    if new_password.size < 6
+      new_password = user.send(:generate_token, 6)
+    end
     user.password = new_password
     user.password_confirmation = new_password
     user.skip_email_verification = "1"
