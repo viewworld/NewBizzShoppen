@@ -115,7 +115,7 @@ class ApplicationController < ActionController::Base
           sign_out(resource_name)
           root_path
         end
-      elsif session[:last_url_before_logout].present? and !current_user.has_any_role?(:agent, :call_centre, :call_centre_agent, :member, :supplier, :lead_supplier)
+      elsif session[:last_url_before_logout].present? and !current_user.has_any_role?(:agent, :call_centre, :call_centre_agent, :member, :supplier, :lead_supplier, :admin)
         last_url = session[:last_url_before_logout]
         session[:last_url_before_logout] = nil
         last_url

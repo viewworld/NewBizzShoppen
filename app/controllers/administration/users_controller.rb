@@ -36,7 +36,7 @@ class Administration::UsersController < Administration::AdministrationController
 
     if @user.save
       flash[:notice] = t("administration.users.update.flash.user_update_successful")
-      if params[user_params_key]["roles_to_add"] or params[user_params_key]["roles_to_remove"] or params[user_params_key]["locked"]
+      if params[user_params_key] and params[user_params_key]["roles_to_add"] or params[user_params_key]["roles_to_remove"] or params[user_params_key]["locked"]
         redirect_to :back
       else
         redirect_to administration_users_path
