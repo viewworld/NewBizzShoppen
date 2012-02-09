@@ -7,8 +7,8 @@ class CallResult < ActiveRecord::Base
   belongs_to :contact
   belongs_to :result
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
-  has_one :call_log
-  has_many :result_values
+  has_one :call_log, :dependent => :destroy
+  has_many :result_values, :dependent => :destroy
   has_one :send_material_result_value, :class_name => "ResultValue", :conditions => "result_values.field_type = '#{ResultField::MATERIAL}'"
   has_one :archived_email, :as => :related, :dependent => :destroy
   accepts_nested_attributes_for :result_values, :allow_destroy => true

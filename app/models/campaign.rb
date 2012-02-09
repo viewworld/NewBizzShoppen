@@ -6,7 +6,7 @@ class Campaign < ActiveRecord::Base
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
   belongs_to :currency
   has_and_belongs_to_many :users
-  has_many :campaigns_results, :foreign_key => "campaign_id"
+  has_many :campaigns_results, :foreign_key => "campaign_id", :dependent => :destroy
   has_many :results, :through => :campaigns_results
   has_many :contacts, :dependent => :destroy
   has_many :materials, :as => :resource, :class_name => "Material", :dependent => :destroy
@@ -14,7 +14,7 @@ class Campaign < ActiveRecord::Base
   has_one :upgrade_contact_to_category_buyer_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_category_buyer'", :dependent => :destroy
   has_one :upgrade_contact_to_buyer_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_buyer'", :dependent => :destroy
   has_one :upgrade_contact_to_member_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_member'", :dependent => :destroy
-  has_many :user_session_logs
+  has_many :user_session_logs, :dependent => :destroy
 
   validates_uniqueness_of :name
   validates_presence_of :name, :max_contact_number, :category_id, :country_id, :start_date, :end_date, :cost_type
@@ -43,7 +43,7 @@ class Campaign < ActiveRecord::Base
   scope :available_for_user, lambda { |user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin }
 
   before_save :set_euro_fixed_cost_value, :set_euro_production_value_per_hour
-  after_save :check_email_templates
+  after_save :check_email_templates, :correct_session_logs_if_cost_type_changed
 
   FIXED_COST = 0.freeze
   AGENT_BILLING_RATE_COST = 1.freeze
@@ -97,7 +97,21 @@ class Campaign < ActiveRecord::Base
     end
   end
 
+  def correct_session_logs_if_cost_type_changed
+    if cost_type_changed?
+      apply_billing_rate_to_user_session_logs!
+    end
+  end
+
   public
+
+  def apply_billing_rate_to_user_session_logs!
+    if [AGENT_BILLING_RATE_COST, FIXED_HOURLY_RATE_COST].include?(cost_type)
+      user_session_logs.where(:euro_billing_rate => nil).each do |usl|
+        usl.update_attribute(:euro_billing_rate, cost_type == AGENT_BILLING_RATE_COST ? usl.user ? usl.user.euro_billing_rate : nil : euro_fixed_cost_value )
+      end
+    end
+  end
 
   def to_i
     id

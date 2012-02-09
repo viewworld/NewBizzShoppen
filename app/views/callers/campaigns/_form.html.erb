@@ -29,7 +29,7 @@
           <h3><%= t("campaigns.edit.campaign_targets") %></h3>
         </li>
         <%= form.input :finished_contacts_per_hour, :input_html => {:style => "width:95px"} %>
-        <%= form.input :production_value_per_hour, :input_html => {:style => "width:95px"}, :hint => "&euro;" %>        
+        <%= form.input :production_value_per_hour, :input_html => {:style => "width:95px"} %>
         <%= form.input :success_rate, :input_html => {:style => "width:95px"} %>
       </ol>
     </fieldset>
@@ -49,7 +49,7 @@
                        :input_html => {:class => "datepicker", :value => campaign.end_date},
                        :hint => t('models.result_field.date_format') %>
         <%= form.input :max_contact_number, :input_html => {:style => "width:95px"} %>
-        <%= form.input :fixed_cost_value, :input_html => {:style => "width:95px"}, :hint => "&euro;" %>        
+        <%= form.input :fixed_cost_value, :input_html => {:style => "width:95px"} %>
         <%= form.input :cost_type, :as => :radio, :collection => Campaign::COST_TYPES.map { |lnt| [t("campaigns.cost_types.cost_type#{lnt}"), lnt] }, :wrapper_html => {:class => "collection"} %>
         <%= form.input :crm_option, :as => :radio, :collection => Campaign::CRM_OPTIONS.map { |lnt| [t("campaigns.crm_options.crm_option#{lnt}"), lnt] }, :wrapper_html => {:class => "collection"}, :label => t("campaigns.form.crm_options") %>
         <li class="select" style="padding-top:10px">

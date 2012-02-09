@@ -22,7 +22,7 @@
         <% end %>
       </tr>
   <% end %>
-  <% [:hours, :results, :value].each do |key| %>
+  <% [:hours, :results, :value, :cost].each do |key| %>
       <% if agent_time_sheet.send("display_#{key}".to_sym) %>
           <tr class="total_row bordered">
             <td class="ta_l"><%= t("agent_timesheets.index.agent_time_sheet.#{key}") %></td>
@@ -33,5 +33,13 @@
           </tr>
       <% end %>
   <% end %>
+
+  <tr class="total_row bordered">
+    <td class="ta_l"><%= t("agent_timesheets.index.agent_time_sheet.total_db") %></td>
+    <% agent_time_sheet.days_of_week.each do %>
+        <td class="total_val_db"></td>
+    <% end %>
+    <td class="total_val_db last"></td>
+  </tr>
   </tbody>
 </table>

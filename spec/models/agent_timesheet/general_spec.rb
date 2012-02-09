@@ -19,8 +19,9 @@ describe AgentTimesheet::General do
 
     # create campaign
     @currency = Currency.make!
-    @campaign = Campaign.make!(:creator => @call_centre, :currency => @currency)
-    @campaign2 = Campaign.make!(:creator => @call_centre, :currency => @currency)
+    @campaign = Campaign.make!(:creator => @call_centre, :currency => @currency, :cost_type => Campaign::AGENT_BILLING_RATE_COST)
+    @campaign2 = Campaign.make!(:creator => @call_centre, :currency => @currency, :cost_type => Campaign::FIXED_HOURLY_RATE_COST, :fixed_cost_value => 8)
+    @campaign3 = Campaign.make!(:creator => @call_centre, :currency => @currency, :cost_type => Campaign::FIXED_COST, :fixed_cost_value => 4500)
 
     # assign users to campaign
     @campaign.users << @call_centre
@@ -29,26 +30,35 @@ describe AgentTimesheet::General do
     @campaign2.users << @call_centre
     @campaign2.users << @call_centre_agent1
     @campaign2.users << @call_centre_agent2
+    @campaign3.users << @call_centre
+    @campaign3.users << @call_centre_agent1
+    @campaign3.users << @call_centre_agent2
 
     # create results
     @result1 = Result.make!(:final_reported_success)
     @result2 = Result.make!(:final_reported_success)
     @result3 = Result.make!(:upgrades_to_lead)
     @result4 = Result.make!(:upgrades_to_lead)
+    @result5 = Result.make!(:not_final_reported)
 
     # assign results to campaign
     @campaign.results = [@result1,@result2,@result3,@result4]
     @campaign2.results = [@result1,@result2,@result3,@result4]
-    @result1.campaigns_results.first.update_attribute(:value, 100)
-    @result1.campaigns_results.last.update_attribute(:value, 100)
-    @result2.campaigns_results.first.update_attribute(:value, 10)
-    @result2.campaigns_results.last.update_attribute(:value, 10)
+    @campaign3.results = [@result1,@result2,@result3,@result4,@result5]
+    @result1.campaigns_results.each do |cr|
+      cr.update_attribute(:value, 100)
+    end
+    @result2.campaigns_results.each do |cr|
+      cr.update_attribute(:value, 10)
+    end
 
     # create contacts
     @contact1 = Contact.make!(:campaign => @campaign)
     @contact2 = Contact.make!(:campaign => @campaign)
     @contact3 = Contact.make!(:campaign => @campaign, :price => 130)
     @contact4 = Contact.make!(:campaign => @campaign, :price => 13)
+    @contact3_1 = Contact.make!(:campaign => @campaign3)
+    @contact3_2 = Contact.make!(:campaign => @campaign3)
   end
 
   context "Initialization" do
@@ -62,6 +72,7 @@ describe AgentTimesheet::General do
                                        :display_hours     => 0,
                                        :display_results   => '0',
                                        :display_value     => false,
+                                       :display_cost      => false,
                                        :overview          => 'false',
                                        :team_result_sheet => false,
                                        :agent_timesheet   => nil)
@@ -72,6 +83,7 @@ describe AgentTimesheet::General do
       at.display_hours.should_not be_true
       at.display_results.should_not be_true
       at.display_value.should_not be_true
+      at.display_cost.should_not be_true
       at.overview.should_not be_true
       at.team_result_sheet.should_not be_true
       at.agent_timesheet.should_not be_true
@@ -313,6 +325,51 @@ describe AgentTimesheet::General do
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
                                   :agents            => [@call_centre_agent1.id,@call_centre_agent2.id]).agent_time_sheet_data(@call_centre_agent2).dig(2011,19,6).first.value.should == 100.0
+    end
+  end
+
+  context "Cost calculation" do
+    it "should calculate correct cost for campaign with agent hourly rate" do
+      time_log(@call_centre_agent1, @campaign, '2011-05-15 12:00:00', 60)
+      time_log(@call_centre_agent2, @campaign, '2011-05-15 12:00:00', 120)
+      AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign],
+                                  :agents            => [@call_centre_agent1.id]).agent_time_sheet_data(@call_centre_agent1).dig(2011,19,6).first.cost.should == 10.0
+      AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign],
+                                  :agents            => [@call_centre_agent2.id]).agent_time_sheet_data(@call_centre_agent2).dig(2011,19,6).first.cost.should == 20.0
+    end
+
+    it "should calculate correct cost for campaign with fixed hourly rate" do
+      time_log(@call_centre_agent1, @campaign2, '2011-05-15 12:00:00', 60)
+      time_log(@call_centre_agent2, @campaign2, '2011-05-15 12:00:00', 120)
+      AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign2],
+                                  :agents            => [@call_centre_agent1.id]).agent_time_sheet_data(@call_centre_agent1).dig(2011,19,6).first.cost.should == 8.0
+      AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign2],
+                                  :agents            => [@call_centre_agent2.id]).agent_time_sheet_data(@call_centre_agent2).dig(2011,19,6).first.cost.should == 16.0
+    end
+
+    it "should calculate correct cost for campaign with fixed campaign cost" do
+      time_log(@call_centre_agent1, @campaign3, '2011-05-15 12:00:00', 60)
+      time_log(@call_centre_agent2, @campaign3, '2011-05-15 12:00:00', 120)
+      CallResult.make!(:contact => @contact3_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.parse('2011-05-15 16:00:00'))
+      CallResult.make!(:contact => @contact3_2, :result => @result5, :creator => @call_centre_agent2, :created_at => Time.parse('2011-05-15 16:00:00'))
+      # 2 contacts total, 1 finished. 3 hours total time
+      # (4500 * 50%) / 3 = 750 per hour
+      AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign3],
+                                  :agents            => [@call_centre_agent1.id]).agent_time_sheet_data(@call_centre_agent1).dig(2011,19,6).first.cost.should == 750.0
+      AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign3],
+                                  :agents            => [@call_centre_agent2.id]).agent_time_sheet_data(@call_centre_agent2).dig(2011,19,6).first.cost.should == 1500.0
     end
   end
 

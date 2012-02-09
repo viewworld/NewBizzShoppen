@@ -10,7 +10,7 @@ class Contact < AbstractLead
   has_many :call_results, :dependent => :destroy
   has_many :result_values, :through => :call_results
   belongs_to :lead
-  has_many :contact_past_user_assignments, :foreign_key => "contact_id"
+  has_many :contact_past_user_assignments, :foreign_key => "contact_id", :dependent => :destroy
   has_many :past_user_assignments, :through => :contact_past_user_assignments, :source => :user
 
   belongs_to :agent, :class_name => "User"

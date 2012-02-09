@@ -7,6 +7,7 @@ class ::AgentTimesheet::General
     sel << "SUM(hours) as hours" if @display_hours
     sel << "SUM(results) as results" if @display_results
     sel << "SUM(value) as value" if @display_value
+    sel << "SUM(cost) as cost" if @display_cost
     sel.join(",")
   end
 
@@ -30,6 +31,7 @@ class ::AgentTimesheet::General
     res += 1 if @display_hours
     res += 1 if @display_results
     res += 1 if @display_value
+    res += 1 if @display_cost
     res
   end
 

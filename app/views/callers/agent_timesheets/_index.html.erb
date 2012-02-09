@@ -7,7 +7,7 @@
 
     <div id="overview" style="page-break-before:always;page-break-after:always;">
       <% if timesheet.overview %>
-        <% [:hours,:results,:value].each do |k| %>
+        <% [:hours,:results,:value,:cost].each do |k| %>
           <%= render :partial => "callers/agent_timesheets/overview_table", :locals => {:type => k, :overview => timesheet, :results => timesheet.overview_data} if timesheet.send("display_#{k}".to_sym) %>
         <% end %>
       <% end %>
@@ -88,6 +88,20 @@
             sum += Number($(this).html());
         });
         $(cell).html(Math.round(sum*100)/100);
+    }
+
+    function agent_time_sheet_db(cell){
+        var pos = $(cell).closest('td').prevAll().length;
+	    cost = Number($(cell).closest('table').find('tbody tr').find('td.total_val_cost').eq(pos-1).html());
+	    value = Number($(cell).closest('table').find('tbody tr').find('td.total_val_value').eq(pos-1).html());
+
+        db = 0;
+
+        if(value >= cost && cost > 0){
+            db = Math.ceil(((value / cost)-1) * 100);
+        }
+
+        $(cell).html(db + "%");
     }
 
     function team_result_sheet_sum_totals(cell, type) {
@@ -191,7 +205,7 @@
     }
 
     function global_averages(scope) {
-        hours = (Number($(scope).find('.total_val_hours.last').html().split(':')[0])*60 + Number($(scope).find('.total_val_hours.last').html().split(':')[1]))/60;
+        hours = Number($(scope).find('.total_val_hours.last').html());
         value = Number($(scope).find('.total_val_value.last').html());
         $(scope).find('.avg_value_per_hour').html(value/hours);
         number_to_value($(scope).find('.avg_value_per_hour'));
@@ -207,19 +221,22 @@
         $('.total_h_h').each(function(){sum_row($(this).closest('tr'),'h')});
         $('.total_h_v').each(function(){sum_row($(this).closest('tr'),'v')});
         $('.total_h_r').each(function(){sum_row($(this).closest('tr'),'r')});
+        $('.total_h_c').each(function(){sum_row($(this).closest('tr'),'c')});
         $('.total_v_h').each(function(){sum_col($(this),'h')});
         $('.total_v_r').each(function(){sum_col($(this),'r')});
         $('.total_v_v').each(function(){sum_col($(this),'v')});
+        $('.total_v_c').each(function(){sum_col($(this),'c')});
 
         // team result sheet totals
         $('.total_val_h').each(function(){team_result_sheet_sum_totals($(this),'h')});
         $('.total_val_r').each(function(){team_result_sheet_sum_totals($(this),'r')});
         $('.total_val_v').each(function(){team_result_sheet_sum_totals($(this),'v')});
+        $('.total_val_c').each(function(){team_result_sheet_sum_totals($(this),'c')});
 
         // agent time sheet totals
         <% if timesheet.agent_timesheet %>
           <% timesheet.agents.each do |agent| %>
-            <% [:hours, :results, :value].each do |key| %>
+            <% [:hours, :results, :value, :cost].each do |key| %>
             $('div#agent_time_sheet_<%= agent.id %> .total_val_<%= key.to_s %>').each(function() {
                 agent_time_sheet_sum_totals($(this), $('div#agent_time_sheet_<%= agent.id %>').find('tr.<%= key.to_s %>'),'<%= key.to_s.first %>')
             });
@@ -238,6 +255,7 @@
             <% end %>
 
             global_averages($('div#agent_time_sheet_<%= agent.id %>'));
+            $('div#agent_time_sheet_<%= agent.id %> .total_val_db').each(function() {  agent_time_sheet_db($(this))  });
           <% end %>
           $('.total_h_l').each(function(){sum_row($(this).closest('tr'),'l')});
         <% end %>
@@ -246,6 +264,7 @@
         $('.number_to_hours').each(function(){number_to_hours($(this))});
         $('.number_to_results').each(function(){number_to_results($(this))});
         $('.number_to_value').each(function(){number_to_value($(this))});
+        $('.number_to_cost').each(function(){number_to_value($(this))});
         $('.number_to_log_out_time').each(function(){number_to_hours($(this))});
 
         show_timesheet($('#agent_timesheet_agent_id').val());

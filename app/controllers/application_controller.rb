@@ -58,10 +58,12 @@ class ApplicationController < ActionController::Base
           session[:current_usl_campaigns] = active_usl.id
           UserSessionLog.update_end_time(session[:current_usl_campaigns], Settings.logout_time.to_i)
         else
+          campaign = Campaign.find(params[:campaign_id])
           usl_campaign = UserSessionLog.create(:user_id => current_user.id, :start_time => Time.now,
                                                :end_time => (Time.now + Settings.logout_time.to_i.minutes),
                                                :log_type => UserSessionLog::TYPE_CAMPAIGN,
-                                               :euro_billing_rate => current_user.euro_billing_rate,
+                                               :euro_billing_rate => campaign.cost_type == Campaign::AGENT_BILLING_RATE_COST ? current_user.euro_billing_rate :
+                                                   campaign.cost_type == Campaign::FIXED_HOURLY_RATE_COST ? campaign.euro_fixed_cost_value : nil,
                                                :campaign_id => params[:campaign_id])
           session[:current_usl_campaigns] = usl_campaign.id
         end

@@ -196,4 +196,9 @@ class IntegrationTasks < Thor
     Translation.where(:key => "formtastic.labels.lead.company_name", :locale => "en").first.update_attribute(:value, "Company name")
     Translation.where(:key => "formtastic.labels.lead.company_name", :locale => "da").first.update_attribute(:value, "Firmanavn")
   end
+
+  desc "m28", ""
+  def m28
+    Campaign.where(:cost_type => [1,2]).each { |c| c.apply_billing_rate_to_user_session_logs! }
+  end
 end
