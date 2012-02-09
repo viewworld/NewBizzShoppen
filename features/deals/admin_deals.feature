@@ -124,3 +124,13 @@ Feature: Deals from admin perspective
     And I sign in as admin@nbs.com with password secret
     And I follow translated "layout.main_menu.admin.deals"
     Then I should see translated "shared.deals.table.awaiting_approval"
+
+  @m29 @requested @selenium @tgn @_done @_tested @wip
+  Scenario: I can click Show all for deals
+    Given pagination page size for leads is set to 2
+    Given a deal named "deal001" exists within category "Electronics"
+    And a deal named "deal002" exists within category "Electronics"
+    And a deal named "deal003" exists within category "Electronics"
+    And a deal named "deal004" exists within category "Electronics"
+    Then I follow translated "layout.main_menu.admin.deals"
+    And I open page in browser
