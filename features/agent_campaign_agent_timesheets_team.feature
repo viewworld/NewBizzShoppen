@@ -28,7 +28,7 @@ Feature: Agent timesheets - team result sheet
     And I should see "test report user CCA2"
     And I should see "384:00"
     And I should see "22"
-    And I should see "286.00"
+    And I should see "286"
 
   @_done @_tested_elsewhere
   Scenario: I can see time spent for each agent for each day of week
