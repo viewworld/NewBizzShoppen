@@ -531,16 +531,28 @@ div.pagination .disabled
 .timesheet .subheader_row th
 {
     font-size: 11px;
-    padding-left: 2px;
-    padding-right: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    border-left: 1px solid #ccc;
+}
+
+.timesheet .subheader_row th:first-child
+{
+    border-left: none;
 }
 
 .timesheet .total_row td
 {
     border-bottom: none;
+    border-left: 1px solid #e0e0e0;
     background: #fff;
     font-weight: bold;
     font-size: 16px;
+}
+
+.timesheet .total_row td:first-child
+{
+    border-left: none;
 }
 
 .timesheet .total_row.bordered
@@ -548,7 +560,8 @@ div.pagination .disabled
     border-bottom: 1px solid #E3E3E3;
 }
 
-.timesheet .total_h
+.timesheet .total_h,
+.timesheet .total_c
 {
     background: #fff;
     font-weight: bold;
@@ -566,15 +579,21 @@ div.pagination .disabled
 
 .timesheet .val_h
 {
-    background: #eaeaea;
+    background: #e6e6e6;
 }
 
 .timesheet .val_r
 {
-    background: #f0f0f0;
+    background: #ececec;
 }
 
 .timesheet .val_v
 {
-    border-right: 1px solid #ddd;
+    background: #f3f3f3;
+}
+
+.timesheet .val_c
+{
+    background: #fafafa;
+    border-right: 1px solid #ccc;
 }

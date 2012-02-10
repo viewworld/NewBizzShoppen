@@ -22,6 +22,7 @@ class CallResult < ActiveRecord::Base
   validates_presence_of :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_zip_code, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
   validates_presence_of :contact_company_name, :contact_phone_number, :contact_address_line_3, :if => Proc.new { |cr| cr.result.upgrades_to_member? }
   validate :validate_uniqueness_of_contact_email_address, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
+  validate :validate_upgraded_user, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
 
   after_create :process_side_effects, :update_contact_note, :set_last_call_result_in_contact, :update_contact_email, :update_contact_address, :unless => :save_without_callbacks
   after_update :process_side_effects, :update_contact_email, :update_contact_address, :unless => :save_without_callbacks
@@ -107,6 +108,14 @@ class CallResult < ActiveRecord::Base
     unless User.where("email = ?", contact_email_address).empty?
       self.errors.add(:contact_email_address, I18n.t("models.call_result.not_unique_email_address"))
     end
+  end
+
+  def validate_upgraded_user
+    if self.errors.empty? and user = prepare_user(result.upgrades_to_user_role.to_s).first and !user.valid?
+      self.errors.add(:upgraded_user, user.errors.to_a.uniq)
+      return false
+    end
+    true
   end
 
   def update_completed_status
@@ -207,7 +216,7 @@ class CallResult < ActiveRecord::Base
     process_for_final_result
   end
 
-  def upgrade_to_user(role)
+  def prepare_user(role)
     user_params = {:email => contact_email_address, :first_name => contact_first_name,
                    :last_name => contact_last_name,
                    :address_attributes => { :address_line_1 => contact_address_line_1, :zip_code => contact_zip_code,
@@ -225,9 +234,17 @@ class CallResult < ActiveRecord::Base
     user = "User::#{role.camelize}".constantize.new(user_params)
 
     new_password = contact.campaign.name.downcase.gsub(' ', '').gsub('-', '').first(6)
+    if new_password.size < 6
+      new_password = user.send(:generate_token, 6)
+    end
     user.password = new_password
     user.password_confirmation = new_password
     user.skip_email_verification = "1"
+    [user, new_password]
+  end
+
+  def upgrade_to_user(role)
+    user, new_password = prepare_user(role)
     user.save
     if role == "category_supplier"
       user.buying_category_ids = buying_category_ids

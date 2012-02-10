@@ -45,6 +45,7 @@ class LeadTemplate < ActiveRecord::Base
   public
 
   def is_filled_out_for(lead)
+    return false if lead.nil?
     values = lead.lead_template_values.select { |ltv| ltv.lead_template_field.lead_template_id == id }
     !values.map(&:value).detect { |v| !v.blank? }.nil?
   end
