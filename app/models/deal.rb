@@ -9,6 +9,7 @@ class Deal < AbstractLead
   has_one :voucher_heading_picture, :class_name => "Asset::VoucherPicture", :as => :resource, :conditions => "asset_type = 'Asset::VoucherPicture'", :dependent => :destroy
   has_many :images, :class_name => "Asset::DealImage", :as => :resource, :conditions => "asset_type = 'Asset::DealImage'", :dependent => :destroy
   has_many :materials, :class_name => "Asset::DealMaterial", :as => :resource, :conditions => "asset_type = 'Asset::DealMaterial'", :dependent => :destroy
+  has_many :internal_documents, :class_name => "Asset::DealInternalDocument", :as => :resource, :conditions => "asset_type = 'Asset::DealInternalDocument'", :dependent => :destroy
   has_many :leads, :class_name => "Lead", :foreign_key => "deal_id"
   has_many :unconfirmed_leads, :class_name => "UnconfirmedLead", :foreign_key => "deal_id"
   has_many :comment_threads, :class_name => "Comment", :foreign_key => :commentable_id, :conditions => {:commentable_type => 'AbstractLead'}
@@ -60,6 +61,7 @@ class Deal < AbstractLead
   accepts_nested_attributes_for :logo, :reject_if => proc { |attributes| attributes['asset'].blank? }
   accepts_nested_attributes_for :images, :reject_if => proc { |attributes| attributes['asset'].blank? }
   accepts_nested_attributes_for :materials, :reject_if => proc { |attributes| attributes['asset'].blank? }
+  accepts_nested_attributes_for :internal_documents, :reject_if => proc { |attributes| attributes['asset'].blank? }
   accepts_nested_attributes_for :voucher_heading_picture, :reject_if => proc { |attributes| attributes['asset'].blank? }
   accepts_nested_attributes_for :voucher_numbers
 

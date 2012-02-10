@@ -31,6 +31,7 @@ module DealActions
   def prepare_assets
     @images = @deal.images
     @materials = @deal.materials
+    @internal_documents = @deal.internal_documents
   end
 
   def check_user

@@ -144,6 +144,21 @@ Then /I add and remove document for deal as "([^"]*)"/ do |role|
   Then %{I should see translated "#{role}.deals.edit.view.title"}
 end
 
+Then /I add and remove internal document for deal as "([^"]*)"/ do |role|
+  Then %{I follow translated "layout.main_menu.#{role == "administration" ? "admin" : role == "supplier" ? "lead_supplier" : role}.#{"my_" if role == "supplier"}deals"}
+  Then %{I follow translated "#{role}.deals.index.view.edit"}
+  Then %{attach the file "document" to "deal_internal_documents_attributes_0_asset"}
+  Then %{I press translated "#{role}.deals.edit.view.update_button"}
+  Then %{I follow translated "#{role}.deals.index.view.edit"}
+  Then %{I should see translated "deals.common.assets.view.download"}
+  Then %{attach the file "document" to "deal_internal_documents_attributes_0_asset"}
+  Then %{I press translated "#{role}.deals.edit.view.update_button"}
+  Then %{I follow translated "#{role}.deals.index.view.edit"}
+  Then %{I follow translated "deals.common.assets.view.remove_material"}
+  Then %{I should see translated "flash.deal_assets.destroy.success"}
+  Then %{I should see translated "#{role}.deals.edit.view.title"}
+end
+
 Then /I add and remove image for deal as "([^"]*)"/ do |role|
   Then %{I follow translated "layout.main_menu.#{role == "administration" ? "admin" : role == "supplier" ? "lead_supplier" : role}.#{"my_" if role == "supplier"}deals"}
   Then %{I follow translated "#{role}.deals.index.view.edit"}
