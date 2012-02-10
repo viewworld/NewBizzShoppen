@@ -556,6 +556,10 @@ Feature: Agent campaign - calling session
     
     @m14 @requested @new_result @$_call_centre_agent @tgn @non_testable @_done
     Scenario: When I click an item on the variables list it should be inserted into rich text editor
+
+    #10198
+    @m29 @requested @tgn @_done @_non_testable
+    Scenario: I can insert agent name, agent phone, contact's company name, full name variables into send material email
     
     @m14 @requested @note_information @$_call_centre_agent @is @_done @_tested
     Scenario: I can see result note on agent work screen
