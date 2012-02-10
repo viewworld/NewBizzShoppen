@@ -39,7 +39,7 @@
           <%#= link_to "#{category.name}", "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}?search[with_category]=#{category.id}", :class => "default_action", :style => "display:none" %>
           <h4>
             <%= category.name %>
-            <%= "(#{(category.is_a?(LeadCategory) ? category.leads_count_for_user(current_user) : category.deals_count_for_user(current_user)) == 0 ? t("layout.main_menu.shared.sold_out") : category.is_a?(LeadCategory) ? category.leads_count_for_user(current_user) : category.deals_count_for_user(current_user)})" %>
+            (<%= user_specific_category_counter(category) %>)
           </h4>
           <%= (category.is_a?(LeadCategory) ? link_to_view_lead_templates(category) : link_to_view_deal_templates(category)) %>
 
