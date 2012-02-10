@@ -726,7 +726,6 @@ Feature: Agent campaign - calling session
     And I fill in "nested_lead_leads_attributes_1_lead_template_values_attributes_0_value" with "template 001"
     And I fill in "nested_lead_leads_attributes_1_lead_template_values_attributes_1_value" with "template 002"
     And I press translated "remote_deal_requests.new.view.create_button"
-    And I run ruby "puts User.last.inspect"
     And I wait 1 second
     Then I am not sign in
     And I am on the homepage
