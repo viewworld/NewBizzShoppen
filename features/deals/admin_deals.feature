@@ -125,8 +125,9 @@ Feature: Deals from admin perspective
     And I follow translated "layout.main_menu.admin.deals"
     Then I should see translated "shared.deals.table.awaiting_approval"
 
+  #10045
   @m29 @requested @selenium @tgn @_done @_tested
-  Scenario: I can click Show all for deals
+  Scenario: I can click Show all for deals and Is active option for filter is by default set to Yes
     Given pagination page size for deals is set to 2
     Given a deal named "deal001" exists within category "Electronics"
     And a deal named "deal002" exists within category "Electronics"
