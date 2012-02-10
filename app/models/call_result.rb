@@ -259,7 +259,7 @@ class CallResult < ActiveRecord::Base
     template = customize_email_template(template)
 
     TemplateMailer.new(contact_email_address, :blank_template, Country.get_country_from_locale,
-                                       {:subject_content => template.subject, :body_content => template.body,
+                                       {:subject_content => template.subject, :body_content => template.render({:contact_company_name => contact.company_name, :contact_name => contact.contact_name, :agent_name => creator.full_name, :agent_phone_number => creator.phone}),
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc,
                                         :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
                                         assets_to_path_names(send_material_result_value.materials)).deliver!
