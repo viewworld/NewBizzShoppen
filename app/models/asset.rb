@@ -61,8 +61,8 @@ class Asset < ActiveRecord::Base
       }
     else
       {
-          :url => "/assets/:id/:style/:basename.:extension",
-          :path => ":rails_root/public/assets/:id/:style/:basename.:extension"
+          :url => "/system/assets/:id/:style/:basename.:extension",
+          :path => ":rails_root/public/system/assets/:id/:style/:basename.:extension"
       }
     end
   end
@@ -79,6 +79,14 @@ class Asset < ActiveRecord::Base
     FileUtils.mv(tmp_file.path, dest_path)
 
     dest_path
+  end
+
+  def path_for_email_attachment(prefix=nil)
+    if self.class.s3_storage?
+      stored_local_temp_path(url, prefix)
+    else
+      asset.path
+    end
   end
 end
 

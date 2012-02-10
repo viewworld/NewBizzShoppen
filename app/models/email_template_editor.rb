@@ -21,7 +21,7 @@ module EmailTemplateEditor
       if assets.blank?
         []
       else
-        assets.map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url])) }
+        assets.map{ |material| material.path_for_email_attachment(material.id.to_s) }
       end
     end
   end
