@@ -36,16 +36,16 @@ Scenario: I should be able to edit currency
   And I should see "US Dollar"
   And I should see "$1,000.00"
   
-@ao @_done
+@ao @_done @_deprecated
 Scenario: I should be able to destroy currency unless there are leads defined with that currency chosen
-  When I follow translated "layout.main_menu.admin.currencies"
-  And I delete "PLN" currency
-  Then I should not see "PLN"
-  When currency with name "PLN" exists
-  And lead LeadInPLN exists with currency "PLN"
-  And I follow translated "layout.main_menu.admin.currencies"
-  And I delete "PLN" currency
-  Then I should see "PLN"
+#  When I follow translated "layout.main_menu.admin.currencies"
+#  And I delete "PLN" currency
+#  Then I should not see "PLN"
+#  When currency with name "PLN" exists
+#  And lead LeadInPLN exists with currency "PLN"
+#  And I follow translated "layout.main_menu.admin.currencies"
+#  And I delete "PLN" currency
+#  Then I should see "PLN"
 
 @tgn @m5 @added @non_testable @_done
 Scenario: There are currencies already defined in the system that are accepted by PayPal
