@@ -199,7 +199,7 @@ class Contact < AbstractLead
 
   def crm_select(select, fields)
     query = "#{select}"
-    fields.each { |field| query += " AND lower(#{field}) = '#{send(field).blank? ? "YOU WILL NOT FIND ME - HA HA HA HA" : send(field).downcase}'" }
+    fields.each { |field| query += " AND lower(#{field}) = '#{send(field).blank? ? "YOU WILL NOT FIND ME - HA HA HA HA" : send(field).downcase.gsub("'", "_")}'" }
     CallResult.where(:contact_id => (Contact.where(query) + [self]).uniq.map(&:id)).order("created_at DESC")
   end
 
