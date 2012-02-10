@@ -28,9 +28,9 @@ Feature: Agent timesheets - overview
     And I should see "4"
     And I should see "14"
     And I should see "22"
-    And I should see "143.00"
-    And I should see "130.00"
-    And I should see "286.00"
+    And I should see "143"
+    And I should see "130"
+    And I should see "286"
 
   @_done @_tested_elsewhere
   Scenario: I can see number of hours spent per day

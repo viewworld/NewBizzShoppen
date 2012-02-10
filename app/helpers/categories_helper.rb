@@ -128,4 +128,13 @@ module CategoriesHelper
     block.call(@hb)
     render(:partial => '/categories/listing', :locals => options.merge({:collection => collection}.merge(@hb.results)))
   end
+
+  def user_specific_category_counter(category)
+    if count = (category.is_a?(LeadCategory) ? category.leads_count_for_user(current_user) : category.deals_count_for_user(current_user)) and count == 0
+      t("layout.main_menu.shared.sold_out")
+    else
+      count
+    end
+  end
+
 end

@@ -19,8 +19,8 @@ class CallResult < ActiveRecord::Base
   validates_presence_of :result_id, :creator_id, :contact_id
   validates_presence_of :contact_email_address, :if => Proc.new{|cr| cr.result.send_material? or cr.result.upgrades_to_any_user?}
   validates_format_of :contact_email_address, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :if => Proc.new{|cr| cr.result.send_material? or cr.result.upgrades_to_any_user?}
-  validates_presence_of :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_zip_code, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
-  validates_presence_of :contact_company_name, :contact_phone_number, :contact_address_line_3, :if => Proc.new { |cr| cr.result.upgrades_to_member? }
+  validates_presence_of :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_3, :contact_zip_code, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
+  validates_presence_of :contact_company_name, :contact_phone_number, :if => Proc.new { |cr| cr.result.upgrades_to_member? }
   validate :validate_uniqueness_of_contact_email_address, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
   validate :validate_upgraded_user, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
 
