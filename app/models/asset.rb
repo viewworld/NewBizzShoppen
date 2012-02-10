@@ -72,7 +72,11 @@ class Asset < ActiveRecord::Base
   end
 
   def stored_local_temp_path(url, prefix=nil)
+    OpenURI::Buffer.send :remove_const, 'StringMax' if OpenURI::Buffer.const_defined?('StringMax')
+    OpenURI::Buffer.const_set 'StringMax', 0
     tmp_file = open(URI.escape(url))
+    OpenURI::Buffer.send :remove_const, 'StringMax' if OpenURI::Buffer.const_defined?('StringMax')
+    OpenURI::Buffer.const_set 'StringMax', 10240
     tmp_filename = tmp_file.path.split('/').last
     url_filename = "#{prefix + '-' if prefix}#{url.split('/').last}"
     dest_path = tmp_file.path.gsub(tmp_filename, url_filename)
