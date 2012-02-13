@@ -55,7 +55,11 @@ class ::User::CategorySupplier < ::User
   end
 
   def parent_accessible_categories_without_auto_buy_with_descendants
-    LeadCategory.where(parent_accessible_categories_without_auto_buy.map { |bc| "lft between #{bc.lft} and #{bc.rgt}" }.join(" or "))
+    if pac = parent_accessible_categories_without_auto_buy and pac.any?
+      LeadCategory.where(pac.map { |bc| "lft between #{bc.lft} and #{bc.rgt}" }.join(" or "))
+    else
+      pac
+    end
   end
 
   def parent_accessible_categories
