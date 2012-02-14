@@ -12,7 +12,7 @@ class CampaignReport
 
   def selected_users?(_user=nil)
     _user = _user || user
-    !_user.nil? and _user.is_a?(Array) and !_user.empty?
+    !_user.nil? and (_user.is_a?(Array) or _user.is_a?(ActiveRecord::Relation)) and !_user.empty?
   end
 
   def target_success_percent
