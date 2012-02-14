@@ -336,10 +336,11 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
       And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_address_line_3" with "Bielsko"
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
       And I follow translated "call_results.new.save_button"
-      And I wait 1 second
+      And I wait 2 second
       Then I should see translated "call_results.create.flash.successfully_added"
 
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
