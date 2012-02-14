@@ -117,6 +117,10 @@ class Campaign < ActiveRecord::Base
     id
   end
 
+  def creator_full_name
+    creator.present? ? creator.full_name : "-creator deleted-"
+  end
+
   def cloned_email_templates
     CLONED_TEMPLATES.keys.map { |template_method| send(template_method) }
   end

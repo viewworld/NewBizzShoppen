@@ -55,7 +55,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def can_be_managed_by?(user)
-    creator.id == user.id or user.has_one_of_roles?(:admin, :call_centre)
+    (creator.present? and creator.id == user.id) or user.has_one_of_roles?(:admin, :call_centre)
   end
 
   def custom_fields_for_csv(size)
@@ -67,6 +67,10 @@ class CallResult < ActiveRecord::Base
 
   def buying_categories
     Category.where("id in (?)", self.buying_category_ids || contact.category.root.id)
+  end
+
+  def creator_full_name
+    creator ? creator.full_name : "-creator deleted-"
   end
 
   class << self
