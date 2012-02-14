@@ -36,7 +36,7 @@
       <tr class="<%= cycle("odd", "even") %>" id="call_result_<%= call_result.id %>">
         <td class="cl"></td>
         <td><%= call_result.created_at %></td>
-        <td><%= call_result.creator.full_name %></td>
+        <td><%= call_result.creator_full_name %></td>
         <td><%= call_result.result %></td>
         <% if crm %>
             <td><%= call_result.contact.company_name %></td>
