@@ -22,7 +22,7 @@ class FairdealsHomeController < ApplicationController
 
   def index
     @per_page = 3
-    @deals = Deal.without_inactive.order("end_date ASC")
+    @deals = Deal.without_inactive.published_only.order("end_date ASC")
     @last_page = (@deals.count.to_f / @per_page).ceil
 
     @deals = if request.xhr?
