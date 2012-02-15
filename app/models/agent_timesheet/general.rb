@@ -12,8 +12,7 @@ class ::AgentTimesheet::General
   end
 
   def overview_data
-    grp = [:year, :week , :dow]
-    scoped.select(build_select(grp)).group(grp.join(",")).group_by_multiple(grp)
+    throw scoped.select(build_select(grp)).group(grp.join(",")) #.group_by_multiple(grp)
   end
 
   def team_result_sheet_data

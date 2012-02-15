@@ -42,32 +42,17 @@
       <tr>
         <td class="cell_week"><%= agent.screen_name %></td>
         <% team_result_sheet.days_of_week.each do |dow| %>
-            <% if result = results.dig(cweek.year, cweek.cweek, agent.id, dow) %>
-                <% if team_result_sheet.display_hours %>
-                    <td class="val_h number_to_hours"><%= result.first.hours.to_f %></td>
-                <% end %>
-                <% if team_result_sheet.display_results %>
-                    <td class="val_r number_to_results"><%= result.first.results.to_i %></td>
-                <% end %>
-                <% if team_result_sheet.display_value %>
-                    <td class="val_v number_to_value"><%= result.first.value.to_f %></td>
-                <% end %>
-                <% if team_result_sheet.display_cost %>
-                    <td class="val_c number_to_cost"><%= result.first.cost.to_f %></td>
-                <% end %>
-            <% else %>
-                <% if team_result_sheet.display_hours %>
-                    <td class="val_h number_to_hours">0</td>
-                <% end %>
-                <% if team_result_sheet.display_results %>
-                    <td class="val_r">0</td>
-                <% end %>
-                <% if team_result_sheet.display_value %>
-                    <td class="val_v">0</td>
-                <% end %>
-                <% if team_result_sheet.display_cost %>
-                    <td class="val_c">0</td>
-                <% end %>
+            <% if team_result_sheet.display_hours %>
+                <td class="val_h number_to_hours"><%= team_result_sheet.hours.for_cweek(cweek).for_dow(dow).for_agents(agent).sum(:hours) %></td>
+            <% end %>
+            <% if team_result_sheet.display_results %>
+                <td class="val_r number_to_results"><%= team_result_sheet.results.for_cweek(cweek).for_dow(dow).for_agents(agent).sum(:results) %></td>
+            <% end %>
+            <% if team_result_sheet.display_value %>
+                <td class="val_v number_to_value"><%= team_result_sheet.value.for_cweek(cweek).for_dow(dow).for_agents(agent).sum(:value) %></td>
+            <% end %>
+            <% if team_result_sheet.display_cost %>
+                <td class="val_c number_to_cost"><%= team_result_sheet.cost.for_cweek(cweek).for_dow(dow).for_agents(agent).sum(:cost) %></td>
             <% end %>
         <% end %>
         <% if team_result_sheet.display_hours %>

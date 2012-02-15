@@ -15,16 +15,14 @@
             <td class="cell_week"><%= t("agent_timesheets.index.agent_time_sheet.#{key}") %></td>
             <% agent_time_sheet.days_of_week.each do |dow| %>
                 <td class="val_<%= key.to_s.first %> number_to_<%= key.to_s %>">
-                  <% if result = results.dig(cweek.year, cweek.cweek, dow) %>
-                      <% if [:log_in, :log_out].include?(key) and val = result.first.send(key) and val.is_a?(ActiveSupport::TimeWithZone) %>
-                          <%= val.strftime("%H:%M") %>
-                      <% elsif val = result.first.send(key) %>
-                          <%= val.to_f %>
-                      <% else %>
-                          <%= 0 %>
-                      <% end %>
+                  <% if [:log_in].include?(key)  %>
+                      <%= (log_in = agent_time_sheet.stats.for_cweek(cweek).for_dow(dow).for_agents(agent).minimum(key)) ? log_in : "-" %>
+                  <% elsif [:log_out].include?(key) %>
+                      <%= (log_out = agent_time_sheet.stats.for_cweek(cweek).for_dow(dow).for_agents(agent).maximum(key)) ? log_out.strftime("HH:MM") : "-" %>
+                  <% elsif [:log_out_time].include?(key) %>
+                      <%= agent_time_sheet.stats.for_cweek(cweek).for_dow(dow).for_agents(agent).sum(key) %>
                   <% else %>
-                      <%= 0 %>
+                      <%= agent_time_sheet.send(key).for_cweek(cweek).for_dow(dow).for_agents(agent).sum(key) %>
                   <% end %>
                 </td>
             <% end %>
