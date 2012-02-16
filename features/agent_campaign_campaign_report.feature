@@ -117,3 +117,67 @@ Feature: Campaign report
   #9289
   @m26 @requested @_done @tested_elsewhere
   Scenario: I should see number of results per minute
+
+  #10254
+  #R is short for realized number F is short for forcast. So the notation Success % 5(10), reads, the campaign has 5 % success rate but forecasted 10%
+  @m29 @requested
+  Scenario: I should see Success% and Finish CPH in format "R(F)"
+
+  #10254
+  @m29 @requested
+  Scenario: I should see Final results P/H -- "R(F)"
+
+  #10254
+  @m29 @requested
+  Scenario: I should see all results P/H -- "R(F)"
+
+  #10254
+  @m29 @requested
+  Scenario: I should see final results - "R(F)"
+
+  #10254
+  @m29 @requested
+  Scenario: I should see temp results --"R(F)"
+
+  #10254
+  @m29 @requested
+  Scenario: I should see Value P/H --"R(F)
+
+  #10254
+  @m29 @requested
+  Scenario: I should see Cost P/H --"R(F)
+
+  #10254
+  #"23-789:3%" Meaning 23 contacts completed out of 289 equals to 3% of the contacts in the campaign is used
+  @m29 @requested
+  Scenario: I should see Contacts used
+
+  #10254
+  @m29 @requested
+  Scenario: I should see all final results with number of them
+
+  # ---- RESULTS ---
+  #10254
+  @m29 @requested
+  Scenario: I should see Value
+
+  #10254
+  @m29 @requested
+  Scenario: I should see Cost
+
+  #10254
+  @m29 @requested
+  Scenario: I should see DB
+
+  # ---- PREDICTION ---
+  #10254
+  @m29 @requested
+  Scenario: I should see hours to completion
+
+  #10254
+  @m29 @requested
+  Scenario: I should see cost for completion
+
+  #10254
+  @m29 @requested
+  Scenario: I should see value for completion
