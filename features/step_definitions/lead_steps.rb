@@ -8,6 +8,10 @@ Given /^pagination page size for leads is set to (\d+)$/ do |n|
   Settings.stubs(:default_leads_per_page).returns(n)
 end
 
+Given /^pagination page size for deals is set to (\d+)$/ do |n|
+  Settings.stubs(:default_deals_per_page).returns(n)
+end
+
 #Given /^a lead exists with #([^#]*)# within category "([^"]*)"$/ do |pickle_params,category_name|
 #  category = Category.find_by_name(category_name).last
 #  Given %{a lead exists with #{pickle_params}, category_id: #{category.id}}

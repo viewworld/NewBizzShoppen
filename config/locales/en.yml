@@ -2953,6 +2953,7 @@ en:
         deal_unique_id_label: "Deal id"
         edit_voucher_number_link: "Edit voucher numbers"
         deal_confirmation_page: "Confirmation page"
+        internal_note_label: "Internal note"
   models:
     archived_emails:
       status:
@@ -4250,6 +4251,11 @@ en:
           add_material_button: "Add material"
           show_image: "Full size"
           download: "Download"
+          internal_documents_label: "Internal documents"
+          upload_internal_document: "Upload internal document"
+          upload_material: "Upload material"
+          upload_image: "Upload image"
+          upload_logo: "Upload logo"
       listing:
         view:
           header: "My deals"

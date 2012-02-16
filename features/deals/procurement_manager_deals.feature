@@ -626,5 +626,10 @@ Feature: Deals from procurement manager perspective
   @m28 @requested @tgn @_done @_tested_elsewhere
   Scenario: When I got redirected to my profile after clicking "Upgrade subscription" I should be advised which subscription to choose in order to get deal
 
-
-
+  #10046
+  @m29 @requested @tgn @_done @_tested
+  Scenario: I can search for deals using their company name
+  Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "premium_deal:1|description:short description1|published:1|header:deal001|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
+  When I fill in "search_with_keyword" with "xeper"
+  And I press translated "layout.fairdeals.main_menu.search"
+  Then I should see "deal001"

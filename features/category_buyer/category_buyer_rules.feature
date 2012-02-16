@@ -295,7 +295,9 @@ Feature: Category buyer rules
     And I go to the homepage
     And I should see CSS path "a[tab='browse_leads']"
 
-
+  #10109
+  @m29 @_done @_non_testable @tgn @requested
+  Scenario: I should see my accessible categories hierarchically sorted in a dropdown on Browse leads page
 
 
 

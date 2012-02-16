@@ -14,4 +14,13 @@ Background:
 Scenario: I can view details of leads assigned to me
   Then I follow "Lead #1111"
   And I should see translated "supplier.lead_purchases.show.view.header"
-  
+
+#10111
+@m29 @requested @tgn @selenium @_done @_tested
+Scenario: As team buyer I should not see uniqueness, novelty, agent certification, creator in lead purchase details panel and I should not be able to reassign the lead to other team members
+  Then I should not see translated "lead_supplier.lead_purchases.index.view.bulk_assigned_field"
+  And I follow translated "lead_purchases.listing.show_row"
+  And I should not see translated "lead_purchases.listing.sale_limit_label"
+  And I should not see translated "lead_purchases.listing.novelty_label"
+  And I should not see translated "lead_purchases.listing.certification_label"
+  And I should not see translated "lead_purchases.listing.creator_name"

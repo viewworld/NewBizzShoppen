@@ -142,25 +142,33 @@
 
             <div class="grid_270 fltl">
               <div class="pdd_10">
+                <% if current_user.parent.nil? %>
                 <p><%= t("lead_purchases.listing.sale_limit_label") %><b><%= lead_purchase.sale_limit %></b></p>
 
                 <p><%= t("lead_purchases.listing.novelty_label") %>
                   <b><%= lead_purchase.lead.published ? lead_purchase.lead.published_at.strftime("%d-%m-%Y") : "-" %></b>
                 </p>
+                <% end %>
 
                 <p><%= t("lead_purchases.listing.hotness_label") %>
-                  <b><%= t("models.lead.hotness.lvl#{lead_purchase.hotness_level}") %></b></p>
+                  <b><%= t("models.lead.hotness.lvl#{lead_purchase.hotness_level}") %></b>
+                </p>
 
+                <% if current_user.parent.nil? %>
                 <p><%= t("lead_purchases.listing.certification_label") %>
-                  <b><%= t("models.lead.certification.lvl#{lead_purchase.certification_level}") %></b></p>
+                  <b><%= t("models.lead.certification.lvl#{lead_purchase.certification_level}") %></b>
+                </p>
+                <% end %>
 
                 <p><%= t("lead_purchases.listing.purchase_date") %>
                   <b><%= format_date lead_purchase.accessible_from %></b>
                 </p>
 
+                <% if current_user.parent.nil? %>
                 <p><%= t("lead_purchases.listing.creator_name") %>
                   <b><%= lead_purchase.lead.creator.screen_name %></b>
                 </p>
+                <% end %>
               </div>
             </div>
 
