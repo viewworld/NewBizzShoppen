@@ -127,11 +127,12 @@ describe AgentTimesheet::General do
   context "Overview" do
     it "should group the results by year, week and day of week" do
       time_log(@call_centre_agent1, @campaign, '2012-05-15 12:00:00', 60)
+      time_log(@call_centre_agent1, @campaign2, '2012-05-15 12:00:00', 60)
       at = AgentTimesheet::General.new(:start_date        => '2012-05-15',
                                        :end_date          => '2012-05-15',
-                                       :campaigns         => [@campaign],
+                                       :campaigns         => [@campaign,@campaign2],
                                        :agents            => @campaign.users.map(&:id))
-      at.overview_data.dig(2012,20,1).size.should == 1
+      at.hours.for_cweek(CWeek.new(20,2012)).for_dow(1).count.should == 2
     end
 
     it "should sum time only for selected agents and campaigns" do
@@ -178,30 +179,30 @@ describe AgentTimesheet::General do
       time_log(@call_centre_agent1, @campaign2, '2011-05-15 13:00:00', 60)
       time_log(@call_centre_agent2, @campaign, '2011-05-15 12:00:00', 60)
 
-#      at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
-#                                  :end_date          => '2011-05-15',
-#                                  :campaigns         => [@campaign],
-#                                  :agents            => [@call_centre_agent1.id]).overview_data.dig(2011,19,6)
-#      at.size.should == 1
-#      at.first.results.should == 0.0
+      at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign],
+                                  :agents            => [@call_centre_agent1.id]).overview_data.dig(2011,19,6)
+      at.size.should == 1
+      at.first.results.should == 0.0
 
       # create result #1
       CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.parse('2011-05-15 16:00:00'))
-#      at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
-#                                  :end_date          => '2011-05-15',
-#                                  :campaigns         => [@campaign],
-#                                  :agents            => [@call_centre_agent1.id]).overview_data.dig(2011,19,6)
-#      at.size.should == 1
-#      at.first.results.should == 1.0
+      at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign],
+                                  :agents            => [@call_centre_agent1.id]).overview_data.dig(2011,19,6)
+      at.size.should == 1
+      at.first.results.should == 1.0
 
       # create result #2
       CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent2, :created_at => Time.parse('2011-05-15 16:00:00'))
-#      at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
-#                                  :end_date          => '2011-05-15',
-#                                  :campaigns         => [@campaign],
-#                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id]).overview_data.dig(2011,19,6)
-#      at.size.should == 1
-#      at.first.results.should == 2.0
+      at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign],
+                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id]).overview_data.dig(2011,19,6)
+      at.size.should == 1
+      at.first.results.should == 2.0
 
       # create results #3 and #4
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.parse('2011-05-15 16:00:00'))

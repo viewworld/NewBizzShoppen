@@ -49,7 +49,7 @@ module AgentTimesheetCommon
   private
 
   def scoped(var)
-    @scoped ||= "AgentTimesheet::#{var.to_s.camelize}".constantize.
+    "AgentTimesheet::#{var.to_s.camelize}".constantize.
         show_weekends(@show_weekends).
         for_campaigns(@campaigns).
         with_date_between(@start_date, @end_date).

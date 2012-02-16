@@ -16,9 +16,9 @@
             <% agent_time_sheet.days_of_week.each do |dow| %>
                 <td class="val_<%= key.to_s.first %> number_to_<%= key.to_s %>">
                   <% if [:log_in].include?(key)  %>
-                      <%= (log_in = agent_time_sheet.stats.for_cweek(cweek).for_dow(dow).for_agents(agent).minimum(key)) ? log_in : "-" %>
+                      <%= (log_in = agent_time_sheet.stats.for_cweek(cweek).for_dow(dow).for_agents(agent).minimum(key)) ? log_in.strftime("%H:%M") : "-" %>
                   <% elsif [:log_out].include?(key) %>
-                      <%= (log_out = agent_time_sheet.stats.for_cweek(cweek).for_dow(dow).for_agents(agent).maximum(key)) ? log_out.strftime("HH:MM") : "-" %>
+                      <%= (log_out = agent_time_sheet.stats.for_cweek(cweek).for_dow(dow).for_agents(agent).maximum(key)) ? log_out.strftime("%H:%M") : "-" %>
                   <% elsif [:log_out_time].include?(key) %>
                       <%= agent_time_sheet.stats.for_cweek(cweek).for_dow(dow).for_agents(agent).sum(key) %>
                   <% else %>
