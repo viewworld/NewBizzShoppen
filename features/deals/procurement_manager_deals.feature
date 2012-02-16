@@ -73,6 +73,10 @@ Feature: Deals from procurement manager perspective
     And I follow category "Electronics deals"
     Then I should see "Some deal #1"
 
+  #10031
+  @m29 @requested
+  Scenario: When I browse deals in category the layout should have right column as on home page / all deals
+
   @_done @tested_elsewhere @tgn
   Scenario: I can see "My requests" instead of "My leads"
 

@@ -919,3 +919,7 @@ Feature: Agent campaign - management
           Then I follow translated "campaigns.index.result"
           Then I wait 1 second
           Then I follow translated "campaigns.show.export_button"
+
+        #10255
+        @m29 @requested
+        Scenario: When I access campaigns from menu I should see only active by default

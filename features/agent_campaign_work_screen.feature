@@ -661,6 +661,14 @@ Feature: Agent campaign - calling session
       And last email sent should have content "Login: new_member888@nbs.com"
       And last email sent should have content "Linked with account: not linked"
 
+    #10200
+    @m29 @requested
+    Scenario: When member (upgraded contact) clicks on deal link in the email he receives, he should be automatically singed in
+
+    #10200
+    @m29 @requested
+    Scenario: When member (upgraded contact) clicks on fairdeals link in the email he receives, he should be automatically singed in
+
     #7746
     @m20 @requested @tgn @_tested @_done
     Scenario:  I can add new contact from agent work screen and it is already assigned to me (even if my campaign max contacts count was reached)

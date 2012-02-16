@@ -52,3 +52,7 @@ Scenario: Categories should be in a form of a list
 #7839
 @m20 @requested @ao @non_testable @_done
 Scenario: I should be able to click on the category row to browse leads
+
+#10251
+@m29 @requested
+Scenario: Deal and lead categories should be listed alphabetically by default

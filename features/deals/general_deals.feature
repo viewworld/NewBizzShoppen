@@ -306,3 +306,15 @@ Feature: General deals
     And I follow translated "layout.main_menu.lead_supplier.my_deals"
     And I follow translated "deals.common.listing.view.new_deal"
     And I check "deal_premium_deal"
+
+  #10203
+  @m29 @requested
+  Scenario: I can duplicate a deal
+
+  #10203
+  @m29 @requested
+  Scenario: I can save the deal without exiting edit screen
+
+  #10203
+  @m29 @requested
+  Scenario: I can save the deal and exit the edit screen

@@ -141,3 +141,7 @@ Feature: Fairdeals view deal
   #9535
   @m26 @requested @_done @_tested_elsewhere @tgn
   Scenario: When I click get deal then I should see company logo, name and description enclosed into styled box without any headers like company name, logo or description
+
+  #10257
+  @m29 @requested
+  Scenario: Premium deal should be marked with translated label

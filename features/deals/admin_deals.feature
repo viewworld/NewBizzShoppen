@@ -138,3 +138,7 @@ Feature: Deals from admin perspective
     And I should see "2" rows with id like "deal_" in a table
     And I follow translated "common.show_all"
     And I should see "4" rows with id like "deal_" in a table
+
+  #10252
+  @m29 @requested
+  Scenario: I can click to see all deals on one page

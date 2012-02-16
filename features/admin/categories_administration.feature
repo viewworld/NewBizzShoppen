@@ -220,3 +220,23 @@ Scenario: I should be able to delete category image
   And I press "Save"
   Then I should not see CSS path "table#categories_table tr:nth-of-type(1) td:nth-of-type(2) img"
 
+#10251
+@m29 @requested
+Scenario: I can filter unique categories (defult on)
+
+#10251
+@m29 @requested
+Scenario: I can filter public categories (defult on)
+
+#10251
+@m29 @requested
+Scenario: I can filter locked categories (defult off)
+
+#10251
+@m29 @requested
+Scenario: I can search category by name
+
+#10251
+@m29 @requested
+Scenario: Default action when I click category is edit
+
