@@ -126,13 +126,14 @@ describe AgentTimesheet::General do
 
   context "Overview" do
     it "should group the results by year, week and day of week" do
-      time_log(@call_centre_agent1, @campaign, '2012-05-15 12:00:00', 60)
-      time_log(@call_centre_agent1, @campaign2, '2012-05-15 12:00:00', 60)
-      at = AgentTimesheet::General.new(:start_date        => '2012-05-15',
-                                       :end_date          => '2012-05-15',
+      time_log(@call_centre_agent1, @campaign, '2011-05-15 12:00:00', 60)
+      time_log(@call_centre_agent1, @campaign2, '2011-05-15 12:00:00', 60)
+      at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                       :end_date          => '2011-05-15',
                                        :campaigns         => [@campaign,@campaign2],
                                        :agents            => @campaign.users.map(&:id))
-      at.hours.for_cweek(CWeek.new(20,2012)).for_dow(1).count.should == 2
+      # 2 records, 1 per campaign
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 2
     end
 
     it "should sum time only for selected agents and campaigns" do
@@ -143,35 +144,36 @@ describe AgentTimesheet::General do
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
-                                  :agents            => [@call_centre_agent1.id]).overview_data.dig(2011,19,6)
-      at.size.should == 1
-      at.first.hours.should == 1.0
+                                  :agents            => [@call_centre_agent1.id])
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:hours) == 1
 
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
-                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id]).overview_data.dig(2011,19,6)
-      at.size.should == 1
-      at.first.hours.should == 2.0
+                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id])
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 2
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:hours) == 2
 
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign2],
-                                  :agents            => [@call_centre_agent1.id]).overview_data.dig(2011,19,6)
-      at.size.should == 1
-      at.first.hours.should == 1.0
+                                  :agents            => [@call_centre_agent1.id])
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:hours) == 1
 
-      AgentTimesheet::General.new(:start_date        => '2011-05-15',
+      at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign2],
-                                  :agents            => [@call_centre_agent2.id]).overview_data.dig(2011,19,6).should be_nil
+                                  :agents            => [@call_centre_agent2.id])
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 0
 
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign, @campaign2],
-                                  :agents            => [@call_centre_agent1.id]).overview_data.dig(2011,19,6)
-      at.size.should == 1
-      at.first.hours.should == 2.0
+                                  :agents            => [@call_centre_agent1.id])
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 2
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:hours) == 2
     end
 
     it "should sum results only for selected agents and campaigns" do
@@ -182,27 +184,27 @@ describe AgentTimesheet::General do
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
-                                  :agents            => [@call_centre_agent1.id]).overview_data.dig(2011,19,6)
-      at.size.should == 1
-      at.first.results.should == 0.0
+                                  :agents            => [@call_centre_agent1.id])
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 0
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:results) == 0
 
       # create result #1
       CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.parse('2011-05-15 16:00:00'))
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
-                                  :agents            => [@call_centre_agent1.id]).overview_data.dig(2011,19,6)
-      at.size.should == 1
-      at.first.results.should == 1.0
+                                  :agents            => [@call_centre_agent1.id])
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 1
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:results) == 1
 
       # create result #2
       CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent2, :created_at => Time.parse('2011-05-15 16:00:00'))
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
-                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id]).overview_data.dig(2011,19,6)
-      at.size.should == 1
-      at.first.results.should == 2.0
+                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id])
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 2
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:results) == 2
 
       # create results #3 and #4
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.parse('2011-05-15 16:00:00'))
@@ -210,40 +212,43 @@ describe AgentTimesheet::General do
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign,@campaign2],
-                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id]).overview_data.dig(2011,19,6)
-      at.size.should == 1
-      at.first.results.should == 4.0
+                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id])
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 4
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:results) == 4
     end
 
     it "should sum value only for sleected agents and campaigns" do
       time_log(@call_centre_agent1, @campaign, '2011-05-15 12:00:00', 60)
       time_log(@call_centre_agent2, @campaign, '2011-05-15 12:00:00', 60)
+
       CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.parse('2011-05-15 16:00:00'))
       CallResult.make!(:contact => @contact2, :result => @result1, :creator => @call_centre_agent2, :created_at => Time.parse('2011-05-15 16:00:00'))
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
-                                  :agents            => [@call_centre_agent1.id]).overview_data.dig(2011,19,6)
-      at.size.should == 1
-      at.first.value.should == 100.0
+                                  :agents            => [@call_centre_agent1.id])
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 1
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:value) == 100
+
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
-                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id]).overview_data.dig(2011,19,6)
-      at.size.should == 1
-      at.first.value.should == 200.0
+                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id])
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 2
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:value) == 200
 
     end
   end
 
   context "Team result sheet" do
     it "should group the results by year, week, user_id and day of week" do
-      time_log(@call_centre_agent1, @campaign, '2012-05-15 12:00:00', 60)
-      at = AgentTimesheet::General.new(:start_date        => '2012-05-15',
-                                       :end_date          => '2012-05-15',
+      time_log(@call_centre_agent1, @campaign, '2011-05-15 12:00:00', 60)
+      at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                       :end_date          => '2011-05-15',
                                        :campaigns         => [@campaign],
                                        :agents            => @campaign.users.map(&:id))
-      at.team_result_sheet_data.dig(2012,20,@call_centre_agent1.id,1).size.should == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agents(@call_centre_agent1).count.should == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agents(@call_centre_agent2).count.should == 0
     end
 
     it "should sum time only for selected agents and campaigns" do
@@ -254,18 +259,23 @@ describe AgentTimesheet::General do
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
                                   :agents            => [@call_centre_agent1.id])
-      at.team_result_sheet_data.dig(2011,19,@call_centre_agent1.id,6).size.should == 1
-      at.team_result_sheet_data.dig(2011,19,@call_centre_agent1.id,6).first.hours.should == 1.0
-      at.team_result_sheet_data.dig(2011,19,@call_centre_agent2.id,6).should be_nil
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:hours) == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 0
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:hours) == 0
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:hours) == 1
 
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
                                   :agents            => [@call_centre_agent1.id,@call_centre_agent2.id])
-      at.team_result_sheet_data.dig(2011,19,@call_centre_agent1.id,6).first.hours.should == 1.0
-      at.team_result_sheet_data.dig(2011,19,@call_centre_agent1.id,6).size.should == 1
-      at.team_result_sheet_data.dig(2011,19,@call_centre_agent2.id,6).first.hours.should == 1.0
-      at.team_result_sheet_data.dig(2011,19,@call_centre_agent2.id,6).size.should == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:hours) == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:hours) == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 2
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:hours) == 2
     end
 
     it "should sum results only for selected agents and campaigns" do
@@ -274,25 +284,37 @@ describe AgentTimesheet::General do
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
-                                  :agents            => [@call_centre_agent1.id]).team_result_sheet_data.dig(2011,19,@call_centre_agent1.id,6)
-      at.size.should == 1
-      at.first.results.should == 0.0
+                                  :agents            => [@call_centre_agent1.id])
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 0
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:results) == 0
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 0
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:results) == 0
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 0
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:results) == 0
 
       CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.parse('2011-05-15 16:00:00'))
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
-                                  :agents            => [@call_centre_agent1.id]).team_result_sheet_data.dig(2011,19,@call_centre_agent1.id,6)
-      at.size.should == 1
-      at.first.results.should == 1.0
+                                  :agents            => [@call_centre_agent1.id])
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 1
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:results) == 1
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 0
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:results) == 0
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 1
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:results) == 100
 
       CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent2, :created_at => Time.parse('2011-05-15 16:00:00'))
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
-                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id]).team_result_sheet_data.dig(2011,19,@call_centre_agent2.id,6)
-      at.size.should == 1
-      at.first.results.should == 1.0
+                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id])
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 1
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:results) == 1
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 1
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:results) == 1
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 2
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:results) == 200
     end
 
     it "should sum value only for sleected agents and campaigns" do
@@ -303,27 +325,36 @@ describe AgentTimesheet::General do
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
-                                  :agents            => [@call_centre_agent1.id]).team_result_sheet_data.dig(2011,19,@call_centre_agent1.id,6)
-      at.size.should == 1
-      at.first.value.should == 100.0
+                                  :agents            => [@call_centre_agent1.id])
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 1
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:value) == 100
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 0
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:value) == 0
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 1
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:value) == 100
+
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
-                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id]).team_result_sheet_data.dig(2011,19,@call_centre_agent2.id,6)
-      at.size.should == 1
-      at.first.value.should == 100.0
+                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id])
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 1
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:value) == 100
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 1
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:value) == 100
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 2
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:value) == 200
 
     end
   end
 
   context "Agent time sheet" do
     it "should group the results by year, week and day of week" do
-      time_log(@call_centre_agent1, @campaign, '2012-05-15 12:00:00', 60)
-      at = AgentTimesheet::General.new(:start_date        => '2012-05-15',
-                                       :end_date          => '2012-05-15',
+      time_log(@call_centre_agent1, @campaign, '2011-05-15 12:00:00', 60)
+      at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                       :end_date          => '2011-05-15',
                                        :campaigns         => [@campaign],
                                        :agents            => @campaign.users.map(&:id))
-      at.agent_time_sheet_data(@call_centre_agent1).dig(2012,20,1).size.should == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 1
     end
 
     it "should sum time only for selected agents and campaigns" do
@@ -334,18 +365,23 @@ describe AgentTimesheet::General do
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
                                   :agents            => [@call_centre_agent1.id])
-      at.agent_time_sheet_data(@call_centre_agent1).dig(2011,19,6).size.should == 1
-      at.agent_time_sheet_data(@call_centre_agent1).dig(2011,19,6).first.hours.should == 1.0
-      at.agent_time_sheet_data(@call_centre_agent2).dig(2011,19,6).should be_nil
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:hours) == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 0
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:hours) == 0
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:hours) == 1
 
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
                                   :agents            => [@call_centre_agent1.id,@call_centre_agent2.id])
-      at.agent_time_sheet_data(@call_centre_agent1).dig(2011,19,6).size.should == 1
-      at.agent_time_sheet_data(@call_centre_agent1).dig(2011,19,6).first.hours.should == 1.0
-      at.agent_time_sheet_data(@call_centre_agent2).dig(2011,19,6).size.should == 1
-      at.agent_time_sheet_data(@call_centre_agent2).dig(2011,19,6).first.hours.should == 1.0
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:hours) == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:hours) == 1
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 2
+      at.hours.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:hours) == 2
     end
 
     it "should sum results only for selected agents and campaigns" do
@@ -354,25 +390,37 @@ describe AgentTimesheet::General do
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
-                                  :agents            => [@call_centre_agent1.id]).agent_time_sheet_data(@call_centre_agent1).dig(2011,19,6)
-      at.size.should == 1
-      at.first.results.should == 0.0
+                                  :agents            => [@call_centre_agent1.id])
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 0
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:results) == 0
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 0
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:results) == 0
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 0
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:results) == 0
 
       CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.parse('2011-05-15 16:00:00'))
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
-                                  :agents            => [@call_centre_agent1.id]).agent_time_sheet_data(@call_centre_agent1).dig(2011,19,6)
-      at.size.should == 1
-      at.first.results.should == 1.0
+                                  :agents            => [@call_centre_agent1.id])
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 1
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:results) == 1
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 0
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:results) == 0
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 1
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:results) == 1
 
       CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent2, :created_at => Time.parse('2011-05-15 16:00:00'))
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
-                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id]).agent_time_sheet_data(@call_centre_agent2).dig(2011,19,6)
-      at.size.should == 1
-      at.first.results.should == 1.0
+                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id])
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 1
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:results) == 1
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 1
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:results) == 1
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 2
+      at.results.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:results) == 2
     end
 
     it "should sum value only for sleected agents and campaigns" do
@@ -383,15 +431,24 @@ describe AgentTimesheet::General do
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
-                                  :agents            => [@call_centre_agent1.id]).agent_time_sheet_data(@call_centre_agent1).dig(2011,19,6)
-      at.size.should == 1
-      at.first.value.should == 100.0
+                                  :agents            => [@call_centre_agent1.id])
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 1
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:value) == 100
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 0
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:value) == 0
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 1
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:value) == 100
+
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
-                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id]).agent_time_sheet_data(@call_centre_agent2).dig(2011,19,6)
-      at.size.should == 1
-      at.first.value.should == 100.0
+                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id])
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 1
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:value) == 100
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 1
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:value) == 100
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 2
+      at.value.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:value) == 200
     end
   end
 
@@ -402,15 +459,35 @@ describe AgentTimesheet::General do
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
-                                  :agents            => [@call_centre_agent1.id]).agent_time_sheet_data(@call_centre_agent1).dig(2011,19,6)
-      at.size.should == 1
-      at.first.cost.should == 10.0
+                                  :agents            => [@call_centre_agent1.id])
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 1
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:cost) == 10
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 0
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:cost) == 0
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 1
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:cost) == 10
+
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign],
-                                  :agents            => [@call_centre_agent2.id]).agent_time_sheet_data(@call_centre_agent2).dig(2011,19,6)
-      at.size.should == 1
-      at.first.cost.should == 20.0
+                                  :agents            => [@call_centre_agent2.id])
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 0
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:cost) == 0
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 1
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:cost) == 20
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 1
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:cost) == 20
+
+      at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign],
+                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id])
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 1
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:cost) == 10
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 1
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:cost) == 20
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 2
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:cost) == 30
     end
 
     it "should calculate correct cost for campaign with fixed hourly rate" do
@@ -419,15 +496,35 @@ describe AgentTimesheet::General do
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign2],
-                                  :agents            => [@call_centre_agent1.id]).agent_time_sheet_data(@call_centre_agent1).dig(2011,19,6)
-      at.size.should == 1
-      at.first.cost.should == 8.0
+                                  :agents            => [@call_centre_agent1.id])
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 1
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:cost) == 8
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 0
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:cost) == 0
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 1
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:cost) == 8
+
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign2],
-                                  :agents            => [@call_centre_agent2.id]).agent_time_sheet_data(@call_centre_agent2).dig(2011,19,6)
-      at.size.should == 1
-      at.first.cost.should == 16.0
+                                  :agents            => [@call_centre_agent2.id])
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 0
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:cost) == 0
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 1
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:cost) == 16
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 1
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:cost) == 16
+
+      at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign2],
+                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id])
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 1
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:cost) == 8
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 1
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:cost) == 16
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 2
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:cost) == 24
     end
 
     it "should calculate correct cost for campaign with fixed campaign cost" do
@@ -440,15 +537,35 @@ describe AgentTimesheet::General do
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign3],
-                                  :agents            => [@call_centre_agent1.id]).agent_time_sheet_data(@call_centre_agent1).dig(2011,19,6)
-      at.size.should == 1
-      at.first.cost.should == 750.0
+                                  :agents            => [@call_centre_agent1.id])
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 1
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:cost) == 750
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 0
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:cost) == 0
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 1
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:cost) == 750
+
       at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
                                   :end_date          => '2011-05-15',
                                   :campaigns         => [@campaign3],
-                                  :agents            => [@call_centre_agent2.id]).agent_time_sheet_data(@call_centre_agent2).dig(2011,19,6)
-      at.size.should == 1
-      at.first.cost.should == 1500.0
+                                  :agents            => [@call_centre_agent2.id])
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 0
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:cost) == 0
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 1
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:cost) == 1500
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 1
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:cost) == 1500
+
+      at = AgentTimesheet::General.new(:start_date        => '2011-05-15',
+                                  :end_date          => '2011-05-15',
+                                  :campaigns         => [@campaign3],
+                                  :agents            => [@call_centre_agent1.id,@call_centre_agent2.id])
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).count.should == 1
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent1).sum(:cost) == 750
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).count.should == 1
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).for_agent(@call_centre_agent2).sum(:cost) == 1500
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).count.should == 2
+      at.cost.for_cweek(CWeek.new(19,2011)).for_dow(6).sum(:cost) == 2250
     end
   end
 

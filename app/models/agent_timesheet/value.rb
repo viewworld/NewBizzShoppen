@@ -12,5 +12,6 @@ class AgentTimesheet::Value < ActiveRecord::Base
     scope :for_year, lambda{|year| where(:year => year)}
     scope :for_campaigns, lambda{|campaign| where(:campaign_id => Array(campaign).map(&:to_i))}
     scope :for_agents, lambda{|users| where(:user_id => Array(users).map(&:to_i))}
+    scope :for_agent, lambda{|user| where("user_id = ?", user.to_i)}
 
 end
