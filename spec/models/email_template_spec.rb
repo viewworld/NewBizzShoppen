@@ -21,4 +21,21 @@ describe EmailTemplate do
       variables.should include(expected_variable)
     end
   end
+
+  it "should be possible to replace links for fairdeals with auto logins" do
+    @member = User::Member.make!
+    @member.generate_login_key!
+
+    body = %{<a href="http://www.fairdeals.dk/deals/7484-business-coaching">Business Coaching</a>}
+    result = StringUtils.replace_fairdeals_urls_for_auto_login_urls(@member, body)
+    result.should == %{<a href="http://www.fairdeals.dk/login_keys/?key=#{@member.login_key}&redirect=http%3A%2F%2Fwww.fairdeals.dk%2Fdeals%2F7484-business-coaching">Business Coaching</a>}
+
+    body = %{http://www.fairdeals.dk/login_keys/?key=#{@member.login_key}}
+    result = StringUtils.replace_fairdeals_urls_for_auto_login_urls(@member, body)
+    result.should == body
+
+    body = %{http://www.otherpage.com/}
+    result = StringUtils.replace_fairdeals_urls_for_auto_login_urls(@member, body)
+    result.should == body
+  end
 end

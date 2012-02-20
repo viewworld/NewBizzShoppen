@@ -250,6 +250,8 @@ class CallResult < ActiveRecord::Base
   def upgrade_to_user(role)
     user, new_password = prepare_user(role)
     user.save
+    user.generate_login_key!
+
     if role == "category_supplier"
       user.buying_category_ids = buying_category_ids
       user.save
@@ -274,8 +276,13 @@ class CallResult < ActiveRecord::Base
     template = contact.campaign.send("upgrade_contact_to_#{role}_email_template".to_sym) || EmailTemplate.global.where(:uniq_id => "upgrade_contact_to_#{role}").first
     template = customize_email_template(template)
 
+    body_content = template.render({:user => user, :password => password})
+    if user.member?
+      body_content = StringUtils.replace_fairdeals_urls_for_auto_login_urls(user, body_content)
+    end
+
     TemplateMailer.new(contact_email_address, :blank_template, Country.get_country_from_locale,
-                                       {:subject_content => template.subject, :body_content => template.render({:user => user, :password => password}),
+                                       {:subject_content => template.subject, :body_content => body_content,
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc,
                                         :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
                                         assets_to_path_names(send_material_result_value.materials)).deliver!

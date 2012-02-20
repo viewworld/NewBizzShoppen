@@ -8,6 +8,6 @@ class LoginKeysController < ApplicationController
         user.clear_login_key!
       end
     end
-    redirect_to root_path
+    redirect_to params[:redirect] ? params[:redirect] : root_path
   end
 end
