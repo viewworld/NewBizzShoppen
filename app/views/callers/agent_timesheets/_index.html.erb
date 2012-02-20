@@ -96,11 +96,11 @@
 	    cost = Number($(cell).closest('table').find('tbody tr').find('td.total_val_cost').eq(pos-1).html());
 	    value = Number($(cell).closest('table').find('tbody tr').find('td.total_val_value').eq(pos-1).html());
 
-        db = 0;
+//        db = 0;
 
-        if(value >= cost && cost > 0){
+//        if(value >= cost && cost > 0){
             db = Math.ceil(((value / cost)-1) * 100);
-        }
+//        }
 
         $(cell).html(db + "%");
     }
@@ -121,6 +121,19 @@
             sum += Number($(this).html());
         });
         $(cell).html(Math.round(sum*100)/100);
+    }
+
+    function calculate_log_out_time(cell, selector) {
+        var pos = $(cell).closest('td').prevAll().length;
+        log_out = Number($(selector).find('tr.log_out td:eq(' + pos + ')').html().split(':')[0]*60) + Number($(selector).find('tr.log_out td:eq(' + pos + ')').html().split(':')[1]);
+        log_in = Number($(selector).find('tr.log_in td:eq(' + pos + ')').html().split(':')[0]*60) + Number($(selector).find('tr.log_in td:eq(' + pos + ')').html().split(':')[1]);
+        hours_worked = Number($(selector).find('tr.hours td:eq(' + pos + ')').html())*60;
+        log_out_time = (log_out - log_in - hours_worked)/60;
+        if (isNaN(log_out_time)) {
+            $(cell).html('0.0');
+        } else {
+            $(cell).html(Math.round(log_out_time*100)/100);
+        }
     }
 
     function agent_time_sheet_avg(cell, selector) {
@@ -197,10 +210,6 @@
             $(cell).html('0.00')
         } else {
             euros = Math.floor(value);
-//            cents = Math.round((value - euros)*100);
-//            if (cents < 10) {
-//                cents = '0' + cents
-//            }
             $(cell).html(euros)
         }
     }
@@ -236,6 +245,9 @@
 
         // agent time sheet totals
         <% if timesheet.agent_timesheet %>
+            $('tr.log_out_time td.val_l').each(function(){
+              calculate_log_out_time($(this), $(this).closest('tbody'))
+            });
           <% timesheet.agents.each do |agent| %>
             <% [:hours, :results, :value, :cost].each do |key| %>
             $('div#agent_time_sheet_<%= agent.id %> .total_val_<%= key.to_s %>').each(function() {

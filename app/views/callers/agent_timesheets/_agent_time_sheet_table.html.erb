@@ -20,7 +20,7 @@
                   <% elsif [:log_out].include?(key) %>
                       <%= (log_out = agent_time_sheet.stats.for_cweek(cweek).for_dow(dow).for_agent(agent).maximum(key)) ? log_out.strftime("%H:%M") : "-" %>
                   <% elsif [:log_out_time].include?(key) %>
-                      <%= agent_time_sheet.stats.for_cweek(cweek).for_dow(dow).for_agent(agent).sum(key) %>
+                      0.0
                   <% else %>
                       <%= agent_time_sheet.send(key).for_cweek(cweek).for_dow(dow).for_agent(agent).sum(key) %>
                   <% end %>
