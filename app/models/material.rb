@@ -21,6 +21,8 @@ class Material < Asset
     end
   end
 
+  public
+
   def url(style=nil, use_timestamp = false)
     super
   end
