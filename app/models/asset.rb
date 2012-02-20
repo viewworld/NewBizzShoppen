@@ -119,11 +119,19 @@ end
 class Asset::DealImage < Asset
   belongs_to :deal, :foreign_key => "resource_id"
   has_attached_file :asset, attachment_options.merge(:styles => {:original => "600x600>", :thumb => "32x32", :medium => "150x100>"})
+
+  def url(style=nil, use_timestamp = false)
+    super
+  end
 end
 
 class Asset::DealMaterial < Asset
   belongs_to :deal, :foreign_key => "resource_id"
   has_attached_file :asset, attachment_options
+
+  def url(style=nil, use_timestamp = false)
+    super
+  end
 end
 
 class Asset::DealInternalDocument < Asset
