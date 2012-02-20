@@ -7,8 +7,8 @@
 
     <div id="overview" style="page-break-before:always;page-break-after:always;">
       <% if timesheet.overview %>
-        <% [:hours,:results,:value,:cost].each do |k| %>
-          <%= render :partial => "callers/agent_timesheets/overview_table", :locals => {:type => k, :overview => timesheet, :results => timesheet.overview_data} if timesheet.send("display_#{k}".to_sym) %>
+        <% timesheet.variables.each do |v| %>
+          <%= render :partial => "callers/agent_timesheets/overview_table", :locals => {:type => v, :timesheet => timesheet} %>
         <% end %>
       <% end %>
     </div>
@@ -16,9 +16,9 @@
     <div id="team_result_sheet" style="overflow-x: auto;page-break-after:always;">
       <% if timesheet.team_result_sheet %>
         <% timesheet.cweeks.each do |cweek| %>
-          <%= render :partial => "callers/agent_timesheets/team_result_sheet_table", :locals => {:cweek => cweek, :team_result_sheet => timesheet, :results => timesheet.team_result_sheet_data} %>
+          <%= render :partial => "callers/agent_timesheets/team_result_sheet_table", :locals => {:cweek => cweek, :team_result_sheet => timesheet} %>
         <% end %>
-        <%= render :partial => "callers/agent_timesheets/team_result_sheet_totals_table", :locals => {:team_result_sheet => timesheet, :results => timesheet.team_result_sheet_data} %>
+        <%= render :partial => "callers/agent_timesheets/team_result_sheet_totals_table", :locals => {:team_result_sheet => timesheet} %>
       <% end %>
     </div>
 
@@ -39,13 +39,14 @@
             </div>
             <clb/>
             <% timesheet.cweeks.each do |cweek| %>
-              <%= render :partial => "callers/agent_timesheets/agent_time_sheet_table", :locals => {:agent => agent, :cweek => cweek, :agent_time_sheet => timesheet, :results => timesheet.agent_time_sheet_data(agent)} %>
+              <%= render :partial => "callers/agent_timesheets/agent_time_sheet_table", :locals => {:agent => agent, :cweek => cweek, :agent_time_sheet => timesheet} %>
             <% end %>
-            <%= render :partial => "callers/agent_timesheets/agent_time_sheet_totals_table", :locals => {:agent => agent, :agent_time_sheet => timesheet, :results => timesheet.agent_time_sheet_data(agent)} %>
+            <%= render :partial => "callers/agent_timesheets/agent_time_sheet_totals_table", :locals => {:agent => agent, :agent_time_sheet => timesheet} %>
           </div>
         <% end %>
       <% end %>
     </div>
+
   </div>
 
   <script type="text/javascript">
@@ -95,11 +96,11 @@
 	    cost = Number($(cell).closest('table').find('tbody tr').find('td.total_val_cost').eq(pos-1).html());
 	    value = Number($(cell).closest('table').find('tbody tr').find('td.total_val_value').eq(pos-1).html());
 
-        db = 0;
+//        db = 0;
 
-        if(value >= cost && cost > 0){
+//        if(value >= cost && cost > 0){
             db = Math.ceil(((value / cost)-1) * 100);
-        }
+//        }
 
         $(cell).html(db + "%");
     }
@@ -120,6 +121,19 @@
             sum += Number($(this).html());
         });
         $(cell).html(Math.round(sum*100)/100);
+    }
+
+    function calculate_log_out_time(cell, selector) {
+        var pos = $(cell).closest('td').prevAll().length;
+        log_out = Number($(selector).find('tr.log_out td:eq(' + pos + ')').html().split(':')[0]*60) + Number($(selector).find('tr.log_out td:eq(' + pos + ')').html().split(':')[1]);
+        log_in = Number($(selector).find('tr.log_in td:eq(' + pos + ')').html().split(':')[0]*60) + Number($(selector).find('tr.log_in td:eq(' + pos + ')').html().split(':')[1]);
+        hours_worked = Number($(selector).find('tr.hours td:eq(' + pos + ')').html())*60;
+        log_out_time = (log_out - log_in - hours_worked)/60;
+        if (isNaN(log_out_time)) {
+            $(cell).html('0.0');
+        } else {
+            $(cell).html(Math.round(log_out_time*100)/100);
+        }
     }
 
     function agent_time_sheet_avg(cell, selector) {
@@ -196,10 +210,6 @@
             $(cell).html('0.00')
         } else {
             euros = Math.floor(value);
-//            cents = Math.round((value - euros)*100);
-//            if (cents < 10) {
-//                cents = '0' + cents
-//            }
             $(cell).html(euros)
         }
     }
@@ -235,6 +245,9 @@
 
         // agent time sheet totals
         <% if timesheet.agent_timesheet %>
+            $('tr.log_out_time td.val_l').each(function(){
+              calculate_log_out_time($(this), $(this).closest('tbody'))
+            });
           <% timesheet.agents.each do |agent| %>
             <% [:hours, :results, :value, :cost].each do |key| %>
             $('div#agent_time_sheet_<%= agent.id %> .total_val_<%= key.to_s %>').each(function() {
