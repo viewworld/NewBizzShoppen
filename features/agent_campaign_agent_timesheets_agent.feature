@@ -38,7 +38,7 @@ Feature: Agent timesheets - agent timesheet
     And I should see "14"
     And I should see "260"
     And I should see "26"
-    And I should see "0%"
+    And I should see "n/a"
 
   @_done @_tested_elsewhere
   Scenario: I should see average result per hour
