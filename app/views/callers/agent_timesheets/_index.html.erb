@@ -97,12 +97,14 @@
 	    value = Number($(cell).closest('table').find('tbody tr').find('td.total_val_value').eq(pos-1).html());
 
 //        db = 0;
-
 //        if(value >= cost && cost > 0){
             db = Math.ceil(((value / cost)-1) * 100);
 //        }
-
-        $(cell).html(db + "%");
+        if (isNaN(db)) {
+            $(cell).html("n/a");
+        } else {
+            $(cell).html(db + "%");
+        }
     }
 
     function team_result_sheet_sum_totals(cell, type) {
