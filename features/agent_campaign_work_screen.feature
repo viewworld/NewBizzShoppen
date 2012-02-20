@@ -662,11 +662,11 @@ Feature: Agent campaign - calling session
       And last email sent should have content "Linked with account: not linked"
 
     #10200
-    @m29 @requested
+    @m29 @requested @tgn @_done @_non_testable
     Scenario: When member (upgraded contact) clicks on deal link in the email he receives, he should be automatically singed in
 
     #10200
-    @m29 @requested
+    @m29 @requested @tgn @_done @_non_testable
     Scenario: When member (upgraded contact) clicks on fairdeals link in the email he receives, he should be automatically singed in
 
     #7746
