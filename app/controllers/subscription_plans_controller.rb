@@ -55,7 +55,7 @@ class SubscriptionPlansController < SecuredController
 
     @user.active_subscription.update_attributes(:paypal_profile_id => paypal_recurring.profile_id, :paypal_invoice_id => @user.active_subscription.id)
 
-    redirect_to my_profile_path
+    redirect_to my_profile_path(:scp => true)
   end
 
   def paypal_canceled
@@ -76,9 +76,9 @@ class SubscriptionPlansController < SecuredController
 
     if current_user.member? and deal = Deal.find_by_id(session[:deal_id])
       session[:deal_id] = nil
-      redirect_to deal_path(:id => deal.slug)
+      redirect_to deal_path(:id => deal.slug, :scp => true)
     else
-      redirect_to my_profile_path
+      redirect_to my_profile_path(:scp => true)
     end
   end
 

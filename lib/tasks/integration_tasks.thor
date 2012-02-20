@@ -201,4 +201,18 @@ class IntegrationTasks < Thor
   def m28
     Campaign.where(:cost_type => [1,2]).each { |c| c.apply_billing_rate_to_user_session_logs! }
   end
+
+  desc "m29", ""
+  def m29
+#    Campaign.all.each do |campaign|
+#      puts "Campaign: #{campaign.name}"
+#      campaign.campaigns_results.each do |campaigns_result|
+#        if campaigns_result.value.to_i > 0
+#          campaigns_result.euro_value = campaigns_result.value
+#          campaigns_result.value = campaign.currency.from_euro(campaigns_result.value).to_f
+#          campaigns_result.save
+#        end
+#      end
+#    end
+  end
 end
