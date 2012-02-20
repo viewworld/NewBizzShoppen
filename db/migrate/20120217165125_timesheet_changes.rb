@@ -61,12 +61,13 @@ class TimesheetChanges < ActiveRecord::Migration
                   ELSE date_part('dow'::text, agent_information.created_at) - 1::double precision
               END::integer AS dow, date_part('week'::text, agent_information.created_at)::integer AS week, date_part('year'::text, agent_information.created_at)::integer AS year
          FROM (        (         SELECT call_results.creator_id AS user_id, sum(campaigns_results.euro_value) AS sum, call_results.created_at::date AS created_at, campaigns_results.campaign_id
-                                 FROM call_results
-                            JOIN results ON results.id = call_results.result_id
-                       JOIN campaigns_results ON results.id = campaigns_results.result_id
-                  JOIN leads contacts ON call_results.contact_id = contacts.id
-                 WHERE results.final = true AND contacts.type::text = 'Contact'::text AND results.upgrades_to_lead IS FALSE AND results.is_reported IS TRUE AND campaigns_results.is_dynamic_value IS FALSE
-                 GROUP BY call_results.created_at::date, call_results.creator_id, campaigns_results.campaign_id
+                                    FROM call_results
+                               JOIN results ON results.id = call_results.result_id
+                          JOIN leads contacts ON call_results.contact_id = contacts.id
+                     JOIN campaigns_results ON results.id = campaigns_results.result_id
+                    WHERE results.final = true AND contacts.type::text = 'Contact'::text AND results.upgrades_to_lead IS FALSE AND results.is_reported IS TRUE AND campaigns_results.is_dynamic_value IS FALSE AND contacts.campaign_id = campaigns_results.campaign_id
+                    GROUP BY call_results.created_at::date, call_results.creator_id, campaigns_results.campaign_id
+                   HAVING sum(campaigns_results.euro_value) > 0::double precision
                       UNION ALL
                                SELECT call_results.creator_id AS user_id, sum(leads.euro_price) AS sum, call_results.created_at::date AS created_at, leads.campaign_id
                                  FROM call_results
