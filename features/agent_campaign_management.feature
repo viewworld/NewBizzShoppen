@@ -921,5 +921,6 @@ Feature: Agent campaign - management
           Then I follow translated "campaigns.show.export_button"
 
         #10255
-        @m29 @requested
+        @m29 @requested @tgn @_done @_tested
         Scenario: When I access campaigns from menu I should see only active by default
+          And "search_with_state" should be selected for value "active"

@@ -81,6 +81,7 @@ class Callers::CampaignsController < Callers::CallerController
 
   def collection
     params[:search]||={}
+    params[:search][:with_state] ||= "active"
     @search = Campaign.scoped_search(params[:search].merge(:available_for_user => current_user))
     @campaigns = @search.paginate(:page => params[:page], :per_page => 20)
   end
