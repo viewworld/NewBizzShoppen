@@ -1041,6 +1041,7 @@ en:
           vars:
             default_payout_delay: "Default payout delay"
             default_leads_per_page: "Default leads per page"
+            default_deals_per_page: "Default deals per page"
             certification_level_1: "Certification level 1"
             contact_us_email: "Contact us email"
             certification_level_2: "Certification level 2"

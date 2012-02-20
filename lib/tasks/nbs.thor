@@ -10,7 +10,7 @@ class Nbs < Thor
     #Default settings
     Settings.default_payout_delay = 0 if Settings.default_payout_delay.nil?
     Settings.default_leads_per_page = 5 if Settings.default_leads_per_page.nil?
-    Settings.default_deals_per_page = 20 if Settings.default_deals_per_page.nil?
+    Settings.default_deals_per_page = 30 if Settings.default_deals_per_page.nil?
     Settings.certification_level_1 = 10 if Settings.certification_level_1.nil?
     Settings.certification_level_2 = 20 if Settings.certification_level_2.nil?
     Settings.logout_time = 5 if Settings.logout_time.nil? #minutes 
