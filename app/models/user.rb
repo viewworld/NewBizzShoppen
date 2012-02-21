@@ -559,7 +559,7 @@ class User < ActiveRecord::Base
   end
 
   def generate_login_key
-    self.login_key = Digest::SHA1.hexdigest("#{created_at} -- #{id} -- #{Time.now}")
+    self.login_key = Digest::SHA1.hexdigest("#{created_at} -- #{id} -- #{Time.now}") unless login_key
     login_key
   end
 
@@ -655,7 +655,7 @@ class User < ActiveRecord::Base
     elsif has_role?(:supplier)
       "http://#{domain_name}/supplier_home"
     elsif has_role?(:member)
-      "http://#{domain_name}/#{ login_key ? "login_keys/?key=#{login_key}" : nil }"
+      "http://#{domain_name}/"
     else
       "http://#{domain_name}/"
     end
