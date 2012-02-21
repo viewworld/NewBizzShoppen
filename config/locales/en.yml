@@ -2037,6 +2037,7 @@ en:
           email: "Email"
           or: "or"
           confirm: "Confirm"
+          change_supplier: "Change supplier"
   call_centre_agent:
     leads:
       index:
@@ -2118,6 +2119,7 @@ en:
           email: "Email address"
           or: "or"
           confirm: "Confirm"
+          change_supplier: "Change supplier"
       edit:
         view:
           title: "Edit deal"
@@ -2126,6 +2128,10 @@ en:
           preview: "Preview"
           duplicate_button: "Duplicate"
           update_and_exit_button: "Save & exit"
+    call_centre_agents:
+      new:
+        view:
+          title: "Change supplier"
   member:
     leads:
       index:

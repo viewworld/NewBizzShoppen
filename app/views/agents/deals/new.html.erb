@@ -4,11 +4,13 @@
         <%= t("agent.deals.new.view.title") %>
      </param:content>
       <param:actions>
-      <ul class="header_actions">
-        <li class="last">
-          <%= bt_link_to nil, t("agent.deals.new.view.change_supplier"), "#", :onclick => "setup_step(0)" %>
-        </li>
-      </ul>
+        <% if params[:deal_id] %>
+          <ul class="header_actions">
+            <li class="last">
+              <%= bt_link_to nil, t("agent.deals.new.view.change_supplier"), "#", :onclick => "setup_step(0)" %>
+            </li>
+          </ul>
+        <% end %>
     </param:actions>
   </header>
 
