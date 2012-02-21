@@ -3,6 +3,9 @@ module DealCreateActions
   def new
     @deal = Deal.new(:start_date => Date.today, :end_date => Date.today, :min_created_leads => Settings.default_group_deal_min_leads_created.to_i, :use_company_name_as_category => true,
     :deal_confirmation_page => I18n.t("deals.common.default_confirmation_page_msg"))
+    @deal_for_duplication = current_user.admin? ? Deal.find_by_id(params[:deal_id]) : current_user.deals.find_by_id(params[:deal_id])
+    @deal.duplicate_fields(@deal_for_duplication)
+    @deal.creation_step = 1 if @deal_for_duplication
     respond_to do |content|
       content.html {}
       content.js {

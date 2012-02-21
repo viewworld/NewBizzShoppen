@@ -7,6 +7,7 @@ class Suppliers::DealsController < Suppliers::BasicSupplierController
   def new
     @template = LeadTemplate.find_by_id(params[:template_id])
     @deal = Deal.new_for_user(current_user)
+    @deal.duplicate_fields(current_user.deals.find_by_id(params[:deal_id]))
   end
 
   def create
@@ -27,7 +28,7 @@ class Suppliers::DealsController < Suppliers::BasicSupplierController
 
   def success(message)
     flash[:notice] = message
-    redirect_to suppliers_deals_path
+    success_redirect_to("suppliers")
   end
 
   def check_users_subscription

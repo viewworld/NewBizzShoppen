@@ -13,9 +13,7 @@
                                                                                :remove_path => "agents_deal_asset_path"} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
-            <%= form.submit t("call_centre_agent.deals.edit.view.update_button"), :name => "commit_update", :onclick => "select_options_to_submit('deal_deal_template_ids_')" %>
-          </ibt>
+            <%= render :partial => "shared/deals/update_buttons", :locals => { :form => form, :role => "call_centre_agent" } %>
         </param:actions>
       </frm>
   <% end %>

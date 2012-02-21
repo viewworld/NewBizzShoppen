@@ -39,4 +39,14 @@ module DealActions
       raise CanCan::AccessDenied
     end
   end
+
+  def success_redirect_to(role)
+    if params[:commit_stay]
+      redirect_to send("edit_#{role}_deal_path".to_sym, @deal)
+    elsif params[:commit_duplicate]
+      redirect_to send("new_#{role}_deal_path".to_sym, :deal_id => @deal.id)
+    else
+      redirect_to send("#{role}_deals_path".to_sym)
+    end
+  end
 end

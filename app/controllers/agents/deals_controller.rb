@@ -10,7 +10,7 @@ class Agents::DealsController < Agents::AgentController
 
   def success(message)
     flash[:notice] = message
-    redirect_to agents_deals_path
+    success_redirect_to("agents")
   end
 
 end

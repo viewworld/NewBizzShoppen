@@ -1159,6 +1159,8 @@ en:
 
           preview: "Preview"
           edit_deal_request_details_email_template: "Edit email template"
+          update_and_exit_button: "Save & exit"
+          duplicate_button: "Duplicate"
     email_bounces:
       index:
         view:
@@ -1899,6 +1901,7 @@ en:
           email: "Email address"
           or: "or"
           confirm: "Confirm"
+          change_supplier: "Change supplier"
       edit:
         view:
           title: "Edit deal"
@@ -2022,6 +2025,8 @@ en:
           update_button: "Save"
           edit_deal_request_details_email_template: "Edit email template"
           preview: "Preview"
+          update_and_exit_button: "Save & exit"
+          duplicate_button: "Duplicate"
       new:
         view:
           title: "New deal"
@@ -2119,6 +2124,8 @@ en:
           update_button: "Save"
           edit_deal_request_details_email_template: "Edit email template"
           preview: "Preview"
+          duplicate_button: "Duplicate"
+          update_and_exit_button: "Save & exit"
   member:
     leads:
       index:
@@ -2332,6 +2339,8 @@ en:
           preview: "Preview"
           new_template: "New template"
           edit_deal_request_details_email_template: "Edit email template"
+          update_and_exit_button: "Save & exit"
+          duplicate_button: "Duplicate"
     deal_certification_requests:
       index:
         view:

@@ -1,5 +1,16 @@
 <column-mc:>
-  <header back="true" backurl="#{agents_deals_path}"><%= t("agent.deals.new.view.title") %></header>
+  <header back="true" backurl="#{agents_deals_path}">
+     <param:content>
+        <%= t("agent.deals.new.view.title") %>
+     </param:content>
+      <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to nil, t("agent.deals.new.view.change_supplier"), "#", :onclick => "setup_step(0)" %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
 
   <div id="supplier_email_form">
     <%= label_tag :supplier_email, t("agent.deals.new.view.email") %>

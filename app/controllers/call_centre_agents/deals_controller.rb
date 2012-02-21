@@ -10,7 +10,7 @@ class CallCentreAgents::DealsController < CallCentreAgents::CallCentreAgentContr
 
   def success(message)
     flash[:notice] = message
-    redirect_to call_centre_agents_deals_path
+    success_redirect_to("call_centre_agents")
   end
 
 end

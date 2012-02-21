@@ -316,6 +316,15 @@ class Deal < AbstractLead
     vat_rate > 0 ? discounted_price + (discounted_price * BigDecimal(vat_rate.to_s).div(100,4)) : discounted_price
   end
 
+  def duplicate_fields(deal)
+    if deal
+      deal.attributes.keys.except(["id", "created_at", "updated_at"]).each do |field|
+        self.send("#{field}=".to_sym, deal.send(field.to_sym))
+      end
+      self.deal_templates = deal.deal_templates
+    end
+  end
+
   private
 
   def can_be_removed
