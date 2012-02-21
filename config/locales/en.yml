@@ -1907,6 +1907,8 @@ en:
           title: "Edit deal"
           update_button: "Save"
 
+          duplicate_button: "Duplicate"
+          update_and_exit_button: "Save & exit"
   call_centre:
     lead_templates:
       index:

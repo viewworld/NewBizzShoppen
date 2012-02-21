@@ -37,7 +37,7 @@ class ::User::CallCentre < ::User
   end
 
   def deals
-    Deal.where("creator_id IN (?) or deal_admin_email = ?", subaccounts.map(&:id) + [id], email)
+    Deal.where("creator_id IN (?) or deal_admin_email IN (?)", subaccounts.map(&:id) + [id], subaccounts.map(&:email) + [email])
   end
 
   def comment_threads

@@ -308,13 +308,88 @@ Feature: General deals
     And I check "deal_premium_deal"
 
   #10203
-  @m29 @requested
+  @m29 @requested @tgn @_done @_tested
   Scenario: I can duplicate a deal
+    Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
+    And user "buyer@nbs.com" has deal maker role enabled
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
+    Given I am on the homepage
+    And I sign in as buyer@nbs.com with password secret
+    And I follow translated "layout.main_menu.lead_supplier.my_deals"
+    And I click hidden link by url regex "/suppliers\/deals\/\d+\/edit/"
+    And I press translated "supplier.deals.edit.view.update_button"
+    And I should be on the supplier deal edit page for software components
+    And I press translated "supplier.deals.edit.view.update_and_exit_button"
+    And I should see translated "deals.common.listing.view.header"
+    And I click hidden link by url regex "/suppliers\/deals\/\d+\/edit/"
+    And I press translated "supplier.deals.edit.view.duplicate_button"
+    And I should see translated "supplier.deals.new.view.title"
+    And the "deal_header" field should contain "software components"
+    And the "deal_description" field should contain "short desc about software"
+    Given I sign out
+    And I sign in as blazejek@gmail.com with password secret
+    And I follow translated "layout.main_menu.admin.deals"
+    And I click hidden link by url regex "/administration\/deals\/\d+\/edit/"
+    And I press translated "administration.deals.edit.view.update_button"
+    And I should be on the administration deal edit page for software components
+    And I press translated "administration.deals.edit.view.update_and_exit_button"
+    And I should see translated "deals.common.listing.view.header"
+    And I click hidden link by url regex "/administration\/deals\/\d+\/edit/"
+    And I press translated "administration.deals.edit.view.duplicate_button"
+    And I should see translated "administration.deals.new.view.title"
+    And the "deal_header" field should contain "software components"
+    And the "deal_description" field should contain "short desc about software"
+    Given I sign out
+    Given I visit domain http://faircalls.eu
+    And user "agent@nbs.com" has deal maker role enabled
+    And a deal named "software components" exists with attributes "deal_admin_email:agent@nbs.com"
+    And I sign in as agent@nbs.com with password secret
+    And I follow translated "layout.main_menu.agent.deals"
+    And I click hidden link by url regex "/agents\/deals\/\d+\/edit/"
+    And I press translated "agent.deals.edit.view.update_button"
+    And I should be on the agent deal edit page for software components
+    And I press translated "agent.deals.edit.view.update_and_exit_button"
+    And I should see translated "deals.common.listing.view.header"
+    And I click hidden link by url regex "/agents\/deals\/\d+\/edit/"
+    And I press translated "agent.deals.edit.view.duplicate_button"
+    And I should see translated "agent.deals.new.view.title"
+    And the "deal_header" field should contain "software components"
+    And the "deal_description" field should contain "short desc about software"
+    Given I sign out
+    And user "translator_call_centre_agent@nbs.com" has deal maker role enabled
+    And a deal named "software components" exists with attributes "deal_admin_email:translator_call_centre_agent@nbs.com"
+    And I sign in as translator_call_centre_agent@nbs.com with password secret
+    And I follow translated "layout.main_menu.agent.deals"
+    And I click hidden link by url regex "/call_centre_agents\/deals\/\d+\/edit/"
+    And I press translated "call_centre_agent.deals.edit.view.update_button"
+    And I should be on the call_centre_agent deal edit page for software components
+    And I press translated "call_centre_agent.deals.edit.view.update_and_exit_button"
+    And I should see translated "deals.common.listing.view.header"
+    And I click hidden link by url regex "/call_centre_agents\/deals\/\d+\/edit/"
+    And I press translated "call_centre_agent.deals.edit.view.duplicate_button"
+    And I should see translated "call_centre_agent.deals.new.view.title"
+    And the "deal_header" field should contain "software components"
+    And the "deal_description" field should contain "short desc about software"
+    Given I sign out
+    And user "translator_call_centre@nbs.com" has deal maker role enabled
+    And I sign in as translator_call_centre@nbs.com with password secret
+    And I follow translated "layout.main_menu.call_centre.deals"
+    And I click hidden link by url regex "/call_centres\/deals\/\d+\/edit/"
+    And I press translated "call_centre.deals.edit.view.update_button"
+    And I should be on the call_centre deal edit page for software components
+    And I press translated "call_centre.deals.edit.view.update_and_exit_button"
+    And I should see translated "deals.common.listing.view.header"
+    And I click hidden link by url regex "/call_centres\/deals\/\d+\/edit/"
+    And I press translated "call_centre.deals.edit.view.duplicate_button"
+    And I should see translated "call_centre.deals.new.view.title"
+    And the "deal_header" field should contain "software components"
+    And the "deal_description" field should contain "short desc about software"
+    Given I sign out
 
   #10203
-  @m29 @requested
+  @m29 @requested @tgn @_tested_elsewhere @_done
   Scenario: I can save the deal without exiting edit screen
 
   #10203
-  @m29 @requested
+  @m29 @requested @tgn @_tested_elsewhere @_done
   Scenario: I can save the deal and exit the edit screen

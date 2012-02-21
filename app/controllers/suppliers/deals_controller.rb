@@ -7,7 +7,7 @@ class Suppliers::DealsController < Suppliers::BasicSupplierController
   def new
     @template = LeadTemplate.find_by_id(params[:template_id])
     @deal = Deal.new_for_user(current_user)
-    @deal.duplicate_fields(current_user.deals.find_by_id(params[:deal_id]))
+    @deal.duplicate_fields(Deal.where("creator_id IN (?) or email_address = ?", current_user.id, current_user.email).find_by_id(params[:deal_id]))
   end
 
   def create
