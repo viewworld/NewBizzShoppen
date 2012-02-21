@@ -489,7 +489,7 @@ Scenario: It should be possible for me to login using new password
   When I sign out
   And I am on the home page
   And I sign in as bob@person.com with password newpass
-  Then I should see translated "devise.sessions.signed_in"
+  Then I should see translated "layout.logout_link" with options "user_email:bob@person.com"
 
 @added @m8b @_done @_tested @faircalls
 Scenario: It should be possible for other users to login after password change

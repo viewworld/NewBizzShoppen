@@ -17,11 +17,17 @@
       <%= form.input :note, :as => :text, :input_html => {:style => "width: 400px;height:120px"} %>
 
       <% if call_result.result.upgrades_to_any_user? %>
+          <% if call_result.errors.on(:upgraded_user) %>
+              <li class="string">
+                <b><%= t("call_results.new.upgraded_user_has_other_errors") %>: <%= call_result.errors.on(:upgraded_user) %></b>
+              </li>
+          <% end %>
+
           <% [:company_name, :first_name, :last_name, :phone_number, :address_line_1, :address_line_2, :address_line_3, :zip_code].each do |field| %>
           <li class="string">
             <%
-               required_fields = [:first_name, :last_name, :address_line_1, :zip_code]
-               required_fields << [:company_name, :phone_number, :address_line_3] if call_result.result.upgrades_to_member?
+               required_fields = [:first_name, :last_name, :address_line_1, :address_line_3, :zip_code]
+               required_fields << [:company_name, :phone_number] if call_result.result.upgrades_to_member?
                required_fields.flatten!
             %>
             <%= label_tag "call_result[contact_email_address]", "#{t("call_results.new.contact_#{field}")}#{'<abbr>*</abbr>' if required_fields.include?(field)}".html_safe %>

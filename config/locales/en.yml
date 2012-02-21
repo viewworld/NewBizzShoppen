@@ -600,6 +600,7 @@ en:
       contact_newsletter_on: "Newsletter on"
       select_deals_for_request: "Select deals for request"
       no_deals_selected_for_request: "No deals selected for request."
+      upgraded_user_has_other_errors: "Upgraded user could not be created"
     edit:
       title: Edit result
       form_title: Edit

@@ -31,14 +31,14 @@ Feature: Agent timesheets - agent timesheet
     When I check "show_all_agents"
     And I should see "16:00"
     And I should see "10"
-    And I should see "130.00"
-    And I should see "260.00"
+    And I should see "130"
+    And I should see "260"
     And I should see "32:00"
     And I should see "128:00"
     And I should see "14"
-    And I should see "260.00"
-    And I should see "26.00"
-    And I should see "0%"
+    And I should see "260"
+    And I should see "26"
+    And I should see "n/a"
 
   @_done @_tested_elsewhere
   Scenario: I should see average result per hour

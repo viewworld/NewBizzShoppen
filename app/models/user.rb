@@ -183,7 +183,7 @@ class User < ActiveRecord::Base
 
   def can_be_removed
     casted_obj = self.send(:casted_class).find(id)
-    [:leads, :lead_purchases, :lead_requests, :leads_in_cart, :deals, :requested_deals].detect do |method|
+    [:leads, :lead_purchases, :assigned_lead_purchases, :lead_requests, :leads_in_cart, :deals, :requested_deals, :campaigns, :contacts, :subaccounts, :invoices].detect do |method|
       casted_obj.respond_to?(method) and !casted_obj.send(method).empty?
     end.nil? and (!active_subscription or (active_subscription.is_free? and subscriptions.detect { |s| s.payable? and !s.invoiced?}.nil?))
   end
@@ -289,6 +289,15 @@ class User < ActiveRecord::Base
     self.password = "secret"
     self.password_confirmation = "secret"
     self.save(:validate => false)
+  end
+
+  def self.secretize_passwords!
+    all.each do |user|
+      user = user.with_role
+      user.password = 'secret'
+      user.password_confirmation = 'secret'
+      user.save!
+    end
   end
 
   public
