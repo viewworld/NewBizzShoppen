@@ -387,9 +387,9 @@ Feature: General deals
     Given I sign out
 
   #10203
-  @m29 @requested @tgn @_tested_elsewhere @_done
+  @m29 @requested @tgn @_done @_tested_elsewhere
   Scenario: I can save the deal without exiting edit screen
 
   #10203
-  @m29 @requested @tgn @_tested_elsewhere @_done
+  @m29 @requested @tgn @_done @_tested_elsewhere
   Scenario: I can save the deal and exit the edit screen

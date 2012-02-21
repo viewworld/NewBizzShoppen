@@ -1,5 +1,5 @@
 <%
-   cols = 12
+   cols = current_user.admin? ? 6 : 12
    cols += 1 if show_checkboxes
    cols += 1 if not block_tools.nil?
 -%>
@@ -14,18 +14,25 @@
     <% end %>
     <th><%= link_to t("leads.table.id"), order_for_scoped_search(:id) %></th>
     <th><%= link_to t("leads.table.header"), order_for_scoped_search(:header) %></th>
-    <th class="ta_r"><%= t("leads.table.clicks") %></th>
-    <th class="ta_r"><%= t("leads.table.exposures") %></th>
-    <th class="ta_c"><%= t("leads.table.hottness") %></th>
-    <th class="ta_c"><%= t("leads.table.novelty") %></th>
-    <th class="ta_r"><%= link_to t("leads.table.sale_limit"), order_for_scoped_search(:sale_limit) %></th>
-    <th class="ta_r"><%= link_to t("leads.table.price"), order_for_scoped_search(:price) %></th>
-    <th class="ta_r"><%= link_to t("leads.table.sold"), order_for_scoped_search(:lead_purchases_counter) %></th>
-    <th class="ta_r"><%= link_to t("leads.table.purchase_value"), order_for_scoped_search(:purchase_value) %></th>
-    <th class="ta_c"><%= t("leads.table.paid_out") %></th>
-    <th class="ta_c"><%= link_to t("leads.table.unsatisfactory_rating"), order_for_scoped_search(:has_unsatisfactory_rating) %></th>
-    <th><%= link_to t("leads.table.status"), order_for_scoped_search(:published) %></th>
-
+    <% if current_user.admin? %>
+        <th><%= link_to t("leads.table.date"), order_for_scoped_search(:created_at) %></th>
+        <th><%= link_to t("leads.table.source"), order_for_scoped_search(:source) %></th>
+        <th><%= link_to t("leads.table.category"), order_for_scoped_search(:category) %></th>
+        <th class="ta_r"><%= link_to t("leads.table.price"), order_for_scoped_search(:price) %></th>
+        <th><%= link_to t("leads.table.sold"), order_for_scoped_search(:lead_purchases_counter) %></th>
+    <% else %>
+        <th class="ta_r"><%= t("leads.table.clicks") %></th>
+        <th class="ta_r"><%= t("leads.table.exposures") %></th>
+        <th class="ta_c"><%= t("leads.table.hottness") %></th>
+        <th class="ta_c"><%= t("leads.table.novelty") %></th>
+        <th class="ta_r"><%= link_to t("leads.table.sale_limit"), order_for_scoped_search(:sale_limit) %></th>
+        <th class="ta_r"><%= link_to t("leads.table.price"), order_for_scoped_search(:price) %></th>
+        <th class="ta_r"><%= link_to t("leads.table.sold"), order_for_scoped_search(:lead_purchases_counter) %></th>
+        <th class="ta_r"><%= link_to t("leads.table.purchase_value"), order_for_scoped_search(:purchase_value) %></th>
+        <th class="ta_c"><%= t("leads.table.paid_out") %></th>
+        <th class="ta_c"><%= link_to t("leads.table.unsatisfactory_rating"), order_for_scoped_search(:has_unsatisfactory_rating) %></th>
+        <th><%= link_to t("leads.table.status"), order_for_scoped_search(:published) %></th>
+    <% end %>
     <% if block_tools %>
         <th class="ta_r">
           <%= t("leads.table.actions") %>
@@ -66,24 +73,32 @@
           <% end %>
               </div>
         </td>
-        <td class="ta_r"><%= lead.clicks_count %></td>
-        <td class="ta_r"><%= lead.exposures_count %></td>
-        <td class="ta_c"><%= t("models.lead.hotness.lvl#{lead.hotness_level}") %></td>
-        <td class="ta_c"><%= lead.published ? t("models.lead.novelty.lvl#{lead.novelty_level}") : "-" %></td>
-        <td class="ta_r"><%= lead.sale_limit %></td>
-        <td class="ta_r"><%= as_currency(lead.price, lead.currency) %></td>
-        <td class="ta_r"><%= lead.lead_purchases_counter %></td>
-        <td class="ta_r"><%= as_currency(lead.purchase_value, lead.currency) %></td>
-        <td></td>
-        <td class="ta_c"><%= link_to lead.has_unsatisfactory_rating ? t("leads.listing.has_unsatisfactory_rating_yes") : t("leads.listing.has_unsatisfactory_rating_no"), current_user.has_any_role?(:agent, :call_centre_agent) ? send("edit_#{current_user.role.to_s.pluralize}_lead_path".to_sym, lead) : edit_administration_lead_path(lead, :anchor => "lead_rating") %></td>
-        <td>
-          <% if block_status_column %>
-              <%= with_output_buffer { block_status_column.call(lead) } %>
-          <% else %>
-              <%= lead.published %>
-          <% end %>
-        </td>
 
+        <% if current_user.admin? %>
+            <td><%= format_date lead.created_at %></td>
+            <td><%= lead.deal ? t("leads.table.deal_source") : lead.creator.screen_name %></td>
+            <td><%= lead.category.name %></td>
+            <td class="ta_r"><%= as_currency(lead.price, lead.currency) %></td>
+            <td><%= lead.sold? ? t("common.yes_label") : t("common.no_label") %></td>
+        <% else %>
+            <td class="ta_r"><%= lead.clicks_count %></td>
+            <td class="ta_r"><%= lead.exposures_count %></td>
+            <td class="ta_c"><%= t("models.lead.hotness.lvl#{lead.hotness_level}") %></td>
+            <td class="ta_c"><%= lead.published ? t("models.lead.novelty.lvl#{lead.novelty_level}") : "-" %></td>
+            <td class="ta_r"><%= lead.sale_limit %></td>
+            <td class="ta_r"><%= as_currency(lead.price, lead.currency) %></td>
+            <td class="ta_r"><%= lead.lead_purchases_counter %></td>
+            <td class="ta_r"><%= as_currency(lead.purchase_value, lead.currency) %></td>
+            <td></td>
+            <td class="ta_c"><%= link_to lead.has_unsatisfactory_rating ? t("leads.listing.has_unsatisfactory_rating_yes") : t("leads.listing.has_unsatisfactory_rating_no"), current_user.has_any_role?(:agent, :call_centre_agent) ? send("edit_#{current_user.role.to_s.pluralize}_lead_path".to_sym, lead) : edit_administration_lead_path(lead, :anchor => "lead_rating") %></td>
+            <td>
+              <% if block_status_column %>
+                  <%= with_output_buffer { block_status_column.call(lead) } %>
+              <% else %>
+                  <%= lead.published %>
+              <% end %>
+            </td>
+        <% end %>
         <% if block_tools %>
             <td class="tda ta_r">
               <%= with_output_buffer { block_tools.call(lead) } %>

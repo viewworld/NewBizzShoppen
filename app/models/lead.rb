@@ -74,6 +74,11 @@ class Lead < AbstractLead
   scope :with_hotness, lambda { |hotness| where("hotness_counter = ?", hotness) }
   scope :for_notification, lambda { |categories, notification_type| where("category_id in (?) and DATE(published_at) between ? and ?", categories.map(&:id), notification_type == User::LEAD_NOTIFICATION_ONCE_PER_DAY ? Date.today : Date.today-7, Date.today).published_only.without_inactive.without_outdated.order("category_id") }
 
+  scope :ascend_by_source, order("CASE when deal_id is not null THEN 0 ELSE 1 END, creator_name")
+  scope :descend_by_source, order("CASE when deal_id is not null THEN 0 ELSE 1 END DESC, creator_name DESC")
+  scope :ascend_by_category, joins(:category).order("categories.name")
+  scope :descend_by_category, joins(:category).order("categories.name DESC")
+
   scope :descend_by_leads_id, order("leads.id DESC")
 
   delegate :certification_level, :to => :creator

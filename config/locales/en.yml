@@ -744,6 +744,9 @@ en:
       company_logo: "Company logo"
       deadline: "Deadline"
       number_of_suppliers: "Number of suppliers"
+      source: "Source"
+      category: "Category"
+      deal_source: "Deal"
     index:
       header: Leads
       header_for: "for"
