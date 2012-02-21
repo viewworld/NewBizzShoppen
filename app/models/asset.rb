@@ -11,6 +11,8 @@ class Asset < ActiveRecord::Base
 
   before_save :set_asset_type
 
+  delegate :url, :to => :asset
+
   def self.inherited(subclass)
     super
     subclass.send(:default_scope, :conditions => "asset_type='#{subclass.name}'")
@@ -41,11 +43,11 @@ class Asset < ActiveRecord::Base
   end
 
   # TODO there must be a better way..
-  def url(style=nil)
+  def url(style=nil, use_timestamp = true)
     if self.class.s3_storage?
-      asset.url(style).gsub('//s3', '//fairleads.s3').gsub('/fairleads/', '/')
+      asset.url(style,use_timestamp).gsub('//s3', '//fairleads.s3').gsub('/fairleads/', '/')
     else
-      asset.url(style)
+      asset.url(style,use_timestamp)
     end
   end
 
@@ -117,11 +119,19 @@ end
 class Asset::DealImage < Asset
   belongs_to :deal, :foreign_key => "resource_id"
   has_attached_file :asset, attachment_options.merge(:styles => {:original => "600x600>", :thumb => "32x32", :medium => "150x100>"})
+
+  def url(style=nil, use_timestamp = false)
+    super
+  end
 end
 
 class Asset::DealMaterial < Asset
   belongs_to :deal, :foreign_key => "resource_id"
   has_attached_file :asset, attachment_options
+
+  def url(style=nil, use_timestamp = false)
+    super
+  end
 end
 
 class Asset::DealInternalDocument < Asset
