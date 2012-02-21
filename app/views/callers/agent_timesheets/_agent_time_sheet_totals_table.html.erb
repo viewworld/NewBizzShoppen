@@ -12,34 +12,59 @@
   <% [:log_in, :log_out, :log_out_time].each do |key| %>
       <tr>
         <td class="cell_week"><%= t("agent_timesheets.index.agent_time_sheet.#{key}") %></td>
-        <% agent_time_sheet.days_of_week.each do %>
-            <td class="avg_val_<%= key %> val_<%= key.to_s.first %> number_to_<%= key.to_s %>"></td>
+        <% agent_time_sheet.days_of_week.each do |dow| %>
+            <td class="avg_val_<%= key %> val_<%= key.to_s.first %> number_to_<%= key.to_s %>">
+              <% if [:log_in].include?(key)  %>
+                  <%= (average_log_in = agent_time_sheet.stats.for_dow(dow).for_agent(agent).average_log_in.first and average_log_in.average_log_in) ? average_log_in.average_log_in.to_time.strftime("%H:%M") : "-" %>
+              <% elsif [:log_out].include?(key) %>
+                  <%= (average_log_out = agent_time_sheet.stats.for_dow(dow).for_agent(agent).average_log_out.first and average_log_out.average_log_out) ? average_log_out.average_log_out.to_time.strftime("%H:%M") : "-" %>
+              <% elsif [:log_out_time].include?(key) %>
+                  <% if average_log_out = agent_time_sheet.stats.for_dow(dow).for_agent(agent).average_log_out.first and average_log_out.average_log_out and average_log_in = agent_time_sheet.stats.for_dow(dow).for_agent(agent).average_log_in.first and average_log_in.average_log_in %>
+                    <%= format_for_timesheet(((average_log_out.average_log_out.to_time - average_log_in.average_log_in.to_time)/3600 - agent_time_sheet.hours.for_dow(dow).for_agent(agent).average(:hours)).round(2), :hours) %>
+                  <% else %>
+                    -
+                  <% end %>
+              <% end %>
+            </td>
         <% end %>
-        <% if [:log_in, :log_out].include?(key) %>
-            <td class="total_h"><%= t("agent_timesheets.index.na") %></td>
-        <% else %>
-            <td class="total_h_<%= key.to_s.first %> number_to_<%= key.to_s %>"></td>
-        <% end %>
+        <td class="total_h"><%= t("agent_timesheets.index.na") %></td>
       </tr>
   <% end %>
+
   <% [:hours, :results, :value, :cost].each do |key| %>
       <% if agent_time_sheet.send("display_#{key}".to_sym) %>
           <tr class="total_row bordered">
             <td class="ta_l"><%= t("agent_timesheets.index.agent_time_sheet.#{key}") %></td>
-            <% agent_time_sheet.days_of_week.each do %>
-                <td class="total_val_<%= key.to_s %> number_to_<%= key.to_s %>"></td>
+            <% agent_time_sheet.days_of_week.each do |dow| %>
+                <td class="total_val_<%= key.to_s %> number_to_<%= key.to_s %>">
+                  <%= format_for_timesheet(agent_time_sheet.send(key).for_dow(dow).for_agent(agent).sum(key), key) %>
+                </td>
             <% end %>
-            <td class="total_val_<%= key %> number_to_<%= key.to_s %> last"></td>
+            <td class="total_val_<%= key %> number_to_<%= key.to_s %> last">
+              <%= format_for_timesheet(agent_time_sheet.send(key).for_agent(agent).sum(key), key) %>
+            </td>
           </tr>
       <% end %>
   <% end %>
 
   <tr class="total_row bordered">
     <td class="ta_l"><%= t("agent_timesheets.index.agent_time_sheet.total_db") %></td>
-    <% agent_time_sheet.days_of_week.each do %>
-        <td class="total_val_db"></td>
+    <% agent_time_sheet.days_of_week.each do |dow| %>
+        <td class="total_val_db">
+          <% if value = agent_time_sheet.value.for_dow(dow).for_agent(agent).sum(:value) and value > 0 and cost = agent_time_sheet.cost.for_dow(dow).for_agent(agent).sum(:cost) and cost > 0 %>
+            <%= "#{(((value / cost)-1)*100).to_i}%" %>
+          <% else %>
+            <%= t("agent_timesheets.index.na") %>
+          <% end %>
+        </td>
     <% end %>
-    <td class="total_val_db last"></td>
+    <td class="total_val_db last">
+      <% if value = agent_time_sheet.value.for_agent(agent).sum(:value) and value > 0 and cost = agent_time_sheet.cost.for_agent(agent).sum(:cost) and cost > 0 %>
+        <%= "#{(((value / cost)-1)*100).to_i}%" %>
+      <% else %>
+        <%= t("agent_timesheets.index.na") %>
+      <% end %>
+    </td>
   </tr>
   </tbody>
 </table>

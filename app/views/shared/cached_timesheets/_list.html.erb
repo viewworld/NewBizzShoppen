@@ -11,11 +11,14 @@
     </thead>
     <tbody>
       <% cached_timesheets.each do |cached| %>
-        <tr id="cached_timesheet_<%= cached %>">
+        <tr id="cached_timesheet_<%= cached.to_i %>">
           <td class="cl"></td>
           <td><%= l Time.at(cached.to_i/100000), :format => :long  %></td>
-          <td><%= link_to "#{cached}.html", callers_agent_timesheet_path(cached, :format => :html), :target => '_new'  %></td>
-          <td><%= bt_link_to :remove, t("agent_timesheets.new.delete"), callers_agent_timesheet_path(cached, :format => :html), :method => :delete  %></td>
+          <td>
+            <%= bt_link_to :invoice, "HTML", callers_agent_timesheet_path(cached.to_i, :format => :html), :target => '_new'  %>
+            <%= bt_link_to :download, "PDF", callers_agent_timesheet_path(cached.to_i, :format => :pdf)  %>
+          </td>
+          <td><%= bt_link_to :remove, t("agent_timesheets.new.delete"), callers_agent_timesheet_path(cached.to_i, :format => :html), :method => :delete  %></td>
           <td class="cr"></td>
         </tr>
       <% end %>

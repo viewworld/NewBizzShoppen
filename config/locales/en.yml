@@ -3990,6 +3990,7 @@ en:
         results: "Res"
         value: "Value"
         cost: "Cost"
+        hours: "Time"
       agent_time_sheet:
         header: "Agent timesheet: %{name}"
         header_wo_name: "Agent timesheet"

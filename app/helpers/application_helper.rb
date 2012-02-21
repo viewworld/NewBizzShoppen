@@ -249,4 +249,15 @@ module ApplicationHelper
     sanitize_options = {:tags=>[],:attributes=>[]}
     raw sanitize(text, sanitize_options)
   end
+
+  def format_for_timesheet(val, type)
+    if type.to_sym == :hours
+      hours = val.to_i
+      minutes = ((val-val.to_i)*60).round
+      minutes = "0#{minutes}" if minutes < 10
+      "#{hours}:#{minutes}"
+    else
+      val.to_i
+    end
+  end
 end

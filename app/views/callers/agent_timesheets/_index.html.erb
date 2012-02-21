@@ -1,12 +1,15 @@
   <div id="tabs">
+    <!-- cut -->
 	<ul>
       <li><a href="#overview"><%= t("agent_timesheets.index.overview.header") %></a></li>
 	  <li><a href="#team_result_sheet"><%= t("agent_timesheets.index.team_result_sheet.header") %></a></li>
 	  <li><a href="#agent_time_sheet"><%= t("agent_timesheets.index.agent_time_sheet.header_wo_name") %></a></li>
 	</ul>
+    <!-- cut -->
 
-    <div id="overview" style="page-break-before:always;page-break-after:always;">
+    <div id="overview" style="page-break-after:always;">
       <% if timesheet.overview %>
+          <h3 style="display:none"><%= t("agent_timesheets.index.overview.header") %></h3>
         <% timesheet.variables.each do |v| %>
           <%= render :partial => "callers/agent_timesheets/overview_table", :locals => {:type => v, :timesheet => timesheet} %>
         <% end %>
@@ -15,6 +18,7 @@
 
     <div id="team_result_sheet" style="overflow-x: auto;page-break-after:always;">
       <% if timesheet.team_result_sheet %>
+          <h3 style="display:none"><%= t("agent_timesheets.index.team_result_sheet.header") %></h3>
         <% timesheet.cweeks.each do |cweek| %>
           <%= render :partial => "callers/agent_timesheets/team_result_sheet_table", :locals => {:cweek => cweek, :team_result_sheet => timesheet} %>
         <% end %>
@@ -23,19 +27,34 @@
     </div>
 
     <div id="agent_time_sheet">
+      <!-- cut -->
       <%= t("agent_timesheets.index.agent_time_sheet.select_agent") %>: <%= select_tag "agent_timesheet_agent_id", options_for_select(timesheet.agents.map{|a| [a.screen_name, a.id]}), :onchange => "show_timesheet($(this).attr('value'))" %>
       <%= t("agent_timesheets.index.agent_time_sheet.show_all") %> <%= check_box_tag "show_all_agents", "1", false, :onchange => "show_all_timesheets($(this).is(':checked'))" %>
+      <!-- cut -->
       <% if timesheet.agent_timesheet %>
+          <h3 style="display:none"><%= t("agent_timesheets.index.agent_time_sheet.header_wo_name") %></h3>
         <% timesheet.agents.each do |agent| %>
           <div id="agent_time_sheet_<%= agent.id %>" style="display:none;page-break-after:always;">
-            <hr/>
+            <!-- cut --><hr/><!-- cut -->
             <div class="fltl">
               <p><%= agent.screen_name %> (<%= agent.email %>)</p>
               <p><%= agent.company_name %></p>
             </div>
             <div class="fltr">
-              <p><%= t("agent_timesheets.index.agent_time_sheet.avg_value_per_hour")%>: <span class="avg_value_per_hour"></span></p>
-              <p><%= t("agent_timesheets.index.agent_time_sheet.avg_result_per_hour")%>: <span class="avg_result_per_hour"></span></p>
+              <p><%= t("agent_timesheets.index.agent_time_sheet.avg_value_per_hour")%>: <span class="avg_value_per_hour">                                                                      
+                <% if value = timesheet.value.for_agent(agent).sum(:value) and value > 0 and hours = timesheet.hours.for_agent(agent).sum(:hours) and hours > 0 %>
+                  <%= (value / hours).round %>
+                <% else %>
+                  0
+                <% end %>
+              </span></p>
+              <p><%= t("agent_timesheets.index.agent_time_sheet.avg_result_per_hour")%>: <span class="avg_result_per_hour">
+                <% if results = timesheet.results.for_agent(agent).sum(:results) and results > 0 and hours = timesheet.hours.for_agent(agent).sum(:hours) and hours > 0 %>
+                  <%= (results / hours).round %>
+                <% else %>
+                  0
+                <% end %>
+              </span></p>
             </div>
             <clb/>
             <% timesheet.cweeks.each do |cweek| %>
@@ -63,225 +82,8 @@
         }
     }
 
-    function sum_row(row, type) {
-        var sum = 0;
-        if (type == undefined) {
-            class_addon = ""
-        } else {
-            class_addon = "_" + type
-        }
-        $(row).find("td.val" + class_addon).each(function() {
-            sum += Number($(this).html());
-        });
-        res_cell = $(row).find("td.total_h" + class_addon);
-        res_cell.html(Math.round(sum*100)/100);
-    }
-
-    function sum_col(cell, type) {
-        var pos = $(cell).closest('td').prevAll().length;
-        var sum = 0;
-        if (type == undefined) {
-            class_addon = ""
-        } else {
-            class_addon = "_" + type
-        }
-        $(cell).closest('table').find('tbody tr').find('td:eq(' + pos + ')').each(function() {
-            sum += Number($(this).html());
-        });
-        $(cell).html(Math.round(sum*100)/100);
-    }
-
-    function agent_time_sheet_db(cell){
-        var pos = $(cell).closest('td').prevAll().length;
-	    cost = Number($(cell).closest('table').find('tbody tr').find('td.total_val_cost').eq(pos-1).html());
-	    value = Number($(cell).closest('table').find('tbody tr').find('td.total_val_value').eq(pos-1).html());
-
-//        db = 0;
-//        if(value >= cost && cost > 0){
-            db = Math.ceil(((value / cost)-1) * 100);
-//        }
-        if (isNaN(db)) {
-            $(cell).html("n/a");
-        } else {
-            $(cell).html(db + "%");
-        }
-    }
-
-    function team_result_sheet_sum_totals(cell, type) {
-        var pos = $(cell).closest('td').prevAll().length;
-        var sum = 0;
-        $('div#team_result_sheet tbody tr:last-of-type').find('td:eq(' + pos + ')').each(function() {
-            sum += Number($(this).html());
-        });
-        $(cell).html(Math.round(sum*100)/100);
-    }
-
-    function agent_time_sheet_sum_totals(cell, selector, type) {
-        var pos = $(cell).closest('td').prevAll().length;
-        var sum = 0;
-        $(selector).find('td:eq(' + pos + ')').each(function() {
-            sum += Number($(this).html());
-        });
-        $(cell).html(Math.round(sum*100)/100);
-    }
-
-    function calculate_log_out_time(cell, selector) {
-        var pos = $(cell).closest('td').prevAll().length;
-        log_out = Number($(selector).find('tr.log_out td:eq(' + pos + ')').html().split(':')[0]*60) + Number($(selector).find('tr.log_out td:eq(' + pos + ')').html().split(':')[1]);
-        log_in = Number($(selector).find('tr.log_in td:eq(' + pos + ')').html().split(':')[0]*60) + Number($(selector).find('tr.log_in td:eq(' + pos + ')').html().split(':')[1]);
-        hours_worked = Number($(selector).find('tr.hours td:eq(' + pos + ')').html())*60;
-        log_out_time = (log_out - log_in - hours_worked)/60;
-        if (isNaN(log_out_time)) {
-            $(cell).html('0.0');
-        } else {
-            $(cell).html(Math.round(log_out_time*100)/100);
-        }
-    }
-
-    function agent_time_sheet_avg(cell, selector) {
-        var pos = $(cell).closest('td').prevAll().length;
-        var sum = 0;
-        var num = 0;
-        var res = 0;
-        $(selector).find('td:eq(' + pos + ')').each(function() {
-          num += 1;
-          sum += Number($(this).html());
-        });
-        if (num == 0) {
-            res = 0;
-        } else {
-            res = (sum/num)*100;
-        }
-        $(cell).html(Math.round(res)/100);
-    }
-
-    function agent_time_sheet_avg_time(cell, selector) {
-        var pos = $(cell).closest('td').prevAll().length;
-        var sum = 0;
-        var num = 0;
-        var res = 0;
-        $(selector).find('td:eq(' + pos + ')').each(function() {
-            temp = Number($(this).html().split(':')[0])*60 + Number($(this).html().split(':')[1]);
-            if (temp > 0) {
-                sum += temp;
-                num += 1;
-            }
-        });
-        if (num == 0) {
-            res = 0;
-        } else {
-            res = (sum/num)*100;
-        }
-        $(cell).html(Math.round(res)/100);
-        minutes_to_hours($(cell));
-    }
-
-    function number_to_hours(cell){
-        to_hours(Number($(cell).html()), cell)
-    }
-
-    function minutes_to_hours(cell){
-        to_hours(Number($(cell).html())/60, cell)
-    }
-
-    function to_hours(value,cell) {
-        if (isNaN(value)) {
-            $(cell).html('0:00')
-        } else {
-            hours = Math.floor(value);
-            minutes = Math.round((value - hours) * 60);
-            if (minutes < 10) {
-                minutes = '0' + minutes
-            }
-            $(cell).html(hours + ':' + minutes)
-        }
-    }
-
-    function number_to_results(cell){
-        value = Number($(cell).html());
-        if (isNaN(value)) {
-            $(cell).html('0')
-        } else {
-            $(cell).html(Math.round(value))
-        }
-    }
-
-    function number_to_value(cell){
-        value = Number($(cell).html());
-        if (isNaN(value)) {
-            $(cell).html('0.00')
-        } else {
-            euros = Math.floor(value);
-            $(cell).html(euros)
-        }
-    }
-
-    function global_averages(scope) {
-        hours = Number($(scope).find('.total_val_hours.last').html());
-        value = Number($(scope).find('.total_val_value.last').html());
-        $(scope).find('.avg_value_per_hour').html(value/hours);
-        number_to_value($(scope).find('.avg_value_per_hour'));
-        results = Number($(scope).find('.total_val_results.last').html());
-        $(scope).find('.avg_result_per_hour').html(results/hours);
-        number_to_value($(scope).find('.avg_result_per_hour'));
-    }
-
     $(document).ready(function(){
         $("#tabs").tabs();
-
-        // totals
-        $('.total_h_h').each(function(){sum_row($(this).closest('tr'),'h')});
-        $('.total_h_v').each(function(){sum_row($(this).closest('tr'),'v')});
-        $('.total_h_r').each(function(){sum_row($(this).closest('tr'),'r')});
-        $('.total_h_c').each(function(){sum_row($(this).closest('tr'),'c')});
-        $('.total_v_h').each(function(){sum_col($(this),'h')});
-        $('.total_v_r').each(function(){sum_col($(this),'r')});
-        $('.total_v_v').each(function(){sum_col($(this),'v')});
-        $('.total_v_c').each(function(){sum_col($(this),'c')});
-
-        // team result sheet totals
-        $('.total_val_h').each(function(){team_result_sheet_sum_totals($(this),'h')});
-        $('.total_val_r').each(function(){team_result_sheet_sum_totals($(this),'r')});
-        $('.total_val_v').each(function(){team_result_sheet_sum_totals($(this),'v')});
-        $('.total_val_c').each(function(){team_result_sheet_sum_totals($(this),'c')});
-
-        // agent time sheet totals
-        <% if timesheet.agent_timesheet %>
-            $('tr.log_out_time td.val_l').each(function(){
-              calculate_log_out_time($(this), $(this).closest('tbody'))
-            });
-          <% timesheet.agents.each do |agent| %>
-            <% [:hours, :results, :value, :cost].each do |key| %>
-            $('div#agent_time_sheet_<%= agent.id %> .total_val_<%= key.to_s %>').each(function() {
-                agent_time_sheet_sum_totals($(this), $('div#agent_time_sheet_<%= agent.id %>').find('tr.<%= key.to_s %>'),'<%= key.to_s.first %>')
-            });
-            <% end %>
-
-            <% [:log_out_time, :value].each do |key| %>
-            $('div#agent_time_sheet_<%= agent.id %> .avg_val_<%= key.to_s %>').each(function() {
-                agent_time_sheet_avg($(this), $('div#agent_time_sheet_<%= agent.id %>').find('tr.<%= key.to_s %>'))
-            });
-            <% end %>
-
-            <% [:log_in, :log_out].each do |key| %>
-            $('div#agent_time_sheet_<%= agent.id %> .avg_val_<%= key.to_s %>').each(function() {
-                agent_time_sheet_avg_time($(this), $('div#agent_time_sheet_<%= agent.id %>').find('tr.<%= key.to_s %>'))
-            });
-            <% end %>
-
-            global_averages($('div#agent_time_sheet_<%= agent.id %>'));
-            $('div#agent_time_sheet_<%= agent.id %> .total_val_db').each(function() {  agent_time_sheet_db($(this))  });
-          <% end %>
-          $('.total_h_l').each(function(){sum_row($(this).closest('tr'),'l')});
-        <% end %>
-
-        // formatting
-        $('.number_to_hours').each(function(){number_to_hours($(this))});
-        $('.number_to_results').each(function(){number_to_results($(this))});
-        $('.number_to_value').each(function(){number_to_value($(this))});
-        $('.number_to_cost').each(function(){number_to_value($(this))});
-        $('.number_to_log_out_time').each(function(){number_to_hours($(this))});
-
         show_timesheet($('#agent_timesheet_agent_id').val());
     });
   </script>
