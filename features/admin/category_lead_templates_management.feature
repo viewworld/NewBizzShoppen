@@ -133,6 +133,10 @@ Scenario: Make it possible to duplicate lead templates (from lead templates list
   And template named "Computer details" is mandatory
   And template named "Computer details" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
   And I go to browse leads
+  When I uncheck "search_with_unique"
+  And I uncheck "search_with_public"
+  And I fill in "search_with_keyword" with "computers"
+  Then I press translated "administration.categories.index.view.search.search_button"
   And I follow translated "administration.categories.index.view.edit_link"
   And I follow translated "administration.categories.edit.view.duplicate_template"
   Then the "lead_template_name" field should contain "Computer details"

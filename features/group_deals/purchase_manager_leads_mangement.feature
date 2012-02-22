@@ -76,7 +76,6 @@ Feature: Purchase manager leads management
     And I fill in "search_with_keyword" with "electronics"
     Then I press translated "administration.categories.index.view.search.search_button"
     Then I follow translated "administration.leads.index.view.edit"
-    And I open page in browser
     Then I should see "Default price"
     Then I fill in "category_default_price" with "error"
     Then I press translated "administration.categories.edit.view.button_update"

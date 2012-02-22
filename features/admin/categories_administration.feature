@@ -104,6 +104,9 @@ Scenario: I can reattach node
   And I select "Parent category 2" from "category_parent_id"
   And attach the file "sample image" to "category_image_attributes_asset"
   And I press translated "administration.categories.edit.view.button_update"
+  When I uncheck "search_with_unique"
+  And I uncheck "search_with_public"
+  Then I press translated "administration.categories.index.view.search.search_button"
   Then I should see category named "Child category" within category named "Parent category 2"
 
 @_tested @_done
@@ -231,16 +234,27 @@ Scenario: Buyout for all categories is disabled by default
   And I follow translated "administration.categories.index.view.new_category"
   And the "category_buyout_enabled" checkbox should not be checked
 
-@m20 @ao @added @_done @_tested    @wip
+@m20 @ao @added @_done @_tested
 Scenario: I should be able to delete category image
   When there are no categories
   And Category Computers is created
-  And I go to administration categories
+  And I go to browse leads
+  When I uncheck "search_with_unique"
+  And I uncheck "search_with_public"
+  And I fill in "search_with_keyword" with "computers"
+  Then I press translated "administration.categories.index.view.search.search_button"
   And I follow translated "administration.categories.index.view.edit_link"
   And attach the file "sample image" to "category_image_attributes_asset"
   And I press "Save"
+  When I uncheck "search_with_unique"
+  And I uncheck "search_with_public"
+  And I fill in "search_with_keyword" with "computers"
+  Then I press translated "administration.categories.index.view.search.search_button"
   And I follow translated "administration.categories.index.view.edit_link"
   And I press "Save"
+  When I uncheck "search_with_unique"
+  And I uncheck "search_with_public"
+  Then I press translated "administration.categories.index.view.search.search_button"
   Then I should see CSS path "table#categories_table tr:nth-of-type(1) td:nth-of-type(2) img"
   When I follow translated "administration.categories.index.view.edit_link"
   And I check "category_remove_image"

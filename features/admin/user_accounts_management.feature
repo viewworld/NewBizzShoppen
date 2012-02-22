@@ -695,6 +695,9 @@ Scenario: When user has unique category with auto-buy he should not be subscribe
   Then User nbsbuyer3483434biz@nbs.com with role supplier is big buyer
   Then Category Computers is created
   When I go to browse leads
+  When I uncheck "search_with_unique"
+  And I uncheck "search_with_public"
+  Then I press translated "administration.categories.index.view.search.search_button"
   And I follow category for edit "Computers"
   Then I check "category_is_customer_unique"
   Then I select "nbsbuyer3483434biz@nbs.com" from "all_customers"
