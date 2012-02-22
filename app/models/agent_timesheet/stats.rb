@@ -14,4 +14,7 @@ class AgentTimesheet::Stats < ActiveRecord::Base
     scope :for_agents, lambda{|users| where(:user_id => Array(users).map(&:to_i))}
     scope :for_agent, lambda{|user| where("user_id = ?", user.to_i)}
 
+    scope :average_log_in, select("(timestamp without time zone 'epoch' + avg(extract(epoch from log_in)) * interval '1 second') as average_log_in")
+    scope :average_log_out, select("(timestamp without time zone 'epoch' + avg(extract(epoch from log_out)) * interval '1 second') as average_log_out")
+
 end

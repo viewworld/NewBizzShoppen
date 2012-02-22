@@ -561,7 +561,9 @@ div.pagination .disabled
 }
 
 .timesheet .total_h,
-.timesheet .total_c
+.timesheet .total_c,
+.timesheet .total_r,
+.timesheet .total_v
 {
     background: #fff;
     font-weight: bold;

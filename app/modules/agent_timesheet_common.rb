@@ -2,6 +2,8 @@ module AgentTimesheetCommon
 
   attr_accessor :start_date, :end_date, :campaigns, :agents, :call_centres, :overview, :team_result_sheet, :agent_timesheet, :display_hours, :display_results, :display_value, :display_cost
 
+  TIMESHEETS_PATH = "public/system/agent_timesheets_cache"
+
   DEFAULT_OPTIONS = {
       :show_weekends     => true,
       :start_date        => (Date.today-1.year).beginning_of_week,
@@ -107,10 +109,9 @@ module AgentTimesheetCommon
     @variables ||= [:hours,:results,:value,:cost].select{|var| var if send("display_#{var}")}
   end
 
-
   def cached_timesheets
     begin
-      Dir.new(Rails.root.join("public/system/agent_timesheets_cache/#{@current_user.id}")).entries.sort.reverse.except(['.','..']).map{|filename| filename.split('.').first}
+      Dir.new(Rails.root.join("#{TIMESHEETS_PATH}/#{@current_user.id}")).entries.sort.reverse.select{|f| f[/\.html/]} #except(['.','..'])#.map{|filename| filename.split('.').first}
     rescue
       []
     end
