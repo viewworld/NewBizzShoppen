@@ -1,0 +1,120 @@
+<div class="homepage_actions frm_dark pdd_10">
+  <% unless user_signed_in? %>
+      <%= bt_link_to nil, t("fairdeals_home.show.view.get_free_account"), new_member_account_path, :class => "bt_max" %>
+  <% end %>
+  <%= bt_link_to nil, t("fairdeals_home.show.view.browse_our_deals"), deal_categories_path, :class => "bt_grey bt_max" %>
+  <%= bt_link_to nil, t("fairdeals_home.show.view.find_a_vendor"), new_members_tender_path, :class => "bt_grey bt_max" %>
+</div>
+
+
+
+<% unless user_signed_in? %>
+
+    <frm title="#{t('home.show.view.sign_in_form_title')}">
+      <div class="pdd_10">
+        <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
+            <fieldset class="inputs labels_100 inputs_180 no_pdd">
+              <ol class="align_inputs no_pdd">
+                <%= render :partial => "shared/accounts/social_login_for_sign_in" %>
+              </ol>
+            </fieldset>
+            <fieldset class="inputs labels_90 inputs_130 no_pdd">
+              <ol class="align_inputs no_pdd">
+                <%= f.input :email, :input_html => {:tabindex => 1} %>
+                <%= f.input :password, :label => raw(I18n.t("activerecord.attributes.user.password") + content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link")), :input_html => {:tabindex => 2}, :wrapper_html => {:class => "rltv"} %>
+                <%= f.input :remember_me, :as => :boolean, :required => false, :input_html => {:tabindex => 3} %>
+                <li class="commit">
+                  <ibt>
+                    <%= f.submit t("home.show.view.sign_in"), :tabindex => 4 %>
+                  </ibt>
+                </li>
+              </ol>
+            </fieldset>
+        <% end %>
+      </div>
+    </frm>
+
+<% end %>
+
+<% if Settings.contact_us_phone.present? or Settings.contact_us_email.present? or Settings.contact_us_skype.present? %>
+    <div class="frm_dark pdd_10 contact_us_frm">
+      <h2><%= t("fairdeals_home.show.view.contact_us") %></h2>
+
+      <% if Settings.contact_us_phone.present? %>
+          <p><%= image_tag("fairdeals/icons/phone.png") %><strong><%= Settings.contact_us_phone %></strong></p>
+      <% end %>
+      <% if Settings.contact_us_email.present? %>
+          <p><%= image_tag("fairdeals/icons/mail.png") %>
+            <strong><%= link_to Settings.contact_us_email, "mailto:#{Settings.contact_us_email}" %></strong></p>
+      <% end %>
+      <% if Settings.contact_us_skype.present? %>
+          <p><%= image_tag("fairdeals/icons/skype.png") %>
+            <strong><%= link_to Settings.contact_us_skype, "skype:#{Settings.contact_us_skype}" %></strong></p>
+      <% end %>
+    </div>
+<% end %>
+
+<div class="frm_dark pdd_10">
+  <h2><%= t("fairdeals_home.show.view.request_a_deal") %></h2>
+  <% @email_deal_request_preview = DealRequestTemplatePreview.new(:blank_template, {}, current_user) %>
+  <%= form_for :email_deal_request_preview, :url => deal_requests_path, :html => {:id => "request_deal_form"} do |f| %>
+
+
+      <fieldset class="inputs labels_70 inputs_160 no_pdd">
+        <ol class="no_pdd">
+          <li id="email_deal_request_preview_name_input" class="string">
+            <%= f.label t("fairdeals_home.show.view.deal_request.name") %>
+            <%= f.text_field :name %> <%= custom_error_for_object_and_field(@email_deal_request_preview, :name) %>
+          </li>
+          <li id="email_deal_request_preview_email_from_input" class="string">
+            <%= f.label t("fairdeals_home.show.view.deal_request.email_from") %>
+            <%= f.text_field :email_from %> <%= custom_error_for_object_and_field(@email_deal_request_preview, :email_from) %>
+          </li>
+          <li id="email_deal_request_preview_phone_number_input" class="string">
+            <%= f.label t("fairdeals_home.show.view.deal_request.phone_number") %>
+            <%= f.text_field :phone_number %> <%= custom_error_for_object_and_field(@email_deal_request_preview, :phone_number) %>
+          </li>
+          <li id="email_deal_request_preview_deal_description_input" class="text">
+            <%#= f.label t("fairdeals_home.show.view.deal_request.description") %>
+            <%= f.text_area :deal_description, :style => "width:240px;height: 80px;" %>
+          </li>
+          <li class="commit">
+            <ibt c="fltri">
+              <%= button_to_function t("fairdeals_home.show.view.deal_request.send_email_button"), "validate_request_deal_form()" %>
+            </ibt>
+          </li>
+        </ol>
+      </fieldset>
+
+
+  <% end %>
+</div>
+
+<% if false %>
+<!--<div class="news">-->
+  <!--
+<h2><%= t('member_home.show.view.header_news') %><%= link_to t("member_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass => 'Member'}) %></h2>
+-->
+  <!--<ul>-->
+    <!--<% if @news.any? %>-->
+        <!--<%= render :partial => 'news', :collection => @news, :as => :news %>-->
+    <!--<% else %>-->
+        <!--<%= render :partial => 'shared/blank_data_li' %>-->
+    <!--<% end %>-->
+  <!--</ul>-->
+
+<!--</div>-->
+<% end %>
+
+<script type="text/javascript">
+      function validate_request_deal_form() {
+          name_is_valid = custom_form_validator_for_field("#request_deal_form", "email_deal_request_preview_name", "not_empty");
+          phone_is_valid = custom_form_validator_for_field("#request_deal_form", "email_deal_request_preview_phone_number", "not_empty");
+          email_is_valid = custom_form_validator_for_field("#request_deal_form", "email_deal_request_preview_email_from", "valid_email");
+          deal_description_is_valid = custom_form_validator_for_field("#request_deal_form", "email_deal_request_preview_deal_description", "not_empty");
+
+          if (name_is_valid && phone_is_valid && email_is_valid && deal_description_is_valid) {
+              $('#request_deal_form').submit();
+          }
+      }
+</script>
