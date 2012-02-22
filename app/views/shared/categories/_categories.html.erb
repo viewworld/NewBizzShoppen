@@ -17,16 +17,16 @@
 
   </header>
 
-   <%= categories_listing @category_type.constantize.roots_for(current_user) do |blocks| %>
+   <%= categories_listing @categories do |blocks| %>
 
       <% blocks.tools do |category| %>
           <% if user_signed_in? and current_user.admin? %>
               <ul-actions>
                 <li>
-                  <%= link_to @category_type == "LeadCategory" ? t("categories.index.view.view_leads") : t("categories.index.view.view_deals"), "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}#{"?search[with_category]=#{category.id}" if category.is_a?(LeadCategory)}", :class => "default_action" %>
+                  <%= link_to @category_type == "LeadCategory" ? t("categories.index.view.view_leads") : t("categories.index.view.view_deals"), "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}#{"?search[with_category]=#{category.id}" if category.is_a?(LeadCategory)}", :class => "#{'default_action' if !user_signed_in? and !current_user.admin?}" %>
                 </li>
                 <li>
-                  <%= link_to(t("administration.categories.index.view.edit_link"), edit_administration_category_path(category)) %>
+                  <%= link_to(t("administration.categories.index.view.edit_link"), edit_administration_category_path(category), :class => "#{'default_action' if user_signed_in? and current_user.admin?}") %>
                 </li>
                 <% if category.is_empty? %>
                 <li>

@@ -1,5 +1,6 @@
 class Category < ActiveRecord::Base
   translates :name, :description
+  include ScopedSearch::Model
 
   attr_accessor :remove_image
 
@@ -76,6 +77,10 @@ class Category < ActiveRecord::Base
   ").where("(categories.is_customer_unique = 't' and category_customers.user_id = :user_id) OR (categories_users.user_id = :user_id)", {:user_id => user.id}) }
   scope :with_comment_threads, select("DISTINCT(categories.id), categories.*").joins("INNER JOIN leads ON leads.category_id=categories.id INNER JOIN comments ON comments.commentable_id=leads.id")
   scope :without_auto_buy, where(:auto_buy => false)
+  scope :with_keyword, lambda { |keyword| where("lower(name) like ?", "%#{keyword.to_s.downcase}%") }
+  scope :with_unique, where("is_customer_unique IS true or is_agent_unique IS true")
+  scope :with_locked, where("is_locked IS true")
+  scope :with_public, where("auto_buy IS false")
   before_destroy :check_if_category_is_empty
   before_destroy :mark_articles_to_destroy
 
@@ -220,16 +225,16 @@ class Category < ActiveRecord::Base
   def self.roots_for(user)
     root_categories = if user
                         if user.admin?
-                          roots
+                          where("parent_id IS NULL")
                         elsif user.has_role?(:category_supplier) and is_a?(LeadCategory)
                           user.parent_accessible_categories_without_auto_buy and  is_a?(LeadCategory)
                         elsif user.has_any_role?(:supplier, :lead_supplier, :lead_user)
-                          roots.with_supplier_unique(user.parent ? user.parent.with_role : user)
+                          where("parent_id IS NULL").with_supplier_unique(user.parent ? user.parent.with_role : user)
                         else
-                          roots.with_agent_unique(user)
+                          where("parent_id IS NULL").with_agent_unique(user)
                         end
                       else
-                        roots.without_unique
+                        where("parent_id IS NULL").without_unique
                       end
 
     root_categories = root_categories.without_locked_and_not_published unless user and user.admin?

@@ -1021,6 +1021,12 @@ en:
           edit_link: "Edit"
           destroy_link: "Delete"
           new_deal_category: "New deal category"
+          search:
+            keyword_label: "Keyword"
+            unique: "Unique"
+            search_button: "Search"
+            locked: "Locked"
+            public: "Public"
       new:
         view:
           button_create: "Create"

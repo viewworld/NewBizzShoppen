@@ -60,6 +60,10 @@ Scenario: I can edit global email template to be sent when lead is bought
 @m13 @requested @auto_buy @is @_done @_tested
 Scenario: I can edit category specific email template to be sent when lead is bought
   Then I follow translated "layout.main_menu.shared.browse_leads"
+  When I uncheck "search_with_unique"
+  And I uncheck "search_with_public"
+  And I fill in "search_with_keyword" with "electronics"
+  Then I press translated "administration.categories.index.view.search.search_button"
   Then category "Electronics" has email template - "No"
   Then I follow translated "administration.categories.index.view.edit_link"
   Then I should see "Electronics"

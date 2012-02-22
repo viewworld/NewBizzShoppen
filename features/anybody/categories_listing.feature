@@ -54,5 +54,9 @@ Scenario: Categories should be in a form of a list
 Scenario: I should be able to click on the category row to browse leads
 
 #10251
-@m29 @requested
+@m29 @requested @tgn @_done @_tested
 Scenario: Deal and lead categories should be listed alphabetically by default
+  And I am on the homepage
+  And I sign in as buyer@nbs.com with password secret
+  Then I follow translated "layout.main_menu.shared.browse_leads"
+  And I should see "Business" before "Electronics"

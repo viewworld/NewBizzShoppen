@@ -71,7 +71,12 @@ Feature: Purchase manager leads management
     Then I follow translated "administration.categories.index.view.new_deal_category"
     Then I should not see "Default price"
     Then I follow translated "layout.main_menu.shared.browse_leads"
+    When I uncheck "search_with_unique"
+    And I uncheck "search_with_public"
+    And I fill in "search_with_keyword" with "electronics"
+    Then I press translated "administration.categories.index.view.search.search_button"
     Then I follow translated "administration.leads.index.view.edit"
+    And I open page in browser
     Then I should see "Default price"
     Then I fill in "category_default_price" with "error"
     Then I press translated "administration.categories.edit.view.button_update"

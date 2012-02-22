@@ -11,6 +11,9 @@ Scenario: I can see categories tree
   Given Category named "Sample category" already exists
   And Category named "Another sample category" already exists within category named "Sample category"
   And I go to browse leads
+  When I uncheck "search_with_unique"
+  And I uncheck "search_with_public"
+  Then I press translated "administration.categories.index.view.search.search_button"
   And I should see category named "Another sample category" within category named "Sample category"
 
 @_tested @bk @_done
@@ -49,6 +52,10 @@ Scenario: I can create a category even when I am on DK locales (slug is not set 
 Scenario: I can edit category - name and description
   Given Category named "New test category" already exists
   And I go to browse leads
+  When I uncheck "search_with_unique"
+  And I uncheck "search_with_public"
+  And I fill in "search_with_keyword" with "New test category"
+  Then I press translated "administration.categories.index.view.search.search_button"
   Then I follow translated "administration.categories.index.view.edit_link"
   And I fill in "category_name" with "Test category correction"
   And I fill in "category_description" with "Description correction"
@@ -63,6 +70,9 @@ Scenario: I can edit category - name and description
 Scenario: I can delete a category if it is empty
   Given Category named "New test category" already exists
   And I go to browse leads
+  When I uncheck "search_with_unique"
+  And I uncheck "search_with_public"
+  Then I press translated "administration.categories.index.view.search.search_button"
   And I follow translated "administration.categories.index.view.destroy_link" within "New test category" category
   Then I should see translated "flash.categories.destroy.notice"
 
@@ -70,6 +80,9 @@ Scenario: I can delete a category if it is empty
 Scenario: I cannot delete a category if it is not empty
   Given Category named "New test category" already exists
   And I go to browse leads
+  When I uncheck "search_with_unique"
+  And I uncheck "search_with_public"
+  Then I press translated "administration.categories.index.view.search.search_button"
   And Lead named "Super printers" exists within "New test category" category
   And I follow translated "administration.categories.index.view.destroy_link" within "New test category" category
   Then I should see translated "flash.categories.destroy.error"
@@ -83,6 +96,9 @@ Scenario: I can reattach node
   And Category named "Parent category 2" already exists
   And Category named "Child category" already exists within category named "Parent category 1"
   And I go to browse leads
+  When I uncheck "search_with_unique"
+  And I uncheck "search_with_public"
+  Then I press translated "administration.categories.index.view.search.search_button"
   Then I should see category named "Child category" within category named "Parent category 1"
   When I follow translated "administration.categories.index.view.edit_link" for category "Child category"
   And I select "Parent category 2" from "category_parent_id"
@@ -110,11 +126,19 @@ Scenario: I can make any category country specific (Category can have one or mor
   Given there are no categories
   And Category Computers is created
   When I go to browse leads
+  When I uncheck "search_with_unique"
+  And I uncheck "search_with_public"
+  And I fill in "search_with_keyword" with "computers"
+  Then I press translated "administration.categories.index.view.search.search_button"
   And I follow translated "administration.categories.index.view.edit_link"
   And I select "Denmark" from "category_country_ids"
   And attach the file "sample image" to "category_image_attributes_asset"
   And I press translated "administration.categories.edit.view.button_update"
   And I should see translated "flash.categories.update.notice"
+  When I uncheck "search_with_unique"
+  And I uncheck "search_with_public"
+  And I fill in "search_with_keyword" with "computers"
+  Then I press translated "administration.categories.index.view.search.search_button"
   Then I follow translated "administration.categories.index.view.edit_link"
   And "category_country_ids" should be selected for value "Denmark"
 
@@ -177,6 +201,9 @@ Scenario: I can enable auto-buy option for big buyer for categories which are un
   Then User nbsbuyer3483434biz@nbs.com with role supplier is big buyer
   Then Category Computers is created
   When I go to browse leads
+  When I uncheck "search_with_unique"
+  And I uncheck "search_with_public"
+  Then I press translated "administration.categories.index.view.search.search_button"
   And I follow category for edit "Computers"
   Then I check "category_is_customer_unique"
   Then I select "nbsbuyer3483434biz@nbs.com" from "all_customers"
@@ -204,7 +231,7 @@ Scenario: Buyout for all categories is disabled by default
   And I follow translated "administration.categories.index.view.new_category"
   And the "category_buyout_enabled" checkbox should not be checked
 
-@m20 @ao @added @_done @_tested
+@m20 @ao @added @_done @_tested    @wip
 Scenario: I should be able to delete category image
   When there are no categories
   And Category Computers is created

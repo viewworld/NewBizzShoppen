@@ -3,6 +3,11 @@ class DealCategoriesController < ApplicationController
 
   before_filter :set_category_type
 
+  def index
+    @search = @category_type.constantize.scoped_search(params[:search])
+    @categories = @search.roots_for(current_user).order("name")
+  end
+
   private
 
   def set_category_type
