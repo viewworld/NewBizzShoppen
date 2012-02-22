@@ -262,22 +262,62 @@ Scenario: I should be able to delete category image
   Then I should not see CSS path "table#categories_table tr:nth-of-type(1) td:nth-of-type(2) img"
 
 #10251
-@m29 @requested
+@m29 @requested @tgn @_done @_tested
 Scenario: I can filter unique categories (defult on)
+  When there are no categories
+  And Category Watches is created
+  And Category Computers is created
+  And Category LockedCat is created
+  And category named "LockedCat" is locked
+  And category "UniqCat" is unique for user with email "buyer@nbs.com" role "supplier"
+  And User translator_category_buyer@nbs.com with role category_supplier is big buyer
+  And category "UniqAutoBuy" is unique for user with email "translator_category_buyer@nbs.com" role "category_supplier"
+  And category "UniqAutoBuy" is unique for some customers users and is auto buy
+  And I go to browse leads
+  Then checkbox named "search_with_unique" should be checked
+  Then checkbox named "search_with_public" should be checked
+  Then checkbox named "search_with_locked" should not be checked
+  And I should see "UniqCat"
+  And I should not see "UniqAutoBuy"
+  And I should not see "Watches"
+  And I should not see "Computers"
+  And I should not see "LockedCat"
+  When I uncheck "search_with_unique"
+  When I uncheck "search_with_public"
+  Then I press translated "administration.categories.index.view.search.search_button"
+  And I should see "UniqCat"
+  And I should see "UniqAutoBuy"
+  And I should see "Watches"
+  And I should see "Computers"
+  And I should see "LockedCat"
+  And I should see "Computers" before "LockedCat"
+  And I should see "LockedCat" before "UniqAutoBuy"
+  And I check "search_with_locked"
+  Then I press translated "administration.categories.index.view.search.search_button"
+  And I should see "LockedCat"
+  And I should not see "UniqCat"
+  And I should not see "UniqAutoBuy"
+  And I should not see "Watches"
+  And I should not see "Computers"
+  And I uncheck "search_with_locked"
+  And I fill in "search_with_keyword" with "uniq"
+  Then I press translated "administration.categories.index.view.search.search_button"
+  And I should see "UniqCat"
+  And I should see "UniqAutoBuy"
 
 #10251
-@m29 @requested
+@m29 @requested @tgn @_done @_tested_elsewhere
 Scenario: I can filter public categories (defult on)
 
 #10251
-@m29 @requested
+@m29 @requested @tgn @_done @_tested_elsewhere
 Scenario: I can filter locked categories (defult off)
 
 #10251
-@m29 @requested
+@m29 @requested @tgn @_done @_tested_elsewhere
 Scenario: I can search category by name
 
 #10251
-@m29 @requested
+@m29 @requested @tgn @_done @_tested_elsewhere
 Scenario: Default action when I click category is edit
 
