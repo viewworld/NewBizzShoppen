@@ -26,7 +26,7 @@ module EmailTemplateHelp
 
       "lead_notification_daily" => {:classes => ["Lead"], :custom => []},
       "lead_notification_weekly" => {:classes => ["Lead"], :custom => []},
-      "result_send_material" => {:classes => [], :custom => []},
+      "result_send_material" => {:classes => [], :custom => ["contact_company_name", "contact_name", "agent_name", "agent_phone_number"]},
       "upgrade_contact_to_category_buyer" => {:classes => ["User"], :custom => ["password"]},
       "upgrade_contact_to_buyer" => {:classes => ["User"], :custom => ["password"]},
 

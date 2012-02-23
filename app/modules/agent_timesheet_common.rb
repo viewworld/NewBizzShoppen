@@ -1,6 +1,8 @@
 module AgentTimesheetCommon
 
-  attr_accessor :scoped, :start_date, :end_date, :campaigns, :agents, :call_centres, :overview, :team_result_sheet, :agent_timesheet, :display_hours, :display_results, :display_value, :display_cost
+  attr_accessor :start_date, :end_date, :campaigns, :agents, :call_centres, :overview, :team_result_sheet, :agent_timesheet, :display_hours, :display_results, :display_value, :display_cost
+
+  TIMESHEETS_PATH = "public/system/agent_timesheets_cache"
 
   DEFAULT_OPTIONS = {
       :show_weekends     => true,
@@ -46,8 +48,10 @@ module AgentTimesheetCommon
 
   end
 
-  def scoped
-    @scoped ||= AgentTimesheet.
+  private
+
+  def scoped(var)
+    "AgentTimesheet::#{var.to_s.camelize}".constantize.
         show_weekends(@show_weekends).
         for_campaigns(@campaigns).
         with_date_between(@start_date, @end_date).
@@ -55,11 +59,33 @@ module AgentTimesheetCommon
   end
 
   def first
-    @first ||= scoped.order("year, week ASC").first
+    @first ||= stats.order("year, week ASC").first
   end
 
   def last
-    @last  ||= scoped.order("year, week ASC").last
+    @last  ||= stats.order("year, week ASC").last
+  end
+
+  public
+
+  def hours
+    @hours ||= scoped(:hours)
+  end
+
+  def results
+    @results ||= scoped(:results)
+  end
+
+  def value
+    @value ||= scoped(:value)
+  end
+
+  def cost
+    @cost ||= scoped(:cost)
+  end
+
+  def stats
+    @stats ||= scoped(:stats)
   end
 
   def cweeks
@@ -75,9 +101,17 @@ module AgentTimesheetCommon
     @commercial_days_of_week ||= @show_weekends ? (days << days.shift) : (1..5).to_a
   end
 
+  def reports
+    @reports ||= [:overview,:team_result_sheet,:agent_timesheet].select{|rep| rep if send(rep)}
+  end
+
+  def variables
+    @variables ||= [:hours,:results,:value,:cost].select{|var| var if send("display_#{var}")}
+  end
+
   def cached_timesheets
     begin
-      Dir.new(Rails.root.join("public/system/agent_timesheets_cache/#{@current_user.id}")).entries.sort.reverse.except(['.','..']).map{|filename| filename.split('.').first}
+      Dir.new(Rails.root.join("#{TIMESHEETS_PATH}/#{@current_user.id}")).entries.sort.reverse.select{|f| f[/\.html/]} #except(['.','..'])#.map{|filename| filename.split('.').first}
     rescue
       []
     end

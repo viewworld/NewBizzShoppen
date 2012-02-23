@@ -206,3 +206,19 @@ Feature: Agent timesheets
   #9889
   @m28 @requested @tgn @_done @_tested_elsewhere
   Scenario: Dynamic result value should be included into agent timesheets
+
+  #10170
+  @m29 @requested
+  Scenario: I can download timesheet as PDF
+
+  #10170
+  @m29 @requested
+  Scenario: The PDF should be generated in background with the HTML version
+
+  #10170
+  @m29 @requested
+  Scenario: The PDF should be well formated (with page breaks, font size)
+
+  #10278
+  @m29 @requested
+  Scenario: Notification should be added when I generate a timesheet

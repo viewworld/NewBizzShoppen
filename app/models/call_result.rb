@@ -19,8 +19,8 @@ class CallResult < ActiveRecord::Base
   validates_presence_of :result_id, :creator_id, :contact_id
   validates_presence_of :contact_email_address, :if => Proc.new{|cr| cr.result.send_material? or cr.result.upgrades_to_any_user?}
   validates_format_of :contact_email_address, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :if => Proc.new{|cr| cr.result.send_material? or cr.result.upgrades_to_any_user?}
-  validates_presence_of :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_zip_code, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
-  validates_presence_of :contact_company_name, :contact_phone_number, :contact_address_line_3, :if => Proc.new { |cr| cr.result.upgrades_to_member? }
+  validates_presence_of :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_3, :contact_zip_code, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
+  validates_presence_of :contact_company_name, :contact_phone_number, :if => Proc.new { |cr| cr.result.upgrades_to_member? }
   validate :validate_uniqueness_of_contact_email_address, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
   validate :validate_upgraded_user, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
 
@@ -55,7 +55,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def can_be_managed_by?(user)
-    creator.id == user.id or user.has_one_of_roles?(:admin, :call_centre)
+    (creator.present? and creator.id == user.id) or user.has_one_of_roles?(:admin, :call_centre)
   end
 
   def custom_fields_for_csv(size)
@@ -67,6 +67,10 @@ class CallResult < ActiveRecord::Base
 
   def buying_categories
     Category.where("id in (?)", self.buying_category_ids || contact.category.root.id)
+  end
+
+  def creator_full_name
+    creator ? creator.full_name : "-creator deleted-"
   end
 
   class << self
@@ -259,7 +263,7 @@ class CallResult < ActiveRecord::Base
     template = customize_email_template(template)
 
     TemplateMailer.new(contact_email_address, :blank_template, Country.get_country_from_locale,
-                                       {:subject_content => template.subject, :body_content => template.body,
+                                       {:subject_content => template.subject, :body_content => template.render({:contact_company_name => contact.company_name, :contact_name => contact.contact_name, :agent_name => creator.full_name, :agent_phone_number => creator.phone}),
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc,
                                         :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
                                         assets_to_path_names(send_material_result_value.materials)).deliver!

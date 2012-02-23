@@ -2,29 +2,18 @@ class ::AgentTimesheet::General
 
   include AgentTimesheetCommon
 
-  def build_select(grp)
-    sel = grp.dup
-    sel << "SUM(hours) as hours" if @display_hours
-    sel << "SUM(results) as results" if @display_results
-    sel << "SUM(value) as value" if @display_value
-    sel << "SUM(cost) as cost" if @display_cost
-    sel.join(",")
-  end
-
-  def overview_data
-    grp = [:year, :week , :dow]
-    scoped.select(build_select(grp)).group(grp.join(",")).group_by_multiple(grp)
-  end
-
-  def team_result_sheet_data
-    grp = [:year, :week, :user_id, :dow]
-    scoped.select(build_select(grp)).group(grp.join(",")).group_by_multiple(grp)
-  end
-
-  def agent_time_sheet_data(agent)
-    grp = [:log_in, :log_out, :log_out_time, :week, :dow, :year, :user_id]
-    scoped.select(build_select(grp)).group(grp.join(",")).where(:user_id => agent.to_i).group_by_multiple([:year, :week, :dow])
-  end
+  MARKUP_SCAFFOLD = %{<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml">
+          <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <style type="text/css">
+              @import url("../stylesheets/invoice.css") print;
+            </style>
+          </head>
+          <body>
+            %s
+          </body>
+        </html>}
 
   def colspan
     res = 0
@@ -47,8 +36,11 @@ class ::AgentTimesheet::General
   def to_file(notify=true)
     if @current_user
       @filename = "#{(Time.now.to_f*100000).to_i}"
-      FileUtils.mkdir_p(Rails.root.join("public/system/agent_timesheets_cache/#{@current_user.id}"))
-      File.open(Rails.root.join("public/system/agent_timesheets_cache/#{@current_user.id}/#{@filename}.html"), 'w') {|f| f.write(to_html) }
+      FileUtils.mkdir_p(Rails.root.join("#{TIMESHEETS_PATH}/#{@current_user.id}"))
+      html = to_html
+      File.open(Rails.root.join("#{TIMESHEETS_PATH}/#{@current_user.id}/#{@filename}.html"), 'w') {|f| f.write(html) }
+      File.open(Rails.root.join("#{TIMESHEETS_PATH}/#{@current_user.id}/#{@filename}.temp"), 'w') {|f| f.write(markup(html)) }
+      store_pdf
       notify! if notify
       @filename
     else
@@ -56,17 +48,42 @@ class ::AgentTimesheet::General
     end
   end
 
+  def markup(html)
+    av = ActionView::Base.new
+    av.assigns[:invoice] = self
+    av.instance_eval do
+      extend InvoiceHelper
+      extend ApplicationHelper
+    end
+
+    html.gsub!(/display:none;*/,'').gsub!(/<!-- cut -->.*?<!-- cut -->/m, '')
+
+    File.read(Rails.root.join("app/views/layouts/pdf_timesheet.html")) % html
+  end
+
+  def store_pdf
+    temp_path = Rails.root.join("#{TIMESHEETS_PATH}/#{@current_user.id}/#{@filename}.temp")
+    pdf_path = Rails.root.join("#{TIMESHEETS_PATH}/#{@current_user.id}/#{@filename}.pdf")
+    `python public/html2pdf/pisa.py #{temp_path} #{pdf_path}`
+    File.delete(temp_path)
+  end
+
   def self.load(filename, current_user)
     begin
-      File.open(Rails.root.join("public/system/agent_timesheets_cache/#{current_user.id}/#{filename}.html"), 'r') {|f| f.read }
+      File.open(Rails.root.join("#{TIMESHEETS_PATH}/#{current_user.id}/#{filename}.html"), 'r') {|f| f.read }
     rescue
       "Agent Timesheet not found!"
     end
   end
 
+  def self.load_pdf(filename, current_user)
+    Rails.root.join("#{TIMESHEETS_PATH}/#{current_user.id}/#{filename}.pdf")
+  end
+
   def self.destroy(filename, current_user)
     begin
-      File.delete(Rails.root.join("public/system/agent_timesheets_cache/#{current_user.id}/#{filename}.html"))
+      File.delete(Rails.root.join("#{TIMESHEETS_PATH}/#{current_user.id}/#{filename}.html"))
+      File.delete(Rails.root.join("#{TIMESHEETS_PATH}/#{current_user.id}/#{filename}.pdf"))
     rescue
       "Agent Timesheet not found!"
     end

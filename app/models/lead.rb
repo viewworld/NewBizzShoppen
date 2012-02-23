@@ -199,7 +199,7 @@ class Lead < AbstractLead
   def send_email_with_deal_details_and_files
     if deal and !dont_send_email_with_deal_details_and_files
       TemplateMailer.new(requestee.email, deal.deal_request_details_email_template || :deal_request_details, Country.get_country_from_locale, {:deal => deal, :sender_id => nil},
-      (deal.images + deal.materials).map{ |material| (Rails.env.staging? or Rails.env.production?) ? material.stored_local_temp_path(material.url, deal.id.to_s) : material.url }).deliver!
+      (deal.images + deal.materials).map{ |material| material.path_for_email_attachment(deal.id.to_s) }).deliver!
     end
   end
 

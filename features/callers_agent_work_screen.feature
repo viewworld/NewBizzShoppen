@@ -463,3 +463,7 @@ Feature: Callers agent work screen
     Then I should see translated "call_results.edit.button_new_result"
     Then I follow contact action "campaigns.edit.show_button" within tr "Bon Jovi inc."
     Then I should not see translated "call_results.edit.button_new_result"
+
+  #10278
+  @m29 @requested
+  Scenario: Notification should be added when I create a Call Back result

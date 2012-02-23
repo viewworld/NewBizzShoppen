@@ -17,7 +17,7 @@ class Contact < AbstractLead
   validates_presence_of :company_name, :company_phone_number, :creator_id, :category_id, :country_id, :campaign_id
   validates_presence_of :price, :if => :process_for_lead_information?
 
-  scope :with_keyword, lambda { |q| where("lower(company_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
+  scope :with_keyword, lambda { |q| where("lower(leads.company_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :only_completed, where(:completed => false)
   scope :for_campaign, lambda { |campaign| where(:campaign_id => campaign) }
   scope :for_campaigns, lambda { |campaign_ids| where("campaign_id in (?)", campaign_ids) unless campaign_ids.to_a.empty? }
@@ -199,7 +199,7 @@ class Contact < AbstractLead
 
   def crm_select(select, fields)
     query = "#{select}"
-    fields.each { |field| query += " AND lower(#{field}) = '#{send(field).blank? ? "YOU WILL NOT FIND ME - HA HA HA HA" : send(field).downcase}'" }
+    fields.each { |field| query += " AND lower(#{field}) = '#{send(field).blank? ? "YOU WILL NOT FIND ME - HA HA HA HA" : send(field).downcase.gsub("'", "_")}'" }
     CallResult.where(:contact_id => (Contact.where(query) + [self]).uniq.map(&:id)).order("created_at DESC")
   end
 

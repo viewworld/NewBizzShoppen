@@ -336,10 +336,11 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
       And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_address_line_3" with "Bielsko"
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
       And I follow translated "call_results.new.save_button"
-      And I wait 1 second
+      And I wait 2 second
       Then I should see translated "call_results.create.flash.successfully_added"
 
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
@@ -406,6 +407,7 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
       And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_address_line_3" with "HardRoad"
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
       And I follow translated "materials.views.index.material_repository"
@@ -555,6 +557,10 @@ Feature: Agent campaign - calling session
     
     @m14 @requested @new_result @$_call_centre_agent @tgn @non_testable @_done
     Scenario: When I click an item on the variables list it should be inserted into rich text editor
+
+    #10198
+    @m29 @requested @tgn @_done @_non_testable
+    Scenario: I can insert agent name, agent phone, contact's company name, full name variables into send material email
     
     @m14 @requested @note_information @$_call_centre_agent @is @_done @_tested
     Scenario: I can see result note on agent work screen
@@ -654,6 +660,14 @@ Feature: Agent campaign - calling session
       And last email sent should have content "fairdeals"
       And last email sent should have content "Login: new_member888@nbs.com"
       And last email sent should have content "Linked with account: not linked"
+
+    #10200
+    @m29 @requested
+    Scenario: When member (upgraded contact) clicks on deal link in the email he receives, he should be automatically singed in
+
+    #10200
+    @m29 @requested
+    Scenario: When member (upgraded contact) clicks on fairdeals link in the email he receives, he should be automatically singed in
 
     #7746
     @m20 @requested @tgn @_tested @_done

@@ -48,7 +48,8 @@
       <ol class="no_pdd">
         <li class="select" style="float:right">
           <%= label "category", t("leads.index.search.category_label") %>
-          <%= select_tag "category", options_for_select(current_user.parent_accessible_categories_without_auto_buy.with_leads.without_locked_and_not_published.map { |c| [c.name, c.cached_slug] }, @home_category.cached_slug),
+          <% categories = current_user.parent_accessible_categories_without_auto_buy_with_descendants.with_leads.without_locked_and_not_published.all %>
+          <%= select_tag "category", options_for_select(nested_set_options(categories).map { |name, id| [name, categories.detect { |c| c.id == id }.cached_slug] }, @home_category.cached_slug),
                          :include_blank => false,
                          :onchange => "uncheck_category_checkboxes();this.form.action='/'+this.value+'/leads';this.form.submit();"
           %>

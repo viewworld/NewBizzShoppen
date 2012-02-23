@@ -3,7 +3,7 @@
   <td><%= contact.company_name %></td>
   <td class="ta_r"><%= contact.company_phone_number %></td>
   <td class="ta_r"><%= contact.direct_phone_number %></td>
-  <td><%= contact.current_call_result_name %> <%= "(#{contact.current_call_result.creator.full_name})" if contact.current_call_result %></td>
+  <td><%= contact.current_call_result_name %> <%= "(#{contact.current_call_result.creator_full_name})" if contact.current_call_result %></td>
   <td><%= contact.current_call_result_note %></td>
 
   <td class="tda ta_r">

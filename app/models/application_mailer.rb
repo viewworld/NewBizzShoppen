@@ -19,7 +19,7 @@ class ApplicationMailer < ActionMailer::Base
 
     if Rails.env.development?
       attachment_paths.each do |ap|
-        attachments[ap.basename.to_s] = File.read(ap.to_s)
+        attachments[Pathname.new(ap).basename.to_s] = File.read(ap.to_s)
       end
     end
 

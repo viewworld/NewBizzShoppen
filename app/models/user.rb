@@ -291,6 +291,15 @@ class User < ActiveRecord::Base
     self.save(:validate => false)
   end
 
+  def self.secretize_passwords!
+    all.each do |user|
+      user = user.with_role
+      user.password = 'secret'
+      user.password_confirmation = 'secret'
+      user.save!
+    end
+  end
+
   public
 
   def domain

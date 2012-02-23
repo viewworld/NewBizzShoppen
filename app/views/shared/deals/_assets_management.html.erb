@@ -19,7 +19,7 @@
     <%= form.semantic_fields_for :logo, @deal.build_logo do |logo_form| %>
         <fieldset class="inputs labels_ta_r labels_200">
           <ol>
-            <%= logo_form.input :asset, :as => :file, :label => "Upload logo" %>
+            <%= logo_form.input :asset, :as => :file, :label => t("deals.common.assets.view.upload_logo") %>
           </ol>
         </fieldset>
     <% end %>
@@ -52,7 +52,7 @@
 <%= form.semantic_fields_for :images, @deal.images.build do |images_form| %>
     <fieldset class="inputs labels_ta_r labels_200 no_pdd_t">
       <ol class="no_pdd_t">
-        <%= images_form.input :asset, :as => :file, :label => "Upload image" %>
+        <%= images_form.input :asset, :as => :file, :label => t("deals.common.assets.view.upload_image") %>
       </ol>
     </fieldset>
 <% end %>
@@ -85,7 +85,39 @@
 <%= form.semantic_fields_for :materials, @deal.images.build do |materials_form| %>
     <fieldset class="inputs labels_ta_r labels_200">
       <ol>
-        <%= materials_form.input :asset, :as => :file, :label => "Upload material" %>
+        <%= materials_form.input :asset, :as => :file, :label => t("deals.common.assets.view.upload_material") %>
+      </ol>
+    </fieldset>
+    <br/>
+<% end %>
+
+<% unless @internal_documents.blank? %>
+    <fieldset class="inputs labels_ta_r labels_200">
+      <ol>
+        <li class="string">
+          <label><%= t("deals.common.assets.view.internal_documents_label") %></label>
+
+          <div class="txt assets_elements materials">
+            <ul>
+              <% @internal_documents.each do |material| %>
+                  <% if material.id %>
+                      <li>
+                        <strong><%= material.asset_file_name %></strong> <%= link_to t("deals.common.assets.view.download"), material.url %>
+                        <%= link_to t("deals.common.assets.view.remove_material"), self.send(remove_path, @deal, material), :method => :delete, :confirm => t("common.confirmation") %>
+                      </li>
+                  <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </li>
+      </ol>
+    </fieldset>
+<% end %>
+
+<%= form.semantic_fields_for :internal_documents, @deal.images.build do |materials_form| %>
+    <fieldset class="inputs labels_ta_r labels_200">
+      <ol>
+        <%= materials_form.input :asset, :as => :file, :label => t("deals.common.assets.view.upload_internal_document") %>
       </ol>
     </fieldset>
     <br/>

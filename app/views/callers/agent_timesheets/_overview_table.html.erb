@@ -2,34 +2,36 @@
   <thead>
   <tr>
     <th class="ta_l"><%= t("agent_timesheets.index.overview.#{type.to_s}_header") %></th>
-    <% overview.commercial_days_of_week.each do |dow| %>
+    <% timesheet.commercial_days_of_week.each do |dow| %>
         <th><%= I18n.t("date.day_names")[dow] %></th>
     <% end %>
     <th style="width:100px"><%= t("agent_timesheets.index.overview.#{type.to_s}_total") %></th>
   </tr>
   </thead>
   <tbody>
-  <% overview.cweeks.each do |cweek| %>
+  <% timesheet.cweeks.each do |cweek| %>
       <tr>
         <td class="cell_week"><%= t("agent_timesheets.index.week") %> <%= cweek.to_s %></td>
-        <% overview.days_of_week.each do |dow| %>
-            <td class="ta_r val_<%= type.to_s.first %> number_to_<%= type.to_s %>">
-              <% if result = results.dig(cweek.year, cweek.cweek, dow) %>
-                  <%= result.first.send(type).to_f %>
-              <% else %>
-                  <%= 0 %>
-              <% end %>
+        <% timesheet.days_of_week.each do |dow| %>
+            <td class="ta_r val_<%= type.to_s.first %>">
+              <%= format_for_timesheet(timesheet.send(type).for_cweek(cweek).for_dow(dow).sum(type), type) %>
             </td>
         <% end %>
-        <td class="total_h_<%= type.to_s.first %> val_<%= type.to_s.first %> number_to_<%= type.to_s %>"></td>
+        <td class="val_<%= type.to_s.first %>">
+          <%= format_for_timesheet(timesheet.send(type).for_cweek(cweek).sum(type), type) %>
+        </td>
       </tr>
   <% end %>
   <tr class="total_row">
     <td class="ta_l"><%= t("agent_timesheets.index.total") %></td>
-    <% overview.days_of_week.each do %>
-        <td class="total_v_<%= type.to_s.first %> val_<%= type.to_s.first %> number_to_<%= type.to_s %>"></td>
+    <% timesheet.days_of_week.each do |dow| %>
+        <td class="val_<%= type.to_s.first %>">
+          <%= format_for_timesheet(timesheet.send(type).for_dow(dow).sum(type), type) %>
+        </td>
     <% end %>
-    <td class="total_v_<%= type.to_s.first %> val_<%= type.to_s.first %> number_to_<%= type.to_s %>"></td>
+    <td class="val_<%= type.to_s.first %>">
+      <%= format_for_timesheet(timesheet.send(type).sum(type), type) %>
+    </td>
   </tr>
   </tbody>
 </table>

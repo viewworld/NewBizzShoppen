@@ -15,23 +15,27 @@
             <td class="cell_week"><%= t("agent_timesheets.index.agent_time_sheet.#{key}") %></td>
             <% agent_time_sheet.days_of_week.each do |dow| %>
                 <td class="val_<%= key.to_s.first %> number_to_<%= key.to_s %>">
-                  <% if result = results.dig(cweek.year, cweek.cweek, dow) %>
-                      <% if [:log_in, :log_out].include?(key) and val = result.first.send(key) and val.is_a?(ActiveSupport::TimeWithZone) %>
-                          <%= val.strftime("%H:%M") %>
-                      <% elsif val = result.first.send(key) %>
-                          <%= val.to_f %>
+                  <% if [:log_in].include?(key)  %>
+                      <%= (log_in = agent_time_sheet.stats.for_cweek(cweek).for_dow(dow).for_agent(agent).minimum(key)) ? log_in.strftime("%H:%M") : "-" %>
+                  <% elsif [:log_out].include?(key) %>
+                      <%= (log_out = agent_time_sheet.stats.for_cweek(cweek).for_dow(dow).for_agent(agent).maximum(key)) ? log_out.strftime("%H:%M") : "-" %>
+                  <% elsif [:log_out_time].include?(key) %>
+                      <% if log_out = agent_time_sheet.stats.for_cweek(cweek).for_dow(dow).for_agent(agent).maximum(:log_out) and log_in = agent_time_sheet.stats.for_cweek(cweek).for_dow(dow).for_agent(agent).minimum(:log_in) %>
+                        <%= format_for_timesheet(((log_out - log_in)/3600 - agent_time_sheet.hours.for_cweek(cweek).for_dow(dow).for_agent(agent).sum(:hours)).round(2), :hours) %>
                       <% else %>
-                          <%= 0 %>
+                        -
                       <% end %>
                   <% else %>
-                      <%= 0 %>
+                      <%= format_for_timesheet(agent_time_sheet.send(key).for_cweek(cweek).for_dow(dow).for_agent(agent).sum(key), key) %>
                   <% end %>
                 </td>
             <% end %>
-            <% if [:log_in, :log_out].include?(key) %>
+            <% if [:log_in, :log_out, :log_out_time].include?(key) %>
                 <td><%= t("agent_timesheets.index.na") %></td>
             <% else %>
-                <td class="total_h_<%= key.to_s.first %> number_to_<%= key.to_s %>"></td>
+                <td class="total_h_<%= key.to_s.first %>">
+                  <%= format_for_timesheet(agent_time_sheet.send(key).for_cweek(cweek).for_agent(agent).sum(key), key) %>
+                </td>
             <% end %>
           </tr>
       <% end %>

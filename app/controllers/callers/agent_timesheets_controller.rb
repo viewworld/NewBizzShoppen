@@ -6,6 +6,10 @@ class Callers::AgentTimesheetsController < Callers::CallerController
   before_filter lambda {authorize_role(:call_centre, :admin)}
 
   def show
+    respond_to do |wants|
+      wants.html
+      wants.pdf { send_file AgentTimesheet::General.load_pdf(params[:id], current_user) }
+    end
   end
 
   def index

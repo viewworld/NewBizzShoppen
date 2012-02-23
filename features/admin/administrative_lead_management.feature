@@ -146,3 +146,24 @@ Scenario: I can change creator of lead to any other agent
   Then I should be on administration leads page
   And I follow translated "leads.listing.edit_label"
   And "lead_tmp_creator_id" should be selected for value "agent_777@nbs.com"
+
+#10277
+@m29 @requested
+Scenario: I should not see Klik,Antal visninger,Hvor hot,Nyhed,Hvor unik,Lead pris,Solgt,Værdi,Udbetalt,Dårlig rating,Status
+
+#10277
+@m29 @requested
+Scenario: I should see date (creation date), category (lead category), lead price
+
+#10277
+@m29 @requested
+Scenario: I should see source (deal or agent name)
+
+#10277
+@m29 @requested
+Scenario: I should see whether lead has been sold
+
+#10277
+@m29 @requested
+Scenario: I can sort leads by all of the new columns
+

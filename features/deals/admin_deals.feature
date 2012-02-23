@@ -124,3 +124,21 @@ Feature: Deals from admin perspective
     And I sign in as admin@nbs.com with password secret
     And I follow translated "layout.main_menu.admin.deals"
     Then I should see translated "shared.deals.table.awaiting_approval"
+
+  #10045
+  @m29 @requested @selenium @tgn @_done @_tested
+  Scenario: I can click Show all for deals and Is active option for filter is by default set to Yes
+    Given pagination page size for deals is set to 2
+    Given a deal named "deal001" exists within category "Electronics"
+    And a deal named "deal002" exists within category "Electronics"
+    And a deal named "deal003" exists within category "Electronics"
+    And a deal named "deal004" exists within category "Electronics"
+    Then I follow translated "layout.main_menu.admin.deals"
+    And "search_active_is" should be selected for value "Yes"
+    And I should see "2" rows with id like "deal_" in a table
+    And I follow translated "common.show_all"
+    And I should see "4" rows with id like "deal_" in a table
+
+  #10252
+  @m29 @requested
+  Scenario: I can click to see all deals on one page
