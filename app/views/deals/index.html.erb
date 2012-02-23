@@ -61,11 +61,6 @@
 <% end %>
 
 <column-mc:>
-
-  <% if session[:site] == "fairdeals" %>
-    <div class="frm_plain pdd_10">
-  <% end %>
-
   <header back="true">
     <param:content>
       <% if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(@search.latest) %>
@@ -98,9 +93,8 @@
     <%= render :partial => "fairdeals_home/right_panel" %>
   </div>
 
-<% if session[:site] == "fairdeals" %>
-    </div>
-  <% end %>
+  <div class="clb"></div>
+
 
 </column-mc:>
 <js:>
