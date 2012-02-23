@@ -61,7 +61,7 @@
 <% end %>
 
 <column-mc:>
-  <header back="true">
+  <header back="true" c="header_grey">
     <param:content>
       <% if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(@search.latest) %>
           <%= t("deals.index.view.header_latest_leads") %>

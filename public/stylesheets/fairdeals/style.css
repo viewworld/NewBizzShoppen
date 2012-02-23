@@ -552,7 +552,12 @@ h1
     font-weight: normal;
     text-decoration: none;
     border-bottom: 1px dotted #fff;
-    font-size: 16px
+    font-size: 16px;
+}
+
+.header_ribbon.header_grey > h1 > span
+{
+    background-position: right -86px;
 }
 
 

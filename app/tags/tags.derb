@@ -11,8 +11,8 @@
 </def>
 
 
-<def tag="header" attrs="title,back,backurl,refresh">
-  <div class="header_ribbon">
+<def tag="header" attrs="c,title,back,backurl,refresh">
+  <div class="header_ribbon<%= c.nil? ? "" : " #{c}" %>">
     <h1>
       <span>
         <param:content/>
