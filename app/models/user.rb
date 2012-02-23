@@ -72,6 +72,7 @@ class User < ActiveRecord::Base
   has_many :subscription_plans, :through => :subscriptions
   belongs_to :company_unique_category, :class_name => "LeadCategory", :foreign_key => "deal_category_id"
   has_many :delayed_jobs, :class_name => '::Delayed::Job', :foreign_key => :queue, :primary_key => :queue, :order => "created_at DESC"
+  has_many :notifications, :as => :notificable
 
   alias_method :parent, :user
 
@@ -973,5 +974,14 @@ class User < ActiveRecord::Base
   
   def queue
     "user_#{id}"
+  end
+
+  def notify!(options)
+    options = {
+      :notify_at => Time.now,
+      :sticky => true,
+      :time => nil
+    }.merge(options)
+    notifications.create(options)
   end
 end

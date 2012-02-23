@@ -9,6 +9,7 @@ class ResultValue < ActiveRecord::Base
   before_create :duplicate_field_type, :unless => :save_without_callbacks
 
   scope :for_result_field, lambda {|result_field| where(:result_field_id => result_field)}
+  scope :dates, where(:field_type => ResultField::DATETIME.to_s)
 
   def duplicate_field_type
     self.field_type = result_field.field_type

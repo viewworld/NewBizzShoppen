@@ -171,6 +171,7 @@ en:
         site_home: "Site home"
         category_request: "Category request"
         comments: "Comments"
+        notifications: "Notifications"
         bounce: "Bounce"
         sold_out: "Sold out"
         browse_deals: "Browse deals"
@@ -3898,6 +3899,7 @@ en:
       show:
         view:
           header: "All threads for %{header}"
+
   materials:
     views:
       index:
@@ -4408,3 +4410,19 @@ en:
         create_button: "Create"
     common:
       request_deals: "Request deals"
+
+  notifications:
+    views:
+      index:
+        header: "Notifications"
+        content: "Content"
+        notify_at: "Notify at"
+    call_result:
+      call_back:
+        title: "Call back notification for contact %{contact}"
+        text: "<a href=\"%{url}\">Go to the contact</a> or <a href=\"%{url}\" target=\"_blank\">open it in a new tab</a>"
+    agent_timesheet:
+      ready:
+        title: "The Agent Timesheet report you've requested is now ready"
+        text: "<a href=\"%{url}\">Go to the report</a> or <a href=\"%{url}\" target=\"_blank\">open it in a new tab</a>"
+

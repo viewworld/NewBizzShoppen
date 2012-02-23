@@ -44,6 +44,9 @@ module Nbs
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters                            += [:password]
 
+    #require "notification_responder"
+    #config.middleware.use "Rack::NotificationResponder"
+
     require "locale_setter"
     config.middleware.use "Rack::LocaleSetter"
 

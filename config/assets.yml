@@ -25,6 +25,7 @@ javascripts:
     - public/javascripts/comments.js
     - public/javascripts/jquery.form.js
     - public/javascripts/jquery.autocomplete.min.js
+    - public/javascripts/jquery.gritter.min.js
 
   fairdeals:
     - public/javascripts/jquery-1.4.2.min.js
@@ -43,6 +44,7 @@ javascripts:
     - public/javascripts/jquery.cycle.all.js
     - public/javascripts/jquery.timers.js
     - public/javascripts/jquery.qtip.min.js
+    - public/javascripts/jquery.gritter.min.js
 
 
 stylesheets:
@@ -62,6 +64,7 @@ stylesheets:
     - public/stylesheets/jquery.autocomplete.css
     - public/stylesheets/ajaxful_rating.css
     - public/stylesheets/shared/shared.css
+    - public/stylesheets/jquery.gritter.css
 
   fairdeals:
     - public/stylesheets/fairdeals/ocss/reset.css
@@ -75,6 +78,7 @@ stylesheets:
     - public/stylesheets/colorbox.css
     - public/stylesheets/countdown.css
     - public/stylesheets/shared/shared.css
+    - public/stylesheets/jquery.gritter.css
 
   fairdeals_thin:
     - public/stylesheets/fairdeals/style_thin.css

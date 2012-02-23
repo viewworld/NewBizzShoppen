@@ -97,7 +97,11 @@ class ::AgentTimesheet::General
 
   def notify!
     if @current_user and url
-      TemplateMailer.new(@current_user.email, :agent_timesheet, Country.get_country_from_locale, {:user => @current_user, :timesheet_url => url, :sender_id => nil}).deliver!
+      #TemplateMailer.new(@current_user.email, :agent_timesheet, Country.get_country_from_locale, {:user => @current_user, :timesheet_url => url, :sender_id => nil}).deliver!
+      @current_user.notify!(
+          :title => I18n.t("notifications.agent_timesheet.ready.title"),
+          :text => I18n.t("notifications.agent_timesheet.ready.text", :url => url)
+      )
     end
   end
 

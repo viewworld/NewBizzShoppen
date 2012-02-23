@@ -1,0 +1,43 @@
+<column-mc:>
+  <header back="true"><%= t("notifications.views.index.header") %></header>
+
+<% if @notifications.blank? %>
+    <%= blank_state_message %>
+<% else %>
+  <table class="generic">
+    <thead>
+        <th class="hl"></th>
+        <th><%= t("notifications.views.index.content") %></th>
+        <th><%= t("notifications.views.index.notify_at") %></th>
+        <th class="hr"></th>
+    </thead>
+      <tfoot>
+      <tr>
+        <td class="fl"></td>
+        <td colspan="2"></td>
+        <td class="fr"></td>
+      </tr>
+      </tfoot>
+    <tbody>
+       <% @notifications.each do |note| %>
+       <tr>
+         <td class="cl"></td>
+         <td>
+           <%= note.title %><br/>
+           <p><%= note.text.html_safe %></p>
+         </td>
+         <td>
+           <%= format_date(note.notify_at, true) %>
+         </td>
+         <td class="cr"></td>
+       </tr>
+       <% end %>
+      <tr class="pagination">
+        <td colspan="5" class="ta_c">
+            <%= will_paginate @notifications, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
+</column-mc:>
