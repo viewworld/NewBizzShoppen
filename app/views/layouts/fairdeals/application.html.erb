@@ -84,7 +84,7 @@
 
     <search-box:/>
 
-    <% if controller.class.to_s != "FairdealsHomeController" %>
+    <% unless  ["FairdealsHomeController", "DealsController"].include?(controller.class.to_s) %>
         <div class="pdd_10">
     <% end %>
 
@@ -109,7 +109,7 @@
     <column-mc:/>
 
 
-    <% if controller.class.to_s != "FairdealsHomeController" %>
+    <% unless  ["FairdealsHomeController", "DealsController"].include?(controller.class.to_s) %>
         </div>
     <% end %>
 

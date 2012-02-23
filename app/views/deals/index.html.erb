@@ -75,7 +75,7 @@
     </param:content>
   </header>
 
-  <div class="grid_680 fltl">
+  <div class="<%= "grid_680 fltl" if session[:site] == "fairdeals"  %>">
   <% if @deals.empty? %>
       <%= blank_state_message %>
   <% else %>
@@ -89,9 +89,11 @@
   <% end %>
   </div>
 
+  <% if session[:site] == "fairdeals" %>
   <div class="grid_280 fltr">
     <%= render :partial => "fairdeals_home/right_panel" %>
   </div>
+  <% end %>
 
   <div class="clb"></div>
 
