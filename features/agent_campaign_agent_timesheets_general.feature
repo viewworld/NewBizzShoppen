@@ -208,15 +208,35 @@ Feature: Agent timesheets
   Scenario: Dynamic result value should be included into agent timesheets
 
   #10170
-  @m29 @requested
+  @m29 @requested @selenium @_done @_tested
   Scenario: I can download timesheet as PDF
+    Given campaign report data is generated
+    And campaign report user session logs are generated
+    And additional timesheet report data is generated
+    Given I am on the homepage
+    And I sign in as blazejek@gmail.com with password secret
+    And I click hidden link by url regex "/callers\/agent_timesheets\/new$/"
+    And I set date "Date.today-1" for field "search[start_date]"
+    And I set date "Date.today+7" for field "search[end_date]"
+    And I uncheck "search_overview"
+    And I uncheck "search_team_result_sheet"
+    And I check "search_agent_timesheet"
+    And I select "TestCampaignReport1" from "all_campaigns"
+    And I select "TestCampaignReport2" from "all_campaigns"
+    And I follow translated "agent_timesheets.new.move_right" within "#campaigns_selection_div"
+    And I select "test report user CC" from "all_call_centres"
+    And I follow translated "agent_timesheets.new.move_right" within "#agents_selection_div"
+    And I press translated "agent_timesheets.new.generate"
+    And I click hidden link by url regex "/callers\/agent_timesheets\/new$/"
+    And I click hidden link by url regex "/callers\/agent_timesheets\/\d+.pdf$/"
 
+  # tested in previous scenario
   #10170
-  @m29 @requested
+  @m29 @requested @_done @_tested_elsewhere
   Scenario: The PDF should be generated in background with the HTML version
 
   #10170
-  @m29 @requested
+  @m29 @requested @_done @_nontestable
   Scenario: The PDF should be well formated (with page breaks, font size)
 
   #10278

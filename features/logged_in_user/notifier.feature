@@ -46,7 +46,7 @@ Feature: Notifier
     Then I should see "Notification title" within "table"
     And I should see "Notification text" within "table"
 
-  @_deprecated
+  @_done @_deprecated
   Scenario: I can click on the side of the screen to reopen the notifier
 
   @_done @_nontestable
