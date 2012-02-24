@@ -52,13 +52,12 @@ Feature: Notifier
   @_done @_nontestable
   Scenario: Notifier should check every n seconds for new notifications
 
-  @selenium @wip
+  @selenium @_done @_tested
   Scenario: I should be possible to insert links inside notifications
     Given there is pending notification with my profile link for user "admin@nbs.com"
     And I am on the homepage
     And I run javascript check_notifications()
     And I wait 1 second
-    And I open page in browser
     And I click hidden link by url regex "/my_profile/" within "div#gritter-item-1"
     Then I should be on my profile page
 
