@@ -112,26 +112,26 @@ Feature: Agent timesheets
   Then I should see "0" rows with id like "cached_timesheet_" in a table
 
   #9787
-  @m27 @requested @selenium @_done @_tested
+  @m27 @requested @selenium @_done @_tested @_deprecated
   Scenario: I should get an email when my report is generated
-    Given campaign report data is generated
-    And campaign report user session logs are generated
-    And additional timesheet report data is generated
-    Given I am on the homepage
-    And I sign in as blazejek@gmail.com with password secret
-    And I click hidden link by url regex "/callers\/agent_timesheets\/new$/"
-    And I set date "Date.today-1" for field "search[start_date]"
-    And I set date "Date.today+7" for field "search[end_date]"
-    And I uncheck "search_overview"
-    And I uncheck "search_team_result_sheet"
-    And I check "search_agent_timesheet"
-    And I select "TestCampaignReport1" from "all_campaigns"
-    And I select "TestCampaignReport2" from "all_campaigns"
-    And I follow translated "agent_timesheets.new.move_right" within "#campaigns_selection_div"
-    And I select "test report user CC" from "all_call_centres"
-    And I follow translated "agent_timesheets.new.move_right" within "#agents_selection_div"
-    And I press translated "agent_timesheets.new.generate"
-    Then last email sent should have been sent to recipient "blazejek@gmail.com"
+#    Given campaign report data is generated
+#    And campaign report user session logs are generated
+#    And additional timesheet report data is generated
+#    Given I am on the homepage
+#    And I sign in as blazejek@gmail.com with password secret
+#    And I click hidden link by url regex "/callers\/agent_timesheets\/new$/"
+#    And I set date "Date.today-1" for field "search[start_date]"
+#    And I set date "Date.today+7" for field "search[end_date]"
+#    And I uncheck "search_overview"
+#    And I uncheck "search_team_result_sheet"
+#    And I check "search_agent_timesheet"
+#    And I select "TestCampaignReport1" from "all_campaigns"
+#    And I select "TestCampaignReport2" from "all_campaigns"
+#    And I follow translated "agent_timesheets.new.move_right" within "#campaigns_selection_div"
+#    And I select "test report user CC" from "all_call_centres"
+#    And I follow translated "agent_timesheets.new.move_right" within "#agents_selection_div"
+#    And I press translated "agent_timesheets.new.generate"
+#    Then last email sent should have been sent to recipient "blazejek@gmail.com"
 
   #9787
   @m27 @requested @_done @_tested
