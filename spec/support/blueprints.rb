@@ -425,6 +425,26 @@ CallResult.blueprint do
   creator { ::User::CallCentreAgent.make! }
 end
 
+CallResult.blueprint(:upgraded_to_member) do
+  contact { Contact.make! }
+  result { Result.where("name = ? and generic IS TRUE", "Upgrade to member").first || Result.make!(:final_reported, :name => "Upgrade to member", :is_generic => true) }
+  note { Faker::Lorem.words(5).to_s.capitalize }
+  creator { ::User::CallCentreAgent.make! }
+  contact_company_name { Faker::Lorem.words(2).to_s.capitalize }
+  contact_first_name { Faker::Name.first_name }
+  contact_last_name { Faker::Name.last_name }
+  contact_phone_number { Faker::PhoneNumber.phone_number }
+  contact_address_line_1 { Faker::Lorem.words(2).to_s.capitalize }
+  contact_address_line_2 { Faker::Lorem.words(2).to_s.capitalize }
+  contact_address_line_3 { Faker::Lorem.words(1).to_s.capitalize }
+  contact_zip_code { Faker::Address.zip_code }
+  contact_country_id { 1 }
+  contact_subscription_plan_id { SubscriptionPlan.active.free.for_role(:member).first }
+  contact_requested_deal_ids { [Deal.make!(:price => 18), Deal.make!(:price => 24)].map(&:id) }
+  contact_email_address { Faker::Internet.email }
+  result_values { [ResultValue.new(:result_field => Result.where("name = ? and generic IS TRUE", "Upgrade to member").first.result_fields.first, :field_type => ResultField::MATERIAL, :value => "")] }
+end
+
 UserSessionLog.blueprint do
   user { ::User::CallCentreAgent.make! }
   start_time { Time.now }
@@ -432,6 +452,7 @@ UserSessionLog.blueprint do
   euro_billing_rate { 10 }
   log_type { UserSessionLog::TYPE_CAMPAIGN }
   campaign { Campaign.make! }
+  contact_email_address {  }
 end
 
 EmailBounce.blueprint do

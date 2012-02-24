@@ -20,6 +20,8 @@ describe CampaignReport do
     @campaign2.users = [@call_centre,@call_centre_agent1,@call_centre_agent2]
 
     # create results
+    @result_upgrade_to_member = Result.where("name = ? and generic IS TRUE", "Upgrade to member").first
+    @result_upgrade_to_member.update_attribute(:is_reported, true)
     @result1 = Result.make!(:final_reported_success)
     @result2 = Result.make!(:final_reported_success)
     @result3 = Result.make!(:upgrades_to_lead)
@@ -169,7 +171,11 @@ describe CampaignReport do
     end
 
     it "should return correct value created" do
+      @contact1_5 = Contact.make!(:campaign => @campaign1)
+      @contact2_5 = Contact.make!(:campaign => @campaign2)
+
       [@campaign1, @campaign2].each do |campaign|
+        #config dyn value
         campaign.results << @result_dyn_value
         campaign.save
         @result_dyn_value.reload
@@ -182,7 +188,25 @@ describe CampaignReport do
           result_values << ResultValue.new(:result_field => result_field, :field_type => result_field.field_type, :value => (i+1).to_s)
         end
         CallResult.make!(:contact => (campaign == @campaign1) ? @contact1_4 : @contact2_1, :result => @result_dyn_value, :creator => @call_centre_agent1, :result_values => result_values)
+
+        #config upgrade to member with deals  (deals' leads' sum price => 42)
+        campaign.results << @result_upgrade_to_member
+        campaign.save
+
+        cr = CallResult.make!(:upgraded_to_member, :contact => (campaign == @campaign1) ? @contact1_5 : @contact2_5,
+                              :result => @result_upgrade_to_member, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+        user = User::Member.where(:contact_id => ((campaign == @campaign1) ? @contact1_5 : @contact2_5).id).first
+
+        nl = NestedLead.new({:user_id => "#{user.id}",
+                        :nested_lead =>{ :leads_attributes => {"0"=>{"deal_id"=>"#{cr.contact_requested_deal_ids[0]}", "hidden_description"=>"note1"},
+                                                             "1"=>{"deal_id"=>"#{cr.contact_requested_deal_ids[1]}", "hidden_description"=>"note2"}}}})
+        nl.save
       end
+
+      #lead's price generated from deal requested outside upgrade should not be counted
+      lead = Lead.new
+      lead.based_on_deal(Deal.make!(:price => 1000), User::Member.where(:contact_id => @contact1_5.id).first)
+      lead.save
 
       CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
       CallResult.make!(:contact => @contact1_3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
@@ -192,7 +216,7 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
 
       cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
-      cr.value_created.should == 304.0
+      cr.value_created.should == 346.0
     end
 
     it "should return correct number of call results" do
