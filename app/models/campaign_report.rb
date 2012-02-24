@@ -31,6 +31,43 @@ class CampaignReport
     campaign.finished_contacts_per_hour.to_f
   end
 
+  def realised_finished_results_per_hour
+    if th = total_hours and th.eql?(0.0)
+      0
+    else
+      final_results.count / th
+    end
+  end
+
+  def target_all_results_per_hour
+    all_exp = campaign.campaigns_results.joins(:result).where("results.is_reported is TRUE").sum(:expected_completed_per_hour)
+    campaign.campaigns_results.count >0 ? all_exp / campaign.campaigns_results.count : 0
+  end
+
+  def realised_all_results_per_hour
+    if th = total_hours and th.eql?(0.0)
+      0
+    else
+      all_call_results.count / th
+    end
+  end
+
+  def target_temp_result_per_hour
+    if fr = final_results.count and fr > 0
+      (temp_results.count / fr) * total_number_of_contacts
+    else
+      0
+    end
+  end
+
+  def realised_temp_result_per_hour
+    if th = total_hours and th.eql?(0.0)
+      0
+    else
+      temp_results.count / th
+    end
+  end
+
   def realised_finished_contacts_per_hour
     if th = total_hours and th.eql?(0.0)
       th
@@ -42,6 +79,10 @@ class CampaignReport
   def target_final_result(result)
     cresult = campaign.campaigns_results.joins(:result).where("results.id = ?", result.id).first
     cresult.nil? ? 0.0 : cresult.expected_completed_per_hour.to_f
+  end
+
+  def realised_final_result_count(result)
+    final_results(result).count
   end
 
   def realised_final_result(result)
@@ -68,8 +109,66 @@ class CampaignReport
     end
   end
 
+  def realised_cost_per_hour
+    if th = total_hours and th.eql?(0.0)
+      0
+    else
+      total_cost / th
+    end
+  end
+
   def total_number_of_contacts
     campaign.contacts.count
+  end
+
+  def contacts_used
+    "#{completed_number_of_contacts}-#{total_number_of_contacts}:#{completion_percent}"
+  end
+
+  def target_db_value
+    if tc = target_production_cost and tc > 0
+      ((target_value_created / tc)-1) * 100
+    end
+  end
+
+  def realised_db_value
+    if tc = total_cost and tc.eql?(0.0)
+      0
+    else
+      ((value_created / tc) - 1) * 100
+    end
+  end
+
+  def target_value_created
+    if cnc = completed_number_of_contacts and cnc > 0
+      (total_number_of_contacts / cnc) * value_created
+    else
+      0
+    end
+  end
+
+  def target_production_cost
+    if cnc = completed_number_of_contacts and cnc > 0
+      (total_number_of_contacts / cnc) * total_cost
+    else
+      0
+    end
+  end
+
+  def predicted_hours_to_completion
+    if cnc = completed_number_of_contacts and cnc > 0
+      (total_hours / cnc) * (total_number_of_contacts - completed_number_of_contacts)
+    else
+      0
+    end
+  end
+
+  def predicted_cost_for_completion
+    target_production_cost - production_cost
+  end
+
+  def predicted_value_for_completion
+    target_value_created - value_created
   end
 
   def completed_number_of_contacts
@@ -177,8 +276,9 @@ class CampaignReport
     selected_result_ids ? crs.where("results.id IN (?)", selected_result_ids) : crs
   end
 
-  def final_results(result=nil)
-    rsp = CallResult.final_for_campaign(campaign).where("call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported
+  def results_scope(type, result)
+    rsp = type == :final ? CallResult.final_for_campaign(campaign) : CallResult.temp_for_campaign(campaign)
+    rsp = rsp.where("call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported
     if selected_users?
       rsp = rsp.where("call_results.creator_id in (?)", user.map(&:id))
     elsif user
@@ -186,6 +286,16 @@ class CampaignReport
     end
     rsp = rsp.where("results.id = ?", result.id) if result
     rsp = rsp.where("results.id IN (?)", selected_result_ids) if selected_result_ids
+    rsp
+  end
+
+  def temp_results(result=nil)
+    rsp = results_scope(:temp, result)
+    rsp
+  end
+
+  def final_results(result=nil)
+    rsp = results_scope(:final, result)
     rsp
   end
 
@@ -256,6 +366,13 @@ class CampaignReport
     upgraded
   end
 
+  def total_value_generated_leads_during_upgrade
+    upgrade_to_member = Result.where("name = ? and generic IS TRUE", "Upgrade to member").first
+    generated_leads = CallResult.final_for_campaign(campaign).where("results.id = ? and call_results.created_at::DATE BETWEEN ? AND ?", upgrade_to_member.id, date_from, date_to).with_reported
+    generated_leads = generated_leads.with_leads_from_deals_requested_during_upgrade_to_member
+    generated_leads
+  end
+
   def total_value
     not_upgraded = total_value_not_upgraded
 
@@ -263,7 +380,9 @@ class CampaignReport
 
     upgraded = total_value_upgraded
 
-    not_upgraded.sum("campaigns_results.euro_value").to_f + not_upgraded_dynamic.sum("value * euro_value").to_f + upgraded.sum("leads_leads.euro_price").to_f
+    generated_leads = total_value_generated_leads_during_upgrade
+
+    not_upgraded.sum("campaigns_results.euro_value").to_f + not_upgraded_dynamic.sum("value * euro_value").to_f + upgraded.sum("leads_leads.euro_price").to_f + generated_leads.sum("generated_leads.euro_price").to_f
   end
 
   def leads_sold

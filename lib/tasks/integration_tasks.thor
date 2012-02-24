@@ -215,4 +215,12 @@ class IntegrationTasks < Thor
 #      end
 #    end
   end
+
+  desc "m29b", ""
+  def m29b
+    Translation.where(:key => "campaign_reports.index.table.value_created", :locale => "en").first.update_attribute(:value, "Value (EUR)")
+    Translation.where(:key => "campaign_reports.index.table.production_cost", :locale => "en").first.update_attribute(:value, "Cost (EUR)")
+    Translation.where(:key => "campaign_reports.index.table.campaign_results", :locale => "en").first.update_attribute(:value, "Results")
+    Translation.where(:key => "campaign_reports.index.table.predicted_results", :locale => "en").first.update_attribute(:value, "Prediction")
+  end
 end

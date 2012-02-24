@@ -83,8 +83,9 @@
   <div id="content">
 
     <search-box:/>
+    <% fairdeals_home_or_deals_listing = (controller.class.to_s == "FairdealsHomeController" or (controller.class.to_s == "DealsController" and params[:action] == "index")) == true %>
 
-    <% unless  ["FairdealsHomeController", "DealsController"].include?(controller.class.to_s) %>
+    <% unless  fairdeals_home_or_deals_listing %>
         <div class="pdd_10">
     <% end %>
 
@@ -109,7 +110,7 @@
     <column-mc:/>
 
 
-    <% unless  ["FairdealsHomeController", "DealsController"].include?(controller.class.to_s) %>
+    <% unless fairdeals_home_or_deals_listing %>
         </div>
     <% end %>
 
