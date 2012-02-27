@@ -109,4 +109,14 @@ class ::AgentTimesheet::General
     "Agent Timesheet"
   end
 
+  def average_log_in(dow,agent)
+    arr = stats.for_dow(dow).for_agent(agent).group(:week).select("MIN(log_in::TIME) as min_log_in").map{|t| Time.zone.parse(t.min_log_in).to_i}
+    arr.size > 0 ? Time.zone.at(arr.sum / arr.size): nil
+  end
+
+  def average_log_out(dow,agent)
+    arr = stats.for_dow(dow).for_agent(agent).group(:week).select("MAX(log_out::TIME) as min_log_out").map{|t| Time.zone.parse(t.min_log_out).to_i}
+    arr.size > 0 ? Time.zone.at(arr.sum / arr.size) : nil
+  end
+
 end
