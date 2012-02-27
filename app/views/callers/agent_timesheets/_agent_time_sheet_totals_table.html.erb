@@ -15,15 +15,11 @@
         <% agent_time_sheet.days_of_week.each do |dow| %>
             <td class="avg_val_<%= key %> val_<%= key.to_s.first %> number_to_<%= key.to_s %>">
               <% if [:log_in].include?(key)  %>
-                  <%= (average_log_in = agent_time_sheet.stats.for_dow(dow).for_agent(agent).average_log_in.first and average_log_in.average_log_in) ? average_log_in.average_log_in.to_time.strftime("%H:%M") : "-" %>
+                  <%= (log_in = agent_time_sheet.average_log_in(dow,agent)) ? log_in.strftime("%H:%M") : '-' %>
               <% elsif [:log_out].include?(key) %>
-                  <%= (average_log_out = agent_time_sheet.stats.for_dow(dow).for_agent(agent).average_log_out.first and average_log_out.average_log_out) ? average_log_out.average_log_out.to_time.strftime("%H:%M") : "-" %>
+                  <%= (log_out = agent_time_sheet.average_log_out(dow,agent)) ? log_out.strftime("%H:%M") : '-' %>
               <% elsif [:log_out_time].include?(key) %>
-                  <% if average_log_out = agent_time_sheet.stats.for_dow(dow).for_agent(agent).average_log_out.first and average_log_out.average_log_out and average_log_in = agent_time_sheet.stats.for_dow(dow).for_agent(agent).average_log_in.first and average_log_in.average_log_in %>
-                    <%= format_for_timesheet(((average_log_out.average_log_out.to_time - average_log_in.average_log_in.to_time)/3600 - agent_time_sheet.hours.for_dow(dow).for_agent(agent).average(:hours)).round(2), :hours) %>
-                  <% else %>
-                    -
-                  <% end %>
+                  <%= (@log_out_times[agent.id][dow].size > 0) ? format_for_timesheet(@log_out_times[agent.id][dow].sum/@log_out_times[agent.id][dow].size, :hours) : '-' %>
               <% end %>
             </td>
         <% end %>
