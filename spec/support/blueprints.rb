@@ -452,7 +452,6 @@ UserSessionLog.blueprint do
   euro_billing_rate { 10 }
   log_type { UserSessionLog::TYPE_CAMPAIGN }
   campaign { Campaign.make! }
-  contact_email_address {  }
 end
 
 EmailBounce.blueprint do

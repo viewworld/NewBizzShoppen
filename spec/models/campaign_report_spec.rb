@@ -378,6 +378,24 @@ describe CampaignReport do
       cr.realised_result.should == 133.0
     end
 
+    it "should return correct DB value" do
+      CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset) #100
+      CallResult.make!(:contact => @contact1_3, :result => @result2, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset) #10
+      CallResult.make!(:contact => @contact1_2, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset-1.day)
+      CallResult.make!(:contact => @contact1_1, :result => @result_final_reported, :creator => @call_centre_agent1) #23
+      CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
+      CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
+
+      @campaign1.update_attribute(:cost_type, Campaign::AGENT_BILLING_RATE_COST)
+
+      (1..4).each do |i|
+        UserSessionLog.make!(:euro_billing_rate => 100, :user => @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
+      end
+
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
+      cr.realised_db_value.should == 33.0
+    end
+
   end
 
   context "Agent report" do

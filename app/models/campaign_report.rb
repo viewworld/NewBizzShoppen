@@ -132,8 +132,8 @@ class CampaignReport
   end
 
   def realised_db_value
-    if tc = total_cost and tc.eql?(0.0)
-      0
+    if tc = total_cost and tc < 0
+      0.0
     else
       ((value_created / tc) - 1) * 100
     end
@@ -404,7 +404,7 @@ class CampaignReport
     elsif campaign.cost_type == Campaign::FIXED_HOURLY_RATE_COST
       campaign.euro_fixed_cost_value * total_hours
     elsif campaign.cost_type == Campaign::AGENT_BILLING_RATE_COST
-      user ? selected_users? ? user.map { |u| u.euro_billing_rate.to_f * total_hours(u)}.sum : (user.euro_billing_rate.to_f * total_hours(user)) : campaign.users.map { |u| total_billing(u) }.sum
+      user ? selected_users? ? user.map { |u| u.euro_billing_rate.to_f * total_hours(u)}.sum : (user.euro_billing_rate.to_f * total_hours(user)) : campaign.users.map { |u| total_billing(u) }.sum.to_f
     elsif campaign.cost_type == Campaign::NO_COST
       0.0
     end
