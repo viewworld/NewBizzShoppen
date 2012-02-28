@@ -85,6 +85,8 @@ Feature: Agent campaign - management
       Then I press "campaign_submit"
       Then I should see "Campaign was successfully created"
       And I follow translated "layout.main_menu.call_centre.campaigns"
+      Given I select "all" from "search_with_state"
+      And I press translated "campaigns.filter.search_button"
       Then I should see "2011-11-11"
       Then I should see "2011-12-12"
       Then I should see "Testing Creation"
@@ -813,6 +815,7 @@ Feature: Agent campaign - management
           And user translator_call_centre@nbs.com with role call_centre exists with attributes "first_name: Ted, company_name:translator_call_centre"
           And user translator_call_centre_agent@nbs.com with role call_centre_agent exists with attributes "first_name: Ted2, company_name:translator_call_centre"
           And I follow translated "layout.main_menu.admin.campaigns"
+          And I select "all" from "search_with_state"
           And I fill in "search_with_keyword" with "Testing Two"
           And I press translated "campaigns.filter.search_button"
           When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
@@ -840,6 +843,7 @@ Feature: Agent campaign - management
           Given I am not sign in
           And I sign in as blazejek@gmail.com with password secret
           And I follow translated "layout.main_menu.admin.campaigns"
+          And I select "all" from "search_with_state"
           And I fill in "search_with_keyword" with "Testing Two"
           And I press translated "campaigns.filter.search_button"
           When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
@@ -872,6 +876,7 @@ Feature: Agent campaign - management
         @m26 @requested @selenium @_done @_tested @tgn
         Scenario: As admin or call centre I can move selected contacts to different campaign
           And I fill in "search_with_keyword" with "Testing Two"
+          And I select "all" from "search_with_state"
           And I press translated "campaigns.filter.search_button"
           And I click hidden link by url regex "/\/callers\/campaigns\/\d+\/edit/"
           And I follow translated "campaigns.edit.button_create_contact"
@@ -890,6 +895,7 @@ Feature: Agent campaign - management
         @m26 @requested @selenium @_done @_tested @tgn
         Scenario: As admin or call centre I can duplicate selected contacts to different campaign
           And I fill in "search_with_keyword" with "Testing Two"
+          And I select "all" from "search_with_state"
           And I press translated "campaigns.filter.search_button"
           And I click hidden link by url regex "/\/callers\/campaigns\/\d+\/edit/"
           And I follow translated "campaigns.edit.button_create_contact"

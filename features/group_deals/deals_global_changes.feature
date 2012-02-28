@@ -11,6 +11,8 @@ Feature: Deals global changes
   @_done @_tested @selenium
   Scenario: I should be able to set normal price and discounted
     Then I follow translated "layout.main_menu.admin.deals"
+    And I select "" from "search_active_is"
+    And I press translated "leads.index.search.search_button"
     Then I click hidden link by url regex "/administration\/deals\/\d+\/edit/"
     Then I fill group deal edit form and submit with translated button "administration.deals.edit.view.update_button"
     Then I click hidden link by url regex "/administration\/deals\/\d+\/edit/"
