@@ -1,0 +1,5 @@
+<% (4..Settings.number_of_secondary_featured_deals.to_i).each do |position| %>
+    <% if @featured_deals[position] %>
+        $('div.secondary_featured_deal:last').after('<%= escape_javascript(render(:partial => 'secondary_deal', :locals => {:position => position, :featured => @featured_deals[position], :middle => nil})) %>');
+    <% end %>
+<% end %>

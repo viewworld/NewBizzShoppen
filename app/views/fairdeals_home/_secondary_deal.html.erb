@@ -2,7 +2,7 @@
       <% if featured.present? %>
           <frm title="#{link_to featured.header, deal_path(featured.slug)}">
             <% cache("#{I18n.locale}_secondary_deal_#{featured.id}_part1") do %>
-            <param:content>
+              <param:content>
               <div class="pdd_10">
                 <div class="deal_thumb">
                   <p>
@@ -24,7 +24,7 @@
                         <span class="b red">(<%= featured.saving %>)</span>
                     <% end %>
                     </p>
-            <% end %>
+          <% end %>
 
                     <!-- not cached content -->
                     <%= ratings_for(featured, :force_static => !current_user_has_role?(:member)) %>
@@ -32,7 +32,7 @@
                     <%= group_deal_leads_created_and_missing(featured) %>
                     <!-- end / not cached content -->
 
-            <% cache("#{I18n.locale}_secondary_deal_#{featured.id}_part2") do %>
+          <% cache("#{I18n.locale}_secondary_deal_#{featured.id}_part2") do %>
                   </div>
 
                   <div class="deal_description">
