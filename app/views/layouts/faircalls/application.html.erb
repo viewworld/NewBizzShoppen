@@ -200,6 +200,9 @@
 
     <% end %>
 
+    <% if current_user %>
+        start_notifications();
+    <% end %>
 </script>
 
 <% if Rails.env.production? %>

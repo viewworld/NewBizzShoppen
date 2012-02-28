@@ -411,3 +411,48 @@ function reset_class_cycle_for_table(name) {
 function select_subscription_radio_button(user_class, subscription_plan_id){
     $('input[name=' + user_class + '[subscription_plan_id]][value=' + subscription_plan_id.toString() + ']').click();
 }
+
+var notification_interval = 30000;
+var notification_limit = 3;
+
+function start_notifications() {
+    setTimeout("check_notifications()", notification_interval);
+}
+
+function check_notifications() {
+    $.getJSON('/notifications.json?per_page=' + notification_limit, function(json){
+            if (json.length > 0) {
+                $.each(json, function() {
+                    $.gritter.add({
+                        title: this["notification"].title,
+                        text: this["notification"].text,
+                        sticky: this["notification"].sticky,
+                        id: this["notification"].id,
+                        before_open: function(){
+                            if($('.gritter-item-wrapper').length == notification_limit)
+                                {
+                                    // Returning false prevents a new gritter from opening
+                                    return false;
+                                }
+                        },
+                        after_open: function(e){
+                            var unique_id = e.attr('id').split('-')[2];
+                            $('#gritter-item-' + unique_id + ' div.gritter-without-image,div.gritter_with_image').find('p a').click(function(e) {
+                                $.gritter.remove(unique_id, {}, null, true);
+                            })
+                        },
+                        before_close: function(e, manual_close){
+                            if (manual_close) {
+                                $.ajax({
+                                  type: 'PUT',
+                                  url: '/notifications/' + e.attr('id').split('-')[2] + '.json',
+                                  dataType: json
+                                });
+                            }
+                        }
+                    });
+                });
+            }
+    });
+    setTimeout("check_notifications()", notification_interval);
+}

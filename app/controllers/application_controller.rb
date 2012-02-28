@@ -166,7 +166,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_user_time_zone
-    #Time.zone = current_user.time_zone if user_signed_in?
+    Time.zone = current_user.time_zone if user_signed_in?
   end
 
   def redirect_to_root_path_if_signed_in

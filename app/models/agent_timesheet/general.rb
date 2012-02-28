@@ -97,12 +97,26 @@ class ::AgentTimesheet::General
 
   def notify!
     if @current_user and url
-      TemplateMailer.new(@current_user.email, :agent_timesheet, Country.get_country_from_locale, {:user => @current_user, :timesheet_url => url, :sender_id => nil}).deliver!
+      #TemplateMailer.new(@current_user.email, :agent_timesheet, Country.get_country_from_locale, {:user => @current_user, :timesheet_url => url, :sender_id => nil}).deliver!
+      @current_user.notify!(
+          :title => I18n.t("notifications.agent_timesheet.ready.title"),
+          :text => I18n.t("notifications.agent_timesheet.ready.text", :url => url)
+      )
     end
   end
 
   def self.human_name
     "Agent Timesheet"
+  end
+
+  def average_log_in(dow,agent)
+    arr = stats.for_dow(dow).for_agent(agent).group(:week).select("MIN(log_in::TIME) as min_log_in").map{|t| Time.zone.parse(t.min_log_in).to_i}
+    arr.size > 0 ? Time.zone.at(arr.sum / arr.size): nil
+  end
+
+  def average_log_out(dow,agent)
+    arr = stats.for_dow(dow).for_agent(agent).group(:week).select("MAX(log_out::TIME) as min_log_out").map{|t| Time.zone.parse(t.min_log_out).to_i}
+    arr.size > 0 ? Time.zone.at(arr.sum / arr.size) : nil
   end
 
 end

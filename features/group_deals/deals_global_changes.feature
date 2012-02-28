@@ -46,6 +46,8 @@ Feature: Deals global changes
   @_done @_tested
   Scenario: As admin I can change the number of generated leads from a deal
     Then I follow translated "layout.main_menu.admin.deals"
+    And I select "" from "search_active_is"
+    And I press translated "leads.index.search.search_button"
     Then I follow translated "administration.deals.index.view.edit"
     Then I fill in "deal_created_leads" with "-1"
     Then I press translated "administration.deals.edit.view.update_button"
@@ -56,4 +58,3 @@ Feature: Deals global changes
     Then I fill in "deal_created_leads" with "0"
     Then I press translated "administration.deals.edit.view.update_button"
     Then I should see translated "flash.deals.update.notice"
-    Then I follow translated "administration.deals.index.view.edit"

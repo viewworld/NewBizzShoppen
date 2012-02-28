@@ -1,0 +1,75 @@
+@page {
+    size: a4 landscape;
+    margin: 15mm;
+
+}
+
+table
+{    
+    border: none;
+    margin-top: 10px;
+}
+
+.hl, hr,
+.cl, .cr,
+.fl, .fr
+{
+    padding: 0 !important;
+    width: 1px;
+}
+
+table td,
+table th    
+{
+    padding: 3px;
+    font-size: 12px;
+    vertical-align: top;    
+    border: 1px solid #aaa;    
+    text-align: center;
+    -pdf-keep-in-frame-mode: shrink;
+}
+
+table thead th
+{
+    background: #ccc;
+    vertical-align: middle;
+}
+
+table tbody tr:first-child td
+{
+    background: #f0f0f0;
+    font-weight: bold;
+    vertical-align: middle;
+    font-size: 10px;
+    -pdf-keep-in-frame-mode: overflow;
+}
+
+
+table tfoot
+{
+    display: none;
+}
+
+.print_company_info
+{
+    font-weight: bold;
+    font-size: 14px;
+}
+
+p
+{
+    padding: 4px 0;
+}
+
+h1
+{
+    font-size: 24px;
+    padding-bottom: 14px;        
+}
+
+h3
+{
+    font-size: 16px;
+    font-weight: bold;
+    padding-bottom: 8px;
+}

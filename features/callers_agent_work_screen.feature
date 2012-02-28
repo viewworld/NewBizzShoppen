@@ -465,5 +465,8 @@ Feature: Callers agent work screen
     Then I should not see translated "call_results.edit.button_new_result"
 
   #10278
-  @m29 @requested
+  @m29 @requested @selenium @_done @_tested
   Scenario: Notification should be added when I create a Call Back result
+    Then I add result "Call back" for current contact
+    Then notification for user "translator_call_centre@nbs.com" should be created
+    And the last notification should not be active

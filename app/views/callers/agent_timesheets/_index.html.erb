@@ -33,10 +33,12 @@
       <!-- cut -->
       <% if timesheet.agent_timesheet %>
           <h3 style="display:none"><%= t("agent_timesheets.index.agent_time_sheet.header_wo_name") %></h3>
+          <% @log_out_times ||= {} %>
         <% timesheet.agents.each do |agent| %>
+          <% @log_out_times[agent.id] ||= {}  %>
           <div id="agent_time_sheet_<%= agent.id %>" style="display:none;page-break-after:always;">
             <!-- cut --><hr/><!-- cut -->
-            <div class="fltl">
+            <div class="fltl print_company_info">
               <p><%= agent.screen_name %> (<%= agent.email %>)</p>
               <p><%= agent.company_name %></p>
             </div>
