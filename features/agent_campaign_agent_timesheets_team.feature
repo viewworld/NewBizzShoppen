@@ -27,7 +27,7 @@ Feature: Agent timesheets - team result sheet
     And I should see "test report user CCA1"
     And I should see "test report user CCA2"
     And I should see "384:00"
-    And I should see "22"
+    And I should see "11"
     And I should see "286"
 
   @_done @_tested_elsewhere

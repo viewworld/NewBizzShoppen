@@ -573,9 +573,13 @@ Feature: Agent campaign - calling session
     Given campaign named "Expired campaign" exists with attributes "start_date:10-01-2011,end_date:02-04-2011"
     And contact for company "Xena1" and campaign "Expired campaign" is assigned to user "translator_call_centre_agent@nbs.com"
     And I follow translated "layout.main_menu.call_centre.campaigns"
+    And I select "all" from "search_with_state"
+    And I press translated "campaigns.filter.search_button"
     When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
     Then I should see translated "call_results.edit.button_new_result"
     And I follow translated "layout.main_menu.call_centre.campaigns"
+    And I select "all" from "search_with_state"
+    And I press translated "campaigns.filter.search_button"
     When I follow translated action "campaigns.table.work_screen" within row containing "Expired campaign"
     Then I should not see translated "call_results.edit.button_new_result"
 

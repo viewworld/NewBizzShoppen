@@ -16,11 +16,12 @@ Feature: Reassigning lead purchases
     And lead Keyboards deal is bought by user customer@person.com with role supplier and is assigned to user lead_user2@person.com with role lead_user
     Then I sign in as lead_user2@person.com with password secret
 
-  @tgn @_done @_tested @selenium
+  #deprecated since m29, only supplier - parent can transfer leads
+  @tgn @_done @_tested @selenium @_deprecated
   Scenario: I can transfer lead access to other lead handler that belong to the same customer (!!)
-    When I follow translated "layout.main_menu.lead_user.lead_purchases"
-    And I fill in "search_with_keyword" with "Printers ultimate deal"
-    And I press translated "lead_user.lead_purchases.index.view.search.search_button"
-    Then I select "Martin Gleesse" from "assignee_id"
-    And I go to lead user lead purchases
-    Then I should not see "Printers ultimate deal"
+#    When I follow translated "layout.main_menu.lead_user.lead_purchases"
+#    And I fill in "search_with_keyword" with "Printers ultimate deal"
+#    And I press translated "lead_user.lead_purchases.index.view.search.search_button"
+#    Then I select "Martin Gleesse" from "assignee_id"
+#    And I go to lead user lead purchases
+#    Then I should not see "Printers ultimate deal"

@@ -232,6 +232,7 @@ Feature: Category buyer rules
     And Category named "Consoles" already exists within category named "Electronics"
     And lead Iksboksy exists within category Consoles
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Electronics"
+    And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I am on category home leads page for Electronics

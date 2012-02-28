@@ -10,7 +10,7 @@ module CampaignActions
 
   def set_locals
     set_contacts
-    campaign_result_ids =  @campaign.to_a.map(&:results).flatten.uniq.map(&:id)
+    campaign_result_ids =  Array(@campaign).map(&:results).flatten.uniq.map(&:id)
     @all_results = Result.where("results.id IN (?)", campaign_result_ids)
     @result_ids = params[:result_ids] || @all_results.map(&:id)
     @date_from = params[:date_from] ? params[:date_from].to_date : @campaign.is_a?(Array) ? @campaign.map(&:start_date).sort.first : @campaign.start_date

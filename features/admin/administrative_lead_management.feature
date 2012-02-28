@@ -81,22 +81,23 @@ Scenario: I can delete a language
   And I follow translated "administration.leads.index.view.edit"
   Then I should not see translated "agent.leads.new.view.remove_language"
 
-@m4 @tgn @added @agent_certification @_tested @selenium @_done
+#deprecated by #10277
+@m4 @tgn @added @agent_certification @_tested @selenium @_done @_deprecated
 Scenario: I can publish a lead that is not published
-  Given I have user with email agent.notcertified@person.com and role agent
-  And user "agent.notcertified@person.com" with role "agent" has certification level set to 0
-  And lead Monitors ultimate deal is created by user agent.notcertified@person.com with role agent
-  And lead named "Monitors ultimate deal" is not published
-  Given I am not sign in
-  Then I sign in as admin2@person.com with password supersecret
-  And I go to administration leads
-  And I select translated "administration.leads.index.view.option_not_published" from "search_with_status"
-  And I press translated "administration.leads.index.view.search_button"
-  Then I select translated "administration.leads.index.view.option_published" from "published"
-  And I go to administration leads
-  And I select translated "administration.leads.index.view.option_not_published" from "search_with_status"
-  And I press translated "administration.leads.index.view.search_button"
-  And I should not see "Monitors ultimate deal"
+#  Given I have user with email agent.notcertified@person.com and role agent
+#  And user "agent.notcertified@person.com" with role "agent" has certification level set to 0
+#  And lead Monitors ultimate deal is created by user agent.notcertified@person.com with role agent
+#  And lead named "Monitors ultimate deal" is not published
+#  Given I am not sign in
+#  Then I sign in as admin2@person.com with password supersecret
+#  And I go to administration leads
+#  And I select translated "administration.leads.index.view.option_not_published" from "search_with_status"
+#  And I press translated "administration.leads.index.view.search_button"
+#  Then I select translated "administration.leads.index.view.option_published" from "published"
+#  And I go to administration leads
+#  And I select translated "administration.leads.index.view.option_not_published" from "search_with_status"
+#  And I press translated "administration.leads.index.view.search_button"
+#  And I should not see "Monitors ultimate deal"
 
 @m5 @tgn @_tested @_done
 Scenario: I can edit leads from any page where they are presented
