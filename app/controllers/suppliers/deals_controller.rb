@@ -2,6 +2,8 @@ class Suppliers::DealsController < Suppliers::BasicSupplierController
   before_filter :set_deal, :only => [:edit, :update, :destroy]
   before_filter :prepare_assets, :only => [:edit, :update]
   before_filter :check_users_subscription, :only => [:new, :create]
+  cache_sweeper :deal_sweeper
+
   include ::DealActions
 
   def new
