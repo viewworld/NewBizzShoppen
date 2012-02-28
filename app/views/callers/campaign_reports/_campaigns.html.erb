@@ -21,7 +21,7 @@
                 <%= as_currency(campaign_report.production_cost, Currency.euro, 0) %> (<%= as_currency(campaign_report.target_production_cost, Currency.euro, 0) %>)
             <% end %>
           </td>
-          <td><%= campaign_report.target_db_value %>% (<%= campaign_report.realised_db_value %>%)</td>
+          <td><%= number_to_percentage(campaign_report.realised_db_value, :precision => 0) %> (<%= number_to_percentage(campaign_report.target_db_value, :precision => 0) %>)</td>
           <td><%= campaign_report.predicted_hours_to_completion.as_hours_and_minutes %></td>
           <td><%= as_currency(campaign_report.predicted_cost_for_completion, Currency.euro, 0) %></td>
           <td><%= as_currency(campaign_report.predicted_value_for_completion, Currency.euro, 0) %></td>
