@@ -19,7 +19,7 @@
               <% elsif [:log_out].include?(key) %>
                   <%= (log_out = agent_time_sheet.average_log_out(dow,agent)) ? log_out.strftime("%H:%M") : '-' %>
               <% elsif [:log_out_time].include?(key) %>
-                  <%= (@log_out_times[agent.id][dow].size > 0) ? format_for_timesheet(@log_out_times[agent.id][dow].sum/@log_out_times[agent.id][dow].size, :hours) : '-' %>
+                  <%= (!@log_out_times[agent.id].empty? and @log_out_times[agent.id][dow].size > 0) ? format_for_timesheet(@log_out_times[agent.id][dow].sum/@log_out_times[agent.id][dow].size, :hours) : '-' %>
               <% end %>
             </td>
         <% end %>

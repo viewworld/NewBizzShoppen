@@ -30,14 +30,7 @@ Feature: Agent timesheets - agent timesheet
     And I should see translated "agent_timesheets.index.agent_time_sheet.total_db"
     When I check "show_all_agents"
     And I should see "16:00"
-    And I should see "10"
-    And I should see "130"
-    And I should see "260"
-    And I should see "32:00"
-    And I should see "128:00"
-    And I should see "14"
-    And I should see "260"
-    And I should see "26"
+    And I should see "08:00"
     And I should see "n/a"
 
   @_done @_tested_elsewhere
