@@ -56,7 +56,7 @@ Scenario: I can filter the listing (similiar to those in lead catalogue + catego
   Then I should see "1" rows with id like "lead_" in a table within "#leads"
   And I should see "Value500Lead"
 
-@ao @_done @_tested @wip
+@ao @_done @_tested
 Scenario: I can sort by columns (those that do match to database columns)
   Given pagination page size for leads is set to 100
   And lead ZZZZZLead exists within category Test
@@ -68,10 +68,6 @@ Scenario: I can sort by columns (those that do match to database columns)
   Then I should see "AAAAALead" before "ZZZZZLead"
   And I follow translated "leads.table.header"
   Then I should see "ZZZZZLead" before "AAAAALead"
-  When I follow translated "leads.table.purchase_value"
-  Then I should see "PurchaseValue1000Lead" before "PurchaseValue1999Lead"
-  When I follow translated "leads.table.purchase_value"
-  Then I should see "PurchaseValue1999Lead" before "PurchaseValue1000Lead"
 
 @ao @_done @_tested
 Scenario: I can go to lead details by clicking on the edit link

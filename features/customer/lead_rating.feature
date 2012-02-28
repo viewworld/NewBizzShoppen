@@ -105,10 +105,9 @@ Scenario: As admin I can view all 'unsatisfactory' ratings
   And a lead "Ultimate mouses deal" has bad rating
   Then I sign in as admin@person.com with password supersecret
   And I go to administration leads
-  When I follow translated "leads.table.unsatisfactory_rating"
-  And I follow translated "leads.table.unsatisfactory_rating"
-  Then I should have translated value "leads.listing.has_unsatisfactory_rating_yes" in the css path "tr:nth-child(1) td:nth-child(13)"
-  Given I follow translated "leads.listing.has_unsatisfactory_rating_yes"
+  And I fill in "search_with_keyword" with "Ultimate mouses deal"
+  And I press translated "administration.leads.index.view.search_button"
+  And I follow translated "administration.leads.index.view.edit"
   Then I should see translated "administration.leads.show.view.rating_level"
 
 # by comments

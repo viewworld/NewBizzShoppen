@@ -32,6 +32,8 @@ Feature: Agent campaign - management
 
     @is @__campaigns_listing @_tested @_done
     Scenario: I can sort campaigns
+      Given I select "all" from "search_with_state"
+      And I press translated "campaigns.filter.search_button"
       Then I follow translated "campaigns.table.name"
       Then I should see "Testing One" before "Testing Two"
       Then I follow translated "campaigns.table.name"
@@ -53,8 +55,9 @@ Feature: Agent campaign - management
       Then I follow translated "campaigns.table.end_date"
       Then I should see "Testing One" before "Testing Two"
 
-    @is @__campaigns_listing @_tested @_done 
+    @is @__campaigns_listing @_tested @_done
     Scenario: I can filter campaigns by name
+      Given I select "all" from "search_with_state"
       Then I fill in "search_with_keyword" with "two"
       Then I press translated "campaigns.filter.search_button"
       Then I should see "Testing Two"
@@ -63,8 +66,10 @@ Feature: Agent campaign - management
     @is @__campaigns_listing @_done @_tested
     Scenario: I can remove selected campaign
       Then I follow translated "campaigns.index.destroy"
-      Then I should not see "Testing One"
       Then I should see translated "flash.campaigns.destroy.notice"
+      Given I select "all" from "search_with_state"
+      Then I press translated "campaigns.filter.search_button"
+      Then I should not see "Testing One"
       Then I should see "Testing Two"
 
     @is @__campaigns_listing @_tested @_done @selenium
@@ -99,6 +104,8 @@ Feature: Agent campaign - management
       Then I press "campaign_submit"
       Then I should see "Campaign was successfully updated"
       And I follow translated "layout.main_menu.call_centre.campaigns"
+      And I select "all" from "search_with_state"
+      And I press translated "campaigns.filter.search_button"
       Then I should see "2011-11-11"
       Then I should see "2011-12-12"
       Then I should see "Testing Changed"
