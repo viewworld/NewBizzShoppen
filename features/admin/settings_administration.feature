@@ -127,8 +127,7 @@ Scenario: I can set default auto buy max for 4 weeks
 
 @m18 @settings @_done @_tested
 Scenario: I can enable/disable email verification for procurement managers
-  When I uncheck "settings[14]"
-  And I press translated "administration.settings.edit.view.button_update_settings"
+  And setting for "email_verification_for_members" is set to "0"
   And I sign out
   And I visit domain http://fairdeals.eu
   When I go to member sign up
@@ -150,12 +149,7 @@ Scenario: I can enable/disable email verification for procurement managers
   And I press translated "member_accounts.new.view.button_create_account"
   Then I should be signed in
   And I sign out
-  And I visit domain http://fairdeals.com
-  And I sign in as lead_user2@person.com with password supersecret
-  Then I go to administration settings
-  When I check "settings[14]"
-  And I press translated "administration.settings.edit.view.button_update_settings"
-  And I sign out
+  And setting for "email_verification_for_members" is set to "1"
   When I go to member sign up
   And I fill in the following:
     | user_member_first_name            | Jon             |
@@ -177,8 +171,7 @@ Scenario: I can enable/disable email verification for procurement managers
 
 @m18 @settings @_done @_tested
 Scenario: I can enable/disable email verification for sales managers
-  When I uncheck "settings[15]"
-  And I press translated "administration.settings.edit.view.button_update_settings"
+  And setting for "email_verification_for_suppliers" is set to "0"
   And I sign out
   When I go to supplier sign up
   And I fill in the following:
@@ -200,11 +193,7 @@ Scenario: I can enable/disable email verification for sales managers
   Then I should see translated "devise.sessions.new.controller.successfully_logged_in"
   And I should be signed in
   And I should be on the home page
-  And I sign out
-  And I sign in as lead_user2@person.com with password supersecret
-  Then I go to administration settings
-  When I check "settings[15]"
-  And I press translated "administration.settings.edit.view.button_update_settings"
+  And setting for "email_verification_for_suppliers" is set to "1"
   And I sign out
   When I go to supplier sign up
   And I fill in the following:

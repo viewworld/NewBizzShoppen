@@ -56,7 +56,7 @@ Scenario: I can filter the listing (similiar to those in lead catalogue + catego
   Then I should see "1" rows with id like "lead_" in a table within "#leads"
   And I should see "Value500Lead"
 
-@ao @_done @_tested
+@ao @_done @_tested @wip
 Scenario: I can sort by columns (those that do match to database columns)
   Given pagination page size for leads is set to 100
   And lead ZZZZZLead exists within category Test

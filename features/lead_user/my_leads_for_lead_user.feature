@@ -93,10 +93,11 @@ Scenario: I can see all leads bought by lead buyers that belong to my account
 @noguess
 Scenario: I can see all leads requested by lead users that belong to my account
 
+#changed by ticket #10111
 @tgn @_tested @_done
 Scenario: I should see created by and certification level for each lead
-  Then I should see "Johan Printing"
-  And I should see translated "models.lead.certification.lvl1"
+  Then I should not see "Johan Printing"
+  And I should not see translated "models.lead.certification.lvl1"
 
 @m4 @tgn @_tested @added @_deprecated @_done
 Scenario: I should see rating % for each lead
@@ -131,10 +132,11 @@ Scenario: I can email the lead if email information were provided
   And I press translated "lead_user.contact_lead_by_email.new.view.send_email_button"
   Then I should see translated "flash.contact_lead_by_email.create.notice"
 
+#changed by #10111
 @tgn @_done @_tested
 Scenario: I should see hottness, publish date, exposure, clicks
   Then I should see translated "models.lead.hotness.lvl2"
-  And I should see "01-01-2011"
+  And I should not see "01-01-2011"
 
 @tgn @_tested @_done
 Scenario: I can see company contact

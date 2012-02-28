@@ -8,7 +8,7 @@ module DealActions
   def index
     params[:search] ||= {}
     params[:search][:active_is] = "1" if params[:search][:active_is].nil?
-    params[:search] = {"descend_by_created_at" => "true"} if params[:search].blank?
+    params[:search][:descend_by_created_at] = "true" if params[:search][:descend_by_created_at].blank?
     @search = Deal.scoped_search(params[:search])
     @deals = current_user.admin? ? @search.paginate(:page => params[:page], :per_page => Settings.default_deals_per_page, :show_all => params[:show_all] == "1") :
         @search.where("creator_id IN (?) or email_address = ? or deal_admin_email IN (?)", (current_user.call_centre? ?

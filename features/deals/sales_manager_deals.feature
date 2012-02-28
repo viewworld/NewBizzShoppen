@@ -16,6 +16,8 @@ Feature: Deals from Sales Manager perspective
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then a deal is created by "translator_customer@nbs.com" for user "translator_customer@nbs.com" and category "Business deals" with attributes "header:hidden|description:hidden|hidden_description:hidden|start_date:2011-01-01|end_date:2011-01-01|company_name:starks"
     Then I follow translated "layout.main_menu.lead_supplier.my_deals"
+    And I select "" from "search_active_is"
+    And I press translated "leads.index.search.search_button"
     Then I should not see "hidden"
     Then I should see "super" before "awesome"
     Then I filter and sort deals with my deals translation "layout.main_menu.lead_supplier.my_deals"
