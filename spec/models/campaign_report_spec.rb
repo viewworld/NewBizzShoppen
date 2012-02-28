@@ -100,7 +100,7 @@ describe CampaignReport do
     end
 
     it "should return all reported result types" do
-      CampaignReport.final_results.size.should == 6
+      CampaignReport.final_results.size.should == 7
     end
 
     it "should return correct target final results of given type per hour" do
@@ -378,57 +378,60 @@ describe CampaignReport do
       cr.realised_result.should == 133.0
     end
 
-    context "report update" do
-      def setup_call_results_with_user_time
+    context "m29 report update" do
+      before(:each) do
         @result1.campaigns_results.first.update_attributes(:value => 200, :expected_completed_per_hour => 5)
         CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset) #200
-        CallResult.make!(:contact => @contact1_3, :result => @result2, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset) #10
+        CallResult.make!(:contact => @contact1_3, :result => @result2, :creator => @call_centre_agent2, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset) #10
         CallResult.make!(:contact => @contact1_2, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset-1.day)
         CallResult.make!(:contact => @contact1_1, :result => @result_final_reported, :creator => @call_centre_agent1) #23
         CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
         CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
-        CallResult.make!(:contact => @contact1_4, :result => @result_not_final_reported, :creator => @call_centre_agent1)
+        CallResult.make!(:contact => @contact1_4, :result => @result_not_final_reported, :creator => @call_centre_agent2)
 
         @campaign1.update_attribute(:cost_type, Campaign::AGENT_BILLING_RATE_COST)
 
         (1..6).each do |i|
-          UserSessionLog.make!(:euro_billing_rate => 100, :user => @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
+          UserSessionLog.make!(:euro_billing_rate => 100, :user => i>4 ? @call_centre_agent2 : @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
         end
       end
 
       it "should return correct realised finished results per hour" do
-        setup_call_results_with_user_time
-
         cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
         cr.realised_finished_results_per_hour.should == 2
       end
 
+      it "should return correct target all results per hour" do
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
+        cr.target_all_results_per_hour.should be_close(3.33, 0.01)
+      end
+
       it "should return correct realised all results per hour" do
-        setup_call_results_with_user_time
         cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
         cr.realised_all_results_per_hour.should be_close(2.66, 0.01)
       end
 
+      it "should return correct target realised temp results per hour" do
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
+        cr.target_temp_result_per_hour.should be_close(1.33, 0.01)
+      end
+
       it "should return correct realised temp results per hour" do
-        setup_call_results_with_user_time
         cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
         cr.realised_temp_result_per_hour.should be_close(0.66, 0.01)
       end
 
       it "should return correct realised cost per hour" do
-        setup_call_results_with_user_time
         cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
         cr.realised_cost_per_hour.should == 100.0
       end
 
       it "should return correct contacts used" do
-        setup_call_results_with_user_time
         cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
         cr.contacts_used.should == "2-4:75.0"
       end
 
       it "should return correct realised final result count" do
-        setup_call_results_with_user_time
         cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
         [@result1,@result2,@result_final_reported].each do |result|
           cr.realised_final_result_count(result).should == 1
@@ -436,33 +439,26 @@ describe CampaignReport do
       end
 
       it "should return correct target value" do
-        setup_call_results_with_user_time
         cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
         cr.target_value_created.should == 466.0 #(4/2)*233
       end
 
       it "should return correct target cost" do
-        setup_call_results_with_user_time
         cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
         cr.target_production_cost.should == 300.0 #(4/2)*150
       end
 
       it "should return correct target DB value" do
-        setup_call_results_with_user_time
         cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
-        cr.realised_db_value.should be_close(55.33, 0.01)
+        cr.target_db_value.should be_close(55.33, 0.01)
       end
 
       it "should return correct realised DB value" do
-        setup_call_results_with_user_time
-
         cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
         cr.realised_db_value.should be_close(55.33, 0.01)
       end
 
       it "should return correct predictions for hours, cost, and value for completion" do
-        setup_call_results_with_user_time
-
         cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
         cr.predicted_hours_to_completion.should == 1.5
         cr.predicted_cost_for_completion.should == 150.0
@@ -661,6 +657,119 @@ describe CampaignReport do
       cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2)
       cr1.realised_result.should == 120.0
       cr2.realised_result.should == 45.0
+    end
+
+    context "m29 report update" do
+      before(:each) do
+        @result1.campaigns_results.first.update_attributes(:value => 200, :expected_completed_per_hour => 5)
+        CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset) #200
+        CallResult.make!(:contact => @contact1_3, :result => @result2, :creator => @call_centre_agent2, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset) #10
+        CallResult.make!(:contact => @contact1_2, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset-1.day)
+        CallResult.make!(:contact => @contact1_1, :result => @result_final_reported) #23
+        CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
+        CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
+        CallResult.make!(:contact => @contact1_4, :result => @result_not_final_reported, :creator => @call_centre_agent2, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+
+        @campaign1.update_attribute(:cost_type, Campaign::AGENT_BILLING_RATE_COST)
+        @call_centre_agent1.update_attribute(:euro_billing_rate, 100)
+        @call_centre_agent2.update_attribute(:euro_billing_rate, 100)
+        (1..7).each do |i|
+          UserSessionLog.make!(:euro_billing_rate => 100, :user => i>4 ? @call_centre_agent2 : @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
+        end
+      end
+
+      it "should return correct realised finished results per hour" do
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1)
+        cr.realised_finished_results_per_hour.should == 1
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2)
+        cr.realised_finished_results_per_hour.should be_close(1.33, 0.01)
+      end
+
+      it "should return correct target all results per hour" do
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1) #global
+        cr.target_all_results_per_hour.should be_close(3.33, 0.01)
+      end
+
+      it "should return correct realised all results per hour" do
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1)
+        cr.realised_all_results_per_hour.should == 1.0
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2)
+        cr.realised_all_results_per_hour.should be_close(2.66, 0.01)
+      end
+
+      it "should return correct target realised temp results per hour" do
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1)
+        cr.target_temp_result_per_hour.should == 0.0
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2)
+        cr.target_temp_result_per_hour.should == 4.0
+      end
+
+      it "should return correct realised temp results per hour" do
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1)
+        cr.realised_temp_result_per_hour.should == 0
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2)
+        cr.realised_temp_result_per_hour.should be_close(1.33, 0.01)
+      end
+
+      it "should return correct realised cost per hour" do
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1)
+        cr.realised_cost_per_hour.should == 100.0
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2)
+        cr.realised_cost_per_hour.should == 100.0
+      end
+
+      it "should return correct contacts used" do
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1)
+        cr.contacts_used.should == "1-4:75.0"
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2)
+        cr.contacts_used.should == "1-4:75.0"
+      end
+
+      it "should return correct realised final result count" do
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1)
+        cr.realised_final_result_count(@result1).should == 1
+        cr.realised_final_result_count(@result2).should == 0
+        cr.realised_final_result_count(@result_final_reported).should == 0
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2)
+        cr.realised_final_result_count(@result1).should == 0
+        cr.realised_final_result_count(@result2).should == 1
+        cr.realised_final_result_count(@result_final_reported).should == 0
+      end
+
+      it "should return correct target value" do
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1)
+        cr.target_value_created.should == 800.0 #(4/1)*200
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2)
+        cr.target_value_created.should == 40.0 #(4/1)*10
+      end
+
+      it "should return correct target cost" do
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1)
+        cr.target_production_cost.should == 400.0 #(4/1)*100
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2)
+        cr.target_production_cost.should == 300.0 #(4/1)*75
+      end
+
+      it "should return correct target DB value" do
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1)
+        cr.target_db_value.should == 100.0
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2)
+        cr.target_db_value.should be_close(-86.66, 0.01)
+      end
+
+      it "should return correct realised DB value" do
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1)
+        cr.realised_db_value.should == 100.0
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2)
+        cr.realised_db_value.should be_close(-86.66, 0.01)
+      end
+
+      it "should return correct predictions for hours, cost, and value for completion" do
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1)
+        cr.predicted_hours_to_completion.should == 3.0
+        cr.predicted_cost_for_completion.should == 300.0
+        cr.predicted_value_for_completion.should == 600.0
+      end
     end
   end
 

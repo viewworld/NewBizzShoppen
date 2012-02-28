@@ -41,7 +41,8 @@ class CampaignReport
 
   def target_all_results_per_hour
     all_exp = campaign.campaigns_results.joins(:result).where("results.is_reported is TRUE").sum(:expected_completed_per_hour)
-    campaign.campaigns_results.count > 0 ? all_exp / campaign.campaigns_results.count : 0
+    all_reported = campaign.campaigns_results.joins(:result).where("results.is_reported is TRUE").count
+    all_reported > 0 ? all_exp / all_reported : 0
   end
 
   def realised_all_results_per_hour
@@ -54,7 +55,7 @@ class CampaignReport
 
   def target_temp_result_per_hour
     if fr = final_results.count and fr > 0
-      (temp_results.count / fr) * total_number_of_contacts
+      (temp_results.count / fr.to_f) * total_number_of_contacts
     else
       0
     end
