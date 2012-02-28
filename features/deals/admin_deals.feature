@@ -140,5 +140,5 @@ Feature: Deals from admin perspective
     And I should see "4" rows with id like "deal_" in a table
 
   #10252
-  @m29 @requested
+  @m29 @requested @tgn @_done @_tested_elsewhere
   Scenario: I can click to see all deals on one page

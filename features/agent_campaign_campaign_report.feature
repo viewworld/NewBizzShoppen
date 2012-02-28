@@ -30,6 +30,25 @@ Feature: Campaign report
     And I press translated "campaign_reports.index.search_button"
     And I should see "TestCampaignReport1" within "#reports_table"
     And I should see "TestCampaignReport2" within "#reports_table"
+    And I should see translated "campaign_reports.index.table.campaign_name"
+    And I should see translated "campaign_reports.index.table.campaign_targets"
+    And I should see translated "campaign_reports.index.table.status"
+    And I should see translated "campaign_reports.index.table.campaign_results"
+    And I should see translated "campaign_reports.index.table.predicted_results"
+    And I should see translated "campaign_reports.index.table.success_percent"
+    And I should see translated "campaign_reports.index.table.finish_cph"
+    And I should see translated "campaign_reports.index.table.final_results_ph"
+    And I should see translated "campaign_reports.index.table.all_results_ph"
+    And I should see translated "campaign_reports.index.table.temp_results_ph"
+    And I should see translated "campaign_reports.index.table.value_ph"
+    And I should see translated "campaign_reports.index.table.cost_ph"
+    And I should see translated "campaign_reports.index.table.contacts_used"
+    And I should see translated "campaign_reports.index.table.value_created"
+    And I should see translated "campaign_reports.index.table.production_cost"
+    And I should see translated "campaign_reports.index.table.db_value"
+    And I should see translated "campaign_reports.index.table.hours_to_completion"
+    And I should see translated "campaign_reports.index.table.cost_for_completion"
+    And I should see translated "campaign_reports.index.table.value_for_completion"
 
   @_done @tested_elsewhere
   Scenario: I can see target success rate
@@ -120,64 +139,64 @@ Feature: Campaign report
 
   #10254
   #R is short for realized number F is short for forcast. So the notation Success % 5(10), reads, the campaign has 5 % success rate but forecasted 10%
-  @m29 @requested
+  @m29 @requested @tgn @_done @_tested_elsewhere
   Scenario: I should see Success% and Finish CPH in format "R(F)"
 
   #10254
-  @m29 @requested
+  @m29 @requested @tgn @_done @_tested_elsewhere
   Scenario: I should see Final results P/H -- "R(F)"
 
   #10254
-  @m29 @requested
+  @m29 @requested @tgn @_done @_tested_elsewhere
   Scenario: I should see all results P/H -- "R(F)"
 
   #10254
-  @m29 @requested
+  @m29 @requested @tgn @_done @_tested_elsewhere
   Scenario: I should see final results - "R(F)"
 
   #10254
-  @m29 @requested
+  @m29 @requested @tgn @_done @_tested_elsewhere
   Scenario: I should see temp results --"R(F)"
 
   #10254
-  @m29 @requested
+  @m29 @requested @tgn @_done @_tested_elsewhere
   Scenario: I should see Value P/H --"R(F)
 
   #10254
-  @m29 @requested
+  @m29 @requested  @tgn @_done @_tested_elsewhere
   Scenario: I should see Cost P/H --"R(F)
 
   #10254
   #"23-789:3%" Meaning 23 contacts completed out of 289 equals to 3% of the contacts in the campaign is used
-  @m29 @requested
+  @m29 @requested @tgn @_done @_tested_elsewhere
   Scenario: I should see Contacts used
 
   #10254
-  @m29 @requested
+  @m29 @requested @tgn @_done @_tested_elsewhere
   Scenario: I should see all final results with number of them
 
   # ---- RESULTS ---
   #10254
-  @m29 @requested
+  @m29 @requested @tgn @_done @_tested_elsewhere
   Scenario: I should see Value
 
   #10254
-  @m29 @requested
+  @m29 @requested @tgn @_done @_tested_elsewhere
   Scenario: I should see Cost
 
   #10254
-  @m29 @requested
+  @m29 @requested @tgn @_done @_tested_elsewhere
   Scenario: I should see DB
 
   # ---- PREDICTION ---
   #10254
-  @m29 @requested
+  @m29 @requested @tgn @_done @_tested_elsewhere
   Scenario: I should see hours to completion
 
   #10254
-  @m29 @requested
+  @m29 @requested @tgn @_done @_tested_elsewhere
   Scenario: I should see cost for completion
 
   #10254
-  @m29 @requested
+  @m29 @requested @tgn @_done @_tested_elsewhere
   Scenario: I should see value for completion

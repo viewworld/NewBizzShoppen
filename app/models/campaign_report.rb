@@ -162,7 +162,7 @@ class CampaignReport
     if cnc = completed_number_of_contacts and cnc > 0
       (total_hours / cnc) * (total_number_of_contacts - completed_number_of_contacts)
     else
-      0
+      0.0
     end
   end
 
