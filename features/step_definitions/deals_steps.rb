@@ -128,7 +128,6 @@ Then /I add and remove logo for deal as "([^"]*)"/ do |role|
   Then %{I follow translated "#{role}.deals.index.view.edit"}
   Then %{attach the file "sample image" to "deal_logo_attributes_asset"}
   Then %{I press translated "#{role}.deals.edit.view.update_button"}
-  Then %{I follow translated "#{role}.deals.index.view.edit"}
   Then %{I should see translated "deals.common.assets.view.show_image"}
   Then %{I follow translated "deals.common.assets.view.remove_logo"}
   Then %{I should see translated "flash.deal_assets.destroy.success"}
@@ -140,11 +139,9 @@ Then /I add and remove document for deal as "([^"]*)"/ do |role|
   Then %{I follow translated "#{role}.deals.index.view.edit"}
   Then %{attach the file "document" to "deal_materials_attributes_0_asset"}
   Then %{I press translated "#{role}.deals.edit.view.update_button"}
-  Then %{I follow translated "#{role}.deals.index.view.edit"}
   Then %{I should see translated "deals.common.assets.view.download"}
   Then %{attach the file "document" to "deal_materials_attributes_0_asset"}
   Then %{I press translated "#{role}.deals.edit.view.update_button"}
-  Then %{I follow translated "#{role}.deals.index.view.edit"}
   Then %{I follow translated "deals.common.assets.view.remove_material"}
   Then %{I should see translated "flash.deal_assets.destroy.success"}
   Then %{I should see translated "#{role}.deals.edit.view.title"}
@@ -155,11 +152,9 @@ Then /I add and remove internal document for deal as "([^"]*)"/ do |role|
   Then %{I follow translated "#{role}.deals.index.view.edit"}
   Then %{attach the file "document" to "deal_internal_documents_attributes_0_asset"}
   Then %{I press translated "#{role}.deals.edit.view.update_button"}
-  Then %{I follow translated "#{role}.deals.index.view.edit"}
   Then %{I should see translated "deals.common.assets.view.download"}
   Then %{attach the file "document" to "deal_internal_documents_attributes_0_asset"}
   Then %{I press translated "#{role}.deals.edit.view.update_button"}
-  Then %{I follow translated "#{role}.deals.index.view.edit"}
   Then %{I follow translated "deals.common.assets.view.remove_material"}
   Then %{I should see translated "flash.deal_assets.destroy.success"}
   Then %{I should see translated "#{role}.deals.edit.view.title"}
@@ -170,11 +165,9 @@ Then /I add and remove image for deal as "([^"]*)"/ do |role|
   Then %{I follow translated "#{role}.deals.index.view.edit"}
   Then %{attach the file "sample image" to "deal_images_attributes_0_asset"}
   Then %{I press translated "#{role}.deals.edit.view.update_button"}
-  Then %{I follow translated "#{role}.deals.index.view.edit"}
   Then %{I should see translated "deals.common.assets.view.show_image"}
   Then %{attach the file "sample image" to "deal_images_attributes_0_asset"}
   Then %{I press translated "#{role}.deals.edit.view.update_button"}
-  Then %{I follow translated "#{role}.deals.index.view.edit"}
   Then %{I follow translated "deals.common.assets.view.remove_material"}
   Then %{I should see translated "flash.deal_assets.destroy.success"}
   Then %{I should see translated "#{role}.deals.edit.view.title"}
