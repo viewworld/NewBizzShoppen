@@ -1,5 +1,7 @@
 Nbs::Application.routes.draw do
 
+  ActiveAdmin.routes(self)
+
   resources :payment_notifications, :only => [:create] do
     member do
       post 'show'
@@ -75,6 +77,7 @@ Nbs::Application.routes.draw do
     resources :supplier_interests, :only => [:edit, :update]
     resources :youtube_introductions
     resources :email_bounces
+    resources :archived_emails
     resources :languages
     resources :subscription_plans do
       collection do
