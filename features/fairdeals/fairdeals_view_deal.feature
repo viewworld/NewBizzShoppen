@@ -143,5 +143,12 @@ Feature: Fairdeals view deal
   Scenario: When I click get deal then I should see company logo, name and description enclosed into styled box without any headers like company name, logo or description
 
   #10257
-  @m29 @requested
+  @m29 @requested @rb @_done @_tested
   Scenario: Premium deal should be marked with translated label
+    Given a deal named "Deal 00001" exists within category "Electronics deals"
+    And a deal named "Deal 00001" exists with attributes "premium_deal:1"
+    Given I visit domain http://fairdeals.dk
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow category "Electronics deals"
+    And I follow "Deal 00001"
+    Then I should see translated "deals.index.view.premium_deal_splash_label"
