@@ -27,7 +27,7 @@
     <% end %>
 
     <!--- other deals --->
-    <% [(1..Settings.number_of_secondary_featured_deals.to_i).to_a].each do |array| %>
+    <% [(1..3)].each do |array| %>
         <div class="other_deals">
           <% array.each do |position| %>
               <% if @featured_deals[position] %>
@@ -54,6 +54,11 @@
   <script>
       $(document).ready(function() {
           $('.introduction_video').colorbox({iframe:true, innerWidth:560, innerHeight:349});
+
+          $.ajax({
+              url: '/.js',
+              type: 'POST'
+          });
       });
   </script>
 

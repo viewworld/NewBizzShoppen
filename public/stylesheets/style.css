@@ -2173,6 +2173,11 @@ li.disabled
     padding-bottom: 8px;
 }
 
+.deal_show_wrapper .element_description
+{
+
+}
+
 .deal_show_wrapper .element_description p
 {
     margin-bottom: 10px;

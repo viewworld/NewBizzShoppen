@@ -1,47 +1,54 @@
-<div id="secondary_featured_deal_<%= position %>" class="secondary_featured_deal">
-  <% if featured.present? %>
-      <frm title="#{link_to featured.header, deal_path(featured.slug)}">
-        <param:content>
-          <div class="pdd_10">
-            <div class="deal_thumb">
-              <p>
-                <%= image_tag featured.logo.url(:preview), :class => "thumb" if featured.logo %>
-              </p>
-              <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(featured.slug), :class => 'default_action' %>
-            </div>
-            <div class="deal_info">
-              <div class="deal_price">
-                <p>
-                <% if featured.general_discount? %>
-                    <%= t("deals.index.view.save") %> <span class="b red"><%= featured.saving %></span>
-                <% else %>
-                    <%= t("deals.index.view.normal_price") %>: <strong><%= as_currency(featured.deal_price, featured.currency) %></strong>
-                    <br/>
-                    <%= t("deals.index.view.fairdeals_price") %>: <span class="b green"><%= as_currency(featured.discounted_price, featured.currency) %></span>
-                    <br/>
-                    <%= t("deals.index.view.you_save") %>: <strong><%= as_currency(featured.deal_price - featured.discounted_price, featured.currency) %></strong>
-                    <span class="b red">(<%= featured.saving %>)</span>
-                <% end %>
-                </p>
+    <div id="secondary_featured_deal_<%= position %>" class="secondary_featured_deal">
+      <% if featured.present? %>
+          <frm title="#{link_to featured.header, deal_path(featured.slug)}">
+            <% cache("#{I18n.locale}_secondary_deal_#{featured.id}_part1") do %>
+              <param:content>
+              <div class="pdd_10">
+                <div class="deal_thumb">
+                  <p>
+                    <%= image_tag featured.logo.url(:preview), :class => "thumb" if featured.logo %>
+                  </p>
+                  <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(featured.slug), :class => 'default_action' %>
+                </div>
+                <div class="deal_info">
+                  <div class="deal_price">
+                    <p>
+                    <% if featured.general_discount? %>
+                        <%= t("deals.index.view.save") %> <span class="b red"><%= featured.saving %></span>
+                    <% else %>
+                        <%= t("deals.index.view.normal_price") %>: <strong><%= as_currency(featured.deal_price, featured.currency) %></strong>
+                        <br/>
+                        <%= t("deals.index.view.fairdeals_price") %>: <span class="b green"><%= as_currency(featured.discounted_price, featured.currency) %></span>
+                        <br/>
+                        <%= t("deals.index.view.you_save") %>: <strong><%= as_currency(featured.deal_price - featured.discounted_price, featured.currency) %></strong>
+                        <span class="b red">(<%= featured.saving %>)</span>
+                    <% end %>
+                    </p>
+          <% end %>
 
-                <%= ratings_for(featured, :force_static => !current_user_has_role?(:member)) %>
+                    <!-- not cached content -->
+                    <%= ratings_for(featured, :force_static => !current_user_has_role?(:member)) %>
 
-                <%= group_deal_leads_created_and_missing(featured) %>
+                    <%= group_deal_leads_created_and_missing(featured) %>
+                    <!-- end / not cached content -->
+
+          <% cache("#{I18n.locale}_secondary_deal_#{featured.id}_part2") do %>
+                  </div>
+
+                  <div class="deal_description">
+                    <p><%= featured.short_featured_description.to_s.html_safe %></p>
+                  </div>
+
+                  <clb/>
+
+                </div>
+                <clb/>
+
               </div>
-
-              <div class="deal_description">
-                <p><%= featured.short_featured_description.to_s.html_safe %></p>
-              </div>
-
-              <clb/>
-
-            </div>
-            <clb/>
-
-          </div>
-        </param:content>
-      </frm>
-  <% elsif !defined?(skip_blank) %>
-      <frm c="no_marg"></frm>
-  <% end %>
-</div>
+            </param:content>
+          </frm>
+          <% end %>
+      <% elsif !defined?(skip_blank) %>
+          <frm c="no_marg"></frm>
+      <% end %>
+    </div>
