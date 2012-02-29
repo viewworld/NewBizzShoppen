@@ -50,7 +50,14 @@
         <% end %>
         <li class="string">
           <label>&nbsp;</label>
-          <%= image_tag(@category.image.url, :class => "thumb") unless @category.image.nil? %>
+
+          <% if @category.image %>
+              <% if @category.image.persisted? %>
+                  <%= image_tag(@category.image.url, :class => "thumb") unless @category.image.nil? %>
+              <% else %>
+                  <%= custom_error_for_object(@category.image) %>
+              <% end %>
+          <% end %>
         </li>
         <%= form.input :remove_image, :as => :boolean unless @category.image.nil? %>
 
