@@ -554,7 +554,7 @@ Feature: Deals from procurement manager perspective
   Scenario: I should see splash image when getting premium deal
 
   #9976
-  @m28 @requested @tgn @_done @_tested
+  @m28 @requested @tgn @_done @_tested @selenium
   Scenario: I should see the amount of secondary deals specified by admin on fairdeals home page
   Given a deal named "deal000" exists within category "Electronics deals"
   Given a deal named "deal001" exists within category "Electronics deals"
