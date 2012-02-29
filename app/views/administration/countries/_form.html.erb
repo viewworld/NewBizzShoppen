@@ -15,7 +15,7 @@
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_200">
       <ol class="align_inputs">
-        <% if @country.logo and @country.logo.id %>
+        <% if @country.logo%>
             <ol>
               <li class="string">
                 <label><%= t("administration.countries.form.logo_label") %></label>
@@ -23,7 +23,11 @@
                 <div class="txt assets_elements">
                   <ul>
                     <li>
-                      <%= image_tag @country.logo.url %>
+                      <% if @country.logo.id %>
+                        <%= image_tag @country.logo.url %>
+                      <% else %>
+                          <%= custom_error_for_object(@country.logo) %>
+                      <% end %>
                     </li>
                   </ul>
                 </div>

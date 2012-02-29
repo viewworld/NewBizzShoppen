@@ -1,4 +1,4 @@
-<% if @deal.logo and @deal.logo.id %>
+<% if @deal.logo %>
     <fieldset class="inputs labels_ta_r labels_200">
       <ol>
         <li class="string">
@@ -7,8 +7,12 @@
           <div class="txt assets_elements">
             <ul>
               <li>
-                <%= image_tag @deal.logo.url(:thumb) %> <%= link_to t("deals.common.assets.view.show_image"), @deal.logo.url, :rel => "colorbox_logo" %>
-                <%= link_to t("deals.common.assets.view.remove_logo"), self.send(remove_path, @deal, @deal.logo), :method => :delete, :confirm => t("common.confirmation") %>
+                <% if @deal.logo.id %>
+                    <%= image_tag @deal.logo.url(:thumb) %> <%= link_to t("deals.common.assets.view.show_image"), @deal.logo.url, :rel => "colorbox_logo" %>
+                    <%= link_to t("deals.common.assets.view.remove_logo"), self.send(remove_path, @deal, @deal.logo), :method => :delete, :confirm => t("common.confirmation") %>
+                <% else %>
+                    <%= custom_error_for_object(@deal.logo) %>
+                <% end %>
               </li>
             </ul>
           </div>
@@ -40,6 +44,8 @@
                         <%= image_tag image.url(:thumb) %> <%= link_to t("deals.common.assets.view.show_image"), image.url, :rel => "colorbox" %>
                         <%= link_to t("deals.common.assets.view.remove_image"), self.send(remove_path, @deal, image), :method => :delete, :confirm => t("common.confirmation") %>
                       </li>
+                  <% else %>
+                      <li><%= custom_error_for_object(image) %></li>
                   <% end %>
               <% end %>
             </ul>
@@ -73,6 +79,8 @@
                         <strong><%= material.asset_file_name %></strong> <%= link_to t("deals.common.assets.view.download"), material.url %>
                         <%= link_to t("deals.common.assets.view.remove_material"), self.send(remove_path, @deal, material), :method => :delete, :confirm => t("common.confirmation") %>
                       </li>
+                  <% else %>
+                      <li><%= custom_error_for_object(material) %></li>
                   <% end %>
               <% end %>
             </ul>
@@ -105,6 +113,8 @@
                         <strong><%= material.asset_file_name %></strong> <%= link_to t("deals.common.assets.view.download"), material.url %>
                         <%= link_to t("deals.common.assets.view.remove_material"), self.send(remove_path, @deal, material), :method => :delete, :confirm => t("common.confirmation") %>
                       </li>
+                  <% else %>
+                      <li><%= custom_error_for_object(material) %></li>
                   <% end %>
               <% end %>
             </ul>

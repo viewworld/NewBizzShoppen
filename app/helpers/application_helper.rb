@@ -83,6 +83,12 @@ module ApplicationHelper
     end
   end
 
+  def custom_error_for_object(object)
+    if object
+      content_tag(:p, object.errors.full_messages.join(", "), :class => "inline-errors") + tag("br")
+    end
+  end
+
   def available_locales_list(translations)
     existing = translations.map(&:locale)
     Locale.enabled.map(&:code).reject { |c| c == I18n.locale.to_s or existing.include?(c) }.map { |c| [t('models.locale.' + c), c] }

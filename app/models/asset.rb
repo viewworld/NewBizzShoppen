@@ -98,31 +98,31 @@ end
 class Asset::CategoryImage < Asset
   belongs_to :category, :foreign_key => "resource_id"
   has_attached_file :asset, attachment_options.merge(:styles => {:original => "100x150>", :thumb => "32x32"})
-  validates_attachment_content_type :asset, :content_type => Asset::IMAGE_FILE_TYPES, :message => " - #{I18n.t(:validation_asset_images_type)}"
+  validates_attachment_content_type :asset, :content_type => Asset::IMAGE_FILE_TYPES, :message => " - #{I18n.t('activerecord.errors.models.asset.validation_asset_images_type')}"
 end
 
 class Asset::YoutubeImage < Asset
   belongs_to :youtube_introduction, :foreign_key => "resource_id"
   has_attached_file :asset, attachment_options
-  validates_attachment_content_type :asset, :content_type => Asset::IMAGE_FILE_TYPES, :message => " - #{I18n.t(:validation_asset_images_type)}"
+  validates_attachment_content_type :asset, :content_type => Asset::IMAGE_FILE_TYPES, :message => " - #{I18n.t('activerecord.errors.models.asset.validation_asset_images_type')}"
 end
 
 class Asset::DealLogo < Asset
   belongs_to :deal, :foreign_key => "resource_id"
   has_attached_file :asset, attachment_options.merge(:styles => {:original => "150x100>", :medium => "80x120", :preview => "60x70", :thumb => "32>x32"})
-  validates_attachment_content_type :asset, :content_type => Asset::IMAGE_FILE_TYPES, :message => " - #{I18n.t(:validation_asset_images_type)}"
+  validates_attachment_content_type :asset, :content_type => Asset::IMAGE_FILE_TYPES, :message => " - #{I18n.t('activerecord.errors.models.asset.validation_asset_images_type')}"
 end
 
 class Asset::VoucherPicture < Asset
   belongs_to :deal, :foreign_key => "resource_id"
   has_attached_file :asset, attachment_options.merge(:styles => {:original => "150x100>", :medium => "80x120", :preview => "60x70", :thumb => "32>x32"})
-  validates_attachment_content_type :asset, :content_type => Asset::IMAGE_FILE_TYPES, :message => " - #{I18n.t(:validation_asset_images_type)}"
+  validates_attachment_content_type :asset, :content_type => Asset::IMAGE_FILE_TYPES, :message => " - #{I18n.t('activerecord.errors.models.asset.validation_asset_images_type')}"
 end
 
 class Asset::DealImage < Asset
   belongs_to :deal, :foreign_key => "resource_id"
   has_attached_file :asset, attachment_options.merge(:styles => {:original => "600x600>", :thumb => "32x32", :medium => "150x100>"})
-  validates_attachment_content_type :asset, :content_type => Asset::IMAGE_FILE_TYPES, :message => " - #{I18n.t(:validation_asset_images_type)}"
+  validates_attachment_content_type :asset, :content_type => Asset::IMAGE_FILE_TYPES, :message => " - #{I18n.t('activerecord.errors.models.asset.validation_asset_images_type')}"
 
   def url(style=nil, use_timestamp = false)
     super
@@ -144,7 +144,7 @@ class Asset::DealInternalDocument < Asset
   has_attached_file :asset, attachment_options
   validates_attachment_presence :asset
   validates_attachment_size :asset, :less_than => 1.megabyte
-  validates_attachment_content_type :asset, :content_type => Asset::DOCUMENT_FILE_TYPES, :message => " - #{I18n.t(:validation_document_images_type)}"
+  validates_attachment_content_type :asset, :content_type => Asset::DOCUMENT_FILE_TYPES, :message => " - #{I18n.t('activerecord.errors.models.asset.validation_asset_document_type')}"
 
   # TODO there must be a better way..
   def url(style=nil, use_timestamp=false)
@@ -160,5 +160,5 @@ end
 class Asset::CountryLogo < Asset
   belongs_to :country, :foreign_key => "resource_id"
   has_attached_file :asset, attachment_options.merge(:styles => {:original => "250x250>"})
-  validates_attachment_content_type :asset, :content_type => Asset::IMAGE_FILE_TYPES, :message => " - #{I18n.t(:validation_asset_images_type)}"
+  validates_attachment_content_type :asset, :content_type => Asset::IMAGE_FILE_TYPES, :message => " - #{I18n.t('activerecord.errors.models.asset.validation_asset_images_type')}"
 end

@@ -3277,6 +3277,9 @@ en:
               incorrect_date_format: "incorrect date format"
               incorrect_datetime_format: "incorrect date & time format"
               incorrect_number_format: "incorrect number format"
+        asset:
+          validation_asset_images_type: "uploaded file is not an image"
+          validation_asset_document_type: "uploaded file is not a document"
 
   activemodel:
     errors:
