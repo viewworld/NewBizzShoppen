@@ -20,12 +20,32 @@
 
     <div class="column_2to3">
       <div class="element_description">
-        <h2></h2>
+
+        <% if @deal.premium_deal? %>
+          <div class="splash splash_premium">
+            <span>
+              <%= t("deals.index.view.premium_deal_splash_label") %>
+            </span>
+          </div>
+        <% elsif @deal.group_deal? %>
+          <div class="splash splash_group">
+            <span>
+              <%= t("deals.index.view.group_deal_splash_label") %>
+            </span>
+          </div>
+        <% else %>
+          <div class="splash splash_fair">
+            <span>
+              <%= t("deals.index.view.fair_deal_splash_label") %>
+            </span>
+          </div>
+        <% end %>
+
 
         <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) and @deal.deal_confirmation_page %>
             <h3><%= t("deals.show.view.confirmation_page_label") %></h3>
 
-            <p><%= @deal.deal_confirmation_page.to_s.html_safe %></p>
+            <p style="padding-right: 45px;"><%= @deal.deal_confirmation_page.to_s.html_safe %></p>
         <% end %>
 
         <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) and @deal.deal_code.present? %>
@@ -36,7 +56,7 @@
 
         <h3><%= t("deals.show.view.short_description_label") %></h3>
 
-        <p><%= raw @deal.description %></p>
+        <p style="padding-right: 45px;"><%= raw @deal.description %></p>
 
         <h3><%= t("deals.show.view.detailed_description_label") %></h3>
 
