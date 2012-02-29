@@ -3,6 +3,8 @@ class Administration::SubscriptionPlansController < Administration::Administrati
   set_tab "financial"
   set_subtab "subscription_plans"
 
+  cache_sweeper :subscription_plan_sweeper
+
   def new
     @subscription_plan = SubscriptionPlan.new(:seller => Seller.default, :paypal_retries => 1)
   end
