@@ -96,15 +96,15 @@
 
           <clb/>
 
+    <% end %>
+    <!-- not cached content -->
           <div>
             <div id="modal_for_share_deal_by_email_<%= email_form_id %>" style="display:none;">
               <%= render :partial => "share_deal_by_email/new", :locals => {:deal => primary_deal, :email_form_id => email_form_id } %>
             </div>
           </div>
           <!-- end / main deal -->
-    <% end %>
 
-    <!-- not cached content -->
           <% if defined? comments_enbaled and comments_enbaled %>
             <%= link_to primary_deal.comment_threads.count.zero? ? !user_signed_in? ? t("deals.listing.no_comments") : t("deals.listing.create_comment") : t("deals.listing.show_comments"), "javascript:void(0)", :class => "toggle_comments show_comments#{' toggle_row_unread' if primary_deal.has_unread_comments_for_user?(current_user)}", :onclick => "load_deal_comments(#{primary_deal.id},#{user_signed_in?})" %>
             <%= link_to t("deals.listing.hide_comments"), "javascript:void(0)", :class => "toggle_comments hide_comments", :style => "display:none" %>
@@ -121,17 +121,17 @@
 
         <div class="frm_foot">
           <%= ratings_for(primary_deal, :force_static => !current_user_has_role?(:member)) %>
-          <p>
-            <%= link_to_function image_tag("fairdeals/bt/social_email.png"), "$('#modal_for_share_deal_by_email_#{email_form_id}').dialog('open');" %>
-            <%= link_to_function image_tag("fairdeals/bt/social_linkedin.png"), "window.open('https://www.linkedin.com/cws/share?url=#{escape_uri(deal_url(:id => primary_deal.slug))}&isFramed=true','', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>
-            <%= link_to_function image_tag("fairdeals/bt/social_facebook.png"), "window.open('https://www.facebook.com/sharer.php?u=#{escape_uri(deal_url(:id => primary_deal.slug))}','', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>
-            <%= link_to_function image_tag("fairdeals/bt/social_twitter.png"), "window.open('https://twitter.com/share?url=#{escape_uri(deal_url(:id => primary_deal.slug))}&text=#{escape_javascript(primary_deal.social_media_description)}','tweet', 'width=400,height=320,location=0,toolbar=0,menubar=0')"  %>
-          </p>
-        </div>
-      </div>
+            <p>
+              <%= link_to_function image_tag("fairdeals/bt/social_email.png"), "$('#modal_for_share_deal_by_email_#{email_form_id}').dialog('open');" %>
     <!-- end / not cached content -->
+    <% cache("#{I18n.locale}_primary_deal_#{primary_deal.id}_part2") do %>
+              <%= link_to_function image_tag("fairdeals/bt/social_linkedin.png"), "window.open('https://www.linkedin.com/cws/share?url=#{escape_uri(deal_url(:id => primary_deal.slug))}&isFramed=true','', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>
+              <%= link_to_function image_tag("fairdeals/bt/social_facebook.png"), "window.open('https://www.facebook.com/sharer.php?u=#{escape_uri(deal_url(:id => primary_deal.slug))}','', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>
+              <%= link_to_function image_tag("fairdeals/bt/social_twitter.png"), "window.open('https://twitter.com/share?url=#{escape_uri(deal_url(:id => primary_deal.slug))}&text=#{escape_javascript(primary_deal.social_media_description)}','tweet', 'width=400,height=320,location=0,toolbar=0,menubar=0')"  %>
+            </p>
+        </div>
+    </div>
 
-  <% cache("#{I18n.locale}_primary_deal_#{primary_deal.id}_part2") do %>
     <script>
     <% if primary_deal.group_deal? %>
     jQuery(document).ready(function() {
