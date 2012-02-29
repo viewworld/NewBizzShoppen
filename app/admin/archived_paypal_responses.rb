@@ -1,4 +1,4 @@
-ActiveAdmin.register ArchivedPaypalResponse do
+ActiveAdmin.register ArchivedPaypalResponse, :as => "Archived Paypal Response" do
 
   index do
     column :id

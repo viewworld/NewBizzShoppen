@@ -1,4 +1,4 @@
-ActiveAdmin.register ArchivedEmail do
+ActiveAdmin.register ArchivedEmail, :as => "Archived Email" do
 
   index do
     column :id

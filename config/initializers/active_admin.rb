@@ -1,3 +1,4 @@
+unless Rails.env.test?
 ActiveAdmin.setup do |config|
 
   # == Site Title
@@ -100,4 +101,5 @@ ActiveAdmin.setup do |config|
   #
   # To load a javascript file:
   #   config.register_javascript 'my_javascript.js'
+end
 end
