@@ -175,7 +175,7 @@ describe CampaignReport do
       @contact2_5 = Contact.make!(:campaign => @campaign2)
 
       [@campaign1, @campaign2].each do |campaign|
-        #config dyn value
+        #config dyn value 1*17+2*17 = 51
         campaign.results << @result_dyn_value
         campaign.save
         @result_dyn_value.reload
@@ -208,10 +208,10 @@ describe CampaignReport do
       lead.based_on_deal(Deal.make!(:price => 1000), User::Member.where(:contact_id => @contact1_5.id).first)
       lead.save
 
-      CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
-      CallResult.make!(:contact => @contact1_3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset) #100
+      CallResult.make!(:contact => @contact1_3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset) #130
       CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset-1.day)
-      CallResult.make!(:contact => @contact1_2, :result => @result_final_reported, :creator => @call_centre_agent1)
+      CallResult.make!(:contact => @contact1_2, :result => @result_final_reported, :creator => @call_centre_agent1) #23
       CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
 
