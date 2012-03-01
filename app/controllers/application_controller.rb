@@ -229,6 +229,10 @@ class ApplicationController < ActionController::Base
     (user_signed_in? and current_user) ? current_user.queue : "guest"
   end
 
+  def authorize_admin
+    raise CanCan::AccessDenied unless current_user and current_user.has_role? :admin
+  end
+
 
 end
 

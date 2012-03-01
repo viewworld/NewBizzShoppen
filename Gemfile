@@ -44,6 +44,7 @@ gem 'postmark-rails'
 #gem 'sanitize'
 gem 'paypal-recurring', :path => 'vendor/gems/paypal-recurring'
 gem 'paypal_nvp'
+gem 'activeadmin', :path => 'vendor/gems/active_admin'
 
 group :production do
   gem 'hoptoad_notifier'

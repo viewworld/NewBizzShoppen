@@ -280,6 +280,35 @@ en:
         subject: "Reset password instructions"
       unlock_instructions:
         subject: "Unlock Instructions"
+
+  active_admin:
+    logout: "Logout"
+    view: "View"
+    edit: "Edit"
+    delete: "Delete"
+    new_model: "New %{model}"
+    download: "Download"
+    filter: "Filter"
+    clear_filters: "Clear filters"
+    search_field: "Search %{field}"
+    equal_to: "Equal to"
+    greater_than: "Greater than"
+    less_than: "Less than"
+    any: "Any"
+    cancel: "Cancel"
+    empty: "Empty"
+    details: "Details"
+    edit_model: "Edit %{model}"
+    delete_model: "Delete %{model}"
+    dashboard: "Dashboard"
+
+  views:
+    pagination:
+      next: "Next &rsaquo;"
+      last: "Last &raquo;"
+      first: "&laquo; First"
+      previous: "&lsaquo; Previous"
+
   lead_templates:
     table:
       name: Name
