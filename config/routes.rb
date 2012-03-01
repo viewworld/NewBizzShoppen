@@ -1,7 +1,5 @@
 Nbs::Application.routes.draw do
 
-  ActiveAdmin.routes(self)
-
   resources :payment_notifications, :only => [:create] do
     member do
       post 'show'
@@ -84,6 +82,7 @@ Nbs::Application.routes.draw do
       end
     end
     resources :paypal_notifications, :only => [:index, :show]
+    match '/dashboard' => 'dashboard#index', :as => 'dashboard'
   end
 
   namespace :suppliers do
@@ -425,6 +424,8 @@ Nbs::Application.routes.draw do
   match ':slug/leads' => 'category_suppliers/leads#index', :as => :category_home_page_leads
 
   root :to => "supplier_home#show"
+
+  ActiveAdmin.routes(self)
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
