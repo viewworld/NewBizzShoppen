@@ -505,3 +505,10 @@ ArchivedEmail.blueprint(:bounced) do
   bounced_at { Time.now }
   status { 2 }
 end
+
+LeadTemplate.blueprint do
+  name { Faker::Lorem.words(2).to_s.capitalize }
+  category { LeadCategory.make! }
+  is_active { true }
+  creator { User::Agent.make! }
+end

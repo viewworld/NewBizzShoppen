@@ -73,6 +73,8 @@ class User < ActiveRecord::Base
   belongs_to :company_unique_category, :class_name => "LeadCategory", :foreign_key => "deal_category_id"
   has_many :delayed_jobs, :class_name => '::Delayed::Job', :foreign_key => :queue, :primary_key => :queue, :order => "created_at DESC"
   has_many :notifications, :as => :notificable
+  has_many :call_results, :as => :creator
+  has_many :campaigns, :as => :creator
 
   alias_method :parent, :user
 
@@ -123,7 +125,7 @@ class User < ActiveRecord::Base
 
   before_save :handle_locking, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled
   before_create :set_rss_token, :set_email_verification
-  before_destroy :can_be_removed
+  before_destroy :check_subscription_before_destroy
   after_create :auto_activate
   after_save :handle_cancel_subscription
   after_create :apply_subscription_plan
@@ -132,6 +134,8 @@ class User < ActiveRecord::Base
   validate :check_billing_rate, :check_subscription_plan
   before_validation :set_auto_generated_password_if_required, :set_role
   after_initialize :set_auto_buy_enabled
+
+  check_associations_before_destroy :leads, :lead_purchases, :lead_templates, :assigned_lead_purchases, :lead_requests, :leads_in_cart, :deals, :requested_deals, :campaigns, :contacts, :call_results, :subaccounts, :invoices
 
   liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_supplier_category_home_url,
          :screen_name, :first_name, :last_name, :home_page_url
@@ -182,11 +186,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def can_be_removed
-    casted_obj = self.send(:casted_class).find(id)
-    [:leads, :lead_purchases, :assigned_lead_purchases, :lead_requests, :leads_in_cart, :deals, :requested_deals, :campaigns, :contacts, :subaccounts, :invoices].detect do |method|
-      casted_obj.respond_to?(method) and !casted_obj.send(method).empty?
-    end.nil? and (!active_subscription or (active_subscription.is_free? and subscriptions.detect { |s| s.payable? and !s.invoiced?}.nil?))
+  def check_subscription_before_destroy
+    (!active_subscription or (active_subscription.is_free? and subscriptions.detect { |s| s.payable? and !s.invoiced?}.nil?))
   end
 
   def handle_locking

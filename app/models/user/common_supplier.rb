@@ -90,5 +90,8 @@ module User::CommonSupplier
       end
     end
 
+    def deals
+      Deal.where("creator_id = ? or email_address = ?", id, email)
+    end
   end
 end
