@@ -14,7 +14,7 @@ class String
   end
 
   def extract_youtube_video_id
-    self.scan(/(v=|embed\/)([a-zA-Z0-9-_]+)/).flatten.last
+    self.scan(/(v=|embed\/)([a-zA-Z0-9\-_]+)/).flatten.last
   end
 
   def truncate_words(length = 30, end_string = ' …')
