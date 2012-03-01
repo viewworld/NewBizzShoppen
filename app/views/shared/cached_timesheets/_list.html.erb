@@ -13,7 +13,7 @@
       <% cached_timesheets.each do |cached| %>
         <tr id="cached_timesheet_<%= cached.to_i %>">
           <td class="cl"></td>
-          <td><%= l Time.at(cached.to_i/100000), :format => :long  %></td>
+          <td><%= l Time.zone.at(cached.to_i/100000), :format => :long  %></td>
           <td>
             <%= bt_link_to :invoice, "HTML", callers_agent_timesheet_path(cached.to_i, :format => :html), :target => '_new'  %>
             <%= bt_link_to :download, "PDF", callers_agent_timesheet_path(cached.to_i, :format => :pdf)  %>
