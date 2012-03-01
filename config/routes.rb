@@ -1,6 +1,6 @@
 Nbs::Application.routes.draw do
 
-  ActiveAdmin.routes(self) unless Rails.env.test?
+  ActiveAdmin.routes(self)
 
   resources :payment_notifications, :only => [:create] do
     member do

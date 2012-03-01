@@ -44,21 +44,19 @@ gem 'postmark-rails'
 #gem 'sanitize'
 gem 'paypal-recurring', :path => 'vendor/gems/paypal-recurring'
 gem 'paypal_nvp'
+gem 'activeadmin'
 
 group :production do
   gem 'hoptoad_notifier'
-  gem 'activeadmin'
 end
 
 group :testing do
   gem 'hoptoad_notifier'
-  gem 'activeadmin'
 end
 
 group :staging do
   gem 'hoptoad_notifier'
   gem 'system-metrics'
-  gem 'activeadmin'
 end
 
 group :development do
@@ -67,7 +65,6 @@ group :development do
   gem "nifty-generators"
   gem "bullet"
   gem "parallel"
-  gem 'activeadmin'
 end
 
 group :test do
