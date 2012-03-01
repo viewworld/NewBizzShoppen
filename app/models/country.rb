@@ -1,5 +1,6 @@
 class Country < ActiveRecord::Base
   has_many :country_interest
+  has_many :abstract_leads
   has_many :leads
   has_many :addresses
   has_many :regions, :order => "name"
@@ -11,7 +12,7 @@ class Country < ActiveRecord::Base
 
   liquid :email_template_signature, :email_template_signature_logo_url
 
-  before_destroy :can_be_destroyed?
+  check_associations_before_destroy :abstract_leads, :country_interest, :addresses, :vat_rate
 
   accepts_nested_attributes_for :regions, :allow_destroy => true
   accepts_nested_attributes_for :logo, :reject_if => proc { |attributes| attributes['asset'].blank? }
@@ -50,7 +51,7 @@ class Country < ActiveRecord::Base
   end
 
   def can_be_destroyed?
-    country_interest.empty? and leads.empty? and addresses.empty? and !vat_rate.present?
+    send(:check_listed_associations_for_existing_objects)
   end
 
   def self.get_country_from_locale

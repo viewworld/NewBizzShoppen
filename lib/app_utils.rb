@@ -13,7 +13,7 @@ module DestroyPrevention
             def check_listed_associations_for_existing_objects
               obj = self.is_a?(User) ? self.with_role : self
               [#{associations.map{ |a| ":#{a.to_s}" }.join(", ")}].detect do |method|
-                obj.respond_to?(method) and !obj.send(method).empty?
+                obj.respond_to?(method) and (obj.send(method).respond_to?(:empty?) ? !obj.send(method).empty? : !obj.send(method).nil?)
               end.nil?
             end
           EOV

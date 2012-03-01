@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Lead do
+describe Region do
   fixtures :all
 
   context "destroy" do
