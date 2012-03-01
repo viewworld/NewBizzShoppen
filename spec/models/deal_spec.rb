@@ -49,4 +49,27 @@ describe Deal do
     end
 
   end
+
+  context "destroy" do
+    before(:each) do
+      @deal = Deal.make!
+    end
+
+    it "should not be destroyed when unconfirmed leads exist" do
+      UnconfirmedLead.make!(:deal => @deal)
+      @deal.reload
+
+      @deal.destroy.should be_false
+    end
+
+    it "should not be destroyed when leads are created" do
+      @lead = Lead.new
+      @lead.based_on_deal(@deal, User::Member.make!)
+      @lead.save
+
+      @deal.reload
+
+      @deal.destroy.should be_false
+    end
+  end
 end

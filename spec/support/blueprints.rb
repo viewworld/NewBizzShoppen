@@ -98,6 +98,25 @@ Lead.blueprint(:featured) do
   currency { Currency.make!}
 end
 
+UnconfirmedLead.blueprint do
+  header { Faker::Lorem.words(4).to_s.capitalize }
+  description { Faker::Lorem.sentences(2).to_s }
+  hidden_description { Faker::Lorem.sentences(2).to_s }
+  purchase_value { Faker.numerify("###").to_f }
+  price { Faker.numerify("###").to_f }
+  country_id { 1 }
+  company_name { Faker::Internet.domain_word.capitalize }
+  contact_name { Faker::Name.name }
+  phone_number { Faker::PhoneNumber.phone_number }
+  email_address { Faker::Internet.email }
+  address_line_1 { Faker::Address.street_address }
+  address_line_3 { Faker::Address.city }
+  zip_code { Faker::Address.zip_code }
+  category_id { LeadCategory.make!.id }
+  creator { User::Member.make! }
+  deal { Deal.make! }
+end
+
 Currency.blueprint do
   name { Faker::Lorem.words(1).to_s + Time.now.to_f.to_s.sub('.','') }
   symbol { ['&euro;','&pound;','$'][rand(3)]}
@@ -511,4 +530,9 @@ LeadTemplate.blueprint do
   category { LeadCategory.make! }
   is_active { true }
   creator { User::Agent.make! }
+end
+
+Region.blueprint do
+  name { Faker::Lorem.words(2).to_s.capitalize }
+  country { Country.make! }
 end
