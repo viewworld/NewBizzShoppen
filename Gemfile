@@ -64,7 +64,6 @@ end
 group :development do
   gem "nifty-generators"
   gem "bullet"
-  gem "parallel"
 end
 
 group :test do
@@ -78,7 +77,6 @@ group :test do
   gem 'mocha'
   gem 'faker', "0.3.1"
   gem 'machinist', '>= 2.0.0.beta1'
-#  gem 'gherkin', '>= 2.2.4'
 
 # Added the following because rake features also complained about spec/expectations
   gem 'rspec', '=2.0.1'

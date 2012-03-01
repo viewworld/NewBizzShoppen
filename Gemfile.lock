@@ -214,7 +214,6 @@ GEM
     paperclip (2.3.6)
       activerecord
       activesupport
-    parallel (0.5.9)
     paypal_nvp (0.2.0)
     pg (0.11.0)
     pickle (0.4.7)
@@ -348,7 +347,6 @@ DEPENDENCIES
   nested_set (= 1.5.4)
   nifty-generators
   paperclip (= 2.3.6)
-  parallel
   paypal-recurring!
   paypal_nvp
   pg
