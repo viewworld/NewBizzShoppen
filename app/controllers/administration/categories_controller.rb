@@ -53,7 +53,7 @@ class Administration::CategoriesController < Administration::AdministrationContr
   end
 
   def set_tab
-    self.class.set_tab (@category_type == "LeadCategory" ? "browse_leads" : "browse_deals")
+    self.class.set_tab(@category_type == "LeadCategory" ? "browse_leads" : "browse_deals")
   end
 
   def resource
