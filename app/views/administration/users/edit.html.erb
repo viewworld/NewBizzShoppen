@@ -74,7 +74,7 @@
             <% if @user.subscriptions.future.count > 0 %>
                 <%= t("administration.users.edit.view.remove_scheduled_subscriptions") %>
                 <%= semantic_form_for :subscription, :url => administration_user_change_subscription_plan_path(@user), :html => {:method => :delete} do |f| %>
-                    <% f.inputs do %>
+                    <%= f.inputs do %>
                         <li class="commit no_marg">
                           <ibt>
                             <%= f.submit t("administration.users.edit.view.remove_scheduled") %>
@@ -86,7 +86,7 @@
                 <%= t("administration.users.edit.view.no_other_subscription_plans_for_user") %>
             <% else %>
                 <%= semantic_form_for Subscription.new, :url => administration_user_change_subscription_plan_path(@user) do |f| %>
-                    <% f.inputs do %>
+                    <%= f.inputs do %>
                         <%= f.input :subscription_plan_id, :collection => @available_subscriptions.map { |s| [s.name, s.id] }, :include_blank => false %>
                         <%= f.input :start_date, :as => :datepicker, :input_html => {:value => (@user.active_subscription.end_date||Date.today)+1}, :wrapper_html => {:class => "date"} %>
                         <li class="commit">

@@ -28,7 +28,7 @@
   <header><%= t("contacts.edit.call_log_title") %></header>
 
   <% if !@contact.completed? and @campaign.active? %>
-      <% form_for CallResult.new, :url => new_callers_contact_call_result_path(@contact), :html => {:method => :get} do %>
+      <%= form_for CallResult.new, :url => new_callers_contact_call_result_path(@contact), :html => {:method => :get} do %>
           <%= select_tag :result_id, options_for_select(@campaign.results_for_select) %>
           <%= bt_link_to nil, t("call_results.edit.button_new_result"), "javascript:void(0)", :onclick => "$(this).parents('form').submit()" %>
       <% end %>

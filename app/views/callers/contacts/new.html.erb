@@ -38,7 +38,7 @@
         </frm>
     <% end %>
 
-      <% form_tag import_xls_callers_campaign_contacts_path(@campaign), :method => :post, :multipart => true, :id => "contact_import_form" do %>
+      <%= form_tag import_xls_callers_campaign_contacts_path(@campaign), :method => :post, :multipart => true, :id => "contact_import_form" do %>
         <frm title="#{t('contacts.new.title_import_from_excel')}">
           <param:content>
             <div class="pdd_10 no_pdd_t">

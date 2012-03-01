@@ -1,6 +1,6 @@
 <column-mc:>
   <header><%= t("voucher_numbers.edit.header") %>: <%= @deal.header %></header>
-  <%= semantic_form_for :deal, @deal, :url => voucher_number_path(@deal), :html => {:method => :put} do |f| %>
+  <%= semantic_form_for  @deal, :as => :deal, :url => voucher_number_path(@deal), :html => {:method => :put} do |f| %>
         <table class="generic">
           <thead>
           <tr>

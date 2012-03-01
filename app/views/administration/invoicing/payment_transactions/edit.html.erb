@@ -1,7 +1,7 @@
 <column-mc:>
   <header back="true"><%= t("administration.payment_transactions.edit.view.header", :number => @payment_transaction.invoice.id, :name => @payment_transaction.invoice.customer_name) %></header>
 
-  <% semantic_form_for @payment_transaction, :url => administration_invoicing_payment_transaction_path(@payment_transaction), :as => :payment_transaction do |form| %>
+  <%= semantic_form_for @payment_transaction, :url => administration_invoicing_payment_transaction_path(@payment_transaction), :as => :payment_transaction do |form| %>
       <frm title="#{t('administration.payment_transactions.edit.view.edit')}">
         <param:content>
           <%= render :partial => 'form', :locals => { :form => form } %>
