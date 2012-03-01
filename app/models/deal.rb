@@ -54,7 +54,7 @@ class Deal < AbstractLead
   after_create :certify_for_unknown_email, :assign_deal_admin, :set_deal_unique_id
   before_save :set_dates, :check_deal_request_details_email_template, :set_enabled_from, :handle_max_auto_buy
   after_save :set_voucher_numbers
-  before_destroy :can_be_removed
+  check_associations_before_destroy :unconfirmed_leads, :leads
 
   attr_accessor :creation_step, :use_company_name_as_category
 
@@ -326,10 +326,6 @@ class Deal < AbstractLead
   end
 
   private
-
-  def can_be_removed
-    unconfirmed_leads.empty? and leads.empty?
-  end
 
   def set_enabled_from
     self.enabled_from = Date.today unless enabled_from

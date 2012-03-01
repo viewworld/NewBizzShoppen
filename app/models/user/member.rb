@@ -8,9 +8,9 @@ class User::Member < ::User
   include Addresses
   include BankAccounts
 
-  has_many :requested_deals, :class_name => "Deal", :foreign_key => "requested_by"
-
   validates_presence_of :company_name, :phone
+
+  has_many :leads, :as => :creator
 
   public
 
@@ -34,6 +34,10 @@ class User::Member < ::User
 
   def comment_threads
     Comment.with_leads_created_by(self)
+  end
+
+  def requested_deals
+    Deal.where("leads_leads.requested_by = ?", id).joins("INNER JOIN leads as leads_leads ON leads_leads.deal_id=leads.id")
   end
 
   def site

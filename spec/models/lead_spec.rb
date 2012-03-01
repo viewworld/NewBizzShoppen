@@ -98,5 +98,15 @@ describe Lead do
     end
   end
 
+  context "destroy" do
+    before(:each) do
+      @lead = Lead.make!
+    end
 
+    it "should not be destroyed when lead purchases are created" do
+      LeadPurchase.make!(:lead => @lead)
+      @lead.reload
+      @lead.destroy.should be_false
+    end
+  end
 end

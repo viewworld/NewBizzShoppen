@@ -47,3 +47,5 @@ class Delayed::Backend::ActiveRecord::Job
     end
   end
 end
+
+require "app_utils"

@@ -212,5 +212,276 @@ describe User do
       end
     end
   end
+
+  context "destroy" do
+    context "subscriber" do
+      it "should not be destroyed when there is active payable subscription" do
+        @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :billing_cycle => 3, :can_be_upgraded => false)
+        @payable_subscription1.subscription_plan_lines.make!(:price => 25)
+        @payable_subscription1.subscription_plan_lines.make!(:price => 5)
+        @supplier = User::Supplier.make!(:subscription_plan_id => @payable_subscription1.id)
+        @supplier.destroy.should be_false
+      end
+    end
+
+    context "supplier" do
+      before(:each) do
+        @supplier = User::Supplier.make!
+      end
+
+      it "should not be destroyed when there are lead purchases" do
+        LeadPurchase.make!(:owner_id => @supplier.id)
+        @supplier.reload
+        @supplier.destroy.should be_false
+      end
+
+      it "should not be destroyed when there are deals" do
+        Deal.make!(:email_address => @supplier.email)
+        @supplier.reload
+        @supplier.destroy.should be_false
+      end
+
+      it "should not be destroyed when there are leads in cart" do
+        @supplier.cart.add_lead(Lead.make!)
+        @supplier.destroy.should be_false
+      end
+
+      it "should not be destroyed when there are subaccounts" do
+        User::LeadSupplier.make!(:parent_id => @supplier.id)
+        @supplier.reload
+        @supplier.destroy.should be_false
+      end
+
+      it "should not be destroyed when there are invoices" do
+        Invoice.make!(:user => @supplier)
+        @supplier.reload
+        @supplier.destroy.should be_false
+      end
+    end
+
+    context "category supplier" do
+      before(:each) do
+        @category_supplier = User::CategorySupplier.make!
+      end
+
+      it "should not be destroyed when there are lead purchases" do
+        LeadPurchase.make!(:owner_id => @category_supplier.id)
+        @category_supplier.reload
+        @category_supplier.destroy.should be_false
+      end
+
+      it "should not be destroyed when there are deals" do
+        Deal.make!(:email_address => @category_supplier.email)
+        @category_supplier.reload
+        @category_supplier.destroy.should be_false
+      end
+
+      it "should not be destroyed when there are leads in cart" do
+        @category_supplier.cart.add_lead(Lead.make!)
+        @category_supplier.destroy.should be_false
+      end
+
+      it "should not be destroyed when there are subaccounts" do
+        User::LeadSupplier.make!(:parent_id => @category_supplier.id)
+        @category_supplier.reload
+        @category_supplier.destroy.should be_false
+      end
+
+      it "should not be destroyed when there are invoices" do
+        Invoice.make!(:user => @category_supplier)
+        @category_supplier.reload
+        @category_supplier.destroy.should be_false
+      end
+    end
+
+    context "lead buyer" do
+      before(:each) do
+        @supplier = User::Supplier.make!
+        @lead_buyer = User::LeadSupplier.make!(:parent_id => @supplier.id)
+      end
+
+      it "should not be destroyed when there are leads" do
+        @lead_buyer.cart.add_lead(Lead.make!)
+        @lead_buyer.destroy.should be_false
+      end
+
+      it "should not be destroyed when there are assigned leads" do
+        LeadPurchase.make!(:owner_id => @supplier.id, :assignee_id => @lead_buyer.id, :accessible_from => Time.now)
+        @lead_buyer.reload
+        @lead_buyer.destroy.should be_false
+      end
+      end
+
+    context "lead user" do
+      before(:each) do
+        @supplier = User::Supplier.make!
+        @lead_user = User::LeadUser.make!(:parent_id => @supplier.id)
+      end
+
+      it "should not be destroyed when there are lead requests" do
+        LeadRequest.make!(:requested_by => @lead_user)
+        @lead_user.reload
+        @lead_user.destroy.should be_false
+      end
+
+      it "should not be destroyed when there are assigned leads" do
+        LeadPurchase.make!(:owner_id => @supplier.id, :assignee_id => @lead_user.id, :accessible_from => Time.now)
+        @lead_user.reload
+        @lead_user.destroy.should be_false
+      end
+    end
+
+    context "agent" do
+      before(:each) do
+        @agent = User::Agent.make!
+      end
+
+      it "should not be destroyed when there are leads created" do
+        Lead.make!(:creator => @agent)
+        @agent.reload
+        @agent.destroy.should be_false
+      end
+
+      it "should not be destroyed when there are deals created" do
+        Deal.make!(:creator => @agent)
+        @agent.reload
+        @agent.destroy.should be_false
+      end
+
+      context "campaigns"  do
+
+        before(:each) do
+          @campaign = Campaign.make!
+        end
+
+        it "should not be destroyed when there are contacts assigned" do
+          Contact.make!(:agent_id => @agent)
+          @agent.reload
+          @agent.destroy.should be_false
+        end
+
+        it "should not be destroyed when there are call results created" do
+          CallResult.make!(:creator => @agent)
+          @agent.reload
+          @agent.destroy.should be_false
+        end
+      end
+    end
+
+    context "call centre agent" do
+      before(:each) do
+        @call_centre_agent = User::CallCentreAgent.make!
+      end
+
+      it "should not be destroyed when there are leads created" do
+        l = Lead.make!(:current_user => @call_centre_agent)
+        l.creator = @call_centre_agent
+        l.save
+        @call_centre_agent.reload
+        @call_centre_agent.destroy.should be_false
+      end
+
+      it "should not be destroyed when there are deals created" do
+        d = Deal.make!(:current_user => @call_centre_agent)
+        d.creator = @call_centre_agent
+        d.save
+        @call_centre_agent.reload
+        @call_centre_agent.destroy.should be_false
+      end
+
+      context "campaigns"  do
+
+        before(:each) do
+          @campaign = Campaign.make!
+        end
+
+        it "should not be destroyed when there are contacts assigned" do
+          Contact.make!(:agent_id => @call_centre_agent)
+          @call_centre_agent.reload
+          @call_centre_agent.destroy.should be_false
+        end
+
+        it "should not be destroyed when there are call results created" do
+          CallResult.make!(:creator => @call_centre_agent)
+          @call_centre_agent.reload
+          @call_centre_agent.destroy.should be_false
+        end
+      end
+    end
+    context "call centre" do
+      before(:each) do
+        @call_centre = User::CallCentre.make!
+      end
+
+      it "should not be destroyed when there are deals created" do
+        d = Deal.make!(:current_user => @call_centre)
+        d.creator = @call_centre
+        d.save
+        @call_centre.reload
+        @call_centre.destroy.should be_false
+      end
+
+      it "should not be destroyed when there are agents created" do
+        User::CallCentreAgent.make!(:parent_id => @call_centre.id)
+        @call_centre.reload
+        @call_centre.destroy.should be_false
+      end
+
+      context "campaigns"  do
+        before(:each) do
+          @campaign = Campaign.make!
+        end
+
+        it "should not be destroyed when there are contacts assigned" do
+          Contact.make!(:agent_id => @call_centre)
+          @call_centre.reload
+          @call_centre.destroy.should be_false
+        end
+
+        it "should not be destroyed when there are call results created" do
+          CallResult.make!(:creator => @call_centre)
+          @call_centre.reload
+          @call_centre.destroy.should be_false
+        end
+      end
+    end
+
+    context "member" do
+      before(:each) do
+        @member = User::Member.make!
+      end
+
+      it "should not be destroyed when there are requested deals" do
+        @deal = Deal.make!
+        @lead = Lead.new
+        @lead.based_on_deal(@deal, @member)
+        @lead.save
+
+        @member.destroy.should be_false
+      end
+
+      it "should not be destroyed when there are leads created (tenders)" do
+        l = Lead.make!(:current_user => @member)
+        l.creator = @member
+        l.save
+        @member.reload
+        @member.destroy.should be_false
+      end
+    end
+
+    context "admin" do
+      before(:each) do
+        @admin = User::Admin.make!
+      end
+
+      it "should not be destroyed when there are deals created" do
+        d = Deal.make!(:current_user => @admin)
+        d.creator = @admin
+        d.save
+        @admin.reload
+        @admin.destroy.should be_false
+      end
+    end
+  end
 end
 

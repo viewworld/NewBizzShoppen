@@ -6,13 +6,9 @@ class Region < ActiveRecord::Base
 
   validates_presence_of :name
 
-  before_destroy :can_be_removed
+  check_associations_before_destroy :abstract_leads, :addresses
 
   def to_s
     name
-  end
-
-  def can_be_removed
-    abstract_leads.empty? and addresses.empty?
   end
 end

@@ -85,7 +85,8 @@ class Lead < AbstractLead
 
   scoped_order :id, :header, :sale_limit, :price, :lead_purchases_counter, :published, :has_unsatisfactory_rating, :purchase_value, :created_at
 
-  before_destroy :can_be_removed?
+  check_associations_before_destroy :lead_purchases
+
   after_find :set_suppliers_notification
   before_update :notify_suppliers_about_changes
   before_create :set_deal_code
@@ -151,10 +152,6 @@ class Lead < AbstractLead
     else
       INFINITY
     end
-  end
-
-  def can_be_removed?
-    lead_purchases.empty?
   end
 
   def set_suppliers_notification
