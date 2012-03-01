@@ -77,7 +77,6 @@ Nbs::Application.routes.draw do
     resources :supplier_interests, :only => [:edit, :update]
     resources :youtube_introductions
     resources :email_bounces
-    resources :archived_emails
     resources :languages
     resources :subscription_plans do
       collection do
@@ -85,7 +84,6 @@ Nbs::Application.routes.draw do
       end
     end
     resources :paypal_notifications, :only => [:index, :show]
-    resources :archived_paypal_responses, :only => [:index, :show]
   end
 
   namespace :suppliers do
