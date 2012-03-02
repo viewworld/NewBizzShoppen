@@ -149,6 +149,12 @@
         });
       <% end %>
 
+      <% if @selected_contact %>
+        $(document).ready(function() {
+          $.get('<%= callers_campaign_agent_work_screen_contact_path(@campaign, @selected_contact) -%>')
+        });
+      <% end %>
+
       <% if !@contact and @pending_contacts and @pending_contacts.any? %>
       display_notice("<%= escape_javascript(t("contacts.show.flash.you_have_only_callback_contacts")) %>", false);
       <% elsif !@contact%>
