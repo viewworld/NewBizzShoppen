@@ -29,4 +29,6 @@ Feature: Chain mail administration
 
   Scenario: I can edit each email in the chain
 
-  Scenario: I can add attachments to each email in the chain
+  Scenario: I can upload attachments to chain mail repository
+
+  Scenario: I can attach multiple attachments to each email

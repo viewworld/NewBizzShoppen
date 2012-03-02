@@ -10,4 +10,4 @@ Feature: Chain mail background
 
   Scenario: It should be possible to check last login of email recipient
 
-  Scenario: It should be possible to check if links in the email has been clicked
+  Scenario: It should be possible to check if links in the email had been clicked
