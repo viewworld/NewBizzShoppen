@@ -308,7 +308,7 @@ class CallResult < ActiveRecord::Base
   def add_call_back_notification!(options={})
     options = {
       :title => I18n.t("notifications.call_result.call_back.title", :contact => contact.company_name),
-      :text => I18n.t("notifications.call_result.call_back.text", :url => "/callers/campaigns/#{contact.campaign_id}/agent_work_screen?selected_call_result_id=#{id}"),
+      :text => I18n.t("notifications.call_result.call_back.text", :url => "/callers/campaigns/#{contact.campaign_id}/agent_work_screen?selected_contact_id=#{contact.id}"),
       :notify_at => Time.zone.parse(result_values.dates.first.value),
       :sticky => true,
       :time => nil
