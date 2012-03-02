@@ -258,10 +258,10 @@ module ApplicationHelper
 
   def format_for_timesheet(val, type)
     if type.to_sym == :hours
-      hours = val.to_i
-      minutes = ((val-val.to_i)*60).round
+      hours = val.to_i.abs
+      minutes = ((val-val.to_i)*60).round.abs
       minutes = "0#{minutes}" if minutes < 10
-      "#{hours}:#{minutes}"
+      "#{'-' if val < 0}#{hours}:#{minutes}"
     else
       val.to_i
     end
