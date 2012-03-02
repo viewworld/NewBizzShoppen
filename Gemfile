@@ -46,7 +46,7 @@ gem 'paypal-recurring', :path => 'vendor/gems/paypal-recurring'
 gem 'paypal_nvp'
 #gem 'activeadmin', :path => 'vendor/gems/active_admin'
 gem 'diff-lcs', :require => false
-gem 'cucumber_fm-core', '0.1', :require => 'cucumber_feature_manager'
+#gem 'cucumber_fm-core', '0.1', :require => 'cucumber_feature_manager'
 
 group :production do
   gem 'hoptoad_notifier'
