@@ -937,3 +937,7 @@ Feature: Agent campaign - management
         @m29 @requested @tgn @_done @_tested
         Scenario: When I access campaigns from menu I should see only active by default
           And "search_with_state" should be selected for value "active"
+
+        #10612
+        @m30 @requested
+        Scenario: I should see number of contacts with callback result assigned on campaigns listing
