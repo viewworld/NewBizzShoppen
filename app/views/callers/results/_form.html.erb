@@ -29,7 +29,7 @@
 </div>
 <% end %>
 
-<% if result.final? and result.created_by_or_admin?(current_user) %>
+<% if result.created_by_or_admin?(current_user) %>
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs_vertical">
     <ol>
@@ -40,9 +40,9 @@
 </div>
 <% end %>
 
-<% if !@result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id }.nil? and @result.final? %>
+<% if !@result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id }.nil? %>
     <%= form.fields_for :campaigns_results, @result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id } do |builder| %>
-        <%= render :partial => "campaign_result", :locals => {:f => builder} %>
+        <%= render :partial => "campaign_result", :locals => {:f => builder, :campaign => @campaign} %>
     <% end %>
 <% else %>
     <div class="pdd_10 no_pdd_t">

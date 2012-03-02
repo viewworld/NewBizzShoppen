@@ -4,7 +4,7 @@
         <li class="string">
           <%= f.label :value %>
           <%= f.text_field :value %>
-          <p class="inline-hints">&euro;</p>
+          <p class="inline-hints"><%= campaign.currency.to_s %></p>
         </li>
         <li class="boolean">
           <%= f.label :is_dynamic_value, t("shared.results.form.is_dynamic_value") %>

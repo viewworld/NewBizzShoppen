@@ -4,7 +4,6 @@
           <td><%= campaign_report.campaign.name %></td>
           <td><%= number_to_percentage(campaign_report.realised_success_percent, :precision => 0) %> (<%= number_to_percentage(campaign_report.target_success_percent, :precision => 0) %>)</td>
           <td><%= number_with_precision(campaign_report.realised_finished_contacts_per_hour, :precision => 2) %> (<%= number_with_precision(campaign_report.target_finished_contacts_per_hour, :precision => 2) %>)</td>
-          <td><%= number_with_precision(campaign_report.realised_finished_results_per_hour, :precision => 2) %></td>
           <td><%= number_with_precision(campaign_report.realised_all_results_per_hour, :precision => 2) %> (<%= number_with_precision(campaign_report.target_all_results_per_hour, :precision => 2) %>)</td>
           <td><%= number_with_precision(campaign_report.realised_temp_result_per_hour, :precision => 2) %> (<%= number_with_precision(campaign_report.target_temp_result_per_hour, :precision => 2) %>)</td>
           <td><%= as_currency(campaign_report.realised_value_per_hour, Currency.euro, 0) %> (<%= as_currency(campaign_report.target_value_per_hour, Currency.euro, 0) %>)</td>
@@ -22,6 +21,7 @@
             <% end %>
           </td>
           <td><%= number_to_percentage(campaign_report.realised_db_value, :precision => 0) %> (<%= number_to_percentage(campaign_report.target_db_value, :precision => 0) %>)</td>
+          <td><%= campaign_report.hours_used.as_hours_and_minutes %></td>
           <td><%= campaign_report.predicted_hours_to_completion.as_hours_and_minutes %></td>
           <td><%= as_currency(campaign_report.predicted_cost_for_completion, Currency.euro, 0) %></td>
           <td><%= as_currency(campaign_report.predicted_value_for_completion, Currency.euro, 0) %></td>

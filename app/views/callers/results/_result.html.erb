@@ -13,7 +13,7 @@
     <td colspan="2"><%= t("campaigns.index.not_allowed_to_edit") %></td>
   <% end %>
   <td class="tda ta_r">
-    <% if (!result.final? and !result.generic?) or (result.final? and result.can_be_managed_by?(current_user)) %>
+    <% if result.can_be_managed_by?(current_user) %>
         <ul-actions>
           <li>
             <%= link_to t("campaigns.index.edit"), url_for(:controller => "callers/results", :action => "edit", :id => result, :campaign_id => campaign) %>
