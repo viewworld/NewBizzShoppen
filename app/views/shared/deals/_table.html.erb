@@ -42,7 +42,7 @@
         <% if show_checkboxes %>
             <td><%= check_box_tag("deal_ids[]", deal.id) %></td>
         <% end %>
-        <td><%= deal.created_at %></td>
+        <td><%= format_date deal.created_at %></td>
         <td>
           <%= deal.header %>
           <%if deal.awaiting_approval? %>
@@ -53,7 +53,7 @@
         <td>
           <%= deal.company_name %>
         </td>
-        <td><%= deal.end_date %></td>
+        <td><%= format_date deal.end_date %></td>
         <% unless current_user.admin? %>
             <td>
               <% if Rails.env != "test" %>
