@@ -4,9 +4,9 @@
   <tr>
     <th class="hl"></th>
     <th><%= t("campaign_reports.index.table.campaign_name") %></th>
-    <th colspan="7" class="ta_c pointer"><%= t("campaign_reports.index.table.campaign_targets") %></th>
+    <th colspan="6" class="ta_c pointer"><%= t("campaign_reports.index.table.campaign_targets") %></th>
     <th colspan="<%= 1 + CampaignReport.final_results(result_ids).count %>" class="ta_c pointer"><%= t("campaign_reports.index.table.status") %></th>
-    <th colspan="3" class="ta_c pointer"><%= t("campaign_reports.index.table.campaign_results") %></th>
+    <th colspan="4" class="ta_c pointer"><%= t("campaign_reports.index.table.campaign_results") %></th>
     <th colspan="3" class="ta_c pointer"><%= t("campaign_reports.index.table.predicted_results") %></th>
     <th class="hr"></th>
   </tr>
@@ -24,7 +24,6 @@
     <td>&nbsp;</td>
     <td><%= t("campaign_reports.index.table.success_percent") %></td>
     <td><%= t("campaign_reports.index.table.finish_cph") %></td>
-    <td><%= t("campaign_reports.index.table.final_results_ph") %></td>
     <td><%= t("campaign_reports.index.table.all_results_ph") %></td>
     <td><%= t("campaign_reports.index.table.temp_results_ph") %></td>
     <td><%= t("campaign_reports.index.table.value_ph") %></td>
@@ -37,6 +36,7 @@
     <td><%= t("campaign_reports.index.table.value_created") %></td>
     <td><%= t("campaign_reports.index.table.production_cost") %></td>
     <td><%= t("campaign_reports.index.table.db_value") %></td>
+    <td><%= t("campaign_reports.index.table.hours_used") %></td>
     <td><%= t("campaign_reports.index.table.hours_to_completion") %></td>
     <td><%= t("campaign_reports.index.table.cost_for_completion") %></td>
     <td><%= t("campaign_reports.index.table.value_for_completion") %></td>

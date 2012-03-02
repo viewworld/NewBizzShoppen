@@ -1,5 +1,5 @@
 #10278
-@m29 @requested @notifier
+@m29 @ao @requested @notifier
 Feature: Notifier
 
   Background:

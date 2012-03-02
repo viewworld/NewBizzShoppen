@@ -403,7 +403,7 @@ describe CampaignReport do
 
       it "should return correct target all results per hour" do
         cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
-        cr.target_all_results_per_hour.should be_close(3.33, 0.01)
+        cr.target_all_results_per_hour.should == 20.0
       end
 
       it "should return correct realised all results per hour" do
@@ -428,7 +428,7 @@ describe CampaignReport do
 
       it "should return correct contacts used" do
         cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
-        cr.contacts_used.should == "2-4:75.0"
+        cr.contacts_used.should == "2-4:75%"
       end
 
       it "should return correct realised final result count" do
@@ -461,8 +461,8 @@ describe CampaignReport do
       it "should return correct predictions for hours, cost, and value for completion" do
         cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week)
         cr.predicted_hours_to_completion.should == 1.5
-        cr.predicted_cost_for_completion.should == 150.0
-        cr.predicted_value_for_completion.should == 233.0
+        cr.predicted_cost_for_completion.should == 50.0
+        cr.predicted_value_for_completion.should be_close(77.66, 0.01)
       end
     end
 
@@ -687,7 +687,7 @@ describe CampaignReport do
 
       it "should return correct target all results per hour" do
         cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1) #global
-        cr.target_all_results_per_hour.should be_close(3.33, 0.01)
+        cr.target_all_results_per_hour.should == 20.0
       end
 
       it "should return correct realised all results per hour" do
@@ -720,9 +720,9 @@ describe CampaignReport do
 
       it "should return correct contacts used" do
         cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1)
-        cr.contacts_used.should == "1-4:75.0"
+        cr.contacts_used.should == "1-4:75%"
         cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2)
-        cr.contacts_used.should == "1-4:75.0"
+        cr.contacts_used.should == "1-4:75%"
       end
 
       it "should return correct realised final result count" do
@@ -767,8 +767,8 @@ describe CampaignReport do
       it "should return correct predictions for hours, cost, and value for completion" do
         cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1)
         cr.predicted_hours_to_completion.should == 3.0
-        cr.predicted_cost_for_completion.should == 300.0
-        cr.predicted_value_for_completion.should == 600.0
+        cr.predicted_cost_for_completion.should be_close(33.33, 0.01)
+        cr.predicted_value_for_completion.should be_close(66.66, 0.01)
       end
     end
   end

@@ -40,9 +40,7 @@ class CampaignReport
   end
 
   def target_all_results_per_hour
-    all_exp = campaign.campaigns_results.joins(:result).where("results.is_reported is TRUE").sum(:expected_completed_per_hour)
-    all_reported = campaign.campaigns_results.joins(:result).where("results.is_reported is TRUE").count
-    all_reported > 0 ? all_exp / all_reported : 0
+    campaign.campaigns_results.joins(:result).where("results.is_reported is TRUE").sum(:expected_completed_per_hour)
   end
 
   def realised_all_results_per_hour
@@ -123,7 +121,7 @@ class CampaignReport
   end
 
   def contacts_used
-    "#{completed_number_of_contacts}-#{total_number_of_contacts}:#{completion_percent}"
+    "#{completed_number_of_contacts}-#{total_number_of_contacts}:#{completion_percent.to_i}%"
   end
 
   def target_db_value
@@ -167,11 +165,19 @@ class CampaignReport
   end
 
   def predicted_cost_for_completion
-    target_production_cost - production_cost
+    if completion_percent.to_i == 0
+      0
+    else
+      ((production_cost / completion_percent) * 100) - production_cost
+    end
   end
 
   def predicted_value_for_completion
-    target_value_created - value_created
+    if completion_percent.to_i == 0
+      0
+    else
+      ((value_created / completion_percent) * 100) - value_created
+    end
   end
 
   def completed_number_of_contacts
