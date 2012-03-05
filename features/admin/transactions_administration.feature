@@ -114,6 +114,6 @@ Scenario: I can search for a transaction by a combination of keyword: contact na
   Then I should see "77.99"
   Then I should not see "88.32"
 
-@requested @m8 @tgn @_tested @_done
+@_requested @m8 @tgn @_tested @_done
 Scenario: Show company name in listing
   Then I should see "Xanesra"

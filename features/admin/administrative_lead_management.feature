@@ -155,7 +155,7 @@ Scenario: I can change creator of lead to any other agent
   And "lead_tmp_creator_id" should be selected for value "agent_777@nbs.com"
 
 #10277
-@m29 @requested @tgn @_done @_tested
+@m29 @_requested @tgn @_done @_tested
 Scenario: I should not see Klik,Antal visninger,Hvor hot,Nyhed,Hvor unik,Lead pris,Solgt,Værdi,Udbetalt,Dårlig rating,Status
   Given I follow translated "layout.main_menu.admin.leads"
   Then I should see translated "leads.table.date"
@@ -174,19 +174,19 @@ Scenario: I should not see Klik,Antal visninger,Hvor hot,Nyhed,Hvor unik,Lead pr
   Then I should not see translated "leads.table.status" within "#leads"
 
 #10277
-@m29 @requested @tgn @_done @_tested_elsewhere
+@m29 @_requested @tgn @_done @_tested_elsewhere
 Scenario: I should see date (creation date), category (lead category), lead price
 
 #10277
-@m29 @requested @tgn @_done @_tested_elsewhere
+@m29 @_requested @tgn @_done @_tested_elsewhere
 Scenario: I should see source (deal or agent name)
 
 #10277
-@m29 @requested @tgn @_done @_tested_elsewhere
+@m29 @_requested @tgn @_done @_tested_elsewhere
 Scenario: I should see whether lead has been sold
 
 #10277
-@m29 @requested @tgn @_done @_tested
+@m29 @_requested @tgn @_done @_tested
 Scenario: I can sort leads by all of the new columns
   Given there are no leads
   And Category Frames is created

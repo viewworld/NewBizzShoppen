@@ -124,7 +124,7 @@ Scenario: I can upload a category image
 Scenario: I can manage categories from Browse categories. Categories tab should be removed
   Then I should not see translated "layout.main_menu.admin.categories"
 
-@m6 @tgn @_tested @requested @_done
+@m6 @tgn @_tested @_requested @_done
 Scenario: I can make any category country specific (Category can have one or more countries assigned to it)
   Given there are no categories
   And Category Computers is created
@@ -145,7 +145,7 @@ Scenario: I can make any category country specific (Category can have one or mor
   Then I follow translated "administration.categories.index.view.edit_link"
   And "category_country_ids" should be selected for value "Denmark"
 
-@m6 @ao @_done @_tested  @requested
+@m6 @ao @_done @_tested  @_requested
 Scenario: I can mark category to allow buyouts
   Given Category named "Sample category" already exists
   And category "Sample category" has attributes "buyout_enabled:0"
@@ -156,7 +156,7 @@ Scenario: I can mark category to allow buyouts
   And I am on administration edit category Sample category
   Then checkbox named "category_buyout_enabled" should be checked
 
-@m6 @ao @_done @_tested @requested @deprecated
+@m6 @ao @_done @_tested @_requested @deprecated
 Scenario: When creating new category it is marked with buyout flag by default
 #  When I go to administration categories
 #  And I follow translated "administration.categories.index.view.new_category"
@@ -169,7 +169,7 @@ Scenario: When creating new category it is marked with buyout flag by default
 #  Then checkbox named "category_buyout_enabled" should be checked
 
 # Allow admin to flag a category with option “Do not show prices to team members” - this will basically make team-buyers (subeaccounts) not see lead price when browsing leads within that particular category.
-@requested @m7 @tgn @_tested @_done
+@_requested @m7 @tgn @_tested @_done
 Scenario: I can flag a category to not show prices to team members
   Given there are no categories
   And Category Computers is created
@@ -218,7 +218,7 @@ Scenario: I can enable auto-buy option for big buyer for categories which are un
   Then lead sub zero has 1 lead purchases
   Then last email sent should have been sent to recipient "nbsbuyer3483434biz@nbs.com"
 
-@m14 @requested @$_admin @auto_buy @is @_done @_tested
+@m14 @_requested @$_admin @auto_buy @is @_done @_tested
 Scenario: I can edit "Additional information" for category
   Given there are no categories
   Then Category Computers is created
@@ -262,7 +262,7 @@ Scenario: I should be able to delete category image
   Then I should not see CSS path "table#categories_table tr:nth-of-type(1) td:nth-of-type(2) img"
 
 #10251
-@m29 @requested @tgn @_done @_tested
+@m29 @_requested @tgn @_done @_tested
 Scenario: I can filter unique categories (defult on)
   When there are no categories
   And Category Watches is created
@@ -306,18 +306,18 @@ Scenario: I can filter unique categories (defult on)
   And I should see "UniqAutoBuy"
 
 #10251
-@m29 @requested @tgn @_done @_tested_elsewhere
+@m29 @_requested @tgn @_done @_tested_elsewhere
 Scenario: I can filter public categories (defult on)
 
 #10251
-@m29 @requested @tgn @_done @_tested_elsewhere
+@m29 @_requested @tgn @_done @_tested_elsewhere
 Scenario: I can filter locked categories (defult off)
 
 #10251
-@m29 @requested @tgn @_done @_tested_elsewhere
+@m29 @_requested @tgn @_done @_tested_elsewhere
 Scenario: I can search category by name
 
 #10251
-@m29 @requested @tgn @_done @_tested_elsewhere
+@m29 @_requested @tgn @_done @_tested_elsewhere
 Scenario: Default action when I click category is edit
 

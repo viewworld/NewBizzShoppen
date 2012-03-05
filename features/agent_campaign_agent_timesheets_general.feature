@@ -1,4 +1,4 @@
-@m26 @requested @agent_timesheets @ao
+@m26 @_requested @agent_timesheets @ao
 Feature: Agent timesheets
 
   Background:
@@ -57,15 +57,15 @@ Feature: Agent timesheets
   Scenario: I can use checkbox to select overview / team results / agent timesheets as report type (all on by default)
 
   #9787
-  @m27 @requested @_done @_nontestable
+  @m27 @_requested @_done @_nontestable
   Scenario: Generated timesheet should be displayed in popup window to use full size of screen
 
   #9787
-  @m27 @requested @_done @_nontestable
+  @m27 @_requested @_done @_nontestable
   Scenario: I should see dropdown with list of agents and "show" button instead of separate tabs for each agent
 
   #9787
-  @m27 @requested @_done @selenium @_tested
+  @m27 @_requested @_done @selenium @_tested
   Scenario: Timesheets should be generated in background
     Given campaign report data is generated
     And campaign report user session logs are generated
@@ -112,7 +112,7 @@ Feature: Agent timesheets
   Then I should see "0" rows with id like "cached_timesheet_" in a table
 
   #9787
-  @m27 @requested @selenium @_done @_tested @_deprecated
+  @m27 @_requested @selenium @_done @_tested @_deprecated
   Scenario: I should get an email when my report is generated
 #    Given campaign report data is generated
 #    And campaign report user session logs are generated
@@ -134,7 +134,7 @@ Feature: Agent timesheets
 #    Then last email sent should have been sent to recipient "blazejek@gmail.com"
 
   #9787
-  @m27 @requested @_done @_tested
+  @m27 @_requested @_done @_tested
   Scenario: I should see queue / generated reports on the bottom of new timesheets screen
     Given campaign report data is generated
     And campaign report user session logs are generated
@@ -146,15 +146,15 @@ Feature: Agent timesheets
     And I should see translated "agent_timesheets.new.cached_timesheets"
 
   #9787
-  @m27 @requested @_done @_tested_elsewhere
+  @m27 @_requested @_done @_tested_elsewhere
   Scenario: I can select only user(s) to generate report for all campaigns for this user(s)
 
   #9787
-  @m27 @requested @_done @_tested_elsewhere
+  @m27 @_requested @_done @_tested_elsewhere
   Scenario: I can select only campaign(s) to generate report for all users on this campaign(s)
 
   #9877
-  @m28 @requested @selenium @_done @_tested
+  @m28 @_requested @selenium @_done @_tested
   Scenario: I can use checkbox to display cost
     Given there are no cached timesheets
     Given user translator_call_centre@nbs.com with role call_centre exists with attributes "first_name: Ted, company_name:Russia Today"
@@ -204,11 +204,11 @@ Feature: Agent timesheets
     And I should not see translated "agent_timesheets.index.agent_time_sheet.cost"
 
   #9889
-  @m28 @requested @tgn @_done @_tested_elsewhere
+  @m28 @_requested @tgn @_done @_tested_elsewhere
   Scenario: Dynamic result value should be included into agent timesheets
 
   #10170
-  @m29 @requested @selenium @_done @_tested
+  @m29 @_requested @selenium @_done @_tested
   Scenario: I can download timesheet as PDF
     Given campaign report data is generated
     And campaign report user session logs are generated
@@ -232,15 +232,15 @@ Feature: Agent timesheets
 
   # tested in previous scenario
   #10170
-  @m29 @requested @_done @_tested_elsewhere
+  @m29 @_requested @_done @_tested_elsewhere
   Scenario: The PDF should be generated in background with the HTML version
 
   #10170
-  @m29 @requested @_done @_nontestable
+  @m29 @_requested @_done @_nontestable
   Scenario: The PDF should be well formated (with page breaks, font size)
 
   #10278
-  @m29 @requested @selenium @_done @_tested
+  @m29 @_requested @selenium @_done @_tested
   Scenario: Notification should be added when I generate a timesheet
     Given there are no cached timesheets
     Given user translator_call_centre@nbs.com with role call_centre exists with attributes "first_name: Ted, company_name:Russia Today"

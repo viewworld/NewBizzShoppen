@@ -1,5 +1,5 @@
 #This is almost the same as in Buyer scope
-@added @start_pages @ao  @requested
+@added @start_pages @ao  @_requested
 Feature: Start page for purchase manager
 
 Background: I am a guest and I am on the home page
@@ -125,7 +125,7 @@ Scenario: In bestsellers and latest listings I should not see leads which I've a
 #  Then I should see "AwesomeLead"
 #  And I should not see "BoughtLead"
 
-@m5 @unique_categories @tgn @added @_tested @requested @_done @_deprecated
+@m5 @unique_categories @tgn @added @_tested @_requested @_done @_deprecated
 Scenario: When I am not logged in I should not see any leads from unique categories on Latest & Bestsellers lists
 #  Given lead CommonLead1 exists within category Common Category1
 #  And CommonLead1 is a best seller
@@ -146,7 +146,7 @@ Scenario: When I am not logged in I should not see any leads from unique categor
 #  And I should not see "UniqueLead2" within "#latest_leads"
 
 # deprecated in favour to 'my contact requests'
-@m5 @unique_categories @tgn @added @_tested @_done @requested @_deprecated
+@m5 @unique_categories @tgn @added @_tested @_done @_requested @_deprecated
 Scenario: I should not see leads from agent unique categories I'm not assigned to on Latest leads listing
 #  Given lead CommonLead1 exists within category Common Category1
 #  And lead CommonLead2 exists within category Common Category2
@@ -166,7 +166,7 @@ Scenario: I should not see leads from agent unique categories I'm not assigned t
 #  And I should see "UniqueLead2" within "#latest_leads"
 
 # best sellers removed in m16
-@m5 @unique_categories @tgn @added @_tested  @requested @_deprecated @_done
+@m5 @unique_categories @tgn @added @_tested  @_requested @_deprecated @_done
 Scenario: I should not see leads from agent unique categories I'm not assigned to on Bestsellers listing
 #  Given lead CommonLead1 exists within category Common Category1
 #  And CommonLead1 is a best seller
@@ -189,11 +189,11 @@ Scenario: I should not see leads from agent unique categories I'm not assigned t
 #  And I should not see "UniqueLead1" within "#best_sellers"
 #  And I should see "UniqueLead2" within "#best_sellers"
 
-@m5 @unique_categories @tgn @added @_tested_elsewhere @_done  @requested
+@m5 @unique_categories @tgn @added @_tested_elsewhere @_done  @_requested
 Scenario: I should see leads from customer unique categories on Latest leads listing
 
 # deprecated in favour to 'my contact requests'
-@m5 @unique_categories @tgn @added @_tested @_done @requested @_deprecated
+@m5 @unique_categories @tgn @added @_tested @_done @_requested @_deprecated
 Scenario: I should see leads from agent unique categories I'm assigned to on Latest leads listing
 #  Given I am signed up and confirmed as user with email agent34234234@nbs.com and password secret and role member
 #  Given lead CommonLead1 exists within category Common Category1
@@ -213,7 +213,7 @@ Scenario: I should see leads from agent unique categories I'm assigned to on Lat
 #  And I should see "UniqueLead2" within "#latest_leads"
 
 # best sellers removed in m16
-@m5 @unique_categories @tgn @added @_tested  @requested @_deprecated @_done
+@m5 @unique_categories @tgn @added @_tested  @_requested @_deprecated @_done
 Scenario: I should see leads from agent unique categories I'm assigned to on Bestsellers listing
 #  Given I am signed up and confirmed as user with email agent34234234@nbs.com and password secret and role member
 #  Given lead CommonLead1 exists within category Common Category1
@@ -236,7 +236,7 @@ Scenario: I should see leads from agent unique categories I'm assigned to on Bes
 #  And I should not see "UniqueLead1" within "#best_sellers"
 #  And I should see "UniqueLead2" within "#best_sellers"
 
-@m12 @$_purchase_manager @requested @_done @_tested @_deprecated
+@m12 @$_purchase_manager @_requested @_done @_tested @_deprecated
 Scenario: I should see "My contact requests" instead of "Latest leads"
 #  When I am signed up and confirmed as user with email pm@nbs.com and password secret and role member
 #  And I am on the home page
@@ -254,7 +254,7 @@ Scenario: I should see "Latest leads" when I'm not a procurement manager
 
 #1/ Lead created by given Procurement manager, and
 #2/ Lead created by other agents where given Procurement manager is specified as Contact
-@m12 @$_purchase_manager @requested @_done @_tested @_deprecated
+@m12 @$_purchase_manager @_requested @_done @_tested @_deprecated
 Scenario: In "My contact requests" I should see leads created by me and leads created by other agents where I am specified as a contact
 #  When there are no leads
 #  And I am signed up and confirmed as user with email pm@nbs.com and password secret and role member

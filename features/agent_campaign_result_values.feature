@@ -1,5 +1,5 @@
 # only final results
-@m15 @result_values @requested @tgn @selenium
+@m15 @result_values @_requested @tgn @selenium
 Feature: Result values
 
   Background:
@@ -63,7 +63,7 @@ Feature: Result values
   Scenario: All result values should be stored additionally in Euro
 
   #9889
-  @m28 @requested @tgn @_done @_tested
+  @m28 @_requested @tgn @_done @_tested
   Scenario: I can check if the field for any given result should be used for dynamic value calculation if it is of the number type
     Given the custom final result with name "Upgrade to supplier (manual)" is created by "blazejek@gmail.com"
     And result "Upgrade to supplier (manual)" is assigned to campaign "Testing Template"
@@ -84,9 +84,9 @@ Feature: Result values
     Then the "result_result_fields_attributes_1_campaigns_result_fields_attributes_0_dynamic_euro_value" field should contain "200"
 
   #9889
-  @m28 @requested @tgn @_done @_tested_elsewhere
+  @m28 @_requested @tgn @_done @_tested_elsewhere
   Scenario: I can enter amount in Euro for dynamic value calculation if type is selected for calculation
 
   #9889
-  @m28 @requested @tgn @_done @_tested_elsewhere
+  @m28 @_requested @tgn @_done @_tested_elsewhere
   Scenario: I can check that value for result should be calculated dynamically based on the sum of fields' values

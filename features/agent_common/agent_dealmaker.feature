@@ -43,7 +43,7 @@ Feature: Agent dealmaker
     Then I should see translated "deal_maker_users.create.flash.user_creation_successful"
 
   #7851
-  @m20 @requested @tgn @selenium @_tested @_done
+  @m20 @_requested @tgn @selenium @_tested @_done
   Scenario: I can customise the invitation emails for members/suppliers
     Then I follow translated "deal_maker_users.index.view.new_member"
     And I fill in "user_first_name" with "Anna"
@@ -69,7 +69,7 @@ Feature: Agent dealmaker
     And last email sent should have been sent to recipient "annalee@nbs.com"
 
   #7851
-  @m20 @requested @tgn @_tested @_done
+  @m20 @_requested @tgn @_tested @_done
   Scenario: I can upload files for emails and maange them globally
     Given I follow translated "deal_maker_users.index.view.materials"
     When attach the file "sample image" to "material_asset"
@@ -77,7 +77,7 @@ Feature: Agent dealmaker
     Then I should see "sample.jpg"
 
   #7851
-  @m20 @requested @tgn @_done @tested_elsewhere
+  @m20 @_requested @tgn @_done @tested_elsewhere
   Scenario: I can choose the uploaded files or upload new during creation of member/supplier
 
   # but the options should be there & editable
@@ -132,7 +132,7 @@ Feature: Agent dealmaker
     And I should see translated "agent_home.show.view.new_deal"
 
   ##7650
-  @m19 @requested @_done @_tested @tgn
+  @m19 @_requested @_done @_tested @tgn
   Scenario: I can check checkbox "Auto generate password" or uncheck it and provide password for supplier or member
     #member
     Then I follow translated "deal_maker_users.index.view.new_member"
@@ -161,5 +161,5 @@ Feature: Agent dealmaker
     And I should see translated "deal_maker_users.create.flash.user_creation_successful"
 
   #9605
-  @m26 @requested @added @tgn @_done @_tested_elsewhere
+  @m26 @_requested @added @tgn @_done @_tested_elsewhere
   Scenario: I can select subscription plan for member and category supplier

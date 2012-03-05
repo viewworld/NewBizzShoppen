@@ -1,4 +1,4 @@
-@lead_templates @$_call_centre @m5 @tgn  @requested @faircalls
+@lead_templates @$_call_centre @m5 @tgn  @_requested @faircalls
 Feature: Lead templates management for call centre
 
 Background:  Sign in user and set locale
@@ -90,7 +90,7 @@ Scenario: I can add translation for the lead template name and its fields
   Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
   And the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
 
-@m6 @tgn @added @_tested @requested @_done
+@m6 @tgn @added @_tested @_requested @_done
 Scenario: Make it possible to duplicate lead templates (from lead templates listings)
   Given template named "Computer details" for category "Computers" is created by user "call_centre@person.com" with role "call_centre"
   And template named "Computer details" is mandatory

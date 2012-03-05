@@ -95,7 +95,7 @@ Scenario: Add links present on sign in page to home login page as well (forgot p
 #  Then I should see translated "home.show.view.forgotten_password_link"
 #  And I should see translated "home.show.view.resend_confirmation_instructions"
 
-@requested @m8b @tgn @_tested @_done
+@_requested @m8b @tgn @_tested @_done
 Scenario: We need a forgot password function, where the user is e-maild his password, this should be available when you enter a wrong password
   Given I am not sign in
   And I go to the homepage
@@ -110,7 +110,7 @@ Scenario: I can login to fairleads as any user without password by hash key that
   And I login as user with email "bob7@person.com" using login key
   And I should see "Logout bob7@person.com"
 
-@m11 @requested @is @_done @_non_testable
+@m11 @_requested @is @_done @_non_testable
 Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
 
 #Since the user has not been loged in before he is given the following prompt:
@@ -118,19 +118,19 @@ Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
 #want to create a new fairleds account and link it to this facebook account
 #(Facebook account namen) (Link Button)(Cancel) Or do you want to login using
 #another account (Icons of facebook, linkin and googel)
-  @m12 @$_guest @janrain @requested @is @_done @_not_testable
+  @m12 @$_guest @janrain @_requested @is @_done @_not_testable
   Scenario: When I try to login with Facebook/Google and I have no Fairleads account associated, I should be given chance to register new or login using different FB/Google/Linkedin/Fairleads account
 
-  @m12 @$_guest @janrain @requested @is @_done @_not_testable
+  @m12 @$_guest @janrain @_requested @is @_done @_not_testable
   Scenario: When I try to login with Facebook/Google and I have Fairleads account for this email, then this accounts should be linked and login page should be displayed
 
-  @m12 @$_guest @janrain @requested @is @added @_done @_not_testable
+  @m12 @$_guest @janrain @_requested @is @added @_done @_not_testable
   Scenario: When I try to login with LinkedIn and I have no Fairleads account associated then the note about linking account should be displayed
 
-  @m13 @$_guest @janrain @requested @is @$_signed_in_user @_done @_not_testable
+  @m13 @$_guest @janrain @_requested @is @$_signed_in_user @_done @_not_testable
   Scenario: After I connect the social account with an existing account I should be logged in and redirect to role home page
 
-  @m13 @$_guest @janrain @requested @is @$_signed_in_user @_done @_tested
+  @m13 @$_guest @janrain @_requested @is @$_signed_in_user @_done @_tested
   Scenario: Agree to terms & conditions should be marked as required field
     Given I am not sign in
     Then I go to agent sign up
@@ -140,7 +140,7 @@ Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
     Then I go to member sign up
     Then I should see "Agree to Terms & Conditions*"
 
-  @m13 @$_guest @janrain @requested @is @$_signed_in_user @_done @_tested
+  @m13 @$_guest @janrain @_requested @is @$_signed_in_user @_done @_tested
   Scenario: I can click cancel button when I creating new account and it redirect me to home page
     Given I am not sign in
     Then I go to agent sign up
@@ -150,11 +150,11 @@ Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
     Then I go to member sign up
     Then I should see translated "shared.accounts.new_account_form.button_cancel"
 
-  @m13 @$_guest @janrain @requested @is @$_signed_in_user @_done @_not_testable
+  @m13 @$_guest @janrain @_requested @is @$_signed_in_user @_done @_not_testable
   Scenario: In header of the creation of new account page I can see who am I and what social account am I using right now
 
   #7554
-  @m19 @requested @_tested @_done @tgn
+  @m19 @_requested @_tested @_done @tgn
   Scenario: When user confirms his account he should be redirected to his home page
     #buyer
     Given setting for "email_verification_for_suppliers" is set to "1"

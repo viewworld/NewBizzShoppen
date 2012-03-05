@@ -495,7 +495,7 @@ Scenario: I can choose region during creation of a lead
   And I select "Denmark" from "lead_country_id"
   And I select "Region #2" from "lead_region_id"
 
-@m6 @tgn @selenium @_tested @requested @_done
+@m6 @tgn @selenium @_tested @_requested @_done
 Scenario: I have already filled in international dialling codes for telephone numbers (+xx) (xxxxxxxxxxxxxxxxxxxxxx)
   Given Category Test category 1 is created
   And I go to agents leads
@@ -509,7 +509,7 @@ Scenario: I have already filled in international dialling codes for telephone nu
   And the "lead_phone_number" field should contain "\+45"
 
 # Do not display raw locale name - display language or country name where appropriate (mostly applicable to interfaces dealing with translations, like “new lead”)
-@requested @m7 @tgn @selenium @_tested @_done
+@_requested @m7 @tgn @selenium @_tested @_done
 Scenario: I can see language or country name when adding translation
   Given Category Test category 1 is created
   And I go to agents leads
@@ -519,7 +519,7 @@ Scenario: I can see language or country name when adding translation
   And I should see translated "models.locale.da" within "#lead_translation_form_lead_lead_translations_attributes_0"
 
 #9706
-@m27 @requested @selenium @tgn @_done @_tested
+@m27 @_requested @selenium @tgn @_done @_tested
 Scenario: I should see datepicker when template field is of date type
   Given template named "Computers details" for category "Computers" is created by user "bob@person.com" with role "agent"
   And template named "Computers details" is mandatory

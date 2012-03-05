@@ -44,7 +44,7 @@ Scenario: I should not have access to subaccounts without team buyers flag
   And I go to suppliers subaccounts
   Then I should see "You are not authorized"
 
-@requested @m8b @tgn @_tested @_done
+@_requested @m8b @tgn @_tested @_done
 Scenario: The big buyer property of a customer should be inherited by all his subaccounts
   Then I follow translated "supplier.subaccounts.index.view.new_lead_supplier"
   And I fill in "user_lead_supplier_first_name" with "Mark"
@@ -56,7 +56,7 @@ Scenario: The big buyer property of a customer should be inherited by all his su
   Then I should see translated "supplier.subaccounts.create.flash.subaccount_creation_successful"
   And user "driscoll@person.noserver.com" should be big buyer
 
-@requested @m8b @tgn @_tested @_done
+@_requested @m8b @tgn @_tested @_done
 Scenario: I should have option to hide the profile page for my team members
   Given an user with role lead_supplier and email lead_buyer2232@nbs.com exists as subaccount for customer customer@person.com
   And I follow translated "layout.main_menu.supplier.subaccounts"
@@ -68,7 +68,7 @@ Scenario: I should have option to hide the profile page for my team members
   And I sign in as lead_buyer2232@nbs.com with password secret
   Then I should not see translated "layout.my_profile_link"
 
-@requested @m8b @tgn @_tested @_done
+@_requested @m8b @tgn @_tested @_done
 Scenario: Give sales manager the option not to show lead price for team buyer
   Given an user with role lead_supplier and email lead_buyer2232@nbs.com exists as subaccount for customer customer@person.com
   And I follow translated "layout.main_menu.supplier.subaccounts"

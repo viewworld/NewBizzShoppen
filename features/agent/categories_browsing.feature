@@ -8,7 +8,7 @@ Feature: I can browse categories
   # Suggest category name: (text box), Describe what would be a good lead: (text box), How many leads would you need a month? (number)
   # Can fairleads contact you to discuss you suggestion?, Phone: (Number), Email: (email)
   # deprecated - agents dont have browse deals
-  @m8 @requested @tgn @_tested @_done @_deprecated
+  @m8 @_requested @tgn @_tested @_done @_deprecated
   Scenario: When you are loged in as an agent, you should be able to request a category, this should be done via a form mail. to admin@fairleads.com the form should contain the following fields
 #    Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
 #    Then I sign in as bob@person.com with password supersecret
@@ -25,7 +25,7 @@ Feature: I can browse categories
 #    And last email sent should have been sent to recipient "admin@fairleads.com"
 #    And I should be on agent home
 
-  @m8b @requested @tgn @_tested @_done
+  @m8b @_requested @tgn @_tested @_done
   Scenario: When you are loged in as a buyer, you should be able to request a category, this should be done via a form mail. to admin@fairleads.com the form should contain the following fields
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role supplier
     Then I sign in as bob@person.com with password supersecret
@@ -42,5 +42,5 @@ Feature: I can browse categories
     And last email sent should have been sent to recipient "admin@fairleads.com"
     And I should be on supplier home
 
-  @m10 @requested @_done @_tested @tested_elsewhere
+  @m10 @_requested @_done @_tested @tested_elsewhere
   Scenario: I will return to agent/buyer home page after category request is sent

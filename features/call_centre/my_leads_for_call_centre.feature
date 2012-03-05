@@ -71,7 +71,7 @@ Scenario: I can see clicks, exposure, hottness, novelty, unikness, price per lea
 @_done @non_testable
 Scenario: clicking on the lead should take to edit page
 
-@m6 @_tested @tgn @requested @_done
+@m6 @_tested @tgn @_requested @_done
 Scenario: I can change a creator of lead to any other user within my call centre
   Given there are no leads
   And I have user with email other_agent@nbs.com and role call_centre_agent

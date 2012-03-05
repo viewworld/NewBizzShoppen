@@ -1,4 +1,4 @@
-@m0 @requested @premium_buyer
+@m0 @_requested @premium_buyer
 Feature: Premium buyer
 
   Scenario: When I sign up as sales manager I can't enable team buyers

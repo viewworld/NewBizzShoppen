@@ -1,4 +1,4 @@
-@lead_templates @$_freelance_agent @m5 @tgn @requested @faircalls
+@lead_templates @$_freelance_agent @m5 @tgn @_requested @faircalls
 Feature: Lead templates management for freelance agent
 
 Background:

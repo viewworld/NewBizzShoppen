@@ -28,7 +28,7 @@ Scenario: I can edit hint
   Then I should be on the homepage
 
 # Hints - allow admin to go to edit hint pages straight from interface (just as with blurbs etc.)
-@requested @m7 @tgn @_tested @_done
+@_requested @m7 @tgn @_tested @_done
 Scenario: I can edit a hint directly from the place where it is displayed
   Given there are no hints
   And article hint for model "Lead" and method "region_id" exists
@@ -40,7 +40,7 @@ Scenario: I can edit a hint directly from the place where it is displayed
 
 # This will require some extension to admin - we think that when editing and admin account, we can set “Become a <<role>>” option -
 #it will allow an admin to become a user with a specific role (only one at a time) - therefore he will be able to access all interfaces within fairleads and perform article/blurb/hint editing.
-@requested @m8 @_tested @translations @_done
+@_requested @m8 @_tested @translations @_done
 Scenario: I can login as any role and be able to edit content
   Given I am a translator for role "supplier" with email "translator_1@nbs.com" and password "secret"
   And I am not sign in

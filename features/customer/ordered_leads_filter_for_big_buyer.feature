@@ -15,7 +15,7 @@ Feature: Ordered leads filter for big buyer
     And I follow translated "supplier.invoices.index.view.pending_leads"
     Then I should see "1" rows in a table with headers within "#not_invoiced_leads"
 
-  @m8b @requested @_done @_tested
+  @m8b @_requested @_done @_tested
   Scenario: Big buyer should have Invoices tab with options: 'Pending leads' - current Not invoiced leads, 'Due invoices' - unpaid invoices, 'Paid' paid invoices
     Given I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
     And User jon@lajoie.ca with role supplier is big buyer

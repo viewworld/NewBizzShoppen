@@ -1,4 +1,4 @@
-@m16 @procurement_manager_deals @requested @_deals @$_procurement_manager
+@m16 @procurement_manager_deals @_requested @_deals @$_procurement_manager
 Feature: Deals from procurement manager perspective
 
   Background:
@@ -74,7 +74,7 @@ Feature: Deals from procurement manager perspective
     Then I should see "Some deal #1"
 
   #10031
-  @m29 @requested @tgn @_done @_non_testable
+  @m29 @_requested @tgn @_done @_non_testable
   Scenario: When I browse deals in category the layout should have right column as on home page / all deals
 
   @_done @tested_elsewhere @tgn
@@ -137,7 +137,7 @@ Feature: Deals from procurement manager perspective
   And last email sent should have been sent to recipient "anakasparian@tyt.com"
 
   ##7659
-  @m19 @requested @_done @_tested @tgn @selenium
+  @m19 @_requested @_done @_tested @tgn @selenium
   Scenario: When I am not logged in I should still see Get deal button and when click I should be prompted to log in or create new account and return to the get deal
     Given I visit domain http://fairdeals.dk
     And subscription plan named "Free member subscription" exists with attributes "free_deal_requests_in_free_period:100"
@@ -192,7 +192,7 @@ Feature: Deals from procurement manager perspective
 
 
   #8340
-  @m22 @requested @tgn @_done @_tested
+  @m22 @_requested @tgn @_done @_tested
   Scenario: When I have free subscription and I click get deal then I should see questions if I want to upgrade
     Given I am not sign in
     Given I visit domain http://fairdeals.dk
@@ -213,11 +213,11 @@ Feature: Deals from procurement manager perspective
     And I fill in "lead_phone_number" with "+49 23432423423234"
 
   #8340
-  @m22 @requested @tgn @_done @_tested_elsewhere
+  @m22 @_requested @tgn @_done @_tested_elsewhere
   Scenario: When I try to get deal on free subscription and I decide to upgrade then I should be redirected to my profile page
 
   #7531
-  @m19 @requested @_done @_tested @tgn
+  @m19 @_requested @_done @_tested @tgn
   Scenario: When I get deal then I should get the email with all deal information and all materials included as attachments
     Given I visit domain http://fairdeals.dk
     Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
@@ -244,7 +244,7 @@ Feature: Deals from procurement manager perspective
     And last email sent should have content "short desc about software"
 
   #7531
-  @m19 @requested @_done @_tested @tgn
+  @m19 @_requested @_done @_tested @tgn
   Scenario: Email with deal information for procurment manager should be customizable per deal (with default template)
     Given I am not sign in
     And I visit domain http://fairleads.eu
@@ -277,7 +277,7 @@ Feature: Deals from procurement manager perspective
     And last email sent should have subject "Customized You got the deal"
     And last email sent should have content "Customized email for software components"
 
-  @m20 @requested @tgn @_tested @_done
+  @m20 @_requested @tgn @_tested @_done
   Scenario: When deal is requested the deal code is included as the first info in lead's hidden description and it is visible when member wants to get the deal
     Given I visit domain http://fairdeals.dk
     Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
@@ -300,7 +300,7 @@ Feature: Deals from procurement manager perspective
     And I follow translated "deals.index.view.view_deal"
     And I should see "CODE4D3AL"
 
-  @m21 @requested @_done @_tested @ao
+  @m21 @_requested @_done @_tested @ao
   Scenario: When I get deal the direct phone number should be populated from my profile
     Given I visit domain http://fairdeals.dk
     And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
@@ -317,7 +317,7 @@ Feature: Deals from procurement manager perspective
     And I follow translated "deals.index.view.contact_me"
     Then the "lead_direct_phone_number" field should contain "48601101101"
 
-  @m21 @requested @_done @_tested @ao @_deprecated
+  @m21 @_requested @_done @_tested @ao @_deprecated
   Scenario: When I get deal the facebook url should contain profile link if my account is linked to facebook
 #    Given I visit domain http://fairdeals.dk
 #    And I am not sign in
@@ -335,7 +335,7 @@ Feature: Deals from procurement manager perspective
 #    And I follow translated "deals.index.view.contact_me"
 #    Then the "lead_facebook_url" field should contain "www.facebook.com/profile/123"
 
-  @m21 @requested @_done @_tested @ao @_deprecated
+  @m21 @_requested @_done @_tested @ao @_deprecated
   Scenario: When I get deal the linkedin url should contain profile link if my account is linked to linkedin
 #    Given I visit domain http://fairdeals.dk
 #    And I am not sign in
@@ -354,7 +354,7 @@ Feature: Deals from procurement manager perspective
 #    Then the "lead_linkedin_url" field should contain "www.linkedin.com/profile/123"
 
   #8339
-  @m22 @requested @ao @_done @_tested
+  @m22 @_requested @ao @_done @_tested
   Scenario: I should not see activation dates on the listing and only deals with valid dates should be displayed
     Given a deal named "Some deal #1" exists within category "Electronics deals"
     Then I follow translated "layout.fairdeals.main_menu.deals"
@@ -362,7 +362,7 @@ Feature: Deals from procurement manager perspective
     Then I should not see "Activation"
 
   #8606
-  @m23 @requested @tgn @_done @_tested
+  @m23 @_requested @tgn @_done @_tested
   Scenario: I can see a blurb text when I confirm a deal
     Given I visit domain http://fairdeals.dk
     And I am not sign in
@@ -381,23 +381,23 @@ Feature: Deals from procurement manager perspective
     And I should see "Blurb voucher confirmation page"
 
   #9606
-  @m27 @requested @tgn @_done @_tested_elsewhere
+  @m27 @_requested @tgn @_done @_tested_elsewhere
   Scenario: When I am not signed in and I click get deal button then modal window should appear
 
   #9606
-  @m27 @requested @tgn @_done @_tested_elsewhere
+  @m27 @_requested @tgn @_done @_tested_elsewhere
   Scenario: It should be possible to sign in or sign up on the modal window view
 
   #9606
-  @m27 @requested @tgn @_done @_tested_elsewhere
+  @m27 @_requested @tgn @_done @_tested_elsewhere
   Scenario: After sign in/up I should see another modal windows where I can enter template information and note
 
   #9606
-  @m27 @requested @tgn @_done @_tested_elsewhere
+  @m27 @_requested @tgn @_done @_tested_elsewhere
   Scenario: I should be redirected to paypal or view deal after completing the modal window form
 
   #9410
-  @m27 @requested @tgn @_done @_tested
+  @m27 @_requested @tgn @_done @_tested
   Scenario: I can get deal when I have free subscription and I didn't used up my limit of free deals
     And subscription plan named "Free member subscription" exists with attributes "free_deal_requests_in_free_period:2"
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
@@ -437,7 +437,7 @@ Feature: Deals from procurement manager perspective
 
 
   #9397
-  @m27 @requested @tgn @_done @_tested
+  @m27 @_requested @tgn @_done @_tested
   Scenario: When I get the deal with voucher and my payment from paypal haven't come yet then I should not see that deal under my deals
     And I visit domain http://fairdeals.eu
     And I am not sign in
@@ -477,11 +477,11 @@ Feature: Deals from procurement manager perspective
     Then I follow translated "member.leads.edit.view.voucher_link"
 
   #9397
-  @m27 @requested @tgn @_done @_tested_elsewhere
+  @m27 @_requested @tgn @_done @_tested_elsewhere
   Scenario: When I get the deal with voucher and my payment from paypal was successful then my request should be visible under My deals
 
   #9397
-  @m27 @requested @tgn @_done @_tested
+  @m27 @_requested @tgn @_done @_tested
   Scenario: When my request is cancelled I get email "Sorry your voucher is canceled since the payment did not go through.Please try again or contact fairleads if the problem persists"
     And I visit domain http://fairdeals.eu
     And I am not sign in
@@ -515,11 +515,11 @@ Feature: Deals from procurement manager perspective
     And I should see translated "deals.index.view.contact_me"
 
   #9367
-  @m27 @requested @tgn @_done @_tested_elsewhere
+  @m27 @_requested @tgn @_done @_tested_elsewhere
   Scenario: When I get the deal on the page for deal request I should not see linkedin/facebook urls but see company name
 
   #9811
-  @m27 @requested @tgn @_done @_tested
+  @m27 @_requested @tgn @_done @_tested
   Scenario: I can get a Premium deal only if I am signed in as member and have subscription that allows getting Premium deals
     Given I am on the homepage
     Given a deal named "PrimaryDeal" exists within category "Electronics deals"
@@ -538,7 +538,7 @@ Feature: Deals from procurement manager perspective
     And I should see "Blurb voucher confirmation page"
 
   #9988
-  @m28 @requested @tgn @_done @_tested
+  @m28 @_requested @tgn @_done @_tested
   Scenario: I should not see short description when getting a deal
     Given user "procurment@nbs.com" has premium deals enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "premium_deal:1|description:short description1|published:1|header:deal001|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
@@ -550,11 +550,11 @@ Feature: Deals from procurement manager perspective
     And I should see translated "deals.index.view.premium_deal_splash_label"
 
   #9987
-  @m28 @requested @rb @_done @_tested_elsewhere
+  @m28 @_requested @rb @_done @_tested_elsewhere
   Scenario: I should see splash image when getting premium deal
 
   #9976
-  @m28 @requested @tgn @_done @_tested @selenium
+  @m28 @_requested @tgn @_done @_tested @selenium
   Scenario: I should see the amount of secondary deals specified by admin on fairdeals home page
   Given a deal named "deal000" exists within category "Electronics deals"
   Given a deal named "deal001" exists within category "Electronics deals"
@@ -577,11 +577,11 @@ Feature: Deals from procurement manager perspective
   And I should see "4" occurrences of css class "secondary_featured_deal" for tag "div"
 
   #9981
-  @m28 @requested @tgn @_done @_non_testable
+  @m28 @_requested @tgn @_done @_non_testable
   Scenario: I should not see JS dialog when I try to get a deal and dont have permission
 
   #9981
-  @m28 @requested @tgn @_done @_tested
+  @m28 @_requested @tgn @_done @_tested
   Scenario: If I dont have permission to get deal the button should state "Upgrade subscription" instead of "Get deal"
     Given I visit domain http://fairdeals.dk
     And subscription plan named "Free member subscription" exists with attributes "free_deal_requests_in_free_period:1"
@@ -627,11 +627,11 @@ Feature: Deals from procurement manager perspective
 
 
   #9981
-  @m28 @requested @tgn @_done @_tested_elsewhere
+  @m28 @_requested @tgn @_done @_tested_elsewhere
   Scenario: When I got redirected to my profile after clicking "Upgrade subscription" I should be advised which subscription to choose in order to get deal
 
   #10046
-  @m29 @requested @tgn @_done @_tested
+  @m29 @_requested @tgn @_done @_tested
   Scenario: I can search for deals using their company name
   Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "premium_deal:1|description:short description1|published:1|header:deal001|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
   When I fill in "search_with_keyword" with "xeper"

@@ -28,6 +28,8 @@
 </search-box:>
 
 <column-mc:>
+  <div class="ajax_flash_msg flash flash_notice" style="display:none;">
+  </div>
 
   <header>
     <param:content>
@@ -78,7 +80,7 @@
             <% end %>
             <% if current_user.admin? %>
                 <li>
-                  <%= link_to t("campaigns.index.duplicate"), duplicate_callers_campaign_path(campaign), :confirm => t("campaigns.index.duplication_confirmation"), :method => :post %>
+                  <%= link_to_function t("campaigns.index.duplicate"), "select_duplication_type('#{campaign.id}')"%>
                 </li>
             <% end %>
           </ul-actions>
@@ -86,3 +88,19 @@
   <% end %>
 
 </column-mc:>
+
+<js:>
+  <script type="text/javascript">
+    function select_duplication_type(campaign_id){
+        if(confirm("<%= t("campaigns.index.duplication_confirmation") %>")){
+            if(confirm("<%= t("campaigns.index.duplication_with_call_results_and_time") %>")){
+                $.post('/callers/campaigns/' + campaign_id + '/duplicate.js?with_call_results=1', {'_method':'post'});
+            }
+            else
+            {
+                $.post('/callers/campaigns/' + campaign_id + '/duplicate.js?with_call_results=0', {'_method':'post'});
+            }
+        }
+    }
+  </script>
+</js:>

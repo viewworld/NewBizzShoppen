@@ -173,7 +173,7 @@ Scenario: I should see leads from customer unique categories I'm assigned to on 
   And I should not see "UniqueLead1" within "#latest_leads"
   And I should see "UniqueLead2" within "#latest_leads"
 
-@requested @m11 @is @interests @_done @_tested @deprecated
+@_requested @m11 @is @interests @_done @_tested @deprecated
 Scenario: Buyer can see link to Interests on supplier home page if he don't have set any interests yet
 #  Given I am on the homepage
 #  Then I sign in as buyer@nbs.com with password secret
@@ -185,7 +185,7 @@ Scenario: Buyer can see link to Interests on supplier home page if he don't have
 #  Then I should see translated "supplier.interests.edit.view.title"
 
 #7457
-@m20 @requested @is @_done @_tested
+@m20 @_requested @is @_done @_tested
 Scenario: I should see Latest deals instead of bestsellers box when I am not logged in on the supplier home
   Given there are no deals
   Given there are "4" existing deals

@@ -159,7 +159,7 @@ Scenario: I should see leads from agent unique categories I'm assigned to on Lat
 @m5 @unique_categories @tgn @added @_tested @_deprecated
 Scenario: I should see leads from agent unique categories I'm assigned to on Bestsellers listing
 
-@m8 @requested @ao @_done @_tested @_deprecated
+@m8 @_requested @ao @_done @_tested @_deprecated
 Scenario: When you are loged in as an agent and go to the role home pages, I should see column with “My sold leads”
 #  Given there are no leads
 #  And I am signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
@@ -173,11 +173,11 @@ Scenario: When you are loged in as an agent and go to the role home pages, I sho
 #  Then I should see "Super ultra lead #1" within "#sold_leads"
 #  And I should see "1" items on a list within "#sold_leads"
 
-  @m8 @requested @ao @_done @_tested @_deprecated
+  @m8 @_requested @ao @_done @_tested @_deprecated
   Scenario: When you are loged in as an agent and go to the role home pages, I should see column with “My new leads” (deprecated in favour of "My new comments")
 
 #hame page is not used anymnore
-@requested @m11 @is @call_center_comments @_done @_tested @_deprecated
+@_requested @m11 @is @call_center_comments @_done @_tested @_deprecated
 Scenario: Agent can see his latest comments on home page
 #  And I have user with email customer2@nbs.com and role supplier
 #  And user "customer2@nbs.com" with role "supplier" has attributes "screen_name: Adam Savage"

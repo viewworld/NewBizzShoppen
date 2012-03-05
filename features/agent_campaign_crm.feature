@@ -1,5 +1,5 @@
 #8060
-@m23 @campaign_crm @$_administrator @$_call_centre @$_call_centre_agent @$_agent @requested @is
+@m23 @campaign_crm @$_administrator @$_call_centre @$_call_centre_agent @$_agent @_requested @is
 Feature: Agent campaign crm
 
   Background:

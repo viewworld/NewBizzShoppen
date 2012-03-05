@@ -1,5 +1,5 @@
 #8644
-@m24 @requested @fairleads_homepage
+@m24 @_requested @fairleads_homepage
 Feature: Faileads homepage
 
   Background:

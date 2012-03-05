@@ -46,15 +46,15 @@ Scenario: I can see customised total number of leads on the browse categories pa
   Then I follow translated "layout.main_menu.shared.browse_leads"
   And I should see "(2)"
 
-@m19 @requested @non_testable @_done
+@m19 @_requested @non_testable @_done
 Scenario: Categories should be in a form of a list
 
 #7839
-@m20 @requested @ao @non_testable @_done
+@m20 @_requested @ao @non_testable @_done
 Scenario: I should be able to click on the category row to browse leads
 
 #10251
-@m29 @requested @tgn @_done @_tested
+@m29 @_requested @tgn @_done @_tested
 Scenario: Deal and lead categories should be listed alphabetically by default
   And I am on the homepage
   And I sign in as buyer@nbs.com with password secret

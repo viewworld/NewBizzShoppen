@@ -62,7 +62,7 @@ Scenario: I can access my basket after I logout and login again
   And I follow translated "layout.cart.show_cart"
   And I should see "Printers ultimate deal"
 
-@added @ao @m6 @_done @_tested  @requested
+@added @ao @m6 @_done @_tested  @_requested
 Scenario: I can't buy (see) a lead when sale_limit is reached
   Given there are no leads
   And I have user with email agent01@nbs.com and role agent
@@ -83,7 +83,7 @@ Scenario: I can't buy (see) a lead when sale_limit is reached
 
 #When adding a lead to cart for the first time, there should be a small popup displayed, pointing on “Cart” button with some customizable text
 #(i.e. Your lead has been added to cart. Click here to checkout.) If You close it, it should no more appear for that particular user
-@requested @m8 @tgn @selenium @_tested @_done
+@_requested @m8 @tgn @selenium @_tested @_done
 Scenario: When adding a lead to cart for the first time, there should be a small popup displayed
   When I follow translated "leads.index.add_to_cart_link"
   Then I should see "Your lead has been added to cart."

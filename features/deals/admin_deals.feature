@@ -1,4 +1,4 @@
-@m16 @requested @admin_deals @_deals @$_administrator
+@m16 @_requested @admin_deals @_deals @$_administrator
 Feature: Deals from admin perspective
 
   Background:
@@ -91,7 +91,7 @@ Feature: Deals from admin perspective
   @_done @_tested_elsewhere
   Scenario: I can specify lead price
 
-  @m21 @requested @_done @_tested @ao
+  @m21 @_requested @_done @_tested @ao
   Scenario: I can see company name on deals list
     Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:awesome|description:awesome|hidden_description:awesome|start_date:2011-01-01|end_date:2011-01-01|company_name:starks"
     Then I wait 1 second
@@ -107,7 +107,7 @@ Feature: Deals from admin perspective
     Then I should see "Saving: 75.00 (75%)"
 
   #9414
-  @m27 @requested @selenium @tgn @_done @_tested
+  @m27 @_requested @selenium @tgn @_done @_tested
   Scenario: Deals awaiting approval should be marked
     Given I am not sign in
     And user "translator_call_centre@nbs.com" has deal maker role enabled
@@ -126,7 +126,7 @@ Feature: Deals from admin perspective
     Then I should see translated "shared.deals.table.awaiting_approval"
 
   #10045
-  @m29 @requested @selenium @tgn @_done @_tested
+  @m29 @_requested @selenium @tgn @_done @_tested
   Scenario: I can click Show all for deals and Is active option for filter is by default set to Yes
     Given pagination page size for deals is set to 2
     Given a deal named "deal001" exists within category "Electronics"
@@ -140,5 +140,5 @@ Feature: Deals from admin perspective
     And I should see "4" rows with id like "deal_" in a table
 
   #10252
-  @m29 @requested @tgn @_done @_tested_elsewhere
+  @m29 @_requested @tgn @_done @_tested_elsewhere
   Scenario: I can click to see all deals on one page

@@ -1,5 +1,5 @@
 #10199
-@m30 @requested @chain_mail
+@m30 @chain_mail @_requested
 Feature: Chain mail administration
 
   Scenario: I should be able to access Chain mail as admin under Content/Chain mail

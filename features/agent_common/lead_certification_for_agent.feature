@@ -1,4 +1,4 @@
-@lead_certification @agent @requested @m10 @faircalls
+@lead_certification @agent @_requested @m10 @faircalls
 Feature: Lead certification for agent
 
 Background:
@@ -52,7 +52,7 @@ Scenario: I can see that the lead I have marked as certified was confirmed by th
 
 # 5770
 # put this button next to others on new lead form, when clicked a certification request should be sent
-@m11 @requested @tgn @selenium @_tested @_done
+@m11 @_requested @tgn @selenium @_tested @_done
 Scenario: When creating a new lead I can click "Create and certify"
   Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
   And I am on the homepage
@@ -141,7 +141,7 @@ Scenario: When creating a new lead I can click "Create and certify"
   And last email sent should have been sent to recipient "kowalski@person.com"
 
 # 5769
-@m11 @requested @is @_done @_tested
+@m11 @_requested @is @_done @_tested
 Scenario: I should see "Recertify" button when Lead's contact email changes and certification request has benn already sent
   When there are no leads
   And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
@@ -159,7 +159,7 @@ Scenario: I should see "Recertify" button when Lead's contact email changes and 
   Then I should see translated "agent.lead_certifications.index.view.sent_successfully"
 
 # 5765
-@m11 @requested @tgn @_tested @_done
+@m11 @_requested @tgn @_tested @_done
 Scenario: I can edit "Hidden description" and "Purchase decision date"
   When there are no leads
   And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
@@ -170,7 +170,7 @@ Scenario: I can edit "Hidden description" and "Purchase decision date"
   Then I fill in "datepicker" with "01-01-2011"
 
 # 5765
-@m11 @requested @tgn @_tested @_done
+@m11 @_requested @tgn @_tested @_done
 Scenario: I can't see "Sales information", "Price", "Currency", "Category", "Country" and "Public Header"
   When there are no leads
   And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
@@ -188,7 +188,7 @@ Scenario: I can't see "Sales information", "Price", "Currency", "Category", "Cou
 # rename "Lead information" to "Procurement information", "Editing lead" to  "Certify information"
 # and "Certification" link to "Certify"
 # and add blurb text to /leads/1/edit page
-@m11 @requested @tgn @_done @_tested
+@m11 @_requested @tgn @_done @_tested
 Scenario: I can see blurb, "Procurement information", "Certify information" and "Certify" link
   When there are no leads
   And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent

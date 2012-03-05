@@ -1,4 +1,4 @@
-@$_admin @m6 @tgn @added  @requested
+@$_admin @m6 @tgn @added  @_requested
 Feature: Creditors administration
 
 Background:

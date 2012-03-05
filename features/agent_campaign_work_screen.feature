@@ -46,7 +46,7 @@ Feature: Agent campaign - calling session
     @_done @_tested_elsewhere
     Scenario: I can navigate through contacts details / results history / add result
 
-    @_done @_tested @requested @ff5
+    @_done @_tested @_requested @ff5
     Scenario: I can go to previous/next contact through arrows
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And the "contact_company_name" field should contain "Bon Jovi inc."
@@ -63,7 +63,7 @@ Feature: Agent campaign - calling session
       And I follow translated "agent_work_screen.index.show_current_call_sheet"
       Then user "translator_call_centre_agent@nbs.com" should see his available contacts
 
-    @_done @_tested @requested
+    @_done @_tested @_requested
     Scenario: I can see pending calls list
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I follow translated "agent_work_screen.index.show_pending_calls"
@@ -89,13 +89,13 @@ Feature: Agent campaign - calling session
     @_done @_tested_elsewhere
     Scenario: I can see new lead form for specifying information based on currently selected contact
 
-    @_done @_tested_elsewhere @requested
+    @_done @_tested_elsewhere @_requested
     Scenario: I can change lead category and system reloads template fields
 
     @_done @_tested_elsewhere
     Scenario: I can see information about previous results for selected contact
 
-    @_done @nontestable @requested
+    @_done @nontestable @_requested
     Scenario: I can see detailed information about result in tooltip
 
     @_todo @snom
@@ -117,7 +117,7 @@ Feature: Agent campaign - calling session
       # http://kb.snom.com/kb/index.php?View=entry&CategoryID=21&EntryID=40
 
     # 5192
-    @m12 @$_call_centre_agent @requested @tgn @briefing @_tested @_done
+    @m12 @$_call_centre_agent @_requested @tgn @briefing @_tested @_done
     Scenario: I should see briefing area when I click "Briefing" on agent work screen
       Given campaign named "Testing One" exists with attributes "briefing:Briefing content here"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
@@ -125,7 +125,7 @@ Feature: Agent campaign - calling session
       Then I should see "Briefing content here"
 
     # 5192
-    @m12 @$_call_centre_agent @requested @tgn @briefing @_tested @_done
+    @m12 @$_call_centre_agent @_requested @tgn @briefing @_tested @_done
     Scenario: I can go back to my work screen when I click "Go to work screen"
       Given campaign named "Testing One" exists with attributes "briefing:Briefing content here"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
@@ -135,7 +135,7 @@ Feature: Agent campaign - calling session
       Then I should see translated "agent_work_screen.index.call_log"
 
     #5460
-    @requested @m11 @ao @_done @_tested
+    @_requested @m11 @ao @_done @_tested
     Scenario: I should be able to upload source materials to the repository of specific campaign
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/materials/"
       And attach the file "sample image" to "material_asset"
@@ -143,7 +143,7 @@ Feature: Agent campaign - calling session
       Then I should see "sample.jpg"
 
     #5460
-    @requested @m11 @ao @_done @_tested
+    @_requested @m11 @ao @_done @_tested
     Scenario: I should be able to browse the campaign repository and modify it (delete files unassigned to any results)
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/materials/"
       And attach the file "sample image" to "material_asset"
@@ -154,7 +154,7 @@ Feature: Agent campaign - calling session
       And I should not see "sample.jpg"
 
     #5460
-    @requested @m11 @ao @_done @_tested
+    @_requested @m11 @ao @_done @_tested
     Scenario: I should be able to add new result called 'Send material' and upload new material or choose one from campaign repository
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Send material" from "selected_result_id"
@@ -168,7 +168,7 @@ Feature: Agent campaign - calling session
       Then I should see "sample.jpg"
 
     #5931
-    @requested @$_call_centre_agent @m12 @ao @_done @non_testable
+    @_requested @$_call_centre_agent @m12 @ao @_done @non_testable
     Scenario: I can edit contact email when adding result type "send material"
 #      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
 #      And I select "Send material" from "result_id"
@@ -182,7 +182,7 @@ Feature: Agent campaign - calling session
 #      And I follow translated "call_results.new.save_button"
 
     #5931
-    @requested @$_call_centre_agent @m12 @ao @_done @non_testable
+    @_requested @$_call_centre_agent @m12 @ao @_done @non_testable
     Scenario: When I add result "send material" then an email should be sent to contact email
 #      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
 #      And I select "Send material" from "result_id"
@@ -196,7 +196,7 @@ Feature: Agent campaign - calling session
 #      And I follow translated "call_results.new.save_button"
 #      And last email sent should have been sent to recipient "new@contact.com"
 
-    @requested @m13 @after_m12_presentation @tgn @$_call_centre_agent @_done @_tested
+    @_requested @m13 @after_m12_presentation @tgn @$_call_centre_agent @_done @_tested
     Scenario: I can see files from "Materials Set" prepared by call centre
       Given I am not sign in
       Given I am on the homepage
@@ -218,7 +218,7 @@ Feature: Agent campaign - calling session
       And I should see "sample.jpg"
 
 
-    @requested @m13 @after_m12_presentation @tgn @$_call_centre_agent @_done @_tested
+    @_requested @m13 @after_m12_presentation @tgn @$_call_centre_agent @_done @_tested
     Scenario: I can select by checkboxes which files from "Materials Set" will be included in email
       Given I am not sign in
       Given I am on the homepage
@@ -240,7 +240,7 @@ Feature: Agent campaign - calling session
       And I should see "sample.jpg"
       And I uncheck "material_selected_1"
 
-    @requested @m13 @after_m12_presentation @tgn @$_call_centre_agent @_done @_tested
+    @_requested @m13 @after_m12_presentation @tgn @$_call_centre_agent @_done @_tested
     Scenario: I can upload and add new files to the set for the result being created
       Given I am not sign in
       Given I am on the homepage
@@ -268,52 +268,52 @@ Feature: Agent campaign - calling session
       And I follow "sample.jpg"
       And I should see "2" elements within CSS path "input[type=checkbox][id^=material_selected_]"
 
-    @requested @m13 @after_m12_presentation @tgn @$_call_centre_agent @_done @_tested
+    @_requested @m13 @after_m12_presentation @tgn @$_call_centre_agent @_done @_tested
     Scenario: I can click "Customize email" button and edit all email fields in modal box
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Send material" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
       And I should see translated "call_results.new.customize_email_template"
 
-    @m23 @requested @system @tgn @_done @_non_testable
+    @m23 @_requested @system @tgn @_done @_non_testable
     Scenario: Any customized email in the agent work screen should be saved
 
     # 5168
-    @m11 @requested @ao @tested_elsewhere @_done
+    @m11 @_requested @ao @tested_elsewhere @_done
     Scenario: I can see a message when there are no more contacts in my campaign
 
     # 5168
-    @m11 @requested @ao @tested_elsewhere @_done
+    @m11 @_requested @ao @tested_elsewhere @_done
     Scenario: I can see a message when there are only callback contacts in my campaign
 
     # 5777
-    @m11 @requested @ao @_done @_tested
+    @m11 @_requested @ao @_done @_tested
     Scenario: I can see new result form on the top of the page
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       Then I should see CSS path ".frm_head #selected_result_id"
 
     # as call centre agent
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
+    @m12 @$_call_centre_agent @_requested @my_results @tgn @_done @_tested
     Scenario: I can access "My results" from agent work screen
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       Then I follow translated "call_results.edit.my_results"
       And I should see translated "production.show.view.header"
 
     # A list of contacts which have results (including final results) assigend to them
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @_deprecated
+    @m12 @$_call_centre_agent @_requested @my_results @tgn @_done @_tested @_deprecated
     Scenario: I should see a list of contacts that have results assigned to them
 
 
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @_deprecated
+    @m12 @$_call_centre_agent @_requested @my_results @tgn @_done @_tested @_deprecated
     Scenario: I should see latest results on top of My results list
 
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @_deprecated
+    @m12 @$_call_centre_agent @_requested @my_results @tgn @_done @_tested @_deprecated
     Scenario: I can search contacts on My results list
 
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @_deprecated
+    @m12 @$_call_centre_agent @_requested @my_results @tgn @_done @_tested @_deprecated
     Scenario: I can edit contact when I click it on My results list
 
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @tested_elsewhere
+    @m12 @$_call_centre_agent @_requested @my_results @tgn @_done @tested_elsewhere
     Scenario: I can edit results when I click contact on My results list
 
     @m13 @$_call_centre_agent @_done @_not_testable @is
@@ -327,7 +327,7 @@ Feature: Agent campaign - calling session
     @m13 @$_call_centre_agent @_done @_not_testable @is
     Scenario: I can open contact when I click on result from contact search
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
+    @m13 @_requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: I can upgrade contact to category buyer
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category supplier" from "selected_result_id"
@@ -343,7 +343,7 @@ Feature: Agent campaign - calling session
       And I wait 2 second
       Then I should see translated "call_results.create.flash.successfully_added"
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
+    @m13 @_requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: Category buyer upgraded from lead should be subscribed to campaign's category by default
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category supplier" from "selected_result_id"
@@ -359,7 +359,7 @@ Feature: Agent campaign - calling session
       Then I should see translated "call_results.create.flash.successfully_added"
       And category "Business" is in interests of user "newcategory_buyer888@nbs.com" "true"
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
+    @m13 @_requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: When upgrading contact to category buyer, agent can select more subscription categories for created category buyer
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category supplier" from "selected_result_id"
@@ -378,7 +378,7 @@ Feature: Agent campaign - calling session
       And category "Business" is in interests of user "newcategory_buyer888@nbs.com" "true"
       And category "Leisure" is in interests of user "newcategory_buyer888@nbs.com" "true"
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
+    @m13 @_requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: Contact should receive customized emails with material and signup link
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category supplier" from "selected_result_id"
@@ -399,7 +399,7 @@ Feature: Agent campaign - calling session
       And last email sent should have content "Fairleads password: testin"
       And last email sent should have content "Fairleads username: newcategory_buyer888@nbs.com"
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
+    @m13 @_requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: Agent can assign materials when upgrading contact to category buyer
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category supplier" from "selected_result_id"
@@ -419,10 +419,10 @@ Feature: Agent campaign - calling session
       And I wait 1 second
       Then I should see translated "call_results.create.flash.successfully_added"
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_done @not_testable
+    @m13 @_requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_done @not_testable
     Scenario: Agent can customize email when upgrading contact to category buyer
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
+    @m13 @_requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: Contact can sign up by clicking on link in email and entering password or using Facebook/Google/Linkedin
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category supplier" from "selected_result_id"
@@ -443,7 +443,7 @@ Feature: Agent campaign - calling session
       Then I should see translated "my_profile.edit.view.header"
 
     # his name account will already be set up by the contact information allready in the system.
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
+    @m13 @_requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: After sign up contact can confirm his account information
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category supplier" from "selected_result_id"
@@ -469,7 +469,7 @@ Feature: Agent campaign - calling session
       And the "user_category_supplier_address_attributes_address_line_1" field should contain "LongRoad 2"
       And the "user_category_supplier_address_attributes_zip_code" field should contain "21-221"
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent  @_tested @_done @ff5
+    @m13 @_requested @upgrade_to_category_buyer @tgn @$_call_centre_agent  @_tested @_done @ff5
     Scenario: After confirming his account information, contact should be redirected to his account home page
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category supplier" from "selected_result_id"
@@ -492,7 +492,7 @@ Feature: Agent campaign - calling session
       Then I should see "Welcome to category: Business"
 
     # After he has confirmed his details he will receive a default (buyer welcome mail) with a link to the the category homepage, how he sign up (Facebook, Google of LinkedIn) just so he can remember to log on to fairleads again.
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
+    @m13 @_requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: After confirming his account information, contact should receive welcome mail link link to his home page and login information
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category supplier" from "selected_result_id"
@@ -520,11 +520,11 @@ Feature: Agent campaign - calling session
     #Note change to “Internal note”
     #During confirmation of contact's account information header says "Confirm account information" instead of "My profile"
     #I should see company name when Upgrading contact to category buyer
-    @m14 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @tested_elsewhere @_done
+    @m14 @_requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @tested_elsewhere @_done
     Scenario: Category buyer changes
 
     #7581
-    @m19 @requested @upgrade_to_category_buyer @$_call_centre_agent @_done @_tested @tgn
+    @m19 @_requested @upgrade_to_category_buyer @$_call_centre_agent @_done @_tested @tgn
     Scenario: I should be able to set for category buyer following properties: Newsletter, Allow invoicing, Do not charge vat, Team buyer and Deal maker enabled
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to supplier" from "selected_result_id"
@@ -544,25 +544,25 @@ Feature: Agent campaign - calling session
       And user "new_buyer888@nbs.com" with role "supplier" should have attributes "not_charge_vat:true"
       And user "new_buyer888@nbs.com" has deal maker role enabled
   
-    @m14 @requested @my_results @$_call_centre_agent @tgn @_done @tested_elsewhere
+    @m14 @_requested @my_results @$_call_centre_agent @tgn @_done @tested_elsewhere
     Scenario: I should see "My results" renamed to "Production" and displayed the same way as campaign's "Results"
     
-    @m14 @requested @google_it @$_call_centre_agent @is @_done @_tested
+    @m14 @_requested @google_it @$_call_centre_agent @is @_done @_tested
     Scenario: I can google for company name from agent work screen
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       Then I click xpath "//a[@id='google_search_for_company_name']"
 
-    @m14 @requested @new_result @$_call_centre_agent @tgn @non_testable @_done
+    @m14 @_requested @new_result @$_call_centre_agent @tgn @non_testable @_done
     Scenario: I can see a white list of available variables that can be inserted into email in a popup
     
-    @m14 @requested @new_result @$_call_centre_agent @tgn @non_testable @_done
+    @m14 @_requested @new_result @$_call_centre_agent @tgn @non_testable @_done
     Scenario: When I click an item on the variables list it should be inserted into rich text editor
 
     #10198
-    @m29 @requested @tgn @_done @_non_testable
+    @m29 @_requested @tgn @_done @_non_testable
     Scenario: I can insert agent name, agent phone, contact's company name, full name variables into send material email
     
-    @m14 @requested @note_information @$_call_centre_agent @is @_done @_tested
+    @m14 @_requested @note_information @$_call_centre_agent @is @_done @_tested
     Scenario: I can see result note on agent work screen
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I follow translated "agent_work_screen.index.show_pending_calls"
@@ -599,7 +599,7 @@ Feature: Agent campaign - calling session
     And I go to the homepage
 
     #7574
-    @m19 @requested @upgrade_to_buyer @$_call_centre_agent @_done @_tested @tgn
+    @m19 @_requested @upgrade_to_buyer @$_call_centre_agent @_done @_tested @tgn
     Scenario: I can upgrade contact to buyer
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to supplier" from "selected_result_id"
@@ -631,7 +631,7 @@ Feature: Agent campaign - calling session
 
 
     #7574
-    @m19 @requested @upgrade_to_member @$_call_centre_agent @_done @_tested @tgn
+    @m19 @_requested @upgrade_to_member @$_call_centre_agent @_done @_tested @tgn
     Scenario: I can upgrade contact to member (procurment manager)
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to member" from "selected_result_id"
@@ -666,15 +666,15 @@ Feature: Agent campaign - calling session
       And last email sent should have content "Linked with account: not linked"
 
     #10200
-    @m29 @requested @tgn @_done @_non_testable
+    @m29 @_requested @tgn @_done @_non_testable
     Scenario: When member (upgraded contact) clicks on deal link in the email he receives, he should be automatically singed in
 
     #10200
-    @m29 @requested @tgn @_done @_non_testable
+    @m29 @_requested @tgn @_done @_non_testable
     Scenario: When member (upgraded contact) clicks on fairdeals link in the email he receives, he should be automatically singed in
 
     #7746
-    @m20 @requested @tgn @_tested @_done
+    @m20 @_requested @tgn @_tested @_done
     Scenario:  I can add new contact from agent work screen and it is already assigned to me (even if my campaign max contacts count was reached)
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       Then I follow translated "agent_work_screen.index.new_contact"
@@ -689,23 +689,23 @@ Feature: Agent campaign - calling session
       And contact "ABC Ltd" should be assigned to user "translator_call_centre_agent@nbs.com"
 
   #9603
-  @m27 @requested @tgn @_done @_non_tested
+  @m27 @_requested @tgn @_done @_non_tested
   Scenario: When upgrading to member I can insert links to deals from CKEDITORs popup
 
   #9603
-  @m27 @requested @tgn @_done @_non_tested
+  @m27 @_requested @tgn @_done @_non_tested
   Scenario: Popup from CKEDITOR allows to select multiple deals and insert then to email template editor
 
   #9602
-  @m27 @requested @tgn @_done @_tested_elsewhere
+  @m27 @_requested @tgn @_done @_tested_elsewhere
   Scenario: When upgrading contact to member / supplier / cat supplier I can select subscription type
 
   #9602
-  @m27 @requested @tgn @_done @_tested_elsewhere
+  @m27 @_requested @tgn @_done @_tested_elsewhere
   Scenario: I can enable a newsletter for user upgraded from contact
 
   #9995
-  @m28 @requested @tgn @_done @_tested
+  @m28 @_requested @tgn @_done @_tested
   Scenario: When upgrading contact to member I can choose deals that will be requested after the account creation
     Given a deal named "SomeDeal001" exists within category "Electronics deals"
     And a deal named "SomeDeal003" exists within category "Electronics deals"
@@ -755,21 +755,21 @@ Feature: Agent campaign - calling session
     And I should see "SomeDeal002"
 
   #9995
-  @m28 @requested @tgn @_done @_tested_elsewhere
+  @m28 @_requested @tgn @_done @_tested_elsewhere
   Scenario: When upgrading contact to member I can fill out the templates
 
   #9995
-  @m28 @requested @tgn @_done @_tested_elsewhere
+  @m28 @_requested @tgn @_done @_tested_elsewhere
   Scenario: When upgrading contact to member I can choose only deals that are allowed by the subscription type
 
   #9995
-  @m28 @requested @tgn @_done @_tested_elsewhere
+  @m28 @_requested @tgn @_done @_tested_elsewhere
   Scenario: When upgrading contact to member I can change subscription after I selected deals but they will be lost
 
   #9995
-  @m28 @requested @tgn @_done @_tested_elsewhere
+  @m28 @_requested @tgn @_done @_tested_elsewhere
   Scenario: When contact is upgraded to member the e-mails for each request won't be sent out
 
   #9989
-  @m28 @requested @tgn @_done @_tested_elsewhere
+  @m28 @_requested @tgn @_done @_tested_elsewhere
   Scenario: A free subscription should be selected by default when upgrading contact to account

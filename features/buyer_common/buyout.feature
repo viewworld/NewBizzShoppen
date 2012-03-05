@@ -1,4 +1,4 @@
-@customer @ao @buyouts @requested
+@customer @ao @buyouts @_requested
 Feature: Buy out
 
   @m6 @_done @_tested
@@ -257,7 +257,7 @@ Feature: Buy out
     And I should see "1,230.00" within "tr:nth-child(3) td:nth-child(3)"
 
   #Buyout from my leads page - i.e. you have bought lead once -> decided it is so good that it is worth buying out -> click buyout lead and buy remaining instances
-  @requested @m8 @ao @_done @_tested
+  @_requested @m8 @ao @_done @_tested
   Scenario: I can buy out remaining leads if I previously bought only one
     Given there are no leads
     And Category named "Computers" already exists
@@ -288,7 +288,7 @@ Feature: Buy out
     And I should see "123.00"
     And I should see "1,107.00"
 
-  @requested @m8 @ao @_done @_tested
+  @_requested @m8 @ao @_done @_tested
   Scenario: I can see 2 transactions when I buyout after buying only one
     Given there are no leads
     And Category named "Computers" already exists

@@ -245,10 +245,10 @@ Scenario: I should not have access to subaccounts without team buyers flag
   And I go to suppliers subaccounts
   Then I should see "You are not authorized"
 
-@m8b @requested @_done @non_testable
+@m8b @_requested @_done @non_testable
 Scenario: Team buyers should have "My assigned leads" tab reamed to "My leads"
 
-@m14 @requested @$_customer @team_buyers @tgn @_tested @_done
+@m14 @_requested @$_customer @team_buyers @tgn @_tested @_done
 Scenario: I can not edit Team buyers flag
   And I follow translated "layout.my_profile_link"
   Then I should not see "Team buyers"

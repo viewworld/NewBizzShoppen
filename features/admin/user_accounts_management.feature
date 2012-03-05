@@ -114,7 +114,7 @@ Scenario: I can perform a bulk invoice action
   And I go to administration upcoming invoices
   And I should not see "John von Buyer"
 
-@m4 @added @agent_certification @tgn @_tested @requested @_done
+@m4 @added @agent_certification @tgn @_tested @_requested @_done
 Scenario: I can override the certification level of any agent or call centre
   Then I fill in "search_with_keyword" with "agent@nbs.com"
   And I press translated "administration.users.index.view.search_button"
@@ -140,7 +140,7 @@ Scenario: In users listing I can see unpaid leads count
   And I press translated "administration.users.index.view.search_button"
   Then I should have value "1" in the css path "tr:nth-child(1) td:nth-child(8)"
 
-@m6 @_done @_tested @requested
+@m6 @_done @_tested @_requested
 Scenario: I can change category buyer to regular buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
@@ -156,7 +156,7 @@ Scenario: I can change category buyer to regular buyer
   And I should see CSS path "#category_interests"
   And I should not see CSS path "#category_supplier_categories"
 
-@m6 @added @_done @_tested  @requested
+@m6 @added @_done @_tested  @_requested
 Scenario: User can login after changing his account to regular buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
@@ -172,7 +172,7 @@ Scenario: User can login after changing his account to regular buyer
   Then I should see "AnotherCategory"
   And I should see "CategoryBuyerCategory"
 
-@m6 @added @_done @_tested  @requested
+@m6 @added @_done @_tested  @_requested
 Scenario: Subaccounts can login after changing parent to regular buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
@@ -189,7 +189,7 @@ Scenario: Subaccounts can login after changing parent to regular buyer
   Then I should see "AnotherCategory"
   And I should see "CategoryBuyerCategory"
 
-@m6 @added @selenium @_done @_tested @requested
+@m6 @added @selenium @_done @_tested @_requested
 Scenario: User can login after changing his account to category buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
@@ -214,7 +214,7 @@ Scenario: User can login after changing his account to category buyer
   And I follow translated "layout.main_menu.shared.browse_leads"
   Then I should be on category leads page for AnotherCategory
 
-@m6 @added @selenium @_done @_tested @requested
+@m6 @added @selenium @_done @_tested @_requested
 Scenario: Subaccounts can login after changing his account to category buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
@@ -240,7 +240,7 @@ Scenario: Subaccounts can login after changing his account to category buyer
   And I follow translated "layout.main_menu.shared.browse_leads"
   Then I should be on category leads page for AnotherCategory
 
-@m6 @_done @_tested  @requested @selenium
+@m6 @_done @_tested  @_requested @selenium
 Scenario: I can change regular buyer to category buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
@@ -261,7 +261,7 @@ Scenario: I can change regular buyer to category buyer
   And I should not see CSS path "#category_interests"
   And I should see CSS path "#category_supplier_categories"
 
-@m6 @selenium @_done @_tested  @requested
+@m6 @selenium @_done @_tested  @_requested
 Scenario: I can specify one or many categories for category buyer
   When Category named "Best Leads" already exists
   And Category named "Basic Leads" already exists
@@ -277,7 +277,7 @@ Scenario: I can specify one or many categories for category buyer
   And I am on administration edit user jon@lajoie.ca
   Then "user_category_supplier_buying_category_ids_" dropdown should have values "Basic Leads,Best Leads,Worst Leads"
 
-@m6 @added @selenium @_done @_tested  @requested
+@m6 @added @selenium @_done @_tested  @_requested
 Scenario: I can't specify categories for category buyer's subaccounts
   When Category named "Basic Leads" already exists
   And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Basic Leads"
@@ -301,7 +301,7 @@ Scenario: I can configure buyer category interests when editing it
   And I follow translated "administration.users.edit.view.change_supplier_interests_link"
   And "user_supplier_category_ids_" dropdown should have values "Computers,Laptops"
 
-@m6 @tgn @selenium @_tested @requested @_done
+@m6 @tgn @selenium @_tested @_requested @_done
 Scenario: I can manage user's access to unique categories as well
   Given I have user with email buyer2222@nbs.com and role supplier
   And category "Computers" is unique for user with email "buyer29382.biz@nbs.com" role "supplier"
@@ -321,7 +321,7 @@ Scenario: I can manage user's access to unique categories as well
 # When editing a call centre as admin, display a list of agents that belong to that particular call centre below the form. Allow going to their edit screen.*
 # Same goes for buyer/big buyer - there should be a list of team-buyers displayed*
 # remove first name and last name fields in favour of company name*
-@requested @m7 @_tested @tgn @_done
+@_requested @m7 @_tested @tgn @_done
 Scenario: I can see a list of subaccounts and edit them when editing parent account
   Given I have user with email buyer2932biz@nbs.com and role supplier
   And an user with role lead_supplier and email lead_buyer29321biz@nbs.com exists as subaccount for customer buyer2932biz@nbs.com
@@ -335,7 +335,7 @@ Scenario: I can see a list of subaccounts and edit them when editing parent acco
   And I should see "lead_user29322biz@nbs.com"
 
 # When changing from regular buyer to category buyer, system should require that buyer to have category interests assigned (that will be migrated to category buyer’s assigned  categories)
-@requested @m7 @selenium @_done @_tested @_deprecated
+@_requested @m7 @selenium @_done @_tested @_deprecated
 Scenario: I can change buyer to category buyer only if he has interests categories
 #  When I follow translated "layout.main_menu.admin.users"
 #  And Category CategoryBuyerCategory is created
@@ -354,7 +354,7 @@ Scenario: I can change buyer to category buyer only if he has interests categori
 #  Then I should be on administration users page
 #  And I should not see translated "activerecord.attributes.user.supplier.base.must_have_interests"
 
-@requested @m7 @_tested @tgn @_done
+@_requested @m7 @_tested @tgn @_done
 Scenario: I can filter users by Call center agents
   Given I have user with email call_centre_agent01@nbs.com and role call_centre_agent
   Given I have user with email call_centre_agent02@nbs.com and role call_centre_agent
@@ -365,7 +365,7 @@ Scenario: I can filter users by Call center agents
   And I should see "call_centre_agent02@nbs.com"
   And I should not see "bob@person.com" within "#users_table"
 
-@ao @requested @m7 @_done @_tested
+@ao @_requested @m7 @_done @_tested
 Scenario: When editing a call centre agent I can see it's name in format "fullname @ callcentername"
   Given I am signed up and confirmed as user with email kol_senter@nbs.com and password secret and role call_centre with attributes "company_name:Selleo"
   And an user with role call_centre_agent and email sab@nbs.com belongs to call centre kol_senter@nbs.com
@@ -375,7 +375,7 @@ Scenario: When editing a call centre agent I can see it's name in format "fullna
   And I click hidden link by url regex "/users\/\d+\/edit/"
   Then I should see /[\w]+ @ \w+/ within ".header_ribbon"
 
-@ao @requested @m7 @_done @_tested
+@ao @_requested @m7 @_done @_tested
 Scenario: When editing call center agent I can navigate to call center's edit page
   Given I am signed up and confirmed as user with email kol_senter@nbs.com and password secret and role call_centre with attributes "company_name:Selleo"
   And an user with role call_centre_agent and email sab@nbs.com belongs to call centre kol_senter@nbs.com
@@ -387,7 +387,7 @@ Scenario: When editing call center agent I can navigate to call center's edit pa
   And I follow "Selleo" within ".header_ribbon"
   Then I should be on administration edit user for kol_senter@nbs.com
 
-@ao @requested @m7 @_done @_tested
+@ao @_requested @m7 @_done @_tested
 Scenario: When editing call center agent I can navigate to list of leads created by this agent
   Given I am signed up and confirmed as user with email kol_senter@nbs.com and password secret and role call_centre with attributes "company_name:Selleo"
   And an user with role call_centre_agent and email sab@nbs.com belongs to call centre kol_senter@nbs.com
@@ -401,7 +401,7 @@ Scenario: When editing call center agent I can navigate to list of leads created
   Then I should see "SabKolSenterLead" within "#leads"
   And I should see "2" rows in a table with headers within "#leads"
 
-@requested @m8b @_done @_tested
+@_requested @m8b @_done @_tested
 Scenario: I should have 'Don't verify email address' for every user I create
   When I go to administration users
   Given I select "Supplier" from "role"
@@ -469,7 +469,7 @@ Scenario: I can login without confirmation when 'Don't verify email address' is 
   And I sign in as alex.nova@person.com with password secret
   Then I should see translated "devise.failure.unconfirmed"
 
-@requested @m8b @_done @_tested
+@_requested @m8b @_done @_tested
 Scenario: I should be able to set new password for any user not just reset it
   When I go to administration edit user for bob@person.com
   And I follow translated "administration.users.edit.view.change_password_link"
@@ -515,7 +515,7 @@ Scenario: It should be possible for other users to login after password change
   And I sign in as ejdzent@nbs.com with password newpass
   Then I should see translated "devise.sessions.signed_in"
 
-@requested @m8b @_done @_tested @_deprecated
+@_requested @m8b @_done @_tested @_deprecated
 Scenario: I can see company name on the users listing (in favour of dynamically displayed full name/company name)
 
 
@@ -547,7 +547,7 @@ Scenario: I can search users on company name
   Then I should see "Xyz"
   And I should not see "Abc"
 
-@requested @m8b @_done @_tested
+@_requested @m8b @_done @_tested
 Scenario: The header of users listing should include total number of users: 'Users: #total'
   And I am on administration users page
   Then I should see /Total:\s\d+/
@@ -562,24 +562,24 @@ Scenario: When I change the certification of call centre then its agents certifi
   And I press translated "password.edit.view.button_update_user"
   And user "ccagent01@person.com" with role "call_centre_agent" has certification level 3
 
-@m10 @requested @_done @_tested
+@m10 @_requested @_done @_tested
 Scenario: I can see a role name of newly created user like "New buyer account”
   When I go to administration users
   Given I select "Supplier" from "role"
   And I press translated "administration.users.index.view.new_user"
   Then I should see "New Supplier account"
 
-@m10 @requested @_done @_tested
+@m10 @_requested @_done @_tested
 Scenario: I can see password fields above unique categories
   When I go to administration users
   Given I select "Agent" from "role"
   And I press translated "administration.users.index.view.new_user"
   Then I should see "Password" before "Available unique categories"
 
-@m10 @requested @tested_elsewhere @_done @_tested
+@m10 @_requested @tested_elsewhere @_done @_tested
 Scenario: I can see "Refresh statistics" button on users listing instead of settings page
 
-@m10 @requested @selenium @tgn @_tested @_done
+@m10 @_requested @selenium @tgn @_tested @_done
 Scenario: I can see "Set interests" button next to "Change password"
   Given I have user with email customer101@person.com and role supplier
   Then I fill in "search_with_keyword" with "customer101@person.com"
@@ -588,7 +588,7 @@ Scenario: I can see "Set interests" button next to "Change password"
   Then I should see translated "administration.users.edit.view.change_supplier_interests_link"
   And I follow translated "administration.users.edit.view.change_supplier_interests_link"
 
-@m10 @requested @tgn @_tested @_done
+@m10 @_requested @tgn @_tested @_done
 Scenario: I should be redirected to edit user page after saving interests
   Given I have user with email customer101@person.com and role supplier
   Then I fill in "search_with_keyword" with "customer101@person.com"
@@ -599,7 +599,7 @@ Scenario: I should be redirected to edit user page after saving interests
   And I press translated "administration.users.edit.view.button_update_user"
   And I should be on administration edit user for customer101@person.com
 
-@requested @m11 @_done @_tested
+@_requested @m11 @_done @_tested
 Scenario: When editing a user I should see the role of the user in header
   Given I have user with email customer101@person.com and role supplier
   Then I fill in "search_with_keyword" with "customer101@person.com"
@@ -649,7 +649,7 @@ Scenario: Category buyer created by admin should have buying categories assigned
   And I should see translated "category_home.show.view.header"
   And category "TestingCategoryBuyer" is in interests of user "category@buyer.fake" "true"
 
-@m14 @requested @$_admin @auto_buy @tgn @_tested @_done
+@m14 @_requested @$_admin @auto_buy @tgn @_tested @_done
 Scenario: When I assign unique categories to buyer I should see only categories which does not have auto-buy enabled
   Given there are no categories
   Then I have user with email nbsbuyer3483434biz@nbs.com and role supplier
@@ -664,7 +664,7 @@ Scenario: When I assign unique categories to buyer I should see only categories 
   And "all_categories" dropdown should have values "Computers"
   And "all_categories" dropdown should not have values "Phones"
 
-@m14 @requested @$_admin @auto_buy @tgn @selenium @_tested @_done
+@m14 @_requested @$_admin @auto_buy @tgn @selenium @_tested @_done
 Scenario: When I assign unique category to buyer the auto-buy option should be automatically enabled for that category
   Given there are no categories
   Then I have user with email new_nbsbuyer3483434biz@nbs.com and role supplier
@@ -687,7 +687,7 @@ Scenario: When I assign unique category to buyer the auto-buy option should be a
   And category named "Computers" is auto buy enabled
   And category named "Phones" is not auto buy enabled
 
-@m14 @requested @$_admin @auto_buy @tgn @selenium @_tested @_done
+@m14 @_requested @$_admin @auto_buy @tgn @selenium @_tested @_done
 Scenario: When user has unique category with auto-buy he should not be subscribed by email to that category any more
   Given there are no categories
   Then I have user with email nbsbuyer3483434biz@nbs.com and role supplier
@@ -707,7 +707,7 @@ Scenario: When user has unique category with auto-buy he should not be subscribe
   Then category named "Computers" is auto buy enabled
   And category "Computers" is in interests of user "nbsbuyer3483434biz@nbs.com" "false"
 
-@m17 @requested @log_in_as @is @_tested @_done
+@m17 @_requested @log_in_as @is @_tested @_done
 Scenario: I can log in as selected user
   Then I fill in "search_with_keyword" with "translator_call_centre_agent"
   Then I press translated "administration.users.index.view.search_button"
@@ -739,7 +739,7 @@ Scenario: I can send welcome email to member / supplier
   And last email sent should have been sent to recipient "customer101@person.com"
 
 #7838
-@m20 @requested @_tested @_done
+@m20 @_requested @_tested @_done
 Scenario: When creating agent/call centre agent then city and country should be mandatory
   When I go to administration users
   Given I select "Agent" from "role"
@@ -749,7 +749,7 @@ Scenario: When creating agent/call centre agent then city and country should be 
   And I should see "1" occurrences of css class "inline-errors" for tag "p" witihin "#user_agent_address_attributes_country_id_input"
   And I should see "1" occurrences of css class "inline-errors" for tag "p" witihin "#user_agent_address_attributes_address_line_3_input"
 
-@m21 @requested @subscriptions @_tested @_done @tgn
+@m21 @_requested @subscriptions @_tested @_done @tgn
 Scenario: I can cancel user's subscription
   Given I have user with email xena@xena.pl and role supplier
   When subscription plan exists with attributes "name:Premium supplier,assigned_roles:supplier,subscription_period:10"
@@ -761,7 +761,7 @@ Scenario: I can cancel user's subscription
   And I follow translated "administration.users.stop_subscription"
   Then user with email "xena@xena.pl" should have subscription named "Premium supplier" cancelled
 
-@m21 @requested @subscriptions @_tested @_done @tgn
+@m21 @_requested @subscriptions @_tested @_done @tgn
 Scenario: When I lock user his/hers subscription is canceled
   Given I have user with email xena@xena.pl and role supplier
   When subscription plan exists with attributes "name:Premium supplier,assigned_roles:supplier,subscription_period:10"
@@ -773,7 +773,7 @@ Scenario: When I lock user his/hers subscription is canceled
   And I follow translated "administration.users.index.view.lock"
   Then user with email "xena@xena.pl" should have subscription named "Premium supplier" cancelled
 
-@m21 @requested @subscriptions @_tested @_done @tgn
+@m21 @_requested @subscriptions @_tested @_done @tgn
 Scenario: User with unpaid subscription cannot be deleted
   Given I have user with email xena@xena.pl and role supplier
   Given subscription plan exists with attributes "name:Paid supplier subscription"
@@ -788,7 +788,7 @@ Scenario: User with unpaid subscription cannot be deleted
   And I follow translated "administration.users.index.view.delete"
   Then I should see translated "administration.users.destroy.flash.user_deletion_failure"
 
-@m22 @requested @_done @_tested @tgn
+@m22 @_requested @_done @_tested @tgn
 Scenario: I can see user's active subscription on user's edit page and button to Stop subscription
   Given I have user with email xena@xena.pl and role supplier
   When subscription plan exists with attributes "name:Premium supplier,assigned_roles:supplier,subscription_period:2"
@@ -807,7 +807,7 @@ Scenario: I can see user's active subscription on user's edit page and button to
 
 #8331
 # VAT rate 25%: 240 => 300 + subscription
-@m22 @requested @_done @_tested @ao
+@m22 @_requested @_done @_tested @ao
 Scenario: When editing a user I can click a button and go to invoices page filtered for this user
   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
   And User kastomer@nbs.fake with role supplier is from country Denmark
@@ -828,7 +828,7 @@ Scenario: When editing a user I can click a button and go to invoices page filte
   And I should see "312.50" within "#invoices_list"
 
 #8605
-@m23 @subscriptions @requested @_done @_tested
+@m23 @subscriptions @_requested @_done @_tested
 Scenario: I can select user's new subscription plan
   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
   And there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "500"
@@ -841,7 +841,7 @@ Scenario: I can select user's new subscription plan
   And I should see "Active subscription: Medium for supplier"
 
 #8605
-@m23 @subscriptions @requested @_done @_tested
+@m23 @subscriptions @_requested @_done @_tested
 Scenario: I can change user's subscription plan no matter what constraints it has (skip no upgrade/downgrade rules)
   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
   And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0,can_be_upgraded:false,can_be_downgraded:false" and price "100"
@@ -864,7 +864,7 @@ Scenario: I can change user's subscription plan no matter what constraints it ha
   And I should see "Active subscription: Basic for supplier"
 
 #8605
-@m23 @subscriptions @requested @_done @_tested
+@m23 @subscriptions @_requested @_done @_tested
 Scenario: I can change user's subscription plan when he entered lockup period
   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
   And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:2,lockup_period:1,billing_period:0,free_period:0" and price "100"
@@ -884,7 +884,7 @@ Scenario: I can change user's subscription plan when he entered lockup period
   And I should see "Active subscription: Basic for supplier"
 
 #8605
-@m23 @subscriptions @requested @_done @_tested
+@m23 @subscriptions @_requested @_done @_tested
 Scenario: I can change user's subscription plan when he is in free period
   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd,vat_number:666"
   And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:2,lockup_period:1,billing_period:0,free_period:1" and price "100"
@@ -904,7 +904,7 @@ Scenario: I can change user's subscription plan when he is in free period
   And I should not see "Active subscription is in free period until"
 
 #8605
-@m23 @subscriptions @requested @_done @_tested
+@m23 @subscriptions @_requested @_done @_tested
 Scenario: I can select start date when I change user's subscription plan
   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
   And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
@@ -917,11 +917,11 @@ Scenario: I can select start date when I change user's subscription plan
   And I should see translated "administration.users.edit.view.next_subscription_plan" with options "next_plan_name:Basic for supplier;next_plan_active_from:2020-01-01"
 
 #8605
-@m23 @subscriptions @requested @_done @tested_elsewhere
+@m23 @subscriptions @_requested @_done @tested_elsewhere
 Scenario: When I select user's new subscription plan then the current plan end date should change
 
 #8605
-@m23 @subscriptions @requested @added @_done @_tested
+@m23 @subscriptions @_requested @added @_done @_tested
 Scenario: I can't change user subscription when he has other subscription scheduled after the active one
   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
   And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
@@ -933,7 +933,7 @@ Scenario: I can't change user subscription when he has other subscription schedu
   And I should see translated "administration.users.edit.view.remove_scheduled_subscriptions"
 
 #8605
-@m23 @subscriptions @requested @added @_done @_tested
+@m23 @subscriptions @_requested @added @_done @_tested
 Scenario: I can remove user's scheduled subscriptions
   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
   And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
@@ -951,7 +951,7 @@ Scenario: I can remove user's scheduled subscriptions
   And I should see "Active subscription: Basic for supplier"
 
 #9400
-@m26 @requested @tgn @_done @_tested
+@m26 @_requested @tgn @_done @_tested
 Scenario: I can mark supplier or category supplier as big buyer (new name Got credit) (overrides subscription properties)
   Given I have user with email buyer2@nbs.com and role supplier
   Given user "buyer2@nbs.com" should not be big buyer
@@ -963,7 +963,7 @@ Scenario: I can mark supplier or category supplier as big buyer (new name Got cr
   Then user "buyer2@nbs.com" should be big buyer
 
 #9394
-@m27 @requested @selenium @tgn @_done @_tested
+@m27 @_requested @selenium @tgn @_done @_tested
 Scenario: I edit user's ean number, vat number and direct phone for member
   And I select "Member" from "role"
   And I follow translated "administration.users.index.view.new_user"
