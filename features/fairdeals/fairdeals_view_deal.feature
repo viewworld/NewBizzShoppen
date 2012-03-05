@@ -78,11 +78,11 @@ Feature: Fairdeals view deal
   Scenario: I should see all fields on one page
 
   ##7631
-  @m19 @requested @_done @tested_elsewhere
+  @m19 @_requested @_done @tested_elsewhere
   Scenario: I should see www address for company if provided on the deal view
 
   #7630
-  @m19 @requested @_tested @_done @tgn
+  @m19 @_requested @_tested @_done @tgn
   Scenario: I can see javascript counter on the group deals details page
     Given a deal named "Abc group deal #1" exists within category "Electronics deals"
     And a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:100,discounted_price:25,social_media_description:quo vadis"
@@ -93,7 +93,7 @@ Feature: Fairdeals view deal
     And I should see "1" occurrences of css class "countdown" for tag "div"
 
   #7651
-  @m19 @requested @_tested @_done @tgn
+  @m19 @_requested @_tested @_done @tgn
   Scenario: When deal does not have price but has discounted price, its value should be displayed as saving
     Given a deal named "Abc group deal #1" exists within category "Electronics deals"
     And a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:0,discounted_price:25,social_media_description:quo vadis"
@@ -106,15 +106,15 @@ Feature: Fairdeals view deal
     But I should see "25%"
 
   #7831
-  @m20 @requested @is @non_testable @_done
+  @m20 @_requested @is @non_testable @_done
   Scenario: The styles of text should be inverted for headings like company and company description under deals listing
 
   #8885
-  @m25 @requested @tgn @_tested @_done
+  @m25 @_requested @tgn @_tested @_done
   Scenario: When I get the deal then on the deal view page I can see heading "How to get your deal" and rich text for deal confirmation page
 
   #8885
-  @m25 @requested @tgn @_tested @_done
+  @m25 @_requested @tgn @_tested @_done
   Scenario: When I get the deal then on the deal view page I can see deal code under deal confirmation page (it should be clickable if deal code resembles valid URL)
     Given a deal named "Abc group deal #1" exists within category "Electronics deals"
     And a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:0,discounted_price:25,social_media_description:quo vadis,deal_code:www.google.com,deal_confirmation_page:to get your deal you need to ..."
@@ -139,11 +139,11 @@ Feature: Fairdeals view deal
     And I should see "to get your deal you need to ..."
 
   #9535
-  @m26 @requested @_done @_tested_elsewhere @tgn
+  @m26 @_requested @_done @_tested_elsewhere @tgn
   Scenario: When I click get deal then I should see company logo, name and description enclosed into styled box without any headers like company name, logo or description
 
   #10257
-  @m29 @requested @rb @_done @_tested
+  @m29 @_requested @rb @_done @_tested
   Scenario: Premium deal should be marked with translated label
     Given a deal named "Deal 00001" exists within category "Electronics deals"
     And a deal named "Deal 00001" exists with attributes "premium_deal:1"

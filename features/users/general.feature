@@ -25,5 +25,5 @@ Feature: General users
     And I fill in "contact_contact_title" with "CEO"
 
   #7379
-  @m20 @requested @is
+  @m20 @_requested @is
   Scenario: User role names should be renamed across the system Procurement manager to Member, Buyer to Supplier, Category Buyer to Category Supplier

@@ -4,7 +4,7 @@ Feature: Automatic transactions creation
 @_done @_tested_elsewhere
 Scenario: Transaction is automatically created for invoice when paypal payment has been processed
 
-@m8 @requested @_tested @_done
+@m8 @_requested @_tested @_done
 Scenario: Every lead purchase's price is converted to Euro according to current rate and saved in separate field
   Given Category Computers is created
   And Lead named "Monitors deal" exists within "Computers" category
@@ -14,5 +14,5 @@ Scenario: Every lead purchase's price is converted to Euro according to current 
   And a lead Monitors deal exists within category Computers and is bought by user customer12@nbs.com with role supplier
   Then last purchase for lead "Monitors deal" has attributes "euro_price:8.0"
 
-@m8 @requested @_done @non_testable
+@m8 @_requested @_done @non_testable
 Scenario: Backend for obtaining current Euro's rate

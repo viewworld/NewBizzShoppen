@@ -1,4 +1,4 @@
-@lead_certification @requested @m10 @faircalls
+@lead_certification @_requested @m10 @faircalls
 Feature: Lead certification for guest
 
 Background:
@@ -151,7 +151,7 @@ Scenario: Once I have confirmed the lead then the link expires and I cannot get 
 
 #5771
 # address, first name, last name
-@m11 @requested @tgn @_done @_tested
+@m11 @_requested @tgn @_done @_tested
 Scenario: All my account information should be populated from lead
   When lead "BestLead" certification request is sent
   And I visit certification url for lead "BestLead"
@@ -164,12 +164,12 @@ Scenario: All my account information should be populated from lead
 
 #5771
 # to make it unique for example "first_name last_name (email_address)"
-@m11 @requested @tgn @tested_elsewhere @_done
+@m11 @_requested @tgn @tested_elsewhere @_done
 Scenario: Screen name should be automatically generated
 
 #5771
 # they should be populated from lead
-@m11 @requested @tgn @_tested @_done
+@m11 @_requested @tgn @_tested @_done
 Scenario: I should not see fields for address, names etc
   When lead "BestLead" certification request is sent
   And I visit certification url for lead "BestLead"
@@ -181,12 +181,12 @@ Scenario: I should not see fields for address, names etc
   And I should not see "Last name"
 
 #5771
-@m11 @requested @is @_done @_non_testable
+@m11 @_requested @is @_done @_non_testable
 Scenario: I should see icons for Facebook/Linkedin/Google sign in
 
 #5771
 # blurb saying "use google/linkedin/facebook to sign in or specify an unique password to create fairleads account"
-@m11 @requested @tgn @_tested @_done
+@m11 @_requested @tgn @_tested @_done
 Scenario: I can see a blurb on the top of the page
   When lead "BestLead" certification request is sent
   And I visit certification url for lead "BestLead"

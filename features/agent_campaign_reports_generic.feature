@@ -1,4 +1,4 @@
-@m15 @reports @requested @tgn
+@m15 @reports @_requested @tgn
 Feature: Reports
   Background:
     Given I am on the homepage
@@ -44,7 +44,7 @@ Feature: Reports
   Scenario: As admin I can generate report for one or more selected agents
 
   #9889
-  @m28 @requested @tgn @_done @_tested_elsewhere
+  @m28 @_requested @tgn @_done @_tested_elsewhere
   Scenario: Dynamic result value should be included into reports
 
   @m30 @_requested @tgn @_done @_tested_elsewhere

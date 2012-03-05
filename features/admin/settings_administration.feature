@@ -52,20 +52,20 @@ Scenario: When I change the certification levels in settings then agents' levels
   Then user "agent01@person.com" with role "agent" has certification level 1
   And user "agent02@person.com" with role "agent" has certification level 11
 
-@requested @m8 @tgn @_tested @_done
+@_requested @m8 @tgn @_tested @_done
 Scenario: Admin should be able to define purchase limit for given big buyer (default in settings). All purchases should be recalculated to Euro and the limit should be set in Euro.
   Then I fill in "setting_0" with "123"
   And I press translated "administration.settings.edit.view.button_update_settings"
   Then I should see translated "administration.settings.update.controller.successful_update_notice"
 
 # 5722
-@m11 @requested @youtube @ao @_done @_tested @_deprecated
+@m11 @_requested @youtube @ao @_done @_tested @_deprecated
 Scenario: I can specify a youtube video url which is displayed on front page
 
 #5919
 #http://img.youtube.com/vi/<insert-youtube-video-id-here>/0.jpg
 #home page is not used anymore
-@requested @$_all @m12 @ao @_done @_tested @_deprecated
+@_requested @$_all @m12 @ao @_done @_tested @_deprecated
 Scenario: I can see a jpg thumbnail of a introduction video on home page
 #  When I follow translated "administration.introduction_video.view.add_video"
 #  And I fill in "youtube_introduction_url" with "http://www.youtube.com/watch?v=SBjQ9tuuTJQ"
@@ -76,7 +76,7 @@ Scenario: I can see a jpg thumbnail of a introduction video on home page
 #  Then I should see "1" elements within CSS path ".introduction_video"
 
 #home page is not used anymore
-@requested @m13 @after_m12_presentation @ao @$_administrator @_done @_tested @_deprecated
+@_requested @m13 @after_m12_presentation @ao @$_administrator @_done @_tested @_deprecated
 Scenario: I can upload custom jpeg image to be displayed on home page for video introduction
 #  When I follow translated "administration.introduction_video.view.add_video"
 #  And I fill in "youtube_introduction_url" with "http://www.youtube.com/watch?v=SBjQ9tuuTJQ"
@@ -88,7 +88,7 @@ Scenario: I can upload custom jpeg image to be displayed on home page for video 
 #  Then I should see CSS path "img[src*='_original']"
 
 #5919
-@requested @$_all @m12 @ao @_done @_tested @selenium @_deprecated
+@_requested @$_all @m12 @ao @_done @_tested @selenium @_deprecated
 Scenario: I can play youtube video in a modal box
 #  When I follow translated "administration.introduction_video.view.add_video"
 #  And I fill in "youtube_introduction_url" with "http://www.youtube.com/watch?v=SBjQ9tuuTJQ"
@@ -102,7 +102,7 @@ Scenario: I can play youtube video in a modal box
 
 #5919
 #home page is not used anymore
-@requested @$_admin @m12 @ao @_done @_tested @_deprecated
+@_requested @$_admin @m12 @ao @_done @_tested @_deprecated
 Scenario: I can specify youtube url for each locale
 #  When I follow translated "administration.introduction_video.view.add_video"
 #  And I fill in "youtube_introduction_url" with "http://www.youtube.com/watch?v=SBjQ9tuuTJQ"
@@ -215,7 +215,7 @@ Scenario: I can enable/disable email verification for sales managers
   Then I should see translated "flash.supplier_accounts.create.notice"
 
 #7450
-@m19 @requested @settings @_done @_tested @tgn
+@m19 @_requested @settings @_done @_tested @tgn
 Scenario: I can set contact info for home page like Phone number, Email, Skype
   Given I should see translated "administration.settings.edit.view.contacts_settings_title"
   Then I fill in "settings[6]" with "my_email@fairleads.com"
@@ -224,12 +224,12 @@ Scenario: I can set contact info for home page like Phone number, Email, Skype
   And I press translated "administration.settings.edit.view.button_update_settings"
 
 #7837
-@m20 @requested @is @_done @_tested
+@m20 @_requested @is @_done @_tested
 Scenario: Contact settings should be renamed to fairdeals contact settings
   Then I should see "Fairdeals contact settings"
 
 #9976
-@m28 @requested @tgn @_done @_tested
+@m28 @_requested @tgn @_done @_tested
 Scenario: I should be able to set the number of secondary featured deals show on fairdeals home page
   And I fill in "settings[18]" with "4"
   And I press translated "administration.settings.edit.view.button_update_settings"

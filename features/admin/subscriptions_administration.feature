@@ -1,4 +1,4 @@
-@subscriptions @$_admin @requested  @m21
+@subscriptions @$_admin @_requested  @m21
 Feature: Subscriptions administration
   Background:
     Given I am on the homepage
@@ -130,7 +130,7 @@ Scenario: When I choose member than additional features like big buyer and other
 Scenario: I can set seller for the subscription plan
 
 #8338
-@m22 @requested @selenium @_done @_tested @tgn
+@m22 @_requested @selenium @_done @_tested @tgn
 Scenario: I can enter a "Subscription text" as rich text
   Given there is a seller with attributes "company_name:ADannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:123,default:1" for country "United Kingdom"
   Given there is a seller with attributes "company_name:BDannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:123,default:1" for country "Denmark"
@@ -160,22 +160,22 @@ Scenario: I can enter a "Subscription text" as rich text
   Then I should see "Sample Subscription Text"
 
 #8338
-@m22 @requested @_done @non_testable @tgn
+@m22 @_requested @_done @non_testable @tgn
 Scenario: I can upload images for "Subscription text"
 
 #9411
-@m27 @requested @tgn @_done @_tested_elsewhere
+@m27 @_requested @tgn @_done @_tested_elsewhere
 Scenario: I can mark subscription plan as public
 
 #9811
-@m27 @requested @selenium @tgn @_done @_tested
+@m27 @_requested @selenium @tgn @_done @_tested
 Scenario: I can check "Allows getting Premium Deals" for each Member subscription
   When I follow translated "administration.subscription_plans.index.view.new_subscription_plan"
   And I select "Member" from "subscription_plan_assigned_roles"
   And I check "subscription_plan_premium_deals"
 
 #9410
-@m27 @requested @selenium @tgn @_done @_tested
+@m27 @_requested @selenium @tgn @_done @_tested
 Scenario: I can set number of free deal requests for member free subscription
   When I follow translated "administration.subscription_plans.index.view.new_subscription_plan"
   And I select "Member" from "subscription_plan_assigned_roles"

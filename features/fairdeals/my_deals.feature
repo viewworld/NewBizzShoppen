@@ -1,4 +1,4 @@
-@requested @fairdeals_my_deals
+@_requested @fairdeals_my_deals
 Feature: My deals
   
 Background:

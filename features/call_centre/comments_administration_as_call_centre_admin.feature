@@ -22,7 +22,7 @@ Background:
   And I visit domain http://faircalls.eu
   And I sign in as call_centre1@nbs.com with password supersecret
 
-@requested @m10 @tgn @selenium @_tested @_done
+@_requested @m10 @tgn @selenium @_tested @_done
 Scenario: I can block comments from my agents
   Given lead Lead#6 is created by user cca1.call_centre1@nbs.com with role call_centre_agent
   And a lead Lead#6 exists within category Computers and is bought by user customer2@nbs.com with role supplier
@@ -114,7 +114,7 @@ Scenario: I cannot start new thread
 
 
 
-@requested @m10 @selenium @tgn @_tested @_done
+@_requested @m10 @selenium @tgn @_tested @_done
 Scenario: I can block particular agent of mine from further dialog with given buyer on given lead
   Given someone is signed up and confirmed as user with email cca3.call_centre1@nbs.com and password secret and role call_centre_agent
   And an user with role call_centre_agent and email cca3.call_centre1@nbs.com belongs to call centre call_centre1@nbs.com
@@ -133,7 +133,7 @@ Scenario: I can block particular agent of mine from further dialog with given bu
   And I follow translated "comments.shared.show_comments"
   Then I should not see translated "comments.threads.show.view.reply"
 
-@requested @m10 @selenium @tgn @_tested @_done
+@_requested @m10 @selenium @tgn @_tested @_done
 Scenario: When I block an agent from further dialog on a lead then communication should be possible on other leads
   Given someone is signed up and confirmed as user with email cca3.call_centre1@nbs.com and password secret and role call_centre_agent
   And an user with role call_centre_agent and email cca3.call_centre1@nbs.com belongs to call centre call_centre1@nbs.com

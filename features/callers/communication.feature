@@ -2,7 +2,7 @@
 Feature: Callers communication
 
   #8820
-  @_done @_tested @requested
+  @_done @_tested @_requested
   Scenario: I can see full list of Communication items when I click "Complete list" on faircalls home page
     Given I visit domain http://faircalls.eu
     And campaign report data is generated

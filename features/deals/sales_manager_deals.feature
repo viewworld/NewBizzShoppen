@@ -1,4 +1,4 @@
-@m16 @requested @sales_manager_deals @_deals @$_sales_manager
+@m16 @_requested @sales_manager_deals @_deals @$_sales_manager
 Feature: Deals from Sales Manager perspective
   Background:
     Given I am on the homepage
@@ -87,7 +87,7 @@ Feature: Deals from Sales Manager perspective
     Then I add and remove document for deal as "supplier"
 
   #10118
-  @m29 @_done @_tested @tgn @tc_file_mgmt @requested
+  @m29 @_done @_tested @tgn @tc_file_mgmt @_requested
   Scenario: I can upload internal document to download  and fill in internal note
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then I add and remove internal document for deal as "supplier"
@@ -224,7 +224,7 @@ Feature: Deals from Sales Manager perspective
     And I should see translated "supplier.lead_templates.new.view.header"
 
   #8885
-  @m25 @requested @selenium @_done @_tested
+  @m25 @_requested @selenium @_done @_tested
   Scenario: As a deal maker I can fill out Deal confirmation page rich text field for each deal
     And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     And user "buyer@nbs.com" has deal maker role enabled

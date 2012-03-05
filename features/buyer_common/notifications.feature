@@ -3,15 +3,15 @@ Feature: Notifications
 
   #5941
   #instantly by default
-  @requested @m12 @tgn @_done @non_testable @$_customer
+  @_requested @m12 @tgn @_done @non_testable @$_customer
   Scenario: I will receive an email with new lead from categories I am subscribed to instantly when it appears
 
-  @requested @m12 @tgn @_done @non_testable
+  @_requested @m12 @tgn @_done @non_testable
   Scenario: I will receive an email with all new leads from categories I am subscribed to once a days or once a week
 
   #5941
   #The text schould be "Notify me on new leads.
-  @requested @m12 @_done @_tested @selenium @is @$_customer
+  @_requested @m12 @_done @_tested @selenium @is @$_customer
   Scenario: I can subscribe by email to category
     Given I am on the homepage
     Then I sign in as buyer@nbs.com with password secret
@@ -34,7 +34,7 @@ Feature: Notifications
     Then I follow category "Business"
     Then I should see translated "leads.index.subscribe_to_rss"
 
-  @m13 @requested @auto_buy @is @_done @_tested
+  @m13 @_requested @auto_buy @is @_done @_tested
   Scenario: I should receive email with direct link when I buy a lead
     Given I am on the homepage
     Then I sign in as buyer@nbs.com with password secret

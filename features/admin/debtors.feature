@@ -1,4 +1,4 @@
-@invoices  @requested
+@invoices  @_requested
 Feature: Debtors
 
   Background:
@@ -24,7 +24,7 @@ Feature: Debtors
   @m6 @ao @_done @nontestable
   Scenario: When I click on row on debtors listing then an invoice should be created
 
-  @m21 @requested @subscriptions @tgn @_tested @_done
+  @m21 @_requested @subscriptions @tgn @_tested @_done
   Scenario: I can filter debtors by type (ad hoc / subscribers)
     When I follow translated "layout.main_menu.admin.upcoming_invoices"
     And I select "Ad-hoc" from "search_with_subscriber_type"
@@ -32,7 +32,7 @@ Feature: Debtors
     Then I should see "Muzykant"
     Then I should see "Vai"
 
-  @m21 @requested @tgn @_done @_tested
+  @m21 @_requested @tgn @_done @_tested
   Scenario: I can filter debtors by role
     When I follow translated "layout.main_menu.admin.upcoming_invoices"
     Then I should see translated "administration.upcoming_invoices.index.view.search.with_role"
@@ -43,10 +43,10 @@ Feature: Debtors
     And I press translated "administration.upcoming_invoices.index.view.search_button"
     And I should not see "Janko Muzykant"
 
-  @m21 @requested @subscriptions @_done @tgn @tested_elsewhere
+  @m21 @_requested @subscriptions @_done @tgn @tested_elsewhere
   Scenario: When lead is bought the user is added ad-hoc flag
 
-  @m21 @requested @subscriptions @_done @_tested @tgn
+  @m21 @_requested @subscriptions @_done @_tested @tgn
   Scenario: At subscription billing date user is added a subscriber flag (rake task)
     Given subscription plan exists with attributes "name:Premium supplier, subscription_period:2, billing_period:0"
     And subscription plan has currency named "DKK"
@@ -59,7 +59,7 @@ Feature: Debtors
     And user subscriptions are reviewed by rake task
     And user "kastomer2@nbs.fake" with role "supplier" should have attributes "subscriber_type:'subscriber'"
 
-  @m21 @requested @subscriptions @selenium @tgn @_done @_tested
+  @m21 @_requested @subscriptions @selenium @tgn @_done @_tested
   Scenario: If user has ad-hoc flag then at subscription date items are added to subscription invoice and flag is changed to subscriber
     Given subscription plan exists with attributes "name:Premium supplier, subscription_period:12"
     And subscription plan has currency named "DKK"
@@ -82,13 +82,13 @@ Feature: Debtors
       | subscr premium line1 |          99 |
       | subscr premium line2 |           3 |
 
-  @m21 @requested @tgn @_done @tested_elsewhere
+  @m21 @_requested @tgn @_done @tested_elsewhere
   Scenario: I can select multiple debtors (checkboxes)
 
-  @m21 @requested @tgn @_done @tested_elsewhere
+  @m21 @_requested @tgn @_done @tested_elsewhere
   Scenario: I can click "Invoice selected" to generate invoices for selected users
 
-  @m21 @requested @selenium @tgn @_tested @_done @tgn
+  @m21 @_requested @selenium @tgn @_tested @_done @tgn
   Scenario: When multiple debtors are selected for invoicing then seller company is assigned to each of them based on their subscription's seller
     Given there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:123" for country "Denmark"
     Given subscription plan exists with attributes "name:Premium supplier, subscription_period:12"
@@ -109,15 +109,15 @@ Feature: Debtors
     Then first invoice for user "kastomer@nbs.fake" with role "supplier" has seller with company name "DannyTheSeller"
     And first invoice for user "kastomer2@nbs.fake" with role "supplier" has seller with company name "DannyTheSeller"
 
-  @m21 @requested @tgn @_done @_tested
+  @m21 @_requested @tgn @_done @_tested
   Scenario: I should see total amount of money that should be paid by debtors in the bottom of the table
     When I click hidden link by url regex "/administration\/invoicing\/upcoming_invoices/"
     Then I should see "240"
 
-  @m21 @requested @tgn @non_testable @_done
+  @m21 @_requested @tgn @non_testable @_done
   Scenario: Debtors list should NOT be paginated
   
-  @m21 @requested @subscriptions @tgn @_done @_tested
+  @m21 @_requested @subscriptions @tgn @_done @_tested
   Scenario: I can see members in the debtors list and invoice them as suppliers
     Given I have user with email member7@rt.tv and role member
     And user "member7@rt.tv" with role "member" has attributes "first_name:Hank, last_name:Fox"
@@ -132,14 +132,14 @@ Feature: Debtors
     When I click hidden link by url regex "/administration\/invoicing\/upcoming_invoices/"
     And I should see "Fox"
 
- @m21 @requested @selenium @_done @tested_elsewhere @tgn
+ @m21 @_requested @selenium @_done @tested_elsewhere @tgn
  Scenario: When multiple debtors are selected for invoicing then if there is no seller than default one is applied
     
- @m21 @requested @subscriptions @tgn @_done @tested_elsewhere
+ @m21 @_requested @subscriptions @tgn @_done @tested_elsewhere
  Scenario: Not invoiced items should be added to the subscription invoice at billing time
 
  #8337
- @m22 @requested @tgn @_done @_tested
+ @m22 @_requested @tgn @_done @_tested
  Scenario: When I issue an invoice for subscriber then I should not see the screen to select user/seller
    Given there is a seller with attributes "name:TestSeller88, first_name:John, last_name:Koval, company_name:Trust"
    And subscription plan exists with attributes "name:TestSubPlan, subscription_period:4"
@@ -154,7 +154,7 @@ Feature: Debtors
    And "invoice_seller_id" should be selected for value "TestSeller88"
 
  #8332
- @m22 @requested @_done @_tested @ao
+ @m22 @_requested @_done @_tested @ao
  Scenario: I should see total value
    When I follow translated "layout.main_menu.admin.upcoming_invoices"
    Then I should see translated "administration.upcoming_invoices.index.view.total_in_euro"

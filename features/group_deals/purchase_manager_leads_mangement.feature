@@ -87,7 +87,7 @@ Feature: Purchase manager leads management
     Then I should see "Default price"
 
   #7553
-  @m19 @requested @selenium @tgn @_done @_tested
+  @m19 @_requested @selenium @tgn @_done @_tested
   Scenario: On the My tenders view I should see only the following columns: Title, Creation date, deadline, number of suppliers
     Given I visit domain http://fairdeals.dk
     Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role member

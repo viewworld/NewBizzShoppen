@@ -372,7 +372,7 @@ Scenario: I can choose region during creation of a lead
   And I select "Denmark" from "lead_country_id"
   And I select "Region #2" from "lead_region_id"
 
-@tgn @requested @m10 @tgn @lead_templates @selenium @_tested @_done
+@tgn @_requested @m10 @tgn @lead_templates @selenium @_tested @_done
 Scenario: I can change the lead's category even if the templates are filled out (templates should be preserved but hidden)
   Given Category named "Cat template#1" already exists
   And Category named "Cat template#1.1" already exists within category named "Cat template#1"

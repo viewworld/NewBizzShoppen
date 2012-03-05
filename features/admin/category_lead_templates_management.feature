@@ -1,4 +1,4 @@
-@lead_templates @$_admin @m5 @tgn  @requested
+@lead_templates @$_admin @m5 @tgn  @_requested
 Feature: Category lead templates management
 
 Background: Set English locale and login
@@ -155,7 +155,7 @@ Scenario: Make it possible to duplicate lead templates (from lead templates list
   And checkbox named "lead_template_lead_template_fields_attributes_2_is_mandatory" should not be checked
 
 # When creating new lead template - display in header for which category it is being created
-@ao @requested @m7 @_done @_tested
+@ao @_requested @m7 @_done @_tested
 Scenario: I can see a category name for which lead temlpate is being created
   Given Category named "Vehicles" already exists
   Then I go to administration categories
@@ -163,7 +163,7 @@ Scenario: I can see a category name for which lead temlpate is being created
   And I follow translated "administration.categories.edit.view.new_template"
   Then I should see "New lead template in category Vehicles"
 
-@tgn @requested @m10 @tgn @selenium @_tested @_done
+@tgn @_requested @m10 @tgn @selenium @_tested @_done
 Scenario: I can edit any kind of template even created by other users
   Given template named "Computer details" for category "Computers" is created by user "call_centrebiz@person.com" with role "call_centre"
   Then I go to administration categories

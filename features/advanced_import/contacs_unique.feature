@@ -1,5 +1,5 @@
 #8059
-@advanced_import @uniq_import @m23 @is @requested
+@advanced_import @uniq_import @m23 @is @_requested
 Feature: Contacts Advanced Import Unique
 
   Background:
