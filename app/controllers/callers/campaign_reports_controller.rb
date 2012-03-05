@@ -62,9 +62,9 @@ class Callers::CampaignReportsController < Callers::CallerController
                             [current_user]
                           end
 
-        @campaign_reports = @campaign_users.map { |user| @campaigns.map { |campaign| CampaignReport.new(campaign, @date_from, @date_to, user, @result_ids) } }.flatten
+        @campaign_reports = @campaign_users.map { |user| @campaigns.map { |campaign| CampaignReport.new(campaign, @date_from, @date_to, user) } }.flatten
       else
-        @campaign_reports = @campaigns.map { |campaign| CampaignReport.new(campaign, @date_from, @date_to, (current_user.has_role?(:admin) and !@selected_agents.empty?) ? @selected_agents : nil, @result_ids) }
+        @campaign_reports = @campaigns.map { |campaign| CampaignReport.new(campaign, @date_from, @date_to, (current_user.has_role?(:admin) and !@selected_agents.empty?) ? @selected_agents : nil) }
       end
     else
       @campaign_reports = []

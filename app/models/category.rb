@@ -52,6 +52,9 @@ class Category < ActiveRecord::Base
 
   has_many :category_countries
   has_many :countries, :through => :category_countries, :source => :country
+  has_many :campaigns
+
+  check_associations_before_destroy :customers, :agents, :countries, :leads, :deals, :campaigns, :lead_templates, :supplier_subscribers, :buying_users
 
   scope :without_locked_and_not_published, where("is_locked = ? or (is_locked = ? and published_leads_count > 0)", false, true)
   scope :within_accessible, lambda { |supplier| where("categories.id IN (?)", supplier.accessible_categories_ids) }
