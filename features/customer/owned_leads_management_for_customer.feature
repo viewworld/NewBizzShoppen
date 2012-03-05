@@ -171,7 +171,7 @@ Scenario: I can send selected lead by email
   And I press translated "lead_supplier.bulk_lead_share_by_email.new.view.send_email_button"
   Then I should see translated "flash.bulk_lead_share_by_email.create.notice"
 
-@m8b @requested @tgn @_done @non_testable
+@m8b @_requested @tgn @_done @non_testable
 Scenario: I can use ckeditor with limited toolbar for writting message in share by email function
 
 @tgn @_tested @selenium @_done
@@ -206,7 +206,7 @@ Scenario: I can bulk set status of leads
   And I follow translated "lead_supplier.lead_purchases.index.view.bulk_update_button"
   Then "state" should be selected for value translated "lead_purchases.statuses.contacted"
 
-@m5 @added @lead_templates @tgn @_tested @requested @_done
+@m5 @added @lead_templates @tgn @_tested @_requested @_done
 Scenario: I can see lead template fields with public values for each lead
   Given template named "Printers details" for category "Computers" is created by user "ccagent@person.com" with role "call_centre_agent"
   And template named "Printers details" has following fields "printers protocol:true:false, vendor name:false:false, versions:false:false"
@@ -229,7 +229,7 @@ Scenario: Hidden description should be truncated and expandable by JS
   And I follow translated "common.js.read_more"
   Then I should see translated "common.js.collapse_expanded_text"
 
-@m6 @tgn @selenium @_tested @requested @_done
+@m6 @tgn @selenium @_tested @_requested @_done
 Scenario: I can add note to owned lead
   When I go to supplier lead purchases
   And I show accordion details for row "#lead_single_purchase_1"
@@ -241,23 +241,23 @@ Scenario: I can add note to owned lead
 
 # https://redmine.selleo.com/issues/4021
 # I should see show page when I click a row!
-@m6 @ao @_deprecated @_done @requested
+@m6 @ao @_deprecated @_done @_requested
 Scenario: I should not see show page for owned lead when accordion style listing is used
     
-@m7 @requested @_tested @tgn @_done
+@m7 @_requested @_tested @tgn @_done
 Scenario: I can't see purchase value on my leads listing
   When I go to supplier lead purchases
   And I should not see "89.93"
 
 # Add creator name under purchase date (should display Agent’s screen name) in details in accordion
-@m7 @requested @selenium @tgn @_tested @_done
+@m7 @_requested @selenium @tgn @_tested @_done
 Scenario: I can see creator name under purchase date
   When I go to supplier lead purchases
   Given I show accordion details for row "#lead_single_purchase_1"
   And I should see "SomeAgent Joe"
 
 # My leads accordion - do not trigger accordion on mouse hover but on link-click instead (i.e. show more details)
-@m7 @requested @selenium @tgn @_tested @_done
+@m7 @_requested @selenium @tgn @_tested @_done
 Scenario: I can see details in accordion when clicking on header
   When I go to supplier lead purchases
   And I show accordion details for row "#lead_single_purchase_1"
@@ -266,5 +266,5 @@ Scenario: I can see details in accordion when clicking on header
 
 # 5768
 # when facebook/linked URL is specified
-@requested @m11 @is @_done @_not_testable
+@_requested @m11 @is @_done @_not_testable
 Scenario: Facebook and Linkedin icons should be displayed next to lead header and be clickable

@@ -54,7 +54,7 @@ Feature: Purchase Manager signup
     And I should be signed in
 
   #7549
-  @m19 @requested @_done @_done @tgn
+  @m19 @_requested @_done @_done @tgn
   Scenario: All fields for procurment sign up must be mandatory
     When I go to member sign up
     And I select "" from "user_member_address_attributes_country_id"
@@ -62,7 +62,7 @@ Feature: Purchase Manager signup
     And I should see "11" occurrences of css class "inline-errors" for tag "p"
 
   # when on free subscription - get deal is displayed but informs that you have to upgrade - tested elsewhere
-  @m21 @requested @subscriptions @_done @_tested @tgn
+  @m21 @_requested @subscriptions @_done @_tested @tgn
   Scenario: Free subscription doesn't allow to get the deal but user can create tenders and see get deal button
     Given I visit domain http://fairdeals.dk
     Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
@@ -86,14 +86,14 @@ Feature: Purchase Manager signup
     And I press translated "member.leads.show.view.ok_confirmation"
 
   #9532
-  @m26 @requested @tgn @_done @_tested
+  @m26 @_requested @tgn @_done @_tested
   Scenario: Remove screen name for member, use first name with company name
     When I visit domain http://fairdeals.eu
     And I follow translated "fairdeals_home.show.view.get_free_account"
     And I should not see "Screen name"
 
   #9532
-  @m26 @requested @tgn @_done @_tested
+  @m26 @_requested @tgn @_done @_tested
   Scenario: On the signup page remove region select for DK language
     When I visit domain http://fairdeals.eu
     And I follow translated "fairdeals_home.show.view.get_free_account"
@@ -105,5 +105,5 @@ Feature: Purchase Manager signup
     Then I should not see "Time zone"
 
   #9532
-  @m26 @requested @tgn @_done @_tested_elsewhere
+  @m26 @_requested @tgn @_done @_tested_elsewhere
   Scenario: Remove timezone for DK language and set it to +1 CPH

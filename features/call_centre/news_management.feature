@@ -1,4 +1,4 @@
-@call_center_news @m11 @requested @$_call_centre @is @faircalls
+@call_center_news @m11 @_requested @$_call_centre @is @faircalls
 Feature: News management for call centre
 
 @_done @_tested @selenium

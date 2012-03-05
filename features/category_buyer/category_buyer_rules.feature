@@ -83,7 +83,7 @@ Feature: Category buyer rules
     When I visit URL "/leads"
     Then I should be on category home page for Best Leads
 
-  @m6 @_done @_tested  @requested
+  @m6 @_done @_tested  @_requested
   Scenario: Category buyers should not have to configure their interest page, but have country selected to the country from which the category was design for.
     When Category named "Best Leads" already exists
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes ""
@@ -95,7 +95,7 @@ Feature: Category buyer rules
     When I am on supplier interests
     Then I should see "You are not authorized"
 
-  @m6 @selenium @_done @_tested  @requested
+  @m6 @selenium @_done @_tested  @_requested
   Scenario: If category buyer has more than one category assigned, when browsing leads he should see "Category dropdown" which will redirect him to correct category scope when filtering
     When Category named "Best Leads" already exists
     And Category named "Worst Leads" already exists
@@ -180,7 +180,7 @@ Feature: Category buyer rules
     Then I should be on category home page for Basic Leads
 
   #deprecated since every category supplier has company uniq category created
-  @m6 @added @_done @_tested @requested @_deprecated
+  @m6 @added @_done @_tested @_requested @_deprecated
   Scenario: I can't login when I have no categories assigned
 #    When Category named "SampleCat" already exists
 #    When I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "SampleCat"
@@ -225,7 +225,7 @@ Feature: Category buyer rules
     And I should see "Justin"
     And I should see "Bieber"
 
-  @m10 @requested @_done @_tested
+  @m10 @_requested @_done @_tested
   Scenario: I have access to all sub categories of my buying categories
     Given Category named "Computers" already exists within category named "Electronics"
     And lead Hapeki exists within category Computers
@@ -245,7 +245,7 @@ Feature: Category buyer rules
     Then I should see "Iksboksy"
     And I should not see "Hapeki"
 
-  @m10 @requested @_done @_tested
+  @m10 @_requested @_done @_tested
   Scenario: I don't have access to subcategories of other root categories
     Given Category named "Computers" already exists within category named "Electronics"
     And lead Hapeki exists within category Computers
@@ -263,7 +263,7 @@ Feature: Category buyer rules
     And I should not see "WymuszeniePierwszenstwa" within "table.categories_table"
 
   #9513
-  @m26 @requested @_done @_tested @tgn
+  @m26 @_requested @_done @_tested @tgn
   Scenario: I can see My deals tab only when I have deal maker role or I was marked by admin as Show my deals
     Given I am not sign in
     And I have user with email category_supplier@nbs.com and role category_supplier
@@ -281,11 +281,11 @@ Feature: Category buyer rules
     And I should see CSS path "a[tab='deals']"
 
   #9513
-  @m26 @requested @tgn @_done @_tested_elsewhere
+  @m26 @_requested @tgn @_done @_tested_elsewhere
   Scenario: I can see Browse deals only when I was marked by admin as Show all deals
 
   #9512
-  @m26 @requested @tgn @_done @_tested
+  @m26 @_requested @tgn @_done @_tested
   Scenario: I can be marked by admin as Auto buy enabled and then all my categories become auto buy by default if possible (Then I don't see Browse leads)
     Given I am not sign in
     And I am on the homepage
@@ -297,7 +297,7 @@ Feature: Category buyer rules
     And I should see CSS path "a[tab='browse_leads']"
 
   #10109
-  @m29 @_done @_non_testable @tgn @requested
+  @m29 @_done @_non_testable @tgn @_requested
   Scenario: I should see my accessible categories hierarchically sorted in a dropdown on Browse leads page
 
 

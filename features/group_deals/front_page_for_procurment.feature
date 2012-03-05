@@ -226,7 +226,7 @@ Feature: Front page for procurment
   Scenario: As admin I can select three secondary featured deals to be displayed on procurement page
 
   #7450
-  @m19 @requested @_done @_tested @tgn
+  @m19 @_requested @_done @_tested @tgn
   Scenario: I should see box with contact info: Phone number, Email, Skype on the home page
     Given I visit domain http://fairdeals.dk
     Then I should see translated "fairdeals_home.show.view.contact_us"
@@ -235,7 +235,7 @@ Feature: Front page for procurment
     And I should see "fairleads_contact"
 
   #7449
-  @m19 @requested @selenium @_done @_tested @tgn @hanging_js
+  @m19 @_requested @selenium @_done @_tested @tgn @hanging_js
   Scenario: I should see box where I can request deal from default deal admin, I should be able to fill in name, phone number, email and details of my request
     Given I am on the homepage
     Given I visit domain http://fairdeals.dk
@@ -256,7 +256,7 @@ Feature: Front page for procurment
 
 
   #7630
-  @m19 @requested @group_deals @_done @_tested @rb
+  @m19 @_requested @group_deals @_done @_tested @rb
   Scenario: Group deal should be marked by a splash saying "Group deal" on the main page in the featured deal box
     Given a deal named "PrimaryGroupDeal" exists within category "Electronics deals"
     And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
@@ -266,7 +266,7 @@ Feature: Front page for procurment
     And I should see translated "deals.index.view.group_deal_splash_label" within ".splash span"
 
   #7630
-  @m19 @requested @group_deals @_tested @_done @tgn
+  @m19 @_requested @group_deals @_tested @_done @tgn
   Scenario: On the main page in the featured group deal I should see how many leads were generated and how many are missing to reach the minimum (5 leads / 2 missing)
     Given a deal named "Abc group deal #1" exists within category "Electronics deals"
     And a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:100,discounted_price:25,social_media_description:quo vadis,created_leads:5,min_created_leads:7"
@@ -275,7 +275,7 @@ Feature: Front page for procurment
     And I should see "5 leads / 2 missing"
 
   #7630
-  @m19 @requested @group_deals @_tested @_done @tgn
+  @m19 @_requested @group_deals @_tested @_done @tgn
   Scenario: As admin I can set per deal minimum number of leads that needs to be generated to give the displayed price
     Given a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:100,discounted_price:25,social_media_description:quo vadis,created_leads:5,min_created_leads:7"
     And I am on the homepage
@@ -286,16 +286,16 @@ Feature: Front page for procurment
     And I press translated "administration.deals.edit.view.update_button"
 
   #7529
-  @m20 @requested @non_testable @_done
+  @m20 @_requested @non_testable @_done
   Scenario: Boxes with secondary featured deals should ber clickable
 
-  @m21 @requested @is @tested_elsewhere @_done
+  @m21 @_requested @is @tested_elsewhere @_done
   Scenario: I can select 6 backup featured deals
 
-  @m21 @requested @is @tested_elsewhere @_done
+  @m21 @_requested @is @tested_elsewhere @_done
   Scenario: When featured deal is unpublished then available backup deal should appear on the front page
 
-  @m22 @requested @_done @_tested @ao
+  @m22 @_requested @_done @_tested @ao
   Scenario: I should not see time countdown when deal is not a group deal
     Given a deal named "PrimaryDeal" exists within category "Electronics deals"
     And a deal named "PrimaryDeal" exists with attributes "published:1,group_deal:0,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
@@ -303,7 +303,7 @@ Feature: Front page for procurment
     And I visit domain http://fairdeals.dk
     Then I should not see CSS path "#countdown"
 
-  @m22 @requested @_done @_tested @ao
+  @m22 @_requested @_done @_tested @ao
   Scenario: I should see "Featured description" for the main featured deal
     Given a deal named "PrimaryDeal" exists within category "Electronics deals"
     And a deal named "PrimaryDeal" exists with attributes "featured_description:FeaturedDescriptionText,published:1,group_deal:0,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
@@ -311,7 +311,7 @@ Feature: Front page for procurment
     And I visit domain http://fairdeals.dk
     Then I should see "FeaturedDescriptionText" within "div.deal_desc"
 
-  @m22 @requested @_done @_tested @ao
+  @m22 @_requested @_done @_tested @ao
   Scenario: I should see "Short featured description" for the secondary featured deals
     Given a deal named "PrimaryDeal" exists within category "Electronics deals"
     And a deal named "PrimaryDeal" exists with attributes "featured_description:FeaturedDescriptionText,published:1,group_deal:0,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
@@ -322,7 +322,7 @@ Feature: Front page for procurment
     And I visit domain http://fairdeals.dk
     Then I should see "ShortDescription" within "div.other_deals"
 
-  @m22 @requested @_done @_tested @ao
+  @m22 @_requested @_done @_tested @ao
   Scenario: Non-group deal should be marked by a splash saying "Fair deal" on the main page in the featured deal box
     Given a deal named "PrimaryDeal" exists within category "Electronics deals"
     And a deal named "PrimaryDeal" exists with attributes "published:1,group_deal:0,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
@@ -332,18 +332,18 @@ Feature: Front page for procurment
     And I should see translated "deals.index.view.fair_deal_splash_label" within ".splash span"
 
   #8883
-  @m25 @requested @_done @nontestable
+  @m25 @_requested @_done @nontestable
   Scenario: When deals are browsed by the arrows on the fairdeals page then transition effect should be added
 
   #8882
-  @m25 @requested @_done @_tested
+  @m25 @_requested @_done @_tested
   Scenario: I can see a link with arrow underneath the featured deals to load all deals
     When I visit domain http://fairdeals.dk
     And I follow translated "fairdeals_home.show.view.see_all_deals"
     Then I should be on all deals page
 
   #8882
-  @m25 @requested @_done @_tested
+  @m25 @_requested @_done @_tested
   Scenario: When See all deals is clicked then instead of featured deals first 15 deals are loaded
     When there are "20" existing deals
     And I visit domain http://fairdeals.dk
@@ -351,37 +351,37 @@ Feature: Front page for procurment
     Then I should see "15" elements within CSS path "div.other_deals"
 
   #8882
-  @m25 @requested @_done @nontestable
+  @m25 @_requested @_done @nontestable
   Scenario: When I scroll down the next six deals are loaded on the front page until all deals are loaded
 
   #8882
-  @m25 @requested @_done @_tested
+  @m25 @_requested @_done @_tested
   Scenario: I should not see articles listing on the front page
     Given I visit domain http://fairdeals.dk
     Then I should not see CSS path "div.news"
 
   #9437
-  @m26 @requested @ao @_done @non_testable
+  @m26 @_requested @ao @_done @non_testable
   Scenario: On fairdeals.dk and fairdeals.eu the certificate should be removed
 
   #9604
-  @m27 @requested @rb @_done @_non_testable
+  @m27 @_requested @rb @_done @_non_testable
   Scenario: I should see only 3 secondary deals on the front page instead of 9
 
   #9604
-  @m27 @requested @tgn @_done @_tested_elsewhere
+  @m27 @_requested @tgn @_done @_tested_elsewhere
   Scenario: I should always see Normal price, Fairdeals price, You save with percent and rating in primary featured deal on the front page
 
   #9604
-  @m27 @requested @rb @_done @_non_testable
+  @m27 @_requested @rb @_done @_non_testable
   Scenario: I should see featured description, rating and three prices in the secondary featured deal boxes on the front page
 
   #9604
-  @m27 @requested @rb @_done @_non_testable
+  @m27 @_requested @rb @_done @_non_testable
   Scenario: I should see deals listed in browse deals as primary deal on the front page
 
   #9811
-  @m27 @requested @tgn @_done @_tested
+  @m27 @_requested @tgn @_done @_tested
   Scenario: I should see splash saying Premium Deal when premium for this deal is enabled by admin or dealmaker
     Given a deal named "PrimaryDeal" exists within category "Electronics deals"
     And a deal named "PrimaryDeal" exists with attributes "published:1,premium_deal:1"

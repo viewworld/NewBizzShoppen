@@ -49,15 +49,15 @@ Scenario: Data is transfererd to paypal in encrypted form
 Scenario: Currency code from cart is passed to PayPal
 
 # https://redmine.selleo.com/issues/5436
-@m10 @requested @_done @_tested
+@m10 @_requested @_done @_tested
 Scenario: When paying by payal the price should include VAT where applicable
   Then cart for user "buyer.jim.jones@nbs.com" has VAT included in total value
 
-@m10 @requested @_done @_tested
+@m10 @_requested @_done @_tested
 Scenario: The vat amount should be visible as additional product line in paypal
   Then cart for user "buyer.jim.jones@nbs.com" has additional line for VAT
 
-@m10 @requested @_done @_tested
+@m10 @_requested @_done @_tested
 Scenario: Total value of a cart should not include VAT rates
   When I am on supplier cart page
   Then I should see "2" rows in a table within "table.cart_table tbody"

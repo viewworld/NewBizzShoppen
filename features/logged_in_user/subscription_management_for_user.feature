@@ -1,4 +1,4 @@
-@m21 @requested @subscriptions @ao
+@m21 @_requested @subscriptions @ao
 Feature: Subscription management for user
 
   Background:
@@ -197,24 +197,24 @@ Feature: Subscription management for user
     And I follow translated "layout.my_profile_link"
     Then I should not see translated "subscriptions.free_period_notification" with options "free_period_date:{Date.today+7.days},localize:long"
 
-  @m22 @_done @_tested_elsewhere @requested @tgn
+  @m22 @_done @_tested_elsewhere @_requested @tgn
   Scenario: When I cancel before lockup the subscription should be active until the end of billing cycle and prolong as free
 
-  @m22 @_done @_tested @tgn @requested
+  @m22 @_done @_tested @tgn @_requested
   Scenario: When I have free subscription and go to My deals then I should see warning 'You need to upgrade your subscription to be able to create deals'
     When I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I should see translated "supplier.deals.index.view.you_need_to_upgrade_subscription_warning"
 
   #8346
-  @m22 @requested @credit_line @tgn @_done @_tested_elsewhere
+  @m22 @_requested @credit_line @tgn @_done @_tested_elsewhere
   Scenario: When I upgrade my subscription a credit line is created for the remaining value of my previous subscription
 
   #8346
-  @m22 @requested @credit_line @tgn @_done @_tested_elsewhere
+  @m22 @_requested @credit_line @tgn @_done @_tested_elsewhere
   Scenario: When I upgrade my subscription and invoice is issued the creadit line value for my previous subscription should be subsctracted
 
   #8333
-  @m22 @requested @selenium @_done @_tested
+  @m22 @_requested @selenium @_done @_tested
   Scenario: Billing date for subscription should be the day it started
     When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
     And I follow translated "layout.my_profile_link"

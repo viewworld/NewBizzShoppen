@@ -1,4 +1,4 @@
-@purchase_manager @m3 @ao  @requested
+@purchase_manager @m3 @ao  @_requested
 Feature: Lead creation by Purchase Manager
 
 In order to create and manage leads I sell

@@ -152,7 +152,7 @@ Feature: Agent campaign - management
       Then I should see "Bon Jovi"
       Then I should not see "Mleko"
 
-    @tbr @__campaign_manage @_done @nontestable @requested
+    @tbr @__campaign_manage @_done @nontestable @_requested
     Scenario: I can export selected contacts to CSV
 
     #
@@ -167,7 +167,7 @@ Feature: Agent campaign - management
     @is @__campaign_assign_agents @_tested_elsewhere @_done
     Scenario: I can assign selected agents to campaign
 
-    @is @__campaign_assign_agents @_tested @selenium @requested @_done
+    @is @__campaign_assign_agents @_tested @selenium @_requested @_done
     Scenario: I can deassign not selected agents to campaign
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
       Then I follow translated "campaigns.edit.agent_assignment_button"
@@ -246,7 +246,7 @@ Feature: Agent campaign - management
     @is @__campaign_manage_results @_done @_tested_elsewhere
     Scenario: I can add new result
 
-    @is @__campaign_manage_results @_done @_tested_elsewhere @requested
+    @is @__campaign_manage_results @_done @_tested_elsewhere @_requested
     Scenario: I can edit result
 
     @is @__campaign_manage_results @_done @_tested_elsewhere
@@ -269,7 +269,7 @@ Feature: Agent campaign - management
       Then agent for "Bon Jovi inc." is blank
 
 
-    @tbr @__campaign_manage_results @selenium @_done @_tested @requested
+    @tbr @__campaign_manage_results @selenium @_done @_tested @_requested
     Scenario: I can see template fields for current category
       Given template named "Leisure template" for category "Leisure" is created by user "translator_call_centre@nbs.com" with role "call_centre"
       And template named "Leisure template" is global
@@ -281,7 +281,7 @@ Feature: Agent campaign - management
       When I select "Leisure" from "Category"
       Then I should see "Leisure template"
 
-    @tbr @__campaign_manage_results @_done @_tested @requested
+    @tbr @__campaign_manage_results @_done @_tested @_requested
     Scenario: I can go to previous/next contact edit page through arrows
       When I edit contact "Bon Jovi inc." 
       And I should see translated "contacts.edit.current_agent_label"
@@ -294,7 +294,7 @@ Feature: Agent campaign - management
     #
     #
     #campaigns::agents::manage_results_types
-    @tbr @__campaign_manage_result_types @_done @_tested @requested
+    @tbr @__campaign_manage_result_types @_done @_tested @_requested
     Scenario: I can see list of generic call log results
       When I edit campaign "Testing One"
       And I should see "Edit campaign"
@@ -303,14 +303,14 @@ Feature: Agent campaign - management
       And I should see "Not interested now"
       And I should see "Not in"
 
-    @tbr @__campaign_manage_result_types @_done @requested
+    @tbr @__campaign_manage_result_types @_done @_requested
     Scenario: I can see list of custom call log results
       Given the custom call_log result with name "Under shower" is created by "translator_call_centre@nbs.com"
       When I edit campaign "Testing One"
       And I follow translated "campaigns.edit.button_manage_result_types"
       Then I should see "Under shower"  
 
-    @tbr @__campaign_manage_result_types @_done @_tested @requested
+    @tbr @__campaign_manage_result_types @_done @_tested @_requested
     Scenario: I can see list of generic final results
       When I edit campaign "Testing One"
       And I should see "Edit campaign"
@@ -320,14 +320,14 @@ Feature: Agent campaign - management
       And I should see "Meeting booked"
       And I should see "Custom result"
 
-    @tbr @__campaign_manage_result_types @_done @requested
+    @tbr @__campaign_manage_result_types @_done @_requested
     Scenario: I can see list of custom final results
       Given the custom final result with name "Don't give a damn" is created by "translator_call_centre@nbs.com"
       When I edit campaign "Testing One"
       And I follow translated "campaigns.edit.button_manage_result_types"
       Then I should see "Don't give a damn"
 
-    @tbr @__campaign_manage_result_types @_done @requested
+    @tbr @__campaign_manage_result_types @_done @_requested
     Scenario: I can assign custom results to campaign
       Given the custom final result with name "Don't give a damn" is created by "translator_call_centre@nbs.com"
       When I edit campaign "Testing One"
@@ -337,16 +337,16 @@ Feature: Agent campaign - management
       And I press translated "results.index.button_assign_result_types"
       Then result "Don't give a damn" should be assigned to campaign "Testing One"
 
-    @tbr @__campaign_manage_result_types @_done @requested
+    @tbr @__campaign_manage_result_types @_done @_requested
     Scenario: I can assign generic results to campaign
     
-    @tbr @__campaign_manage_result_types @_done @_tested_elsewhere @requested
+    @tbr @__campaign_manage_result_types @_done @_tested_elsewhere @_requested
     Scenario: I can add new call result
     
-    @tbr @__campaign_manage_result_types @_done @_tested_elsewhere @requested
+    @tbr @__campaign_manage_result_types @_done @_tested_elsewhere @_requested
     Scenario: I can remove call result
     
-    @tbr @__campaign_manage_result_types @_done @selenium @_tested @requested
+    @tbr @__campaign_manage_result_types @_done @selenium @_tested @_requested
     Scenario: I can edit call log results
       When I edit campaign "Testing One"
       And I should see "Edit campaign"
@@ -361,13 +361,13 @@ Feature: Agent campaign - management
       Then I should see "I am on fire"
       And I should see "Some text"
 
-    @tbr @__campaign_manage_result_types @_done @_tested_elsewhere @requested
+    @tbr @__campaign_manage_result_types @_done @_tested_elsewhere @_requested
     Scenario: I can add final results
     
-    @tbr @__campaign_manage_result_types @_done @_tested_elsewhere @requested
+    @tbr @__campaign_manage_result_types @_done @_tested_elsewhere @_requested
     Scenario: I can remove final results
 
-    @tbr @__campaign_manage_result_types @_done @selenium @_tested @requested
+    @tbr @__campaign_manage_result_types @_done @selenium @_tested @_requested
     Scenario: I can edit final results
       When I edit campaign "Testing One"
       And I should see "Edit campaign"
@@ -382,16 +382,16 @@ Feature: Agent campaign - management
       Then I should see "I am on fire"
       And I should see "Some text"
 
-    @tbr @__campaign_manage_result_types @_done @requested
+    @tbr @__campaign_manage_result_types @_done @_requested
     Scenario: I can add custom fields to result type
 
-    @tbr @__campaign_manage_result_types @_done @requested
+    @tbr @__campaign_manage_result_types @_done @_requested
     Scenario: I can see list of fields in result types list
 
-    @tbr @__campaign_manage_result_types @_done @requested
+    @tbr @__campaign_manage_result_types @_done @_requested
     Scenario: I can select "datetime" type for custom field in result type
 
-    @tbr @__campaign_manage_result_types @_done @requested @selenium
+    @tbr @__campaign_manage_result_types @_done @_requested @selenium
     Scenario: I custom fields values should validate correct format
       Given the custom call_log result with name "Multiple fields" is created by "translator_call_centre@nbs.com"
       And result "Multiple fields" has mandatory "text field/STRING" field
@@ -489,7 +489,7 @@ Feature: Agent campaign - management
     #
     # CUSTOM RESULT TYPES
     #
-    @tbr @__campaign_manage_results @_done @requested @selenium
+    @tbr @__campaign_manage_results @_done @_requested @selenium
     Scenario: I can add custom call result (call log)
       Given the custom call_log result with name "Just a call log result" is created by "translator_call_centre@nbs.com"
       When I am adding "Just a call log result" result for contact "Mleko company"
@@ -497,7 +497,7 @@ Feature: Agent campaign - management
       Then contact "Mleko company" should be at bottom of the list
       And I should see translated "contacts.edit.current_agent_label"
 
-    @tbr @__campaign_manage_results @_done @requested @selenium
+    @tbr @__campaign_manage_results @_done @_requested @selenium
     Scenario: I can add custom call result (final)
       Given the custom final result with name "Just a final result" is created by "translator_call_centre@nbs.com"
       When I am adding "Just a final result" result for contact "Mleko company"
@@ -505,10 +505,10 @@ Feature: Agent campaign - management
       Then contact "Mleko company" should be completed
       And I should see translated "contacts.edit.current_agent_label"
       
-    @tbr @__campaign_manage_results @_done @_tested_elsewhere @requested
+    @tbr @__campaign_manage_results @_done @_tested_elsewhere @_requested
     Scenario: I can edit custom call result
     
-    @tbr @__campaign_manage_results @_done @_tested_elsewhere @requested
+    @tbr @__campaign_manage_results @_done @_tested_elsewhere @_requested
     Scenario: I can remove custom call result 
 
     #
@@ -571,7 +571,7 @@ Feature: Agent campaign - management
       Then I follow translated "call_results.table.edit_link"
       Then I should see "Edit result"
 
-    @is @__campaign_statistics @_tested @selenium @requested @_done
+    @is @__campaign_statistics @_tested @selenium @_requested @_done
     Scenario: I can see results list for given agent list
       Then I create call result
       Then I add user "translator_call_centre@nbs.com" to campaign "Testing One"
@@ -588,7 +588,7 @@ Feature: Agent campaign - management
       Then I should see "1" within "#all_result_row"
       Then I wait 4 second
 
-    @is @__campaign_statistics @_tested @selenium @requested @_done
+    @is @__campaign_statistics @_tested @selenium @_requested @_done
     Scenario: I can see results list for completed contacts only
       Then I execute js for display action block for "campaigns"
       Then I follow translated "campaigns.index.result"
@@ -630,11 +630,11 @@ Feature: Agent campaign - management
         Scenario: As call centre agent or agent I can't manage campaigns, result types, agent assignment
 
         # 5189
-        @m11 @requested @is @non_testable @_done
+        @m11 @_requested @is @non_testable @_done
         Scenario: I can see timestamps in my localization, not server time
 
         # 5192
-        @m12 @$_call_centre @requested @tgn @briefing @selenium @_done @_tested @_deprecated
+        @m12 @$_call_centre @_requested @tgn @briefing @selenium @_done @_tested @_deprecated
         Scenario: I can specify description and briefing when creating new campaign
 #          When I follow translated "campaigns.header.new_campaign_button"
 #          Then I fill in "campaign_name" with "BriefingCampaingTest"
@@ -646,11 +646,11 @@ Feature: Agent campaign - management
 #          And I press translated "campaigns_description.edit.button_update"
 
         # 5192
-        @m12 @$_call_centre @requested @tgn @briefing @non_testable @_done
+        @m12 @$_call_centre @_requested @tgn @briefing @non_testable @_done
         Scenario: I can see a description in a popup
 
         # 5192
-        @m12 @$_call_centre @requested @tgn @briefing @selenium @_done @_tested
+        @m12 @$_call_centre @_requested @tgn @briefing @selenium @_done @_tested
         Scenario: When editing a campaign I can click a link to edit description and briefing
           When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
           And I follow translated "campaigns.edit.description_and_briefing"
@@ -661,11 +661,11 @@ Feature: Agent campaign - management
           And I press translated "campaigns_description.edit.button_update"
         
         ##5650
-        @requested @m11 @ao @non_testable @_done
+        @_requested @m11 @ao @non_testable @_done
         Scenario: I should see a listbox with all the resuls types and be able to filter by them
 
         ##5649
-        @requested @m11 @_done @_tested @tgn
+        @_requested @m11 @_done @_tested @tgn
         Scenario: I should see "Go to results" button beside "Agent assignment" in edit campaign
           When I follow translated "campaigns.index.edit"
           Then I should see translated "campaigns.edit.results"
@@ -673,7 +673,7 @@ Feature: Agent campaign - management
 
         #5931
         # when editing campaign add “email template” nex to “result” button
-        @m12 @$_call_centre @requested @ao @selenium @_done @_tested
+        @m12 @$_call_centre @_requested @ao @selenium @_done @_tested
         Scenario: When I create a new campaign the default admin template should be populated and it should be editable by campaign creator
           When there are no campaigns
           And I follow translated "layout.main_menu.call_centre.campaigns"
@@ -693,11 +693,11 @@ Feature: Agent campaign - management
           And the "Subject" field should contain "Additional materials"
 
         #5935
-        @m12 @$_call_centre @requested @ao @_done @non_testable
+        @m12 @$_call_centre @_requested @ao @_done @non_testable
         Scenario: When I am on campaign results page and I change date then the page should reload with filter applied
 
         #5970
-        @m12 @$_call_centre @requested @tgn @selenium @_tested @_done
+        @m12 @$_call_centre @_requested @tgn @selenium @_tested @_done
         Scenario: Call centre can edit campaign when assigned to it by admin
           Given I am not sign in
           And I am on the homepage
@@ -719,7 +719,7 @@ Feature: Agent campaign - management
           When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
           And I should see "Edit campaign: Campaign for call centre"
 
-        @m13 @requested @after_m12_presentation @tgn @$_call_centre @selenium @_tested @_done
+        @m13 @_requested @after_m12_presentation @tgn @$_call_centre @selenium @_tested @_done
         Scenario: I can define a default set of materials to be included in emails
           When I click hidden link by url regex "/callers\/campaigns\/\d+\/materials/"
           And attach the file "sample image" to "material_asset"
@@ -727,7 +727,7 @@ Feature: Agent campaign - management
           And I check "is_default"
 
         # "My results" for call centre / TGN
-        @m13 @requested @$_call_centre @after_m12_presentation @tgn @_done @_tested
+        @m13 @_requested @$_call_centre @after_m12_presentation @tgn @_done @_tested
         Scenario: Call centre can see results from his agents
           Given I have user with email ccagent01@nbs.com and role call_centre_agent
           And user ccagent01@nbs.com with role call_centre_agent exists with attributes "first_name:Greg,last_name:Foam"
@@ -740,7 +740,7 @@ Feature: Agent campaign - management
           And I should see translated "production.show.view.header"
           
 
-        @m13 @requested @$_admin @after_m12_presentation @tgn @_tested @_done
+        @m13 @_requested @$_admin @after_m12_presentation @tgn @_tested @_done
         Scenario: Admin call see results from all agents
           Given I am not sign in
           Given I have user with email ccagent01@nbs.com and role call_centre_agent
@@ -756,7 +756,7 @@ Feature: Agent campaign - management
           And I should see translated "production.show.view.header"
           And I should see "Campaigns"
 
-        @m13 @requested @$_call_centre @$_admin @after_m12_presentation @tgn @_tested @_done @selenium
+        @m13 @_requested @$_call_centre @$_admin @after_m12_presentation @tgn @_tested @_done @selenium
         Scenario: I can select for which agents display the results
           Given I have user with email ccagent01@nbs.com and role call_centre_agent
           And user ccagent01@nbs.com with role call_centre_agent exists with attributes "first_name:Greg,last_name:Foam"
@@ -772,14 +772,14 @@ Feature: Agent campaign - management
           And I should see translated "production.show.view.header"
 
 
-        @m14 @requested @my_results @$_call_centre @tgn @_done @tested_elsewhere
+        @m14 @_requested @my_results @$_call_centre @tgn @_done @tested_elsewhere
         Scenario: I should see "My results" renamed to "Production" and displayed the same way as campaign's "Results"
 
-        @m14 @requested @my_results @$_admin @tgn @_done @tested_elsewhere
+        @m14 @_requested @my_results @$_admin @tgn @_done @tested_elsewhere
         Scenario: I should see "My results" renamed to "Production" and displayed the same way as campaign's "Results"
 
         #8315
-        @m22 @requested @selenium @is @_done @_tested
+        @m22 @_requested @is @_done @_tested
         Scenario: I can click to duplicate a campaign (data, briefing)
           Given I am not sign in
           And I visit domain http://localhost
@@ -794,26 +794,26 @@ Feature: Agent campaign - management
           And I should see "Copy of Testing"
 
         #8315
-        @m22 @requested @is @_done @_tested_elsewhere
+        @m22 @_requested @is @_done @_tested_elsewhere
         Scenario: When I duplicate a campaign, agents and their assigments should be copied
 
         #8315
-        @m22 @requested @is @_done @_tested_elsewhere
+        @m22 @_requested @is @_done @_tested_elsewhere
         Scenario: When I duplicate a campaign, materials repository should be copied
 
         #8315
-        @m22 @requested @is @_done @_tested_elsewhere
+        @m22 @_requested @is @_done @_tested_elsewhere
         Scenario: When I duplicate a campaign, customization emails and other data should be copied
 
         #9143
-        @m25 @requested @_done @_tested @tgn
+        @m25 @_requested @_done @_tested @tgn
         Scenario: As call centre I can go to production from campaign edit
           And I follow translated "layout.main_menu.admin.campaigns"
           And I follow translated "campaigns.edit.edit_button"
           And I should see translated "campaigns.edit.production"
 
         #9143
-        @m25 @requested @selenium @_done @_tested @tgn
+        @m25 @_requested @selenium @_done @_tested @tgn
         Scenario: As call centre I can go to agent work screen from campaign edit
           Given I add user "translator_call_centre@nbs.com" to campaign "Testing Two"
           And I add user "translator_call_centre_agent@nbs.com" to campaign "Testing Two"
@@ -830,7 +830,7 @@ Feature: Agent campaign - management
 
 
         #9143
-        @m25 @requested @_done @_tested @tgn
+        @m25 @_requested @_done @_tested @tgn
         Scenario: As admin I can go to production from campaign edit
           Given I am not sign in
           And I sign in as blazejek@gmail.com with password secret
@@ -839,7 +839,7 @@ Feature: Agent campaign - management
           And I should see translated "campaigns.edit.production"
 
         #9143
-        @m25 @requested @selenium @_tested @_done @tgn
+        @m25 @_requested @selenium @_tested @_done @tgn
         Scenario: As admin I can go to agent work screen from campaign edit
           Given I add user "translator_call_centre@nbs.com" to campaign "Testing Two"
           And I add user "translator_call_centre_agent@nbs.com" to campaign "Testing Two"
@@ -857,7 +857,7 @@ Feature: Agent campaign - management
           Then I should see translated "agent_work_screen.index.logged_as_other_user" with options "user:Ted2, translator_call_centre"
 
         #9143
-        @m25 @requested @_tested @_done @tgn
+        @m25 @_requested @_tested @_done @tgn
         Scenario: When I go to production from campaign's edit page the results are already filtered fro that campaign
           Given I am not sign in
           And I sign in as blazejek@gmail.com with password secret
@@ -869,16 +869,16 @@ Feature: Agent campaign - management
           And "campaign_ids" should be selected for value "Testing One"
 
         #9143
-        @m25 @requested @_done @_tested_elsewhere @tgn
+        @m25 @_requested @_done @_tested_elsewhere @tgn
         Scenario: When admin go to agent work screen then he can choose to become certain agent
 
         #9143
-        @m25 @requested @_done @_tested_elsewhere @tgn
+        @m25 @_requested @_done @_tested_elsewhere @tgn
         Scenario: When call centre go to agent work screen then he can choose to be himself or become certain agent of his
 
 
         #8891
-        @m26 @requested @selenium @_done @_tested @tgn
+        @m26 @_requested @selenium @_done @_tested @tgn
         Scenario: As admin or call centre I can move selected contacts to different campaign
           And I fill in "search_with_keyword" with "Testing Two"
           And I select "all" from "search_with_state"
@@ -897,7 +897,7 @@ Feature: Agent campaign - management
           And campaign "Testing One" should have contact named "Moveable contact"
 
         #8891
-        @m26 @requested @selenium @_done @_tested @tgn
+        @m26 @_requested @selenium @_done @_tested @tgn
         Scenario: As admin or call centre I can duplicate selected contacts to different campaign
           And I fill in "search_with_keyword" with "Testing Two"
           And I select "all" from "search_with_state"
@@ -917,11 +917,11 @@ Feature: Agent campaign - management
 
 
         #8891
-        @m26 @requested @_done @_tested_elsewhere @tgn
+        @m26 @_requested @_done @_tested_elsewhere @tgn
         Scenario: As call centre I can move or duplicate contacts to campaigns that are assigned to me
 
         #6553
-        @m25 @requested @selenium @_done @_tested
+        @m25 @_requested @selenium @_done @_tested
         Scenario: In production I can see Export all button beside the search button
           Then I create call result
           Then I execute js for display action block for "campaigns"
@@ -930,7 +930,7 @@ Feature: Agent campaign - management
           Then I should see translated "campaigns.show.export_button"
 
         #6553
-        @m25 @requested @selenium @_done @_tested
+        @m25 @_requested @selenium @_done @_tested
         Scenario: In production the export button exports all results matched by filters
           Then I create call result
           Then I execute js for display action block for "campaigns"
@@ -939,15 +939,15 @@ Feature: Agent campaign - management
           Then I follow translated "campaigns.show.export_button"
 
         #10255
-        @m29 @requested @tgn @_done @_tested
+        @m29 @_requested @tgn @_done @_tested
         Scenario: When I access campaigns from menu I should see only active by default
           And "search_with_state" should be selected for value "active"
 
         #10612
-        @m30 @requested
+        @m30 @_requested
         Scenario: I should see number of contacts with callback result assigned on campaigns listing
 
         #When you duplicate a camping you should be asked:
         #Move agent time and result to new camping (yes / no / cancel)
-        @m30 @requested @_done @_tested_elsewhere @tgn
+        @m30 @_requested @_done @_tested_elsewhere @tgn
         Scenario: I should be asked to move results/time when I duplicate a campaign

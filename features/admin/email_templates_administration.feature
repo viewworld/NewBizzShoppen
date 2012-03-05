@@ -53,11 +53,11 @@ Scenario: I can edit email template for send material result type
   Then I should see "Additional materials"
   And I should see "result_send_material"
 
-@m13 @requested @auto_buy @is @_done @_tested
+@m13 @_requested @auto_buy @is @_done @_tested
 Scenario: I can edit global email template to be sent when lead is bought
   Then I should see "Bought lead notification"
 
-@m13 @requested @auto_buy @is @_done @_tested
+@m13 @_requested @auto_buy @is @_done @_tested
 Scenario: I can edit category specific email template to be sent when lead is bought
   Then I follow translated "layout.main_menu.shared.browse_leads"
   When I uncheck "search_with_unique"
@@ -72,7 +72,7 @@ Scenario: I can edit category specific email template to be sent when lead is bo
   Then I should see translated "administration.category_email_templates.update.controller.successful_update_notice"
   Then category "Electronics" has email template - "Yes"
 
-@m17 @requested @email_signature @is @_done @_tested @tc_file_mgmt
+@m17 @_requested @email_signature @is @_done @_tested @tc_file_mgmt
 Scenario: For each country I can specify email signature
   Then I follow translated "layout.main_menu.admin.countries"
   Then I follow translated "administration.countries.index.view.edit" within "#country_actions_td_United_Kingdom"
@@ -85,19 +85,19 @@ Scenario: For each country I can specify email signature
   Then last email sent should have content "marvel vs dc comics"
   Then last email sent should have content "original/sample.jpg"
 
-@m17 @requested @email_signature @is @_done @tested_elsewhere
+@m17 @_requested @email_signature @is @_done @tested_elsewhere
 Scenario: The email signature should include Fairleads logo
 
 #8823
-@m25 @requested @_done @is @_tested_elsewhere
+@m25 @_requested @_done @is @_tested_elsewhere
 Scenario: Every email should have a list of all variables that can used within its body
 
 #8823
-@m25 @requested @_done @tgn @_non_testable
+@m25 @_requested @_done @tgn @_non_testable
 Scenario: I choose available variables from the ckeditor popup
 
-@m30 @requested
+@m30 @_requested
 Scenario: I can customize signature for each email template
 
-@m30 @requested
+@m30 @_requested
 Scenario: Customized email template signature has priority over country signature

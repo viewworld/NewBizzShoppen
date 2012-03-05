@@ -94,7 +94,7 @@ Scenario: I cannot see unique categories not assigned to me in Browse leads
 # contact e-mail
 # Contact phone
 # How many leads do you need a month:
-@m13 @requested @request_leads @ao @$_guest @_done @_tested
+@m13 @_requested @request_leads @ao @$_guest @_done @_tested
 Scenario: I can request more leads for category
   Given there are no leads
   And Category TestingMoreLeadsRequest is created

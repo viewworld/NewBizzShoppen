@@ -1,4 +1,4 @@
-@m16 @deals_rating_and_comments @_deals @requested @$_procurement_manager @tgn
+@m16 @deals_rating_and_comments @_deals @_requested @$_procurement_manager @tgn
 Feature: Rating and comments
 
 Background:
@@ -38,7 +38,7 @@ Scenario: All comments regarding deals should be public
   And I should see translated "deals.listing.no_comments"
 
 #7802
-@m20 @requested @is @_done @_tested
+@m20 @_requested @is @_done @_tested
 Scenario: I can see rating when I am not logged in or my role is not purchase manager
   When I sign out
   And I am on the home page

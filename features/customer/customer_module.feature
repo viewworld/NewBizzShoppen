@@ -66,13 +66,13 @@ Scenario: I can select multiple lead areas/countries that I am interested in
 #  And I press translated "supplier.interests.edit.view.button_update"
 #  Then I should see translated "supplier.interests.update.flash.interests_update_successful"
 
-@m5 @tgn @_tested @_deprecated  @requested @_done
+@m5 @tgn @_tested @_deprecated  @_requested @_done
 Scenario: I can select "all" as a Deal value
 #  And I check "user_all_deal_values_enabled"
 #  And I press translated "supplier.interests.edit.view.button_update"
 #  Then I should see translated "supplier.interests.update.flash.interests_update_successful"
 
-@m5 @unique_categories @added @_tested @tgn @requested @_done
+@m5 @unique_categories @added @_tested @tgn @_requested @_done
 Scenario: I should not see unique categories I'm not assigned to on my interests page
   Given Category Computers is created
   And category "Computers" is unique for user with email "bob@person.com" role "supplier"
@@ -82,7 +82,7 @@ Scenario: I should not see unique categories I'm not assigned to on my interests
   And I should see "Leisure"
   And I should see "Computers"
 
-@m5 @unique_categories @added @_tested @tgn @requested @_done
+@m5 @unique_categories @added @_tested @tgn @_requested @_done
 Scenario: I should not see categories on my interests page when I'm assigned to unique category
   Given I have user with email other_buyer34525biz@nbs.com and role supplier
   And Category OthersBuyerCategory is created
@@ -96,7 +96,7 @@ Scenario: I should not see categories on my interests page when I'm assigned to 
   And I should see "Computers"
   And I should not see "OthersBuyerCategory"
 
-@m5 @unique_categories @added @_tested @tgn @requested @_done
+@m5 @unique_categories @added @_tested @tgn @_requested @_done
 Scenario: I should have my interests fixed to the unique category I'm assigned to
   Given there are no categories
   Given Category Computers is created
@@ -105,7 +105,7 @@ Scenario: I should have my interests fixed to the unique category I'm assigned t
   Then checkbox named "category_" should be checked
 
 #home page is not used anymore
-@added @m6 @ao @_done @_tested  @requested @_deprecated
+@added @m6 @ao @_done @_tested  @_requested @_deprecated
 Scenario: If customer is category buyer he/she can see also unique categories
 #  When I sign out
 #  And Category named "Best Leads" already exists
@@ -118,7 +118,7 @@ Scenario: If customer is category buyer he/she can see also unique categories
 #  Then I should see "Best Leads"
 #  And I should see "Unique Leads"
 
-@added @m6 @ao @_done @_tested  @requested
+@added @m6 @ao @_done @_tested  @_requested
 Scenario: If customer is category buyer with assigned unique categories he can access them
   When I sign out
   And Category named "Best Leads" already exists
@@ -139,7 +139,7 @@ Scenario: If customer is category buyer with assigned unique categories he can a
 
 # all countries are selected after sign up
 # https://redmine.selleo.com/issues/5423
-@added @tgn @_tested @requested @_deprecated @_done
+@added @tgn @_tested @_requested @_deprecated @_done
 Scenario: On the interests page the country should be selected based on current locale
 
 @m6 @tgn @_tested @selenium @_done
@@ -200,7 +200,7 @@ Scenario: I can use "Advanced search" in Browse leads with following fields: Dea
   And I should see "Super printers #2"
   And I should not see "Super printers #3"
 
-@requested @m8 @tgn @selenium @_tested @_done
+@_requested @m8 @tgn @selenium @_tested @_done
 Scenario: Advanced search in browse leads should be hidden by default
   Given Category Computers is created
   And I go to browse leads
@@ -208,7 +208,7 @@ Scenario: Advanced search in browse leads should be hidden by default
   And I follow translated "common.advanced_search"
   Then I should see translated "leads.index.search.deal_value_from_label"
 
-@requested @m8b @tgn @selenium @_tested @_done
+@_requested @m8b @tgn @selenium @_tested @_done
 Scenario: Advanced search in browse leads should contain regions and all fields should be included in the hidden advanced search except keyword
   Given country "Denmark" has regions "DK region #1, DK region #2"
   And I have user with email agent01@nbs.com and role agent
@@ -229,18 +229,18 @@ Scenario: Advanced search in browse leads should contain regions and all fields 
 
 # On the configure you interests page there should be a back button, when it is selected from my profile page
 # except for first login
-@m7 @requested @tgn @_tested @_deprecated @_done
+@m7 @_requested @tgn @_tested @_deprecated @_done
 Scenario: I can see a back button when on configure interests page
 #  Given I should not see "Back"
 #  When I go to my profile
 #  And I follow translated "my_profile.edit.view.interests_settings"
 #  Then I should see "Back"
 
-@m10 @requested @_done @_tested
+@m10 @_requested @_done @_tested
 Scenario: After first login I should be redirected to my home page instead of interests config
   Then I should be on supplier home
 
-@m10 @requested @_done @_tested
+@m10 @_requested @_done @_tested
 Scenario: Interests are automatically configured after account is created - all countries and categories should be selected with disabled notifications
   When I am on supplier interests page
   Then checkbox named "country_1" should be checked

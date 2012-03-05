@@ -97,7 +97,7 @@ Feature: Customer signup
 #    And I press translated "supplier_accounts.new.view.button_create_account"
 #    Then I should see translated "activerecord.errors.messages.taken"
 
-  @m21 @requested @subscriptions @selenium @_done @_tested @tgn
+  @m21 @_requested @subscriptions @selenium @_done @_tested @tgn
   Scenario: Free subscription doesn't allow to create deals but user can buy leads
     And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     And I sign in as buyer@nbs.com with password secret
@@ -110,7 +110,7 @@ Feature: Customer signup
     And I fill in "deal_header" with "Templates deal test"
 
 
-  @m21 @requested @subscriptions @tested_elsewhere @_done @tgn
+  @m21 @_requested @subscriptions @tested_elsewhere @_done @tgn
   Scenario: When supplier is not big buyer and tries to creates the deal then the created company category will not be autobuy
 
   @subscriptions @m24 @tgn @selenium @_done @_tested

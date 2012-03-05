@@ -1,7 +1,7 @@
 Feature: Deals search panel
 
   #7803
-  @m20 @requested @is @_done @_tested @_deprecated
+  @m20 @_requested @is @_done @_tested @_deprecated
   Scenario: Searching should be across all categories (remove the checkboxes in adv search) and should include fields like name, description, company name
 #    When Deal category Primo is created
 #    And a deal named "DealInPrimo" exists within category "Primo"

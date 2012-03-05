@@ -113,7 +113,7 @@ Scenario: I can reply to existing comment thread
   Then I should see "Reply to First Lead1 comment"
   And I should see "Body reply to First Lead1 comment"
 
-@requested @m10 @tgn @selenium @m10 @_tested @_done
+@_requested @m10 @tgn @selenium @m10 @_tested @_done
 Scenario: I can block a comment
   Given a lead Lead#6 exists within category Computers and is bought by user customer2@nbs.com with role supplier
   And comment thread for lead "Lead#6" was posted by users "customer2@nbs.com, admin1@nbs.com, customer2@nbs.com"
@@ -131,7 +131,7 @@ Scenario: I can block a comment
   And I should see "Comment title #2"
   And I should see "Comment title #3"
 
-@requested @m10 @selenium @_tested @_done
+@_requested @m10 @selenium @_tested @_done
 Scenario:  When comment is blocked I should not see it's children
   Given someone is signed up and confirmed as user with email customer99@nbs.com and password secret and role supplier
   And a lead Lead#6 exists within category Computers and is bought by user customer99@nbs.com with role supplier
@@ -162,7 +162,7 @@ Scenario:  When comment is blocked I should not see it's children
   And I should not see "Comment title #2"
   And I should not see "Comment title #3"
 
-@requested @m10 @selenium @tgn @_tested @_done @faircalls
+@_requested @m10 @selenium @tgn @_tested @_done @faircalls
 Scenario: I can block particular agent from further dialog with given buyer
   Given someone is signed up and confirmed as user with email agent99@nbs.com and password secret and role agent
   And lead Lead#6 is created by user agent99@nbs.com with role agent
@@ -181,7 +181,7 @@ Scenario: I can block particular agent from further dialog with given buyer
   Then I should not see translated "comments.threads.show.view.reply"
 
 # filter on screen name, email address, company name
-@requested @m10 @tgn @_tested @_done
+@_requested @m10 @tgn @_tested @_done
 Scenario: I can filter by users - any user involved in the conversation
   Given there are no leads
   And I have user with email agent99@nbs.com and role agent
@@ -204,7 +204,7 @@ Scenario: I can filter by users - any user involved in the conversation
   And I should not see "Lead#7"
   And I should not see "Lead#6"
 
-@requested @m10 @tgn @selenium @_tested @_done
+@_requested @m10 @tgn @selenium @_tested @_done
 Scenario: I can see Hide/Show links beside the destroy link to collapse/expand certain conversations (threads)
   Given a lead Lead#6 exists within category Computers and is bought by user customer2@nbs.com with role supplier
   And I have user with email agent1@nbs.com and role agent

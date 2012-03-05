@@ -173,7 +173,7 @@ Scenario: Call centre agents should inherit the certification of a call centre
 Scenario: Call centre should have refreshed stats just like the agents
 
 # 4871
-@m11 @requested @_done @_tested
+@m11 @_requested @_done @_tested
 Scenario: Call centers is able to reset and set password to all his agents
   Given an user with role call_centre_agent and email ccagent@person.com belongs to call centre call_centre@person.com
   And I go to call centre agents
@@ -197,14 +197,14 @@ Scenario: Call centers is able to reset and set password to all his agents
   And a password reset message should be sent to ccagent@person.com
 
 # look for call_results.table.export_to_csv
-@m11 @requested @is @_done @_tested_elsewhere
+@m11 @_requested @is @_done @_tested_elsewhere
 Scenario: I can view the contact on agent work screen when I click it on results listing
 
 # look for call_results.table.export_to_csv
-@m11 @requested @is @_done @_tested_elsewhere
+@m11 @_requested @is @_done @_tested_elsewhere
 Scenario: I can export all contacts with final results to a csv file
 
-@_done @_tested @is @m11 @requested
+@_done @_tested @is @m11 @_requested
 Scenario: Call centers is able to reset password to all his agents
   Given I go to the homepage
   And I am not sign in
@@ -215,7 +215,7 @@ Scenario: Call centers is able to reset password to all his agents
   Then I should see translated "administration.password.destroy.flash.password_reset_successful"
   Then a call_center password reset message should be sent to translator_call_centre_agent@nbs.com
 
-@added @_done @_tested @is @m11 @requested
+@added @_done @_tested @is @m11 @_requested
 Scenario: Call centers is able to set password to all his agents
   Given I am on the homepage
   And I am not sign in
@@ -232,7 +232,7 @@ Scenario: Call centers is able to set password to all his agents
   Then I sign in as translator_call_centre_agent@nbs.com with password 3343secret33234
   Then I should see translated "devise.sessions.signed_in"
 
-@_done @_tested @m11 @requested @is
+@_done @_tested @m11 @_requested @is
 Scenario: Call centers is able to skip email confirmation when creating new agent
   Given I am on the homepage
   And I am not sign in

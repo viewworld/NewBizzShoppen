@@ -1,4 +1,4 @@
-@m26 @requested @agent_timesheets @ao
+@m26 @_requested @agent_timesheets @ao
 Feature: Agent timesheets - agent timesheet
 
   @selenium @_done @_tested
@@ -92,7 +92,7 @@ Feature: Agent timesheets - agent timesheet
   Scenario: I should see total value created
 
   #9877
-  @m28 @requested @selenium @_done @_tested
+  @m28 @_requested @selenium @_done @_tested
   Scenario: I should see first log in / last log in instead of first value / last value
     Given there are no cached timesheets
     Given user translator_call_centre@nbs.com with role call_centre exists with attributes "first_name: Ted, company_name:Russia Today"
@@ -117,9 +117,9 @@ Feature: Agent timesheets - agent timesheet
     And I should see translated "agent_timesheets.index.agent_time_sheet.log_out"
 
   #9877
-  @m28 @requested @_done @_tested_elsewhere
+  @m28 @_requested @_done @_tested_elsewhere
   Scenario: I should see cost the same way as value created (for fixed value ((cost/completion rate)/total time spent)*agent's time spent)
 
   #9877
-  @m28 @requested @tgn @_done @_tested_elsewhere
+  @m28 @_requested @tgn @_done @_tested_elsewhere
   Scenario: I should see total cost percent calculated as ((value created / Cost)-1)*100

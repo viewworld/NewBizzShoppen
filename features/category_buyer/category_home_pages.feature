@@ -1,4 +1,4 @@
-@m5 @ao @category_home_pages  @requested
+@m5 @ao @category_home_pages  @_requested
 Feature: Category home pages
 
   @_done
@@ -165,10 +165,10 @@ Feature: Category home pages
   @_done @_tested_elsewhere
   Scenario: When clicking on the row with lead (as customer in leads catalogue), prompt user if he wishes to add a lead to cart (and do so if he agrees)
 
-  @m14 @requested @$_category_buyer @auto_buy @is @_done @_tested_elsewhere
+  @m14 @_requested @$_category_buyer @auto_buy @is @_done @_tested_elsewhere
   Scenario: I should see "Description" in the right column instead of "Latest leads" when I have auto-buy enabled
 
-  @m14 @requested @$_category_buyer @auto_buy @is @_done @_tested
+  @m14 @_requested @$_category_buyer @auto_buy @is @_done @_tested
   Scenario: I should not have access to "Browse leads" when I have auto-buy enabled
     When Category named "Best Leads" already exists
     And I am on the home page

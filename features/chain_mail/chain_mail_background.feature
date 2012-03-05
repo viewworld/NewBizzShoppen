@@ -1,5 +1,5 @@
 #10199
-@m30 @requested @chain_mail
+@m30 @chain_mail @_requested
 Feature: Chain mail background
 
   Scenario: All emails in Chain should be sheduled

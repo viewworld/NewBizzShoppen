@@ -62,7 +62,7 @@ Feature: User Account - Profile edit
 
   #5941
   #in user profile
-  @requested @$_customer @m12 @notifications @tgn @_tested @_done
+  @_requested @$_customer @m12 @notifications @tgn @_tested @_done
   Scenario: I can select to be notified instantly, once a day or once a week on new leads
     Given I am not sign in
     And I am on the homepage
@@ -77,20 +77,20 @@ Feature: User Account - Profile edit
   #Go to their profile page
   #Clik on link to thid party login (Display facbokk, linkeid and google icons)
   #The user login and their facebook account is linked to the apporpiate sevice.
-  @requested @$_all @m12 @janrain @is @_done @not_testable
+  @_requested @$_all @m12 @janrain @is @_done @not_testable
   Scenario: I can link my fairleads account with Facebook/Google/Linkedin account
 
-  @requested @$_all @m12 @janrain @is @_done @not_testable
+  @_requested @$_all @m12 @janrain @is @_done @not_testable
   Scenario: I can unlink Facebook/Google/Linkedin account from my fairleads account
 
-  @requested @$_all @m12 @janrain @is @_done @not_testable
+  @_requested @$_all @m12 @janrain @is @_done @not_testable
   Scenario: Only one Facebook/Google/Linkedin account can be connected to fairleads account
     
   @m12 @$_all @is
   Scenario: I can see time zone for user
 
   #9509
-  @m26 @requested @tgn @_done @_tested
+  @m26 @_requested @tgn @_done @_tested
   Scenario: As category supplier I should not see Change account to normal supplier
     Given I am not sign in
     And I have user with email category_supplier@nbs.com and role category_supplier
@@ -99,12 +99,12 @@ Feature: User Account - Profile edit
     And I should not see translated "my_profile.edit.view.remove_category_supplier"
 
   #9503
-  @m26 @requested @tgn @_done @_tested
+  @m26 @_requested @tgn @_done @_tested
   Scenario: The OK button on my profile should redirect to main page
     When I go to my profile page
     Then I press translated "password.edit.view.button_update_user"
     And I should be on the homepage
 
   #9782
-  @m27 @requested @tgn @_done @_tested_elsewhere
+  @m27 @_requested @tgn @_done @_tested_elsewhere
   Scenario: There should not be screen name for any role in the system

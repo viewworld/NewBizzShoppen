@@ -35,7 +35,7 @@ Scenario: I can see list of invoices pending creation
   Then I should see "304.35"
   Then I should see "41.22"
 
-@m5 @ao @added @_done @_tested  @requested
+@m5 @ao @added @_done @_tested  @_requested
 Scenario: I can see list of invoices pending creation grouped by currency
   Given I am not sign in
   Given I have user with email bigbuyer1@person.com and role supplier
@@ -127,7 +127,7 @@ Scenario: I should see on the upper right corner there should be a total of the 
   And I should see translated "administration.upcoming_invoices.index.view.total"
   And I should see "2"
 
-@m5 @added @tgn @sprint_5_corrections @_tested  @requested @_done
+@m5 @added @tgn @sprint_5_corrections @_tested  @_requested @_done
 Scenario: I should be able to write a custom text on the invoice
   Given invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "charge_vat:0"
   And I go to administration invoices
@@ -368,7 +368,7 @@ Scenario: I can send invoice to given email address (as an attachment)
 @tgn @_done @non_testable
 Scenario: I can print out invoice (bypassing PDF)
 
-@tgn @m6 @added @_tested  @requested @_done
+@tgn @m6 @added @_tested  @_requested @_done
 Scenario: I can credit an invoice ...
   Given I have user with email big_buyer.biz@nbs.com and role supplier
   And User big_buyer.biz@nbs.com with role supplier is big buyer
@@ -382,7 +382,7 @@ Scenario: I can credit an invoice ...
   And I should see "0.00"
   And I should see "Paid"
 
-@tgn @added @_tested @selenium @requested @_done
+@tgn @added @_tested @selenium @_requested @_done
 Scenario: I can bulk set selected invoices as paid
   Given invoice exists for user "kastomer@nbs.fake" with role "supplier"
   And invoice exists for user "kastomer@nbs.fake" with role "supplier"
@@ -392,21 +392,21 @@ Scenario: I can bulk set selected invoices as paid
   Then I should see translated "flash.bulk_invoice_update.update.notice"
   Then I should see "Paid"
 
-@tgn @added @_tested @requested @_done
+@tgn @added @_tested @_requested @_done
 Scenario: I can create invoice for any customer from users tab
   Given I go to administration users
   And I click hidden translated link "administration.users.index.view.create_invoice"
   Then I press translated "administration.invoices.new.view.button_create"
   And I should see translated "administration.invoices.edit.view.form.general_information"
 
-@tgn @added @_tested @requested @_done
+@tgn @added @_tested @_requested @_done
 Scenario: I can create invoice for any customer from users tab
   Given I go to administration users
   And I click hidden translated link "administration.users.index.view.create_invoice"
   Then I press translated "administration.invoices.new.view.button_create"
   And I should see translated "administration.invoices.edit.view.form.general_information"
 
-@added @m4b @_done  @requested
+@added @m4b @_done  @_requested
 Scenario: EAN should be visible if filled
   When invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "ean_number:123456"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
@@ -414,7 +414,7 @@ Scenario: EAN should be visible if filled
   And I follow translated "administration.invoices.index.view.show_invoice"
   Then I should see translated "administration.invoices.show.view.ean_number"
 
-@added @m4b @_done  @requested
+@added @m4b @_done  @_requested
 Scenario: EAN should not be visible if not filled
   When invoice exists for user "kastomer@nbs.fake" with role "supplier"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
@@ -422,7 +422,7 @@ Scenario: EAN should not be visible if not filled
   And I follow translated "administration.invoices.index.view.show_invoice"
   Then I should not see translated "administration.invoices.show.view.ean_number"
 
-@added @m4b @_done  @requested
+@added @m4b @_done  @_requested
 Scenario: I should not see amounts grouped by vat rate when vat is paid in customer country
   When user "kastomer@nbs.fake" with role "supplier" has attributes "not_charge_vat:1"
   And invoice exists for user "kastomer@nbs.fake" with role "supplier"
@@ -432,7 +432,7 @@ Scenario: I should not see amounts grouped by vat rate when vat is paid in custo
   Then I should not see translated "administration.invoices.show.view.including"
   And I should not see "122" within ".totals"
 
-@added @m4b @_done  @requested
+@added @m4b @_done  @_requested
 Scenario: I should see amounts grouped by vat rate when vat is not paid in customer country
   When user "kastomer@nbs.fake" with role "supplier" has attributes "not_charge_vat:0"
   And invoice exists for user "kastomer@nbs.fake" with role "supplier"
@@ -506,7 +506,7 @@ Scenario: Include users name, company and user email when filtering invoices
   Then I should see "88.32"
   And I should not see "77.99"
 
-@m5 @tgn @_tested @requested @_done
+@m5 @tgn @_tested @_requested @_done
 Scenario: On Invoices listing there should be sums present in top right hand corner (total, total paid, total unpaid)
   Given I have user with email bigbuyer1@person.com and role supplier
   And User bigbuyer1@person.com with role supplier is big buyer
@@ -552,7 +552,7 @@ Scenario: I can see customer and seller addresses on invoice
   And I should see "Michalowicza" within ".from_to_table tr:nth-child(2) td:nth-child(2)"
 
 # You should be able to select seller on the edit invoice note, which will fill out the details on the seller on the invoice (display dropdown over seller information fields)
-@ao @requested @m7 @selenium @_done @_tested
+@ao @_requested @m7 @selenium @_done @_tested
 Scenario: I can select a seller on the edit inovice page
   Given there is a seller with attributes "company_name:SomeSeller,default:1" for country "Denmark"
   And seller "SomeSeller" has address "address_line_1:Prosta"
@@ -575,7 +575,7 @@ Scenario: I can select a seller on the edit inovice page
   And I should see "Kaminskiego" within ".from_to_table"
 
 # On the invoice, remove the text (labels) “address line 1, address line 2, address line 3”, leave zip code and country lables though
-@ao @requested @m7 @_done @_tested
+@ao @_requested @m7 @_done @_tested
 Scenario: I can't see address line x labels
   Given I have user with email bigbuyer1@person.com and role supplier
   And User bigbuyer1@person.com with role supplier is big buyer
@@ -589,7 +589,7 @@ Scenario: I can't see address line x labels
   And I should not see translated "administration.invoices.show.view.bank_address_line_1"
 
 # The “VAT paid in customer country” label, should be renamed “Charge VAT”, the VAT paid field on the invoice should be removed (i.e. “VAT Paid: No” - both show view and pdf)
-@ao @requested @m7 @_done @_tested
+@ao @_requested @m7 @_done @_tested
 Scenario: VAT paid in customer country should be renamed to 'Charge VAT' and I can't see VAT paid field neither on page nor on pdf
   Given I have user with email bigbuyer1@person.com and role supplier
   And User bigbuyer1@person.com with role supplier is big buyer
@@ -603,7 +603,7 @@ Scenario: VAT paid in customer country should be renamed to 'Charge VAT' and I c
   Then I should see "Charge VAT"
 
 # If “Charge VAT” is set to false, do not display “VAT spec” section in show view and pdf
-@ao @requested @m7 @_done @_tested
+@ao @_requested @m7 @_done @_tested
 Scenario: I can't see VAT spec section when Carge VAT is set to false
   Given invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "charge_vat:0"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
@@ -611,7 +611,7 @@ Scenario: I can't see VAT spec section when Carge VAT is set to false
   And I follow translated "administration.invoices.index.view.show_invoice"
   Then I should not see translated "administration.invoices.show.view.vat_spec"
 
-@ao @added @requested @m7 @_done @_tested
+@ao @added @_requested @m7 @_done @_tested
 Scenario: I can see VAT spec section when Carge VAT is set to false
   Given invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "charge_vat:1"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
@@ -619,7 +619,7 @@ Scenario: I can see VAT spec section when Carge VAT is set to false
   And I follow translated "administration.invoices.index.view.show_invoice"
   Then I should see translated "administration.invoices.show.view.vat_spec"
 
-@m21 @requested @tgn @_tested @_done
+@m21 @_requested @tgn @_tested @_done
 Scenario: I can see invoices generated from debtors tab
   And User kastomer@nbs.fake with role supplier is big buyer
   And a lead TestLead1 exists within category Computers and is bought by user kastomer@nbs.fake with role supplier
@@ -630,7 +630,7 @@ Scenario: I can see invoices generated from debtors tab
   When I click hidden link by url regex "/administration\/invoicing\/invoices$/"
   Then I should see "Janko Muzykant"
 
-@m21 @requested @tgn @selenium @_done @_tested
+@m21 @_requested @tgn @selenium @_done @_tested
 Scenario: I can resend invoice to selected user from invoices table menu
   Given invoice exists for user "kastomer@nbs.fake" with role "supplier"
   When invoice line for first invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
@@ -640,7 +640,7 @@ Scenario: I can resend invoice to selected user from invoices table menu
   And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d+\/mailings\/new/"
   Then I press translated "administration.invoices.mailing.new.view.send"
 
-@m21 @requested @tgn @selenium @_tested @_done
+@m21 @_requested @tgn @selenium @_tested @_done
 Scenario: I can bulk send invoices to selected users
   Given someone is signed up and confirmed as user with email kastomer2@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello2 Ltd"
   Given invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "charge_vat:0"
@@ -656,7 +656,7 @@ Scenario: I can bulk send invoices to selected users
   Then last "2" emails should be sent to recipients "kastomer@nbs.fake,kastomer2@nbs.fake"
   And I should see translated "flash.bulk_mailings.invoices_sent"
 
-@m21 @requested @tgn @_done @_tested @selenium
+@m21 @_requested @tgn @_done @_tested @selenium
 Scenario: I can see warning in a popup when trying to send invoice which has been already sent or is paid
   Given invoice exists for user "kastomer@nbs.fake" with role "supplier"
   When invoice line for first invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
@@ -666,5 +666,5 @@ Scenario: I can see warning in a popup when trying to send invoice which has bee
   Then I confirm a js popup on the next step
   And I follow translated "administration.invoices.show.view.send"
 
-@m22 @requested @tgn @_done @_non_testable
+@m22 @_requested @tgn @_done @_non_testable
 Scenario: I should see a warning that invoice has been already sent or paid (accurate message)

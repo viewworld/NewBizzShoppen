@@ -1,4 +1,4 @@
-@m21 @requested @fairdeals_search @ao
+@m21 @_requested @fairdeals_search @ao
 Feature: Fairdeals global search
 
   Background:

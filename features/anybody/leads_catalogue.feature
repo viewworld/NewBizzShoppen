@@ -97,7 +97,7 @@ Scenario: Add blurb or info text to leads listing "To view lead details click bu
 @m0 @statistics
 Scenario: Statistics for exposures and clicks are stored per date
 
-@m10 @requested @_done @_tested
+@m10 @_requested @_done @_tested
 Scenario: I should see tree with category checkboxes beneath the search filter instead of select with categories
     When Category named "HP" already exists within category named "Computers"
     And lead Hapeki exists within category HP
@@ -107,7 +107,7 @@ Scenario: I should see tree with category checkboxes beneath the search filter i
     And I should see "HP" within "table.categories_table"
     And I should see "Hapeki"
 
-@m10 @requested @_done @_tested
+@m10 @_requested @_done @_tested
 Scenario: I should be able to select categories from different levels of the tree and see their leads
   When there are no leads
   And lead Hapeki exists within category Computers
@@ -128,16 +128,16 @@ Scenario: I should be able to select categories from different levels of the tre
   And I should see "Makbuki"
 
 # 5768
-@m11 @requested @is @_done @_not_testable
+@m11 @_requested @is @_done @_not_testable
 Scenario: I can see a certification icon next to lead header if lead is cerified
 
 # 5768
-@m11 @requested @is @_done @_not_testable
+@m11 @_requested @is @_done @_not_testable
 Scenario: If a linkedin/faceboook url is specified then I can see facebook/linkedin icon next to lead header
 
 # 5767
 # remove the icon from the right and put that text instead
-@m11 @requested @is @_tested @_done
+@m11 @_requested @is @_tested @_done
 Scenario: If a lead is certified then I see "Certified by procurement: (yes/no)"
   Given Category named "Sample category" already exists
   And Lead named "Lead sample" exists within "Sample category" category
@@ -147,7 +147,7 @@ Scenario: If a lead is certified then I see "Certified by procurement: (yes/no)"
 
 # 5766
 # the "certification" we have now is about agent's so it should be removed
-@m11 @requested @tgn @_tested @_done
+@m11 @_requested @tgn @_tested @_done
 Scenario: I should see "Agent's certification" instead of "Certification"
   Given Category named "Sample category" already exists
   And Lead named "Lead sample" exists within "Sample category" category
@@ -156,7 +156,7 @@ Scenario: I should see "Agent's certification" instead of "Certification"
   And I should see translated "leads.listing.agent_certification_label"
 
 # 5763
-@m11 @requested @tgn @selenium @_tested @_done
+@m11 @_requested @tgn @selenium @_tested @_done
 Scenario: I can see categories tree when I click advanced search
   Given Category named "Sample category" already exists
   And Category named "Sample category#2" already exists within category named "Sample category"
@@ -169,7 +169,7 @@ Scenario: I can see categories tree when I click advanced search
 
 # 5762
 # do not display other root categories. for examples when you select "Electronics" from browse lead then show categories tree only for Electronics and no other like Business, Leisure etc
-@m11 @requested @tgn @selenium @_done @_tested
+@m11 @_requested @tgn @selenium @_done @_tested
 Scenario: I should see only tree for selected root category
   Given Category named "Sample category" already exists
   And Category named "Sample category#2" already exists within category named "Sample category"
@@ -185,7 +185,7 @@ Scenario: I should see only tree for selected root category
   And I should not see "Computers"
   And I should not see "Business"
 
-@m13 @requested @request_leads @ao @$_guest @_done @_tested
+@m13 @_requested @request_leads @ao @$_guest @_done @_tested
 Scenario: I can request a category and more leads for category as a guest
   When there are no leads
   And I follow translated "layout.main_menu.shared.category_request"
@@ -197,7 +197,7 @@ Scenario: I can request a category and more leads for category as a guest
 
 #6054
 # If a category has "0" leads it should display "Sold out" instead.
-@m13 @requested @ao @$_guest @_done @_tested
+@m13 @_requested @ao @$_guest @_done @_tested
 Scenario: I can see "Sold out" message when there are no leads in category
   Given there are no categories
   And Category named "Sample category" already exists
@@ -207,7 +207,7 @@ Scenario: I can see "Sold out" message when there are no leads in category
   Then I should see translated "layout.main_menu.shared.sold_out" within "#categories_table tbody tr:nth-child(1) td:nth-child(3)"
   And I should not see translated "layout.main_menu.shared.sold_out" within "#categories_table tbody tr:nth-child(2) td:nth-child(3)"
 
-@m14 @requested @$_guest @request_more_leads @ao @_done @_tested
+@m14 @_requested @$_guest @request_more_leads @ao @_done @_tested
 Scenario: I can provide additional information in Note field when requesting more leads for category
   When there are no leads
   And I follow translated "layout.main_menu.shared.category_request"
@@ -224,7 +224,7 @@ Scenario: I can provide additional information in Note field when requesting mor
   And last email sent should have been sent to cc "zorro@zorro.pl"
   And last email sent should have content "blah note blah blah"
 
-@m14 @requested @$_guest @request_more_leads @ao @_done @_tested_elsewhere
+@m14 @_requested @$_guest @request_more_leads @ao @_done @_tested_elsewhere
 Scenario: I should receive copy of the email which is sent when I request more leads for category
 
 # only child (1 level)
