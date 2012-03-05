@@ -779,13 +779,18 @@ Feature: Agent campaign - management
         Scenario: I should see "My results" renamed to "Production" and displayed the same way as campaign's "Results"
 
         #8315
-        @m22 @requested @is @_done @_tested
+        @m22 @requested @selenium @is @_done @_tested
         Scenario: I can click to duplicate a campaign (data, briefing)
           Given I am not sign in
+          And I visit domain http://localhost
           And I sign in as blazejek@gmail.com with password secret
           And I follow translated "layout.main_menu.admin.campaigns"
-          And I follow translated "campaigns.index.duplicate"
+          And display all hidden actions
+          And I confirm a js popup on the next step
+          When I follow translated action "campaigns.index.duplicate" within row containing "Testing One"
+          And I wait 5 second
           And I should see translated "flash.campaigns.duplicate.notice"
+          And I follow translated "layout.main_menu.admin.campaigns"
           And I should see "Copy of Testing"
 
         #8315
@@ -944,5 +949,5 @@ Feature: Agent campaign - management
 
         #When you duplicate a camping you should be asked:
         #Move agent time and result to new camping (yes / no / cancel)
-        @m30 @requested
+        @m30 @requested @_done @_tested_elsewhere @tgn
         Scenario: I should be asked to move results/time when I duplicate a campaign

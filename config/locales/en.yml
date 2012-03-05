@@ -471,6 +471,7 @@ en:
       not_allowed_to_edit: "You are not allowed to edit this settings"
       duplicate: "Duplicate"
       duplication_confirmation: "Are you sure you want to duplicate the campaign?"
+      duplication_with_call_results_and_time: "Would you like to duplicate call results and time spent for that campaign as well?"
     call_result_details_table:
       date: Date
       contact: Contact
@@ -4494,4 +4495,8 @@ en:
       ready:
         title: "The Agent Timesheet report you've requested is now ready"
         text: "<a href=\"%{url}\">Go to the report</a> or <a href=\"%{url}\" target=\"_blank\">open it in a new tab</a>"
+    campaign:
+      duplicated:
+        title: "Campaign %{campaign_name} has been successfully duplicated"
+        text: "<a href=\"%{url}\">Go to the campaign</a> or <a href=\"%{url}\" target=\"_blank\">open it in a new tab</a>"
 

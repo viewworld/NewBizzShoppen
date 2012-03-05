@@ -294,16 +294,24 @@ class Campaign < ActiveRecord::Base
     start_date <= Date.today and end_date >= Date.today
   end
 
-  def duplicate!
-    campaign = self.deep_clone!(:with_callbacks => false, :include => [:campaigns_results, :user_session_logs,
-                                                                       {:contacts => [{:call_results => [:call_log, :result_values, :archived_email]}, :contact_past_user_assignments, {:lead_template_values => :lead_template_value_translations}, :translations]},
-                                                                       {:send_material_email_template => :translations},
-                                                                       {:upgrade_contact_to_buyer_email_template => :translations},
-                                                                       {:upgrade_contact_to_category_buyer_email_template => :translations},
-                                                                       {:upgrade_contact_to_member_email_template => :translations}])
+  def duplicate!(with_call_results=true, user_to_notify=nil)
+    clone_config = [:campaigns_results,
+                     {:send_material_email_template => :translations},
+                     {:upgrade_contact_to_buyer_email_template => :translations},
+                     {:upgrade_contact_to_category_buyer_email_template => :translations},
+                     {:upgrade_contact_to_member_email_template => :translations}]
+
+    if with_call_results
+      clone_config << :user_session_logs
+      clone_config << {:contacts => [{:call_results => [:call_log, :result_values, :archived_email]}, :contact_past_user_assignments, {:lead_template_values => :lead_template_value_translations}, :translations]}
+    else
+      clone_config << {:contacts => [{:lead_template_values => :lead_template_value_translations}, :translations]}
+    end
+
+    campaign = self.deep_clone!(:with_callbacks => false, :include => clone_config)
 
     campaign.users = users
-    campaign.name = "Copy of #{name} #{Time.now.strftime("%d-%m-%Y %H:%M")}"
+    campaign.name = "Copy of #{name} #{Time.now.strftime("%d-%m-%Y %H:%M:%S")}"
     campaign.save
 
     results = ResultValue.where("field_type::INT = ? and leads.campaign_id = ?", ResultField::MATERIAL, campaign.id).
@@ -320,6 +328,15 @@ class Campaign < ActiveRecord::Base
         selected.each { |rv| rv.update_attribute(:value, _material.id.to_s) }
       end
     end
+
+    unless with_call_results
+      campaign.contacts.each { |contact| contact.update_attributes(:completed => false, :agent_id => nil) }
+    end
+
+    if user_to_notify
+      user_to_notify.notify!(:title => I18n.t("notifications.campaign.duplicated.title", :campaign_name => name), :text => I18n.t("notifications.campaign.duplicated.text", :url => "http://#{user_to_notify.domain_name}/callers/campaigns/#{campaign.id}/edit"))
+    end
+
     campaign
   end
   handle_asynchronously :duplicate!, :queue => 'duplications'

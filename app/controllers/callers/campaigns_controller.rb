@@ -50,12 +50,15 @@ class Callers::CampaignsController < Callers::CallerController
   def duplicate
     @campaign = Campaign.find(params[:id])
     if current_user.admin?
-      @campaign.duplicate!
-      flash[:notice] = I18n.t("flash.campaigns.duplicate.notice")
+      @campaign.duplicate!(params[:with_call_results].to_i == 1, current_user)
     else
       raise CanCan::AccessDenied
     end
-    redirect_to :back
+
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js {  }
+    end
   end
 
   def result_details
