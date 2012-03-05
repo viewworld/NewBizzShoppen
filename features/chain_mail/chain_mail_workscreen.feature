@@ -1,5 +1,5 @@
 #10199
-@m30 @requested @chain_mail
+@m30 @chain_mail @_requested
 Feature: Chain mail workscreen
 
   Scenario: I can check box to attach Chain mail to each result

@@ -96,8 +96,8 @@ Scenario: Every email should have a list of all variables that can used within i
 @m25 @requested @_done @tgn @_non_testable
 Scenario: I choose available variables from the ckeditor popup
 
-@m30 @requested
+@m30 @_requested
 Scenario: I can customize signature for each email template
 
-@m30 @requested
+@m30 @_requested
 Scenario: Customized email template signature has priority over country signature
