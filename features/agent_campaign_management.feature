@@ -941,3 +941,8 @@ Feature: Agent campaign - management
         #10612
         @m30 @requested
         Scenario: I should see number of contacts with callback result assigned on campaigns listing
+
+        #When you duplicate a camping you should be asked:
+        #Move agent time and result to new camping (yes / no / cancel)
+        @m30 @requested
+        Scenario: I should be asked to move results/time when I duplicate a campaign
