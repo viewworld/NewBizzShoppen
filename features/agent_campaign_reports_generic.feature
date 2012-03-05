@@ -46,3 +46,6 @@ Feature: Reports
   #9889
   @m28 @requested @tgn @_done @_tested_elsewhere
   Scenario: Dynamic result value should be included into reports
+
+  @m30 @requested @tgn @_done @_tested_elsewhere
+  Scenario: When I choose some results for campaign then the results set shown in table's column Status should be scoped but not the numerical values in the report
