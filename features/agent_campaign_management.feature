@@ -944,8 +944,14 @@ Feature: Agent campaign - management
           And "search_with_state" should be selected for value "active"
 
         #10612
-        @m30 @_requested
+        @m30 @_requested @_done @_tested @tgn
         Scenario: I should see number of contacts with callback result assigned on campaigns listing
+          Given I sign out
+          And I sign in as translator_call_centre_agent@nbs.com with password secret
+          And I create call result for campaign "Testing One"
+          And I create call result for campaign "Testing One"
+          And I follow translated "layout.main_menu.call_centre.campaigns"
+          And I should see "2"
 
         #When you duplicate a camping you should be asked:
         #Move agent time and result to new camping (yes / no / cancel)

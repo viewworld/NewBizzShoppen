@@ -113,6 +113,19 @@ Then /^I create call result$/ do
                                                    :result_field_id => ResultField.find_by_name("Call back date")}])
 end
 
+Then /^I create call result for campaign "([^"]*)"$/ do |campaign_name|
+  campaign = Campaign.where(:name => campaign_name).first
+  contact = campaign.contacts.where(:pending => false).first
+  agent = User.find_by_email("translator_call_centre_agent@nbs.com")
+  CallResult.create!(:contact_id => contact.id,
+                    :result_id => Result.find_by_name("Call back").id,
+                    :creator_id => agent.id,
+                    :creator_type => "User::CallCentreAgent",
+                    :result_values_attributes => [{:value => "#{(Campaign.find_by_name("Testing One").start_date).to_s} 12:12",
+                                                   :result_field_id => ResultField.find_by_name("Call back date")}])
+  contact.update_attribute(:agent_id, agent.id)
+end
+
 Then /^I add user "([^\"]*)" to campaign "([^\"]*)"$/ do |user_email, campaign_name|
   CampaignsUser.create(:campaign_id => Campaign.find_by_name(campaign_name).id, :user_id => User.find_by_email(user_email).id)
 end

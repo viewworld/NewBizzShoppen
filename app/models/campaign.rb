@@ -365,4 +365,13 @@ class Campaign < ActiveRecord::Base
     self.deleted_at = nil
     self.save(:validate => false)
   end
+
+  def call_backs_count(user=nil)
+    call_back = Result.where("name = ?", "Call back").first
+    contacts_scope = Contact.joins(:call_results).where("leads.campaign_id = ? AND call_results.result_id = ? AND leads.completed IS FALSE AND pending IS TRUE", id, call_back.id)
+    if user and (user.call_centre_agent? or user.call_centre? or user.agent?)
+      contacts_scope = contacts_scope.where("leads.agent_id IN (?)", user.call_centre? ? [user.id] + user.subaccount_ids : user.id)
+    end
+    contacts_scope.select("DISTINCT(leads.id)").count
+  end
 end

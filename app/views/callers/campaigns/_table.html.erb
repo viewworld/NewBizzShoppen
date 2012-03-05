@@ -9,7 +9,7 @@
     <th class="hl"></th>
     <th><%= link_to t("campaigns.table.name"), order_for_scoped_search(:name) %></th>
     <th><%= link_to t("campaigns.table.category"), order_for_scoped_search(:category) %></th>
-    <th><%= link_to t("campaigns.table.country"), order_for_scoped_search(:country) %></th>
+    <th><%= t("campaigns.table.call_backs") %></th>
     <th class="ta_r"><%= link_to t("campaigns.table.start_date"), order_for_scoped_search(:start_date) %></th>
     <th class="ta_r"><%= link_to t("campaigns.table.end_date"), order_for_scoped_search(:end_date) %></th>
     <th class="ta_r"><%= t("campaigns.table.agents") %></th>
@@ -39,7 +39,7 @@
           <%= campaign.name %>
         </td>
         <td><%= campaign.category %></td>
-        <td><%= campaign.country %></td>
+        <td><%= campaign.call_backs_count(current_user) %></td>
         <td class="ta_r"><%= campaign.start_date %></td>
         <td class="ta_r"><%= campaign.end_date %></td>
         <td class="ta_r"><%= campaign.users.count %></td>
