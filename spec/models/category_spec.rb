@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Lead do
+describe Category do
 
   before(:each) do
     @category1 = LeadCategory.make!
@@ -64,6 +64,64 @@ describe Lead do
       Lead.make!(:category_id => @category1.id, :published => false)
       @category1.reload
     }.should_not change(@category1, :published_leads_count).by(1)
+  end
+
+  context "destroy" do
+    before(:each) do
+      @lead_category = LeadCategory.make!
+      @deal_category = DealCategory.make!
+    end
+    it "should not be destroyed when leads present" do
+      Lead.make!(:category => @lead_category)
+      @lead_category.reload
+      @lead_category.destroy.should be_false
+    end
+
+    it "should not be destroyed when deals present" do
+      Deal.make!(:category => @deal_category)
+      @deal_category.reload
+      @deal_category.destroy.should be_false
+    end
+
+    it "should not be destroyed when countries present" do
+      @lead_category.countries << Country.make!
+      @lead_category.save
+      @lead_category.destroy.should be_false
+    end
+
+    it "should not be destroyed when customers present" do
+      @lead_category.customers << User::Supplier.make!
+      @lead_category.save
+      @lead_category.destroy.should be_false
+    end
+
+    it "should not be destroyed when agents present" do
+      @lead_category.agents << User::Agent.make!
+      @lead_category.save
+      @lead_category.destroy.should be_false
+    end
+
+    it "should not be destroyed when campaigns present" do
+      Campaign.make!(:category => @lead_category)
+      @lead_category.reload
+      @lead_category.destroy.should be_false
+    end
+
+    it "should not be destroyed when buying users present" do
+      @category_supplier = User::CategorySupplier.make!
+      @category_supplier.buying_categories << @lead_category
+      @category_supplier.save
+      @lead_category.reload
+      @lead_category.destroy.should be_false
+    end
+
+    it "should not be destroyed when subscriber users present" do
+      @category_supplier = User::Supplier.make!
+      @category_supplier.categories << @lead_category
+      @category_supplier.save
+      @lead_category.reload
+      @lead_category.destroy.should be_false
+    end
   end
 
 end
