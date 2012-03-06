@@ -65,7 +65,7 @@ CKEDITOR.editorConfig = function( config )
         ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
         ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
         ['Link','Unlink','Anchor'],
-        ['Table','HorizontalRule','Smiley','SpecialChar','PageBreak']
+        ['Image', 'Table','HorizontalRule','Smiley','SpecialChar','PageBreak']
     ];
 
   config.toolbar_EmailPopup =
@@ -79,7 +79,7 @@ CKEDITOR.editorConfig = function( config )
         ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
         ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
         ['Link','Unlink','Anchor'],
-        ['Table','HorizontalRule','Smiley','SpecialChar','PageBreak', 'insertEmailTemplVars', 'insertDealLinks']
+        ['Image', 'Table','HorizontalRule','Smiley','SpecialChar','PageBreak', 'insertEmailTemplVars', 'insertDealLinks']
     ];
 
   config.toolbar_EmailSignature =
