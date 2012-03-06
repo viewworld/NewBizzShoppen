@@ -1,0 +1,13 @@
+<div id="chain_mail_item_field_form_<%= f.object.new_record? ? 'chain_mail_chain_mail_items_attributes_0' : f.object.id %>">
+  <hl/>
+  <div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r labels_100">
+      <ol>
+        <li><%= f.input :body %></li>
+        <li class="commit">
+          <%= bt_link_to :remove, t("views.button_delete"), "javascript:void(0)", :onclick => "remove_chain_mail_item('#{f.object.new_record? ? 'chain_mail_chain_mail_items_attributes_0' : f.object.id}', #{f.object.new_record? ? 'null' : f.object.id})" %>
+        </li>
+      </ol>
+    </fieldset>
+  </div>
+</div>

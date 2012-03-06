@@ -17,6 +17,12 @@ module ApplicationHelper
     end
   end
 
+  def generic_table(collection, options = {}, &block)
+    @hb = ApplicationHelper::HelperBlocks.new(:headers, :cells)
+    block.call(@hb)
+    render(:partial => '/shared/generic_table', :locals => options.merge({:collection => collection}.merge(@hb.results)))
+  end
+
   def fields_for_leads_translations(f)
     new_object = current_user.has_any_role?(:admin, :call_centre) ? Lead.new : current_user.leads.build
     new_object.lead_translations = [LeadTranslation.new]
@@ -65,6 +71,14 @@ module ApplicationHelper
       render("subscription_plan_line_fields", :f => builder)
     end
     "add_subscription_plan_line(this, \"#{escape_javascript(fields)}\")"
+  end
+
+  def fields_for_associated(klass, form, partial)
+    _instance = klass.new
+    _fields = form.fields_for klass.to_s.tableize, _instance do |builder|
+      render(partial, :f => builder)
+    end
+    "add_#{klass.to_s.underscore}(this, \"#{escape_javascript(_fields)}\")"
   end
 
   def available_templates_list(lead)

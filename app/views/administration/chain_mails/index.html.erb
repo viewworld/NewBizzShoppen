@@ -1,0 +1,21 @@
+<column-mc:>
+
+  <header back="true"></header>
+
+  <% if @chain_mails.empty? %>
+      <%= blank_state_message %>
+  <% else %>
+      <%= generic_table @chain_mails, :table_class => "chain_mails", :cols => 1 do |blocks| %>
+
+          <% blocks.headers do %>
+            <th><%= t("chain_mails.table.name") %></th>
+          <% end %>
+              
+          <% blocks.cells do |chain_mail| %>
+              <td class="cl"><%= chain_mail.name %></td>
+          <% end %>
+
+      <% end %>
+  <% end %>
+
+</column-mc:>

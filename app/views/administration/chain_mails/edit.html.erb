@@ -1,0 +1,49 @@
+<column-mc:>
+  <%= javascript_include_tag :ckeditor %>
+
+  <header back="true"><%= t("chain_mails.edit.header", :name => @chain_mail.name) %></header>
+
+  <%= semantic_form_for [:administration, @chain_mail], :url => administration_chain_mail_path(@chain_mail), :method => :put do |form| %>
+      <frm title="#{t('chain_mails.edit.title')}">
+        <param:content>
+          <%= render :partial => 'form', :locals => {:form => form} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("views.button_update") %>
+          </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function t("views.button_cancel"), href(administration_chain_mails_path) %>
+          </ibt>          
+        </param:actions>
+      </frm>
+  <% end %>
+
+</column-mc:>
+
+<js:>
+  <script>
+      var nestedFormsCount = <%= @chain_mail.chain_mail_items.size %>;
+
+      function add_chain_mail_item(link, content) {
+          var new_id = new Date().getTime();
+          content = content.replace(/chain_mail_chain_mail_items_attributes_\d+/g, "chain_mail_chain_mail_items_attributes_" + nestedFormsCount.toString());
+          content = content.replace(/chain_mail\[chain_mail_items_attributes\]\[\d+\]/g, "chain_mail[chain_mail_items_attributes][" + new_id.toString() + "]");
+          $('.nested_chain_mail_items_fields_container:last').append(content);
+          nestedFormsCount = nestedFormsCount + 1;
+      }
+
+      function remove_chain_mail_item(id, record_id) {
+          nestedFormsCount = nestedFormsCount - 1;
+
+          if (record_id == null) {
+              $('#chain_mail_item_field_form_' + id).remove();
+          }
+          else {
+              $('#chain_mail_item_field_form_' + id).hide();
+              $('#destroy_hidden_field_' + record_id.toString()).val('true')
+          }
+
+      }
+  </script>
+</js:>

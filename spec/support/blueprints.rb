@@ -536,3 +536,11 @@ Region.blueprint do
   name { Faker::Lorem.words(2).to_s.capitalize }
   country { Country.make! }
 end
+
+ChainMail.blueprint do
+  name { Faker::Lorem.words(2).to_s.capitalize }
+  first_execution_delay { 1 }
+  cycle_time { 1 }
+  execution_time { "10:00" }
+  execution_condition { 0 }
+end

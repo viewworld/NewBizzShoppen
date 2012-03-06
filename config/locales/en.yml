@@ -113,6 +113,7 @@ en:
         news: "News"
         hints: "Hints"
         translations: "Translations"
+        chain_mail: "Chain mail"
         currencies: "Currencies"
         countries: Countries
         languages: "Languages"
@@ -303,11 +304,29 @@ en:
     dashboard: "Dashboard"
 
   views:
+    button_update: "Save"
+    button_cancel: "Cancel"
+    button_add: "Add"
+    button_delete: "Delete"
     pagination:
       next: "Next &rsaquo;"
       last: "Last &raquo;"
       first: "&laquo; First"
       previous: "&lsaquo; Previous"
+    generic_table:
+      actions: "Actions"
+      show: "Show"
+      edit: "Edit"
+      delete: "Delete"
+      confirmation: "Are you sure?"
+
+  chain_mails:
+    table:
+      name: "Name"
+    edit:
+      header: "Editing chain mail: %{name}"
+      title: "Edit"
+
 
   lead_templates:
     table:

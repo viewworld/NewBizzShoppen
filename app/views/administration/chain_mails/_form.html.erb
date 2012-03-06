@@ -1,0 +1,23 @@
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_100">
+    <ol>
+      <%= form.input :name %>
+      <%= form.input :first_execution_delay %>
+      <%= form.input :cycle_time %>
+      <%= form.input :execution_time %>
+    </ol>
+  </fieldset>
+
+  <%= form.fields_for :chain_mail_items, @chain_mail.chain_mail_items do |chain_mail_item_form| %>
+      <%= render :partial => '/administration/chain_mails/chain_mail_item_form' %>
+  <% end %>
+
+  <hl/>
+
+  <div class="pdd_20" style="padding-top:10px">
+    <%= bt_link_to :plus, t("views.button_add"), "javascript:void(0)", :onclick => "#{fields_for_associated(ChainMailItem, form, '/administration/chain_mails/chain_mail_item_form')}" %>
+  </div>
+
+  <div class="nested_chain_mail_items_fields_container"></div>
+
+</div>
