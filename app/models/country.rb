@@ -6,6 +6,7 @@ class Country < ActiveRecord::Base
   has_many :regions, :order => "name"
   has_one :vat_rate, :dependent => :destroy
   has_one :logo, :class_name => "Asset::CountryLogo", :as => :resource, :conditions => "asset_type = 'Asset::CountryLogo'", :dependent => :destroy
+  has_one :email_template_signature, :as => :related
 
   validates_presence_of :name
   validates_uniqueness_of :name
@@ -16,6 +17,7 @@ class Country < ActiveRecord::Base
 
   accepts_nested_attributes_for :regions, :allow_destroy => true
   accepts_nested_attributes_for :logo, :reject_if => proc { |attributes| attributes['asset'].blank? }
+  accepts_nested_attributes_for :email_template_signature
 
   scope :with_leads, select("DISTINCT(name), countries.*").joins("RIGHT JOIN leads on countries.id=leads.country_id")
   scope :with_leads_in_categories, lambda { |category_ids| with_leads.where("leads.category_id IN (?)", category_ids) }
@@ -24,6 +26,22 @@ class Country < ActiveRecord::Base
   scope :with_lead_purchase_owner, lambda { |owner| select("DISTINCT(name), countries.*").where("lead_purchases.requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL", owner.id).joins("RIGHT JOIN leads on countries.id=leads.country_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
   scope :with_lead_purchase_assignee, lambda { |assignee| select("DISTINCT(name), countries.*").where("lead_purchases.assignee_id = ? and accessible_from IS NOT NULL", assignee.id).joins("RIGHT JOIN leads on countries.id=leads.country_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
   scope :within_accessible_categories, lambda { |supplier| where("leads.category_id NOT IN (?)", supplier.accessible_categories_ids) }
+
+  after_save :create_email_template_signature_if_locale_present
+
+
+  private
+
+  def create_email_template_signature_if_locale_present
+    if !locale.blank? and email_template_signature.nil?
+      orig_locale = I18n.locale
+      I18n.locale = locale
+      EmailTemplateSignature.create(:related => self)
+      I18n.locale = orig_locale
+    end
+  end
+
+  public
 
   def email_template_signature_logo_url
     (logo and logo.id) ? logo.url : default_email_template_signature_logo_url

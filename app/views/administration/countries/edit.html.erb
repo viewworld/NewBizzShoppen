@@ -1,4 +1,7 @@
 <column-mc:>
+  <%= javascript_include_tag :ckeditor %>
+  <%= javascript_include_tag "popup_email_template_editor" %>
+  <%= javascript_include_tag "email_template_signature" %>
   <header back="true"><%= t("administration.countries.edit.view.header", :name => @country.name) %></header>
 
   <%= semantic_form_for @country, :url => administration_country_path, :html => {:multipart => true} do |form| %>

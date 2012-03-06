@@ -1,48 +1,18 @@
-<div class="column_left">
+
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_200">
       <ol class="align_inputs">
         <%= form.input :name %>
         <%= form.input :locale %>
         <%= form.input :detailed_locale %>
-        <%= form.input :email_template_signature, :as => :text, :input_html => {:style => "width:230px;height:60px"} %>
-      </ol>
-    </fieldset>
-  </div>
-</div>
-
-<div class="column_right">
-  <div class="pdd_10 no_pdd_t">
-    <fieldset class="inputs labels_ta_r labels_200">
-      <ol class="align_inputs">
-        <% if @country.logo%>
-            <ol>
-              <li class="string">
-                <label><%= t("administration.countries.form.logo_label") %></label>
-
-                <div class="txt assets_elements">
-                  <ul>
-                    <li>
-                      <% if @country.logo.id %>
-                        <%= image_tag @country.logo.url %>
-                      <% else %>
-                          <%= custom_error_for_object(@country.logo) %>
-                      <% end %>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-            </ol>
+        <%= form.fields_for :email_template_signature, @country.email_template_signature do |builder| %>
+           <li><%= builder.text_area :body %></li>
         <% end %>
-        <%= form.semantic_fields_for :logo, @country.logo || @country.build_logo do |logo_form| %>
-            <ol>
-            <%= logo_form.input :asset, :as => :file, :label => t("administration.countries.form.upload_logo_label") %>
-            </ol>
-      <% end %>
       </ol>
     </fieldset>
+
   </div>
-</div>
+
 <clb/>
 
 <%= form.fields_for :regions, @country.regions do |builder| %>
@@ -57,6 +27,8 @@
 </div>
 
 <script>
+  setup_ckeditor_for_field("country_email_template_signature_attributes_body");
+
     var nestedFormsCount = <%= @country.regions.size %>;
 
     function add_region(link, content) {
