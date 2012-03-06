@@ -72,18 +72,23 @@ Scenario: I can edit category specific email template to be sent when lead is bo
   Then I should see translated "administration.category_email_templates.update.controller.successful_update_notice"
   Then category "Electronics" has email template - "Yes"
 
-@m17 @_requested @email_signature @is @_done @_tested @tc_file_mgmt
+@m17 @_requested @email_signature @is @_done @_tested @selenium
 Scenario: For each country I can specify email signature
-  Then I follow translated "layout.main_menu.admin.countries"
+  Then I click hidden link by url regex "/administration\/countries/"
+  And display all hidden actions
   Then I follow translated "administration.countries.index.view.edit" within "#country_actions_td_United_Kingdom"
-  Then I fill in "country_email_template_signature" with "marvel vs dc comics"
-  Then attach the file "sample image" to "country_logo_attributes_asset"
+  And I wait 3 second
+  And I fill in "country_email_template_signature_attributes_body" ckeditor with "some signature no 3928"
   Then I press translated "administration.countries.edit.view.button_update_country"
-  Then I follow translated "administration.countries.index.view.edit" within "#country_actions_td_United_Kingdom"
-  Then I should see translated "administration.countries.form.logo_label"
   Then I send email using email template "certification_request" for email address "john@rambo.pl"
-  Then last email sent should have content "marvel vs dc comics"
-  Then last email sent should have content "original/sample.jpg"
+  Then last email sent should have content "some signature no 3928"
+  Then I follow edit for email template named "certification_request"
+  And I check "email_template_enable_custom_signature"
+  And I wait 3 second
+  And I fill in "email_template_email_template_signature_attributes_body" ckeditor with "some signature that is custom 323"
+  And I press translated "administration.email_templates.edit.view.button_update"
+  Then I send email using email template "certification_request" for email address "john@rambo.pl"
+  Then last email sent should have content "some signature that is custom 323"
 
 @m17 @_requested @email_signature @is @_done @tested_elsewhere
 Scenario: The email signature should include Fairleads logo
@@ -96,8 +101,8 @@ Scenario: Every email should have a list of all variables that can used within i
 @m25 @_requested @_done @tgn @_non_testable
 Scenario: I choose available variables from the ckeditor popup
 
-@m30 @_requested
+@m30 @_requested @_done @_tested_elsewhere @tgn
 Scenario: I can customize signature for each email template
 
-@m30 @_requested
+@m30 @_requested @_done @_tested_elsewhere @tgn
 Scenario: Customized email template signature has priority over country signature

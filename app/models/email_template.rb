@@ -44,7 +44,7 @@ class EmailTemplate < ActiveRecord::Base
   #Template cannot be cached due to dynamic translations
   def template
     template_content = body
-    template_content += signature unless preview
+    template_content += signature.to_s unless preview
     Liquid::Template.parse(template_content)
   end
 end
