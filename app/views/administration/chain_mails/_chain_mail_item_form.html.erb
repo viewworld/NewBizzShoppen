@@ -3,9 +3,23 @@
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_100">
       <ol>
-        <li><%= f.input :body %></li>
+        <li>
+          <%= f.input :body #,
+                        #:as => :ckeditor,
+                        #:label => false,
+                        #:input_html => {
+                        #    :width => '1085px',
+                        #    :height => '300px'
+                        #}
+          %>
+        </li>
         <li class="commit">
           <%= bt_link_to :remove, t("views.button_delete"), "javascript:void(0)", :onclick => "remove_chain_mail_item('#{f.object.new_record? ? 'chain_mail_chain_mail_items_attributes_0' : f.object.id}', #{f.object.new_record? ? 'null' : f.object.id})" %>
+        </li>
+        <li class="hidden">
+          <% unless f.object.new_record? %>
+              <%= f.hidden_field :_destroy, :id => "destroy_hidden_field_#{f.object.id}" %>
+          <% end %>
         </li>
       </ol>
     </fieldset>

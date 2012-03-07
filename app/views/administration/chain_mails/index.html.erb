@@ -5,7 +5,7 @@
   <% if @chain_mails.empty? %>
       <%= blank_state_message %>
   <% else %>
-      <%= generic_table @chain_mails, :table_class => "chain_mails", :cols => 1 do |blocks| %>
+      <%= generic_table @chain_mails, :table_class => "chain_mails", :default_action => :edit, :cols => 1 do |blocks| %>
 
           <% blocks.headers do %>
             <th><%= t("chain_mails.table.name") %></th>

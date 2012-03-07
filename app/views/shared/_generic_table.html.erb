@@ -23,9 +23,9 @@
         <%= with_output_buffer { block_cells.call(object) } %>
         <td class="tda ta_r">
             <ul-actions>
-              <li><%= link_to t("views.generic_table.show"), [:administration,object], :class => "default_action" %></li>
-              <li><%= link_to t("views.generic_table.edit"), [:edit,:administration,object] %></li>
-              <li><%= link_to t("views.generic_table.delete"), [:administration,object], :method => :delete, :confirm => t("views.generic_table.confirmation") %></li>
+              <li><%= link_to t("views.generic_table.show"), [:administration,object], :class => "#{'default_action' if default_action == :show}" %></li>
+              <li><%= link_to t("views.generic_table.edit"), [:edit,:administration,object], :class => "#{'default_action' if default_action == :edit}" %></li>
+              <li><%= link_to t("views.generic_table.delete"), [:administration,object], :method => :delete, :confirm => t("views.generic_table.confirmation"), :class => "#{'default_action' if default_action == :delete}" %></li>
             </ul-actions>
         </td>
         <td class="cr"></td>

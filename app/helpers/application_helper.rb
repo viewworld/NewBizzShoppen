@@ -20,6 +20,7 @@ module ApplicationHelper
   def generic_table(collection, options = {}, &block)
     @hb = ApplicationHelper::HelperBlocks.new(:headers, :cells)
     block.call(@hb)
+    options[:default_action] ||= :show
     render(:partial => '/shared/generic_table', :locals => options.merge({:collection => collection}.merge(@hb.results)))
   end
 

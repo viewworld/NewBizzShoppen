@@ -131,6 +131,16 @@
     </div>
 <% end %>
 
+<hl/>
+<div class="pdd_10">
+  <fieldset class="inputs labels_ta_r labels_200">
+    <ol class="align_inputs">
+      <%= label_tag "call_result[chain_mail_id]", "#{t("call_results.new.chain_mail")}<abbr>*</abbr>".html_safe %>
+      <%= select_tag "call_result[chain_mail_id]", options_for_select([[]]+ChainMail.active.order("name ASC").map{|cm| [cm.name,cm.id]}) %>
+    </ol>
+  </fieldset>
+</div>
+
 <script type="text/javascript">
   $("#call_result_contact_attributes_category_id").change(function(){
       var path = '<%= reload_path %>'+'&category_id='+$(this).val();
