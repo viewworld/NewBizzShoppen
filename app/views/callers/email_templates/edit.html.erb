@@ -1,6 +1,7 @@
 <column-mc:>
   <%= javascript_include_tag :ckeditor %>
   <%= javascript_include_tag "popup_email_template_editor" %>
+  <%= javascript_include_tag "email_template_signature" %>
   <header back="true"><%= t("campaigns.email_templates.edit.view.title", :name => @email_template.subject) %><%= image_tag_for_locale %></header>
 
   <%= semantic_form_for [:callers, @campaign, @email_template], :url => callers_campaign_email_template_path(@campaign,@email_template), :method => :put do |form| %>
@@ -32,5 +33,7 @@
   <script type="text/javascript">
       setup_jquery_vars_popup_dialog();
       setup_jquery_deal_links_dialog();
+      setup_ckeditor_for_field('email_template_email_template_signature_attributes_body');
+      show_hide_custom_signature();
   </script>
 </js:>

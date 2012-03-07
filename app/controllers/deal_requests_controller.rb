@@ -8,7 +8,7 @@ class DealRequestsController < ApplicationController
                                        {:subject_content => @email_preview.subject, :body_content => @email_preview.body,
                                         :bcc_recipients => @email_preview.bcc, :cc_recipients => @email_preview.cc,
                                         :reply_to => @email_preview.email_from, :sender_id => user_signed_in? ? current_user.id : nil,
-                                        :email_template_uniq_id => "deal_request_for_deal_admin"}).deliver!
+                                        :email_template_uniq_id => "deal_request_for_deal_admin", :email_template_id => @email_preview.email_template_id}).deliver!
     end
     redirect_to :back
   end

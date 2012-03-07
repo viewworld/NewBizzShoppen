@@ -8,4 +8,4 @@ set :default_environment, {
 
 set :deploy_to, "/srv/#{application}/testing"
 set :rails_env, "testing"
-set :branch, "m24_paypal_subscriptions"
+set :branch, "tgn_m30"
