@@ -3,7 +3,13 @@ Feature: Newsletter backend
 
   Scenario: When a new list is created then it is created also in Campaign Monitor
 
+  Scenario: When list is created in Campaigns monitor then the ListID is stored locally
+
   Scenario: When a new list is created for given owner for the the first time then client account is created in Campaign Monitor
+
+  Scenario: When owner is updated then he/she should be synced to Campaign monitor
+
+  Scenario: When owner is created in Campaigns monitor then the ClientID is stored locally
 
   Scenario: When a new list is created then the subscribers are exported from the sources to Campaign Monitor
 
@@ -15,7 +21,13 @@ Feature: Newsletter backend
 
   Scenario: When any previously exported subscriber from any source of any list is updated then is should be synced with Campaign Monitor
 
-  Scenario: Bounces and cancellations of subscriptions should be synced back from Campaign Monitor to the local lists
+  Scenario: Bounces should be synced back from Campaign Monitor to the local lists
+
+  Scenario: Cancellations of subscriptions should be synced back from Campaign Monitor to the local lists
+
+  Scenario: When subscriber's email is unsubscribed or bounced then it should be removed from all list's sources
+
+  Scenario: When subscriber's email is unsubscribed or bounced then it should be black listed from future usage (user should have newsletter flag off)
 
   Scenario: When subscriber is exported to the Campaign Monitor then email, full name and the following custom fields should be included: company name and zip code
 

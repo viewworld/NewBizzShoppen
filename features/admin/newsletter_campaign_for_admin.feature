@@ -11,7 +11,13 @@ Feature: Newsletter campaign for admin
 
   Scenario: I can set the current content in rich text editor
 
-  Scenario: I can select deals for current content
+  Scenario: I can click Add Deals links
+
+  Scenario: I can search the deals by text
+
+  Scenario: I can see selected deals
+
+  Scenario: I can see all deals
 
   Scenario: I can save as a draft
 
@@ -26,3 +32,5 @@ Feature: Newsletter campaign for admin
   Scenario: The template for the newsletter campaign should be publicly available under random hash name
 
   Scenario: I should see button to sign in to Campaign Monitor on the campaigns listing
+
+  Scenario: When campaign is created in Campaign Monitor then CampaignID is stored locally
