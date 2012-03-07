@@ -202,3 +202,8 @@ end
 def options_s_to_hash(options)
   Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys  
 end
+
+Then /^I follow edit for email template named "([^"]*)"$/ do |template_uniq_id|
+   template = EmailTemplate.find_by_uniq_id(template_uniq_id)
+  visit "/administration/email_templates/#{template.id}/edit"
+end

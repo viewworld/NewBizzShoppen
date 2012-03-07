@@ -15,6 +15,7 @@ class DealRequestTemplatePreview < EmailTemplatePreview
     self.subject = @email_template.render_subject(options.merge({:name => name}).stringify_keys)
     self.cc = @email_template.cc
     self.bcc = @email_template.bcc
+    self.email_template_id = @email_template.id
   end
 
 end

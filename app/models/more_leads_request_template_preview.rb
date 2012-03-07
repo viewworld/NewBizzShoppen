@@ -17,5 +17,6 @@ class MoreLeadsRequestTemplatePreview < EmailTemplatePreview
     self.subject = @email_template.render_subject(options)
     self.cc = [@email_template.cc, contact_email].compact
     self.bcc = @email_template.bcc
+    self.email_template_id = @email_template.id
   end
 end

@@ -281,11 +281,14 @@ class CallResult < ActiveRecord::Base
   def deliver_material
     template = contact.campaign.send_material_email_template || EmailTemplate.global.where(:uniq_id => 'result_send_material').first
     template = customize_email_template(template)
+    template.preview = true
 
     TemplateMailer.new(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.render({:contact_company_name => contact.company_name, :contact_name => contact.contact_name, :agent_name => creator.full_name, :agent_phone_number => creator.phone}),
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc,
-                                        :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
+                                        :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id,
+                                        :related_id => self.id, :related_type => self.class.to_s,
+                                        :email_template_id => template.id},
                                         assets_to_path_names(send_material_result_value.materials)).deliver!
   end
 
@@ -293,6 +296,7 @@ class CallResult < ActiveRecord::Base
     role = user.role_to_campaign_template_name
     template = contact.campaign.send("upgrade_contact_to_#{role}_email_template".to_sym) || EmailTemplate.global.where(:uniq_id => "upgrade_contact_to_#{role}").first
     template = customize_email_template(template)
+    template.preview = true
 
     body_content = template.render({:user => user, :password => password})
     if user.member?
@@ -302,7 +306,9 @@ class CallResult < ActiveRecord::Base
     TemplateMailer.new(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => body_content,
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc,
-                                        :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
+                                        :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id,
+                                        :related_id => self.id, :related_type => self.class.to_s,
+                                        :email_template_id => template.id},
                                         assets_to_path_names(send_material_result_value.materials)).deliver!
   end
   

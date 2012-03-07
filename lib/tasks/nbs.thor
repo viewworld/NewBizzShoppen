@@ -31,8 +31,8 @@ class Nbs < Thor
     Settings.default_group_deal_min_leads_created = 5 if Settings.default_group_deal_min_leads_created.nil?
     Settings.number_of_secondary_featured_deals = 3 if Settings.number_of_secondary_featured_deals.nil?
 
-    Country.find_or_create_by_name("Denmark", :locale => "da", :detailed_locale => "da", :vat_rate => VatRate.new(:rate => 25), :email_template_signature => "some amazing signature that will keep everyone happy all day long")
-    Country.find_or_create_by_name("United Kingdom", :locale => "en", :detailed_locale => "gb", :vat_rate => VatRate.new(:rate => 20), :email_template_signature => "some amazing signature that will keep everyone happy all day long")
+    Country.find_or_create_by_name("Denmark", :locale => "da", :detailed_locale => "da", :vat_rate => VatRate.new(:rate => 25))
+    Country.find_or_create_by_name("United Kingdom", :locale => "en", :detailed_locale => "gb", :vat_rate => VatRate.new(:rate => 20))
 
     if BankAccount.count == 0
       BankAccount.create(

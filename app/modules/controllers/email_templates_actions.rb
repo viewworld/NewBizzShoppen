@@ -7,7 +7,9 @@ module EmailTemplatesActions
 
       TemplateMailer.new(params[:email], :blank_template, Country.where(:locale => I18n.locale.to_s).first,
                                { :subject_content => StringUtils.replace_template_variables(params[:subject] || @email_template.subject),
-                                 :body_content => StringUtils.replace_template_variables(params[:body] || @email_template.body) + "<h3>#{disclaimer}</h3>" }).deliver!
+                                 :body_content => StringUtils.replace_template_variables(params[:body] || @email_template.body) + "<h3>#{disclaimer}</h3>",
+                                 :email_template_id => @email_template.id
+                               }).deliver!
     end
 
     render :nothing => true

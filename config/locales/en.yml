@@ -420,6 +420,7 @@ en:
       work_screen: Work screen
       materials_repository: "Materials repository"
       description_tooltip_blank: "(no description)"
+      call_backs: "Call backs"
     new:
       title: New campaign
       button_create: Create

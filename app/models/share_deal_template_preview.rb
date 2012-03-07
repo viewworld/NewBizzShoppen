@@ -12,5 +12,6 @@ class ShareDealTemplatePreview < EmailTemplatePreview
     self.email_from = email_from
     self.cc = @email_template.cc
     self.bcc = @email_template.bcc
+    self.email_template_id = @email_template.id
   end
 end

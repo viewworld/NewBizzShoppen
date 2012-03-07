@@ -20,6 +20,12 @@ class Administration::EmailTemplatesController < Administration::AdministrationC
     @email_templates ||= end_of_association_chain.global.paginate(:page => params[:page], :per_page => EmailTemplate.per_page)
   end
 
+  def resource
+    @email_template = EmailTemplate.find(params[:id])
+    @email_template.enable_custom_signature = @email_template.email_template_signature.present?
+    @email_template
+  end
+
   private
 
   def set_referer
