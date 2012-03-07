@@ -108,8 +108,10 @@ class ApplicationController < ActionController::Base
       elsif resource.has_role? :member and session[:site] == "fairdeals"
         root_path
       elsif resource.has_role? :category_supplier
-        if resource.with_role.parent_buying_categories.first
-          category_home_page_path(resource.with_role.parent_buying_categories.first.cached_slug)
+        if resource.with_role.parent_accessible_categories_without_auto_buy.first
+          category_home_page_path(resource.with_role.parent_accessible_categories_without_auto_buy.first.cached_slug)
+        elsif resource.with_role.parent_accessible_categories.first
+          category_home_page_path(resource.with_role.parent_accessible_categories.first.cached_slug)
         else
           flash[:notice] = t("common.no_categories_for_category_supplier")
           sign_out(resource_name)
