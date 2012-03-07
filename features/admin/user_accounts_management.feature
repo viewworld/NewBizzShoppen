@@ -978,3 +978,6 @@ Scenario: I edit user's ean number, vat number and direct phone for member
   And I fill in "user_member_company_ean_number" with "124234324324244"
   And I fill in "user_member_direct_phone_number" with "+49 234124234324324"
   And I fill in "user_member_vat_number" with "V234234234"
+
+@m31 @_requested @newsletter
+Scenario: I can mark supplier or category supplier as newsletter manager (overrides subscription properties)
