@@ -192,7 +192,11 @@ class ApplicationController < ActionController::Base
                        elsif requested_category
                          redirect_to category_home_page_path(current_user.with_role.parent_buying_categories.first.cached_slug)
                        elsif current_user.has_role?(:category_supplier)
-                         current_user.with_role.parent_accessible_categories_without_auto_buy.first
+                         if home_category = current_user.with_role.parent_accessible_categories_without_auto_buy.first and home_category
+                           home_category
+                         else
+                           current_user.with_role.parent_accessible_categories.first
+                         end
                        end
                      elsif requested_category
                        requested_category
