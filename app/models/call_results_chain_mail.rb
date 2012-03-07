@@ -11,7 +11,14 @@ class CallResultsChainMail < ActiveRecord::Base
   private
 
   def create_delayed_emails
-
+    chain_mail.chain_mail_items.each do |cmi|
+      TemplateMailer.new("aossowski@gmail.com", :blank_template, Country.get_country_from_locale,
+                                    {:subject_content => cmi.subject,
+                                     :body_content => cmi.body,
+                                     :queue => queue,
+                                     :run_at => cmi.run_at
+                                    }).deliver!
+    end
   end
 
   public

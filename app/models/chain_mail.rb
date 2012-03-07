@@ -1,14 +1,12 @@
 class ChainMail < ActiveRecord::Base
   serialize :execution_conditions
 
-  has_many :chain_mail_items, :dependent => :destroy, :order => "id ASC"
+  has_many :chain_mail_items, :dependent => :destroy, :order => "position ASC"
   has_and_belongs_to_many :call_results
 
   validates_presence_of :name, :first_execution_delay, :cycle_time, :execution_time
   validates_length_of :chain_mail_items, :execution_conditions, :minimum => 1
   validates_associated :chain_mail_items
-
-  scope :active
 
   accepts_nested_attributes_for :chain_mail_items, :allow_destroy => true
 

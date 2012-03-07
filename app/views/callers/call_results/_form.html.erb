@@ -136,7 +136,7 @@
   <fieldset class="inputs labels_ta_r labels_200">
     <ol class="align_inputs">
       <%= label_tag "call_result[chain_mail_id]", "#{t("call_results.new.chain_mail")}<abbr>*</abbr>".html_safe %>
-      <%= select_tag "call_result[chain_mail_id]", options_for_select([[]]+ChainMail.active.order("name ASC").map{|cm| [cm.name,cm.id]}) %>
+      <%= select_tag "call_result[chain_mail_id]", options_for_select([[]]+ChainMail.order("name ASC").map{|cm| [cm.name,cm.id]}, call_result.active_chain_mail_id) %>
     </ol>
   </fieldset>
 </div>

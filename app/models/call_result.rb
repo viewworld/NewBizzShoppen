@@ -12,6 +12,7 @@ class CallResult < ActiveRecord::Base
   has_one :send_material_result_value, :class_name => "ResultValue", :conditions => "result_values.field_type = '#{ResultField::MATERIAL}'"
   has_one :archived_email, :as => :related, :dependent => :destroy
   has_and_belongs_to_many :chain_mails
+  has_many :call_results_chain_mails
   accepts_nested_attributes_for :result_values, :allow_destroy => true
   accepts_nested_attributes_for :contact
 
@@ -30,7 +31,7 @@ class CallResult < ActiveRecord::Base
   after_destroy :update_completed_status, :update_pending_status, :unless => :save_without_callbacks
   before_update :process_for_changed_result_type, :unless => :save_without_callbacks
   after_save do
-    if chain_mail_id and chain_mail = ChainMail.find_by_id(chain_mail_id) and chain_mail != chain_mails.active.first
+    if chain_mail_id and chain_mail = ChainMail.find_by_id(chain_mail_id) and chain_mail != active_chain_mail
       CallResultsChainMail.disable_all_for_call_result(self)
       CallResultsChainMail.create(:call_result => self, :chain_mail_id => chain_mail_id, :active => true)
     elsif chain_mails.active.first and chain_mail_id.blank?
@@ -87,6 +88,14 @@ class CallResult < ActiveRecord::Base
 
   def to_i
     id
+  end
+
+  def active_chain_mail
+    call_results_chain_mails.active.first
+  end
+
+  def active_chain_mail_id
+    active_chain_mail ? active_chain_mail.id : nil
   end
 
   class << self

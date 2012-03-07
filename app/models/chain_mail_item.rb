@@ -1,5 +1,7 @@
 class ChainMailItem < ActiveRecord::Base
-  validates_presence_of :body, :chain_mail
+  acts_as_list :scope => :chain_mail_id
+
+  validates_presence_of :subject, :body, :chain_mail
   belongs_to :chain_mail
 
   before_destroy do
@@ -8,5 +10,11 @@ class ChainMailItem < ActiveRecord::Base
       self.errors.add(:base, :too_short, :count => 1)
       return false
     end
+  end
+
+  def run_at
+    Time.zone.parse("#{chain_mail.execution_time.hour}:#{chain_mail.execution_time.min}") +
+        chain_mail.first_execution_delay.to_i.days +
+        (position - 1) * chain_mail.cycle_time.to_i.days
   end
 end
