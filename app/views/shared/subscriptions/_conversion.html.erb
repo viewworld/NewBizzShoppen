@@ -1,4 +1,5 @@
-<% if Rails.env.production? and params[:scp] == "true" %>
+<% if Rails.env.production? and (params[:scp] == "true" or (user_signed_in? and current_user and current_user.sign_in_count == 1 and !session[:scp_shown])) %>
+    <% session[:scp_shown] = true %>
     <!-- Google Code for Subscription Conversion Page -->
     <script type="text/javascript">
     /* <![CDATA[ */
