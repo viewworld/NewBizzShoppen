@@ -76,7 +76,7 @@
 
         <% if current_user.admin? %>
             <td><%= format_date lead.created_at %></td>
-            <td><%= lead.deal ? t("leads.table.deal_source") : lead.creator.screen_name %></td>
+            <td><%= lead.deal ? t("leads.table.deal_source") : lead.creator_name %></td>
             <td><%= lead.category.name %></td>
             <td class="ta_r"><%= as_currency(lead.price, lead.currency) %></td>
             <td><%= lead.sold? ? t("common.yes_label") : t("common.no_label") %></td>
