@@ -42,10 +42,6 @@ Feature: Agent campaign - management
       Then I should see "Business" before "Electronics"
       Then I follow translated "campaigns.table.category"
       Then I should see "Electronics" before "Business"
-      Then I follow translated "campaigns.table.country"
-      Then I should see "Denmark" before "United Kingdom"
-      Then I follow translated "campaigns.table.country"
-      Then I should see "United Kingdom" before "Denmark"
       Then I follow translated "campaigns.table.start_date"
       Then I should see "Testing Two" before "Testing One"
       Then I follow translated "campaigns.table.start_date"
@@ -779,7 +775,7 @@ Feature: Agent campaign - management
         Scenario: I should see "My results" renamed to "Production" and displayed the same way as campaign's "Results"
 
         #8315
-        @m22 @_requested @is @_done @_tested
+        @m22 @_requested @is @_done @_tested @selenium
         Scenario: I can click to duplicate a campaign (data, briefing)
           Given I am not sign in
           And I visit domain http://localhost
