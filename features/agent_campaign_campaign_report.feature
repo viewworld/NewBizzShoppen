@@ -37,7 +37,6 @@ Feature: Campaign report
     And I should see translated "campaign_reports.index.table.predicted_results"
     And I should see translated "campaign_reports.index.table.success_percent"
     And I should see translated "campaign_reports.index.table.finish_cph"
-    And I should see translated "campaign_reports.index.table.final_results_ph"
     And I should see translated "campaign_reports.index.table.all_results_ph"
     And I should see translated "campaign_reports.index.table.temp_results_ph"
     And I should see translated "campaign_reports.index.table.value_ph"
