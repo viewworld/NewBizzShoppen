@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
   end
 
   def update_log_entries
-    if user_signed_in? and self.class.to_s != "UserSessionLogController"
+    if user_signed_in? and self.class.to_s != "UserSessionLogController" and self.class.to_s != "NotificationsController"
       UserSessionLog.update_end_time(session[:current_usl_global], Settings.logout_time.to_i) if session[:current_usl_global].present?
 
       other_user_id = params[:other_user_id] || session[:other_user_id]
