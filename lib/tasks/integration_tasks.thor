@@ -223,7 +223,7 @@ class IntegrationTasks < Thor
     Translation.where(:key => "campaign_reports.index.table.campaign_results", :locale => "en").first.update_attribute(:value, "Results")
     Translation.where(:key => "campaign_reports.index.table.predicted_results", :locale => "en").first.update_attribute(:value, "Prediction")
   end
-
+    
   desc "m30", ""
   def m30
     orig_locale = ::I18n.locale
@@ -235,5 +235,49 @@ class IntegrationTasks < Thor
     end
 
     ::I18n.locale = orig_locale
+  end
+
+  desc "m30a", ""
+  def m30a
+    users = [141, 143]
+    campaigns = [27, 28, 29, 30]
+
+    users.each do |user_id|
+      puts "[User: #{user_id}]"
+      campaigns.each do |campaign_id|
+        puts "[Campaign: #{campaign_id}]"
+        time_logs = UserSessionLog.where(:user_id => user_id, :campaign_id => campaign_id).where("start_time::DATE >= ?", '2012-03-02').order("start_time")
+
+        current_tl = time_logs.first
+        delete_logs = []
+
+
+        time_logs.each_with_index do |tl, i|
+          next_tl = time_logs[i+1]
+
+          if next_tl
+            if ((next_tl.start_time - tl.end_time) / 60) > 20
+              current_tl.update_attributes!(:end_time => tl.end_time, :skip_other_logs => true) unless current_tl.id == tl.id
+              puts "Update current [#{current_tl.start_time.strftime("%d-%m-%Y %H:%M:%S")} - #{current_tl.end_time.strftime("%H:%M:%S")}] to end_time =  #{tl.end_time.strftime("%H:%M:%S")}\n\n" unless current_tl.id == tl.id
+
+              delete_logs << tl unless tl.id == current_tl.id
+              delete_logs.each {|l| l.destroy }
+
+              current_tl = next_tl
+              delete_logs = []
+            else
+              delete_logs << tl unless tl.id == current_tl.id
+            end
+          else
+            current_tl.update_attributes!(:end_time => tl.end_time, :skip_other_logs => true) unless current_tl.id == tl.id
+            puts "NEXT is null; Update current [#{current_tl.start_time.strftime("%d-%m-%Y %H:%M:%S")} - #{current_tl.end_time.strftime("%H:%M:%S")}] to end_time = #{tl.end_time.strftime("%H:%M:%S")}\n\n" unless current_tl.id == tl.id
+            delete_logs << tl unless tl.id == current_tl.id
+            delete_logs.each {|l| l.destroy }
+          end
+        end
+        puts "\n"
+      end
+      puts "\n"
+    end
   end
 end
