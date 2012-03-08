@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
   end
 
   def update_log_entries
-    if user_signed_in? and self.class.to_s != "UserSessionLogController"
+    if user_signed_in? and self.class.to_s != "UserSessionLogController" and self.class.to_s != "NotificationsController"
       UserSessionLog.update_end_time(session[:current_usl_global], Settings.logout_time.to_i) if session[:current_usl_global].present?
 
       other_user_id = params[:other_user_id] || session[:other_user_id]
@@ -108,8 +108,10 @@ class ApplicationController < ActionController::Base
       elsif resource.has_role? :member and session[:site] == "fairdeals"
         root_path
       elsif resource.has_role? :category_supplier
-        if resource.with_role.parent_buying_categories.first
-          category_home_page_path(resource.with_role.parent_buying_categories.first.cached_slug)
+        if resource.with_role.parent_accessible_categories_without_auto_buy.first
+          category_home_page_path(resource.with_role.parent_accessible_categories_without_auto_buy.first.cached_slug)
+        elsif resource.with_role.parent_accessible_categories.first
+          category_home_page_path(resource.with_role.parent_accessible_categories.first.cached_slug)
         else
           flash[:notice] = t("common.no_categories_for_category_supplier")
           sign_out(resource_name)
@@ -192,7 +194,11 @@ class ApplicationController < ActionController::Base
                        elsif requested_category
                          redirect_to category_home_page_path(current_user.with_role.parent_buying_categories.first.cached_slug)
                        elsif current_user.has_role?(:category_supplier)
-                         current_user.with_role.parent_accessible_categories_without_auto_buy.first
+                         if home_category = current_user.with_role.parent_accessible_categories_without_auto_buy.first and home_category
+                           home_category
+                         else
+                           current_user.with_role.parent_accessible_categories.first
+                         end
                        end
                      elsif requested_category
                        requested_category
