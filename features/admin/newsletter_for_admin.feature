@@ -15,6 +15,9 @@ Feature: Newsletter for admin
 
   Scenario: I can choose Members (all or given subscription type) as a source
 
+  @tags
+  Scenario: I can choose any contact, member, supplier, lead that was tagged by combination of any given tags
+
   Scenario: I can choose all contacts from given TM-Campaign as a source
 
   Scenario: It should be possible to change owner of a list
@@ -22,3 +25,9 @@ Feature: Newsletter for admin
   Scenario: It should be possible to change source of a list
 
   Scenario: When I go to Newsletter I should be able to
+
+  Scenario: I should be able to see list of all created lists with headers: Owner, Name, Number of subscribers, Last sync (date)
+
+  Scenario: I should be able to Edit, Archive, Unsubscribe any list from created lists
+
+  Scenario: When I edit created list I should be able to view all the subscribers and go to edit the selected object connected to it (member, supplier, lead, contact)
