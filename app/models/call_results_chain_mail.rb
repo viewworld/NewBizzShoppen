@@ -29,6 +29,7 @@ class CallResultsChainMail < ActiveRecord::Base
 
   def self.disable_all_for_call_result(call_result)
     with_call_result(call_result).update_all("active = FALSE")
+    ::Delayed::Job.where(:queue => "call_result_#{call_result.id}_chain_mails").destroy_all
   end
 
 end

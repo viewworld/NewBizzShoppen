@@ -1,6 +1,16 @@
 <column-mc:>
 
-  <header back="true"></header>
+  <header>
+    <param:content>
+      <%= t("chain_mails.index.header") %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last"><%= bt_link_to :plus, t("chain_mails.index.new"), new_administration_chain_mail_path %></li>
+      </ul>
+    </param:actions>
+  </header>
 
   <% if @chain_mails.empty? %>
       <%= blank_state_message %>

@@ -1,10 +1,10 @@
 <column-mc:>
   <%= javascript_include_tag :ckeditor %>
 
-  <header back="true"><%= t("chain_mails.edit.header", :name => @chain_mail.name) %></header>
+  <header back="true"><%= t("chain_mails.new.header") %></header>
 
-  <%= semantic_form_for [:administration, @chain_mail], :url => administration_chain_mail_path(@chain_mail), :method => :put do |form| %>
-      <frm title="#{t('chain_mails.edit.title')}">
+  <%= semantic_form_for @chain_mail, :url => administration_chain_mails_path, :method => :post do |form| %>
+      <frm title="#{t('chain_mails.new.title')}">
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>

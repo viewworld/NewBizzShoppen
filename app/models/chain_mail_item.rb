@@ -1,7 +1,7 @@
 class ChainMailItem < ActiveRecord::Base
   acts_as_list :scope => :chain_mail_id
 
-  validates_presence_of :subject, :body, :chain_mail
+  validates_presence_of :subject, :body
   belongs_to :chain_mail
 
   before_destroy do

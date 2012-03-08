@@ -10,4 +10,11 @@ class Administration::ChainMailsController < Administration::AdministrationContr
       success.html { redirect_to administration_chain_mails_path }
     end
   end
+
+  def create
+    create! do |success, failure|
+      success.html { redirect_to administration_chain_mails_path }
+    end
+  end
+
 end

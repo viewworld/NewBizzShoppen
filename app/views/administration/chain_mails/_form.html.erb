@@ -24,3 +24,28 @@
   <div class="nested_chain_mail_items_fields_container"></div>
 
 </div>
+
+<script>
+  var nestedFormsCount = <%= @chain_mail.chain_mail_items.size %>;
+
+  function add_chain_mail_item(link, content) {
+      var new_id = new Date().getTime();
+      content = content.replace(/chain_mail_chain_mail_items_attributes_\d+/g, "chain_mail_chain_mail_items_attributes_" + nestedFormsCount.toString());
+      content = content.replace(/chain_mail\[chain_mail_items_attributes\]\[\d+\]/g, "chain_mail[chain_mail_items_attributes][" + new_id.toString() + "]");
+      $('.nested_chain_mail_items_fields_container:last').append(content);
+      nestedFormsCount = nestedFormsCount + 1;
+  }
+
+  function remove_chain_mail_item(id, record_id) {
+      nestedFormsCount = nestedFormsCount - 1;
+
+      if (record_id == null) {
+          $('#chain_mail_item_field_form_' + id).remove();
+      }
+      else {
+          $('#chain_mail_item_field_form_' + id).hide();
+          $('#destroy_hidden_field_' + record_id.toString()).val('true')
+      }
+
+  }
+</script>

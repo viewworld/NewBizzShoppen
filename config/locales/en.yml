@@ -326,6 +326,12 @@ en:
     edit:
       header: "Editing chain mail: %{name}"
       title: "Edit"
+    index:
+      header: "Chain mails"
+      new: "New chain mail"
+    new:
+      header: "New chain mail"
+      title: "New"
 
 
   lead_templates:

@@ -34,7 +34,7 @@ class CallResult < ActiveRecord::Base
     if chain_mail_id and chain_mail = ChainMail.find_by_id(chain_mail_id) and chain_mail != active_chain_mail
       CallResultsChainMail.disable_all_for_call_result(self)
       CallResultsChainMail.create(:call_result => self, :chain_mail_id => chain_mail_id, :active => true)
-    elsif chain_mails.active.first and chain_mail_id.blank?
+    elsif active_chain_mail and chain_mail_id.blank?
       CallResultsChainMail.disable_all_for_call_result(self)
     end
   end
@@ -91,7 +91,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def active_chain_mail
-    call_results_chain_mails.active.first
+    call_results_chain_mails.active.first ? call_results_chain_mails.active.first.chain_mail : nil
   end
 
   def active_chain_mail_id
