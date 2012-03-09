@@ -114,6 +114,7 @@ en:
         hints: "Hints"
         translations: "Translations"
         chain_mail: "Chain mail"
+        chain_mail_type: "Chain mail type"
         currencies: "Currencies"
         countries: Countries
         languages: "Languages"
@@ -320,17 +321,17 @@ en:
       delete: "Delete"
       confirmation: "Are you sure?"
 
-  chain_mails:
+  chain_mail_types:
     table:
       name: "Name"
     edit:
-      header: "Editing chain mail: %{name}"
+      header: "Editing chain mail type: %{name}"
       title: "Edit"
     index:
-      header: "Chain mails"
-      new: "New chain mail"
+      header: "Chain mail types"
+      new: "New chain mail type"
     new:
-      header: "New chain mail"
+      header: "New chain mail type"
       title: "New"
 
 
@@ -658,7 +659,7 @@ en:
       select_deals_for_request: "Select deals for request"
       no_deals_selected_for_request: "No deals selected for request."
       upgraded_user_has_other_errors: "Upgraded user could not be created"
-      chain_mail: "Chain mail"
+      chain_mail_type: "Chain mail type"
       number_of_emails_left_to_send_in_this_chain: "Number of emails left to send in this chain: %{count}"
     edit:
       title: Edit result
