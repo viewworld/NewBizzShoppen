@@ -2,7 +2,7 @@ class CallResult < ActiveRecord::Base
   attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_2,
                 :contact_address_line_3, :contact_zip_code, :contact_country_id, :contact_phone_number,
                 :contact_company_name, :buying_category_ids, :result_id_changed, :user_not_charge_vat, :current_user, :contact_subscription_plan_id,
-                :contact_newsletter_on, :contact_requested_deal_ids, :upgraded_user, :chain_mail_id
+                :contact_newsletter_on, :contact_requested_deal_ids, :upgraded_user
 
   belongs_to :contact
   belongs_to :result
@@ -11,8 +11,8 @@ class CallResult < ActiveRecord::Base
   has_many :result_values, :dependent => :destroy
   has_one :send_material_result_value, :class_name => "ResultValue", :conditions => "result_values.field_type = '#{ResultField::MATERIAL}'"
   has_one :archived_email, :as => :related, :dependent => :destroy
-  has_and_belongs_to_many :chain_mails
-  has_many :call_results_chain_mails
+  belongs_to :chain_mail
+  has_many :chain_mail_delayed_jobs, :class_name => '::Delayed::Job', :foreign_key => :queue, :primary_key => :chain_mail_queue, :order => "created_at DESC"
   accepts_nested_attributes_for :result_values, :allow_destroy => true
   accepts_nested_attributes_for :contact
 
@@ -31,11 +31,11 @@ class CallResult < ActiveRecord::Base
   after_destroy :update_completed_status, :update_pending_status, :unless => :save_without_callbacks
   before_update :process_for_changed_result_type, :unless => :save_without_callbacks
   after_save do
-    if chain_mail_id and chain_mail = ChainMail.find_by_id(chain_mail_id) and chain_mail != active_chain_mail
-      CallResultsChainMail.disable_all_for_call_result(self)
-      CallResultsChainMail.create(:call_result => self, :chain_mail_id => chain_mail_id, :active => true)
-    elsif active_chain_mail and chain_mail_id.blank?
-      CallResultsChainMail.disable_all_for_call_result(self)
+    if chain_mail_id_changed?
+      ChainMail.stop_sending(self)
+      if new_chain_mail = ChainMail.find_by_id(chain_mail_id)
+        new_chain_mail.start_sending(self)
+      end
     end
   end
 
@@ -90,12 +90,8 @@ class CallResult < ActiveRecord::Base
     id
   end
 
-  def active_chain_mail
-    call_results_chain_mails.active.first ? call_results_chain_mails.active.first.chain_mail : nil
-  end
-
-  def active_chain_mail_id
-    active_chain_mail ? active_chain_mail.id : nil
+  def chain_mail_queue
+    "call_result_#{id}_chain_mails"
   end
 
   class << self
