@@ -1,0 +1,36 @@
+<%= form_for material, :url => administration_chain_mail_materials_path(:format => :js, :chain_mail_id => params[:chain_mail_id], :chain_mail_item_id => params[:chain_mail_item_id]), :remote => true, :html => {:multipart => true} do |f| %>
+  <%= f.file_field :asset %>
+<% end %>
+
+<ul class="materials_list with_icon">
+  <% if materials.any? %>
+    <% materials.each do |material| %>
+      <li>
+        <%= link_to_function material.asset_file_name, "select_file_for_chain_mail_item('#{params[:chain_mail_item_id]}', #{material.id})" %>
+      </li>
+    <% end %>
+  <% else %>
+    <%= t("materials.views.index.no_materials") %>
+  <% end %>
+</ul>
+
+<script>
+$('#new_asset_chain_mail_material input').change(function(){
+ $(this).parent().ajaxSubmit({
+  beforeSubmit: function(a,f,o) {
+   o.dataType = 'script';
+  },
+  complete: function(XMLHttpRequest, textStatus) {
+   // XMLHttpRequest.responseText will contain the URL of the uploaded image.
+   // Put it in an image element you create, or do with it what you will.
+   // For example, if you have an image elemtn with id "my_image", then
+   //  $('#my_image').attr('src', XMLHttpRequest.responseText);
+   // Will set that image tag to display the uploaded image.
+  }
+ });
+});
+
+function select_file_for_chain_mail_item(chain_mail_item_id, material_id){
+    $.post('/administration/chain_mail_items/' + chain_mail_item_id + '.js', '_method=PUT&material_id=' + material_id.toString() )
+}
+</script>

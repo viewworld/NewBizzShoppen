@@ -83,6 +83,8 @@ Nbs::Application.routes.draw do
     end
     resources :paypal_notifications, :only => [:index, :show]
     resources :chain_mails
+    resources :chain_mail_items
+    resources :chain_mail_materials
     match '/dashboard' => 'dashboard#index', :as => 'dashboard'
   end
 

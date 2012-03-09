@@ -1,5 +1,7 @@
 class Administration::ChainMailsController < Administration::AdministrationController
   inherit_resources
+  set_tab "content"
+  set_subtab "chain_mail"
 
   def collection
     @chain_mails = ChainMail.order("name ASC").paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
