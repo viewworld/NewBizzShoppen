@@ -1,21 +1,22 @@
-<div id="chain_mail_item_field_form_<%= f.object.new_record? ? 'chain_mail_chain_mail_items_attributes_0' : f.object.id %>">
+<% div_chain_mail_item_html_id = f.object.new_record? ? "chain_mail_chain_mail_items_attributes_#{defined?(counter) ? counter.to_i : 0}" : f.object.id %>
+<div class="chain_mail_item" id="chain_mail_item_field_form_<%= div_chain_mail_item_html_id %>">
   <hl/>
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_100">
       <ol>
         <li>
           <%= f.input :subject, :as => :string %>
-          <%= f.input :body #,
-                        #:as => :ckeditor,
-                        #:label => false,
-                        #:input_html => {
-                        #    :width => '1085px',
-                        #    :height => '300px'
-                        #}
-          %>
+        </li>
+        <li>
+          <span class="body_ckeditor_span">
+            <%= f.text_area :body %>
+          </span>
         </li>
         <li class="commit">
-          <%= bt_link_to :remove, t("views.button_delete"), "javascript:void(0)", :onclick => "remove_chain_mail_item('#{f.object.new_record? ? 'chain_mail_chain_mail_items_attributes_0' : f.object.id}', #{f.object.new_record? ? 'null' : f.object.id})" %>
+          <script type="text/javascript">
+            var ckeditor_<%= div_chain_mail_item_html_id %> = $('.body_ckeditor_span:last textarea').attr('id');
+          </script>
+          <%= bt_link_to :remove, t("views.button_delete"), "javascript:void(0)", :onclick => "remove_chain_mail_item('#{div_chain_mail_item_html_id}', #{f.object.new_record? ? 'null' : f.object.id}, ckeditor_#{div_chain_mail_item_html_id})" %>
         </li>
         <li class="hidden">
           <% unless f.object.new_record? %>
@@ -26,3 +27,7 @@
     </fieldset>
   </div>
 </div>
+
+<script type="text/javascript">
+  setup_ckeditor_for_field($('.body_ckeditor_span:last textarea').attr('id'));
+</script>

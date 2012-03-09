@@ -9,8 +9,9 @@
     </ol>
   </fieldset>
 
+  <% counter = -1 %>
   <%= form.fields_for :chain_mail_items, @chain_mail.chain_mail_items do |chain_mail_item_form| %>
-      <%= render :partial => '/administration/chain_mails/chain_mail_item_form', :locals => { :f => chain_mail_item_form } %>
+      <%= render :partial => '/administration/chain_mails/chain_mail_item_form', :locals => { :f => chain_mail_item_form, :counter => (counter += 1) } %>
   <% end %>
 
   <hl/>
@@ -36,8 +37,10 @@
       nestedFormsCount = nestedFormsCount + 1;
   }
 
-  function remove_chain_mail_item(id, record_id) {
-      nestedFormsCount = nestedFormsCount - 1;
+  function remove_chain_mail_item(id, record_id, ckeditor_instance_id) {
+      CKEDITOR.instances[ckeditor_instance_id].destroy();
+
+      //nestedFormsCount = nestedFormsCount - 1;
 
       if (record_id == null) {
           $('#chain_mail_item_field_form_' + id).remove();
