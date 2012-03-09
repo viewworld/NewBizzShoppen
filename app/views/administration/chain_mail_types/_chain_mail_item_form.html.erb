@@ -26,6 +26,12 @@
       </ol>
     </fieldset>
   </div>
+<% unless f.object.new_record? %>
+<%= bt_link_to_function :cog, t("materials.views.index.material_repository"), "$('#materials_dialog').load('#{administration_chain_mail_materials_path(:format => :js, :chain_mail_type_id => f.object.chain_mail_type_id, :chain_mail_item_id => f.object.id)}').dialog({title:'#{t('materials.views.index.select_or_upload')}', width:400, height:350, beforeClose: function(event, ui) { $('#materials_dialog').html('');return true; }})" %>
+<div id="chain_mail_item_materials_<%= f.object.id %>">
+  <%= render :partial => "chain_mail_materials", :locals => { :chain_mail_item => f.object } %>
+</div>
+<% end %>
 </div>
 
 <script type="text/javascript">

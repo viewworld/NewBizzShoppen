@@ -4,6 +4,8 @@ class ChainMailItem < ActiveRecord::Base
   validates_presence_of :subject, :body
   belongs_to :chain_mail_type
 
+  has_and_belongs_to_many :chain_mail_materials, :class_name => "Asset::ChainMailMaterial"
+
   before_destroy do
     if self.chain_mail_type.chain_mail_items.count == 1
       self.chain_mail_type.errors.add(:chain_mail_items, :too_short, :count => 1)

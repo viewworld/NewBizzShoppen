@@ -1,0 +1,7 @@
+<% unless chain_mail_item.chain_mail_materials.empty? %>
+    <ul>
+    <% chain_mail_item.chain_mail_materials.each do |chain_mail_material| %>
+          <li><%= chain_mail_material.filename %></li>
+    <% end %>
+    </ul>
+<% end %>

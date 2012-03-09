@@ -32,5 +32,4 @@ class ChainMail < ActiveRecord::Base
     ::Delayed::Job.where(:queue => chain_mailable.chain_mail_queue).destroy_all
   end
 
-
 end
