@@ -1,5 +1,5 @@
 class ChainMailItem < ActiveRecord::Base
-  acts_as_list :scope => :chain_mail_id
+  acts_as_list :scope => :chain_mail_type_id
 
   validates_presence_of :subject, :body
   belongs_to :chain_mail_type

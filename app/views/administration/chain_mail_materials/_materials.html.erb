@@ -4,9 +4,12 @@
 
 <ul class="materials_list with_icon">
   <% if materials.any? %>
-    <% materials.each do |material| %>
+    <% materials.each do |material_item| %>
       <li>
-        <%= link_to_function material.asset_file_name, "select_file_for_chain_mail_item('#{params[:chain_mail_item_id]}', #{material.id})" %>
+        <%= link_to_function material_item.asset_file_name, "select_file_for_chain_mail_item('#{params[:chain_mail_item_id]}', #{material_item.id})" %>
+        <% if !material_item.new_record? and !material_item.chain_mail_items.any? %>
+        <%= link_to image_tag("/images/icons/remove.png"), administration_chain_mail_material_path(material_item, :chain_mail_type_id => material_item.chain_mail_type.id, :chain_mail_item_id => params[:chain_mail_item_id], :format => :js), :remote => true, :method => :delete, :confirm => t("common.confirmation") %>
+        <% end %>
       </li>
     <% end %>
   <% else %>
