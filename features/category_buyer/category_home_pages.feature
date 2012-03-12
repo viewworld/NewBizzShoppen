@@ -180,7 +180,7 @@ Feature: Category home pages
     And I should see translated "layout.main_menu.shared.browse_leads"
     And I should not see translated "category_home.show.view.header_additional_information_label"
     And I follow translated logout link for jon@lajoie.ca
-    And category "Best Leads" has attributes "auto_buy:true"
+    And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:true"
     And category named "Best Leads" is auto buy enabled
     And I sign in as jon@lajoie.ca with password secret
     And I should not see translated "layout.main_menu.shared.browse_leads"
