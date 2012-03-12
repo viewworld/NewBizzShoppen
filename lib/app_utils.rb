@@ -22,3 +22,30 @@ module DestroyPrevention
  end
 
  ActiveRecord::Base.send(:include, DestroyPrevention)
+
+module ActsAsSubscribable
+    def self.included(base)
+      base.extend(ClassMethods)
+    end
+
+    module ClassMethods
+      def acts_as_subscribable(options={})
+        options.merge!(:email_field => "email", :name_field => "full_name", :source_associations => [:category])
+
+         class_eval <<-EOV
+            has_one :newsletter_subscriber, :as => :subscribable
+            before_create :create_newsletter_subscriber
+            before_destroy :destroy_newsletter_subscriber
+            before_update :update_newsletter_subscriber
+          EOV
+      end
+
+      def acts_as_newsletter_source
+        class_eval <<-EOV
+          has_many :newsletter_sources, :as => :sourceable
+        EOV
+      end
+   end
+end
+
+ActiveRecord::Base.send(:include, ActsAsSubscribable)
