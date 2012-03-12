@@ -278,9 +278,7 @@ Nbs::Application.routes.draw do
     resources :delayed_jobs
   end
 
-  namespace :mailing do
-    resource :click
-  end
+  resources :chain_mails
 
   match 'supplier_home' => 'supplier_home#show', :as => "supplier_home"
   match 'agent_home' => 'agent_home#show', :as => "agent_home"

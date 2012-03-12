@@ -33,7 +33,7 @@ class CallResult < ActiveRecord::Base
   after_save do
     if chain_mail_type_id and new_chain_mail_type = ChainMailType.find_by_id(chain_mail_type_id) and new_chain_mail_type.id != active_chain_mail_type_id
       chain_mail.destroy if chain_mail
-      ChainMail.create(:chain_mailable => self, :chain_mail_type => new_chain_mail_type)
+      ChainMail.create(:email => (contact_email_address || contact.email_address), :chain_mailable => self, :chain_mail_type => new_chain_mail_type)
     elsif active_chain_mail_type_id and chain_mail_type_id.blank?
       chain_mail.destroy if chain_mail
     end

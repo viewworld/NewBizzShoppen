@@ -12,11 +12,11 @@ class StringUtils
     body.gsub(/(http:\/\/\S+)"/) { |i | (i.to_s.include?("fairdeals.") and !i.to_s.include?("login_keys/")) ? %{http://#{URI.parse($1).host}/login_keys/?key=#{user.login_key}&redirect=#{CGI::escape($1)}"} : i }
   end
 
-  def self.replace_urls_for_chain_mail_verification(chain_mailable, body)
+  def self.replace_urls_for_chain_mail_verification(chain_mail, body)
     body.gsub(/(http:\/\/\S+)"/) do |uri|
-      unless uri.to_s.include?("mailing/click/cr/#{chain_mailable.id}")
+      unless uri.to_s.include?("/chain_mails/#{chain_mail.id}")
         uri = URI.parse($1)
-        URI::HTTP.new(uri.scheme, nil, uri.host, nil, nil, "/mailing/click", nil, "source=#{chain_mailable.class.name.underscore}&id=#{chain_mailable.id}&redirect=#{CGI::escape($1)}", nil).to_s
+        URI::HTTP.new(uri.scheme, nil, uri.host, nil, nil, "/chain_mails/#{chain_mail.id}", nil, "redirect=#{CGI::escape($1)}", nil).to_s
       else
         uri
       end
