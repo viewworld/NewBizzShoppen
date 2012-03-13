@@ -4,6 +4,7 @@ class ChainMail < ActiveRecord::Base
   belongs_to :chain_mailable, :polymorphic => true
   belongs_to :chain_mail_type
   has_many :chain_mail_items, :through => :chain_mail_type
+  has_many :delayed_jobs, :class_name => '::Delayed::Job', :foreign_key => :queue, :primary_key => :queue, :dependent => :destroy
 
   validates_presence_of :email, :chain_mailable, :chain_mail_type
 
@@ -15,25 +16,16 @@ class ChainMail < ActiveRecord::Base
     self.start_sending
   end
 
-  before_destroy do
-    self.stop_sending
-  end
-
   def start_sending
     chain_mail_items.each do |cmi|
-      TemplateMailer.new("aossowski@gmail.com", :blank_template, Country.get_country_from_locale,
+      ChainMailer.new(email, self, Country.get_country_from_locale,
                                     {:subject_content => cmi.subject,
                                      :body_content => StringUtils.replace_urls_for_chain_mail_verification(self, cmi.body),
-                                     :queue => chain_mailable.chain_mail_queue,
+                                     :queue => queue,
                                      :run_at => cmi.run_at,
-                                     :notify_object => self,
-                                     :notify_options => {:position => cmi.position}
+                                     :position => cmi.position
                                     }).deliver!
     end
-  end
-
-  def stop_sending
-    ::Delayed::Job.where(:queue => chain_mailable.chain_mail_queue).destroy_all
   end
 
   def register_click!
@@ -71,10 +63,18 @@ class ChainMail < ActiveRecord::Base
   end
 
   def keep_sending?
-    case execution_conditions["type"]
-      when ChainMailType::STOP_IF then !conditions_met?
-      when ChainMailType::SEND_IF then conditions_met?
+    if last_mail_sent_at.nil?
+      true
+    else
+      case execution_conditions["type"]
+        when ChainMailType::STOP_IF then !conditions_met?
+        when ChainMailType::SEND_IF then conditions_met?
+      end
     end
+  end
+
+  def queue
+    "chain_mail_#{id}"
   end
 
 end

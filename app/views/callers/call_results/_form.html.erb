@@ -129,7 +129,7 @@
     </div>
 <% end %>
 
-<% if chain_mail_types_for_select = ChainMailType.active.for_campaign(@campaign || call_result.contact.campaign).order("name ASC").map{|cm| [cm.name,cm.id]} and chain_mail_types_for_select.any? %>
+<% if chain_mail_types_for_select = ChainMailType.with_active.for_campaign(@campaign || call_result.contact.campaign).order("name ASC").map{|cm| [cm.name,cm.id]} and chain_mail_types_for_select.any? %>
     <hl/>
     <div class="pdd_10 no_pdd_t">
       <fieldset class="inputs labels_ta_r labels_200">
@@ -166,4 +166,13 @@
     }
   <% end %>
 <% end %>
+
+  var stored_chain_mail_type_id = $('#call_result_chain_mail_type_id').val();
+  $('#call_result_chain_mail_type_id').bind('click', function(){
+      if ($('#contact_email_address').val() == '' && $('#call_result_contact_email_address').val() == '') {
+        alert("You must enter contact email address to change this");
+        $('#call_result_chain_mail_type_id').val(stored_chain_mail_type_id);
+        return false;
+      }
+  });
 </script>

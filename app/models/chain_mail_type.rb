@@ -12,7 +12,7 @@ class ChainMailType < ActiveRecord::Base
   validates_associated :chain_mail_items
   validate :has_at_least_one_item, :execution_conditions_format
 
-  scope :active
+  scope :with_active, where(:active => true)
   scope :for_campaign, lambda{|campaign| where(:campaign_id => campaign.to_i)}
 
   accepts_nested_attributes_for :chain_mail_items, :allow_destroy => true
@@ -40,7 +40,7 @@ class ChainMailType < ActiveRecord::Base
 
   after_initialize do
     self.execution_conditions = {} if execution_conditions.nil?
-    self.execition_conditions["conditions"] = [] if execution_conditions["conditions"].nil?
+    self.execution_conditions["conditions"] = [] if execution_conditions["conditions"].nil?
   end
 
   before_validation do

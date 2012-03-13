@@ -12,7 +12,6 @@ class CallResult < ActiveRecord::Base
   has_one :send_material_result_value, :class_name => "ResultValue", :conditions => "result_values.field_type = '#{ResultField::MATERIAL}'"
   has_one :archived_email, :as => :related, :dependent => :destroy
   has_one :chain_mail, :as => :chain_mailable
-  has_many :chain_mail_delayed_jobs, :class_name => '::Delayed::Job', :foreign_key => :queue, :primary_key => :chain_mail_queue, :order => "created_at DESC"
   accepts_nested_attributes_for :result_values, :allow_destroy => true
   accepts_nested_attributes_for :contact
 
@@ -35,7 +34,7 @@ class CallResult < ActiveRecord::Base
       chain_mail.destroy if chain_mail
       ChainMail.create(:email => (contact_email_address || contact.email_address), :chain_mailable => self, :chain_mail_type => new_chain_mail_type)
     elsif active_chain_mail_type_id and chain_mail_type_id.blank?
-      chain_mail.destroy if chain_mail
+      chain_mail.destroy
     end
   end
 

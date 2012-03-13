@@ -13,10 +13,9 @@ class StringUtils
   end
 
   def self.replace_urls_for_chain_mail_verification(chain_mail, body)
-    body.gsub(/(http:\/\/\S+)"/) do |uri|
+    body.gsub(/(https?:\/\/[\w.\-\/\?\=\&\:]*)/) do |uri|
       unless uri.to_s.include?("/chain_mails/#{chain_mail.id}")
-        uri = URI.parse($1)
-        URI::HTTP.new(uri.scheme, nil, uri.host, nil, nil, "/chain_mails/#{chain_mail.id}", nil, "redirect=#{CGI::escape($1)}", nil).to_s
+        URI::HTTP.new('http', nil, Domain.default, nil, nil, "/chain_mails/#{chain_mail.id}", nil, "redirect=#{CGI::escape(uri)}", nil).to_s
       else
         uri
       end

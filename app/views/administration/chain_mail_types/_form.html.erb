@@ -2,6 +2,7 @@
   <fieldset class="inputs labels_ta_r labels_100">
     <ol>
       <%= form.input :name %>
+      <%= form.input :active %>
       <%= form.input :campaign_id, :collection => Campaign.with_state("active").ascend_by_name, :include_blank => false %>
       <%= form.input :first_execution_delay %>
       <%= form.input :cycle_time %>

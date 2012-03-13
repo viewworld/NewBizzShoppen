@@ -7,6 +7,7 @@ class CreateChainMails < ActiveRecord::Migration
       t.time :execution_time
       t.text :execution_conditions
       t.integer :campaign_id
+      t.boolean :active, :default => true
       t.timestamps
     end
     create_table :chain_mails do |t|
