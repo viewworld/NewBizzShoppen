@@ -1,0 +1,23 @@
+<column-mc:>
+  <%= javascript_include_tag :ckeditor %>
+  <%= javascript_include_tag "email_template_signature" %>
+
+  <header back="true"><%= t("chain_mail_types.edit.header", :name => @chain_mail_type.name) %></header>
+
+  <%= semantic_form_for [:administration, @chain_mail_type], :url => administration_chain_mail_type_path(@chain_mail_type), :method => :put do |form| %>
+      <frm title="#{t('chain_mail_types.edit.title')}">
+        <param:content>
+          <%= render :partial => 'form', :locals => {:form => form} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("views.button_update") %>
+          </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function t("views.button_cancel"), href(administration_chain_mail_types_path) %>
+          </ibt>          
+        </param:actions>
+      </frm>
+  <% end %>
+
+</column-mc:>

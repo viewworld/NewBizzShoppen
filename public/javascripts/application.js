@@ -416,7 +416,7 @@ var notification_interval = 30000;
 var notification_limit = 3;
 
 function start_notifications() {
-    setTimeout("check_notifications()", notification_interval);
+//    setTimeout("check_notifications()", notification_interval);
 }
 
 function check_notifications() {

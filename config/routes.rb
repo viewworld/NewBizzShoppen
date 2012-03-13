@@ -82,6 +82,9 @@ Nbs::Application.routes.draw do
       end
     end
     resources :paypal_notifications, :only => [:index, :show]
+    resources :chain_mail_types
+    resources :chain_mail_items
+    resources :chain_mail_materials
     match '/dashboard' => 'dashboard#index', :as => 'dashboard'
   end
 
@@ -274,6 +277,8 @@ Nbs::Application.routes.draw do
   namespace :users do
     resources :delayed_jobs
   end
+
+  resources :chain_mails
 
   match 'supplier_home' => 'supplier_home#show', :as => "supplier_home"
   match 'agent_home' => 'agent_home#show', :as => "agent_home"

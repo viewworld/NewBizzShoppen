@@ -38,6 +38,8 @@ class Devise::SessionsController < ApplicationController
       end
     end
 
+    resource.chain_mails.update_all("last_login_at = '#{Time.now}'") if resource
+
     deal = params[:deal_request_id] ? Deal.without_inactive.find_by_id(params[:deal_request_id]) : nil
 
     respond_to do |format|

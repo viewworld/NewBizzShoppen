@@ -1,0 +1,63 @@
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_100">
+    <ol>
+      <%= form.input :name %>
+      <%= form.input :active %>
+      <%= form.input :campaign_id, :collection => Campaign.with_state("active").ascend_by_name, :include_blank => false %>
+      <%= form.input :first_execution_delay %>
+      <%= form.input :cycle_time %>
+      <%= form.input :execution_time %>
+      <%= form.label :execution_conditions %>
+      <%= select_tag "chain_mail_type[execution_conditions][type]", options_for_select(ChainMailType::EXECUTION_TYPES, @chain_mail_type.execution_conditions["type"]) %>
+      <%= select_tag "chain_mail_type[execution_conditions][conditions][]", options_for_select(ChainMailType::EXECUTION_CONDITIONS, @chain_mail_type.execution_conditions["conditions"][0]) %>
+      <%= select_tag "chain_mail_type[execution_conditions][operator]", options_for_select(ChainMailType::EXECUTION_CONDITION_OPERATORS, @chain_mail_type.execution_conditions["operator"]), :include_blank => true %>
+      <%= select_tag "chain_mail_type[execution_conditions][conditions][]", options_for_select(ChainMailType::EXECUTION_CONDITIONS, @chain_mail_type.execution_conditions["conditions"][1]), :include_blank => true %>
+      <%= form.errors_on :execution_conditions %>
+    </ol>
+  </fieldset>
+
+  <% counter = -1 %>
+  <%= form.fields_for :chain_mail_items, @chain_mail_type.chain_mail_items do |chain_mail_item_form| %>
+      <%= render :partial => '/administration/chain_mail_types/chain_mail_item_form', :locals => { :f => chain_mail_item_form, :counter => (counter += 1) } %>
+  <% end %>
+
+  <hl/>
+
+  <div class="pdd_20" style="padding-top:10px">
+    <%= bt_link_to :plus, t("views.button_add"), "javascript:void(0)", :onclick => "#{fields_for_associated(ChainMailItem, form, '/administration/chain_mail_types/chain_mail_item_form')}" %>
+  </div>
+  
+  <%= form.errors_on :chain_mail_items %>
+
+  <div class="nested_chain_mail_items_fields_container"></div>
+
+</div>
+
+<div id="materials_dialog"></div>
+
+<script>
+  var nestedFormsCount = <%= @chain_mail_type.chain_mail_items.size %>;
+
+  function add_chain_mail_item(link, content) {
+      var new_id = new Date().getTime();
+      content = content.replace(/chain_mail_type_chain_mail_items_attributes_\d+/g, "chain_mail_type_chain_mail_items_attributes_" + nestedFormsCount.toString());
+      content = content.replace(/chain_mail_type\[chain_mail_items_attributes\]\[\d+\]/g, "chain_mail_type[chain_mail_items_attributes][" + new_id.toString() + "]");
+      $('.nested_chain_mail_items_fields_container:last').append(content);
+      nestedFormsCount = nestedFormsCount + 1;
+  }
+
+  function remove_chain_mail_item(id, record_id, ckeditor_instance_id) {
+      CKEDITOR.instances[ckeditor_instance_id].destroy();
+
+      //nestedFormsCount = nestedFormsCount - 1;
+
+      if (record_id == null) {
+          $('#chain_mail_item_field_form_' + id).remove();
+      }
+      else {
+          $('#chain_mail_item_field_form_' + id).hide();
+          $('#destroy_hidden_field_' + record_id.toString()).val('true')
+      }
+
+  }
+</script>
