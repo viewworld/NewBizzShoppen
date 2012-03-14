@@ -7,6 +7,14 @@ describe NewsletterSubscriber do
     @list = NewsletterList.make!
   end
 
+  context "No source created" do
+    it "should NOT create subscriber when object is not connected to any source newsletter" do
+      [Lead.make!, Contact.make!, User::Member.make!].each do |object|
+        object.newsletter_subscriber.should be_nil
+      end
+    end
+  end
+
   context "Lead" do
     before(:each) do
       @lead_category = LeadCategory.make!
@@ -149,7 +157,52 @@ describe NewsletterSubscriber do
   end
 
   context "Tags" do
+    before(:each) do
+      @tag_group = TagGroup.create(:match_all => false)
+      @tag_group.tag_list << "some tag1"
+      @tag_group.tag_list << "some tag2"
+      @tag_group.save
 
+      @list.newsletter_sources.create(:source_type => NewsletterSource::TAG_SOURCE, :sourceable => @tag_group)
+
+      @contact1 = Contact.make!
+      @contact1.tag_list << "some tag1"
+      @contact1.tag_list << "some tag2"
+      @contact1.save
+
+      @contact2 = Contact.make!
+      @contact2.tag_list << "some tag1"
+      @contact2.save
+
+      @member1 = User::Member.make!
+      @member1.tag_list << "some tag1"
+      @member1.tag_list << "some tag2"
+      @member1.save
+
+      @member2 = User::Member.make!
+      @member2.tag_list << "some tag2"
+      @member2.save
+    end
+
+    context "match any" do
+      before(:each) do
+
+      end
+
+      it "should create newsletter subscriber to all objects that are tagged with tag1 OR tag2" do
+
+      end
+    end
+
+    context "match all" do
+      before(:each) do
+        @tag_group.update_attribute(:match_all, true)
+      end
+
+      it "should create newsletter subscriber to all objects that are tagged with tag1 AND tag2" do
+
+      end
+    end
   end
 
 end

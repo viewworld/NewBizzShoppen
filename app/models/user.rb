@@ -143,6 +143,8 @@ class User < ActiveRecord::Base
 
   acts_as_newsletter_subscribable :email_field => "email", :name_field => "full_name", :source_associations => [:user_role, :subscription_plan]
 
+  acts_as_taggable
+
   private
 
   def set_email_verification
