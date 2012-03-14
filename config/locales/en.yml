@@ -324,6 +324,7 @@ en:
   chain_mail_types:
     table:
       name: "Name"
+      active: "Active"
     edit:
       header: "Editing chain mail type: %{name}"
       title: "Edit"

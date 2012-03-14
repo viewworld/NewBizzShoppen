@@ -15,14 +15,16 @@
   <% if @chain_mail_types.empty? %>
       <%= blank_state_message %>
   <% else %>
-      <%= generic_table @chain_mail_types, :table_class => "chain_mail_types", :default_action => :edit, :cols => 1 do |blocks| %>
+      <%= generic_table @chain_mail_types, :table_class => "chain_mail_types", :default_action => :edit, :cols => 2 do |blocks| %>
 
           <% blocks.headers do %>
             <th><%= t("chain_mail_types.table.name") %></th>
+            <th><%= t("chain_mail_types.table.active") %></th>
           <% end %>
               
           <% blocks.cells do |chain_mail_type| %>
               <td class="cl"><%= chain_mail_type.name %></td>
+              <td class="cl"><%= chain_mail_type.active? ? t("common.yes_label") : t("common.no_label") %></td>
           <% end %>
 
       <% end %>
