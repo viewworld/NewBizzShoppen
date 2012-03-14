@@ -32,6 +32,7 @@
       </tr>
   <% end %>
 
+  <% if will_paginate %>
   <tr class="pagination">
     <td class="cl"></td>
     <td colspan="<%= cols+1 %>" class="ta_c">
@@ -39,6 +40,7 @@
     </td>
     <td class="cr"></td>
   </tr>
+  <% end %>
 
   </tbody>
 </table>
