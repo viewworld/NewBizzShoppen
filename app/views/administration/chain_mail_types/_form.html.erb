@@ -1,17 +1,21 @@
 <div class="pdd_10 no_pdd_t">
-  <fieldset class="inputs labels_ta_r labels_100">
-    <ol>
+  <fieldset class="inputs labels_ta_r labels_160">
+    <ol class="align_inputs">
       <%= form.input :name %>
       <%= form.input :active %>
       <%= form.input :campaign_id, :collection => Campaign.with_state("active").ascend_by_name, :include_blank => false %>
       <%= form.input :first_execution_delay %>
       <%= form.input :cycle_time %>
-      <%= form.input :execution_time %>
-      <%= form.label :execution_conditions %>
-      <%= select_tag "chain_mail_type[execution_conditions][type]", options_for_select(ChainMailType::EXECUTION_TYPES, @chain_mail_type.execution_conditions["type"]) %>
-      <%= select_tag "chain_mail_type[execution_conditions][conditions][]", options_for_select(ChainMailType::EXECUTION_CONDITIONS, @chain_mail_type.execution_conditions["conditions"][0]) %>
-      <%= select_tag "chain_mail_type[execution_conditions][operator]", options_for_select(ChainMailType::EXECUTION_CONDITION_OPERATORS, @chain_mail_type.execution_conditions["operator"]), :include_blank => true %>
-      <%= select_tag "chain_mail_type[execution_conditions][conditions][]", options_for_select(ChainMailType::EXECUTION_CONDITIONS, @chain_mail_type.execution_conditions["conditions"][1]), :include_blank => true %>
+      <%= form.input :execution_time,  :wrapper_html => {:class => "date"} %>
+      <li class="string">
+        <%= form.label :execution_conditions %>
+        <div class="txt">
+          <%= select_tag "chain_mail_type[execution_conditions][type]", options_for_select(ChainMailType::EXECUTION_TYPES, @chain_mail_type.execution_conditions["type"]) %>
+          <%= select_tag "chain_mail_type[execution_conditions][conditions][]", options_for_select(ChainMailType::EXECUTION_CONDITIONS, @chain_mail_type.execution_conditions["conditions"][0]) %>
+          <%= select_tag "chain_mail_type[execution_conditions][operator]", options_for_select(ChainMailType::EXECUTION_CONDITION_OPERATORS, @chain_mail_type.execution_conditions["operator"]), :include_blank => true %>
+          <%= select_tag "chain_mail_type[execution_conditions][conditions][]", options_for_select(ChainMailType::EXECUTION_CONDITIONS, @chain_mail_type.execution_conditions["conditions"][1]), :include_blank => true %>
+        </div>
+      </li>
       <%= form.errors_on :execution_conditions %>
     </ol>
   </fieldset>

@@ -21,6 +21,9 @@ module ApplicationHelper
     @hb = ApplicationHelper::HelperBlocks.new(:headers, :cells)
     block.call(@hb)
     options[:default_action] ||= :show
+    options[:link_to_show] = true unless options.has_key?(:link_to_show)
+    options[:link_to_edit] = true unless options.has_key?(:link_to_edit)
+    options[:link_to_delete] = true unless options.has_key?(:link_to_delete)
     render(:partial => '/shared/generic_table', :locals => options.merge({:collection => collection}.merge(@hb.results)))
   end
 
