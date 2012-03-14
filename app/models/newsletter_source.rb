@@ -11,4 +11,8 @@ class NewsletterSource < ActiveRecord::Base
   CUSTOM_SOURCE            = 5.freeze
 
   SOURCE_TYPES = [CAMPAIGN_SOURCE, LEAD_CATEGORY_SOURCE, USER_ROLE_SOURCE, SUBSCRIPTION_TYPE_SOURCE, TAG_SOURCE, CUSTOM_SOURCE]
+
+  def custom_source?
+    source_type == CUSTOM_SOURCE
+  end
 end

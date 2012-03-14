@@ -536,3 +536,9 @@ Region.blueprint do
   name { Faker::Lorem.words(2).to_s.capitalize }
   country { Country.make! }
 end
+
+NewsletterList.blueprint do
+  name { Faker::Lorem.words(2).to_s.capitalize }
+  owner { User::CallCentre.make! }
+  creator { User::Admin.make! }
+end

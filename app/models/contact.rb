@@ -34,6 +34,8 @@ class Contact < AbstractLead
 
   accepts_nested_attributes_for :call_results, :result_values
 
+  acts_as_newsletter_subscribable :email_field => "email_address", :name_field => "contact_name", :source_associations => [:campaign]
+
   class << self
 
     def batch_remove(ids)

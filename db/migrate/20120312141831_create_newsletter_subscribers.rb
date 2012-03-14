@@ -3,8 +3,10 @@ class CreateNewsletterSubscribers < ActiveRecord::Migration
     create_table :newsletter_subscribers do |t|
       t.string :email
       t.string :name
+      t.string :previous_email, :default => nil
       t.integer :subscribable_id
       t.string :subscribable_type
+      t.boolean :is_synced, :default => false
       t.timestamps
     end
 
