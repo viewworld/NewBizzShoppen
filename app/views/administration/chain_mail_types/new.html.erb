@@ -5,7 +5,7 @@
   <header back="true"><%= t("chain_mail_types.new.header") %></header>
 
   <%= semantic_form_for @chain_mail_type, :url => administration_chain_mail_types_path, :method => :post do |form| %>
-      <frm title="#{t('chain_mails.new.title')}">
+      <frm title="#{t('chain_mail_types.new.title')}">
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
