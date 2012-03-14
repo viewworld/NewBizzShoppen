@@ -6,6 +6,8 @@ class ChainMail < ActiveRecord::Base
   has_many :chain_mail_items, :through => :chain_mail_type
   has_many :delayed_jobs, :class_name => '::Delayed::Job', :foreign_key => :queue, :primary_key => :queue, :dependent => :destroy
 
+  include EmailTemplateEditor
+
   validates_presence_of :email, :chain_mailable, :chain_mail_type
 
   before_create do
@@ -23,8 +25,8 @@ class ChainMail < ActiveRecord::Base
                                      :body_content => StringUtils.replace_urls_for_chain_mail_verification(self, cmi.body),
                                      :queue => queue,
                                      :run_at => cmi.run_at,
-                                     :position => cmi.position
-                                    }).deliver!
+                                     :position => cmi.position},
+                                    assets_to_path_names(chain_mail_type.materials)).deliver!
     end
   end
 
