@@ -141,6 +141,8 @@ class User < ActiveRecord::Base
          :screen_name, :first_name, :last_name, :home_page_url
   require 'digest/sha1'
 
+  acts_as_newsletter_subscribable :email_field => "email", :name_field => "full_name", :source_associations => [:user_role, :subscription_plan]
+
   private
 
   def set_email_verification
@@ -984,5 +986,13 @@ class User < ActiveRecord::Base
       :time => nil
     }.merge(options)
     notifications.create(options)
+  end
+
+  def user_role
+    Role.find(ROLES_PRIORITY.index(role))
+  end
+
+  def subscription_plan
+    active_subscription ? active_subscription.subscription_plan : nil
   end
 end

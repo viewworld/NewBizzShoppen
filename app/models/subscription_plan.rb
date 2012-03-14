@@ -55,6 +55,8 @@ class SubscriptionPlan < ActiveRecord::Base
   scope :ascend_by_billing_price, order("billing_price")
   scope :without_paypal, where(:use_paypal => false)
 
+  acts_as_newsletter_source
+
   private
 
   def subscription_period_in_context_of_billing_cycle

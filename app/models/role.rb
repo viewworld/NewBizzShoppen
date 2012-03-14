@@ -13,4 +13,20 @@ class Role
   def self.find(id, options={})
     Role.new(id.to_i)
   end
+
+  def self.base_class
+    Role
+  end
+
+  def destroyed?
+    false
+  end
+
+  def persisted?
+    true
+  end
+
+  def newsletter_sources
+    NewsletterSource.where(:sourceable_id => @id, :sourceable_type => "Role")
+  end
 end

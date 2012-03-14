@@ -52,7 +52,7 @@ module ActsAsSubscribable
             def newsletter_sources_enabled?
               if newsletter_subscriber.nil?
                 newsletter_config[:source_associations].detect do |source_association|
-                  self.send(source_association).send(:newsletter_sources).any?
+                  self.send(source_association).respond_to?(:newsletter_sources) and self.send(source_association).send(:newsletter_sources).any?
                 end.present?
               else
                 newsletter_subscriber.newsletter_sources.any?
@@ -61,7 +61,7 @@ module ActsAsSubscribable
 
             def all_newsletter_sources
               newsletter_config[:source_associations].map do |source_association|
-                self.send(source_association).send(:newsletter_sources)
+                self.send(source_association).respond_to?(:newsletter_sources) ? self.send(source_association).send(:newsletter_sources) : []
               end.flatten
             end
 
