@@ -15,7 +15,7 @@
   <% if @chain_mail_types.empty? %>
       <%= blank_state_message %>
   <% else %>
-      <%= generic_table @chain_mail_types, :table_class => "chain_mail_types", :default_action => :edit, :cols => 2, :link_to_show => false do |blocks| %>
+      <%= generic_table @chain_mail_types, :table_class => "chain_mail_types", :default_action => :edit, :cols => 2, :link_to_show => false, :link_to_delete => false do |blocks| %>
 
           <% blocks.headers do %>
             <th><%= t("chain_mail_types.table.name") %></th>
