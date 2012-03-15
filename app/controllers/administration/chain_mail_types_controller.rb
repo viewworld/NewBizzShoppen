@@ -1,9 +1,16 @@
 class Administration::ChainMailTypesController < Administration::AdministrationController
   inherit_resources
 
+  protected
+
   def collection
-    @chain_mail_types = ChainMailType.order("name ASC").paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
+    params[:search] ||= {}
+    params[:search][:with_archived] = "0" unless params[:search][:with_archived].present?
+    @search = ChainMailType.scoped_search(params[:search])
+    @chain_mail_types = @search.paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
   end
+
+  public
 
   def update
     update! do |success, failure|

@@ -1,7 +1,12 @@
 <% unless chain_mail_item.chain_mail_materials.empty? %>
     <ul>
     <% chain_mail_item.chain_mail_materials.each do |chain_mail_material| %>
-          <li><%= link_to chain_mail_material.filename, chain_mail_material.url %><%= link_to image_tag("/images/icons/remove.png"), administration_chain_mail_item_path(chain_mail_item, :material_id => chain_mail_material), :remote => true, :method => :delete, :confirm => t("common.confirmation") %></li>
+          <li>
+            <%= link_to chain_mail_material.filename, chain_mail_material.url %>
+            <% if chain_mail_item.chain_mail_type.chain_mails.empty? %>
+              <%= link_to image_tag("/images/icons/remove.png"), administration_chain_mail_item_path(chain_mail_item, :material_id => chain_mail_material), :remote => true, :method => :delete, :confirm => t("common.confirmation") %>
+            <% end %>
+          </li>
     <% end %>
     </ul>
 <% end %>

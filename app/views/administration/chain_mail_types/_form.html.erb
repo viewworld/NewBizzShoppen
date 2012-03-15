@@ -3,6 +3,7 @@
     <ol class="align_inputs">
       <%= form.input :name %>
       <%= form.input :active %>
+      <%= form.input :archived %>
       <%= form.input :campaign_id, :collection => Campaign.with_state("active").ascend_by_name, :include_blank => false %>
       <%= form.input :first_execution_delay %>
       <%= form.input :cycle_time %>

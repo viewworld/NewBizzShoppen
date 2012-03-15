@@ -29,6 +29,10 @@ en:
     all_label: "All"
     nothing_to_display: "Nothing to display"
     search: "Search"
+    search_box:
+      keyword_label: "Keyword"
+      archived_label: "Archived"
+      search_button: "Search"
     clear_filter: "Clear filter"
     fewer: Fewer
     more: More
@@ -325,6 +329,7 @@ en:
     table:
       name: "Name"
       active: "Active"
+      archived: "Archived"
     edit:
       header: "Editing chain mail type: %{name}"
       title: "Edit"

@@ -12,8 +12,14 @@ class ChainMailType < ActiveRecord::Base
   validates_associated :chain_mail_items
   validate :has_at_least_one_item, :execution_conditions_format
 
-  scope :with_active, where(:active => true)
+  scope :with_active, where(:active => true, :archived => false)
+  scope :with_archived, lambda{|b| b.to_s == "1" ? where("archived IS NOT NULL") : where(:archived => false) }
+  scope :with_keyword, lambda{|q| where("name LIKE :keyword", {:keyword => "%#{q.downcase}%"})}
   scope :for_campaign, lambda{|campaign| where(:campaign_id => campaign.to_i)}
+
+  include ScopedSearch::Model
+
+  scoped_order :id, :name
 
   accepts_nested_attributes_for :chain_mail_items, :allow_destroy => true
 
