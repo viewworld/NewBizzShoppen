@@ -25,7 +25,7 @@ class MoreLeadsRequestsController < ApplicationController
         TemplateMailer.new(Settings.contact_us_email, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => @email_template_preview.subject, :body_content => @email_template_preview.body,
                                         :bcc_recipients => @email_template_preview.bcc, :cc_recipients => @email_template_preview.cc, :reply_to => @email_template_preview.contact_email,
-                                        :sender_id => user_signed_in? ? current_user.id : nil, :email_template_uniq_id => "more_leads_request"}).deliver!
+                                        :sender_id => user_signed_in? ? current_user.id : nil, :email_template_uniq_id => "more_leads_request", :email_template_id => @email_template_preview.email_template_id}).deliver!
 
         if current_user
           redirect_to current_user.has_any_role?(:agent, :call_centre_agent, :member) ? agent_home_path : supplier_home_path

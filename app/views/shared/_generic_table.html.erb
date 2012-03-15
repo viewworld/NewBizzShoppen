@@ -1,0 +1,52 @@
+<table class="generic <%= table_class %>">
+  <thead>
+  <tr>
+    <th class="hl"></th>
+    <%= with_output_buffer { block_headers.call } %>
+    <th class="ta_r"><%= t("views.generic_table.actions") %></th>
+    <th class="hr"></th>
+  </tr>
+  </thead>
+
+  <tfoot>
+  <tr>
+    <td class="fl"></td>
+    <td colspan="<%= cols+1 %>"></td>
+    <td class="fr"></td>
+  </tr>
+  </tfoot>
+
+  <tbody>
+  <% collection.each do |object| %>
+      <tr class="<%= dom_class(object) %> <%= cycle("odd", "even") %>" id="<%= dom_id(object) %>">
+        <td class="cl"></td>
+        <%= with_output_buffer { block_cells.call(object) } %>
+        <td class="tda ta_r">
+            <ul-actions>
+              <% if link_to_show %>
+              <li><%= link_to t("views.generic_table.show"), [:administration,object], :class => "#{'default_action' if default_action == :show}" %></li>
+              <% end %>
+              <% if link_to_edit %>
+              <li><%= link_to t("views.generic_table.edit"), [:edit,:administration,object], :class => "#{'default_action' if default_action == :edit}" %></li>
+              <% end %>
+              <% if link_to_delete %>
+              <li><%= link_to t("views.generic_table.delete"), [:administration,object], :method => :delete, :confirm => t("views.generic_table.confirmation"), :class => "#{'default_action' if default_action == :delete}" %></li>
+              <% end %>
+            </ul-actions>
+        </td>
+        <td class="cr"></td>
+      </tr>
+  <% end %>
+
+  <% if will_paginate %>
+  <tr class="pagination">
+    <td class="cl"></td>
+    <td colspan="<%= cols+1 %>" class="ta_c">
+      <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+    </td>
+    <td class="cr"></td>
+  </tr>
+  <% end %>
+
+  </tbody>
+</table>

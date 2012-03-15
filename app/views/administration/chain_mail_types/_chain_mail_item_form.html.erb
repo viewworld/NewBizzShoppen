@@ -1,0 +1,42 @@
+<% div_chain_mail_item_html_id = f.object.new_record? ? "chain_mail_type_chain_mail_items_attributes_#{defined?(counter) ? counter.to_i : 0}" : f.object.id %>
+<div class="chain_mail_item" id="chain_mail_item_field_form_<%= div_chain_mail_item_html_id %>">
+  <hl/>
+  <div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r labels_100">
+      <ol>
+        <li>
+          <%= f.input :subject, :as => :string %>
+        </li>
+        <li>
+          <span class="body_ckeditor_span">
+            <%= f.text_area :body %>
+          </span>
+        </li>
+        <li style="padding: 5px 0 0 4px;">
+          <script type="text/javascript">
+            var ckeditor_<%= div_chain_mail_item_html_id %> = $('.body_ckeditor_span:last textarea').attr('id');
+          </script>
+          <%= bt_link_to :remove, t("views.button_delete"), "javascript:void(0)", :onclick => "remove_chain_mail_item('#{div_chain_mail_item_html_id}', #{f.object.new_record? ? 'null' : f.object.id}, ckeditor_#{div_chain_mail_item_html_id})" %>
+        </li>
+        <li class="hidden">
+          <% unless f.object.new_record? %>
+              <%= f.hidden_field :_destroy, :id => "destroy_hidden_field_#{f.object.id}" %>
+          <% end %>
+        </li>
+      </ol>
+    </fieldset>
+  </div>
+<% unless f.object.new_record? %>
+<hl pdd=""/>
+<div style="padding:10px 15px;">
+<%= bt_link_to_function :cog, t("materials.views.index.material_repository"), "$('#materials_dialog').load('#{administration_chain_mail_materials_path(:format => :js, :chain_mail_type_id => f.object.chain_mail_type_id, :chain_mail_item_id => f.object.id)}').dialog({title:'#{t('materials.views.index.select_or_upload')}', width:400, height:350, beforeClose: function(event, ui) { $('#materials_dialog').html('');return true; }})" %>
+</div>
+<div id="chain_mail_item_materials_<%= f.object.id %>">
+  <%= render :partial => "chain_mail_materials", :locals => { :chain_mail_item => f.object } %>
+</div>
+<% end %>
+</div>
+
+<script type="text/javascript">
+  setup_ckeditor_for_field($('.body_ckeditor_span:last textarea').attr('id'));
+</script>

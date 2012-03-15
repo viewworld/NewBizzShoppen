@@ -37,12 +37,17 @@ module MaterialActions
 
   def destroy
     @material = @resource.materials.find(params[:id])
-    unless @material.destroy
-      flash[:alert] = @material.errors.full_messages
-    else
+    if @material.destroy
       flash[:notice] = I18n.t("materials.views.index.successfully_deleted")
+    else
+      flash[:alert] = @material.errors.full_messages
     end
-    redirect_to :back
+    @resource.reload
+
+    respond_to do |wants|
+      wants.html { redirect_to :back }
+      wants.js
+    end
   end
 
 end

@@ -13,6 +13,7 @@ class Callers::EmailTemplatesController < Callers::CallerController
   def fetch_objects
     @campaign = Campaign.find(params[:campaign_id])
     @email_template = EmailTemplate.find(params[:id])
+    @email_template.enable_custom_signature = @email_template.email_template_signature.present?
   end
 
   def authorize_for_controller!

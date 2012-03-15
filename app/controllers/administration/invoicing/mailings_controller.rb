@@ -13,7 +13,8 @@ class Administration::Invoicing::MailingsController < Administration::Administra
       TemplateMailer.new(email_params[:recipients], :blank_template, Country.get_country_from_locale,
                                        {:subject_content => email_params[:subject], :body_content => email_params[:body],
                                         :bcc_recipients => @email_template_preview.bcc, :cc_recipients => @email_template_preview.cc,
-                                        :sender_id => user_signed_in? ? current_user.id : nil, :email_template_uniq_id => "invoice"}, Array(invoice_path)).deliver!
+                                        :sender_id => user_signed_in? ? current_user.id : nil, :email_template_uniq_id => "invoice",
+                                        :email_template_id => @email_template_preview.email_template_id}, Array(invoice_path)).deliver!
     end
     @invoice.update_attribute(:emailed_at, Time.now)
     flash[:notice] = I18n.t("flash.bulk_lead_share_by_email.create.notice")

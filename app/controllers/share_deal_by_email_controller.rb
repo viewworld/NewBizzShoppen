@@ -8,7 +8,8 @@ class ShareDealByEmailController < ApplicationController
       TemplateMailer.new(params[:email_to], :blank_template, Country.get_country_from_locale,
                                        {:subject_content => @email_preview.subject, :body_content => @email_preview.body,
                                         :bcc_recipients => @email_preview.bcc, :cc_recipients => @email_preview.cc, :reply_to => @email_preview.email_from,
-                                        :sender_id => user_signed_in? ? current_user.id : nil, :email_template_uniq_id => "share_deal_by_email"}).deliver!
+                                        :sender_id => user_signed_in? ? current_user.id : nil, :email_template_uniq_id => "share_deal_by_email",
+                                        :email_template_id => @email_preview.email_template_id}).deliver!
     end
     redirect_to :back
   end

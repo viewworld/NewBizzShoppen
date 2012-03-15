@@ -3,9 +3,13 @@ class ApplicationMailer < ActionMailer::Base
           :return_path => "admin@fairleads.com"
 
   def email_template(to, email_template, country, options = {}, attachment_paths=[])
-    email_template = email_template.is_a?(Symbol) ? EmailTemplate.find_by_uniq_id(email_template) : email_template
+    email_template = email_template.is_a?(Symbol) ? EmailTemplate.global.where(:uniq_id => email_template).first : email_template
     email_template.preview = true if options[:preview] == true
-    options.merge!(:country => country)
+    email_template.country = country
+
+    if email_template_id = options.delete(:email_template_id) and email_template.blank_template? and et = EmailTemplate.find_by_id(email_template_id)
+      email_template.custom_email_template_signature = et.email_template_signature
+    end
 
     subject = email_template.render_subject(options.stringify_keys)
     body = email_template.render(options)

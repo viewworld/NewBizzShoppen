@@ -223,6 +223,19 @@ class IntegrationTasks < Thor
     Translation.where(:key => "campaign_reports.index.table.campaign_results", :locale => "en").first.update_attribute(:value, "Results")
     Translation.where(:key => "campaign_reports.index.table.predicted_results", :locale => "en").first.update_attribute(:value, "Prediction")
   end
+    
+  desc "m30", ""
+  def m30
+    orig_locale = ::I18n.locale
+
+    Country.all.each do |country|
+      ::I18n.locale = country.locale.to_sym
+      EmailTemplateSignature.create(:related => country,
+                                    :body => "<table border=\"0\" cellpadding=\"4\" cellspacing=\"4\" style=\"height: 55px; width: 800px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n\t\t\t\t<img alt=\"Logo Fairleads\" src=\"#{country.email_template_signature_logo_url}\" /></td>\r\n\t\t\t<td>\r\n\t\t\t\t#{country.email_template_signature}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n<p>\r\n\t&nbsp;</p>\r\n")
+    end
+
+    ::I18n.locale = orig_locale
+  end
 
   desc "m30a", ""
   def m30a

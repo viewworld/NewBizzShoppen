@@ -29,6 +29,10 @@ en:
     all_label: "All"
     nothing_to_display: "Nothing to display"
     search: "Search"
+    search_box:
+      keyword_label: "Keyword"
+      archived_label: "Archived"
+      search_button: "Search"
     clear_filter: "Clear filter"
     fewer: Fewer
     more: More
@@ -113,6 +117,8 @@ en:
         news: "News"
         hints: "Hints"
         translations: "Translations"
+        chain_mail: "Chain mail"
+        chain_mail_type: "Chain mail type"
         currencies: "Currencies"
         countries: Countries
         languages: "Languages"
@@ -303,11 +309,37 @@ en:
     dashboard: "Dashboard"
 
   views:
+    button_update: "Save"
+    button_cancel: "Cancel"
+    button_add: "Add"
+    button_delete: "Delete"
     pagination:
       next: "Next &rsaquo;"
       last: "Last &raquo;"
       first: "&laquo; First"
       previous: "&lsaquo; Previous"
+    generic_table:
+      actions: "Actions"
+      show: "Show"
+      edit: "Edit"
+      delete: "Delete"
+      confirmation: "Are you sure?"
+
+  chain_mail_types:
+    table:
+      name: "Name"
+      active: "Active"
+      archived: "Archived"
+    edit:
+      header: "Editing chain mail type: %{name}"
+      title: "Edit"
+    index:
+      header: "Chain mail types"
+      new: "New chain mail type"
+    new:
+      header: "New chain mail type"
+      title: "New"
+
 
   lead_templates:
     table:
@@ -401,6 +433,7 @@ en:
       work_screen: Work screen
       materials_repository: "Materials repository"
       description_tooltip_blank: "(no description)"
+      call_backs: "Call backs"
     new:
       title: New campaign
       button_create: Create
@@ -632,6 +665,8 @@ en:
       select_deals_for_request: "Select deals for request"
       no_deals_selected_for_request: "No deals selected for request."
       upgraded_user_has_other_errors: "Upgraded user could not be created"
+      chain_mail_type: "Chain mail type"
+      number_of_emails_left_to_send_in_this_chain: "Number of emails left to send in this chain: %{count}"
     edit:
       title: Edit result
       form_title: Edit
@@ -3281,6 +3316,12 @@ en:
         asset:
           validation_asset_images_type: "uploaded file is not an image"
           validation_asset_document_type: "uploaded file is not a document"
+        chain_mail:
+          attributes:
+            chain_mail_items:
+              too_short: "There has to be at least %{count} email in the chain"
+            execution_conditions:
+              too_short: "At least %{count} condition has to be selected"
 
   activemodel:
     errors:

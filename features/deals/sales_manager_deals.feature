@@ -35,7 +35,7 @@ Feature: Deals from Sales Manager perspective
     Then I should see translated "shared.deals.table.likes"
     Then I should see translated "shared.deals.table.published"
     Then I should see "super" within "#deals"
-    Then I should see "2016-12-12" within "#deals"
+    Then I should see "12-12-2016" within "#deals"
     Then I should see "false" within "#deals"
 
   # when I am Deal Maker

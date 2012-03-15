@@ -629,7 +629,7 @@ Scenario: Category buyer created by admin should have buying categories assigned
   And I am on administration new category supplier page
   Then I fill in "user_category_supplier_first_name" with "Category"
   And I fill in "user_category_supplier_last_name" with "Buyer"
-  And I fill in "user_category_supplier_company_name" with "Selleo"
+  And I fill in "user_category_supplier_company_name" with "ZSelleo"
   And I fill in "user_category_supplier_phone" with "0297272341235"
   And I fill in "user_category_supplier_email" with "category@buyer.fake"
   And I fill in "user_category_supplier_address_attributes_address_line_1" with "Typical 23"
@@ -639,6 +639,7 @@ Scenario: Category buyer created by admin should have buying categories assigned
   And I fill in "user_category_supplier_password" with "secret"
   And I fill in "user_category_supplier_password_confirmation" with "secret"
   And I check "user_category_supplier_skip_email_verification"
+  And I uncheck "user_category_supplier_auto_buy_enabled"
   And I select "TestingCategoryBuyer" from "all_categories"
   And I follow "move_right"
   Then I press translated "administration.users.edit.view.button_update_user"
@@ -978,3 +979,6 @@ Scenario: I edit user's ean number, vat number and direct phone for member
   And I fill in "user_member_company_ean_number" with "124234324324244"
   And I fill in "user_member_direct_phone_number" with "+49 234124234324324"
   And I fill in "user_member_vat_number" with "V234234234"
+
+@m31 @_requested @newsletter
+Scenario: I can mark supplier or category supplier as newsletter manager (overrides subscription properties)

@@ -5,10 +5,13 @@ class EmailTemplate < ActiveRecord::Base
   translates :subject, :body
   has_many :email_template_translations
   belongs_to :resource, :polymorphic => true
+  has_one :email_template_signature, :as => :related
 
   validates_uniqueness_of :uniq_id, :scope => [:resource_type,:resource_id]
 
-  attr_accessor :preview
+  accepts_nested_attributes_for :email_template_signature, :allow_destroy => true
+
+  attr_accessor :preview, :enable_custom_signature, :country, :custom_email_template_signature
 
   scope :global, where("resource_type IS NULL and resource_id IS NULL")
 
@@ -21,7 +24,19 @@ class EmailTemplate < ActiveRecord::Base
   end
 
   def signature
-    "<table border=\"0\" cellpadding=\"4\" cellspacing=\"4\" style=\"height: 55px; width: 800px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n\t\t\t\t<img alt=\"Logo Fairleads\" src=\"{{country.email_template_signature_logo_url}}\" /></td>\r\n\t\t\t<td>\r\n\t\t\t\t{{country.email_template_signature}}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n<p>\r\n\t&nbsp;</p>\r\n"
+    if custom_email_template_signature
+      custom_email_template_signature.body
+    elsif email_template_signature
+      email_template_signature.body
+    elsif country and country.email_template_signature
+      country.email_template_signature.body
+    else
+      ""
+    end
+  end
+
+  def blank_template?
+    uniq_id == "blank_template"
   end
 
   private
@@ -29,7 +44,7 @@ class EmailTemplate < ActiveRecord::Base
   #Template cannot be cached due to dynamic translations
   def template
     template_content = body
-    template_content += signature unless preview
+    template_content += signature.to_s unless preview
     Liquid::Template.parse(template_content)
   end
 end

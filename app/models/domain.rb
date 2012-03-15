@@ -32,6 +32,10 @@ class Domain < ActiveRecord::Base
     Domain.where(:site => site, :locale => locale).first || Domain.where(:site => site).with_default.first
   end
 
+  def self.default
+    with_default.first.name_for_env
+  end
+
   def name_for_env
     if Rails.env.development?
       "#{name}:3000"

@@ -65,7 +65,7 @@ CKEDITOR.editorConfig = function( config )
         ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
         ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
         ['Link','Unlink','Anchor'],
-        ['Table','HorizontalRule','Smiley','SpecialChar','PageBreak']
+        ['Image', 'Table','HorizontalRule','Smiley','SpecialChar','PageBreak']
     ];
 
   config.toolbar_EmailPopup =
@@ -79,7 +79,21 @@ CKEDITOR.editorConfig = function( config )
         ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
         ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
         ['Link','Unlink','Anchor'],
-        ['Table','HorizontalRule','Smiley','SpecialChar','PageBreak', 'insertEmailTemplVars', 'insertDealLinks']
+        ['Image', 'Table','HorizontalRule','Smiley','SpecialChar','PageBreak', 'insertEmailTemplVars', 'insertDealLinks']
+    ];
+
+  config.toolbar_EmailSignature =
+    [
+        ['Source','-','Preview','Templates'],
+        ['Cut','Copy','Paste','PasteText','PasteFromWord',],
+        ['Maximize','-','About'],
+        ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
+        ['Styles','Format'],
+        ['Bold','Italic','Underline','Strike','-','Subscript','Superscript', 'TextColor'],
+        ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
+        ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+        ['Link','Unlink','Anchor'],
+        ['Image', 'Table','HorizontalRule','Smiley','SpecialChar','PageBreak']
     ];
 
     config.toolbar_Lite =

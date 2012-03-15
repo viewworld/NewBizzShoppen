@@ -2,7 +2,7 @@ class CallResult < ActiveRecord::Base
   attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_2,
                 :contact_address_line_3, :contact_zip_code, :contact_country_id, :contact_phone_number,
                 :contact_company_name, :buying_category_ids, :result_id_changed, :user_not_charge_vat, :current_user, :contact_subscription_plan_id,
-                :contact_newsletter_on, :contact_requested_deal_ids, :upgraded_user
+                :contact_newsletter_on, :contact_requested_deal_ids, :upgraded_user, :chain_mail_type_id
 
   belongs_to :contact
   belongs_to :result
@@ -11,6 +11,7 @@ class CallResult < ActiveRecord::Base
   has_many :result_values, :dependent => :destroy
   has_one :send_material_result_value, :class_name => "ResultValue", :conditions => "result_values.field_type = '#{ResultField::MATERIAL}'"
   has_one :archived_email, :as => :related, :dependent => :destroy
+  has_one :chain_mail, :as => :chain_mailable
   accepts_nested_attributes_for :result_values, :allow_destroy => true
   accepts_nested_attributes_for :contact
 
@@ -28,6 +29,14 @@ class CallResult < ActiveRecord::Base
   after_update :process_side_effects, :update_contact_email, :update_contact_address, :unless => :save_without_callbacks
   after_destroy :update_completed_status, :update_pending_status, :unless => :save_without_callbacks
   before_update :process_for_changed_result_type, :unless => :save_without_callbacks
+  after_save do
+    if chain_mail_type_id and new_chain_mail_type = ChainMailType.find_by_id(chain_mail_type_id) and new_chain_mail_type.id != active_chain_mail_type_id
+      chain_mail.destroy if chain_mail
+      ChainMail.create(:email => (contact_email_address || contact.email_address), :chain_mailable => self, :chain_mail_type => new_chain_mail_type)
+    elsif active_chain_mail_type_id and chain_mail_type_id.blank?
+      chain_mail.destroy
+    end
+  end
 
   PENDING_RESULT_TYPES = [:call_back, :not_interested_now]
 
@@ -74,6 +83,24 @@ class CallResult < ActiveRecord::Base
 
   def creator_full_name
     creator ? creator.full_name : "-creator deleted-"
+  end
+
+  def to_i
+    id
+  end
+
+  def chain_mail_queue
+    "call_result_#{id}_chain_mails"
+  end
+
+  def active_chain_mail_type_id
+    chain_mail ? chain_mail.chain_mail_type_id : nil
+  end
+
+  def register_click!
+    if chain_mail and chain_mail.stop_on_link_click?
+      ChainMail.stop_sending(self)
+    end
   end
 
   class << self
@@ -268,11 +295,14 @@ class CallResult < ActiveRecord::Base
   def deliver_material
     template = contact.campaign.send_material_email_template || EmailTemplate.global.where(:uniq_id => 'result_send_material').first
     template = customize_email_template(template)
+    template.preview = true
 
     TemplateMailer.new(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.render({:contact_company_name => contact.company_name, :contact_name => contact.contact_name, :agent_name => creator.full_name, :agent_phone_number => creator.phone}),
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc,
-                                        :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
+                                        :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id,
+                                        :related_id => self.id, :related_type => self.class.to_s,
+                                        :email_template_id => template.id},
                                         assets_to_path_names(send_material_result_value.materials)).deliver!
   end
 
@@ -280,6 +310,7 @@ class CallResult < ActiveRecord::Base
     role = user.role_to_campaign_template_name
     template = contact.campaign.send("upgrade_contact_to_#{role}_email_template".to_sym) || EmailTemplate.global.where(:uniq_id => "upgrade_contact_to_#{role}").first
     template = customize_email_template(template)
+    template.preview = true
 
     body_content = template.render({:user => user, :password => password})
     if user.member?
@@ -289,7 +320,9 @@ class CallResult < ActiveRecord::Base
     TemplateMailer.new(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => body_content,
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc,
-                                        :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
+                                        :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id,
+                                        :related_id => self.id, :related_type => self.class.to_s,
+                                        :email_template_id => template.id},
                                         assets_to_path_names(send_material_result_value.materials)).deliver!
   end
   

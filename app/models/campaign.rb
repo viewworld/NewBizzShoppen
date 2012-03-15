@@ -15,6 +15,7 @@ class Campaign < ActiveRecord::Base
   has_one :upgrade_contact_to_buyer_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_buyer'", :dependent => :destroy
   has_one :upgrade_contact_to_member_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_member'", :dependent => :destroy
   has_many :user_session_logs, :dependent => :destroy
+  has_many :chain_mail_types, :dependent => :nullify
 
   validates_uniqueness_of :name
   validates_presence_of :name, :max_contact_number, :category_id, :country_id, :start_date, :end_date, :cost_type
@@ -364,5 +365,14 @@ class Campaign < ActiveRecord::Base
   def set_as_retrieved!
     self.deleted_at = nil
     self.save(:validate => false)
+  end
+
+  def call_backs_count(user=nil)
+    call_back = Result.where("name = ?", "Call back").first
+    contacts_scope = Contact.joins(:call_results).where("leads.campaign_id = ? AND call_results.result_id = ? AND leads.completed IS FALSE AND pending IS TRUE", id, call_back.id)
+    if user and (user.call_centre_agent? or user.call_centre? or user.agent?)
+      contacts_scope = contacts_scope.where("leads.agent_id IN (?)", user.call_centre? ? [user.id] + user.subaccount_ids : user.id)
+    end
+    contacts_scope.select("DISTINCT(leads.id)").count
   end
 end
