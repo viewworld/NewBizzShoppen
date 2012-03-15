@@ -26,7 +26,7 @@ class ChainMail < ActiveRecord::Base
                                      :queue => queue,
                                      :run_at => cmi.run_at,
                                      :position => cmi.position},
-                                    assets_to_path_names(chain_mail_type.materials)).deliver!
+                                    assets_to_path_names(cmi.chain_mail_materials)).deliver!
     end
   end
 
