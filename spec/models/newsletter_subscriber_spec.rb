@@ -4,7 +4,24 @@ describe NewsletterSubscriber do
   fixtures :all
 
   before(:each) do
+    Delayed::Worker.delay_jobs = true
+    @time = Time.now
+
     @list = NewsletterList.make!
+  end
+
+  def set_time(t)
+    Time.stubs(:now).returns(t)
+  end
+
+  def reset_time
+    Time.stubs(:now).returns(@time)
+  end
+
+  def execute_delayed_jobs
+    set_time(Time.now+5.minutes)
+    Delayed::Worker.new.work_off
+    #puts Delayed::Job.where(:queue => "newsletter_objects_update").first.last_error.inspect
   end
 
   context "Update & sync" do
@@ -67,6 +84,11 @@ describe NewsletterSubscriber do
     it "should create subscriber when new lead created" do
       @lead.newsletter_subscriber.should_not be_nil
       @lead.newsletter_subscriber.subscribable.should == @lead
+
+      execute_delayed_jobs
+
+      @lead.reload
+
       @lead.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
 
       @lead.newsletter_subscriber.email.should == @lead.email_address
@@ -75,6 +97,10 @@ describe NewsletterSubscriber do
 
     it "should update subscriber when lead was updated" do
       @lead.update_attributes!(:email_address => "new_email_1331638434@nbs.com", :contact_name => "Tom Jones")
+
+      execute_delayed_jobs
+
+      @lead.reload
 
       @lead.newsletter_subscriber.email.should == @lead.email_address
       @lead.newsletter_subscriber.name.should == @lead.contact_name
@@ -106,6 +132,11 @@ describe NewsletterSubscriber do
     it "should create subscriber when new contact created" do
       @contact.newsletter_subscriber.should_not be_nil
       @contact.newsletter_subscriber.subscribable.should == @contact
+
+      execute_delayed_jobs
+
+      @contact.reload
+
       @contact.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
 
       @contact.newsletter_subscriber.email.should == @contact.email_address
@@ -114,6 +145,10 @@ describe NewsletterSubscriber do
 
     it "should update subscriber when contact was updated" do
       @contact.update_attributes!(:email_address => "new_email_1331638434@nbs.com", :contact_name => "Tom Jones")
+
+      execute_delayed_jobs
+
+      @contact.reload
 
       @contact.newsletter_subscriber.email.should == @contact.email_address
       @contact.newsletter_subscriber.name.should == @contact.contact_name
@@ -141,6 +176,11 @@ describe NewsletterSubscriber do
     it "should create subscriber when new user of certain role is created" do
       @member.newsletter_subscriber.should_not be_nil
       @member.newsletter_subscriber.subscribable.should == @member
+
+      execute_delayed_jobs
+
+      @member.reload
+
       @member.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
 
       @member.newsletter_subscriber.email.should == @member.email
@@ -149,6 +189,10 @@ describe NewsletterSubscriber do
 
     it "should update subscriber when user was updated" do
       @member.update_attributes!(:email => "new_email_1331638434@nbs.com", :first_name => "Tom")
+
+      execute_delayed_jobs
+
+      @member.reload
 
       @member.newsletter_subscriber.email.should == @member.email
       @member.newsletter_subscriber.name.should == @member.full_name
@@ -183,6 +227,11 @@ describe NewsletterSubscriber do
     it "should create subscriber when new user of certain subscription type is created" do
       @supplier.newsletter_subscriber.should_not be_nil
       @supplier.newsletter_subscriber.subscribable.should == @supplier
+
+      execute_delayed_jobs
+
+      @supplier.reload
+
       @supplier.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
 
       @supplier.newsletter_subscriber.email.should == @supplier.email
@@ -191,6 +240,9 @@ describe NewsletterSubscriber do
 
     it "should update subscriber when user was updated" do
       @supplier.update_attributes!(:email => "new_email_1331638434@nbs.com", :first_name => "Tom")
+
+      execute_delayed_jobs
+      @supplier.reload
 
       @supplier.newsletter_subscriber.email.should == @supplier.email
       @supplier.newsletter_subscriber.name.should == @supplier.full_name
@@ -223,6 +275,10 @@ describe NewsletterSubscriber do
 
     it "should update object added to custom source of the list" do
       @contact.update_attributes!(:email_address => "new_email_1331638434@nbs.com", :contact_name => "Tom Jones")
+
+      execute_delayed_jobs
+
+      @contact.reload
 
       @contact.newsletter_subscriber.email.should == @contact.email_address
       @contact.newsletter_subscriber.name.should == @contact.contact_name

@@ -3,7 +3,6 @@ class NewsletterSubscriber < ActiveRecord::Base
   has_many :newsletter_lists, :through => :newsletter_sources
   belongs_to :subscribable, :polymorphic => true
 
-  after_save :assign_to_subscribable_sources
   before_save :set_previous_email
 
   private
@@ -18,7 +17,9 @@ class NewsletterSubscriber < ActiveRecord::Base
     true
   end
 
-  def assign_to_subscribable_sources
+  public
+
+  def assign_to_subscribable_sources!
       subscribable.reload
       subscribable.all_newsletter_sources.each do |source|
         source.newsletter_subscribers << self unless source.newsletter_subscribers.include?(self)
