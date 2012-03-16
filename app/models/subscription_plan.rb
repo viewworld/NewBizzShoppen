@@ -31,6 +31,7 @@ class SubscriptionPlan < ActiveRecord::Base
 
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
   has_many :subscriptions
+  has_many :users, :through => :subscriptions, :source => :user
   has_one :invoice_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'invoice'", :dependent => :destroy
   belongs_to :currency
   belongs_to :seller

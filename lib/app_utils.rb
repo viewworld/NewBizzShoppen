@@ -66,17 +66,17 @@ module ActsAsSubscribable
           end
 
           def all_newsletter_sources
-            newsletter_config[:source_associations].map do |source_association|
+            (newsletter_config[:source_associations].map do |source_association|
               self.send(source_association).respond_to?(:newsletter_sources) ? self.send(source_association).send(:newsletter_sources) : []
-            end.flatten + newsletter_sources_from_tags
+            end.flatten + newsletter_sources_from_tags).uniq
           end
 
           def newsletter_sources_from_tags
-            if respond_to?(:tags) and tags.any?
+            if self.respond_to?(:tag_list) and self.tag_list.any?
               tag_groups = TagGroup.tagged_with(tag_list, :any => true).where(:match_all => false) +
                   TagGroup.tagged_with(tag_list, :match_all => true).where(:match_all => true)
 
-              tag_groups.each do |tag_group|
+              tag_groups.map do |tag_group|
                 tag_group.newsletter_sources
               end.flatten.uniq
             else

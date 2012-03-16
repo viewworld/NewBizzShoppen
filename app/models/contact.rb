@@ -38,6 +38,7 @@ class Contact < AbstractLead
 
   acts_as_taggable
 
+
   class << self
 
     def batch_remove(ids)

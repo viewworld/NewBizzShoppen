@@ -29,4 +29,14 @@ class Role
   def newsletter_sources
     NewsletterSource.where(:sourceable_id => @id, :sourceable_type => "Role")
   end
+
+  def users
+    if @key == :supplier
+      User::Supplier.with_role(:supplier).with_roles_except([:category_supplier])
+    elsif @key == :category_supplier
+      User::CategorySupplier.all
+    else
+      User::Member.all
+    end
+  end
 end

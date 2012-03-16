@@ -85,6 +85,7 @@ class User < ActiveRecord::Base
   scope :with_call_centre_agents, lambda { |call_centre| where("(roles_mask & #{2**User.valid_roles.index(:call_centre_agent)} > 0) and parent_id = ?", call_centre.id) }
   scope :with_call_centres, where("roles_mask & #{2**User.valid_roles.index(:call_centre)} > 0")
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
+  scope :with_any_role, lambda { |roles| where( roles.map { |r| "(roles_mask & #{2**User.valid_roles.index(r.to_sym)} > 0)" }.join(" OR ") ) }
   scope :with_roles_except, lambda { |roles| where( roles.map { |r| "NOT(roles_mask & #{2**User.valid_roles.index(r.to_sym)} > 0)" }.join(" AND ") ) }
   scope :with_keyword, lambda { |q| where("lower(first_name) like :keyword OR lower(last_name) like :keyword OR lower(email) like :keyword or lower(company_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :with_subaccounts, lambda { |parent_id| where("parent_id = ?", parent_id) }

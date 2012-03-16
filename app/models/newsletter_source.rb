@@ -15,4 +15,30 @@ class NewsletterSource < ActiveRecord::Base
   def custom_source?
     source_type == CUSTOM_SOURCE
   end
+
+  def fetch_all_subscribable_objects
+    case source_type
+      when CAMPAIGN_SOURCE
+        sourceable.contacts
+      when LEAD_CATEGORY_SOURCE
+        sourceable.leads.including_subcategories
+      when USER_ROLE_SOURCE
+        sourceable.users
+      when SUBSCRIPTION_TYPE_SOURCE
+        sourceable.users
+      when TAG_SOURCE
+        sourceable.tagged_objects
+      else #custom
+        newsletter_subscribers.map(&:subscribable)
+    end
+  end
+
+  def assign_existing_subscribable_objects!
+    unless custom_source?
+      fetch_all_subscribable_objects.each do |sob|
+        sob = sob.with_role if sob.class.to_s == "User"
+        sob.send(:update_newsletter_subscriber) if sob.newsletter_subscriber.nil? or !newsletter_subscribers.include?(sob.newsletter_subscriber)
+      end
+    end
+  end
 end
