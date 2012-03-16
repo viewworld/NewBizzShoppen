@@ -24,13 +24,13 @@
         <td class="tda ta_r">
             <ul-actions>
               <% if link_to_show %>
-              <li><%= link_to t("views.generic_table.show"), [:administration,object], :class => "#{'default_action' if default_action == :show}" %></li>
+              <li><%= link_to t("views.generic_table.show"), link_scope+[object], :class => "#{'default_action' if default_action == :show}" %></li>
               <% end %>
               <% if link_to_edit %>
-              <li><%= link_to t("views.generic_table.edit"), [:edit,:administration,object], :class => "#{'default_action' if default_action == :edit}" %></li>
+              <li><%= link_to t("views.generic_table.edit"), [:edit]+link_scope+[object], :class => "#{'default_action' if default_action == :edit}" %></li>
               <% end %>
               <% if link_to_delete %>
-              <li><%= link_to t("views.generic_table.delete"), [:administration,object], :method => :delete, :confirm => t("views.generic_table.confirmation"), :class => "#{'default_action' if default_action == :delete}" %></li>
+              <li><%= link_to t("views.generic_table.delete"), link_scope+[object], :method => :delete, :confirm => t("views.generic_table.confirmation"), :class => "#{'default_action' if default_action == :delete}" %></li>
               <% end %>
             </ul-actions>
         </td>

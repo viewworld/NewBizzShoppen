@@ -14,6 +14,10 @@
           <%= f.label :expected_completed_per_hour %>
           <%= f.text_field :expected_completed_per_hour %>
         </li>
+        <li class="select">
+          <%= f.label :chain_mail_type_id %>
+          <%= f.select :chain_mail_type_id, options_for_select(campaign.chain_mail_types.with_active.map{|cmt| [cmt.name,cmt.id]}, f.object.chain_mail_type_id), :include_blank => true %>
+        </li>
       </ol>
     </fieldset>
 </div>

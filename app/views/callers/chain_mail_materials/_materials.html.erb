@@ -1,4 +1,4 @@
-<%= form_for material, :url => administration_chain_mail_materials_path(:format => :js, :chain_mail_type_id => params[:chain_mail_type_id], :chain_mail_item_id => params[:chain_mail_item_id]), :remote => true, :html => {:multipart => true} do |f| %>
+<%= form_for material, :url => callers_chain_mail_materials_path(:format => :js, :chain_mail_type_id => params[:chain_mail_type_id], :chain_mail_item_id => params[:chain_mail_item_id]), :remote => true, :html => {:multipart => true} do |f| %>
   <%= f.file_field :asset %>
 <% end %>
 
@@ -6,9 +6,13 @@
   <% if materials.any? %>
     <% materials.each do |material_item| %>
       <li>
-        <%= link_to_function material_item.asset_file_name, "select_file_for_chain_mail_item('#{params[:chain_mail_item_id]}', #{material_item.id})" %>
+        <% if params[:chain_mail_item_id] %>
+            <%= link_to_function material_item.asset_file_name, "select_file_for_chain_mail_item('#{params[:chain_mail_item_id]}', #{material_item.id})" %>
+         <% else %>
+            <%= material_item.asset_file_name %>
+         <% end %>
         <% if !material_item.new_record? and !material_item.chain_mail_items.any? %>
-        <%= link_to image_tag("/images/icons/remove.png"), administration_chain_mail_material_path(material_item, :chain_mail_type_id => material_item.chain_mail_type.id, :chain_mail_item_id => params[:chain_mail_item_id], :format => :js), :remote => true, :method => :delete, :confirm => t("common.confirmation") %>
+        <%= link_to image_tag("/images/icons/remove.png"), callers_chain_mail_material_path(material_item, :chain_mail_type_id => material_item.chain_mail_type.id, :chain_mail_item_id => params[:chain_mail_item_id], :format => :js), :remote => true, :method => :delete, :confirm => t("common.confirmation") %>
         <% end %>
       </li>
     <% end %>
@@ -34,6 +38,6 @@ $('#new_asset_chain_mail_material input').change(function(){
 });
 
 function select_file_for_chain_mail_item(chain_mail_item_id, material_id){
-    $.post('/administration/chain_mail_items/' + chain_mail_item_id + '.js', '_method=PUT&material_id=' + material_id.toString() )
+    $.post('/callers/chain_mail_items/' + chain_mail_item_id + '.js', '_method=PUT&material_id=' + material_id.toString() )
 }
 </script>
