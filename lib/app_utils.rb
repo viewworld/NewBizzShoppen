@@ -45,14 +45,17 @@ module ActsAsSubscribable
 
         class_eval do
           has_one :newsletter_subscriber, :as => :subscribable, :dependent => :destroy
-          after_create :create_new_newsletter_update_delayed_job
-          after_update :create_new_newsletter_update_delayed_job
+          after_save :create_new_newsletter_update_delayed_job
           before_destroy :destroy_newsletter_subscriber
 
           def add_to_custom_source_of_newsletter_list!(newsletter_list)
             if newsletter_list.newsletter_subscribers.where(:email => self.send(newsletter_config[:email_field])).first.nil?
               newsletter_list.custom_source.newsletter_subscribers << get_or_create_newsletter_subscriber
             end
+          end
+
+          def newsletter_custom_sources_enabled?
+            newsletter_subscriber and newsletter_subscriber.newsletter_sources.where(:source_type => NewsletterSource::CUSTOM_SOURCE).first
           end
 
           def newsletter_sources_enabled?
@@ -91,14 +94,14 @@ module ActsAsSubscribable
           end
 
           def create_new_newsletter_update_delayed_job
-            if newsletter_sources_enabled? or (newsletter_subscriber and newsletter_subscriber.newsletter_sources.where(:source_type => NewsletterSource::CUSTOM_SOURCE).first)
+            if newsletter_sources_enabled? or newsletter_custom_sources_enabled?
               get_or_create_newsletter_subscriber
-              NewsletterManager.create_new_update_newsletter_objects_job
+              NewsletterManager.create_new_update_newsletter_objects_job(updated_at)
             end
           end
 
           def update_newsletter_subscriber
-            if newsletter_sources_enabled? or (newsletter_subscriber and newsletter_subscriber.newsletter_sources.where(:source_type => NewsletterSource::CUSTOM_SOURCE).first)
+            if newsletter_sources_enabled? or newsletter_custom_sources_enabled?
               get_or_create_newsletter_subscriber.update_attributes(:email => self.send(newsletter_config[:email_field]), :name => self.send(newsletter_config[:name_field]))
               get_or_create_newsletter_subscriber.assign_to_subscribable_sources!
             end

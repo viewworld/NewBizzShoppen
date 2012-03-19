@@ -37,6 +37,10 @@ describe NewsletterSubscriber do
       @new_email = "test#{Time.now.to_i}@nbs1.com"
       @lead.update_attributes!(:email_address => @new_email)
 
+      execute_delayed_jobs
+
+      @lead.reload
+
       @lead.newsletter_subscriber.email.should == @new_email
       @lead.newsletter_subscriber.previous_email.should == @old_email
       @lead.newsletter_subscriber.is_synced.should be_false
@@ -53,6 +57,10 @@ describe NewsletterSubscriber do
       #email is updated second time
       @new_email2 = "test2#{Time.now.to_i}@nbs1.com"
       @lead.update_attributes!(:email_address => @new_email2)
+
+      execute_delayed_jobs
+
+      @lead.reload
 
       @lead.newsletter_subscriber.email.should == @new_email2
       @lead.newsletter_subscriber.previous_email.should == @new_email
@@ -335,11 +343,15 @@ describe NewsletterSubscriber do
       end
 
       it "should create newsletter subscriber to all objects that are tagged with tag1 OR tag2" do
+        execute_delayed_jobs
+
         [@contact1, @contact2, @member1, @member2].each do |object|
           object.reload
 
           object.newsletter_subscriber.should_not be_nil
+          object.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
         end
+
         @supplier1.newsletter_subscriber.should be_nil
       end
 
@@ -365,10 +377,13 @@ describe NewsletterSubscriber do
       end
 
       it "should create newsletter subscriber to all objects that are tagged with tag1 AND tag2" do
+        execute_delayed_jobs
+
         [@contact1, @member1].each do |object|
           object.reload
 
           object.newsletter_subscriber.should_not be_nil
+          object.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
         end
 
         [@contact2, @member2, @supplier1].each do |object|
@@ -402,6 +417,10 @@ describe NewsletterSubscriber do
       @lead = Lead.make!(:category => @lead_category)
 
       @lead.newsletter_subscriber.should_not be_nil
+
+      execute_delayed_jobs
+
+      @lead.reload
       @lead.newsletter_subscriber.newsletter_sources.size.should == 1
 
       @other_list = NewsletterList.make!
@@ -416,6 +435,9 @@ describe NewsletterSubscriber do
 
       #every newly created subscribable object should have two sources
       @new_lead = Lead.make!(:category => @lead_category)
+
+      execute_delayed_jobs
+
       @new_lead.reload
       @new_lead.newsletter_subscriber.newsletter_sources.size.should == 2
     end
@@ -429,6 +451,10 @@ describe NewsletterSubscriber do
       @contact.save
 
       @contact.newsletter_subscriber.should_not be_nil
+
+      execute_delayed_jobs
+
+      @contact.reload
       @contact.newsletter_subscriber.newsletter_sources.size.should == 1
 
       @other_list = NewsletterList.make!
@@ -448,9 +474,9 @@ describe NewsletterSubscriber do
       @new_contact.tag_list << "some tag1"
       @new_contact.tag_list << "some tag2"
       @new_contact.save
-      @new_contact.reload
 
-      @new_contact.send(:update_newsletter_subscriber)
+      execute_delayed_jobs
+
       @new_contact.reload
       @new_contact.newsletter_subscriber.newsletter_sources.size.should == 2
     end
