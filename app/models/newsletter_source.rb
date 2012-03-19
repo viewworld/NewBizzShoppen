@@ -3,6 +3,8 @@ class NewsletterSource < ActiveRecord::Base
   has_and_belongs_to_many :newsletter_subscribers
   belongs_to :sourceable, :polymorphic => true
 
+  after_create :assign_existing_subscribable_objects
+
   CAMPAIGN_SOURCE          = 0.freeze
   LEAD_CATEGORY_SOURCE     = 1.freeze
   USER_ROLE_SOURCE         = 2.freeze
@@ -31,6 +33,10 @@ class NewsletterSource < ActiveRecord::Base
       else #custom
         newsletter_subscribers.map(&:subscribable)
     end
+  end
+
+  def assign_existing_subscribable_objects
+    self.delay(:queue => "newsletter_objects_assign_existing").assign_existing_subscribable_objects!
   end
 
   def assign_existing_subscribable_objects!

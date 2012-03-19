@@ -18,8 +18,8 @@ describe NewsletterSubscriber do
     Time.stubs(:now).returns(@time)
   end
 
-  def execute_delayed_jobs
-    set_time(Time.now+5.minutes)
+  def execute_delayed_jobs(immediately=false)
+    set_time(Time.now+5.minutes) unless immediately
     Delayed::Worker.new.work_off
     #puts Delayed::Job.where(:queue => "newsletter_objects_update").first.last_error.inspect
   end
@@ -118,9 +118,11 @@ describe NewsletterSubscriber do
       @lead_before.reload
       @lead_before.newsletter_subscriber.should be_nil
 
-      @list.newsletter_sources.first.assign_existing_subscribable_objects!
+      execute_delayed_jobs(true)
+
       @lead_before.reload
       @lead_before.newsletter_subscriber.should_not be_nil
+      @lead_before.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
     end
   end
 
@@ -166,9 +168,11 @@ describe NewsletterSubscriber do
       @contact_before.reload
       @contact_before.newsletter_subscriber.should be_nil
 
-      @list.newsletter_sources.first.assign_existing_subscribable_objects!
+      execute_delayed_jobs(true)
+
       @contact_before.reload
       @contact_before.newsletter_subscriber.should_not be_nil
+      @contact_before.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
     end
   end
 
@@ -210,10 +214,11 @@ describe NewsletterSubscriber do
       @member_before.reload
       @member_before.newsletter_subscriber.should be_nil
 
-      @list.newsletter_sources.first.assign_existing_subscribable_objects!
+      execute_delayed_jobs(true)
 
       @member_before.reload
       @member_before.newsletter_subscriber.should_not be_nil
+      @member_before.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
     end
   end
 
@@ -260,10 +265,11 @@ describe NewsletterSubscriber do
       @supplier_before.reload
       @supplier_before.newsletter_subscriber.should be_nil
 
-      @list.newsletter_sources.first.assign_existing_subscribable_objects!
+      execute_delayed_jobs(true)
 
       @supplier_before.reload
       @supplier_before.newsletter_subscriber.should_not be_nil
+      @supplier_before.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
     end
   end
 
@@ -361,11 +367,12 @@ describe NewsletterSubscriber do
           object.newsletter_subscriber.should be_nil
         end
 
-        @list.newsletter_sources.first.assign_existing_subscribable_objects!
+        execute_delayed_jobs(true)
 
         [@contact_before, @member_before].each do |object|
           object.reload
           object.newsletter_subscriber.should_not be_nil
+          object.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
         end
       end
     end
@@ -399,10 +406,11 @@ describe NewsletterSubscriber do
           object.newsletter_subscriber.should be_nil
         end
 
-        @list.newsletter_sources.first.assign_existing_subscribable_objects!
+        execute_delayed_jobs(true)
 
         @contact_before.reload
         @contact_before.newsletter_subscriber.should_not be_nil
+        @contact_before.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
 
         @member_before.reload
         @member_before.newsletter_subscriber.should be_nil
@@ -425,7 +433,8 @@ describe NewsletterSubscriber do
 
       @other_list = NewsletterList.make!
       @other_list.newsletter_sources.create(:source_type => NewsletterSource::LEAD_CATEGORY_SOURCE, :sourceable => @lead_category)
-      @other_list.newsletter_sources.first.assign_existing_subscribable_objects!
+
+      execute_delayed_jobs(true)
 
       @lead.reload
       @lead.newsletter_subscriber.newsletter_sources.size.should == 2
@@ -463,7 +472,8 @@ describe NewsletterSubscriber do
       @tag_group.tag_list << "some tag2"
       @tag_group.save
       @other_list.newsletter_sources.create(:source_type => NewsletterSource::TAG_SOURCE, :sourceable => @tag_group)
-      @other_list.newsletter_sources.first.assign_existing_subscribable_objects!
+
+      execute_delayed_jobs(true)
 
       @tag_group.reload
 
