@@ -29,6 +29,10 @@ en:
     all_label: "All"
     nothing_to_display: "Nothing to display"
     search: "Search"
+    search_box:
+      keyword_label: "Keyword"
+      archived_label: "Archived"
+      search_button: "Search"
     clear_filter: "Clear filter"
     fewer: Fewer
     more: More
@@ -113,6 +117,8 @@ en:
         news: "News"
         hints: "Hints"
         translations: "Translations"
+        chain_mail: "Chain mail"
+        chain_mail_type: "Chain mail type"
         currencies: "Currencies"
         countries: Countries
         languages: "Languages"
@@ -303,11 +309,45 @@ en:
     dashboard: "Dashboard"
 
   views:
+    button_update: "Save"
+    button_cancel: "Cancel"
+    button_add: "Add"
+    button_delete: "Delete"
     pagination:
       next: "Next &rsaquo;"
       last: "Last &raquo;"
       first: "&laquo; First"
       previous: "&lsaquo; Previous"
+    generic_table:
+      actions: "Actions"
+      show: "Show"
+      edit: "Edit"
+      delete: "Delete"
+      confirmation: "Are you sure?"
+
+  chain_mail_types:
+    table:
+      name: "Name"
+      campaign: "Campaign"
+      active: "Active"
+      archived: "Archived"
+    edit:
+      header: "Editing chain mail type: %{name}"
+      title: "Edit"
+    index:
+      header: "Chain mail types"
+      campaign_header: "Chain mail types in campaign %{name}"
+      new: "New chain mail type"
+      back_to_campaign: "Back to campaign"
+    new:
+      header: "New chain mail type"
+      title: "New"
+    form:
+      number_of_days: "# of days"
+      add_another_email: "Add another email"
+      manage_attachments: "Manage attachments"
+      chain_mail_at_position: "Chain mail at position %{position}"
+      attachments: "Attachments"
 
   lead_templates:
     table:
@@ -457,6 +497,7 @@ en:
       send_material_email_template: "Edit 'Send material' email template"
       upgrade_to_category_supplier_email_template: "Edit 'Upgrade to category supplier' email"
       materials_repository: "Materials repository"
+      chain_mail_types: "Chain mail types"
       edit_template: "Edit template"
       production: "Production"
       agent_work_screen_as: "Go to agent work screen as"
@@ -633,6 +674,9 @@ en:
       select_deals_for_request: "Select deals for request"
       no_deals_selected_for_request: "No deals selected for request."
       upgraded_user_has_other_errors: "Upgraded user could not be created"
+      chain_mail_type: "Chain mail type"
+      chain_mail_enabled: "Chain mail enabled"
+      number_of_emails_left_to_send_in_this_chain: "Number of emails left to send in this chain: %{count}"
     edit:
       title: Edit result
       form_title: Edit
@@ -3282,6 +3326,12 @@ en:
         asset:
           validation_asset_images_type: "uploaded file is not an image"
           validation_asset_document_type: "uploaded file is not a document"
+        chain_mail_type:
+          attributes:
+            chain_mail_items:
+              too_short: "There has to be at least %{count} email in the chain"
+            execution_conditions:
+              too_short: "At least %{count} condition has to be selected"
 
   activemodel:
     errors:

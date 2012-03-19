@@ -28,6 +28,20 @@ ActiveAdmin::Dashboards.build do
     strong { link_to "View All Paypal Responses", administration_archived_paypal_responses_path }
   end
 
+  section "Awaiting Delayed Jobs" do
+    table_for Delayed::Job.order("run_at DESC").first(5).collect do
+      column :id do |dj|
+        link_to dj.id, administration_delayed_job_path(dj)
+      end
+      column :queue do |dj|
+        link_to dj.queue, administration_delayed_jobs_path(:q => {:queue_contains => dj.queue})
+      end
+      column :attempts
+      column :run_at
+    end
+    strong { link_to "View All Delayed Jobs", administration_delayed_jobs_path }
+  end
+
   # == Render Partial Section
   # The block is rendered within the context of the view, so you can
   # easily render a partial rather than build content in ruby.

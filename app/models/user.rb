@@ -75,6 +75,7 @@ class User < ActiveRecord::Base
   has_many :notifications, :as => :notificable
   has_many :call_results, :as => :creator
   has_many :campaigns, :as => :creator
+  has_many :chain_mails, :primary_key => :email, :foreign_key => :email
 
   alias_method :parent, :user
 
