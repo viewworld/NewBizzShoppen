@@ -26,5 +26,11 @@ class NewsletterSubscriber < ActiveRecord::Base
       end
   end
 
+  def synchronize_in_lists!
+    newsletter_lists.each do |nl|
+      nl.cm_synchronize_subscriber!(self)
+    end
+  end
+
   #sync subscribers with the same prev_email_address if email_address was changed
 end

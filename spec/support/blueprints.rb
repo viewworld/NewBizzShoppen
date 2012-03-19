@@ -563,3 +563,9 @@ NewsletterList.blueprint do
   owner { User::CallCentre.make! }
   creator { User::Admin.make! }
 end
+
+NewsletterSource.blueprint(:campaign) do
+  source_type { NewsletterSource::CAMPAIGN_SOURCE }
+  newsletter_list { NewsletterList.make! }
+  sourceable { Campaign.make! }
+end

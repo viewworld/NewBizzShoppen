@@ -104,6 +104,7 @@ module ActsAsSubscribable
             if newsletter_sources_enabled? or newsletter_custom_sources_enabled?
               get_or_create_newsletter_subscriber.update_attributes(:email => self.send(newsletter_config[:email_field]), :name => self.send(newsletter_config[:name_field]))
               get_or_create_newsletter_subscriber.assign_to_subscribable_sources!
+              get_or_create_newsletter_subscriber.synchronize_in_lists!
             end
           end
 
