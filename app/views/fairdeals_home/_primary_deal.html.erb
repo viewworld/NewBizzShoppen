@@ -3,7 +3,7 @@
   <% cache("#{I18n.locale}_primary_deal_#{primary_deal.id}_part1") do %>
       <div class="frm_plain primary_deal">
         <div class="frm_head">
-            <%= image_tag("http://placehold.it/300x50", :size => "250x50") %>
+            <%= image_tag primary_deal.logo.url if primary_deal.logo %>
             <% if primary_deal.premium_deal? %>
               <div class="splash splash_premium">
                 <span>
@@ -26,19 +26,21 @@
         </div>
         <div class="frm_content">
           <div class="deal_ft_desc">
-            <%= image_tag("http://placehold.it/270x210", :size => "300x210", :class => "deal_ft_img") %>
+            <%= image_tag(primary_deal.images.first.url(:featured), :class => "deal_ft_img") if primary_deal.images.first %>
 
-            <h4>Gourmet frokost i høj kvalitet leveret til døren</h4>
+            <h4><%= link_to primary_deal.header, deal_path(primary_deal.slug) %></h4>
 
-            <div class="deal_ft_discount" style="display: none">
-              <p class="row">SPAR 50%</p>
-            </div>
-
-            <div class="deal_ft_prices">
-              <p class="row">Pris: DKK 135</p>
-              <p class="row">Pris: DKK 50</p>
-              <p class="cell">SPAR:<br/>27%</p>
-            </div>
+            <% if primary_deal.general_discount? %>
+                <div class="deal_ft_discount">
+                  <p class="row" style="text-transform:uppercase;"><%= t("deals.index.view.save") %> <%= primary_deal.saving %></p>
+                </div>
+            <% else %> 
+                <div class="deal_ft_prices">
+                  <p class="row"><%= t("deals.index.view.price") %>: <%= as_currency(primary_deal.deal_price, primary_deal.currency) %></p>
+                  <p class="row"><%= t("deals.index.view.save") %>: <%= as_currency(primary_deal.discounted_price, primary_deal.currency) %></p>
+                  <p class="cell" style="text-transform:uppercase;"><%= t("deals.index.view.save") %><br/><%= primary_deal.saving %></p>
+                </div>
+            <% end %>
 
           </div>
 
