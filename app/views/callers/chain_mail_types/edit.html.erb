@@ -26,7 +26,7 @@
             <%= form.submit t("views.button_update") %>
           </ibt>
           <ibt c="bt_grey fltri">
-            <%= button_to_function t("views.button_cancel"), href(callers_chain_mail_types_path) %>
+            <%= button_to_function t("views.button_cancel"), href(@campaign ? callers_campaign_chain_mail_types_path(@campaign) : callers_chain_mail_types_path) %>
           </ibt>          
         </param:actions>
       </frm>
