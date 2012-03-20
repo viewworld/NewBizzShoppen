@@ -104,6 +104,8 @@ class Lead < AbstractLead
 
   acts_as_newsletter_subscribable :email_field => "email_address", :name_field => "contact_name", :source_associations => [:category]
 
+  acts_as_taggable
+
   private
 
   def check_if_category_can_publish_leads

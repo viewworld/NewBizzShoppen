@@ -1,0 +1,20 @@
+<column-mc:>
+  <header back="true"><%= t("newsletter.newsletter_lists.edit.view.header") %></header>
+
+  <%= semantic_form_for @newsletter_list, :url => newsletters_newsletter_list_path do |form| %>
+      <frm>
+        <param:content>
+          <%= render :partial => 'form', :locals => {:form => form} %>
+          <%= render :partial => "autocompleter" %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("newsletter.newsletter_lists.edit.view.button_update"), :onclick => "select_sourceable_items()" %>
+          </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function t("newsletter.newsletter_lists.edit.view.button_cancel"), "history.go(-1)" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+</column-mc:>
