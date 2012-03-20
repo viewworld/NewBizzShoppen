@@ -76,6 +76,8 @@ class User < ActiveRecord::Base
   has_many :call_results, :as => :creator
   has_many :campaigns, :as => :creator
   has_many :chain_mails, :primary_key => :email, :foreign_key => :email
+  has_many :campaign_monitor_responses, :as => :resource
+  has_many :newsletter_lists, :foreign_key => :owner_id
 
   alias_method :parent, :user
 
@@ -308,14 +310,13 @@ class User < ActiveRecord::Base
     end
   end
 
-  public
-
   def cm_delete!
     begin
       CreateSend::Client.new(with_role.cm_client_id).delete
+      newsletter_lists.update_all("cm_list_id = NULL")
       with_role.update_attribute(:cm_client_id, nil)
     rescue Exception => e
-      CampaignMonitorResponse.create(:response => e)
+      self.campaign_monitor_responses.create(:response => e)
       false
     end
   end
@@ -324,11 +325,14 @@ class User < ActiveRecord::Base
     begin
       client_id = CreateSend::Client.create((with_role.respond_to?(:company_name) ? with_role.company_name : with_role.full_name), with_role.full_name, with_role.email, "(GMT) Coordinated Universal Time", with_role.country.name)
       with_role.update_attribute(:cm_client_id, client_id)
+      client_id
     rescue Exception => e
-      CampaignMonitorResponse.create(:response => e)
+      self.campaign_monitor_responses.create(:response => e)
       false
     end
   end
+
+  public
 
   def cm_client
     cm_client_id || cm_create!

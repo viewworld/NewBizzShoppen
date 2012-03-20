@@ -1,7 +1,7 @@
 class NewsletterSubscriber < ActiveRecord::Base
   has_and_belongs_to_many :newsletter_sources
-  has_many :newsletter_lists, :through => :newsletter_sources
   belongs_to :subscribable, :polymorphic => true
+  has_many :campaign_monitor_responses, :as => :resource
 
   before_save :set_previous_email
 
@@ -17,7 +17,38 @@ class NewsletterSubscriber < ActiveRecord::Base
     true
   end
 
+  def cm_get_subscriber(newsletter_list, email_address)
+    begin
+      CreateSend::Subscriber.get(newsletter_list.cm_list_id, email_address)
+    rescue
+      self.campaign_monitor_responses.create(:response => e, :code => 1)
+      false
+    end
+  end
+
+  def cm_synchronize!(newsletter_list)
+    begin
+      if email != previous_email and subscriber = cm_get_subscriber(newsletter_list, previous_email)
+        subscriber.update(email, name, [], true)
+      else
+        newsletter_list = NewsletterList.find(newsletter_list)
+        CreateSend::Subscriber.add(newsletter_list.cm_list, email, name, [], true)
+      end
+      update_attribute(:is_synced, true)
+    rescue Exception => e
+      self.campaign_monitor_responses.create(:response => e, :code => 2)
+      false
+    end
+  end
+
   public
+
+  def newsletter_lists
+    NewsletterList.
+        joins(:newsletter_sources).
+        joins("INNER JOIN \"newsletter_sources_newsletter_subscribers\" ON \"newsletter_sources_newsletter_subscribers\".\"newsletter_source_id\" = \"newsletter_sources\".\"id\"").
+        where("\"newsletter_sources_newsletter_subscribers\".\"newsletter_subscriber_id\" = ?", id)
+  end
 
   def assign_to_subscribable_sources!
       subscribable.reload
@@ -27,10 +58,8 @@ class NewsletterSubscriber < ActiveRecord::Base
   end
 
   def synchronize_in_lists!
-    newsletter_lists.each do |nl|
-      nl.cm_synchronize_subscriber!(self)
+    newsletter_lists.each do |newsletter_list|
+      cm_synchronize!(newsletter_list)
     end
   end
-
-  #sync subscribers with the same prev_email_address if email_address was changed
 end
