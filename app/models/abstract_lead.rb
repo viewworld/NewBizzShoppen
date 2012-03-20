@@ -167,6 +167,10 @@ class AbstractLead < ActiveRecord::Base
 
   public
 
+  def requestee_screen_name
+    requestee ? requestee.screen_name : "-user deleted-"
+  end
+
   def based_on_deal(deal, user)
     {:current_user => User.find_by_email(deal.deal_admin_email).with_role, :category => deal.lead_category, :sale_limit => 1, :price => deal.price.blank? ? 0 : deal.price,
      :purchase_decision_date => deal.end_date+7, :currency => deal.currency, :published => true, :requestee => user, :deal_id => deal.id
