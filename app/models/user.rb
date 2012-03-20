@@ -75,6 +75,7 @@ class User < ActiveRecord::Base
   has_many :notifications, :as => :notificable
   has_many :call_results, :as => :creator
   has_many :campaigns, :as => :creator
+  has_many :chain_mails, :primary_key => :email, :foreign_key => :email
 
   alias_method :parent, :user
 
@@ -308,6 +309,30 @@ class User < ActiveRecord::Base
   end
 
   public
+
+  def cm_delete!
+    begin
+      CreateSend::Client.new(with_role.cm_client_id).delete
+      with_role.update_attribute(:cm_client_id, nil)
+    rescue Exception => e
+      CampaignMonitorResponse.create(:response => e)
+      false
+    end
+  end
+
+  def cm_create!
+    begin
+      client_id = CreateSend::Client.create((with_role.respond_to?(:company_name) ? with_role.company_name : with_role.full_name), with_role.full_name, with_role.email, "(GMT) Coordinated Universal Time", with_role.country.name)
+      with_role.update_attribute(:cm_client_id, client_id)
+    rescue Exception => e
+      CampaignMonitorResponse.create(:response => e)
+      false
+    end
+  end
+
+  def cm_client
+    cm_client_id || cm_create!
+  end
 
   def domain
     Domain.where(:site => with_role.site, :locale => I18n.locale).first || Domain.where(:site => with_role.site).with_default.first

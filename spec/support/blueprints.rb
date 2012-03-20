@@ -537,8 +537,35 @@ Region.blueprint do
   country { Country.make! }
 end
 
+ChainMailItem.blueprint do
+  subject { Faker::Lorem.words(3).to_s.capitalize }
+  body { Faker::Lorem.words(5).to_s.capitalize }
+end
+
+ChainMailType.blueprint do
+  name { Faker::Lorem.words(2).to_s.capitalize }
+  first_execution_delay { 1 }
+  cycle_time { 1 }
+  execution_time { "10:00" }
+  execution_conditions { {"conditions" => [ChainMailType::LINK_CLICKED], "type" => ChainMailType::STOP_IF, "operator" => nil } }
+  campaign_id { Campaign.make!.id }
+  chain_mail_items { Array(ChainMailItem.make!) }
+end
+
+ChainMail.blueprint do
+  chain_mailable { CallResult.make! }
+  chain_mail_type { ChainMailType.make!}
+  email { Faker::Internet.email }
+end
+
 NewsletterList.blueprint do
   name { Faker::Lorem.words(2).to_s.capitalize }
   owner { User::CallCentre.make! }
   creator { User::Admin.make! }
+end
+
+NewsletterSource.blueprint(:campaign) do
+  source_type { NewsletterSource::CAMPAIGN_SOURCE }
+  newsletter_list { NewsletterList.make! }
+  sourceable { Campaign.make! }
 end

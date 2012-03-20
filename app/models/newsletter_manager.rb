@@ -11,7 +11,7 @@ class NewsletterManager
   end
 
   def update_all_subscribable_objects!(now)
-    (Contact.joins(:newsletter_subscriber).where("leads.updated_at BETWEEN ? AND ?", now-10.seconds, Time.now) +
+    (Contact.joins(:newsletter_subscriber).where("leads.updated_at BETWEEN ? AND ?", now, Time.now) +
     User.joins(%{INNER JOIN "newsletter_subscribers" ON "newsletter_subscribers"."subscribable_id" = "users"."id" AND ("newsletter_subscribers"."subscribable_type" like 'User::%' OR "newsletter_subscribers"."subscribable_type" like 'SubscriptionPlan')}).where("users.updated_at BETWEEN ? AND ?", now-10.seconds, Time.now) +
     Lead.joins(:newsletter_subscriber).where("leads.updated_at BETWEEN ? AND ?", now, Time.now)).each do |sob|
       sob = sob.with_role if sob.class.to_s == "User"

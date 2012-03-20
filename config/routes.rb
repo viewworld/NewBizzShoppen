@@ -191,6 +191,9 @@ Nbs::Application.routes.draw do
   end
 
   namespace :callers do
+    resources :chain_mail_types, :controller => "chain_mail_types"
+    resources :chain_mail_items
+    resources :chain_mail_materials
     resources :campaigns do
       resources :materials
       member do
@@ -236,6 +239,7 @@ Nbs::Application.routes.draw do
           post 'test_send_email'
         end
       end
+      resources :chain_mail_types, :controller => "chain_mail_types"
     end
 
     resource :production, :controller => "production", :only => [:show] do
@@ -283,6 +287,8 @@ Nbs::Application.routes.draw do
   namespace :users do
     resources :delayed_jobs
   end
+
+  resources :chain_mails
 
   match 'supplier_home' => 'supplier_home#show', :as => "supplier_home"
   match 'agent_home' => 'agent_home#show', :as => "agent_home"

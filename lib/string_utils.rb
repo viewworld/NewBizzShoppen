@@ -11,4 +11,15 @@ class StringUtils
   def self.replace_fairdeals_urls_for_auto_login_urls(user, body)
     body.gsub(/(http:\/\/\S+)"/) { |i | (i.to_s.include?("fairdeals.") and !i.to_s.include?("login_keys/")) ? %{http://#{URI.parse($1).host}/login_keys/?key=#{user.login_key}&redirect=#{CGI::escape($1)}"} : i }
   end
+
+  def self.replace_urls_for_chain_mail_verification(chain_mail, body)
+    body.gsub(/(https?:\/\/[\w.\-\/\?\=\&\:]*)/) do |uri|
+      unless uri.to_s.include?("/chain_mails/#{chain_mail.id}")
+        URI::HTTP.new('http', nil, Domain.default, nil, nil, "/chain_mails/#{chain_mail.id}", nil, "redirect=#{CGI::escape(uri)}", nil).to_s
+      else
+        uri
+      end
+    end
+  end
+
 end
