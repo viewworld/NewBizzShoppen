@@ -3,7 +3,8 @@
   <% cache("#{I18n.locale}_primary_deal_#{primary_deal.id}_part1") do %>
       <div class="frm_plain primary_deal">
         <div class="frm_head">
-            <%= image_tag primary_deal.logo.url if primary_deal.logo %>
+            <%= image_tag primary_deal.logo.url(:featured) if primary_deal.logo %>
+
             <% if primary_deal.premium_deal? %>
               <div class="splash splash_premium">
                 <span>
@@ -28,7 +29,7 @@
           <div class="deal_ft_desc">
             <%= image_tag(primary_deal.images.first.url(:featured), :class => "deal_ft_img") if primary_deal.images.first %>
 
-            <h4><%= link_to primary_deal.header, deal_path(primary_deal.slug) %></h4>
+            <h4><%= link_to primary_deal.header, deal_path(primary_deal.slug), :style => "text-decoration:none;color:#fff" %></h4>
 
             <% if primary_deal.general_discount? %>
                 <div class="deal_ft_discount">
