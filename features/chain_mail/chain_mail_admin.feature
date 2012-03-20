@@ -17,18 +17,26 @@ Feature: Chain mail administration
   Scenario: It should be possible to list/edit/archive/active/Inactive all chain mail types
     Given there are "2" chain mail types
     When I follow translated "layout.main_menu.admin.chain_mail"
-    Then I should see "3" rows in a table within "table.chain_mail_types tbody"
+    Then I should see "2" rows in a table within "table.chain_mail_types tbody"
 
-  @_done @_tested @wip
+  @_done @_tested @selenium
   Scenario: I can create new Chain mail
     When campaign named "Testing One" exists with attributes "crm_campaigns:2,crm_option:0"
-    And I follow translated "layout.main_menu.admin.chain_mail"
-    And I follow translated "chain_mail_types.index.new"
+    And I click hidden link by url regex "/callers\/chain_mail_types/"
+    Then I should not see CSS path "table.chain_mail_types tbody"
+    When I follow translated "chain_mail_types.index.new"
     And I fill in "chain_mail_type_name" with "First chain mail type"
-    And I fill in "chain_mail_type_first_execution_delay" with "1"
-    And I fill in "chain_mail_type_cycle_time" with "1"
-    And I fill in "chain_mail_type_execution_time_4i" with "10"
-    And I fill in "chain_mail_type_execution_time_5i" with "00"
+    And I check "chain_mail_type_active"
+    And I select "0" from "chain_mail_type_first_execution_delay"
+    And I select "1" from "chain_mail_type_cycle_time"
+    And I select "10" from "chain_mail_type_execution_time_4i"
+    And I select "00" from "chain_mail_type_execution_time_5i"
+    And I follow translated "chain_mail_types.form.add_another_email"
+    And I fill in "chain_mail_type_chain_mail_items_attributes_0_subject" with "subject 1"
+    And I fill in "chain_mail_type_chain_mail_items_attributes_0_body" ckeditor with "body 1"
+    And I press translated "views.button_update"
+    When I click hidden link by url regex "/callers\/chain_mail_types$/"
+    Then I should see "1" rows in a table within "table.chain_mail_types tbody"
 
   @_done @_tested_elsewhere
   Scenario: I can enter Chain mail name

@@ -1,6 +1,7 @@
 class CampaignsResult < ActiveRecord::Base
   belongs_to :campaign
   belongs_to :result
+  belongs_to :chain_mail_type
 
   before_save :set_euro_value
 

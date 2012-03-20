@@ -1,7 +1,8 @@
 class ChainMailItem < ActiveRecord::Base
+  attr_accessor :skip_validations
   acts_as_list :scope => :chain_mail_type_id
 
-  validates_presence_of :subject, :body
+  validates_presence_of :subject, :body, :unless => Proc.new{|cmi| cmi.skip_validations}
   belongs_to :chain_mail_type
 
   has_and_belongs_to_many :chain_mail_materials, :class_name => "Asset::ChainMailMaterial"

@@ -3,6 +3,7 @@
   <hl/>
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_100">
+      <h2><%= t("chain_mail_types.form.chain_mail_at_position", :position => f.object.position) %></h2>
       <ol>
         <li>
           <%= f.input :subject, :as => :string %>
@@ -16,7 +17,14 @@
           <script type="text/javascript">
             var ckeditor_<%= div_chain_mail_item_html_id %> = $('.body_ckeditor_span:last textarea').attr('id');
           </script>
+          <%#= bt_link_to :remove, t("views.button_delete"), "javascript:void(0)", :onclick => "remove_chain_mail_item('#{div_chain_mail_item_html_id}', #{f.object.new_record? ? 'null' : f.object.id}, ckeditor_#{div_chain_mail_item_html_id})" %>
           <%= bt_link_to :remove, t("views.button_delete"), "javascript:void(0)", :onclick => "remove_chain_mail_item('#{div_chain_mail_item_html_id}', #{f.object.new_record? ? 'null' : f.object.id}, ckeditor_#{div_chain_mail_item_html_id})" %>
+          <% unless f.object.new_record? %>
+              <%= bt_link_to_function :cog, t("chain_mail_types.form.manage_attachments"), "$('#materials_dialog').load('#{callers_chain_mail_materials_path(:format => :js, :chain_mail_type_id => f.object.chain_mail_type_id, :chain_mail_item_id => f.object.id)}').dialog({title:'#{t('materials.views.index.select_or_upload')}', width:400, height:350, beforeClose: function(event, ui) { $('#materials_dialog').html('');return true; }})" %>
+              <div id="chain_mail_item_materials_<%= f.object.id %>">
+                <%= render :partial => "chain_mail_materials", :locals => { :chain_mail_item => f.object } %>
+              </div>
+          <% end %>
         </li>
         <li class="hidden">
           <% unless f.object.new_record? %>
@@ -26,15 +34,6 @@
       </ol>
     </fieldset>
   </div>
-<% unless f.object.new_record? %>
-<hl pdd=""/>
-<div style="padding:10px 15px;">
-<%= bt_link_to_function :cog, t("materials.views.index.material_repository"), "$('#materials_dialog').load('#{administration_chain_mail_materials_path(:format => :js, :chain_mail_type_id => f.object.chain_mail_type_id, :chain_mail_item_id => f.object.id)}').dialog({title:'#{t('materials.views.index.select_or_upload')}', width:400, height:350, beforeClose: function(event, ui) { $('#materials_dialog').html('');return true; }})" %>
-</div>
-<div id="chain_mail_item_materials_<%= f.object.id %>">
-  <%= render :partial => "chain_mail_materials", :locals => { :chain_mail_item => f.object } %>
-</div>
-<% end %>
 </div>
 
 <script type="text/javascript">

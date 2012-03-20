@@ -1,0 +1,35 @@
+<column-mc:>
+  <%= javascript_include_tag :ckeditor %>
+  <%= javascript_include_tag "email_template_signature" %>
+
+  <header back="true" backurl="#{@campaign ? callers_campaign_chain_mail_types_path(@campaign) : callers_chain_mail_types_path}">
+    <param:content>
+        <%= @chain_mail_type.name.present? ? t("chain_mail_types.edit.header", :name => @chain_mail_type.name) : t("chain_mail_types.new.header") %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to_function :cog, t("chain_mail_types.form.manage_attachments"), "$('#materials_dialog').load('#{callers_chain_mail_materials_path(:format => :js, :chain_mail_type_id => @chain_mail_type.id)}').dialog({title:'#{t('materials.views.index.select_or_upload')}', width:400, height:350, beforeClose: function(event, ui) { $('#materials_dialog').html('');return true; }})" %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
+
+  <%= semantic_form_for @chain_mail_type, :url => (@campaign ? callers_campaign_chain_mail_type_path(@campaign, @chain_mail_type) : callers_chain_mail_type_path(@chain_mail_type)), :method => :put do |form| %>
+      <frm title="#{t('chain_mail_types.edit.title')}">
+        <param:content>
+          <%= render :partial => 'form', :locals => {:form => form} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("views.button_update") %>
+          </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function t("views.button_cancel"), href(callers_chain_mail_types_path) %>
+          </ibt>          
+        </param:actions>
+      </frm>
+  <% end %>
+
+</column-mc:>
