@@ -1,0 +1,20 @@
+<div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r labels_200">
+      <ol class="align_inputs">
+        <%= form.input :name %>
+        <%= form.input :owner_email %>
+        <div style="display: none;">
+        <%= form.input :sourceable_items, :collection => [], :as => :select, :multiple => true %>
+        </div>
+      </ol>
+    </fieldset>
+
+  <ul id="ul_sources_list">
+  <%= form.fields_for :newsletter_sources, @newsletter_list.newsletter_sources do |builder| %>
+    <li><%= render :partial => "newsletter_sources_fields", :locals => {:f => builder} %></li>
+  <% end %>
+  </ul>
+
+  <div id="newsletter_sources_append"></div>
+
+</div>

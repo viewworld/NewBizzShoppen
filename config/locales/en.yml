@@ -130,6 +130,7 @@ en:
         reports: "Reports"
         agent_timesheets: "Timesheets"
         subscription_plans: "Subscriptions"
+        newsletter_lists: "Lists"
       agent:
         leads: My leads
         deals: My deals
@@ -3138,6 +3139,14 @@ en:
 
     invoice:
       invoice_paypal_name: "Invoice %{number}"
+    newsletter_sources:
+      types:
+        type0: "Campaign"
+        type1: "Lead category"
+        type2: "User role"
+        type3: "Subscription type"
+        type4: "Tags"
+        type5: "Custom"
   activerecord:
     models:
       article:
@@ -4501,3 +4510,25 @@ en:
         title: "Campaign %{campaign_name} has been successfully duplicated"
         text: "<a href=\"%{url}\">Go to the campaign</a> or <a href=\"%{url}\" target=\"_blank\">open it in a new tab</a>"
 
+  newsletters:
+    newsletter_lists:
+      index:
+        view:
+          header: "Newsletter lists"
+  newsletter:
+    newsletter_lists:
+      index:
+        view:
+          new_newsletter_list: "New list"
+      new:
+        view:
+          header: "New newsletter list"
+          button_create: "Create"
+          button_cancel: "Cancel"
+      edit:
+        view:
+          header: "Edit newsletter list"
+          button_update: "Save"
+          button_cancel: "Cancel"
+      form:
+        keyword_for_autocompleter: "Enter name of campaign, tag, subscription or role"

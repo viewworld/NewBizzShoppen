@@ -14,6 +14,10 @@ class Role
     Role.new(id.to_i)
   end
 
+  def self.find_by_key(q)
+    %w{category_supplier member supplier}.select { |x| x.include?(q) }.map { |key| Role.new(User::ROLES_PRIORITY.index(key.to_sym)) }
+  end
+
   def self.base_class
     Role
   end
@@ -38,5 +42,9 @@ class Role
     else
       User::Member.all
     end
+  end
+
+  def name
+    @key
   end
 end

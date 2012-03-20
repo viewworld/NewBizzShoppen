@@ -85,6 +85,15 @@ Nbs::Application.routes.draw do
     match '/dashboard' => 'dashboard#index', :as => 'dashboard'
   end
 
+  namespace :newsletters do
+    root :to => "newsletter_lists#index"
+    resources :newsletter_lists do
+      collection do
+        get 'sourceable_for_search'
+      end
+    end
+  end
+
   namespace :suppliers do
     root :to => "lead_purchases#index"
     resources :cart_items
