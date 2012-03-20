@@ -1,5 +1,5 @@
 <% if user_signed_in? %>
-    <% if current_user.has_role?(:lead_supplier) %>
+    <% if current_user.has_role?(:lead_supplier) and lead.lead_purchases.detect { |lp| current_user.parent.present? ? lp.owner_id == current_user.parent_id : lp.owner_id == current_user.id }.nil? %>
         <!-- TODO Should not be here - should be in supplier scope! ... Oh rly? -->
         <!-- We should change it - ask RB! -->
         <%= bt_link_to :cart, current_user.big_buyer? ? t("leads.index.buy_lead") : t("leads.index.add_to_cart_link"), suppliers_cart_items_path(:id => lead.id), :method => :post, :class => "default_action" %>
