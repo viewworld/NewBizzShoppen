@@ -38,7 +38,7 @@
                   </div>
 
                   <div class="deal_description">
-                    <%= image_tag featured.logo.url(:featured), :class => "thumb" if featured.logo %>
+                    <%= image_tag featured.logo.url(:featured), :class => "logo" if featured.logo %>
                     <p><%= featured.short_featured_description.to_s.html_safe %></p>
                     <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(featured.slug), :class => 'default_action' %>
                   </div>
