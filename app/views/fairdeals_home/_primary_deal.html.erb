@@ -3,7 +3,7 @@
   <% cache("#{I18n.locale}_primary_deal_#{primary_deal.id}_part1") do %>
       <div class="frm_plain primary_deal">
         <div class="frm_head">
-            <h2><%= link_to primary_deal.header, deal_path(primary_deal.slug) %></h2>
+            <%= image_tag("http://placehold.it/300x50", :size => "250x50") %>
             <% if primary_deal.premium_deal? %>
               <div class="splash splash_premium">
                 <span>
@@ -24,43 +24,46 @@
               </div>
             <% end %>
         </div>
-        <div class="frm_content" style="min-height:255px">
+        <div class="frm_content">
+          <div class="deal_ft_desc">
+            <%= image_tag("http://placehold.it/270x210", :size => "300x210", :class => "deal_ft_img") %>
 
-          <div class="deal_info">
+            <h4>Gourmet frokost i høj kvalitet leveret til døren</h4>
+
+            <div class="deal_ft_discount" style="display: none">
+              <p class="row">SPAR 50%</p>
+            </div>
+
+            <div class="deal_ft_prices">
+              <p class="row">Pris: DKK 135</p>
+              <p class="row">Pris: DKK 50</p>
+              <p class="cell">SPAR:<br/>27%</p>
+            </div>
+
+          </div>
+
+          <div class="deal_info" style="display: none">
             <p>
               <%= image_tag primary_deal.logo.url if primary_deal.logo %>
             </p>
 
             <% if primary_deal.general_discount? %>
-                 <p style="font-size:20px; padding: 4px 0 10px">
-                <%= t("deals.index.view.save") %> <span class="b red"><%= primary_deal.saving %></span>
-                 </p>
+                <%= t("deals.index.view.save") %> <%= primary_deal.saving %>
             <% else %>
-                <p class="b">
-                    <%= t("deals.index.view.normal_price") %>: <%= as_currency(primary_deal.deal_price, primary_deal.currency) %>
-                </p>
+                <%= t("deals.index.view.normal_price") %>: <%= as_currency(primary_deal.deal_price, primary_deal.currency) %>
+                <br/>
+                <%= t("deals.index.view.fairdeals_price") %>:<br/><%= as_currency(primary_deal.discounted_price, primary_deal.currency) %>
+                <br/>
+                <%= t("deals.index.view.you_save") %>:<%= as_currency(primary_deal.deal_price - primary_deal.discounted_price, primary_deal.currency) %> (<%= primary_deal.saving %>)
 
-                <p class="new_price">
-                  <%= t("deals.index.view.fairdeals_price") %>:<br/><%= as_currency(primary_deal.discounted_price, primary_deal.currency) %>
-                </p>
-
-                <p class="you_save">
-                  <%= t("deals.index.view.you_save") %>:<br/><%= as_currency(primary_deal.deal_price - primary_deal.discounted_price, primary_deal.currency) %> <span class="b red">(<%= primary_deal.saving %>)</span>
-                </p>
             <% end %>
 
-            <p>
-              <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(primary_deal.slug) %>
-            </p>
-            <br />
             <p><%= group_deal_leads_created_and_missing(primary_deal) %></p>
 
           </div>
 
-          <div class="deal_desc">
-            <div class="deal_featured_desc">
-              <%= raw primary_deal.featured_description %>
-            </div>
+          <div class="deal_desc" style="display: none">
+            <h3><%= link_to primary_deal.header, deal_path(primary_deal.slug) %></h3>
 
             <% if primary_deal.group_deal? %>
                 <div id="countdown_<%= email_form_id %>" class="countdown">
@@ -96,6 +99,7 @@
 
           <clb/>
 
+
     <% end %>
     <!-- not cached content -->
           <div>
@@ -120,16 +124,23 @@
         </div>
 
         <div class="frm_foot">
-          <%= ratings_for(primary_deal, :force_static => !current_user_has_role?(:member)) %>
-            <p>
-              <%= link_to_function image_tag("fairdeals/bt/social_email.png"), "$('#modal_for_share_deal_by_email_#{email_form_id}').dialog('open');" %>
-    <!-- end / not cached content -->
-    <% cache("#{I18n.locale}_primary_deal_#{primary_deal.id}_part2") do %>
-              <%= link_to_function image_tag("fairdeals/bt/social_linkedin.png"), "window.open('https://www.linkedin.com/cws/share?url=#{escape_uri(deal_url(:id => primary_deal.slug))}&isFramed=true','', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>
-              <%= link_to_function image_tag("fairdeals/bt/social_facebook.png"), "window.open('https://www.facebook.com/sharer.php?u=#{escape_uri(deal_url(:id => primary_deal.slug))}','', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>
-              <%= link_to_function image_tag("fairdeals/bt/social_twitter.png"), "window.open('https://twitter.com/share?url=#{escape_uri(deal_url(:id => primary_deal.slug))}&text=#{escape_javascript(primary_deal.social_media_description)}','tweet', 'width=400,height=320,location=0,toolbar=0,menubar=0')"  %>
-            </p>
+          <div class="deal_foot">
+            <%= ratings_for(primary_deal, :force_static => !current_user_has_role?(:member)) %>
+            <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(primary_deal.slug) %>
+          </div>
+
+          <div class="deal_sm">
+            <%= link_to_function image_tag("fairdeals/bt/social_email.png"), "$('#modal_for_share_deal_by_email_#{email_form_id}').dialog('open');" %>
+            <!-- end / not cached content -->
+            <% cache("#{I18n.locale}_primary_deal_#{primary_deal.id}_part2") do %>
+                <%= link_to_function image_tag("fairdeals/bt/social_linkedin.png"), "window.open('https://www.linkedin.com/cws/share?url=#{escape_uri(deal_url(:id => primary_deal.slug))}&isFramed=true','', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>
+                <%= link_to_function image_tag("fairdeals/bt/social_facebook.png"), "window.open('https://www.facebook.com/sharer.php?u=#{escape_uri(deal_url(:id => primary_deal.slug))}','', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>
+                <%= link_to_function image_tag("fairdeals/bt/social_twitter.png"), "window.open('https://twitter.com/share?url=#{escape_uri(deal_url(:id => primary_deal.slug))}&text=#{escape_javascript(primary_deal.social_media_description)}','tweet', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>
+          </div>
+          <clb/>
+
         </div>
+
     </div>
 
     <script>
