@@ -52,8 +52,10 @@
       <h4><%= t("deals.show.view.detailed_description_label") %></h4>
       <p><%= @deal.hidden_description.to_s.html_safe %></p>
 
-      <h4><%= t("deals.show.view.fine_print_label") %></h4>
-      <p><%= @deal.fine_print.to_s.html_safe %></p>
+      <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) %>
+        <h4><%= t("deals.show.view.fine_print_label") %></h4>
+        <p><%= @deal.fine_print.to_s.html_safe %></p>
+      <% end %>
     </div>
 
     <div class="column_right">
@@ -62,16 +64,6 @@
       <div class="company_info">
         <p><%= @deal.company_description.to_s.html_safe %></p>
       </div>
-
-                <%= deal_show_li(@deal.contact_name, t("deals.show.view.contact_name_label")) %>
-                <%= deal_show_li(@deal.email_address, t("deals.show.view.email_address_label")) %>
-                <%= deal_show_li(link_to(@deal.company_website_with_protocol, @deal.company_website_with_protocol), t("deals.show.view.company_website_label")) unless @deal.company_website.blank? %>
-                <%= deal_show_li(@deal.phone_number, t("deals.show.view.phone_number_label")) %>
-                <%= deal_show_li(@deal.address_line_1, t("deals.show.view.address_line_1_label")) %>
-                <%= deal_show_li(@deal.address_line_2, t("deals.show.view.address_line_2_label")) %>
-                <%= deal_show_li(@deal.address_line_3, t("deals.show.view.address_line_3_label")) %>
-                <%= deal_show_li(@deal.zip_code, t("deals.show.view.zip_code_label")) %>
-                <%= deal_show_li(@deal.country, t("deals.show.view.country_label")) %>
 
       <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) %>
           <div class="contact_info">
@@ -113,6 +105,9 @@
               <% end %>
             </ol>
           </div>
+      <% else %>
+        <h4><%= t("deals.show.view.fine_print_label") %></h4>
+        <p><%= @deal.fine_print.to_s.html_safe %></p>
       <% end %>
     </div>
     <clb/>

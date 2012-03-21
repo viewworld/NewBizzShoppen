@@ -38,7 +38,7 @@
                   </div>
 
                   <div class="deal_description">
-                    <%= image_tag featured.logo.url(:featured), :class => "logo" if featured.logo %>
+                    <%= image_tag featured.logo.url(:featured), :size => "300x210", :class => "logo" if featured.logo %>
                     <p><%= st(featured.short_featured_description.to_s, {}, {:length => 300}) %></p>
                   </div>
 

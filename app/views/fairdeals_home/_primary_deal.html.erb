@@ -27,7 +27,7 @@
         </div>
         <div class="frm_content">
           <div class="deal_ft_desc">
-            <%= image_tag(primary_deal.images.first.url(:featured), :class => "deal_ft_img") if primary_deal.images.first %>
+            <%= image_tag(primary_deal.images.first.url, :size => "300x210", :class => "deal_ft_img") if primary_deal.images.first %>
 
             <h4><%= link_to primary_deal.header, deal_path(primary_deal.slug), :style => "text-decoration:none;color:#fff" %></h4>
 
