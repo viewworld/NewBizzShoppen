@@ -31,8 +31,7 @@
             <p><%= @deal.deal_confirmation_page.to_s.html_safe %></p>
         <% end %>
         <% if @deal.deal_code.present? %>
-            <h2><%= t("deals.show.view.deal_code_label") %></h2>
-            <p><%= @deal.deal_code_is_url? ? link_to(@deal.deal_code, @deal.deal_code_as_url) : @deal.deal_code %></p>
+            <p><b><%= t("deals.show.view.deal_code_label") %></b>: <%= @deal.deal_code_is_url? ? link_to(@deal.deal_code, @deal.deal_code_as_url) : @deal.deal_code %></p>
         <% end %>
         </div>
       <% end %>
