@@ -1055,6 +1055,29 @@ a.bt_max
     text-align: center;
 }
 
+a.bt_big
+{
+    background-position: 0 -240px
+}
+
+a.bt_big span
+{
+    background-position: right -280px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+}
+
+a.bt_big:hover
+{
+    background-position: 0 -320px;
+}
+
+a.bt_big:hover span
+{
+    background-position: right -360px;
+}
+
 
 
 .frm .frm_head .frm_hc a.bt
@@ -1639,8 +1662,9 @@ span.cke_skin_kama
 {
     font-size: 18px;
     margin-bottom: 2px;
-    width: 200px;
-    padding-left: 20px;
+    width: 180px;
+    padding-left: 40px;
+    text-align: left;
 }
 
 .deal_ft_desc .deal_ft_prices .cell
@@ -1834,6 +1858,216 @@ a.toggle_comments
     padding-right: 7px;
     vertical-align: middle;
 }
+
+/* --- show view ----
+------------------------------------------------------------------------------------ */
+
+.deal_show
+{
+    padding: 0;
+    border: 1px solid #bbb;
+    background: #fff;
+
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+
+    -moz-box-shadow: 0 0 5px #d2d2d2;
+    -webkit-box-shadow: 0 0 5px #d2d2d2;
+    box-shadow: 0 0 5px #d2d2d2;
+}
+
+.deal_show .column_left,
+.deal_show .column_right
+{
+    width: 430px;
+    padding: 20px;
+}
+
+.deal_show .column_left
+{
+    float: left;
+}
+
+.deal_show .column_right
+{
+    float: right;
+}
+
+.deal_show .deal_show_header
+{
+    background: #7ca03a;
+    padding: 12px;
+    -moz-border-radius: 9px 9px 0 0;
+    -webkit-border-radius: 9px 9px 0 0;
+    border-radius: 9px 9px 0 0;
+    position: relative;
+}
+
+.deal_show .deal_show_header .ajaxful-rating-wrapper
+{
+    position: absolute;
+    top: 10px;
+    right: 12px;
+}
+
+.deal_show .deal_show_header h1
+{
+    padding: 0;
+    color: #fff;
+    text-shadow: none;
+}
+
+.deal_show .deal_text_intro
+{
+    padding-bottom: 20px;
+}
+
+.deal_show .deal_text_intro h2
+{
+    margin-left: -20px;
+    background: #9ebf3c;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+.deal_show .deal_intro
+{
+    background: #9ebf3d;
+    -moz-border-radius-bottom-right: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.deal_show .company_info
+{
+    background: #9ebf3d;
+    -moz-border-radius-bottom-left: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 15px;
+    color: #333;
+    margin: 10px 0 30px;
+}
+
+.deal_show .contact_info
+{
+    background: #9ebf3d;
+    -moz-border-radius-top-left: 10px;
+    -webkit-border-top-left-radius: 10px;
+    border-top-left-radius: 10px;
+    padding: 1px;
+}
+
+.deal_show .contact_info h4
+{
+    text-align: center;
+    color: #333;
+    padding: 12px 0;
+}
+
+.deal_show .contact_info li
+{
+    display: block;
+    background: #fff;
+    margin: 1px;
+    padding: 10px 10px 10px 140px;
+    position: relative;
+    font-size: 13px;
+    font-weight: bold
+}
+
+.deal_show .contact_info em
+{
+    position: absolute;
+    left: 12px;
+    top: 10px;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.deal_show .deal_bt
+{
+    padding-top: 10px;
+}
+
+.deal_show .deal_bt a
+{
+    width: 100%;
+    text-align: center;
+}
+
+
+.deal_show .row
+{
+    background: #000;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 8px 0;
+    text-align: center;
+}
+
+.deal_show .deal_ft_discount
+{
+    padding: 30px 0;
+}
+
+.deal_show .deal_ft_discount .row
+{
+    font-size: 28px;
+}
+
+.deal_show .deal_ft_prices
+{
+    padding: 15px 0;
+    width: 420px;
+    position: relative;
+}
+
+.deal_show .deal_ft_prices .row
+{
+    font-size: 18px;
+    margin-bottom: 2px;
+    width: 280px;
+    padding-left: 30px;
+    text-align: left;
+}
+
+.deal_show .deal_ft_prices .cell
+{
+    background: #fff;
+    color: #000;
+    font-size: 24px;
+    line-height: 24px;
+    font-weight: bold;
+    width: 106px;
+    height: 60px;
+    position: absolute;
+    right: 0;
+    top: 15px;
+    padding: 10px 0 0;
+    text-align: center;
+}
+
+.deal_show h4
+{
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 0 5px;
+}
+
+.deal_show ul li
+{
+    line-height: 18px;
+}
+
+
 
 
 /* --- other styles ----

@@ -15,6 +15,139 @@
 </head:>
 
 <column-mc:>
+
+
+  <div class="deal_show">
+    <div class="deal_show_header">
+      <h1><%= @deal.header %></h1>
+      <%= ratings_for(@deal, :force_static => !current_user_has_role?(:member)) %>
+    </div>
+    <div class="column_left">
+
+      <div class="deal_text_intro">
+        <h2>Sådan får du din deal</h2>
+        <p>Vi har sendt en mail til 24native med dine kontaktinformationer. Du er også velkommen til at kontakte 24Native direkte, du skal huske at op- lyse at du er medlem af fairdeals så du får din rabat.</p>
+      </div>
+      
+      <div class="deal_intro">
+        <%= image_tag("http://placehold.it/440x300", :size => "430x300") %>
+
+        <div class="deal_ft_discount">
+          <p class="row">SPAR 50%</p>
+        </div>
+
+        <div class="deal_ft_prices">
+          <p class="row">Pris: DKK 135</p>
+          <p class="row">Pris: DKK 50</p>
+          <p class="cell">SPAR:<br/>27%</p>
+        </div>
+      </div>
+      
+      <h4>Hvad er inkluderet i aftalen</h4>
+      <p>24Native levere de kreative ideer, de digitale strategier og de flotte tryksager. Vi har et alsidigt produktsortiment -fra den lille folder til store forædlede publikationer.</p>
+      <p>Prøv vore grafisk opsætning af:</p>
+      <ul>
+        <li>Tryk sager</li>
+        <li>Brochure</li>
+        <li>Visitkort</li>
+        <li>Brevpapir</li>
+        <li>Konvelutter</li>
+        <li>Postkort</li>
+        <li>Plakater</li>
+      </ul>
+
+      <h4>Det med småt</h4>
+      <p>Her finder du alt under et tag- Opfylde dit behov for kreativitet og markedsføring via tryk, websites og new media. Full service cross media virksomhed med mange års erfaring i at levere ydelser fra idé til virkelighed til private virksomheder og den offentlige sektor.</p>
+    </div>
+
+    <div class="column_right">
+      <%= image_tag("http://placehold.it/300x50", :size => "300x75") %>
+      <div class="company_info">
+        <p>24NATIVE er blandt de mest veletablerede frokostordnings- leverandører i Danmark, og leverer hver dag frokost til næsten 100 virksomheder i Storkøbenhavn. Leverer hver dag frokost til næsten 100 virksomheder i Storkøbenhavn. Leverer hver dag frokost til næsten 100 virk- somheder i Storkøbenhavn. Virksomheder i Storkøbenhavn. 100 virksomheder i Storkøbenhavn.</p>
+        <p>Leverer hver dag frokost til næsten 100 virksomheder i Storkøbenhavn. Leverer hver dag frokost til næsten 100 virk- somheder i Storkøbenhavn. Virksomheder i Storkøbenhavn. 100 virksomheder i Storkøbenhavn.</p>
+      </div>
+
+      <div class="contact_info">
+        <h4>KONTAKT INFORMATION</h4>
+        <ol>
+          <li>
+            <em>Navn</em>
+            Anders Schneider
+          </li>
+          <li>
+            <em>Email</em>
+            as@24native.dk
+          </li>
+          <li>
+            <em>Telefon</em>
+            88 80 87 90
+          </li>
+          <li>
+            <em>Adresse</em>
+            Store Kongensgade 40H, 3. TH
+          </li>
+          <li>
+            <em>Postnummer</em>
+            1264
+          </li>
+          <li>
+            <em>By</em>
+            København
+          </li>
+          <li>
+            <em>Land</em>
+            Danmark
+          </li>
+          <li>
+            <em>Website</em>
+            www.24native.dk
+          </li>
+        </ol>
+      </div>
+    </div>
+    <clb/>
+
+    <div class="column_left">
+      <div class="deal_bt">
+        <%= bt_link_to nil, t("deals.index.view.contact_me"), "#", :onclick => "javascript:show_sign_up_or_sign_in_modal()", :class => "bt_big" %>
+      </div>
+    </div>
+    <div class="column_left">
+      <ul class="social_share">
+        <li>
+          <%= link_to_function image_tag('fairdeals/bt/social_email.png', :height => "20", :alt => t("deals.show.view.share_by_email")), "$('#modal_for_share_deal_by_email').dialog('open');" %>
+        </li>
+        <% if Rails.env != "test" %>
+            <% if false %>
+                <li>
+                  <a name="fb_share" share_url="<%= escape_uri(deal_url(:id => @deal.slug)) %>"></a>
+
+                  <!--<iframe src="http://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(:id => @deal.slug)) %>&amp;send=true&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe>-->
+                  <!--<div id="fb-root"></div>-->
+                  <!--<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>-->
+                  <!--<fb:comments href="<%= escape_uri(deal_url(:id => @deal.slug)) %>" num_posts="2" width="500"></fb:comments>-->
+
+                </li>
+            <% end %>
+            <li>
+              <script src="https://platform.linkedin.com/in.js" type="text/javascript"></script>
+              <script type="IN/Share" data-url="<%= deal_url(:id => @deal.slug) %>" data-counter="right"></script>
+            </li>
+            <li>
+              <a href="https://twitter.com/share" class="twitter-share-button" data-text="<%= @deal.social_media_description %>" data-count="horizontal"><%= t("deals.show.view.tweet") %></a>
+              <script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
+            </li>
+            <li>
+              <iframe src="https://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(@deal)) %>&amp;send=false&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:150px; height:21px;" allowTransparency="true"></iframe>
+            </li>
+        <% end %>
+      </ul>
+    </div>
+    <clb/>
+
+  </div>
+
+
   <div class="deal_show_wrapper">
     <header back="true"><%= @deal.header %><%= ratings_for(@deal, :force_static => !current_user_has_role?(:member)) %></header>
 

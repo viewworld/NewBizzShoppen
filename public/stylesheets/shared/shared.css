@@ -99,3 +99,16 @@
     position: absolute;
     right: -45px;
 }
+
+
+/* --- deal - social share buttons --- */
+
+.social_share
+{
+    padding: 20px 0;
+}
+
+.social_share li
+{
+    display: inline;
+}
