@@ -11,7 +11,7 @@ class NewsletterList < ActiveRecord::Base
 
   attr_accessor :owner_email, :sourceable_items, :tag_group_items
 
-  accepts_nested_attributes_for :newsletter_sources
+  accepts_nested_attributes_for :newsletter_sources, :allow_destroy => true
   
   private
 
@@ -52,7 +52,7 @@ class NewsletterList < ActiveRecord::Base
   end
 
   def extract_sourceable_objects
-    if sourceable_items and sourceable_items.is_a?(Array)
+    if sourceable_items and sourceable_items.is_a?(Array) and valid?
       sourceable_items.each do |source|
         if source.split("_").size > 1
           model, id = source.split("_")
@@ -64,7 +64,7 @@ class NewsletterList < ActiveRecord::Base
 
 
   def extract_tag_groups
-    if tag_group_items and tag_group_items.is_a?(Array)
+    if tag_group_items and tag_group_items.is_a?(Array) and valid?
       tag_group_tags = {}
       tag_group_items.each do |item|
         if item.split(":").size > 1
@@ -99,6 +99,8 @@ class NewsletterList < ActiveRecord::Base
       end
 
       tag_groups.each do |tag_group|
+        tag_group.match_all = tag_group.tag_list.size > 1
+
         if tag_group.new_record?
           tag_group.save
           self.newsletter_sources << NewsletterSource.new(:sourceable => tag_group)

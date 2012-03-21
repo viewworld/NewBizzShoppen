@@ -12,7 +12,7 @@
 
   <ul id="ul_sources_list">
   <%= form.fields_for :newsletter_sources, @newsletter_list.newsletter_sources.without_tags_and_custom do |builder| %>
-    <li><%= render :partial => "newsletter_sources_fields", :locals => {:f => builder} %></li>
+    <li id="li_source_<%= builder.object.id %>"><%= render :partial => "newsletter_sources_fields", :locals => {:f => builder} %></li>
   <% end %>
   </ul>
 
@@ -20,7 +20,10 @@
   <% tag_groups.each do |tag_group| %>
       <ul class="droppable" id="tag_group_<%= tag_group.new_record? ? "new#{Time.now.to_f.to_s.gsub(".", "")}" : tag_group.id %>" style="background-color: #609d00; padding: 4px; margin: 4px;">
         <% tag_group.tags.each do |tag| %>
-            <li class="draggable" style="background-color: #fafad2;margin: 4px;" id="tag_<%= tag.id %>"><%= tag.name %></li>
+            <li class="draggable" style="background-color: #fafad2;margin: 4px;" id="tag_<%= tag.id %>">
+              <%= tag.name %>
+              <%= link_to_function image_tag("/images/icons/remove.png"), "remove_tag('#{tag.id}')" %>
+            </li>
         <% end %>
 
       </ul>
@@ -50,7 +53,8 @@
                     if(item[1] == "ActsAsTaggableOn::Tag"){
                         tmp_id = "new" + new Date().getTime().toString();
                         tags_tag_groups[item[2].toString()] = tmp_id;
-                        $("<ul  class='droppable' id='tag_group_" + tmp_id + "' style='background-color: #bc8f8f; padding: 4px; margin: 4px;'><li class='draggable' style='background-color: #fafad2;margin: 4px;' id='tag_" + item[2] + "'>" +item[0]+ "</li></ul>").insertBefore("#newsletter_sources_tags")
+                        remove_link = "<a href='#' onclick=\"" + "remove_tag('" + item[2].toString() + "')" + "\"><img src='/images/icons/remove.png' border=0></a></li>";
+                        $("<ul  class='droppable' id='tag_group_" + tmp_id + "' style='background-color: #bc8f8f; padding: 4px; margin: 4px;'><li class='draggable' style='background-color: #fafad2;margin: 4px;' id='tag_" + item[2] + "'>" + item[0] + " " + remove_link + "</li></ul>").insertBefore("#newsletter_sources_tags");
                         init_sortable();
                     }
                     else
@@ -61,14 +65,30 @@
                                     text(item[0]));
                         $('#autocompleter').val('');
 
-                        $("#ul_sources_list").append("<li>" + item[0] + "</li>");
+                        $("#ul_sources_list").append("<li id='source_li_" + item[1] + "_" + item[2] + "'>" + item[0] + "<a href='#' onclick=\"" + "remove_source('" + item[1] + "_" + item[2] + "', true)" + "\"><img src='/images/icons/remove.png' border=0></a></li>");
                     }
-
+                    $('#autocompleter').val('');
                 });
 
         $("#autocompleter").autocomplete('<%= sourceable_for_search_newsletters_newsletter_lists_path(:format => :js) %>', function(event, data, formatted) {
         });
     });
+
+    function remove_source(id, new_record){
+        if(new_record){
+            $("#source_li_" + id).remove();
+            $("#newsletter_list_sourceable_items option[value='" + id + "']").remove()
+        }
+        else{
+            $("#destroy_hidden_field_" + id).val('true');
+            $('#li_source_' + id).hide()
+        }
+    }
+
+    function remove_tag(id, tag_group_id){
+        tags_tag_groups[id] = undefined;
+        $('li[id=tag_' + id + ']').remove()
+    }
 
     function init_sortable(){
     $(".droppable").sortable({
@@ -87,7 +107,6 @@
         prev_tag_group_id = ui.sender.attr("id").split("_").reverse()[0];
         window.tag_groups_tags_count[prev_tag_group_id] = parseInt(window.tag_groups_tags_count[prev_tag_group_id]) - 1;
         window.tag_groups_tags_count[target_group_id] = parseInt(window.tag_groups_tags_count[target_group_id]) +1;
-        alert(ui.item.attr('id') + " => " + $(this).attr('id') + "from " + ui.sender.attr("id"));
     }
 
     function select_sourceable_items(){
