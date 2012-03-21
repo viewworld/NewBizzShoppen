@@ -1443,8 +1443,14 @@ span.cke_skin_kama
 
 .primary_deal .frm_head
 {
-    padding: 15px 15px 10px;
+    padding: 15px 15px 12px;
     zoom: 1 !ie7;
+    line-height: 50px;
+}
+
+.primary_deal .frm_head img
+{
+    vertical-align: middle;
 }
 
 .primary_deal .frm_head a
@@ -1785,7 +1791,7 @@ a.toggle_comments
 
 .other_deals .frm_content
 {
-    min-height: 110px;
+    min-height: 240px;
 }
 
 .other_deals .deal_desc
@@ -1798,7 +1804,7 @@ a.toggle_comments
 .other_deals .deal_thumb
 {
     float: right;
-    width: 220px;
+    /*width: 220px;*/
     height: 20px;
     text-align: center;
     padding-bottom: 15px;
@@ -1812,7 +1818,7 @@ a.toggle_comments
 .other_deals .deal_info
 {
     float: left;
-    width: 380px;
+    width: 336px;
     font-size: 13px;
 }
 
@@ -1835,6 +1841,11 @@ a.toggle_comments
 .other_deals .deal_description .default_action
 {
     margin-top: 10px;
+}
+
+.other_deals .deal_description .logo
+{
+    margin: 10px 0px 15px;
 }
 
 
