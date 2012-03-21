@@ -31,6 +31,37 @@
 
             <h4><%= link_to primary_deal.header, deal_path(primary_deal.slug), :style => "text-decoration:none;color:#fff" %></h4>
 
+            <% if primary_deal.group_deal? %>
+                <div id="countdown_<%= email_form_id %>" class="countdown">
+                  <span class="countdown_title">Time left:</span>
+
+                  <div class="dash days_dash">
+                    <span class="dash_title"><%= t("deals.show.view.days") %></span>
+
+                    <div class="digit">0</div>
+                    <div class="digit">0</div>
+                  </div>
+                  <div class="dash hours_dash">
+                    <span class="dash_title"><%= t("deals.show.view.hours") %></span>
+
+                    <div class="digit">0</div>
+                    <div class="digit">0</div>
+                  </div>
+                  <div class="dash minutes_dash">
+                    <span class="dash_title"><%= t("deals.show.view.minutes") %></span>
+
+                    <div class="digit">0</div>
+                    <div class="digit">0</div>
+                  </div>
+                  <div class="dash seconds_dash">
+                    <span class="dash_title"><%= t("deals.show.view.seconds") %></span>
+
+                    <div class="digit">0</div>
+                    <div class="digit">0</div>
+                  </div>
+                </div>
+            <% end %>
+
             <% if primary_deal.general_discount? %>
                 <div class="deal_ft_discount">
                   <p class="row" style="text-transform:uppercase;"><%= t("deals.index.view.save") %> <%= primary_deal.saving %></p>
@@ -67,36 +98,6 @@
 
           <div class="deal_desc" style="display: none">
             <h3><%= link_to primary_deal.header, deal_path(primary_deal.slug) %></h3>
-
-            <% if primary_deal.group_deal? %>
-                <div id="countdown_<%= email_form_id %>" class="countdown">
-                  <span class="countdown_title">Time left:</span>
-                  <div class="dash days_dash">
-                    <span class="dash_title"><%= t("deals.show.view.days") %></span>
-
-                    <div class="digit">0</div>
-                    <div class="digit">0</div>
-                  </div>
-                  <div class="dash hours_dash">
-                    <span class="dash_title"><%= t("deals.show.view.hours") %></span>
-
-                    <div class="digit">0</div>
-                    <div class="digit">0</div>
-                  </div>
-                  <div class="dash minutes_dash">
-                    <span class="dash_title"><%= t("deals.show.view.minutes") %></span>
-
-                    <div class="digit">0</div>
-                    <div class="digit">0</div>
-                  </div>
-                  <div class="dash seconds_dash">
-                    <span class="dash_title"><%= t("deals.show.view.seconds") %></span>
-
-                    <div class="digit">0</div>
-                    <div class="digit">0</div>
-                  </div>
-                </div>
-            <% end %>
 
           </div>
 

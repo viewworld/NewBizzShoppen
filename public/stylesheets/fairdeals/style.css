@@ -1597,8 +1597,18 @@ span.cke_skin_kama
 
 .primary_deal .countdown
 {
-    float: right;
     margin-top: 15px;
+    padding-left: 120px;
+}
+
+.primary_deal .countdown_title
+{
+    left: 55px;
+}
+
+.primary_deal .countdown .dash_title
+{
+    color: #fff;
 }
 
 
@@ -1681,8 +1691,8 @@ span.cke_skin_kama
     top: 15px;
     padding: 10px 0 0;
     text-align: center;
-
 }
+
 
 /* --- comments ----------------------------------------------------------------------------------------------------- */
 
