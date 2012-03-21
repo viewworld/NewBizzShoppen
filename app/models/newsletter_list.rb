@@ -3,12 +3,13 @@ class NewsletterList < ActiveRecord::Base
   belongs_to :creator, :polymorphic => true
   belongs_to :owner, :foreign_key => "owner_id", :class_name => "User"
 
-  after_save :cm_synchronize!
+  #after_save :cm_synchronize!
+  before_save :extract_sourceable_objects, :extract_tag_groups
   
   validates_presence_of :name
   validates_uniqueness_of :name
 
-  attr_accessor :owner_email, :sourceable_items
+  attr_accessor :owner_email, :sourceable_items, :tag_group_items
 
   accepts_nested_attributes_for :newsletter_sources
   
@@ -56,6 +57,49 @@ class NewsletterList < ActiveRecord::Base
         if source.split("_").size > 1
           model, id = source.split("_")
           self.newsletter_sources << NewsletterSource.new(:sourceable => model.constantize.find(id))
+        end
+      end
+    end
+  end
+
+
+  def extract_tag_groups
+    if tag_group_items and tag_group_items.is_a?(Array)
+      tag_group_tags = {}
+      tag_group_items.each do |item|
+        if item.split(":").size > 1
+          tag_id, tag_group_id = item.split(":")
+          tag_group_tags[tag_group_id] ||= []
+          tag_group_tags[tag_group_id] << tag_id
+        end
+      end
+
+      tag_groups = []
+
+      tag_group_tags.each_pair do |tag_group_id, tag_ids|
+        if tag_group_id =~ /new\d+/
+          tg = TagGroup.new
+          tg.tag_list = ActsAsTaggableOn::Tag.where(:id => tag_ids).map(&:name)
+        else
+          tags = ActsAsTaggableOn::Tag.where(:id => tag_ids)
+          tg = TagGroup.find(tag_group_id)
+          (tg.tags - tags).each do |tag|
+            tg.tags.delete(tag)
+          end
+          tags.each do |tag|
+            tg.tag_list << tag.name unless tg.tag_list.include?(tag.name)
+          end
+        end
+
+        tag_groups << tg
+      end
+
+      tag_groups.each do |tag_group|
+        if tag_group.new_record?
+          tag_group.save
+          self.newsletter_sources << NewsletterSource.new(:sourceable => tag_group)
+        else
+          tag_group.save
         end
       end
     end

@@ -284,4 +284,14 @@ module ApplicationHelper
       val.to_i
     end
   end
+
+  def humanize_object_class_name(object)
+    if object.is_a?(ActsAsTaggableOn::Tag)
+      "Tag"
+    elsif object.is_a?(SubscriptionPlan)
+      "Subscription"
+    else
+      object.class.to_s.tableize.humanize.singularize
+    end
+  end
 end

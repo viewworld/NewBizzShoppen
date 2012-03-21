@@ -5,11 +5,10 @@ class Newsletters::NewsletterListsController < Newsletters::NewslettersControlle
   set_subtab "newsletter_lists"
 
   def create
-    @newsletter_list = NewsletterList.new(params[:newsletter_list])
-    @newsletter_list.extract_sourceable_objects
     create! do |success, failure|
       success.html { redirect_to newsletters_newsletter_lists_path }
       failure.html { render 'new' }
+      failure.js {  }
     end
   end
 

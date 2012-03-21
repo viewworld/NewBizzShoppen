@@ -1,11 +1,10 @@
 <column-mc:>
   <header back="true"><%= t("newsletter.newsletter_lists.new.view.header") %></header>
 
-  <%= semantic_form_for @newsletter_list, :url => newsletters_newsletter_lists_path do |form| %>
+  <%= semantic_form_for @newsletter_list, :remote => true, :url => newsletters_newsletter_lists_path do |form| %>
       <frm>
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
-          <%= render :partial => "autocompleter" %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">

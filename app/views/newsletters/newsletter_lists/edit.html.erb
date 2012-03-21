@@ -5,11 +5,10 @@
       <frm>
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
-          <%= render :partial => "autocompleter" %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
-            <%= form.submit t("newsletter.newsletter_lists.edit.view.button_update"), :onclick => "select_sourceable_items()" %>
+            <%= form.submit t("newsletter.newsletter_lists.edit.view.button_update"), :onclick => "serialize_tag_groups_items();select_sourceable_items()" %>
           </ibt>
           <ibt c="bt_grey fltri">
             <%= button_to_function t("newsletter.newsletter_lists.edit.view.button_cancel"), "history.go(-1)" %>

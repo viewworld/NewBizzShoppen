@@ -14,6 +14,9 @@ class NewsletterSource < ActiveRecord::Base
 
   SOURCE_TYPES = [CAMPAIGN_SOURCE, LEAD_CATEGORY_SOURCE, USER_ROLE_SOURCE, SUBSCRIPTION_TYPE_SOURCE, TAG_SOURCE, CUSTOM_SOURCE]
 
+  scope :without_tags_and_custom, where("source_type NOT IN (?)", [TAG_SOURCE, CUSTOM_SOURCE])
+  scope :with_tags, where("source_type = ?", TAG_SOURCE)
+
   def custom_source?
     source_type == CUSTOM_SOURCE
   end

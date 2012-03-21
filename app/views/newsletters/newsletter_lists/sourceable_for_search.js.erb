@@ -1,3 +1,3 @@
 <% @items.each do |item| %>
-    <%= item.name %> (<%= item.class.to_s.tableize.humanize.singularize %>)|<%= item.class.to_s %>|<%= item.id %>
+    <%= item.name %> (<%= humanize_object_class_name(item) %>)|<%= item.class.to_s %>|<%= item.id %>
 <% end %>
