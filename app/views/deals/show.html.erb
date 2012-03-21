@@ -38,9 +38,11 @@
       <% end %>
 
       <div class="deal_intro">
-        <% unless @deal.images.blank? %>
-          <%= image_tag(@deal.images.first.url, :size => "430x300") %>
-        <% end %>
+        <div class="deal_images">
+          <% @deal.images.each do |img| %>
+            <%= image_tag(img.url, :size => "430x300", :style => "display:none") %>
+          <% end %>
+        </div>
 
         <% if @deal.general_discount? %>
             <div class="deal_ft_discount" style="text-transform:uppercase;">
@@ -289,7 +291,16 @@
     }
 
     $(document).ready(function() {
-        select_subscription_radio_button('user_member', <%= SubscriptionPlan.free.active.only_public.for_role(:member).first.id -%>)
+        select_subscription_radio_button('user_member', <%= SubscriptionPlan.free.active.only_public.for_role(:member).first.id -%>);
+
+        $('.deal_images').cycle({
+          fx:     'fade',
+          timeout: 5000,
+          next: '.deal_images',
+          pause: 1,
+          width: 430,
+          fit: 1
+        });
     });
   </script>
 </js:>
