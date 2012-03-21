@@ -2225,6 +2225,7 @@ en:
         view:
           new_lead: "New lead"
           edit: "Edit"
+          show: "Show"
           destroy: "Destroy"
           destroy_confirmation: "Are you sure?"
           search_button: "Search"

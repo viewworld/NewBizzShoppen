@@ -16,7 +16,7 @@
 
 <column-mc:>
 
-  <% requested_by_current_user = user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) %>
+  <% requested_by_current_user = (user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user)) %>
 
   <div class="deal_show">
     <div class="deal_show_header">
@@ -71,6 +71,16 @@
                 <%= link_to material.filename, material.url %><br/>
             <% end %>
           </p>
+      <% end %>
+      
+      <% if requested_by_current_user and @deal.voucher_numbers.where(:user_id => current_user.id).first and @lead = @deal.leads.where(:requested_by => current_user.id).first %>
+          <h4><%= t("member.leads.edit.view.voucher_label") %></h4>
+          <p><%= link_to t("member.leads.edit.view.voucher_link"), pdf_members_lead_path(@lead) %></p>
+
+          <% unless @deal.voucher_how_to_redeem.blank? %>
+            <h4><%= t("member.leads.edit.view.voucher_how_to_redeem_label") %></h4>
+            <p><%= @deal.voucher_how_to_redeem.to_s.html_safe %></p>
+          <% end %>
       <% end %>
 
     </div>
