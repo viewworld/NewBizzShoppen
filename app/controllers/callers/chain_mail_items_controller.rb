@@ -1,4 +1,4 @@
-class Administration::ChainMailItemsController < Administration::AdministrationController
+class Callers::ChainMailItemsController < Callers::CallerController
 
   def update
     @chain_mail_item = ChainMailItem.find(params[:id])

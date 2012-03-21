@@ -1,4 +1,4 @@
-class Administration::ChainMailMaterialsController < Administration::AdministrationController
+class Callers::ChainMailMaterialsController < Callers::CallerController
   inherit_resources
   set_tab "content"
   set_subtab "chain_mail"

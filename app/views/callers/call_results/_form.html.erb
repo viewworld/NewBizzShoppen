@@ -129,16 +129,15 @@
     </div>
 <% end %>
 
-<% if chain_mail_types_for_select = ChainMailType.with_active.for_campaign(@campaign || call_result.contact.campaign).order("name ASC").map{|cm| [cm.name,cm.id]} and chain_mail_types_for_select.any? %>
+<% if cr = call_result.result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id } and chain_mail_type = cr.chain_mail_type %>
     <hl/>
     <div class="pdd_10 no_pdd_t">
       <fieldset class="inputs labels_ta_r labels_200">
         <ol class="align_inputs">
-          <li class="select">
-              <%= label_tag "call_result[chain_mail_type_id]", "#{t("call_results.new.chain_mail_type")}".html_safe %>
-              <%= select_tag "call_result[chain_mail_type_id]", options_for_select([[]]+chain_mail_types_for_select, call_result.active_chain_mail_type_id) %>
+          <li class="boolean">
+              <%= label_tag "call_result[chain_mail_type_id]", "#{t("call_results.new.chain_mail_enabled")}".html_safe %>
+              <%= check_box_tag "call_result[chain_mail_type_id]", chain_mail_type.id, (call_result.chain_mail.present? or call_result.new_record?) %>
               <%= custom_error_for_object_and_field(call_result, :chain_mail) %>
-              <%#= t("call_results.new.number_of_emails_left_to_send_in_this_chain", :count => call_result.chain_mail_delayed_jobs.count) if call_result.chain_mail %>
           </li>
         </ol>
       </fieldset>

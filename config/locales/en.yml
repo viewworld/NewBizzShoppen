@@ -328,6 +328,7 @@ en:
   chain_mail_types:
     table:
       name: "Name"
+      campaign: "Campaign"
       active: "Active"
       archived: "Archived"
     edit:
@@ -335,11 +336,18 @@ en:
       title: "Edit"
     index:
       header: "Chain mail types"
+      campaign_header: "Chain mail types in campaign %{name}"
       new: "New chain mail type"
+      back_to_campaign: "Back to campaign"
     new:
       header: "New chain mail type"
       title: "New"
-
+    form:
+      number_of_days: "# of days"
+      add_another_email: "Add another email"
+      manage_attachments: "Manage attachments"
+      chain_mail_at_position: "Chain mail at position %{position}"
+      attachments: "Attachments"
 
   lead_templates:
     table:
@@ -489,6 +497,7 @@ en:
       send_material_email_template: "Edit 'Send material' email template"
       upgrade_to_category_supplier_email_template: "Edit 'Upgrade to category supplier' email"
       materials_repository: "Materials repository"
+      chain_mail_types: "Chain mail types"
       edit_template: "Edit template"
       production: "Production"
       agent_work_screen_as: "Go to agent work screen as"
@@ -666,6 +675,7 @@ en:
       no_deals_selected_for_request: "No deals selected for request."
       upgraded_user_has_other_errors: "Upgraded user could not be created"
       chain_mail_type: "Chain mail type"
+      chain_mail_enabled: "Chain mail enabled"
       number_of_emails_left_to_send_in_this_chain: "Number of emails left to send in this chain: %{count}"
     edit:
       title: Edit result
@@ -3316,7 +3326,7 @@ en:
         asset:
           validation_asset_images_type: "uploaded file is not an image"
           validation_asset_document_type: "uploaded file is not a document"
-        chain_mail:
+        chain_mail_type:
           attributes:
             chain_mail_items:
               too_short: "There has to be at least %{count} email in the chain"

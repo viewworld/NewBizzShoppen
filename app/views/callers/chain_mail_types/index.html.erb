@@ -5,7 +5,7 @@
     <h2><%= t("common.search") %></h2>
 
     <div class="search_content">
-      <%= form_for @search, :url => administration_chain_mail_types_path do |f| %>
+      <%= form_for @search, :url => callers_chain_mail_types_path do |f| %>
           <fieldset class="inputs_vertical">
             <ol class="no_pdd">
               <li class="string">
@@ -35,12 +35,21 @@
 
   <header>
     <param:content>
-      <%= t("chain_mail_types.index.header") %>
+      <% if @campaign %>
+        <%= t("chain_mail_types.index.campaign_header", :name => @campaign.name) %>
+      <% else %>
+        <%= t("chain_mail_types.index.header") %>
+      <% end %>
     </param:content>
 
     <param:actions>
       <ul class="header_actions">
-        <li class="last"><%= bt_link_to :plus, t("chain_mail_types.index.new"), new_administration_chain_mail_type_path %></li>
+        <% if params[:campaign_id] %>
+          <li><%= bt_link_to :undo, t("chain_mail_types.index.back_to_campaign"), edit_callers_campaign_path(params[:campaign_id]) %></li>
+          <li class="last"><%= bt_link_to :plus, t("chain_mail_types.index.new"), new_callers_campaign_chain_mail_type_path(params[:campaign_id]) %></li>
+        <% else %>
+          <li class="last"><%= bt_link_to :plus, t("chain_mail_types.index.new"), new_callers_chain_mail_type_path %></li>
+        <% end %>
       </ul>
     </param:actions>
   </header>
@@ -48,16 +57,22 @@
   <% if @chain_mail_types.empty? %>
       <%= blank_state_message %>
   <% else %>
-      <%= generic_table @chain_mail_types, :table_class => "chain_mail_types", :default_action => :edit, :cols => 3, :link_to_show => false, :link_to_delete => false do |blocks| %>
+      <%= generic_table @chain_mail_types, :table_class => "chain_mail_types", :default_action => :edit, :cols => (@campaign ? 3 : 4), :link_scope => (@campaign ? [:callers, @campaign] : [:callers]), :link_to_show => false, :link_to_delete => false do |blocks| %>
 
           <% blocks.headers do %>
             <th><%= t("chain_mail_types.table.name") %></th>
+            <% unless @campaign %>
+                <th><%= t("chain_mail_types.table.campaign") %></th>
+            <% end %>
             <th><%= t("chain_mail_types.table.active") %></th>
             <th><%= t("chain_mail_types.table.archived") %></th>
           <% end %>
               
           <% blocks.cells do |chain_mail_type| %>
               <td><%= chain_mail_type.name %></td>
+              <% unless @campaign %>
+                  <td><%= chain_mail_type.campaign_name %></td>
+              <% end %>
               <td><%= chain_mail_type.active? ? t("common.yes_label") : t("common.no_label") %></td>
               <td><%= chain_mail_type.archived? ? t("common.yes_label") : t("common.no_label") %></td>
           <% end %>

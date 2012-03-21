@@ -19,7 +19,7 @@
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.news")), administration_news_index_path, :subtab => "news" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.hints")), administration_hints_path, :subtab => "hints" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.translations")), administration_translation_path, :subtab => "translations" %>
-    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.chain_mail")), administration_chain_mail_types_path, :subtab => "chain_mail_type", :additional_class => "last" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.chain_mail")), callers_chain_mail_types_path, :subtab => "chain_mail_type", :additional_class => "last" %>
 <% end %>
 
 <%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.admin.settings"), :tab => "settings" do  %>
