@@ -6,16 +6,16 @@
               <%= ratings_for(featured, :force_static => !current_user_has_role?(:member)) %>
 
               <h2>
-                <%= link_to featured.header, deal_path(featured.slug) %>
+                <%= link_to st(featured.header,{},{:length => (featured.general_discount? ? 62 : 42)}), deal_path(featured.slug) %>
 
                 <span class="highlighted">/
                     <% if featured.general_discount? %>
                         <%= t("deals.index.view.save") %> <%= featured.saving %>
                     <% else %>
-                        <%= t("deals.index.view.fairdeals_price") %>:
+                        <%= t("deals.index.view.price") %>
                         <%= as_currency(featured.discounted_price, featured.currency) %>
                         /
-                        <%= t("deals.index.view.you_save") %>:
+                        <%= t("deals.index.view.save") %>
                         <%= featured.saving %>
                     <% end %>
                 </span>
@@ -39,9 +39,10 @@
 
                   <div class="deal_description">
                     <%= image_tag featured.logo.url(:featured), :class => "logo" if featured.logo %>
-                    <p><%= featured.short_featured_description.to_s.html_safe %></p>
+                    <p><%= st(featured.short_featured_description.to_s) %></p>
                     <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(featured.slug), :class => 'default_action' %>
                   </div>
+
 
                   <clb/>
 
