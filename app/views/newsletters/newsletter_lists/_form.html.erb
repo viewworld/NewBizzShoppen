@@ -1,7 +1,8 @@
 <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_200">
       <ol class="align_inputs">
-        <%= render :partial => "list_fields", :locals => {:f => form}  %>
+        <%= form.input :name %>
+        <%= form.input :owner_email %>
         <div style="display: none">
         <%= form.input :sourceable_items, :collection => [], :as => :select, :multiple => true %>
         <%= form.input :tag_group_items, :collection => [], :as => :select, :multiple => true %>
@@ -81,8 +82,12 @@
     init_sortable();
 
     function handle_receive(event, ui){
-        window.tags_tag_groups[ui.item.attr("id").split("_").reverse()[0]] = $(this).attr('id').split("_").reverse()[0].toString();
-        alert(ui.item.attr('id') + " => " + $(this).attr('id'));
+        target_group_id = $(this).attr('id').split("_").reverse()[0].toString();
+        window.tags_tag_groups[ui.item.attr("id").split("_").reverse()[0]] = target_group_id;
+        prev_tag_group_id = ui.sender.attr("id").split("_").reverse()[0];
+        window.tag_groups_tags_count[prev_tag_group_id] = parseInt(window.tag_groups_tags_count[prev_tag_group_id]) - 1;
+        window.tag_groups_tags_count[target_group_id] = parseInt(window.tag_groups_tags_count[target_group_id]) +1;
+        alert(ui.item.attr('id') + " => " + $(this).attr('id') + "from " + ui.sender.attr("id"));
     }
 
     function select_sourceable_items(){
@@ -98,8 +103,10 @@
     }
 
     var tags_tag_groups = [];
+    var tag_groups_tags_count = [];
 
     <% tag_groups.each do |tag_group| %>
+        <%= "tag_groups_tags_count['#{tag_group.id}'] = '#{tag_group.tags.count}'" %>
         <% tag_group.tags.each do |tag| %>
             <%= "tags_tag_groups['#{tag.id}'] = '#{tag_group.id}'" %>
         <% end %>
@@ -115,6 +122,15 @@
                             text("1"));
             }
         });
+
+        $.each(tag_groups_tags_count, function(index, value) {
+            if(value != undefined && parseInt(value) == 0){
+                $("#newsletter_list_tag_group_items").
+                            append($("<option></option>").
+                            attr("value","null:" + index.toString()).
+                            text("1"));
+            }
+        })
 
 
     }

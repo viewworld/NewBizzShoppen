@@ -8,7 +8,8 @@ class Newsletters::NewsletterListsController < Newsletters::NewslettersControlle
     create! do |success, failure|
       success.html { redirect_to newsletters_newsletter_lists_path }
       failure.html { render 'new' }
-      failure.js {  }
+      success.js { }
+      failure.js { }
     end
   end
 
@@ -16,6 +17,8 @@ class Newsletters::NewsletterListsController < Newsletters::NewslettersControlle
     update! do |success, failure|
       success.html { redirect_to newsletters_newsletter_lists_path }
       failure.html { render 'new' }
+      success.js { }
+      failure.js { }
     end
   end
 
@@ -31,6 +34,12 @@ class Newsletters::NewsletterListsController < Newsletters::NewslettersControlle
     respond_to do |format|
       format.js
     end
+  end
+
+  protected
+
+  def collection
+    @newsletter_lists = NewsletterList.paginate(:page => params[:page], :per_page => NewsletterList.per_page)
   end
 
 end

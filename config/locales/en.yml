@@ -4565,6 +4565,10 @@ en:
       index:
         view:
           header: "Newsletter lists"
+          name_column: "Name"
+          owner_column: "Owner"
+          actions_column: "Actions"
+          edit: "Edit"
   newsletter:
     newsletter_lists:
       index:

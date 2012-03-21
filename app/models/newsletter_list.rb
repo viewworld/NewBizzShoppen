@@ -1,5 +1,5 @@
 class NewsletterList < ActiveRecord::Base
-  has_many :newsletter_sources
+  has_many :newsletter_sources, :dependent => :destroy
   belongs_to :creator, :polymorphic => true
   belongs_to :owner, :foreign_key => "owner_id", :class_name => "User"
 
@@ -70,24 +70,28 @@ class NewsletterList < ActiveRecord::Base
         if item.split(":").size > 1
           tag_id, tag_group_id = item.split(":")
           tag_group_tags[tag_group_id] ||= []
-          tag_group_tags[tag_group_id] << tag_id
+          tag_group_tags[tag_group_id] << tag_id unless tag_id == "null"
         end
       end
 
       tag_groups = []
 
       tag_group_tags.each_pair do |tag_group_id, tag_ids|
-        if tag_group_id =~ /new\d+/
+        if tag_group_id =~ /new\d+/ and !tag_ids.empty?
           tg = TagGroup.new
           tg.tag_list = ActsAsTaggableOn::Tag.where(:id => tag_ids).map(&:name)
         else
           tags = ActsAsTaggableOn::Tag.where(:id => tag_ids)
           tg = TagGroup.find(tag_group_id)
-          (tg.tags - tags).each do |tag|
-            tg.tags.delete(tag)
-          end
-          tags.each do |tag|
-            tg.tag_list << tag.name unless tg.tag_list.include?(tag.name)
+          if tag_ids.empty?
+            tg.tag_list = []
+          else
+            (tg.tags - tags).each do |tag|
+              tg.tags.delete(tag)
+            end
+            tags.each do |tag|
+              tg.tag_list << tag.name unless tg.tag_list.include?(tag.name)
+            end
           end
         end
 

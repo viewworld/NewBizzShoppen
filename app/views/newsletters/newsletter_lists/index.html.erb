@@ -11,4 +11,43 @@
 
       </param:actions>
    </header>
+
+  <table id="newsletter_lists_table" class="generic">
+    <thead>
+    <tr>
+      <th class="hl"></th>
+      <th><%= t("newsletters.newsletter_lists.index.view.name_column") %></th>
+      <th><%= t("newsletters.newsletter_lists.index.view.owner_column") %></th>
+      <th class="ta_r"><%= t("newsletters.newsletter_lists.index.view.actions_column") %></th>
+      <th class="hr"></th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="3"></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <% @newsletter_lists.each do |newsletter_list| %>
+        <tr class="<%= cycle("odd", "even") %>">
+          <td class="cl"></td>
+          <td><%= newsletter_list.name %></td>
+          <td><%= newsletter_list.owner_id %></td>
+          <td class="tda ta_r">
+            <%= bt_link_to nil, t("newsletters.newsletter_lists.index.view.edit"), edit_newsletters_newsletter_list_path(newsletter_list), :class => "default_action" %>
+          </td>
+          <td class="cr"></td>
+        </tr>
+    <% end %>
+    <% if will_paginate %>
+        <tr class="pagination">
+          <td colspan="5" class="ta_c">
+            <%= will_paginate @newsletter_lists, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
 </column-mc:>
