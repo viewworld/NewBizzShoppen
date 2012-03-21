@@ -36,7 +36,7 @@
           <%= image_tag(@deal.images.first.url, :size => "430x300") %>
         <% end %>
 
-        <% if primary_deal.general_discount? %>
+        <% if @deal.general_discount? %>
             <div class="deal_ft_discount" style="text-transform:uppercase;">
               <p class="row"><%= t("deals.index.view.save") %> <%= @deal.saving %></p>
             </div>
@@ -57,7 +57,7 @@
     </div>
 
     <div class="column_right">
-      <%= image_tag primary_deal.logo.url(:featured) if primary_deal.logo %>
+      <%= image_tag @deal.logo.url(:featured) if @deal.logo %>
 
       <div class="company_info">
         <p><%= @deal.company_description.to_s.html_safe %></p>
