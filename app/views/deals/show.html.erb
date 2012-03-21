@@ -24,86 +24,96 @@
     </div>
     <div class="column_left">
 
-      <div class="deal_text_intro">
-        <h2>Sådan får du din deal</h2>
-        <p>Vi har sendt en mail til 24native med dine kontaktinformationer. Du er også velkommen til at kontakte 24Native direkte, du skal huske at op- lyse at du er medlem af fairdeals så du får din rabat.</p>
-      </div>
-      
+      <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) and @deal.deal_confirmation_page %>
+        <div class="deal_text_intro">
+          <h2><%= t("deals.show.view.confirmation_page_label") %></h2>
+          <p><%= @deal.deal_confirmation_page.to_s.html_safe %></p>
+        </div>
+      <% end %>
+
       <div class="deal_intro">
-        <%= image_tag("http://placehold.it/440x300", :size => "430x300") %>
+        <% unless @deal.images.blank? %>
+          <%= image_tag(@deal.images.first.url, :size => "430x300") %>
+        <% end %>
 
-        <div class="deal_ft_discount">
-          <p class="row">SPAR 50%</p>
-        </div>
-
-        <div class="deal_ft_prices">
-          <p class="row">Pris: DKK 135</p>
-          <p class="row">Pris: DKK 50</p>
-          <p class="cell">SPAR:<br/>27%</p>
-        </div>
+        <% if primary_deal.general_discount? %>
+            <div class="deal_ft_discount" style="text-transform:uppercase;">
+              <p class="row"><%= t("deals.index.view.save") %> <%= @deal.saving %></p>
+            </div>
+        <% else %>
+            <div class="deal_ft_prices">
+              <p class="row"><%= t("deals.index.view.price") %>: <%= as_currency(@deal.deal_price, @deal.currency) %></p>
+              <p class="row"><%= t("deals.index.view.save") %>: <%= as_currency(@deal.discounted_price, @deal.currency) %></p>
+              <p class="cell" style="text-transform:uppercase;"><%= t("deals.index.view.save") %>:<br/><%= @deal.saving %></p>
+            </div>
+        <% end %>
       </div>
       
-      <h4>Hvad er inkluderet i aftalen</h4>
-      <p>24Native levere de kreative ideer, de digitale strategier og de flotte tryksager. Vi har et alsidigt produktsortiment -fra den lille folder til store forædlede publikationer.</p>
-      <p>Prøv vore grafisk opsætning af:</p>
-      <ul>
-        <li>Tryk sager</li>
-        <li>Brochure</li>
-        <li>Visitkort</li>
-        <li>Brevpapir</li>
-        <li>Konvelutter</li>
-        <li>Postkort</li>
-        <li>Plakater</li>
-      </ul>
+      <h4><%= t("deals.show.view.detailed_description_label") %></h4>
+      <p><%= @deal.hidden_description.to_s.html_safe %></p>
 
-      <h4>Det med småt</h4>
-      <p>Her finder du alt under et tag- Opfylde dit behov for kreativitet og markedsføring via tryk, websites og new media. Full service cross media virksomhed med mange års erfaring i at levere ydelser fra idé til virkelighed til private virksomheder og den offentlige sektor.</p>
+      <h4><%= t("deals.show.view.fine_print_label") %></h4>
+      <p><%= @deal.fine_print.to_s.html_safe %></p>
     </div>
 
     <div class="column_right">
-      <%= image_tag("http://placehold.it/300x50", :size => "300x75") %>
+      <%= image_tag primary_deal.logo.url(:featured) if primary_deal.logo %>
+
       <div class="company_info">
-        <p>24NATIVE er blandt de mest veletablerede frokostordnings- leverandører i Danmark, og leverer hver dag frokost til næsten 100 virksomheder i Storkøbenhavn. Leverer hver dag frokost til næsten 100 virksomheder i Storkøbenhavn. Leverer hver dag frokost til næsten 100 virk- somheder i Storkøbenhavn. Virksomheder i Storkøbenhavn. 100 virksomheder i Storkøbenhavn.</p>
-        <p>Leverer hver dag frokost til næsten 100 virksomheder i Storkøbenhavn. Leverer hver dag frokost til næsten 100 virk- somheder i Storkøbenhavn. Virksomheder i Storkøbenhavn. 100 virksomheder i Storkøbenhavn.</p>
+        <p><%= @deal.company_description.to_s.html_safe %></p>
       </div>
 
-      <div class="contact_info">
-        <h4>KONTAKT INFORMATION</h4>
-        <ol>
-          <li>
-            <em>Navn</em>
-            Anders Schneider
-          </li>
-          <li>
-            <em>Email</em>
-            as@24native.dk
-          </li>
-          <li>
-            <em>Telefon</em>
-            88 80 87 90
-          </li>
-          <li>
-            <em>Adresse</em>
-            Store Kongensgade 40H, 3. TH
-          </li>
-          <li>
-            <em>Postnummer</em>
-            1264
-          </li>
-          <li>
-            <em>By</em>
-            København
-          </li>
-          <li>
-            <em>Land</em>
-            Danmark
-          </li>
-          <li>
-            <em>Website</em>
-            www.24native.dk
-          </li>
-        </ol>
-      </div>
+                <%= deal_show_li(@deal.contact_name, t("deals.show.view.contact_name_label")) %>
+                <%= deal_show_li(@deal.email_address, t("deals.show.view.email_address_label")) %>
+                <%= deal_show_li(link_to(@deal.company_website_with_protocol, @deal.company_website_with_protocol), t("deals.show.view.company_website_label")) unless @deal.company_website.blank? %>
+                <%= deal_show_li(@deal.phone_number, t("deals.show.view.phone_number_label")) %>
+                <%= deal_show_li(@deal.address_line_1, t("deals.show.view.address_line_1_label")) %>
+                <%= deal_show_li(@deal.address_line_2, t("deals.show.view.address_line_2_label")) %>
+                <%= deal_show_li(@deal.address_line_3, t("deals.show.view.address_line_3_label")) %>
+                <%= deal_show_li(@deal.zip_code, t("deals.show.view.zip_code_label")) %>
+                <%= deal_show_li(@deal.country, t("deals.show.view.country_label")) %>
+
+      <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) %>
+          <div class="contact_info">
+            <h4><%= t("deals.show.view.contact_information") %></h4>
+            <ol>
+              <li>
+                <em><%= t("deals.show.view.contact_name_label") %></em>
+                <%= @deal.contact_name %>
+              </li>
+              <li>
+                <em><%= t("deals.show.view.email_address_label") %></em>
+                <%= @deal.email_address %>
+              </li>
+              <li>
+                <em><%= t("deals.show.view.phone_number_label") %></em>
+                <%= @deal.phone_number %>
+              </li>
+              <li>
+                <em><%= t("deals.show.view.address_label") %></em>
+                <%= @deal.address_line_1 %>, <%= @deal.address_line_1 %> 
+              </li>
+              <li>
+                <em><%= t("deals.show.view.zip_code_label") %></em>
+                <%= @deal.zip_code %>
+              </li>
+              <li>
+                <em><%= t("deals.show.view.address_line_3_label") %></em>
+                <%= @deal.address_line_3 %>
+              </li>
+              <li>
+                <em><%= t("deals.show.view.country_label") %></em>
+                <%= @deal.country %>
+              </li>
+              <% unless @deal.company_website.blank? %>
+                <li>
+                  <em><%= t("deals.show.view.company_website_label") %></em>
+                  <%= link_to(@deal.company_website_with_protocol, @deal.company_website_with_protocol) %>
+                </li>
+              <% end %>
+            </ol>
+          </div>
+      <% end %>
     </div>
     <clb/>
 
