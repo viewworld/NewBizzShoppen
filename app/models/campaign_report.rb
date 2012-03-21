@@ -90,9 +90,13 @@ class CampaignReport
     (frc > 0 and th > 0) ? (frc / th) : 0
   end
 
-  def self.final_results(_selected_result_ids=nil)
+  def self.final_results(_selected_result_ids=nil, selected_campaigns=nil)
     res = Result.where(:final => true, :is_reported => true).order("name")
     res = res.where(:id => _selected_result_ids) if _selected_result_ids
+
+    if selected_campaigns
+      res = res.joins(:campaigns_results).select("DISTINCT results.id, results.*").where("campaigns_results.campaign_id IN (?)", selected_campaigns.map(&:id))
+    end
     res
   end
 

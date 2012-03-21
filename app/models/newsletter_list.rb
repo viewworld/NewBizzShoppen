@@ -2,9 +2,10 @@ class NewsletterList < ActiveRecord::Base
   has_many :newsletter_sources, :dependent => :destroy
   belongs_to :creator, :polymorphic => true
   belongs_to :owner, :foreign_key => "owner_id", :class_name => "User"
+  has_many :campaign_monitor_responses, :as => :resource
 
-  #after_save :cm_synchronize!
-  before_save :extract_sourceable_objects, :extract_tag_groups
+  after_save :cm_synchronize!, :unless => Proc.new{|nl| nl.cm_list_id_changed?}
+  before_save :extract_sourceable_objects, :extract_tag_groups  
   
   validates_presence_of :name
   validates_uniqueness_of :name
@@ -16,33 +17,30 @@ class NewsletterList < ActiveRecord::Base
   private
 
   def cm_create!
-    list_id = CreateSend::List.create(owner.cm_client, name, "", true, "")
-    self.update_attribute(:cm_list_id, list_id)
+    list_id = CreateSend::List.create(owner.cm_client, name, "", false, "")
+    reload; update_attribute(:cm_list_id, list_id)
+    list_id
   end
 
   def cm_update!
-    CreateSend::List.new(cm_list_id).update(name, "", true, "")
-  end
-
-  public
-
-  def cm_list?
-    cm_list_id.present?
+    CreateSend::List.new(cm_list_id).update(name, "", false, "")
   end
 
   def cm_synchronize!
     begin
-      cm_list? ? cm_update! : cm_create!
+      cm_list_id.present? ? cm_update! : cm_create!
     rescue Exception => e
-      CampaignMonitorResponse.create(:response => e)
+      self.campaign_monitor_responses.create(:response => e)
       false
     end
   end
 
-  def cm_synchronize_subscriber!(subscriber)
+  public
 
-  end  
-  
+  def cm_list
+    cm_list_id || cm_create!
+  end
+
   def newsletter_subscribers
     NewsletterSubscriber.joins(:newsletter_sources).where("newsletter_sources.id in (?)", newsletter_source_ids)
   end
