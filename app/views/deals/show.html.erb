@@ -164,10 +164,6 @@
             <p><%= @deal.deal_code_is_url? ? link_to(@deal.deal_code, @deal.deal_code_as_url) : @deal.deal_code %></p>
         <% end %>
 
-        <h3><%= t("deals.show.view.short_description_label") %></h3>
-
-        <p style="padding-right: 45px;"><%= raw @deal.description %></p>
-
         <% unless @deal.materials.blank? %>
             <h3><%= t("deals.show.view.materials_label") %></h3>
 
