@@ -59,12 +59,6 @@
                     </div>
                   </li>
                   <li class="string">
-                    <%= form.label t("member.leads.edit.view.short_deal_description_label") %>
-                    <div class="txt">
-                      <%= @lead.deal.description %>
-                    </div>
-                  </li>
-                  <li class="string">
                     <%= form.label t("member.leads.edit.view.deal_description_label") %>
                     <div class="txt">
                       <%= link_to t("member.leads.edit.view.view_description_link"), deal_path(:id => @lead.deal.slug) %>
