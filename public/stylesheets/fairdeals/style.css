@@ -1962,6 +1962,11 @@ a.toggle_comments
     margin-bottom: 15px;
 }
 
+.deal_show .column_right .time_left_counter
+{
+    margin-bottom: 10px;
+}
+
 .row_bottom
 {
     position: absolute;

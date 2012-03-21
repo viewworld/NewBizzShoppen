@@ -16,6 +16,7 @@
 
 <column-mc:>
 
+  <% requested_by_current_user = user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) %>
 
   <div class="deal_show">
     <div class="deal_show_header">
@@ -24,7 +25,7 @@
     </div>
     <div class="column_left">
 
-      <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) %>
+      <% if requested_by_current_user %>
         <div class="deal_text_intro">
         <% if @deal.deal_confirmation_page %>
             <h2><%= t("deals.show.view.confirmation_page_label") %></h2>
@@ -57,7 +58,7 @@
       <h4><%= t("deals.show.view.detailed_description_label") %></h4>
       <p><%= @deal.hidden_description.to_s.html_safe %></p>
 
-      <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) %>
+      <% if requested_by_current_user %>
         <h4><%= t("deals.show.view.fine_print_label") %></h4>
         <p><%= @deal.fine_print.to_s.html_safe %></p>
       <% end %>
@@ -75,8 +76,8 @@
     </div>
 
     <div class="column_right">
-      <div class="row_fixed">
-        <div class="row_bottom">
+      <div class="<%= "row_fixed" unless requested_by_current_user %>">
+        <div class="<%= "row_bottom" unless requested_by_current_user %>">
           <%= image_tag @deal.logo.url(:featured) if @deal.logo %>
 
           <div class="company_info">
@@ -118,7 +119,7 @@
           </div>
       <% end %>
 
-      <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) %>
+      <% if requested_by_current_user %>
           <div class="contact_info">
             <h4><%= t("deals.show.view.contact_information") %></h4>
             <ol>
