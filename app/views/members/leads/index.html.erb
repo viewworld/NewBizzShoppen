@@ -52,14 +52,13 @@
         <th><%= t("leads.table.company_logo") %></th>
         <th><%= t("leads.table.company_name") %></th>
         <th><%= t("leads.table.date") %></th>
-        <th class="ta_r"><%= t("leads.table.actions") %></th>
         <th class="hr"></th>
       </tr>
       </thead>
       <tfoot>
       <tr>
         <td class="fl"></td>
-        <td colspan="6"></td>
+        <td colspan="5"></td>
         <td class="fr"></td>
       </tr>
       </tfoot>
@@ -70,7 +69,7 @@
             <td><%= lead.id %></td>
             <td>
               <div class="rltv" style="padding-bottom: 20px;">
-              <%= lead.header %>
+              <%= link_to lead.header deal_path(lead.deal), :class => "default_action" %>
               <% if lead.can_be_commented? %>
                <div class="row_tooltip_actions">
                <%= link_to t("comments.shared.show_comments")+" (#{lead.comments_count_for(current_user)})", "#", :class => "toggle_row show_comments#{' toggle_row_unread' if lead.has_unread_comments_for_user?(current_user)}", :onclick => "mark_comments_as_read(#{lead.id}); mark_row_as_read('lead_#{lead.id}')" %>
@@ -88,14 +87,6 @@
             <td><%= image_tag lead.deal.logo.url(:thumb), :class => "thumb" if lead.deal and lead.deal.logo %></td>
             <td><%= lead.deal ? lead.deal.company_name : lead.company_name %></td>
             <td><%= format_date lead.created_at %></td>
-
-            <td class="tda ta_r">
-              <ul-actions>
-                <li>
-                  <%= link_to t("member.leads.index.view.show"), deal_path(lead.deal), :class => "default_action" %>
-                </li>
-              </ul-actions>
-            </td>
             <td class="cr"></td>
           </tr>
 
@@ -103,7 +94,7 @@
 
           <tr class="row_tooltip">
             <td class="cl no_pdd"></td>
-            <td colspan="6" class="no_pdd">
+            <td colspan="5" class="no_pdd">
               <div class="row_tooltip_content pdd_10">
                 <p><%= render :partial => "/shared/comments/lead_threads", :locals => {:lead => lead, :threads => lead.comment_threads.roots.order("created_at DESC")} %></p>
               </div>
@@ -117,7 +108,7 @@
 
       <% if will_paginate %>
           <tr class="pagination">
-            <td colspan="9" class="ta_c">
+            <td colspan="8" class="ta_c">
               <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
             </td>
           </tr>
