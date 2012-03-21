@@ -1597,18 +1597,20 @@ span.cke_skin_kama
 
 .primary_deal .countdown
 {
-    margin-top: 15px;
-    padding-left: 120px;
+    position: absolute;
+    top: -65px;
+    right: 100px;
 }
 
 .primary_deal .countdown_title
 {
-    left: 55px;
+    left: -60px;
+    color: #000;
 }
 
 .primary_deal .countdown .dash_title
 {
-    color: #fff;
+    color: #000;
 }
 
 
@@ -1663,7 +1665,7 @@ span.cke_skin_kama
 
 .deal_ft_desc .deal_ft_prices
 {
-    padding: 15px 0;
+    padding: 15px 0 30px;
     width: 330px;
     position: relative;
 }
@@ -1802,6 +1804,7 @@ a.toggle_comments
 .other_deals .frm_content
 {
     min-height: 240px;
+    position: relative;
 }
 
 .other_deals .deal_desc
@@ -1856,6 +1859,13 @@ a.toggle_comments
 .other_deals .deal_description .logo
 {
     margin: 10px 0px 15px;
+}
+
+.other_deals .default_action
+{
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
 }
 
 
@@ -1945,8 +1955,21 @@ a.toggle_comments
     *zoom: 1;
 }
 
+.deal_show .row_fixed
+{
+    height: 410px;
+    position: relative;
+}
+
+.row_bottom
+{
+    position: absolute;
+    bottom: 0;
+}
+
 .deal_show .deal_intro
 {
+    height: 410px;
     background: #9ebf3d;
     -moz-border-radius-bottom-right: 10px;
     -webkit-border-bottom-right-radius: 10px;
@@ -1962,7 +1985,7 @@ a.toggle_comments
     border-bottom-left-radius: 10px;
     padding: 15px;
     color: #333;
-    margin: 10px 0 30px;
+    margin-top: 15px;
 }
 
 .deal_show .contact_info
