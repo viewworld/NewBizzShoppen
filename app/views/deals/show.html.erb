@@ -154,25 +154,9 @@
 
 
   <div class="deal_show_wrapper">
-    <header back="true"><%= @deal.header %><%= ratings_for(@deal, :force_static => !current_user_has_role?(:member)) %></header>
 
     <div class="column_2to3">
       <div class="element_description">
-
-        <% if @deal.premium_deal? %>
-          <div class="splash splash_premium">
-            <span>
-              <%= t("deals.index.view.premium_deal_splash_label") %>
-            </span>
-          </div>
-        <% end %>
-
-
-        <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) and @deal.deal_confirmation_page %>
-            <h3><%= t("deals.show.view.confirmation_page_label") %></h3>
-
-            <p style="padding-right: 45px;"><%= @deal.deal_confirmation_page.to_s.html_safe %></p>
-        <% end %>
 
         <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) and @deal.deal_code.present? %>
             <h3><%= t("deals.show.view.deal_code_label") %></h3>
@@ -183,24 +167,6 @@
         <h3><%= t("deals.show.view.short_description_label") %></h3>
 
         <p style="padding-right: 45px;"><%= raw @deal.description %></p>
-
-        <h3><%= t("deals.show.view.detailed_description_label") %></h3>
-
-        <p><%= @deal.hidden_description.to_s.html_safe %></p>
-
-        <h3><%= t("deals.show.view.fine_print_label") %></h3>
-
-        <p><%= @deal.fine_print.to_s.html_safe %></p>
-
-        <% unless @deal.images.blank? %>
-            <h3><%= t("deals.show.view.images_label") %></h3>
-
-            <p>
-              <% @deal.images.each do |image| %>
-                  <%= link_to image_tag(image.url(:original), :class => "thumb"), image.url, :rel => "colorbox" %>
-              <% end %>
-            </p>
-        <% end %>
 
         <% unless @deal.materials.blank? %>
             <h3><%= t("deals.show.view.materials_label") %></h3>
@@ -215,50 +181,6 @@
     </div>
 
     <div class="grid_300 fltr">
-
-      <div class="frm_ribbon_right">
-        <% if @deal.general_discount? %>
-            <p><%= t("deals.show.view.saving_label") %> <em><%= @deal.saving %></em></p>
-        <% else %>
-            <p><%= t("deals.show.view.price_label") %>: <em><%= as_currency(@deal.deal_price, @deal.currency) %></em>
-            </p>
-
-            <p><%= t("deals.show.view.discounted_price_label") %>:<em><%= as_currency(@deal.discounted_price, @deal.currency) %></em></p>
-
-            <p><%= t("deals.show.view.saving_label") %> <%= @deal.saving %></p>
-        <% end %>
-      </div>
-
-      <div class="frm_tiny company_info">
-
-        <% if @deal.logo %>
-            <p><%= image_tag(@deal.logo.url) %></p>
-        <% end %>
-
-
-        <h3><%= @deal.company_name %></h3>
-
-        <p class="ta_l"><%= @deal.company_description.to_s.html_safe %></p>
-
-      </div>
-
-      <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) %>
-      <div class="frm_tiny">
-        <div class="pdd_10">
-          <ul class="elements_list">
-                <%= deal_show_li(@deal.contact_name, t("deals.show.view.contact_name_label")) %>
-                <%= deal_show_li(@deal.email_address, t("deals.show.view.email_address_label")) %>
-                <%= deal_show_li(link_to(@deal.company_website_with_protocol, @deal.company_website_with_protocol), t("deals.show.view.company_website_label")) unless @deal.company_website.blank? %>
-                <%= deal_show_li(@deal.phone_number, t("deals.show.view.phone_number_label")) %>
-                <%= deal_show_li(@deal.address_line_1, t("deals.show.view.address_line_1_label")) %>
-                <%= deal_show_li(@deal.address_line_2, t("deals.show.view.address_line_2_label")) %>
-                <%= deal_show_li(@deal.address_line_3, t("deals.show.view.address_line_3_label")) %>
-                <%= deal_show_li(@deal.zip_code, t("deals.show.view.zip_code_label")) %>
-                <%= deal_show_li(@deal.country, t("deals.show.view.country_label")) %>
-          </ul>
-        </div>
-      </div>
-      <% end %>
 
       <% if !user_signed_in? and @deal.active? %>
           <%= bt_link_to nil, t("deals.index.view.contact_me"), "#", :onclick => "javascript:show_sign_up_or_sign_in_modal()", :class => "bt_max bt_big" %>
