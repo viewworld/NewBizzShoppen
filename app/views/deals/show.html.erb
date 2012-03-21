@@ -59,10 +59,14 @@
     </div>
 
     <div class="column_right">
-      <%= image_tag @deal.logo.url(:featured) if @deal.logo %>
+      <div class="row_fixed">
+        <div class="row_bottom">
+          <%= image_tag @deal.logo.url(:featured) if @deal.logo %>
 
-      <div class="company_info">
-        <p><%= @deal.company_description.to_s.html_safe %></p>
+          <div class="company_info">
+            <p><%= @deal.company_description.to_s.html_safe %></p>
+          </div>
+        </div>
       </div>
 
       <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) %>
