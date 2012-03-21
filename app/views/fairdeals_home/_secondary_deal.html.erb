@@ -39,8 +39,7 @@
 
                   <div class="deal_description">
                     <%= image_tag featured.logo.url(:featured), :class => "logo" if featured.logo %>
-                    <p><%= st(featured.short_featured_description.to_s) %></p>
-                    <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(featured.slug), :class => 'default_action' %>
+                    <p><%= st(featured.short_featured_description.to_s, {}, {:length => 300}) %></p>
                   </div>
 
 
@@ -57,6 +56,7 @@
                 <clb/>
 
               </div>
+              <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(featured.slug), :class => 'default_action' %>
             </param:content>
           </frm>
           <% end %>
