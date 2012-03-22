@@ -17,8 +17,7 @@ Background:
   And I press translated "member.leads.new.view.button_create"
   And I press translated "member.leads.show.view.ok_confirmation"
   And I follow translated "layout.fairdeals.main_menu.member.my_requests"
-  And I follow translated "member.leads.index.view.edit"
-
+  And I follow translated "member.leads.index.view.show"
 
 #9481
 @m26 @tgn @_done @_tested

@@ -13,11 +13,6 @@
           <%= f.text_field :header %>
           <%= custom_error_for_field(f, :header) %>
         </li>
-        <li class="text">
-          <%= f.label :description, t("shared.deals.form.description_label") %>
-          <%= f.text_area :description, :style => "height: 140px; width: 600px" %>
-          <%= custom_error_for_field(f, :description) %>
-        </li>
 
         <% unless user_signed_in? and current_user.has_role?(:member) %>
         <li class="text">

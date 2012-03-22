@@ -26,8 +26,7 @@ Feature: My requests listing
 
   @_done @_tested @tgn
   Scenario: I should see date, company name, contact information of the company and company logo
-    Then I follow translated "member.leads.index.view.edit"
-    And I should see "Xeper"
+    Then I follow translated "member.leads.index.view.show"
     And I should see "adr1"
     And I should see "adr2"
     And I should see "adr3"
