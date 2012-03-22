@@ -26,6 +26,7 @@ class Lead < AbstractLead
 
   validates_presence_of :price, :purchase_decision_date, :sale_limit, :category_id
   validates_inclusion_of :sale_limit, :in => 0..10, :if => :process_for_lead_information?
+  validates_presence_of :description, :if => :process_for_lead_information?
 
   scope :deal_value_from, lambda { |q| where(["purchase_value >= ?", q]) }
   scope :deal_value_to, lambda { |q| where(["purchase_value <= ?", q]) }
