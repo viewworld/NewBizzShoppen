@@ -186,7 +186,7 @@ class AbstractLead < ActiveRecord::Base
     (deal.lead_translations.count > 1 ? ::Locale.enabled.map(&:code) : [current_locale]).each do |locale_code|
       I18n.locale = locale_code
       self.header = "#{I18n.t("models.lead.field_prefixes.header")} #{deal.header}"
-      self.description = "#{I18n.t("models.lead.field_prefixes.description")} #{deal.description}"
+      self.description = "#{I18n.t("models.lead.field_prefixes.description")} #{deal.header}"
     end
     I18n.locale = current_locale
   end
