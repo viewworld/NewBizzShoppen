@@ -190,7 +190,6 @@ Feature: Deals from procurement manager perspective
     And I press translated "member.leads.show.view.ok_confirmation"
     And I should see "ultradeal"
 
-
   #8340
   @m22 @_requested @tgn @_done @_tested
   Scenario: When I have free subscription and I click get deal then I should see questions if I want to upgrade
@@ -210,7 +209,6 @@ Feature: Deals from procurement manager perspective
     Then I follow translated "subscriptions.listing.upgrade"
     And I should see "ultimate some funky deal"
     And I follow translated "deals.index.view.contact_me"
-    And I fill in "lead_phone_number" with "+49 23432423423234"
 
   #8340
   @m22 @_requested @tgn @_done @_tested_elsewhere
