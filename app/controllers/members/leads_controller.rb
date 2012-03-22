@@ -50,6 +50,11 @@ class Members::LeadsController < Members::MemberController
     @deal = Deal.find_by_id(params[:deal_id])
     @lead = Lead.new(params[:lead])
     @lead.based_on_deal(@deal, current_user)
+
+    respond_to do |format|
+      format.html { }
+      format.js { }
+    end
   end
 
   def create
@@ -64,6 +69,8 @@ class Members::LeadsController < Members::MemberController
       success.html {
         redirect_to members_lead_path(@lead)
       }
+      success.js { }
+      failure.js { }
     end
   end
 

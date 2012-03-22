@@ -183,8 +183,11 @@
         <% if !user_signed_in? and @deal.active? %>
             <%= bt_link_to nil, t("deals.index.view.contact_me"), "#", :onclick => "javascript:show_sign_up_or_sign_in_modal()", :class => "bt_max bt_big" %>
         <% elsif (user_signed_in? and current_user.has_role?(:member) and !@deal.requested_by?(current_user) and !@deal.awaiting_payment_requested_by?(current_user)) and @deal.active? %>
-            <%= bt_link_to nil, current_user.can_request?(@deal) ? t("deals.index.view.contact_me") : t("deals.index.view.upgrade_subscription_to_get_deal"),
-                           current_user.can_request?(@deal) ? new_members_lead_path(:deal_id => @deal.id) : my_profile_path(:deal_id => @deal.id), :class => "bt_max bt_big" %>
+            <% if current_user.can_request?(@deal) %>
+                <%= bt_link_to nil, t("deals.index.view.contact_me"), "#", :onclick => "javascript:remote_get_deal_for_member('#{@deal.id}')", :class => "bt_max bt_big" %>
+            <% else %>
+                <%= bt_link_to nil, t("deals.index.view.upgrade_subscription_to_get_deal"), my_profile_path(:deal_id => @deal.id), :class => "bt_max bt_big" %>
+            <% end %>
         <% end %>
       </div>
     </div>
@@ -227,7 +230,7 @@
     <%= render :partial => "share_deal_by_email/new", :locals => {:deal => @deal} %>
   </div>
 
-  <% unless user_signed_in? %>
+
       <% cache("#{I18n.locale}_deals_show_#{@deal.id}_sign_up") do %>
       <div id="modal_sign_in_or_sign_up_container_blinder" style="display:none;">
           <div id="modal_sign_in_or_sign_up_container">
@@ -235,7 +238,6 @@
           </div>
       </div>
       <% end %>
-  <% end %>
 
 </column-mc:>
 
@@ -302,5 +304,9 @@
           fit: 1
         });
     });
+
+    function remote_get_deal_for_member(deal_id){
+        $.get("/members/requests/new.js?deal_id=" + deal_id);
+    }
   </script>
 </js:>
