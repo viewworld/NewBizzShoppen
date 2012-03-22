@@ -21,10 +21,8 @@ Feature: Fairdeals view deal
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow "super"
-    And I should see "super descr"
     And I should see "super detailed"
     And I should see "super fine print"
-    And I should see "Azazel"
     And I should see "super company desc"
 
   @_done @non_testable @tgn
@@ -45,7 +43,7 @@ Feature: Fairdeals view deal
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow "super"
-    And I should see "Azazel"
+    And I open page in browser
     And I should see "Ed Yudkovsky"
     And I should see "buyer@nbs.com"
     And I should see "+49887755"
@@ -142,13 +140,13 @@ Feature: Fairdeals view deal
   @m26 @_requested @_done @_tested_elsewhere @tgn
   Scenario: When I click get deal then I should see company logo, name and description enclosed into styled box without any headers like company name, logo or description
 
-  #10257
-  @m29 @_requested @rb @_done @_tested
+  #10257 deprecated with new deal layout
+  @m29 @_requested @rb @_done @_tested @_deprecated
   Scenario: Premium deal should be marked with translated label
-    Given a deal named "Deal 00001" exists within category "Electronics deals"
-    And a deal named "Deal 00001" exists with attributes "premium_deal:1"
-    Given I visit domain http://fairdeals.dk
-    Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow category "Electronics deals"
-    And I follow "Deal 00001"
-    Then I should see translated "deals.index.view.premium_deal_splash_label"
+#    Given a deal named "Deal 00001" exists within category "Electronics deals"
+#    And a deal named "Deal 00001" exists with attributes "premium_deal:1"
+#    Given I visit domain http://fairdeals.dk
+#    Then I follow translated "layout.fairdeals.main_menu.deals"
+#    And I follow category "Electronics deals"
+#    And I follow "Deal 00001"
+#    Then I should see translated "deals.index.view.premium_deal_splash_label"

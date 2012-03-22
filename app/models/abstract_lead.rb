@@ -30,7 +30,7 @@ class AbstractLead < ActiveRecord::Base
   attr_accessor :validate_contact_email
   attr_accessor :creation_step
 
-  validates_presence_of :header, :description, :company_name, :contact_name, :phone_number, :country_id, :currency, :address_line_1, :address_line_3, :zip_code, :if => :process_for_lead_information?
+  validates_presence_of :header, :company_name, :contact_name, :phone_number, :country_id, :currency, :address_line_1, :address_line_3, :zip_code, :if => :process_for_lead_information?
   validates_presence_of :hidden_description, :unless => Proc.new { |l| l.created_by?('Member') }, :if => :process_for_lead_information?
   validates_presence_of :email_address, :if => Proc.new { |l| l.validate_contact_email }
   validates_format_of :email_address, :allow_blank => true, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
@@ -167,6 +167,10 @@ class AbstractLead < ActiveRecord::Base
 
   public
 
+  def requestee_screen_name
+    requestee ? requestee.screen_name : "-user deleted-"
+  end
+
   def based_on_deal(deal, user)
     {:current_user => User.find_by_email(deal.deal_admin_email).with_role, :category => deal.lead_category, :sale_limit => 1, :price => deal.price.blank? ? 0 : deal.price,
      :purchase_decision_date => deal.end_date+7, :currency => deal.currency, :published => true, :requestee => user, :deal_id => deal.id
@@ -182,7 +186,7 @@ class AbstractLead < ActiveRecord::Base
     (deal.lead_translations.count > 1 ? ::Locale.enabled.map(&:code) : [current_locale]).each do |locale_code|
       I18n.locale = locale_code
       self.header = "#{I18n.t("models.lead.field_prefixes.header")} #{deal.header}"
-      self.description = "#{I18n.t("models.lead.field_prefixes.description")} #{deal.description}"
+      self.description = "#{I18n.t("models.lead.field_prefixes.description")} #{deal.header}"
     end
     I18n.locale = current_locale
   end

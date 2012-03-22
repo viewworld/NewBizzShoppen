@@ -1,0 +1,6 @@
+$("#modal_sign_in_or_sign_up_container").html("<%= escape_javascript(render :partial => "members/leads/templates_for_modal", :locals => {:lead => @lead, :url => members_leads_path(:deal_id => @deal.id, :format => :js)}) %>");
+<% if @deal.deal_templates.empty? %>
+   $('#new_lead').submit();
+<% else %>
+    $.colorbox({overlayClose: false, width: 980, height: false, inline: true, href:'#modal_sign_in_or_sign_up_container' });
+<% end %>

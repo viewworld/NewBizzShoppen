@@ -92,10 +92,7 @@
             <td class="tda ta_r">
               <ul-actions>
                 <li>
-                  <%= link_to t("member.leads.index.view.edit"), edit_members_lead_path(lead), :class => "default_action" %>
-                </li>
-                <li>
-                  <%= link_to t("member.leads.index.view.destroy"), members_lead_path(lead), :confirm => t("member.leads.index.view.destroy_confirmation"), :method => :delete %>
+                  <%= link_to t("member.leads.index.view.show"), deal_path(lead.deal), :class => "default_action" %>
                 </li>
               </ul-actions>
             </td>

@@ -92,7 +92,9 @@
       <div class="frm_hr"></div>
       <div class="frm_hc">
         <param:header/>
-        <h2><%= title.html_safe if title %></h2>
+        <% if not title.nil? %>
+          <h2><%= title.html_safe if title %></h2>
+        <% end %>
       </div>
     </div>
     <div class="frm_content">

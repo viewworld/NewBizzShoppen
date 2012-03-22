@@ -190,7 +190,6 @@ Feature: Deals from procurement manager perspective
     And I press translated "member.leads.show.view.ok_confirmation"
     And I should see "ultradeal"
 
-
   #8340
   @m22 @_requested @tgn @_done @_tested
   Scenario: When I have free subscription and I click get deal then I should see questions if I want to upgrade
@@ -210,7 +209,6 @@ Feature: Deals from procurement manager perspective
     Then I follow translated "subscriptions.listing.upgrade"
     And I should see "ultimate some funky deal"
     And I follow translated "deals.index.view.contact_me"
-    And I fill in "lead_phone_number" with "+49 23432423423234"
 
   #8340
   @m22 @_requested @tgn @_done @_tested_elsewhere
@@ -435,7 +433,6 @@ Feature: Deals from procurement manager perspective
     And I follow translated "deals.index.view.upgrade_subscription_to_get_deal"
     And I should be on my profile
 
-
   #9397
   @m27 @_requested @tgn @_done @_tested
   Scenario: When I get the deal with voucher and my payment from paypal haven't come yet then I should not see that deal under my deals
@@ -471,7 +468,7 @@ Feature: Deals from procurement manager perspective
     Then last email sent should have subject "You have new voucher"
     #check displaying
     Then I follow translated "layout.fairdeals.main_menu.member.my_requests"
-    And I click hidden link by url regex "/members\/requests\/\d+\/edit/"
+    And I follow translated "member.leads.index.view.show"
     And I should see "you can redeem it by calling me"
     Then I should see translated "member.leads.edit.view.voucher_label"
     Then I follow translated "member.leads.edit.view.voucher_link"
