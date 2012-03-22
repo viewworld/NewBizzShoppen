@@ -142,3 +142,17 @@
     margin-bottom: 7px;
     background: url(/images/fairdeals/frm/hl_darkfrm.png) repeat-x bottom left;
 }
+
+
+/* --- others ---
+--------------------------------------------------------------------------------- */
+
+.frm_foot_actions
+{
+    padding: 10px 0 0;
+}
+
+.frm_foot_actions .bt
+{
+    margin-left: 5px;
+}
