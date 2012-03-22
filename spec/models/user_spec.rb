@@ -482,6 +482,18 @@ describe User do
         @admin.destroy.should be_false
       end
     end
+
+    context "campaign monitor" do
+      it "should create campaign monitor client" do
+        CreateSend::Client.expects(:create).returns("ClientId10123123")
+        user = User::Admin.make!
+        user.cm_client.should == "ClientId10123123"
+      end
+
+      it "should update user in camapign monitor" do
+        throw "TODO"
+      end
+    end
   end
 end
 

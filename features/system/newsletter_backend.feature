@@ -1,10 +1,13 @@
-@newsletter @_requested @$_system @m31
+@newsletter @_requested @$_system @m31 @ao
 Feature: Newsletter backend
 
+  @_done @_tested_elsewhere @_rspec
   Scenario: When a new list is created then it is created also in Campaign Monitor
 
+  @_done @_tested_elsewhere @_rspec
   Scenario: When list is created in Campaigns monitor or owner then the ListID or the ClientID is stored locally
 
+  @_done @_tested_elsewhere @_rspec
   Scenario: When a new list is created for given owner for the the first time then client account is created in Campaign Monitor
 
   Scenario: When owner is updated then he/she should be synced to Campaign monitor

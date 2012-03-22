@@ -323,7 +323,11 @@ class User < ActiveRecord::Base
 
   def cm_create!
     begin
-      client_id = CreateSend::Client.create((with_role.respond_to?(:company_name) ? with_role.company_name : with_role.full_name), with_role.full_name, with_role.email, "(GMT) Coordinated Universal Time", with_role.country.name)
+      client_id = CreateSend::Client.create((with_role.respond_to?(:company_name) ? with_role.company_name : with_role.full_name),
+                                            with_role.full_name,
+                                            with_role.email,
+                                            CampaignMonitorTimezone.find(time_zone),
+                                            with_role.country.name)
       with_role.update_attribute(:cm_client_id, client_id)
       client_id
     rescue Exception => e

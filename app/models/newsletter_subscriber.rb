@@ -21,7 +21,7 @@ class NewsletterSubscriber < ActiveRecord::Base
     begin
       CreateSend::Subscriber.get(newsletter_list.cm_list_id, email_address)
     rescue
-      self.campaign_monitor_responses.create(:response => e, :code => 1)
+      self.campaign_monitor_responses.create(:response => e)
       false
     end
   end
@@ -36,7 +36,7 @@ class NewsletterSubscriber < ActiveRecord::Base
       end
       update_attribute(:is_synced, true)
     rescue Exception => e
-      self.campaign_monitor_responses.create(:response => e, :code => 2)
+      self.campaign_monitor_responses.create(:response => e)
       false
     end
   end
