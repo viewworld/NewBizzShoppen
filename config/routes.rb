@@ -91,6 +91,9 @@ Nbs::Application.routes.draw do
       collection do
         get 'sourceable_for_search'
       end
+      member do
+        post 'archive'
+      end
     end
   end
 

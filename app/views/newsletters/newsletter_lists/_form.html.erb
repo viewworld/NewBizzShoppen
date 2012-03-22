@@ -2,7 +2,7 @@
     <fieldset class="inputs labels_ta_r labels_200">
       <ol class="align_inputs">
         <%= form.input :name %>
-        <%= form.input :owner_email %>
+        <%= form.input :owner_email, :required => true %>
         <div style="display: none">
         <%= form.input :sourceable_items, :collection => [], :as => :select, :multiple => true %>
         <%= form.input :tag_group_items, :collection => [], :as => :select, :multiple => true %>
@@ -31,7 +31,7 @@
 
   <div id="newsletter_sources_tags"></div>
 
-  <%= t("newsletter.newsletter_lists.form.keyword_for_autocompleter") %><%= text_field_tag "autocompleter", nil %>
+  <%= t("newsletters.newsletter_lists.form.keyword_for_autocompleter") %><%= text_field_tag "autocompleter", nil %>
 
   <a data-remote="true" data-method="get" id="autocompleter_sourceable_form" href="<%= sourceable_for_search_newsletters_newsletter_lists_path(:format => :js) %>" class="display:none"></a>
 

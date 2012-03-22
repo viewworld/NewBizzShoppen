@@ -9,12 +9,28 @@ class NewsletterList < ActiveRecord::Base
   
   validates_presence_of :name
   validates_uniqueness_of :name
+  validate :owner_is_present_and_valid
 
-  attr_accessor :owner_email, :sourceable_items, :tag_group_items
+  scope :with_keyword, lambda { |q| where("lower(name) like ?", "%#{q.to_s.downcase}%") }
+  scope :with_archived, lambda{ |q| where("is_archived = ?", q.to_i == 1) }
+  scope :without_archived, where("is_archived is FALSE")
+
+  attr_accessor :sourceable_items, :tag_group_items
+
+  include ScopedSearch::Model
 
   accepts_nested_attributes_for :newsletter_sources, :allow_destroy => true
   
   private
+
+  def owner_is_present_and_valid
+    if owner.nil?
+      errors.add(:owner_email, :blank)
+    elsif owner and !owner.has_any_role?(:admin, :call_centre, :supplier, :category_supplier)
+      errors.add(:owner_email, :invalid)
+    end
+    true
+  end
 
   def cm_create!
     list_id = CreateSend::List.create(owner.cm_client, name, "", false, "")
@@ -59,7 +75,6 @@ class NewsletterList < ActiveRecord::Base
       end
     end
   end
-
 
   def extract_tag_groups
     if tag_group_items and tag_group_items.is_a?(Array) and valid?
@@ -109,4 +124,15 @@ class NewsletterList < ActiveRecord::Base
     end
   end
 
+  def owner_email
+    owner ? owner.email : nil
+  end
+
+  def owner_email=(new_email)
+    self.owner = User.where(:email => new_email).first
+  end
+
+  def archive_or_retrieve!
+    update_attribute(:is_archived, !is_archived?)
+  end
 end

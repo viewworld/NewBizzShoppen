@@ -1,5 +1,5 @@
 <column-mc:>
-  <header back="true"><%= t("newsletter.newsletter_lists.new.view.header") %></header>
+  <header back="true"><%= t("newsletters.newsletter_lists.new.view.header") %></header>
 
   <%= semantic_form_for @newsletter_list, :remote => true, :url => newsletters_newsletter_lists_path do |form| %>
       <frm>
@@ -8,10 +8,10 @@
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
-            <%= form.submit t("newsletter.newsletter_lists.new.view.button_create"), :onclick => "serialize_tag_groups_items();select_sourceable_items()" %>
+            <%= form.submit t("newsletters.newsletter_lists.new.view.button_create"), :onclick => "serialize_tag_groups_items();select_sourceable_items()" %>
           </ibt>
           <ibt c="bt_grey fltri">
-            <%= button_to_function t("newsletter.newsletter_lists.new.view.button_cancel"), "history.go(-1)" %>
+            <%= button_to_function t("newsletters.newsletter_lists.new.view.button_cancel"), "history.go(-1)" %>
           </ibt>
         </param:actions>
       </frm>

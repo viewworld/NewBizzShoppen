@@ -152,6 +152,7 @@ en:
         campaign_reports: "Campaign"
         agent_timesheets: "Timesheets"
         deals: "My deals"
+        newsletter_lists: "Lists"
       call_centre_agent:
         leads: "My leads"
         lead_templates: "Lead templates"
@@ -4569,11 +4570,15 @@ en:
           owner_column: "Owner"
           actions_column: "Actions"
           edit: "Edit"
-  newsletter:
-    newsletter_lists:
-      index:
-        view:
+          number_of_subscribers_column: "# of subscribers"
+          last_sync_date_column: "Last sync date"
+          search:
+            keyword_label: "Keyword"
+            archived: "Archived"
+            search_button: "Search"
+          archive: "Archive"
           new_newsletter_list: "New list"
+          retrieve: "Retrieve from archive"
       new:
         view:
           header: "New newsletter list"
@@ -4586,3 +4591,7 @@ en:
           button_cancel: "Cancel"
       form:
         keyword_for_autocompleter: "Enter name of campaign, tag, subscription or role"
+      archive:
+        flash:
+          notice_archived: "Newsletter list has been successfully archived"
+          notice_retrieved: "Newsletter list has been successfully retrieved."
