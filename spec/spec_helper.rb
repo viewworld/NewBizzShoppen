@@ -1,5 +1,8 @@
 require 'rubygems'
 require 'spork'
+require 'fakeweb'
+
+FakeWeb.allow_net_connect = false
 
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However, 

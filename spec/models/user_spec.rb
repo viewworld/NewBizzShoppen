@@ -491,7 +491,20 @@ describe User do
       end
 
       it "should update user in camapign monitor" do
-        throw "TODO"
+        CreateSend::Client.expects(:create).returns("ClientId10123123")
+        CreateSend::Client.any_instance.expects(:set_basics).with("new_company_name",
+                                                                  "New Lastname",
+                                                                  "new@email.fake",
+                                                                  "(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb",
+                                                                  "Poland")
+        user = User::Admin.make!
+        user.company_name = "new_company_name"
+        user.first_name = "New"
+        user.last_name = "Lastname"
+        user.email = "new@email.fake"
+        user.time_zone = "Warsaw"
+        user.address.country = Country.make!(:name => "Poland")
+        user.save!
       end
     end
   end

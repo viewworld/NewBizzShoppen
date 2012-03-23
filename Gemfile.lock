@@ -142,6 +142,7 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     faker (0.3.1)
+    fakeweb (1.3.0)
     fastercsv (1.5.4)
     fastthread (1.0.7)
     ffi (1.0.9)
@@ -343,6 +344,7 @@ DEPENDENCIES
   devise_rpx_connectable
   diff-lcs
   faker (= 0.3.1)
+  fakeweb
   fastercsv
   formtastic (= 1.1.0)
   globalize3 (= 0.0.10)

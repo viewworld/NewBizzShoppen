@@ -40,6 +40,7 @@ class NewsletterList < ActiveRecord::Base
 
   def cm_update!
     CreateSend::List.new(cm_list_id).update(name, "", false, "")
+    cm_list_id
   end
 
   def cm_synchronize!
@@ -54,7 +55,7 @@ class NewsletterList < ActiveRecord::Base
   public
 
   def cm_list
-    cm_list_id || cm_create!
+    cm_list_id || cm_synchronize!
   end
 
   def newsletter_subscribers

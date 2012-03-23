@@ -10,8 +10,10 @@ Feature: Newsletter backend
   @_done @_tested_elsewhere @_rspec
   Scenario: When a new list is created for given owner for the the first time then client account is created in Campaign Monitor
 
+  @_done @_tested_elsewhere @_rspec
   Scenario: When owner is updated then he/she should be synced to Campaign monitor
 
+  @_done @_tested_elsewhere @_rspec
   Scenario: When a new list is created then the subscribers are exported from the sources to Campaign Monitor
 
   Scenario: When a source of the list is updated (new contact, new user or new lead) then is should be synced with Campaign Monitor

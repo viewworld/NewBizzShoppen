@@ -3,6 +3,7 @@ class ::User::Admin < ::User
 
   include Addresses
   include BankAccounts
+  include CampaignMonitorClient
 
   def can_publish_leads?
     true
