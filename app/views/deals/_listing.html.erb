@@ -116,8 +116,6 @@
 
           <% end %>
 
-          <p class="element_description i expandable"><b>Description:</b> <%= deal.description %></p>
-
           <% unless deal.fine_print.blank? %>
               <p class="element_description i expandable"><b>Fine print:</b> <%= deal.fine_print.html_safe %></p>
           <% end %>

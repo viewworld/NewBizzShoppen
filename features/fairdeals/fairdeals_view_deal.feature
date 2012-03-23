@@ -21,17 +21,17 @@ Feature: Fairdeals view deal
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow "super"
-    And I should see "super descr"
     And I should see "super detailed"
     And I should see "super fine print"
-    And I should see "Azazel"
     And I should see "super company desc"
 
   @_done @non_testable @tgn
   Scenario: I can see a popup with translated message and OK,Cancel buttons when I slick Get deal
 
-  @_done @_tested @tgn
+  @_done @_tested @tgn @selenium
   Scenario: I should see Company contact name, Company contact e-mail, Company weblink, Company contact telephone number when I click OK
+    Given deal named "super" has deal template "Computer details1" assigned
+    Given I am on the homepage
     Given I visit domain http://fairdeals.dk
     Then I sign in as procurment@nbs.com with password secret
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
@@ -40,12 +40,12 @@ Feature: Fairdeals view deal
     And I follow category "Business deals"
     And I follow "super"
     And I follow translated "deals.index.view.contact_me"
+    And I wait 3 second
     And I fill in "lead_lead_template_values_attributes_0_value" with "value1"
     And I press translated "member.leads.new.view.button_create"
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow "super"
-    And I should see "Azazel"
     And I should see "Ed Yudkovsky"
     And I should see "buyer@nbs.com"
     And I should see "+49887755"
@@ -54,22 +54,22 @@ Feature: Fairdeals view deal
   @_done @non_testable @tgn
   Scenario: Lead is generated using only the existing information about the procurement manager
 
-  @_done @_tested @tgn
+  @_done @_tested @tgn @_deprecated
   Scenario: As PM I can fill in additional field for lead "Please tell us about your needs"
-    Given I visit domain http://fairdeals.dk
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
-    And user with email "procurment@nbs.com" upgrades to subscription named "Premium member"
-    Then I sign in as procurment@nbs.com with password secret
-    Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow category "Business deals"
-    And I follow "super"
-    And I follow translated "deals.index.view.contact_me"
-    And I fill in "lead_hidden_description" with "my specific needs are following etc"
-    And I fill in "lead_lead_template_values_attributes_0_value" with "some value1"
-    And I fill in "lead_lead_template_values_attributes_1_value" with "some value2"
-    And I fill in "lead_lead_template_values_attributes_2_value" with "some value3"
-    And I press translated "member.leads.new.view.button_create"
-    And I press translated "member.leads.show.view.ok_confirmation"
+#    Given I visit domain http://fairdeals.dk
+#    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
+#    And user with email "procurment@nbs.com" upgrades to subscription named "Premium member"
+#    Then I sign in as procurment@nbs.com with password secret
+#    Then I follow translated "layout.fairdeals.main_menu.deals"
+#    And I follow category "Business deals"
+#    And I follow "super"
+#    And I follow translated "deals.index.view.contact_me"
+#    And I fill in "lead_hidden_description" with "my specific needs are following etc"
+#    And I fill in "lead_lead_template_values_attributes_0_value" with "some value1"
+#    And I fill in "lead_lead_template_values_attributes_1_value" with "some value2"
+#    And I fill in "lead_lead_template_values_attributes_2_value" with "some value3"
+#    And I press translated "member.leads.new.view.button_create"
+#    And I press translated "member.leads.show.view.ok_confirmation"
 
   @_done @tested_elsewhere @tgn
   Scenario: I can fill in template fields
@@ -114,10 +114,11 @@ Feature: Fairdeals view deal
   Scenario: When I get the deal then on the deal view page I can see heading "How to get your deal" and rich text for deal confirmation page
 
   #8885
-  @m25 @_requested @tgn @_tested @_done
+  @m25 @_requested @tgn @_tested @_done @selenium
   Scenario: When I get the deal then on the deal view page I can see deal code under deal confirmation page (it should be clickable if deal code resembles valid URL)
     Given a deal named "Abc group deal #1" exists within category "Electronics deals"
     And a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:0,discounted_price:25,social_media_description:quo vadis,deal_code:www.google.com,deal_confirmation_page:to get your deal you need to ..."
+    Given I am on the homepage
     Given I visit domain http://fairdeals.dk
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
     And user with email "procurment@nbs.com" upgrades to subscription named "Premium member"
@@ -126,11 +127,7 @@ Feature: Fairdeals view deal
     And I follow category "Electronics deals"
     And I follow "Abc group deal #1"
     And I follow translated "deals.index.view.contact_me"
-    And I fill in "lead_hidden_description" with "my specific needs are following etc"
-    And I should not see "Company logo"
-    And I should not see "Company description"
-    And I press translated "member.leads.new.view.button_create"
-    And I press translated "member.leads.show.view.ok_confirmation"
+    And I wait 3 second
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Electronics deals"
     And I follow "Abc group deal #1"
@@ -142,13 +139,13 @@ Feature: Fairdeals view deal
   @m26 @_requested @_done @_tested_elsewhere @tgn
   Scenario: When I click get deal then I should see company logo, name and description enclosed into styled box without any headers like company name, logo or description
 
-  #10257
-  @m29 @_requested @rb @_done @_tested
+  #10257 deprecated with new deal layout
+  @m29 @_requested @rb @_done @_tested @_deprecated
   Scenario: Premium deal should be marked with translated label
-    Given a deal named "Deal 00001" exists within category "Electronics deals"
-    And a deal named "Deal 00001" exists with attributes "premium_deal:1"
-    Given I visit domain http://fairdeals.dk
-    Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow category "Electronics deals"
-    And I follow "Deal 00001"
-    Then I should see translated "deals.index.view.premium_deal_splash_label"
+#    Given a deal named "Deal 00001" exists within category "Electronics deals"
+#    And a deal named "Deal 00001" exists with attributes "premium_deal:1"
+#    Given I visit domain http://fairdeals.dk
+#    Then I follow translated "layout.fairdeals.main_menu.deals"
+#    And I follow category "Electronics deals"
+#    And I follow "Deal 00001"
+#    Then I should see translated "deals.index.view.premium_deal_splash_label"

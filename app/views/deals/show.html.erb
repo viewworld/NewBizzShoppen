@@ -5,7 +5,7 @@
       <meta property="og:url" content="<%= deal_url(:id => @deal.slug) %>"/>
       <meta property="og:image" content="<%= path_to_image("logo_fairleads_with_border.jpg") %>"/>
       <meta property="og:site_name" content="Fairleads"/>
-      <meta property="og:description" content="<%= (@deal.group_deal? and !@deal.social_media_description.blank?) ? @deal.social_media_description : @deal.description %>">
+      <meta property="og:description" content="<%= @deal.social_media_description if @deal.group_deal? %>">
       <meta property="fb:app_id" content="198584516868482"/>
   <% end %>
   <%= javascript_include_tag "jquery.lwtCountdown-1.0" %>
@@ -15,127 +15,92 @@
 </head:>
 
 <column-mc:>
-  <div class="deal_show_wrapper">
-    <header back="true"><%= @deal.header %><%= ratings_for(@deal, :force_static => !current_user_has_role?(:member)) %></header>
 
-    <div class="column_2to3">
-      <div class="element_description">
+  <% requested_by_current_user = (user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user)) %>
 
-        <% if @deal.premium_deal? %>
-          <div class="splash splash_premium">
-            <span>
-              <%= t("deals.index.view.premium_deal_splash_label") %>
-            </span>
-          </div>
+  <div class="deal_show">
+    <div class="deal_show_header">
+      <h1><%= @deal.header %></h1>
+      <%= ratings_for(@deal, :force_static => !current_user_has_role?(:member)) %>
+    </div>
+    <div class="column_left">
+
+      <% if requested_by_current_user %>
+        <div class="deal_text_intro">
+        <% if @deal.deal_confirmation_page %>
+            <h2><%= t("deals.show.view.confirmation_page_label") %></h2>
+            <p><%= @deal.deal_confirmation_page.to_s.html_safe %></p>
         <% end %>
-
-
-        <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) and @deal.deal_confirmation_page %>
-            <h3><%= t("deals.show.view.confirmation_page_label") %></h3>
-
-            <p style="padding-right: 45px;"><%= @deal.deal_confirmation_page.to_s.html_safe %></p>
+        <% if @deal.deal_code.present? %>
+            <p><b><%= t("deals.show.view.deal_code_label") %></b>: <%= @deal.deal_code_is_url? ? link_to(@deal.deal_code, @deal.deal_code_as_url) : @deal.deal_code %></p>
         <% end %>
+        </div>
+      <% end %>
 
-        <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) and @deal.deal_code.present? %>
-            <h3><%= t("deals.show.view.deal_code_label") %></h3>
+      <div class="deal_intro">
+        <div class="deal_images">
+          <% @deal.images.each do |img| %>
+            <%= image_tag(img.url, :size => "430x300", :style => "display:none") %>
+          <% end %>
+        </div>
 
-            <p><%= @deal.deal_code_is_url? ? link_to(@deal.deal_code, @deal.deal_code_as_url) : @deal.deal_code %></p>
-        <% end %>
-
-        <h3><%= t("deals.show.view.short_description_label") %></h3>
-
-        <p style="padding-right: 45px;"><%= raw @deal.description %></p>
-
-        <h3><%= t("deals.show.view.detailed_description_label") %></h3>
-
-        <p><%= @deal.hidden_description.to_s.html_safe %></p>
-
-        <h3><%= t("deals.show.view.fine_print_label") %></h3>
-
-        <p><%= @deal.fine_print.to_s.html_safe %></p>
-
-        <% unless @deal.images.blank? %>
-            <h3><%= t("deals.show.view.images_label") %></h3>
-
-            <p>
-              <% @deal.images.each do |image| %>
-                  <%= link_to image_tag(image.url(:original), :class => "thumb"), image.url, :rel => "colorbox" %>
-              <% end %>
-            </p>
-        <% end %>
-
-        <% unless @deal.materials.blank? %>
-            <h3><%= t("deals.show.view.materials_label") %></h3>
-
-            <p>
-              <% @deal.materials.each do |material| %>
-                  <%= link_to material.filename, material.url %><br/>
-              <% end %>
-            </p>
+        <% if @deal.general_discount? %>
+            <div class="deal_ft_discount" style="text-transform:uppercase;">
+              <p class="row"><%= t("deals.index.view.save") %> <%= @deal.saving %></p>
+            </div>
+        <% else %>
+            <div class="deal_ft_prices">
+              <p class="row"><%= t("deals.index.view.price") %>: <%= as_currency(@deal.deal_price, @deal.currency) %></p>
+              <p class="row"><%= t("deals.index.view.save") %>: <%= as_currency(@deal.discounted_price, @deal.currency) %></p>
+              <p class="cell" style="text-transform:uppercase;"><%= t("deals.index.view.save") %>:<br/><%= @deal.saving %></p>
+            </div>
         <% end %>
       </div>
+      
+      <h4><%= t("deals.show.view.detailed_description_label") %></h4>
+      <p><%= @deal.hidden_description.to_s.html_safe %></p>
+
+      <% if requested_by_current_user %>
+        <h4><%= t("deals.show.view.fine_print_label") %></h4>
+        <p><%= @deal.fine_print.to_s.html_safe %></p>
+      <% end %>
+
+      <% unless @deal.materials.blank? %>
+          <h4><%= t("deals.show.view.materials_label") %></h4>
+
+          <p>
+            <% @deal.materials.each do |material| %>
+                <%= link_to material.filename, material.url %><br/>
+            <% end %>
+          </p>
+      <% end %>
+      
+      <% if requested_by_current_user and @deal.voucher_numbers.where(:user_id => current_user.id).first and @lead = @deal.leads.where(:requested_by => current_user.id).first %>
+          <h4><%= t("member.leads.edit.view.voucher_label") %></h4>
+          <p><%= link_to t("member.leads.edit.view.voucher_link"), pdf_members_lead_path(@lead) %></p>
+
+          <% unless @deal.voucher_how_to_redeem.blank? %>
+            <h4><%= t("member.leads.edit.view.voucher_how_to_redeem_label") %></h4>
+            <p><%= @deal.voucher_how_to_redeem.to_s.html_safe %></p>
+          <% end %>
+      <% end %>
+
     </div>
 
-    <div class="grid_300 fltr">
+    <div class="column_right">
+      <div class="<%= "row_fixed" unless requested_by_current_user %>">
+        <div class="<%= "row_bottom" unless requested_by_current_user %>">
+          <%= image_tag @deal.logo.url(:featured) if @deal.logo %>
 
-      <div class="frm_ribbon_right">
-        <% if @deal.general_discount? %>
-            <p><%= t("deals.show.view.saving_label") %> <em><%= @deal.saving %></em></p>
-        <% else %>
-            <p><%= t("deals.show.view.price_label") %>: <em><%= as_currency(@deal.deal_price, @deal.currency) %></em>
-            </p>
-
-            <p><%= t("deals.show.view.discounted_price_label") %>:<em><%= as_currency(@deal.discounted_price, @deal.currency) %></em></p>
-
-            <p><%= t("deals.show.view.saving_label") %> <%= @deal.saving %></p>
-        <% end %>
-      </div>
-
-      <div class="frm_tiny company_info">
-
-        <% if @deal.logo %>
-            <p><%= image_tag(@deal.logo.url) %></p>
-        <% end %>
-
-
-        <h3><%= @deal.company_name %></h3>
-
-        <p class="ta_l"><%= @deal.company_description.to_s.html_safe %></p>
-
-      </div>
-
-      <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) %>
-      <div class="frm_tiny">
-        <div class="pdd_10">
-          <ul class="elements_list">
-                <%= deal_show_li(@deal.contact_name, t("deals.show.view.contact_name_label")) %>
-                <%= deal_show_li(@deal.email_address, t("deals.show.view.email_address_label")) %>
-                <%= deal_show_li(link_to(@deal.company_website_with_protocol, @deal.company_website_with_protocol), t("deals.show.view.company_website_label")) unless @deal.company_website.blank? %>
-                <%= deal_show_li(@deal.phone_number, t("deals.show.view.phone_number_label")) %>
-                <%= deal_show_li(@deal.address_line_1, t("deals.show.view.address_line_1_label")) %>
-                <%= deal_show_li(@deal.address_line_2, t("deals.show.view.address_line_2_label")) %>
-                <%= deal_show_li(@deal.address_line_3, t("deals.show.view.address_line_3_label")) %>
-                <%= deal_show_li(@deal.zip_code, t("deals.show.view.zip_code_label")) %>
-                <%= deal_show_li(@deal.country, t("deals.show.view.country_label")) %>
-          </ul>
+          <div class="company_info">
+            <p><%= @deal.company_description.to_s.html_safe %></p>
+          </div>
         </div>
       </div>
-      <% end %>
-
-      <% if !user_signed_in? and @deal.active? %>
-          <%= bt_link_to nil, t("deals.index.view.contact_me"), "#", :onclick => "javascript:show_sign_up_or_sign_in_modal()", :class => "bt_max bt_big" %>
-      <% elsif (user_signed_in? and current_user.has_role?(:member) and !@deal.requested_by?(current_user) and !@deal.awaiting_payment_requested_by?(current_user)) and @deal.active? %>
-          <%= bt_link_to nil, current_user.can_request?(@deal) ? t("deals.index.view.contact_me") : t("deals.index.view.upgrade_subscription_to_get_deal"),
-                         current_user.can_request?(@deal) ? new_members_lead_path(:deal_id => @deal.id) : my_profile_path(:deal_id => @deal.id), :class => "bt_max bt_big" %>
-      <% end %>
 
       <% if @deal.group_deal? %>
           <div class="time_left_counter">
-            <!--<h3><%#= t("deals.show.view.created_leads_label") %></h3>-->
-
-            <!--<p><%#= group_deal_leads_created_and_missing(@deal) %></p>-->
-
-            <h3><%= t("deals.show.view.time_left_label") %></h3>
+            <h4><%= t("deals.show.view.time_left_label") %></h4>
 
             <div id="countdown" class="countdown">
               <div class="dash days_dash">
@@ -165,49 +130,107 @@
             </div>
           </div>
       <% end %>
-    </div>
 
+      <% if requested_by_current_user %>
+          <div class="contact_info">
+            <h4><%= t("deals.show.view.contact_information") %></h4>
+            <ol>
+              <li>
+                <em><%= t("deals.show.view.contact_name_label") %></em>
+                <%= @deal.contact_name %>
+              </li>
+              <li>
+                <em><%= t("deals.show.view.email_address_label") %></em>
+                <%= @deal.email_address %>
+              </li>
+              <li>
+                <em><%= t("deals.show.view.phone_number_label") %></em>
+                <%= @deal.phone_number %>
+              </li>
+              <li>
+                <em><%= t("deals.show.view.address_label") %></em>
+                <%= @deal.address_line_1 %>, <%= @deal.address_line_2 %>
+              </li>
+              <li>
+                <em><%= t("deals.show.view.zip_code_label") %></em>
+                <%= @deal.zip_code %>
+              </li>
+              <li>
+                <em><%= t("deals.show.view.address_line_3_label") %></em>
+                <%= @deal.address_line_3 %>
+              </li>
+              <li>
+                <em><%= t("deals.show.view.country_label") %></em>
+                <%= @deal.country %>
+              </li>
+              <% unless @deal.company_website.blank? %>
+                <li>
+                  <em><%= t("deals.show.view.company_website_label") %></em>
+                  <%= link_to(@deal.company_website_with_protocol, @deal.company_website_with_protocol) %>
+                </li>
+              <% end %>
+            </ol>
+          </div>
+      <% else %>
+        <h4><%= t("deals.show.view.fine_print_label") %></h4>
+        <p><%= @deal.fine_print.to_s.html_safe %></p>
+      <% end %>
+    </div>
     <clb/>
 
-
-    <ul class="social_share">
-      <li>
-        <%= link_to_function image_tag('fairdeals/bt/social_email.png', :height => "20", :alt => t("deals.show.view.share_by_email")), "$('#modal_for_share_deal_by_email').dialog('open');" %>
-      </li>
-      <% if Rails.env != "test" %>
-          <% if false %>
-              <li>
-                <a name="fb_share" share_url="<%= escape_uri(deal_url(:id => @deal.slug)) %>"></a>
-
-                <!--<iframe src="http://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(:id => @deal.slug)) %>&amp;send=true&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe>-->
-                <!--<div id="fb-root"></div>-->
-                <!--<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>-->
-                <!--<fb:comments href="<%= escape_uri(deal_url(:id => @deal.slug)) %>" num_posts="2" width="500"></fb:comments>-->
-
-              </li>
-          <% end %>
-          <li>
-            <script src="https://platform.linkedin.com/in.js" type="text/javascript"></script>
-            <script type="IN/Share" data-url="<%= deal_url(:id => @deal.slug) %>" data-counter="right"></script>
-          </li>
-          <li>
-            <a href="https://twitter.com/share" class="twitter-share-button" data-text="<%= @deal.social_media_description %>" data-count="horizontal"><%= t("deals.show.view.tweet") %></a>
-            <script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
-          </li>
-          <li>
-            <iframe src="https://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(@deal)) %>&amp;send=false&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe>
-          </li>
-      <% end %>
-    </ul>
-
-
-    <div id="modal_for_share_deal_by_email" style="display:none;">
-      <%= render :partial => "share_deal_by_email/new", :locals => {:deal => @deal} %>
+    <div class="column_left">
+      <div class="deal_bt">
+        <% if !user_signed_in? and @deal.active? %>
+            <%= bt_link_to nil, t("deals.index.view.contact_me"), "#", :onclick => "javascript:show_sign_up_or_sign_in_modal()", :class => "bt_max bt_big" %>
+        <% elsif (user_signed_in? and current_user.has_role?(:member) and !@deal.requested_by?(current_user) and !@deal.awaiting_payment_requested_by?(current_user)) and @deal.active? %>
+            <% if current_user.can_request?(@deal) %>
+                <%= bt_link_to nil, t("deals.index.view.contact_me"), "#", :onclick => "javascript:remote_get_deal_for_member('#{@deal.id}')", :class => "bt_max bt_big" %>
+            <% else %>
+                <%= bt_link_to nil, t("deals.index.view.upgrade_subscription_to_get_deal"), my_profile_path(:deal_id => @deal.id), :class => "bt_max bt_big" %>
+            <% end %>
+        <% end %>
+      </div>
     </div>
-    <div style="width: 300px;"><%= link_to t("deals.index.view.back_to_front_page"), root_path %></div>
+    <div class="column_left">
+      <ul class="social_share">
+        <li>
+          <%= link_to_function image_tag('fairdeals/bt/social_email.png', :height => "20", :alt => t("deals.show.view.share_by_email")), "$('#modal_for_share_deal_by_email').dialog('open');" %>
+        </li>
+        <% if Rails.env != "test" %>
+            <% if false %>
+                <li>
+                  <a name="fb_share" share_url="<%= escape_uri(deal_url(:id => @deal.slug)) %>"></a>
+
+                  <!--<iframe src="http://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(:id => @deal.slug)) %>&amp;send=true&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe>-->
+                  <!--<div id="fb-root"></div>-->
+                  <!--<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>-->
+                  <!--<fb:comments href="<%= escape_uri(deal_url(:id => @deal.slug)) %>" num_posts="2" width="500"></fb:comments>-->
+
+                </li>
+            <% end %>
+            <li>
+              <script src="https://platform.linkedin.com/in.js" type="text/javascript"></script>
+              <script type="IN/Share" data-url="<%= deal_url(:id => @deal.slug) %>" data-counter="right"></script>
+            </li>
+            <li>
+              <a href="https://twitter.com/share" class="twitter-share-button" data-text="<%= @deal.social_media_description %>" data-count="horizontal"><%= t("deals.show.view.tweet") %></a>
+              <script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
+            </li>
+            <li>
+              <iframe src="https://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(@deal)) %>&amp;send=false&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:150px; height:21px;" allowTransparency="true"></iframe>
+            </li>
+        <% end %>
+      </ul>
+    </div>
+    <clb/>
+
   </div>
 
-  <% unless user_signed_in? %>
+  <div id="modal_for_share_deal_by_email" style="display:none;">
+    <%= render :partial => "share_deal_by_email/new", :locals => {:deal => @deal} %>
+  </div>
+
+
       <% cache("#{I18n.locale}_deals_show_#{@deal.id}_sign_up") do %>
       <div id="modal_sign_in_or_sign_up_container_blinder" style="display:none;">
           <div id="modal_sign_in_or_sign_up_container">
@@ -215,7 +238,6 @@
           </div>
       </div>
       <% end %>
-  <% end %>
 
 </column-mc:>
 
@@ -271,7 +293,20 @@
     }
 
     $(document).ready(function() {
-        select_subscription_radio_button('user_member', <%= SubscriptionPlan.free.active.only_public.for_role(:member).first.id -%>)
+        select_subscription_radio_button('user_member', <%= SubscriptionPlan.free.active.only_public.for_role(:member).first.id -%>);
+
+        $('.deal_images').cycle({
+          fx:     'fade',
+          timeout: 5000,
+          next: '.deal_images',
+          pause: 1,
+          width: 430,
+          fit: 1
+        });
     });
+
+    function remote_get_deal_for_member(deal_id){
+        $.get("/members/requests/new.js?deal_id=" + deal_id);
+    }
   </script>
 </js:>

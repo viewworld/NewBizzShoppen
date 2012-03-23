@@ -10,7 +10,7 @@ Given /^paypal voucher payment (succeeded|failed) for deal "([^"]*)" and user wi
   voucher_number.state.should == "new"
   voucher_number.reserved_until.blank?.should == false
   member = "User::#{role.camelize}".constantize.find_by_email(email)
-  rack_test_session_wrapper = Capybara.current_session.driver
+  rack_test_session_wrapper = Capybara.current_driver == :selenium ? self : Capybara.current_session.driver
   rack_test_session_wrapper.post("/payment_notifications", :txn_type => "cart", :txn_id => "irek", :payment_status => status == "succeeded" ? "Completed" : "Failed", :secret => APP_CONFIG[:paypal_secret], :receiver_email => APP_CONFIG[:paypal_email], :mc_gross => BigDecimal(deal.brutto_discounted_price(member).to_s).to_s, :invoice => "v_#{voucher_number.deal_unique_id}_#{voucher_number.number}_#{voucher_number.user_id}")
   if status == "succeeded"
     voucher_number.reload.state.should == "active"

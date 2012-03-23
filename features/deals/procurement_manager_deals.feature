@@ -170,7 +170,7 @@ Feature: Deals from procurement manager perspective
     And I fill in "lead_lead_template_values_attributes_0_value" with "some value1"
     And I fill in "lead_lead_template_values_attributes_1_value" with "some value2"
     And I press translated "member.leads.new.view.button_create"
-    And I press translated "member.leads.show.view.ok_confirmation"
+    And I wait 3 second
     And I should see "super"
     And I am not sign in
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:ultradeal|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
@@ -187,9 +187,7 @@ Feature: Deals from procurement manager perspective
     And I fill in "lead_lead_template_values_attributes_0_value" with "some value1"
     And I fill in "lead_lead_template_values_attributes_1_value" with "some value2"
     And I press translated "member.leads.new.view.button_create"
-    And I press translated "member.leads.show.view.ok_confirmation"
     And I should see "ultradeal"
-
 
   #8340
   @m22 @_requested @tgn @_done @_tested
@@ -210,14 +208,13 @@ Feature: Deals from procurement manager perspective
     Then I follow translated "subscriptions.listing.upgrade"
     And I should see "ultimate some funky deal"
     And I follow translated "deals.index.view.contact_me"
-    And I fill in "lead_phone_number" with "+49 23432423423234"
 
   #8340
   @m22 @_requested @tgn @_done @_tested_elsewhere
   Scenario: When I try to get deal on free subscription and I decide to upgrade then I should be redirected to my profile page
 
   #7531
-  @m19 @_requested @_done @_tested @tgn
+  @m19 @_requested @_done @_tested @tgn @selenium
   Scenario: When I get deal then I should get the email with all deal information and all materials included as attachments
     Given I visit domain http://fairdeals.dk
     Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
@@ -231,23 +228,17 @@ Feature: Deals from procurement manager perspective
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
-    And I fill in "lead_company_name" with "The Young Turks"
-    And I fill in "lead_contact_name" with "Ana Kasparian"
-    And I fill in "lead_hidden_description" with "some hidden note"
-    And I should not see "Facebook"
-    And I should not see "Linkedin"
-    And I press translated "member.leads.new.view.button_create"
-    And I press translated "member.leads.show.view.ok_confirmation"
+    And I wait 3 second
     And last email sent should have been sent to recipient "purchase_manager101@nbs.com"
     And last email sent should have subject "You have requested a deal"
     And last email sent should have content "software components"
     And last email sent should have content "short desc about software"
 
   #7531
-  @m19 @_requested @_done @_tested @tgn
+  @m19 @_requested @_done @_tested @tgn @selenium
   Scenario: Email with deal information for procurment manager should be customizable per deal (with default template)
     Given I am not sign in
-    And I visit domain http://fairleads.eu
+    And I visit domain http://localhost
     And I make sure current locale is "da"
     Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     And user "buyer@nbs.com" has deal maker role enabled
@@ -255,10 +246,11 @@ Feature: Deals from procurement manager perspective
     And I am on the homepage
     And I sign in as buyer@nbs.com with password secret
     And I follow translated "layout.main_menu.lead_supplier.my_deals"
+    And display all hidden actions
     And I follow translated "supplier.deals.index.view.edit"
     And I follow translated "supplier.deals.edit.view.edit_deal_request_details_email_template"
     And I fill in "email_template_subject" with "Customized You got the deal"
-    And I fill in "email_template_body_editor" with "Customized email for {{deal.header}}"
+    And I fill in "email_template_body_editor" ckeditor with "Customized email for {{deal.header}}"
     And I press translated "campaigns.email_templates.edit.view.button_update"
     Given I visit domain http://fairdeals.dk
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
@@ -270,14 +262,12 @@ Feature: Deals from procurement manager perspective
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
-    And I fill in "lead_hidden_description" with "some hidden note"
-    And I press translated "member.leads.new.view.button_create"
-    And I press translated "member.leads.show.view.ok_confirmation"
+    And I wait 3 second
     And last email sent should have been sent to recipient "purchase_manager101@nbs.com"
     And last email sent should have subject "Customized You got the deal"
     And last email sent should have content "Customized email for software components"
 
-  @m20 @_requested @tgn @_tested @_done
+  @m20 @_requested @tgn @_tested @_done @selenium
   Scenario: When deal is requested the deal code is included as the first info in lead's hidden description and it is visible when member wants to get the deal
     Given I visit domain http://fairdeals.dk
     Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
@@ -291,16 +281,14 @@ Feature: Deals from procurement manager perspective
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
-    And I fill in "lead_hidden_description" with "some hidden note"
-    And I press translated "member.leads.new.view.button_create"
+    And I wait 5 second
     And lead "A company is interested in software components" should have the following deal code "CODE4D3AL"
-    And I press translated "member.leads.show.view.ok_confirmation"
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I should see "CODE4D3AL"
 
-  @m21 @_requested @_done @_tested @ao
+  @m21 @_requested @_done @_tested @ao @selenium
   Scenario: When I get deal the direct phone number should be populated from my profile
     Given I visit domain http://fairdeals.dk
     And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
@@ -315,7 +303,8 @@ Feature: Deals from procurement manager perspective
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
-    Then the "lead_direct_phone_number" field should contain "48601101101"
+    And I wait 5 second
+    And lead "A company is interested in software components" should have field "direct_phone_number" with value "48601101101"
 
   @m21 @_requested @_done @_tested @ao @_deprecated
   Scenario: When I get deal the facebook url should contain profile link if my account is linked to facebook
@@ -362,23 +351,23 @@ Feature: Deals from procurement manager perspective
     Then I should not see "Activation"
 
   #8606
-  @m23 @_requested @tgn @_done @_tested
+  @m23 @_requested @tgn @_done @_tested @_deprecated
   Scenario: I can see a blurb text when I confirm a deal
-    Given I visit domain http://fairdeals.dk
-    And I am not sign in
-    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
-    And user "buyer@nbs.com" has deal maker role enabled
-    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL"
-    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
-    And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
-    Then I sign in as purchase_manager101@nbs.com with password supersecret
-    Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow category "Business deals"
-    And I follow translated "deals.index.view.view_deal"
-    And I follow translated "deals.index.view.contact_me"
-    And I press translated "member.leads.new.view.button_create"
-    And I should see "Blurb voucher confirmation page"
+#    Given I visit domain http://fairdeals.dk
+#    And I am not sign in
+#    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
+#    And user "buyer@nbs.com" has deal maker role enabled
+#    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL"
+#    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
+#    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
+#    And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
+#    Then I sign in as purchase_manager101@nbs.com with password supersecret
+#    Then I follow translated "layout.fairdeals.main_menu.deals"
+#    And I follow category "Business deals"
+#    And I follow translated "deals.index.view.view_deal"
+#    And I follow translated "deals.index.view.contact_me"
+#    And I press translated "member.leads.new.view.button_create"
+#    And I should see "Blurb voucher confirmation page"
 
   #9606
   @m27 @_requested @tgn @_done @_tested_elsewhere
@@ -397,7 +386,7 @@ Feature: Deals from procurement manager perspective
   Scenario: I should be redirected to paypal or view deal after completing the modal window form
 
   #9410
-  @m27 @_requested @tgn @_done @_tested
+  @m27 @_requested @tgn @_done @_tested @selenium
   Scenario: I can get deal when I have free subscription and I didn't used up my limit of free deals
     And subscription plan named "Free member subscription" exists with attributes "free_deal_requests_in_free_period:2"
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
@@ -421,23 +410,18 @@ Feature: Deals from procurement manager perspective
     And I press translated "layout.fairdeals.main_menu.search"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
-    And I press translated "member.leads.new.view.button_create"
-    And I should see "Blurb voucher confirmation page"
     And I fill in "search_with_keyword" with "FreeDeal002"
     And I press translated "layout.fairdeals.main_menu.search"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
-    And I press translated "member.leads.new.view.button_create"
-    And I should see "Blurb voucher confirmation page"
     And I fill in "search_with_keyword" with "FreeDeal003"
     And I press translated "layout.fairdeals.main_menu.search"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.upgrade_subscription_to_get_deal"
     And I should be on my profile
 
-
   #9397
-  @m27 @_requested @tgn @_done @_tested
+  @m27 @_requested @tgn @_done @_tested @selenium
   Scenario: When I get the deal with voucher and my payment from paypal haven't come yet then I should not see that deal under my deals
     And I visit domain http://fairdeals.eu
     And I am not sign in
@@ -453,10 +437,10 @@ Feature: Deals from procurement manager perspective
     Then I should see "software components"
     Then I follow translated "deals.index.view.view_deal"
     Then I follow translated "deals.index.view.contact_me"
-    And I press translated "member.leads.new.view.button_create"
-    Then I press translated "member.leads.show.view.go_to_paypal"
-    Then I should see "redirecting to paypal, please wait..."
+    And I wait 5 second
+    #Then I should see "redirecting to paypal, please wait..."
     #it should not be visible before payment under my deals
+    And I am on the homepage
     Then I follow translated "layout.fairdeals.main_menu.member.my_requests"
     And I should not see "software components"
     #Get deal button should not be available until the payment is cancelled
@@ -471,7 +455,8 @@ Feature: Deals from procurement manager perspective
     Then last email sent should have subject "You have new voucher"
     #check displaying
     Then I follow translated "layout.fairdeals.main_menu.member.my_requests"
-    And I click hidden link by url regex "/members\/requests\/\d+\/edit/"
+    And display all hidden actions
+    And I follow translated "member.leads.index.view.show"
     And I should see "you can redeem it by calling me"
     Then I should see translated "member.leads.edit.view.voucher_label"
     Then I follow translated "member.leads.edit.view.voucher_link"
@@ -481,7 +466,7 @@ Feature: Deals from procurement manager perspective
   Scenario: When I get the deal with voucher and my payment from paypal was successful then my request should be visible under My deals
 
   #9397
-  @m27 @_requested @tgn @_done @_tested
+  @m27 @_requested @tgn @_done @_tested @selenium
   Scenario: When my request is cancelled I get email "Sorry your voucher is canceled since the payment did not go through.Please try again or contact fairleads if the problem persists"
     And I visit domain http://fairdeals.eu
     And I am not sign in
@@ -497,14 +482,14 @@ Feature: Deals from procurement manager perspective
     Then I should see "software components"
     Then I follow translated "deals.index.view.view_deal"
     Then I follow translated "deals.index.view.contact_me"
-    And I press translated "member.leads.new.view.button_create"
-    Then I press translated "member.leads.show.view.go_to_paypal"
-    Then I should see "redirecting to paypal, please wait..."
+    And I wait 5 second
+    #Then I should see "redirecting to paypal, please wait..."
     #check paypal response
     Then paypal voucher payment failed for deal "software components" and user with email "translator_purchase_manager@nbs.com" and role "member"
     Then last email sent should have been sent to recipient "translator_purchase_manager@nbs.com"
     Then last email sent should have subject "Payment failed for voucher from deal software components"
     #check displaying
+    Given I am on the homepage
     Then I follow translated "layout.fairdeals.main_menu.member.my_requests"
     And I should not see "software components"
     #Get deal button should be available until the payment is cancelled
@@ -519,7 +504,7 @@ Feature: Deals from procurement manager perspective
   Scenario: When I get the deal on the page for deal request I should not see linkedin/facebook urls but see company name
 
   #9811
-  @m27 @_requested @tgn @_done @_tested
+  @m27 @_requested @tgn @_done @_tested @selenium
   Scenario: I can get a Premium deal only if I am signed in as member and have subscription that allows getting Premium deals
     Given I am on the homepage
     Given a deal named "PrimaryDeal" exists within category "Electronics deals"
@@ -534,8 +519,7 @@ Feature: Deals from procurement manager perspective
     And I follow category "Electronics deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
-    And I press translated "member.leads.new.view.button_create"
-    And I should see "Blurb voucher confirmation page"
+    And I should not see translated "deals.index.view.contact_me"
 
   #9988
   @m28 @_requested @tgn @_done @_tested
@@ -547,7 +531,7 @@ Feature: Deals from procurement manager perspective
     And I follow "deal001"
     And I follow translated "deals.index.view.contact_me"
     And I should not see "short description1"
-    And I should see translated "deals.index.view.premium_deal_splash_label"
+    #DEPRECATED: And I should see translated "deals.index.view.premium_deal_splash_label"
 
   #9987
   @m28 @_requested @rb @_done @_tested_elsewhere
@@ -581,7 +565,7 @@ Feature: Deals from procurement manager perspective
   Scenario: I should not see JS dialog when I try to get a deal and dont have permission
 
   #9981
-  @m28 @_requested @tgn @_done @_tested
+  @m28 @_requested @tgn @_done @_tested @selenium
   Scenario: If I dont have permission to get deal the button should state "Upgrade subscription" instead of "Get deal"
     Given I visit domain http://fairdeals.dk
     And subscription plan named "Free member subscription" exists with attributes "free_deal_requests_in_free_period:1"
@@ -592,9 +576,6 @@ Feature: Deals from procurement manager perspective
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
-    And I fill in "lead_hidden_description" with "something"
-    And I press translated "member.leads.new.view.button_create"
-    And I press translated "member.leads.show.view.ok_confirmation"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:deal002|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
@@ -602,11 +583,9 @@ Feature: Deals from procurement manager perspective
     And I follow translated "deals.index.view.upgrade_subscription_to_get_deal"
     And I should be on my profile
     And I should see translated "subscriptions.subscription_upgrade_to_payable" with options "header: deal002"
+    And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
     And I follow translated "deals.index.view.contact_me"
-    And I fill in "lead_hidden_description" with "something"
-    And I press translated "member.leads.new.view.button_create"
-    And I press translated "member.leads.show.view.ok_confirmation"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:deal003|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|premium_deal:1"
     When subscription plan exists with attributes "name:Premium deals member,assigned_roles:member,subscription_period:10,premium_deals:1"
     And subscription plan has following lines
@@ -619,11 +598,10 @@ Feature: Deals from procurement manager perspective
     And I follow translated "deals.index.view.upgrade_subscription_to_get_deal"
     And I should be on my profile
     And I should see translated "subscriptions.subscription_upgrade_to_premium_deals" with options "header: deal003"
+    And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
     And I follow translated "deals.index.view.contact_me"
-    And I fill in "lead_hidden_description" with "something"
-    And I press translated "member.leads.new.view.button_create"
-    And I press translated "member.leads.show.view.ok_confirmation"
+    And I should not see translated "deals.index.view.contact_me"
 
 
   #9981

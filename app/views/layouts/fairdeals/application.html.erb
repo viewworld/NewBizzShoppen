@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <title>Fairdeals</title>
   <link rel="shortcut icon" href="/images/favicon.ico"/>
-  <% if (controller.action_name == "index" and controller.class.to_s == "DealsController") or  controller.class.to_s == "FairdealsHomeController" %>
+  <% if (['index','show'].include?(controller.action_name) and controller.class.to_s == "DealsController") or  controller.class.to_s == "FairdealsHomeController" %>
       <%= include_stylesheets :fairdeals %>
       <%= include_javascripts :fairdeals %>
   <% else %>

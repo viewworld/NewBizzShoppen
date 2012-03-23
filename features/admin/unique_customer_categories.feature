@@ -65,6 +65,10 @@ Scenario: I can search customers by first name, last name and email
   And attach the file "sample image" to "category_image_attributes_asset"
   Then I press translated "administration.categories.edit.view.button_update"
   And I should see translated "flash.categories.update.notice"
+  When I uncheck "search_with_unique"
+  And I uncheck "search_with_public"
+  And I fill in "search_with_keyword" with "computers"
+  Then I press translated "administration.categories.index.view.search.search_button"
   When I click hidden link by url regex "/administration\/categories\/\d+\/edit/"
   And "selected_customers" should be selected for value "nbsbuyer3483434biz@nbs.com"
 

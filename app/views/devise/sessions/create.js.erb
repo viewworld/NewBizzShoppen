@@ -2,7 +2,14 @@
     <% if @deal.requested_by?(@user) or !@user.can_request?(@deal) %>
         window.location.href = "<%= deal_path(@lead.deal.slug) %>";
     <% else %>
-        window.location.href =  "<%=  new_members_lead_path(:deal_id => @deal.id) %>";
+        <% if @deal.deal_templates.empty? %>
+            $.colorbox.close();
+        <% end %>
+        $("#modal_sign_in_or_sign_up_container").html("<%= escape_javascript(render :partial => "members/leads/templates_for_modal", :locals => {:lead => @lead, :url => members_leads_path(:deal_id => @deal.id, :format => :js)}) %>");
+        $.colorbox.resize();
+        <% if @deal.deal_templates.empty? %>
+           $('#new_lead').submit();
+        <% end %>
     <% end %>
 <% else %>
    alert("<%= I18n.t("devise.failure.invalid") %>");

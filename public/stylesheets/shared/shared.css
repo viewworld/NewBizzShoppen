@@ -46,6 +46,12 @@
     top: 90px;
 }
 
+.primary_deal .splash
+{
+    top: 15px;
+    right: 10px;
+}
+
 
 /* --- frm ribbon ---
 --------------------------------------------------------------------------------------------------------------------- */
@@ -92,4 +98,144 @@
 {
     position: absolute;
     right: -45px;
+}
+
+
+/* --- deal - social share buttons --- */
+
+.social_share
+{
+    padding: 20px 0;
+}
+
+.social_share li
+{
+    display: inline;
+}
+
+/* --- subscription plans ------------------------------------------------------------------------ */
+
+.subscription_plans
+{
+    text-align: center;
+}
+
+.subscription_plan_item
+{
+    display: inline-block;
+    display: inline !ie7;
+    zoom: 1 !ie7;
+    vertical-align: top;
+    cursor: pointer;
+    position: relative;
+
+    margin: 5px;
+    min-height: 195px;
+    width: 200px;
+    border: 1px solid #d0d0d0;
+    min-width: 150px;
+    text-align: center;
+    background: #fff;
+    padding-bottom: 45px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+
+    -moz-box-shadow: 0 0 4px rgba(0,0,0,.2);
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0,.2);
+    box-shadow: 0 0 4px rgba(0,0,0,.2);
+}
+
+.subscription_plan_item.active
+{
+    border: 4px solid #2da9ff;
+
+    -moz-box-shadow: 0 0 8px rgba(0,0,0,.3);
+    -webkit-box-shadow: 0 0 8px rgba(0,0,0,.3);
+    box-shadow: 0 0 8px rgba(0,0,0,.3);
+    margin: 2px
+}
+
+.subscription_plan_item .active_badge
+{
+    position: absolute;
+    display: none;
+
+    left: 50%;
+    margin-left: -55px;
+    margin-top: -24px;
+    width: 100px;
+    height: 12px;
+    padding: 6px 5px;
+    color: #eee;
+    font-weight: bold;
+    font-size: 11px;
+    text-align: center;
+    background: #000;
+    background: rgba(0,0,0,.8);
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+}
+
+.subscription_plan_item.active .active_badge
+{
+    display: block;
+}
+
+.subscription_plan_item .subscription_plan_head
+{
+    height: 47px;
+    overflow: hidden;
+}
+
+.subscription_plan_item .subscription_plan_head h3
+{
+    font-size: 16px;
+    padding: 9px 5px;
+    font-weight: bold;
+}
+
+.subscription_plan_item .subscription_plan_price
+{
+    background: #fafafa;
+    border-top: 1px solid #d0d0d0;
+    border-bottom: 1px solid #d0d0d0;
+    padding: 8px;
+    margin-bottom: 7px;
+}
+
+.subscription_plan_item .subscription_plan_price p
+{
+    font-size: 11px;
+    line-height: 14px;
+    padding-top: 3px;
+}
+
+.subscription_plan_item .subscription_plan_price p.billing
+{
+    color: #0096ff;
+    font-size: 26px;
+    font-weight: bold;
+    padding: 3px 5px 8px;
+}
+
+.subscription_plan_item > p
+{
+    padding: 0 5px;
+}
+
+.subscription_plan_footer
+{
+    position: absolute;
+    bottom: 0;
+    width:100%;
+    padding: 6px 0 10px;
+    text-align: center;
+}
+
+#current_subscription img
+{
+    vertical-align: -3px;
+    padding-right: 5px;
 }

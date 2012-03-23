@@ -73,7 +73,7 @@ module NavigationHelpers
         deals_index_path(:slag => dc.cached_slug)
       when /show deal (.+)/
         deal = Deal.where(:header => $1).first
-        deal_path(deal)
+        deal_path(deal.slug)
       when /all deals/
         all_deals_path
       when /deals/
