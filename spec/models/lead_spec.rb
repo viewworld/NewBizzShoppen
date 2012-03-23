@@ -50,7 +50,7 @@ describe Lead do
 
     it "should have proper header and description" do
       @lead.header.should == "A company is interested in Printers deal"
-      @lead.description.should == "A company is interested in Some desc of this"
+      @lead.description.should == "A company is interested in Printers deal"
     end
 
     it "should have purchase manager's contact info" do
