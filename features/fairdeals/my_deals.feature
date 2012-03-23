@@ -13,14 +13,13 @@ Background:
   And I follow category "Electronics deals"
   And I follow "Abc group deal #1"
   And I follow translated "deals.index.view.contact_me"
-  And I fill in "lead_hidden_description" with "my specific needs are following etc"
-  And I press translated "member.leads.new.view.button_create"
-  And I press translated "member.leads.show.view.ok_confirmation"
+  And I wait 3 second
   And I follow translated "layout.fairdeals.main_menu.member.my_requests"
+  And display all hidden actions
   And I follow translated "member.leads.index.view.show"
 
 #9481
-@m26 @tgn @_done @_tested
+@m26 @tgn @_done @_tested @selenium
 Scenario: I should see "My deals" in the menu instead of "My requests"
   Then I should see "My deals"
   And I should see "Abc group deal #1"

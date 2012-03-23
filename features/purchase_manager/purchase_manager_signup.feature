@@ -6,6 +6,7 @@ Feature: Purchase Manager signup
   Should be able to create a Purchase Manager account
 
   Background: Set English locale on the home page
+    Given I am on the homepage
     Given I visit domain http://fairdeals.eu
     And I am on the homepage
     And I make sure current locale is "en"
@@ -62,8 +63,9 @@ Feature: Purchase Manager signup
     And I should see "11" occurrences of css class "inline-errors" for tag "p"
 
   # when on free subscription - get deal is displayed but informs that you have to upgrade - tested elsewhere
-  @m21 @_requested @subscriptions @_done @_tested @tgn
+  @m21 @_requested @subscriptions @_done @_tested @tgn @selenium
   Scenario: Free subscription doesn't allow to get the deal but user can create tenders and see get deal button
+    And I am on the homepage
     Given I visit domain http://fairdeals.dk
     Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     And subscription plan exists with attributes "name:Premium supplier,deal_maker:1,big_buyer:1,assigned_roles:supplier"
@@ -81,9 +83,8 @@ Feature: Purchase Manager signup
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
-    And I fill in "lead_hidden_description" with "my specific needs are following etc"
-    And I press translated "member.leads.new.view.button_create"
-    And I press translated "member.leads.show.view.ok_confirmation"
+    And I wait 3 second
+    And I should see "software components"
 
   #9532
   @m26 @_requested @tgn @_done @_tested
