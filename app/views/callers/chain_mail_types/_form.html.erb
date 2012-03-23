@@ -8,6 +8,7 @@
       <% unless params[:campaign_id] %>
         <%= form.input :campaign_id, :collection => Campaign.with_state("active").ascend_by_name, :include_blank => false %>
       <% end %>
+      <%= form.input :result_id, :collection => @chain_mail_type.campaign.results, :include_blank => false %>
       <%= form.input :first_execution_delay, :as => :select, :collection => 0..30, :include_blank => false, :hint => t("chain_mail_types.form.number_of_days") %>
       <%= form.input :cycle_time, :as => :select, :collection => 1..30, :include_blank => false, :hint => t("chain_mail_types.form.number_of_days") %>
       <%= form.input :execution_time,  :wrapper_html => {:class => "date"} %>

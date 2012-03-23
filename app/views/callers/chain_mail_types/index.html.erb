@@ -45,11 +45,19 @@
     <param:actions>
       <ul class="header_actions">
         <% if params[:campaign_id] %>
-          <li><%= bt_link_to :undo, t("chain_mail_types.index.back_to_campaign"), edit_callers_campaign_path(params[:campaign_id]) %></li>
-          <li class="last"><%= bt_link_to :plus, t("chain_mail_types.index.new"), new_callers_campaign_chain_mail_type_path(params[:campaign_id]) %></li>
-        <% else %>
-          <li class="last"><%= bt_link_to :plus, t("chain_mail_types.index.new"), new_callers_chain_mail_type_path %></li>
-        <% end %>
+          <%= form_tag new_callers_campaign_chain_mail_type_path(params[:campaign_id]), :method => :get, :id => "form_new_chain_mail_type" do %>
+              <span style="position:absolute;top: 1px; right: 310px;">
+                <%= select_tag :result_id, options_for_select(@campaign.results.map { |r| [r.name, r.id] }) %>
+              </span>
+                <li>
+                  <div class="hidden">
+                    <%= submit_tag "New" %>
+                  </div>
+                  <%= bt_link_to :plus, t("chain_mail_types.index.new"), "javascript:void", :onclick => "$('#form_new_chain_mail_type').submit()" %>
+                </li>
+                <li class="last"><%= bt_link_to :undo, t("chain_mail_types.index.back_to_campaign"), edit_callers_campaign_path(params[:campaign_id]) %></li>
+          <% end %>
+      <% end %>
       </ul>
     </param:actions>
   </header>

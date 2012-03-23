@@ -42,7 +42,7 @@ class Callers::ChainMailTypesController < Callers::CallerController
   end
 
   def new
-    @chain_mail_type = ChainMailType.create(:skip_validations => true, :active => false, :campaign_id => params[:campaign_id])
+    @chain_mail_type = ChainMailType.create(:skip_validations => true, :active => false, :campaign_id => params[:campaign_id], :result_id => params[:result_id])
     if @chain_mail_type.campaign_id
       redirect_to edit_callers_campaign_chain_mail_type_path(@chain_mail_type.campaign_id,@chain_mail_type)
     else

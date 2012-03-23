@@ -7,6 +7,7 @@ class ChainMailType < ActiveRecord::Base
   has_many :call_results
   has_many :materials, :class_name => "Asset::ChainMailMaterial", :as => :resource, :conditions => "asset_type = 'Asset::ChainMailMaterial'", :dependent => :destroy
   belongs_to :campaign
+  belongs_to :result
 
   validates_presence_of :name, :first_execution_delay, :cycle_time, :execution_time, :campaign, :unless => Proc.new{|cmt| cmt.skip_validations}
   validates_length_of :chain_mail_items, :execution_conditions, :minimum => 1, :unless => Proc.new{|cmt| cmt.skip_validations or cmt.add_new_item.present? }

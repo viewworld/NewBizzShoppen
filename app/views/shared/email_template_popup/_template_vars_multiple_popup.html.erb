@@ -1,0 +1,24 @@
+<div id="modal_email_vars_<%= instance_name %>" style="display:none;">
+  <%
+     variables = unless defined? object
+     [
+       "nothind"
+     ]
+     else
+       object.available_variables
+     end
+
+     variables.each do |label|
+  %>
+      <%= link_to_function label, "insert_variable_to_multiple_editor('#{label}', '#{instance_name}')" %><br />
+  <% end %>
+</div>
+
+<script type="text/javascript">
+    $('#modal_email_vars_<%= instance_name %>').dialog({
+        autoOpen: false,
+        width: 700,
+        title: 'Insert variables',
+        modal: true
+    });
+</script>

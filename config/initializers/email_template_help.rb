@@ -2,6 +2,11 @@ module EmailTemplateHelp
 
   def self.included(base)
     base.send(:include, InstanceMethods)
+    base.class_eval do
+      def self.available_variables_for(template_name)
+        EmailTemplate.first.extract_variables(EmailTemplateHelp::HELP[template_name])
+      end
+    end
   end
 
   HELP = {
@@ -43,14 +48,22 @@ module EmailTemplateHelp
       "supplier_invitation" => {:classes => ["User"], :custom => ["new_password"]},
 
       "deal_request_details" => {:classes => ["Deal"], :custom => []},
-      "deal_request_for_deal_admin" => {:classes => [], :custom => ["name", "phone_number", "email_from", "deal_description"] }
+      "deal_request_for_deal_admin" => {:classes => [], :custom => ["name", "phone_number", "email_from", "deal_description"] },
+
+
+      #custom fake templates for chain mail result-based dynamic variables
+
+      "common_result" => { :classes => ["Lead"], :custom => [] },
+      "upgrade_to_member" => { :classes => ["User"], :custom => [] },
+      "upgrade_to_supplier" => { :classes => ["User"], :custom => [] },
+      "upgrade_to_category_supplier" => { :classes => ["User"], :custom => [] },
+      "upgraded_to_lead" => { :classes => ["Lead"], :custom => [] }
   }
 
   module InstanceMethods
 
-    def available_variables
+    def extract_variables(hash)
       result = []
-      hash = EmailTemplateHelp::HELP[uniq_id]
       hash[:custom].each do |item|
         result << "{{#{item}}}"
       end
@@ -67,6 +80,10 @@ module EmailTemplateHelp
       end
 
       result.sort
+    end
+
+    def available_variables
+      extract_variables(EmailTemplateHelp::HELP[uniq_id])
     end
 
   end

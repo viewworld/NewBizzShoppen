@@ -2,7 +2,7 @@ function setup_ckeditor_for_field(field_id){
 //<![CDATA[
 if (CKEDITOR.instances[field_id]) {
         CKEDITOR.remove(CKEDITOR.instances[field_id]);}
-        CKEDITOR.replace(field_id, { filebrowserImageBrowseUrl: '/ckeditor/images',toolbar: 'EmailSignature',filebrowserImageUploadUrl: '/ckeditor/create/image',language: 'en',width: '1085px',filebrowserBrowseUrl: '/ckeditor/files',filebrowserUploadUrl: '/ckeditor/create/file',height: '300px' });
+        CKEDITOR.replace(field_id, { filebrowserImageBrowseUrl: '/ckeditor/images',toolbar: 'EmailPopupMulti',filebrowserImageUploadUrl: '/ckeditor/create/image',language: 'en',width: '1085px',filebrowserBrowseUrl: '/ckeditor/files',filebrowserUploadUrl: '/ckeditor/create/file',height: '300px' });
 //]]>
 }
 
