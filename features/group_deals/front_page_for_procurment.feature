@@ -67,7 +67,7 @@ Feature: Front page for procurment
   @_done @_tested
   Scenario: I should see one primary group deal
     Given a deal named "PrimaryGroupDeal" exists within category "Electronics deals"
-    And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,saving:75%,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "PrimaryGroupDeal" is a primary featured deal
     Given I visit domain http://fairdeals.dk
     Then I should see "PrimaryGroupDeal" within "div#primary_group_deal"
