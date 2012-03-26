@@ -4,7 +4,7 @@ class NotificationsController < SecuredController
   def index
     respond_to do |wants|
       wants.html {
-        @notifications = current_user.with_role.notifications.order("id ASC").paginate(:page => params[:page], :per_page => 20)
+        @notifications = current_user.with_role.notifications.order("notify_at DESC").paginate(:page => params[:page], :per_page => 20)
       }
       wants.json {
         render :text => current_user.with_role.notifications.pending.order("id ASC").limit(params[:per_page]).to_json

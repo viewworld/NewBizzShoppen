@@ -24,6 +24,7 @@ module CampaignsHelper
   end
 
   def display_result_value(result)
+    return "-" if result.nil?
     case result.field_type.to_i
       when ResultField::MATERIAL then result.materials.map{|material| link_to(material.asset_file_name, material.url) }.join(", ").html_safe
       else result.value

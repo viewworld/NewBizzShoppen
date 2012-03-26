@@ -1626,6 +1626,12 @@ span.cke_skin_kama
     min-height: 180px;
 }
 
+.deal_ft_desc h4
+{
+    height: 2em;
+    overflow: hidden;
+}
+
 .deal_ft_desc .deal_ft_img
 {
     position: absolute;
