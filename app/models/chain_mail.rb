@@ -45,7 +45,7 @@ class ChainMail < ActiveRecord::Base
   end
 
   def prepare_body(body)
-    StringUtils.replace_urls_for_chain_mail_verification(self, EmailTemplate.new(:body => body).render(variables_for_body))
+    StringUtils.replace_urls_for_chain_mail_verification(self, EmailTemplate.new(:body => body, :preview => true).render(variables_for_body))
   end
 
   def register_click!
