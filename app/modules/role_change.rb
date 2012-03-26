@@ -36,8 +36,8 @@ module RoleChange
     end
 
     def add_role_category_supplier
-      if categories.empty?
-        self.errors.add(:base, I18n.t("activerecord.attributes.user.supplier.base.must_have_interests"))
+      if unique_categories.empty?
+        self.errors.add(:base, I18n.t("activerecord.attributes.user.supplier.base.must_have_unique_categories"))
       else
         self.roles << :category_supplier
         subaccounts.map(&:with_role).each do |sa|
@@ -49,7 +49,8 @@ module RoleChange
 
     def assign_buying_categories
       if roles_mask_changed? and has_role? :category_supplier and !parent
-        self.with_role.buying_categories = categories
+        new_category_supplier = self.with_role
+        new_category_supplier.buying_categories = unique_categories
       end
     end
 

@@ -3235,6 +3235,7 @@ en:
         supplier:
           base:
             must_have_interests: "User must have at least one interests category"
+            must_have_unique_categories: "User must have at least one unique category"
       lead:
         purchase_decision_date: "Purchase decision date"
         notify_suppliers_after_update: "Notify supliers about changes"
