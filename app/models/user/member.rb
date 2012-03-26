@@ -7,6 +7,7 @@ class User::Member < ::User
   include User::CommonAgent
   include Addresses
   include BankAccounts
+  include User::CampaignMonitorClient
 
   validates_presence_of :company_name, :phone
 

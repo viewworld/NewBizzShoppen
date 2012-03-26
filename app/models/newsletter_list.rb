@@ -33,7 +33,7 @@ class NewsletterList < ActiveRecord::Base
   end
 
   def cm_create!
-    list_id = CreateSend::List.create(owner.cm_client, name, "", false, "")
+    list_id = CreateSend::List.create(owner.with_role.cm_client, name, "", false, "")
     reload; update_attribute(:cm_list_id, list_id)
     list_id
   end
