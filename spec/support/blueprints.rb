@@ -549,6 +549,7 @@ ChainMailType.blueprint do
   execution_time { "10:00" }
   execution_conditions { {"conditions" => [ChainMailType::LINK_CLICKED], "type" => ChainMailType::STOP_IF, "operator" => nil } }
   campaign_id { Campaign.make!.id }
+  result_id { Result.make!.id }
   chain_mail_items { Array(ChainMailItem.make!) }
 end
 
