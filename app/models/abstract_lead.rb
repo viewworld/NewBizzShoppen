@@ -17,11 +17,11 @@ class AbstractLead < ActiveRecord::Base
   has_many :lead_template_values, :foreign_key => :lead_id
 
   liquid_methods :show_lead_details_url, :category_name, :header, :description, :hidden_description, :company_name, :contact_name, :phone_number, :email_address,
-                 :address, :www_address, :direct_phone_number, :fine_print, :company_description
+                 :address, :www_address, :direct_phone_number, :fine_print, :company_description, :company_website, :contact_title
 
   #TODO ???
   liquid :show_lead_details_url, :category_name, :header, :description, :hidden_description, :company_name, :contact_name, :phone_number, :email_address,
-         :address, :www_address, :direct_phone_number, :fine_print, :company_description
+         :address, :www_address, :direct_phone_number, :fine_print, :company_description, :company_website, :contact_title
 
   attr_accessor :category_is_changed
   attr_accessor :tmp_creator_id

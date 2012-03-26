@@ -21,6 +21,7 @@ class ChainMailType < ActiveRecord::Base
   scope :with_keyword, lambda{|q| where("name LIKE :keyword", {:keyword => "%#{q.downcase}%"})}
   scope :for_campaign, lambda{|campaign| where(:campaign_id => campaign.to_i)}
   scope :with_campaign, lambda{|c| where(:campaign_id => c.to_i)}
+  scope :with_result, lambda{ |result| where(:result_id => result.id) }
 
   include ScopedSearch::Model
 

@@ -88,7 +88,7 @@ class Result < ActiveRecord::Base
   end
 
   def available_variables
-    EmailTemplate.available_variables_for( (upgrades_to_any_user? or upgrades_to_lead?) ? name.downcase.gsub(" ", "_") : "common_result")
+    EmailTemplate.available_variables_for((upgrades_to_any_user? or upgrades_to_lead?) ? name.downcase.gsub(" ", "_") : "common_result")
   end
 
   private

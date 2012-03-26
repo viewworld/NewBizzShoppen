@@ -349,6 +349,9 @@ en:
       chain_mail_at_position: "Chain mail at position %{position}"
       attachments: "Attachments"
 
+    update:
+      flash:
+        result_changed: "Result has been changed. Please check if variables are correct in chain mail templates."
   lead_templates:
     table:
       name: Name

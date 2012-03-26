@@ -53,7 +53,7 @@ module EmailTemplateHelp
 
       #custom fake templates for chain mail result-based dynamic variables
 
-      "common_result" => { :classes => ["Lead"], :custom => [] },
+      "common_result" => { :classes => ["Contact"], :custom => [] },
       "upgrade_to_member" => { :classes => ["User"], :custom => [] },
       "upgrade_to_supplier" => { :classes => ["User"], :custom => [] },
       "upgrade_to_category_supplier" => { :classes => ["User"], :custom => [] },
@@ -71,8 +71,10 @@ module EmailTemplateHelp
       hash[:classes].each do |item|
         keys = if item.to_s == "Lead"
                  Lead::LIQUID_METHODS.call(self).keys - ["fine_print"]
+               elsif item.to_s == "Contact"
+                 Contact::LIQUID_METHODS.call(self).keys - ["fine_print", "show_lead_details_url", "category_name", "description", "hidden_description"]
                elsif item.to_s == "Deal"
-                 Deal::LIQUID_METHODS.call(self).keys - ["show_lead_details_url"]
+                 Deal::LIQUID_METHODS.call(self).keys - ["show_lead_details_url", "contact_title"]
                else
                  "#{item.to_s}::LIQUID_METHODS".constantize.call(self).keys
                end

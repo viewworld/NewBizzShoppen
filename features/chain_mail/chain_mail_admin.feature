@@ -19,9 +19,14 @@ Feature: Chain mail administration
     When I follow translated "layout.main_menu.admin.chain_mail"
     Then I should see "2" rows in a table within "table.chain_mail_types tbody"
 
-  @_done @_tested @selenium
+  @_done @_tested @selenium @wip
   Scenario: I can create new Chain mail
     When campaign named "Testing One" exists with attributes "crm_campaigns:2,crm_option:0"
+    And I follow translated "layout.main_menu.admin.campaigns"
+    And I fill in "search_with_keyword" with "Testing one"
+    Then I press translated "campaigns.filter.search_button"
+    And display all hidden actions
+    And I follow translated "campaigns.index.edit"
     And I click hidden link by url regex "/callers\/chain_mail_types/"
     Then I should not see CSS path "table.chain_mail_types tbody"
     When I follow translated "chain_mail_types.index.new"
