@@ -173,6 +173,7 @@ Feature: Category home pages
     When Category named "Best Leads" already exists
     And I am on the home page
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
+    And user jon@lajoie.ca with role category_supplier exists with attributes "company_name:Zzzzzzzzztop"
     And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
     And I sign in as jon@lajoie.ca with password secret
     Then I should see "Best Leads"

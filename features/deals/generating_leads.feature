@@ -63,13 +63,10 @@ Feature: Generating leads from deals
     And I follow translated "deals.index.view.view_deal"
     And I confirm a js popup on the next step
     And I follow translated "deals.index.view.contact_me"
-    And I fill in "lead_hidden_description" with "some hidden note"
     And I fill in "lead_lead_template_values_attributes_0_value" with "lorem ipsum 1"
     And I fill in "lead_lead_template_values_attributes_1_value" with "lorem ipsum 2"
     And I fill in "lead_lead_template_values_attributes_2_value" with "lorem ipsum 3"
     And I press translated "member.leads.new.view.button_create"
-    And I should see translated "member.leads.show.view.confirmation_message"
-    And I press translated "member.leads.show.view.ok_confirmation"
     And I should be on show deal Templates deal test
 
   # If there is any template information associated with the deal the procurement manager is prompted for the information. And the procurement manager can enter some note information (will go into hidden description)

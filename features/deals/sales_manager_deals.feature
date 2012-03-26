@@ -188,12 +188,13 @@ Feature: Deals from Sales Manager perspective
     And I follow translated "deals.index.view.view_deal"
     And I confirm a js popup on the next step
     And I follow translated "deals.index.view.contact_me"
-    And I fill in "lead_hidden_description" with "Some name"
     And I fill in "lead_lead_template_values_attributes_0_value" with "some val1"
     And I fill in "lead_lead_template_values_attributes_3_value" with "some val2"
     Then I should see "Computer details1"
     Then I should see "Computer details2"
     And I press translated "member.leads.new.view.button_create"
+    And I wait 3 second
+    And I should see "Templates deal test"
 
   @_done @tested_elsewhere
   Scenario: Mandatory templates for category should be automatically included

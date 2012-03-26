@@ -129,6 +129,7 @@
     </div>
 <% end %>
 
+<% @campaign = call_result.contact.campaign if @campaign.nil? %>
 <% if cr = call_result.result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id } and chain_mail_type = cr.chain_mail_type %>
     <hl/>
     <div class="pdd_10 no_pdd_t">
