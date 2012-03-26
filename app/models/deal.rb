@@ -200,7 +200,7 @@ class Deal < AbstractLead
     current_dcr.present? and current_dcr.active?
   end
 
-  def saving
+  def _saving
     if (deal_price.to_f > 0 and discounted_price.to_f > 0 and deal_price > discounted_price)
       "#{(100 - discounted_price * 100 / deal_price).to_i}%"
     elsif general_discount?

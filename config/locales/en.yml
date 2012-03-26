@@ -3043,6 +3043,7 @@ en:
         deal_category_label: "Deal category"
         price_label: "Lead price"
         discounted_price_label: "Discounted deal price"
+        saving: "Saving"
         saving_percent_label: "Saving:"
         max_auto_buy_label: "Max auto buy per 4 weeks"
         min_created_leads: "Min created leads"
