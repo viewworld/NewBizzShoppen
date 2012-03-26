@@ -73,7 +73,7 @@
               <%= form.input :deal_price, :required => (@deal.group_deal == true or @deal.voucher_enabled == true) %>
               <%= form.input :discounted_price, :required => (@deal.group_deal == true or @deal.voucher_enabled == true), :label => t("shared.deals.form.discounted_price_label") %>
               <%= form.input :saving, :label => t("shared.deals.form.saving") %>
-              <div class="form_comment"><%= "#{t("shared.deals.form.saving_percent_label")} #{as_currency(@deal.saving_in_money)}" if @deal.discounted_price.to_i > 0 %></div>
+              <%= form.input :saving_in_money, :label => t("shared.deals.form.saving_in_money") %>
               <%= form.input :social_media_description, :input_html => {:style => "height: 150px;width:280px;"}, :required => @deal.group_deal == true %>
             </div>
 

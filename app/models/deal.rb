@@ -210,7 +210,7 @@ class Deal < AbstractLead
     end
   end
 
-  def saving_in_money
+  def _saving_in_money
     if (deal_price.to_f > 0 and discounted_price.to_f > 0 and deal_price > discounted_price)
       (deal_price - discounted_price).to_f
     elsif general_discount?
