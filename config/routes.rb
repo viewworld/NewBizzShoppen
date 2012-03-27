@@ -95,6 +95,12 @@ Nbs::Application.routes.draw do
         post 'archive'
       end
     end
+
+    resources :newsletter_campaigns do
+      member do
+        post 'archive'
+      end
+    end
   end
 
   namespace :suppliers do

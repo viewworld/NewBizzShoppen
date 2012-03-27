@@ -1,37 +1,17 @@
 class NewsletterList < ActiveRecord::Base
   has_many :newsletter_sources, :dependent => :destroy
-  belongs_to :creator, :polymorphic => true
-  belongs_to :owner, :foreign_key => "owner_id", :class_name => "User"
   has_many :campaign_monitor_responses, :as => :resource
 
   after_save :cm_synchronize!, :unless => Proc.new{|nl| nl.cm_list_id_changed?}
-  before_save :extract_sourceable_objects, :extract_tag_groups  
-  
-  validates_presence_of :name
-  validates_uniqueness_of :name
-  validate :owner_is_present_and_valid
-
-  scope :with_keyword, lambda { |q| where("lower(name) like ?", "%#{q.to_s.downcase}%") }
-  scope :with_archived, lambda{ |q| where("is_archived = ?", q.to_i == 1) }
-  scope :without_archived, where("is_archived is FALSE")
-  scope :created_or_owned_by, lambda { |creator| where("creator_id = ? or owner_id = ?", creator.id, creator.id) }
+  before_save :extract_sourceable_objects, :extract_tag_groups
 
   attr_accessor :sourceable_items, :tag_group_items
 
-  include ScopedSearch::Model
-
   accepts_nested_attributes_for :newsletter_sources, :allow_destroy => true
-  
-  private
 
-  def owner_is_present_and_valid
-    if owner.nil?
-      errors.add(:owner_email, :blank)
-    elsif owner and !owner.has_any_role?(:admin, :call_centre, :supplier, :category_supplier)
-      errors.add(:owner_email, :invalid)
-    end
-    true
-  end
+  include CommonNewsletter
+
+  private
 
   def cm_create!
     list_id = CreateSend::List.create(owner.with_role.cm_client, name, "", false, "")
@@ -127,21 +107,5 @@ class NewsletterList < ActiveRecord::Base
 
       self.tag_group_items = nil
     end
-  end
-
-  def owner_email
-    owner ? owner.email : nil
-  end
-
-  def owner_email=(new_email)
-    self.owner = User.where(:email => new_email).first
-  end
-
-  def archive_or_retrieve!
-    update_attribute(:is_archived, !is_archived?)
-  end
-
-  def created_or_owned_by?(user)
-    user.admin? or creator_id == user.id or owner_id == user.id
   end
 end

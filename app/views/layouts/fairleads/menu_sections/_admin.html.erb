@@ -40,6 +40,7 @@
 <%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.admin.campaigns"), :tab => "campaigns" do  %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.campaigns")), callers_campaigns_path, :subtab => "campaigns" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.newsletter_lists")), newsletters_newsletter_lists_path, :subtab => "newsletter_lists" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.newsletter_campaigns")), newsletters_newsletter_campaigns_path, :subtab => "newsletter_campaigns" %>
 <% end %>
 
 <%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.shared.import"), :tab => "import" do  %>
