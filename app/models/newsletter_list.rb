@@ -75,6 +75,7 @@ class NewsletterList < ActiveRecord::Base
           self.newsletter_sources << NewsletterSource.new(:sourceable => model.constantize.find(id))
         end
       end
+      self.sourceable_items = nil
     end
   end
 
@@ -123,6 +124,8 @@ class NewsletterList < ActiveRecord::Base
           tag_group.save
         end
       end
+
+      self.tag_group_items = nil
     end
   end
 
