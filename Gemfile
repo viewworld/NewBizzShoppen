@@ -79,7 +79,8 @@ group :test do
   gem 'mocha'
   gem 'faker', "0.3.1"
   gem 'machinist', '>= 2.0.0.beta1'
-  gem 'fakeweb'
+  gem 'fakeweb', :require => false
+  gem 'webmock', :require => false
 
 # Added the following because rake features also complained about spec/expectations
   gem 'rspec', '=2.0.1'
