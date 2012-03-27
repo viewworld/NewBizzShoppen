@@ -294,4 +294,14 @@ module ApplicationHelper
       object.class.to_s.tableize.humanize.singularize
     end
   end
+
+  def edit_subscribable_object_path(subscriber)
+    case
+      when subscriber.subscribable.is_a?(Contact) then edit_callers_campaign_contact_path(subscriber.subscribable, :campaign_id => subscriber.subscribable.campaign_id)
+      when subscriber.subscribable.is_a?(Lead) then edit_administration_lead_path(subscriber.subscribable)
+      when subscriber.subscribable.is_a?(User) then edit_administration_user_path(subscriber.subscribable)
+      else
+        ""
+    end
+  end
 end

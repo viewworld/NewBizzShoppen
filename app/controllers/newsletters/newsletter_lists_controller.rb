@@ -4,6 +4,11 @@ class Newsletters::NewsletterListsController < Newsletters::NewslettersControlle
   set_tab "campaigns"
   set_subtab "newsletter_lists"
 
+  def edit
+    @newsletter_list = NewsletterList.find(params[:id])
+    @newsletter_subscribers = @newsletter_list.newsletter_subscribers.paginate(:page => params[:page], :per_page => NewsletterSubscriber.per_page)
+  end
+
   def create
     @newsletter_list = NewsletterList.new(params[:newsletter_list])
     @newsletter_list.creator = current_user
@@ -54,6 +59,7 @@ class Newsletters::NewsletterListsController < Newsletters::NewslettersControlle
   def collection
     @search = NewsletterList.scoped_search(params[:search])
     @search.with_archived ||= 0
+    @search.created_by = current_user unless current_user.admin?
     @newsletter_lists = @search.paginate(:page => params[:page], :per_page => NewsletterList.per_page)
   end
 

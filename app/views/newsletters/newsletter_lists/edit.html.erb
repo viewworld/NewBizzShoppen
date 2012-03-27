@@ -16,4 +16,6 @@
         </param:actions>
       </frm>
   <% end %>
+
+  <%= render :partial => "subscribers_list", :locals => { :newsletter_subscribers => @newsletter_subscribers } %>
 </column-mc:>

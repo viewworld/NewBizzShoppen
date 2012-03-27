@@ -4594,6 +4594,10 @@ en:
           header: "Edit newsletter list"
           button_update: "Save"
           button_cancel: "Cancel"
+          subscribers:
+            email_column: "E-mail"
+            name_column: "Name"
+            edit: "Edit"
       form:
         keyword_for_autocompleter: "Enter name of campaign, tag, subscription or role"
       archive:
