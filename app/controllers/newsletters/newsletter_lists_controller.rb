@@ -1,11 +1,11 @@
 class Newsletters::NewsletterListsController < Newsletters::NewslettersController
   inherit_resources
+  before_filter :fetch_object, :only => [:edit, :update, :archive]
 
   set_tab "campaigns"
   set_subtab "newsletter_lists"
 
   def edit
-    @newsletter_list = NewsletterList.find(params[:id])
     @newsletter_subscribers = @newsletter_list.newsletter_subscribers.paginate(:page => params[:page], :per_page => NewsletterSubscriber.per_page)
   end
 
@@ -30,7 +30,7 @@ class Newsletters::NewsletterListsController < Newsletters::NewslettersControlle
   end
 
   def archive
-    @newsletter_list = NewsletterList.find(params[:id])
+
     @newsletter_list.archive_or_retrieve!
     if @newsletter_list.is_archived?
       flash[:notice] = I18n.t("newsletters.newsletter_lists.archive.flash.notice_archived")
@@ -59,8 +59,12 @@ class Newsletters::NewsletterListsController < Newsletters::NewslettersControlle
   def collection
     @search = NewsletterList.scoped_search(params[:search])
     @search.with_archived ||= 0
-    @search.created_by = current_user unless current_user.admin?
+    @search.created_or_owned_by = current_user unless current_user.admin?
     @newsletter_lists = @search.paginate(:page => params[:page], :per_page => NewsletterList.per_page)
   end
 
+  def fetch_object
+    @newsletter_list = NewsletterList.find(params[:id])
+    raise CanCan::AccessDenied unless @newsletter_list.created_or_owned_by?(current_user)
+  end
 end

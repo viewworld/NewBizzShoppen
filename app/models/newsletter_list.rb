@@ -14,7 +14,7 @@ class NewsletterList < ActiveRecord::Base
   scope :with_keyword, lambda { |q| where("lower(name) like ?", "%#{q.to_s.downcase}%") }
   scope :with_archived, lambda{ |q| where("is_archived = ?", q.to_i == 1) }
   scope :without_archived, where("is_archived is FALSE")
-  scope :created_by, lambda { |creator| where(:creator_id => creator.id) }
+  scope :created_or_owned_by, lambda { |creator| where("creator_id = ? or owner_id = ?", creator.id, creator.id) }
 
   attr_accessor :sourceable_items, :tag_group_items
 
@@ -139,5 +139,9 @@ class NewsletterList < ActiveRecord::Base
 
   def archive_or_retrieve!
     update_attribute(:is_archived, !is_archived?)
+  end
+
+  def created_or_owned_by?(user)
+    user.admin? or creator_id == user.id or owner_id == user.id
   end
 end
