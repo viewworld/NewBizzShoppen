@@ -355,6 +355,14 @@ class Subscription < ActiveRecord::Base
     end
   end
 
+  def newsletter_manager?
+    if unconfirmed_paypal? and !is_today_in_free_period?
+      false
+    else
+      read_attribute(:newsletter_manager)
+    end
+  end
+
   def premium_deals?
     if unconfirmed_paypal? and !is_today_in_free_period?
       false

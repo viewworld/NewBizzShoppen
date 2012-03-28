@@ -980,5 +980,11 @@ Scenario: I edit user's ean number, vat number and direct phone for member
   And I fill in "user_member_direct_phone_number" with "+49 234124234324324"
   And I fill in "user_member_vat_number" with "V234234234"
 
-@m31 @_requested @newsletter
+@m31 @_requested @newsletter @_done @_tested
 Scenario: I can mark supplier or category supplier as newsletter manager (overrides subscription properties)
+  Given I have user with email buyer2@nbs.com and role supplier
+  And I fill in "search_with_keyword" with "buyer2@nbs.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
+  And I check "user_supplier_newsletter_manager"
+  When I press translated "administration.users.edit.view.button_update_user"

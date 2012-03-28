@@ -3764,6 +3764,7 @@ en:
         time_zone: "Time zone"
         deal_maker_role_enabled: "Deal maker role enabled"
         big_buyer: "Got credit"
+        newsletter_manager: "Newsletter manager"
       user/call_centre_agent:
         first_name: "First name"
         last_name: "Last name"
@@ -3838,6 +3839,7 @@ en:
         show_my_deals: "Show my deals"
         big_buyer: "Got credit"
         auto_buy_enabled: "Auto buy enabled"
+        newsletter_manager: "Newsletter manager"
       country:
         name: "Country name"
       lead_template:
@@ -3920,6 +3922,7 @@ en:
         free_deals_in_free_period: "Number of free deals in free period"
         free_deal_requests_in_free_period: "Number of free deal requests in free period"
         premium_deals: "Allow premium deals"
+        newsletter_manager: "Newsletter manager"
       newsletter_list:
         name: "Name"
         owner_email: "Owner email"

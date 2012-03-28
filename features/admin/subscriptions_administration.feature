@@ -181,5 +181,8 @@ Scenario: I can set number of free deal requests for member free subscription
   And I select "Member" from "subscription_plan_assigned_roles"
   And I fill in "subscription_plan_free_deal_requests_in_free_period" with "70"
 
-@m31 @_requested
+@m31 @_requested @selenium @_done @_tested
 Scenario: I can enable feature newsletter manager for suppliers and category suppliers
+  When I follow translated "administration.subscription_plans.index.view.new_subscription_plan"
+    And I select "Supplier" from "subscription_plan_assigned_roles"
+    And I check "subscription_plan_newsletter_manager"

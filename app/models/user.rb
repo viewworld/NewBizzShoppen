@@ -929,6 +929,10 @@ class User < ActiveRecord::Base
     active_subscription ? active_subscription.deal_maker? : admin? ? true : has_role?(:deal_maker)
   end
 
+  def newsletter_manager?
+    active_subscription ? (read_attribute(:newsletter_manager) ? true : active_subscription.newsletter_manager?) : parent ? parent.newsletter_manager? : false
+  end
+
   def handle_privileges
     if subaccounts.any?
       if team_buyers?
