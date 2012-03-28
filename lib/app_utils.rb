@@ -44,9 +44,9 @@ module ActsAsSubscribable
         EOV
 
         class_eval do
-          has_one :newsletter_subscriber, :as => :subscribable, :dependent => :destroy
+          has_one :newsletter_subscriber, :as => :subscribable, :dependent => :nullify
           after_save :create_new_newsletter_update_delayed_job
-          before_destroy :destroy_newsletter_subscriber
+          before_destroy :create_new_newsletter_update_delayed_job
 
           def add_to_custom_source_of_newsletter_list!(newsletter_list)
             if newsletter_list.newsletter_subscribers.where(:email => self.send(newsletter_config[:email_field])).first.nil?
@@ -108,11 +108,6 @@ module ActsAsSubscribable
             end
           end
 
-          def destroy_newsletter_subscriber
-            if newsletter_subscriber
-              #unsubscribe!
-            end
-          end
         end
       end
 

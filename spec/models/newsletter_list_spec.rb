@@ -6,6 +6,15 @@ describe NewsletterList do
   before(:each) do
     Delayed::Worker.delay_jobs = true
     @lead_category = LeadCategory.make!
+    @time = Time.now
+  end
+
+  def set_time(t)
+    Time.stubs(:now).returns(t)
+  end
+
+  def reset_time
+    Time.stubs(:now).returns(@time)
   end
 
   it "should be possible to add a source" do
@@ -77,6 +86,14 @@ describe NewsletterList do
     CreateSend::Subscriber.expects(:add).with(@list_lead_category.cm_list_id, @lead.email_address, @lead.contact_name, [], true)
     Delayed::Worker.new.work_off
 
+    CreateSend::Subscriber.expects(:get).with(@list_lead_category.cm_list_id, @lead.email_address).returns(true)
+    set_time(Time.now+5.minutes)
+    Delayed::Worker.new.work_off
+
+    @lead.destroy
+    CreateSend::Subscriber.any_instance.expects(:delete)
+    set_time(Time.now+5.minutes)
+    Delayed::Worker.new.work_off
   end
 
 end
