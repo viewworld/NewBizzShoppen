@@ -137,6 +137,7 @@ en:
         agent_timesheets: "Timesheets"
         subscription_plans: "Subscriptions"
         newsletter_lists: "Lists"
+        newsletter_campaigns: "Newsletter"
       agent:
         leads: My leads
         deals: My deals
@@ -4594,9 +4595,35 @@ en:
           header: "Edit newsletter list"
           button_update: "Save"
           button_cancel: "Cancel"
+          subscribers:
+            email_column: "E-mail"
+            name_column: "Name"
+            edit: "Edit"
       form:
         keyword_for_autocompleter: "Enter name of campaign, tag, subscription or role"
       archive:
         flash:
           notice_archived: "Newsletter list has been successfully archived"
           notice_retrieved: "Newsletter list has been successfully retrieved."
+    newsletter_campaigns:
+      index:
+        view:
+          search:
+            keyword_label: "Keyword"
+            archived: "Archived"
+            search_button: "Search"
+          header: "Newsletter campaigns"
+          new_newsletter_list: "New campaign"
+          owner_column: "Owner"
+          name_column: "Name"
+          list_names_column: "List names"
+          status_column: "Status"
+          actions_column: "Actions"
+          edit: "Edit"
+          retrieve: "Retrieve from archive"
+          archive: "Archive"
+      new:
+        view:
+          button_create: "Create"
+          button_cancel: "Cancel"
+          header: "New newsletter campaign"
