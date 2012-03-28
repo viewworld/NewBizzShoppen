@@ -569,3 +569,10 @@ NewsletterSource.blueprint(:campaign) do
   newsletter_list { NewsletterList.make! }
   sourceable { Campaign.make! }
 end
+
+NewsletterCampaign.blueprint do
+  owner { User::CallCentre.make! }
+  creator { User::Admin.make! }
+  cm_username { "fairletters" }
+  cm_password { "secret" }
+end

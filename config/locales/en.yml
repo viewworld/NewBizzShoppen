@@ -4619,7 +4619,7 @@ en:
         keyword_for_autocompleter: "Enter name of campaign, tag, subscription or role"
       archive:
         flash:
-          notice_archived: "Newsletter list has been successfully archived"
+          notice_archived: "Newsletter list has been successfully archived."
           notice_retrieved: "Newsletter list has been successfully retrieved."
     newsletter_campaigns:
       index:
@@ -4629,7 +4629,6 @@ en:
             archived: "Archived"
             search_button: "Search"
           header: "Newsletter campaigns"
-          new_newsletter_list: "New campaign"
           owner_column: "Owner"
           name_column: "Name"
           list_names_column: "List names"
@@ -4639,6 +4638,7 @@ en:
           retrieve: "Retrieve from archive"
           archive: "Archive"
           sign_in_to_cm: "Sign in to CM"
+          new_newsletter_campaign: "New campaign"
       new:
         view:
           button_create: "Create"
@@ -4661,3 +4661,7 @@ en:
           button_update: "Save"
           button_cancel: "Cancel"
           button_update_and_send: "Save & send"
+      archive:
+        flash:
+          notice_archived: "Newsletter list has been successfully archived."
+          notice_retrieved: "Newsletter list has been successfully retrieved."

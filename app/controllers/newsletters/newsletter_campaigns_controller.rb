@@ -37,11 +37,11 @@ class Newsletters::NewsletterCampaignsController < Newsletters::NewslettersContr
     @newsletter_campaign = NewsletterCampaign.find(params[:id])
     @newsletter_campaign.archive_or_retrieve!
     if @newsletter_campaign.is_archived?
-      flash[:notice] = I18n.t("newsletters.newsletter_lists.archive.flash.notice_archived")
+      flash[:notice] = I18n.t("newsletters.newsletter_campaigns.archive.flash.notice_archived")
     else
-      flash[:notice] = I18n.t("newsletters.newsletter_lists.archive.flash.notice_retrieved")
+      flash[:notice] = I18n.t("newsletters.newsletter_campaigns.archive.flash.notice_retrieved")
     end
-    redirect_to newsletters_newsletter_lists_path
+    redirect_to newsletters_newsletter_campaigns_path
   end
 
   protected
