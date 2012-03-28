@@ -137,7 +137,7 @@ en:
         agent_timesheets: "Timesheets"
         subscription_plans: "Subscriptions"
         newsletter_lists: "Lists"
-        newsletter_campaigns: "Newsletter"
+        newsletter_campaigns: "Newsletters"
       agent:
         leads: My leads
         deals: My deals
@@ -3196,6 +3196,10 @@ en:
         type3: "Subscription type"
         type4: "Tags"
         type5: "Custom"
+    newsletter_campaign:
+      statuses:
+        status0: "Saved as draft"
+        status1: "Sent to Campaign Monitor"
   activerecord:
     models:
       article:
@@ -3916,6 +3920,15 @@ en:
         free_deals_in_free_period: "Number of free deals in free period"
         free_deal_requests_in_free_period: "Number of free deal requests in free period"
         premium_deals: "Allow premium deals"
+      newsletter_list:
+        name: "Name"
+        owner_email: "Owner email"
+      newsletter_campaign:
+        name: "Name"
+        owner_email: "Owner email"
+        cm_username: "Campaign monitor username"
+        cm_password: "Campaign monitor password"
+
   users:
     passwords:
       edit:
@@ -4474,6 +4487,9 @@ en:
         test_send_email: "Test send email"
     common:
       insert_deal_link: "Insert deal links"
+      search_deal_link: "Search"
+      show_all_deals_link: "Show all"
+      show_selected_deals_link: "Show selected"
   deal_requests:
     create:
       flash:
@@ -4622,8 +4638,26 @@ en:
           edit: "Edit"
           retrieve: "Retrieve from archive"
           archive: "Archive"
+          sign_in_to_cm: "Sign in to CM"
       new:
         view:
           button_create: "Create"
           button_cancel: "Cancel"
           header: "New newsletter campaign"
+      form:
+        all_lists: "All lists"
+        selected_lists: "Selected lists"
+        move_right: "Add >"
+        move_left: "< Remove"
+        fetch_lists: "Fetch lists"
+        new_list: "New list"
+        test_access: "Test access"
+      lists_for_owner:
+        view:
+          user_not_found: "User not found!"
+      edit:
+        view:
+          header: "Edit newsletter campaign %{name}"
+          button_update: "Save"
+          button_cancel: "Cancel"
+          button_update_and_send: "Save & send"

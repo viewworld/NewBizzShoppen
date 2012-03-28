@@ -1,0 +1,5 @@
+<% if @newsletter_campaign %>
+    <%= @newsletter_campaign.body.to_s.html_safe %>
+<% else %>
+    <%= "404 Not found" %>
+<% end %>

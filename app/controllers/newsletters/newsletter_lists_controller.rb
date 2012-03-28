@@ -30,7 +30,6 @@ class Newsletters::NewsletterListsController < Newsletters::NewslettersControlle
   end
 
   def archive
-
     @newsletter_list.archive_or_retrieve!
     if @newsletter_list.is_archived?
       flash[:notice] = I18n.t("newsletters.newsletter_lists.archive.flash.notice_archived")

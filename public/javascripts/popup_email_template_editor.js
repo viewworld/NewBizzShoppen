@@ -208,3 +208,18 @@
     });
     $('#modal_for_deal_links').dialog('close');
   }
+
+  function search_deal_links(query){
+      query = query.toString().split(" ").join("_");
+      $('div[id^=div_link_container_]').hide();
+      $('div[id^=div_link_container_][id*=' + query + ']').show()
+  }
+
+  function show_all_deal_links(){
+      $('div[id^=div_link_container_]').show();
+  }
+
+  function show_selected_deal_links(){
+      $('div[id^=div_link_container_]').hide();
+      $('input:checked').closest("div").show();
+  }

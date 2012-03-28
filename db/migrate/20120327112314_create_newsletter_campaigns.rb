@@ -7,12 +7,16 @@ class CreateNewsletterCampaigns < ActiveRecord::Migration
       t.string :creator_type
       t.boolean :is_archived, :default => false
       t.integer :status, :default => 0
+      t.string :cm_username
+      t.string :cm_password
+      t.text :body
+      t.string :template_key
 
       t.timestamps
     end
 
     create_table :newsletter_campaigns_newsletter_lists, :id => false do |t|
-      t.integer :newsletter_campaigns_id
+      t.integer :newsletter_campaign_id
       t.integer :newsletter_list_id
     end
   end

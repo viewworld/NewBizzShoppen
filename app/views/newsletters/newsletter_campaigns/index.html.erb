@@ -46,7 +46,9 @@
 
       </param:actions>
    </header>
-
+  <% if @newsletter_campaigns.blank? %>
+      <%= blank_state_message %>
+  <% else %>
   <table id="newsletter_lists_table" class="generic">
     <thead>
     <tr>
@@ -70,12 +72,15 @@
     <% @newsletter_campaigns.each do |newsletter_campaign| %>
         <tr class="<%= cycle("odd", "even") %>">
           <td class="cl"></td>
-          <td><%= newsletter_campaign.owner.screen_name %></td>
+          <td><%= newsletter_campaign.owner ? newsletter_campaign.owner.screen_name : "-" %></td>
           <td><%= newsletter_campaign.name %></td>
           <td><%= newsletter_campaign.newsletter_lists.map(&:name) %></td>
-          <td><%= "-" %></td>
+          <td><%= t("models.newsletter_campaign.statuses.status#{newsletter_campaign.status}") %></td>
           <td class="tda ta_r">
             <ul-actions>
+                <li>
+                    <%= link_to t("newsletters.newsletter_campaigns.index.view.sign_in_to_cm"),  "https://fairleads.createsend.com/login.aspx?ReturnUrl=%2f&username=#{newsletter_campaign.cm_username}&password=#{newsletter_campaign.cm_password}", :target => "_blank" %>
+                </li>
                 <li>
                     <%= link_to t("newsletters.newsletter_campaigns.index.view.edit"),  edit_newsletters_newsletter_campaign_path(newsletter_campaign), :class => "default_action" %>
                 </li>
@@ -96,4 +101,5 @@
     <% end %>
     </tbody>
   </table>
+ <% end %>
 </column-mc:>

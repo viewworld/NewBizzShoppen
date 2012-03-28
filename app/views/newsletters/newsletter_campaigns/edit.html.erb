@@ -1,0 +1,29 @@
+<column-mc:>
+  <%= javascript_include_tag :ckeditor %>
+  <%= javascript_include_tag "popup_email_template_editor" %>
+  <header back="true"><%= t("newsletters.newsletter_campaigns.edit.view.header", :name => @newsletter_campaign.name) %></header>
+
+  <%= semantic_form_for @newsletter_campaign, :url => newsletters_newsletter_campaign_path do |form| %>
+      <frm>
+        <param:content>
+          <%= render :partial => 'form', :locals => {:form => form} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("newsletters.newsletter_campaigns.edit.view.button_update_and_send"), :name => "commit_send", :onclick => "select_options_to_submit('newsletter_campaign_newsletter_list_ids_')" %>
+          </ibt>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("newsletters.newsletter_campaigns.edit.view.button_update"), :name => "commit", :onclick => "select_options_to_submit('newsletter_campaign_newsletter_list_ids_')" %>
+          </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function t("newsletters.newsletter_campaigns.edit.view.button_cancel"), "history.go(-1)" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+  <%= render :partial => "shared/email_template_popup/template_deal_links", :locals => {:instance_name => "newsletter_campaign_body_editor"} %>
+
+  <script type="text/javascript">
+    setup_jquery_deal_links_dialog();
+  </script>
+</column-mc:>

@@ -1,0 +1,66 @@
+<div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r labels_200">
+      <ol class="align_inputs">
+        <%= form.input :owner_email, :required => true %><%= bt_link_to :magnify, t("newsletters.newsletter_campaigns.form.fetch_lists"), "#", :onclick => "fetch_lists()" %>
+
+        <%= form.input :cm_username %><%= bt_link_to :padlock, t("newsletters.newsletter_campaigns.form.test_access"), "/buyer_home", :onclick => "test_cm_access()", :target => "_blank", :id => "test_access_link" %>
+        <%= form.input :cm_password %>
+      </ol>
+    </fieldset>
+  <hl/>
+  <div id="category_supplier_categories">
+    <div class="pdd_10">
+      <div class="grid_210 fltl">&nbsp;</div>
+      <div class="grid_240 fltl">
+        <h3><%= t("newsletters.newsletter_campaigns.form.all_lists") %></h3>
+        <%= select_tag "all_lists", options_for_select(((@newsletter_campaign.owner ? @newsletter_campaign.owner.newsletter_lists : [])-@newsletter_campaign.newsletter_lists).map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+      </div>
+
+      <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
+        <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("newsletters.newsletter_campaigns.form.move_right"), "javascript:move_selected('all_lists','newsletter_campaign_newsletter_list_ids_')", :id => "move_right" %></p>
+
+        <p class="ta_c pdd_5"><%= bt_link_to nil, t("newsletters.newsletter_campaigns.form.move_left"), "javascript:move_selected('newsletter_campaign_newsletter_list_ids_','all_lists')", :id => "move_left" %></p>
+
+        <p class="ta_c"><%= bt_link_to nil, t("newsletters.newsletter_campaigns.form.new_list"), new_newsletters_newsletter_list_path, :target => "_window" %></p>
+      </div>
+
+      <div class="grid_240 fltl">
+        <h3><%= t("newsletters.newsletter_campaigns.form.selected_lists") %></h3>
+        <%= select_tag "newsletter_campaign[newsletter_list_ids][]", options_for_select(@newsletter_campaign.newsletter_lists.map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+      </div>
+      <clb/>
+    </div>
+  </div>
+</div>
+
+<div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r labels_200">
+      <ol class="align_inputs">
+        <%= form.input :body,
+                          :label => false,
+                          :as => :ckeditor,
+                          :input_html => {
+                              :width => '1085px',
+                              :height => '300px',
+                          :toolbar => "EmailPopup",
+                          :swf_params => {
+                              :resource_type => @newsletter_campaign.class.name,
+                              :resource_id => @newsletter_campaign.id
+                              }
+                          }
+
+        %>
+      </ol>
+    </fieldset>
+</div>
+
+<script type="text/javascript">
+    function fetch_lists() {
+        $.get("<%= lists_for_owner_newsletters_newsletter_campaigns_path(:format => :js) -%>",
+              "owner_email=" + $('#newsletter_campaign_owner_email').val());
+    }
+
+    function test_cm_access(){
+        $('#test_access_link').attr('href', "https://fairleads.createsend.com/login.aspx?ReturnUrl=%2f&username=" + $('#newsletter_campaign_cm_username').val() + "&password=" + $('#newsletter_campaign_cm_password').val())
+    }
+</script>

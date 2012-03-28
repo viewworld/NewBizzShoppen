@@ -1,3 +1,6 @@
+<% if newsletter_subscribers.blank? %>
+    <%= blank_state_message %>
+<% else %>
 <table id="newsletter_lists_table" class="generic">
   <thead>
   <tr>
@@ -40,3 +43,4 @@
   <% end %>
   </tbody>
 </table>
+<% end %>

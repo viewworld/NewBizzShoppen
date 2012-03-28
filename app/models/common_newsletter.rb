@@ -4,9 +4,9 @@ module CommonNewsletter
       belongs_to :owner, :class_name => "User"
       belongs_to :creator, :polymorphic => true
 
-      validates_presence_of :name
-      validates_uniqueness_of :name
-      validate :owner_is_present_and_valid
+      validates_presence_of :name, :unless => Proc.new{|n| n.skip_validations}
+      validates_uniqueness_of :name, :unless => Proc.new{|n| n.skip_validations}
+      validate :owner_is_present_and_valid, :unless => Proc.new{|n| n.skip_validations}
 
       include ScopedSearch::Model
 
@@ -14,6 +14,8 @@ module CommonNewsletter
       scope :with_archived, lambda{ |q| where("is_archived = ?", q.to_i == 1) }
       scope :without_archived, where("is_archived is FALSE")
       scope :created_or_owned_by, lambda { |creator| where("creator_id = ? or owner_id = ?", creator.id, creator.id) }
+
+      attr_accessor :skip_validations
     end
     base.send(:include, InstanceMethods)
   end
