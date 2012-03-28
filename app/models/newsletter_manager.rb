@@ -17,5 +17,6 @@ class NewsletterManager
       sob = sob.with_role if sob.class.to_s == "User"
       sob.send(:update_newsletter_subscriber)
     end
+    NewsletterSubscriber.where(:subscribable_id => nil).destroy_all
   end
 end
