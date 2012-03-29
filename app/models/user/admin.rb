@@ -25,4 +25,7 @@ class ::User::Admin < ::User
     Contact.with_results
   end
 
+  def newsletter_manager?
+    true
+  end
 end
