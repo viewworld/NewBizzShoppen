@@ -1,6 +1,7 @@
 class NewsletterList < ActiveRecord::Base
   has_many :newsletter_sources, :dependent => :destroy
   has_many :campaign_monitor_responses, :as => :resource
+  has_many :newsletter_synches
 
   after_save :cm_synchronize!, :unless => Proc.new{|nl| nl.cm_list_id_changed?}
   before_save :extract_sourceable_objects, :extract_tag_groups
@@ -14,19 +15,33 @@ class NewsletterList < ActiveRecord::Base
   private
 
   def cm_create!
-    list_id = CreateSend::List.create(owner.with_role.cm_client, name, "", false, "")
-    reload; update_attribute(:cm_list_id, list_id)
-    list_id
+    begin
+      list_id = CreateSend::List.create(owner.with_role.cm_client, name, "", false, "")
+      reload; update_attribute(:cm_list_id, list_id)
+      list_id
+    rescue Exception => e
+      self.campaign_monitor_responses.create(:response => e)
+      false
+    end
   end
 
   def cm_update!
-    CreateSend::List.new(cm_list_id).update(name, "", false, "")
-    cm_list_id
+    begin
+      CreateSend::List.new(cm_list_id).update(name, "", false, "")
+      cm_list_id
+    rescue Exception => e
+      self.campaign_monitor_responses.create(:response => e)
+      false
+    end
   end
 
   def cm_synchronize!
+    cm_exists? ? cm_update! : cm_create!
+  end
+
+  def cm_exists?
     begin
-      cm_list_id.present? ? cm_update! : cm_create!
+      CreateSend::List.new(cm_list_id).details
     rescue Exception => e
       self.campaign_monitor_responses.create(:response => e)
       false
@@ -36,11 +51,11 @@ class NewsletterList < ActiveRecord::Base
   public
 
   def cm_list
-    cm_list_id || cm_synchronize!
+    cm_exists? ? cm_list_id : cm_create!
   end
 
-  def newsletter_subscribers
-    NewsletterSubscriber.joins(:newsletter_sources).where("newsletter_sources.id in (?)", newsletter_source_ids)
+  def fetch_all_subscribable_objects
+    newsletter_sources.map(&:fetch_all_subscribable_objects).flatten
   end
 
   def custom_source

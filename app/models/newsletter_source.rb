@@ -1,9 +1,7 @@
 class NewsletterSource < ActiveRecord::Base
   belongs_to :newsletter_list
-  has_and_belongs_to_many :newsletter_subscribers
   belongs_to :sourceable, :polymorphic => true
   before_save :assign_source_type
-  after_create :assign_existing_subscribable_objects
 
   CAMPAIGN_SOURCE          = 0.freeze
   LEAD_CATEGORY_SOURCE     = 1.freeze
@@ -35,20 +33,7 @@ class NewsletterSource < ActiveRecord::Base
         sourceable.tagged_objects
       else #custom
         newsletter_subscribers.map(&:subscribable)
-    end
-  end
-
-  def assign_existing_subscribable_objects
-    self.delay(:queue => "newsletter_objects_assign_existing").assign_existing_subscribable_objects!
-  end
-
-  def assign_existing_subscribable_objects!
-    unless custom_source?
-      fetch_all_subscribable_objects.each do |sob|
-        sob = sob.with_role if sob.class.to_s == "User"
-        sob.send(:update_newsletter_subscriber) if sob.newsletter_subscriber.nil? or !newsletter_subscribers.include?(sob.newsletter_subscriber)
-      end
-    end
+    end.all
   end
 
   def assign_source_type
