@@ -433,6 +433,10 @@ class Subscription < ActiveRecord::Base
 
   def handle_user_privileges
     user.handle_privileges
+    if newsletter_manager?
+      user.send(:cm_synchronize!)
+      user.send(:cm_set_access!)
+    end
   end
 
   def create_subscription_sub_periods

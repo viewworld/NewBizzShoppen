@@ -504,6 +504,7 @@ SubscriptionPlan.blueprint do
   team_buyers { false }
   big_buyer { false }
   deal_maker { false }
+  newsletter_manager { false }
   seller { Seller.make! }
   paypal_retries { 1 }
 end

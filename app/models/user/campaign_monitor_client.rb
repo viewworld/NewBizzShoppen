@@ -3,7 +3,8 @@ module User::CampaignMonitorClient
   def self.included(base)
     base.class_eval do
       after_save do
-        cm_synchronize! if company_name_changed? or first_name_changed? or last_name_changed? or email_changed? or time_zone_changed?
+        cm_synchronize! if newsletter_manager? and (newsletter_manager_changed? or company_name_changed? or first_name_changed? or last_name_changed? or email_changed? or time_zone_changed?)
+        cm_set_access! if newsletter_manager? and newsletter_manager_changed?
       end
     end
     base.send(:include, InstanceMethods)
@@ -52,7 +53,7 @@ module User::CampaignMonitorClient
         false
       end
     end
-
+    
     def cm_exists?
       begin
         CreateSend::Client.new(cm_client_id).details
@@ -60,6 +61,23 @@ module User::CampaignMonitorClient
         self.campaign_monitor_responses.create(:response => e)
         false
       end
+    end    
+
+    def cm_set_access!
+      begin
+        random_username = cm_username.present? ? cm_username : generate_cm_username
+        random_password = cm_password.present? ? cm_password : generate_token(7)
+        CreateSend::Client.new(with_role.cm_client_id).set_access(random_username, random_password, 63)
+        CreateSend::Client.new(with_role.cm_client_id).set_payg_billing("EUR", true, true, 2000)
+        with_role.update_attributes(:cm_username => random_username, :cm_password => random_password)
+      rescue Exception => e
+        self.campaign_monitor_responses.create(:response => e)
+        false
+      end
+    end
+
+    def generate_cm_username
+      "#{company_name.present? ? company_name : full_name} #{id}".to_url.gsub("-", "_")
     end
 
     def cm_synchronize!

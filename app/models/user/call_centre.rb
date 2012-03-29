@@ -61,6 +61,10 @@ class ::User::CallCentre < ::User
     :faircalls
   end
 
+  def newsletter_manager?
+    true
+  end
+
   private
 
   def validate_first_and_last_name?
