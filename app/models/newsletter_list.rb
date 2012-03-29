@@ -5,6 +5,7 @@ class NewsletterList < ActiveRecord::Base
 
   after_save :cm_synchronize!, :unless => Proc.new{|nl| nl.cm_list_id_changed?}
   before_save :extract_sourceable_objects, :extract_tag_groups
+  before_destroy :cm_delete!, :if => :cm_exists?
 
   attr_accessor :sourceable_items, :tag_group_items
 
@@ -32,6 +33,14 @@ class NewsletterList < ActiveRecord::Base
     rescue Exception => e
       self.campaign_monitor_responses.create(:response => e)
       false
+    end
+  end
+
+  def cm_delete!
+    begin
+      CreateSend::List.new(cm_list_id).delete
+    rescue Exception => e
+      self.campaign_monitor_responses.create(:response => e)
     end
   end
 
