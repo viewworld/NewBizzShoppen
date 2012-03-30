@@ -1,5 +1,4 @@
 <column-mc:>
-  <%= javascript_include_tag "jquery.autocomplete.min.js" %>
   <%= javascript_include_tag :ckeditor %>
   <%= javascript_include_tag "popup_email_template_editor" %>
   <%= javascript_include_tag "global_field_validator" %>
@@ -38,21 +37,14 @@
 
   <script language="javascript">
       $(document).ready(function() {
-          jQuery.ajaxSetup({
-              'beforeSend': function(xhr) {
-                  xhr.setRequestHeader("Accept", "text/javascript")
-              }
-          });
-          $("#autocompleter").autocomplete({
-                      url : 'callers/campaigns/<%= @campaign.id %>/contacts_for_search.js',
-                      mustMatch : false
-                  }
-          ).result(function(event, item) {
-                      $("#autocomplter_result_form").attr("href", "/callers/campaigns/<%= @campaign.id %>/agent_work_screen/contacts/" + item[1]).click();
-                  });
+          $( "#autocompleter" ).autocomplete({
+          			source: "contacts_for_search.js",
+          			minLength: 1,
+          			select: function( event, ui ) {
+                          $("#autocomplter_result_form").attr("href", "/callers/campaigns/<%= @campaign.id %>/agent_work_screen/contacts/" + ui.item.id).click();
+          			}
+          		});
 
-          $("#autocompleter").autocomplete('contacts_for_search', function(event, data, formatted) {
-          });
       });
 
   </script>
