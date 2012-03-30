@@ -62,6 +62,14 @@ class NewsletterList < ActiveRecord::Base
 
   public
 
+  def last_synchronized_at
+    if last_synch = newsletter_synches.order("updated_at DESC").first
+      last_synch.updated_at
+    else
+      "never"
+    end
+  end
+
   def cm_list
     cm_exists? ? cm_list_id : cm_create!
   end
