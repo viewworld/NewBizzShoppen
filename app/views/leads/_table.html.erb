@@ -131,7 +131,7 @@
       </tr>
   <% end %>
 
-  <% if user_signed_in? and current_user.admin? %>
+  <% if user_signed_in? and current_user.has_any_role?(:admin, :call_centre, :call_centre_agent, :agent) %>
       <tr class="main_actions">
         <td class="cl"></td>
         <td colspan="<%= cols +1 %>" class="no_pdd_lr ta_l">

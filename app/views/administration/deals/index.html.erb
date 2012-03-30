@@ -2,7 +2,7 @@
 <column-mc:>
   <%= render :partial => "shared/deals/actions", :locals => {:path => new_administration_deal_path} %>
 
-   <%= deals_table @deals do |blocks| %>
+   <%= deals_table @deals, :show_checkboxes => true do |blocks| %>
       <% blocks.tools do |deal| %>
           <ul-actions>
             <li>

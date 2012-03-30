@@ -59,11 +59,12 @@
       <%= blank_state_message %>
   <% else %>
 
-      <% cols = 12 -%>
+      <% cols = 13 -%>
       <table id="leads" class="generic">
         <thead>
         <tr>
           <th class="hl"></th>
+          <th><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></th>
           <th><%= link_to t("leads.table.header"), order_for_scoped_search(:header) %></th>
           <th class="ta_r"><%= link_to t("leads.table.purchase_value"), order_for_scoped_search(:purchase_value) %></th>
           <th class="ta_r"><%= link_to t("leads.table.price"), order_for_scoped_search(:price) %></th>
@@ -94,6 +95,7 @@
         <% @leads.each do |lead| %>
             <tr id="lead_<%= lead.id %>" class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
+              <td><%= check_box_tag("lead_ids[]", lead.id) %></td>
               <td>
                 <div class="rltv" style="padding-bottom: 20px;">
                   <%= lead.header %>
@@ -150,7 +152,16 @@
               </td>
             </tr>
         <% end %>
-
+        <tr class="main_actions">
+          <td class="cl"></td>
+          <td colspan="<%= cols +1 %>" class="no_pdd_lr ta_l">
+            <%= bulk_form do %>
+              <%= hidden_field_tag :route_to %>
+              <%= render :partial => "/shared/tags/assign_tags", :locals => { :ids_container => "lead_ids", :taggable_class_name => "Lead" } %>
+            <% end %>
+          </td>
+          <td class="cr"></td>
+        </tr>
         </tbody>
       </table>
   <% end %>

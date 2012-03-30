@@ -4672,3 +4672,6 @@ en:
   tags:
     common:
       assign_tags: "Assign tags"
+    create:
+      flash:
+        tags_successfully_assigned: "%{tags_count} tags successfully assigned to %{taggables_count} objects."

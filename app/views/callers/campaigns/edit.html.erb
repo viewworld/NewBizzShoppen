@@ -109,6 +109,10 @@
                   <%= bt_link_to :arrow_right, t("campaigns.edit.button_copy_selected_contacts"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_move_form');$('#hf_batch_move_form_action_type').val('copy');$('#batch_move_form').submit();" %>
               <% end %>
           <% end %>
+          <%= bulk_form do %>
+            <%= hidden_field_tag :route_to %>
+            <%= render :partial => "/shared/tags/assign_tags", :locals => { :ids_container => "cb_contact_", :taggable_class_name => "Contact" } %>
+          <% end %>
       <% end %>
   <% end %>
 </column-mc:>
