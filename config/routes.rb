@@ -428,6 +428,8 @@ Nbs::Application.routes.draw do
 
   resources :notifications, :only => [:index, :update]
 
+  resources :tags, :only => [:index, :create]
+
   resources :email_templates, :only => [:edit, :update] do
     member do
       post 'test_send_email'

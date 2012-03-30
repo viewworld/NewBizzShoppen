@@ -48,4 +48,22 @@ class Delayed::Backend::ActiveRecord::Job
   end
 end
 
+class ActsAsTaggableOn::Tag < ActiveRecord::Base
+  before_validation :downcase_name
+
+  private
+
+  def downcase_name
+    self.name = name.to_s.downcase
+  end
+
+  public
+
+  def self.find_or_create(tag_names)
+    existing_tags = ActsAsTaggableOn::Tag.where("name in (?)", tag_names.map{ |w| w.to_s.strip.downcase })
+    new_tags = (tag_names - existing_tags.map(&:name)).map{ |name| ActsAsTaggableOn::Tag.create(:name => name) }
+    existing_tags + new_tags
+  end
+end
+
 require "app_utils"

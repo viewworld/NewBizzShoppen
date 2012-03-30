@@ -4669,3 +4669,6 @@ en:
         flash:
           notice_archived: "Newsletter list has been successfully archived."
           notice_retrieved: "Newsletter list has been successfully retrieved."
+  tags:
+    common:
+      assign_tags: "Assign tags"
