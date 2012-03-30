@@ -44,9 +44,6 @@ module ActsAsSubscribable
         EOV
 
         class_eval do
-          has_one :newsletter_subscriber, :as => :subscribable, :dependent => :nullify
-          after_save :create_new_newsletter_update_delayed_job
-          before_destroy :create_new_newsletter_update_delayed_job
 
           def add_to_custom_source_of_newsletter_list!(newsletter_list)
             if newsletter_list.newsletter_subscribers.where(:email => self.send(newsletter_config[:email_field])).first.nil?
@@ -80,31 +77,6 @@ module ActsAsSubscribable
               end.flatten.uniq
             else
               []
-            end
-          end
-
-          private
-
-          def get_or_create_newsletter_subscriber
-            if newsletter_subscriber.nil?
-              self.newsletter_subscriber = NewsletterSubscriber.create(:subscribable => self, :email => self.send(newsletter_config[:email_field]), :name => self.send(newsletter_config[:name_field]))
-            else
-              newsletter_subscriber
-            end
-          end
-
-          def create_new_newsletter_update_delayed_job
-            if newsletter_sources_enabled? or newsletter_custom_sources_enabled?
-              get_or_create_newsletter_subscriber
-              NewsletterManager.create_new_update_newsletter_objects_job(updated_at)
-            end
-          end
-
-          def update_newsletter_subscriber
-            if newsletter_sources_enabled? or newsletter_custom_sources_enabled?
-              get_or_create_newsletter_subscriber.update_attributes(:email => self.send(newsletter_config[:email_field]), :name => self.send(newsletter_config[:name_field]))
-              get_or_create_newsletter_subscriber.assign_to_subscribable_sources!
-              get_or_create_newsletter_subscriber.synchronize_in_lists!
             end
           end
 

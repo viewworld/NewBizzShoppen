@@ -26,23 +26,42 @@ module User::CampaignMonitorClient
     end
 
     def cm_create!
-      client_id = CreateSend::Client.create((with_role.respond_to?(:company_name) ? with_role.company_name : with_role.full_name),
-                                            with_role.full_name,
-                                            with_role.email,
-                                            CampaignMonitorTimezone.find(time_zone),
-                                            with_role.country.name)
-      with_role.update_attribute(:cm_client_id, client_id)
-      client_id
+      begin
+        client_id = CreateSend::Client.create((with_role.respond_to?(:company_name) ? with_role.company_name : with_role.full_name),
+                                              with_role.full_name,
+                                              with_role.email,
+                                              CampaignMonitorTimezone.find(time_zone),
+                                              with_role.country.name)
+        with_role.update_attribute(:cm_client_id, client_id)
+        client_id
+      rescue Exception => e
+        self.campaign_monitor_responses.create(:response => e)
+        false
+      end
     end
 
     def cm_update!
-      CreateSend::Client.new(cm_client_id).set_basics((with_role.respond_to?(:company_name) ? with_role.company_name : with_role.full_name),
-                                                      with_role.full_name,
-                                                      with_role.email,
-                                                      CampaignMonitorTimezone.find(time_zone),
-                                                      with_role.country.name)
-      cm_client_id
+      begin
+        CreateSend::Client.new(cm_client_id).set_basics((with_role.respond_to?(:company_name) ? with_role.company_name : with_role.full_name),
+                                                        with_role.full_name,
+                                                        with_role.email,
+                                                        CampaignMonitorTimezone.find(time_zone),
+                                                        with_role.country.name)
+        cm_client_id
+      rescue Exception => e
+        self.campaign_monitor_responses.create(:response => e)
+        false
+      end
     end
+    
+    def cm_exists?
+      begin
+        CreateSend::Client.new(cm_client_id).details
+      rescue Exception => e
+        self.campaign_monitor_responses.create(:response => e)
+        false
+      end
+    end    
 
     def cm_set_access!
       begin
@@ -57,23 +76,18 @@ module User::CampaignMonitorClient
       end
     end
 
-    def cm_synchronize!
-      begin
-        cm_client_id.present? ? cm_update! : cm_create!
-      rescue Exception => e
-        self.campaign_monitor_responses.create(:response => e)
-        false
-      end
-    end
-
     def generate_cm_username
       "#{company_name.present? ? company_name : full_name} #{id}".to_url.gsub("-", "_")
+    end
+
+    def cm_synchronize!
+      cm_exists? ? cm_update! : cm_create!
     end
 
     public
 
     def cm_client
-      cm_client_id || cm_synchronize!
+      cm_exists? ? cm_client_id : cm_create!
     end
 
   end
