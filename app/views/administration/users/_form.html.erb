@@ -97,6 +97,8 @@
             <%= form.input :billing_rate %>
             <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => true %>
         <% end %>
+
+        <%= render :partial => "/shared/tags/assigned_tags", :locals => { :object => @user } %>
       </ol>
     </fieldset>
   </div>

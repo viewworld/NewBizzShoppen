@@ -208,7 +208,7 @@
             };
 
             if (this.options.select) {
-                this.element.after('<select class="tagit-hiddenSelect" name="'+this.element.attr('name')+'[]" id="'+this.element.attr('name')+'" multiple="multiple"></select>');
+                this.element.after('<select class="tagit-hiddenSelect" name="'+this.element.attr('name')+'[]" id="'+this.element.attr('name').replace('[','_').replace(']','')+'" multiple="multiple"></select>');
                 this.select = this.element.next('.tagit-hiddenSelect');
             }
             this._initialTags();

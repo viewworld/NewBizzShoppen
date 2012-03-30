@@ -95,7 +95,9 @@
       <%= bt_link_to :padlock, t("administration.users.index.view.lock_selected"), "javascript:void(0)", :onclick => "$('#bulk_action_type').val('lock'); submitBulkForm('#{administration_bulk_users_update_path}#PUT');", :id => "lock_selected" %>
       <%= bt_link_to :unlock, t("administration.users.index.view.unlock_selected"), "javascript:void(0)", :onclick => "$('#bulk_action_type').val('unlock'); submitBulkForm('#{administration_bulk_users_update_path}#PUT');", :id => "unlock_selected" %>
       <%= bt_link_to nil, t("administration.settings.edit.view.button_update_stats"), administration_stats_recalculation_path, :method => :put %>
-      <%= render :partial => "/shared/tags/assign_tags", :locals => { :ids_container => "user_ids", :taggable_class_name => "User" } %>
+      <% unless subaccounts_table %>
+        <%= render :partial => "/shared/tags/assign_tags", :locals => { :ids_container => "user_ids", :taggable_class_name => "User" } %>
+      <% end %>
     </td>
     <td colspan="3" class="ta_r">
       <%= t("administration.users.index.view.total") %>: <strong><%= @total_users %></strong>      
