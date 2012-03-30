@@ -1,6 +1,6 @@
 class NewsletterSynch < ActiveRecord::Base
 
-  attr_accessor :cm_list_id
+  attr_accessor :use_delay_job
 
   validates_presence_of :newsletter_list_id
 
@@ -8,9 +8,11 @@ class NewsletterSynch < ActiveRecord::Base
   belongs_to :newsletter_list
 
   after_create do
-    self.cm_list_id = newsletter_list.cm_list
-    self.send(:process!)
-    self.touch
+    if use_delay_job
+      self.delay(:queue => 'campaign_monitor_synchronization').send(:process!)
+    else
+      self.send(:process!)
+    end
   end
 
   private
@@ -48,7 +50,7 @@ class NewsletterSynch < ActiveRecord::Base
     unless @all_cm_subscribers
       @all_cm_subscribers, page, per_page, next_page = [], 1, 1000, true
       while next_page
-        subscribers = CreateSend::List.new(self.cm_list_id).
+        subscribers = CreateSend::List.new(newsletter_list.cm_list_id).
             active(newsletter_list.created_at.strftime("%Y-%m-%d"), page, per_page)
         @all_cm_subscribers += subscribers.Results.map(&:to_hash)
         next_page = false if subscribers.RecordsOnThisPage < per_page
@@ -64,7 +66,7 @@ class NewsletterSynch < ActiveRecord::Base
 
   def process_locally_deleted_subscriber(subscriber)
     begin
-      CreateSend::Subscriber.new(self.cm_list_id, subscriber["EmailAddress"]).delete
+      CreateSend::Subscriber.new(newsletter_list.cm_list_id, subscriber["EmailAddress"]).delete
     rescue Exception => e
       self.campaign_monitor_responses.create(:response => e)
       false
@@ -79,7 +81,7 @@ class NewsletterSynch < ActiveRecord::Base
 
   def export_subscribers(subscribers)
     begin
-      CreateSend::Subscriber.import(self.cm_list_id, subscribers, false)
+      CreateSend::Subscriber.import(newsletter_list.cm_list_id, subscribers, false)
     rescue Exception => e
       self.campaign_monitor_responses.create(:response => e)
       false
@@ -93,6 +95,7 @@ class NewsletterSynch < ActiveRecord::Base
   def process!
     process_locally_deleted_subscribers
     export_all_local_subscribers
+    touch
   end
 
   public
