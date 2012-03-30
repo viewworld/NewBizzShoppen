@@ -22,8 +22,8 @@
   <% newsletter_subscribers.each do |newsletter_subscriber| %>
       <tr class="<%= cycle("odd", "even") %>">
         <td class="cl"></td>
-        <td><%= newsletter_subscriber.email %></td>
-        <td><%= newsletter_subscriber.name %></td>
+        <td><%= newsletter_subscriber.send(newsletter_subscriber.newsletter_config[:email_field]) %></td>
+        <td><%= newsletter_subscriber.send(newsletter_subscriber.newsletter_config[:name_field]) %></td>
         <td class="tda ta_r">
           <ul-actions>
               <li>
