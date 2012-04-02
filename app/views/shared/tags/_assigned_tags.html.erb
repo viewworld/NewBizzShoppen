@@ -1,8 +1,10 @@
+<div>
+<%= t("tags.common.assigned_tags_label") %>:
 <ul id="tags_selection" name="<%= "#{object.class.to_s.tableize.singularize.gsub("/", "_")}[tag_list]" %>"></ul>
+</div>
 
 <script type="text/javascript">
       $(function() {
-
-               $('#tags_selection').tagit({tagSource: "/tags.js", triggerKeys: ['enter', 'comma', 'tab'], select: true, initialTags: [<%= object.tag_list.map{ |w| %{"#{w}"} }.join(",").html_safe %>]});
+        $('#tags_selection').tagit({tagSource: "/tags.js", triggerKeys: ['enter', 'comma', 'tab'], select: true, initialTags: [<%= object.tag_list.map{ |w| %{"#{w}"} }.join(",").html_safe %>]});
       })
 </script>

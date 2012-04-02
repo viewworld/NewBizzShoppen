@@ -41,6 +41,9 @@
         <%= form.input :linkedin_url, :hint => hint_for(@lead, :linkedin_url) %>
         <%= form.input :facebook_url, :hint => hint_for(@lead, :facebook_url) %>
         <%= form.input :note, :as => :text, :hint => hint_for(@lead, :note), :input_html => {:cols => 40, :rows => 10} if @contact %>
+        <% if user_signed_in? and (current_user.admin? or current_user.agent?)  %>
+          <%= render :partial => "/shared/tags/assigned_tags", :locals => { :object => @lead } %>
+        <% end %>
       </ol>
     </fieldset>
   </div>
