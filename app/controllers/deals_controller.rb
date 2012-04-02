@@ -56,6 +56,7 @@ class DealsController < ApplicationController
 
   def show
     @deal = Deal.find(params[:id].split("-").first)
+    current_user.tag_with_tags_from(@deal) if user_signed_in? and current_user.member?
   end
 
   def rate

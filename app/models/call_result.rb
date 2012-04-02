@@ -292,6 +292,12 @@ class CallResult < ActiveRecord::Base
       user.buying_category_ids = buying_category_ids
       user.save
     end
+    if contact.tag_list.any?
+      contact.tag_list.each do |tag|
+        user.tag_list << tag
+      end
+      user.save
+    end
     self.upgraded_user = user
     deliver_email_for_upgraded_user(user, new_password)
   end
