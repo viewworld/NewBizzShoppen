@@ -75,8 +75,8 @@
           <td class="cl"></td>
           <td><%= newsletter_list.owner.screen_name %></td>
           <td><%= newsletter_list.name %></td>
-          <td><%= newsletter_list.newsletter_subscribers.count %></td>
-          <td><%= "-" %></td>
+          <td><%= newsletter_list.fetch_all_subscribable_objects.count %></td>
+          <td><%= newsletter_list.last_synchronized_at %></td>
           <td class="tda ta_r">
             <ul-actions>
                 <li>

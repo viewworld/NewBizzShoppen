@@ -22,18 +22,18 @@ class NewsletterSource < ActiveRecord::Base
   def fetch_all_subscribable_objects
     case source_type
       when CAMPAIGN_SOURCE
-        sourceable.contacts
+        sourceable.contacts.all
       when LEAD_CATEGORY_SOURCE
-        sourceable.leads.including_subcategories
+        sourceable.leads.including_subcategories.all
       when USER_ROLE_SOURCE
         sourceable.users
       when SUBSCRIPTION_TYPE_SOURCE
-        sourceable.users
+        sourceable.users.all
       when TAG_SOURCE
-        sourceable.tagged_objects
+        sourceable.tagged_objects.all
       else #custom
         newsletter_subscribers.map(&:subscribable)
-    end.all
+    end
   end
 
   def assign_source_type

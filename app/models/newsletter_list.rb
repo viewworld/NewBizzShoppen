@@ -6,6 +6,9 @@ class NewsletterList < ActiveRecord::Base
   after_save :cm_synchronize!, :unless => Proc.new{|nl| nl.cm_list_id_changed?}
   before_save :extract_sourceable_objects, :extract_tag_groups
   before_destroy :cm_delete!, :if => :cm_exists?
+  after_create do
+    self.newsletter_synches.create(:use_delay_job => true)
+  end
 
   attr_accessor :sourceable_items, :tag_group_items
 
@@ -18,7 +21,7 @@ class NewsletterList < ActiveRecord::Base
   def cm_create!
     begin
       list_id = CreateSend::List.create(owner.with_role.cm_client, name, "", false, "")
-      reload; update_attribute(:cm_list_id, list_id)
+      update_attribute(:cm_list_id, list_id)
       list_id
     rescue Exception => e
       self.campaign_monitor_responses.create(:response => e)
@@ -50,7 +53,7 @@ class NewsletterList < ActiveRecord::Base
 
   def cm_exists?
     begin
-      CreateSend::List.new(cm_list_id).details
+      CreateSend::List.new(cm_list_id).details.ListID == cm_list_id
     rescue Exception => e
       self.campaign_monitor_responses.create(:response => e)
       false
@@ -58,6 +61,14 @@ class NewsletterList < ActiveRecord::Base
   end
 
   public
+
+  def last_synchronized_at
+    if last_synch = newsletter_synches.order("updated_at DESC").first
+      last_synch.updated_at
+    else
+      "never"
+    end
+  end
 
   def cm_list
     cm_exists? ? cm_list_id : cm_create!
