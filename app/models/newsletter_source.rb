@@ -2,6 +2,9 @@ class NewsletterSource < ActiveRecord::Base
   belongs_to :newsletter_list
   belongs_to :sourceable, :polymorphic => true
   before_save :assign_source_type
+  before_save :assign_custom_source_class
+
+  has_many :newsletter_subscribers
 
   CAMPAIGN_SOURCE          = 0.freeze
   LEAD_CATEGORY_SOURCE     = 1.freeze
@@ -15,24 +18,10 @@ class NewsletterSource < ActiveRecord::Base
   scope :without_tags_and_custom, where("source_type NOT IN (?)", [TAG_SOURCE, CUSTOM_SOURCE])
   scope :with_tags, where("source_type = ?", TAG_SOURCE)
 
-  def custom_source?
-    source_type == CUSTOM_SOURCE
-  end
-
-  def fetch_all_subscribable_objects
-    case source_type
-      when CAMPAIGN_SOURCE
-        sourceable.contacts.all
-      when LEAD_CATEGORY_SOURCE
-        sourceable.leads.including_subcategories.all
-      when USER_ROLE_SOURCE
-        sourceable.users
-      when SUBSCRIPTION_TYPE_SOURCE
-        sourceable.users.all
-      when TAG_SOURCE
-        sourceable.tagged_objects.all
-      else #custom
-        newsletter_subscribers.map(&:subscribable)
+  def assign_custom_source_class
+    self.sourceable_type = case sourceable.class.superclass
+        when ActiveRecord::Base then sourceable.class.to_s
+        else sourceable.class.superclass.to_s
     end
   end
 

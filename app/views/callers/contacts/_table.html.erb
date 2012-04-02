@@ -48,7 +48,7 @@
             <td><%= contact.agent_name %></td>
         <% end %>
         <% if current_call_result = contact.current_call_result %>
-            <td><%= current_call_result.result.name %> <%= "(#{current_call_result.creator_full_name})" %></td>
+            <td><%= current_call_result.result_name %> <%= "(#{current_call_result.creator_full_name})" %></td>
             <td><%= current_call_result.note %></td>
         <% else %>
             <td>-</td>

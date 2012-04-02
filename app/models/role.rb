@@ -7,7 +7,7 @@ class Role
 
   def initialize(id)
     @id = id
-    @key = User::ROLES_PRIORITY[@id]
+    @key = User.valid_roles[@id]
   end
 
   def self.find(id, options={})
@@ -15,7 +15,7 @@ class Role
   end
 
   def self.find_by_key(q)
-    %w{category_supplier member supplier}.select { |x| x.include?(q) }.map { |key| Role.new(User::ROLES_PRIORITY.index(key.to_sym)) }
+    %w{category_supplier member supplier}.select { |x| x.include?(q) }.map { |key| Role.new(User.valid_roles.index(key.to_sym)) }
   end
 
   def self.base_class
