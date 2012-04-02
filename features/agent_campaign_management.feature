@@ -455,6 +455,7 @@ Feature: Agent campaign - management
 
     @tbr @__campaign_manage_results @_done @_tested @selenium
     Scenario: new lead should be created based on contact when result is "Upgrade to lead"
+      Given all contacts from campaign "Testing One" have tags "tag1, tag2, tag3"
       When I am adding "Upgraded to lead" result for contact "Mleko company"
       
       And I fill in the following:
@@ -470,6 +471,7 @@ Feature: Agent campaign - management
          | datepicker                     | 2011-02-02                  |
       And I follow translated "call_results.new.save_button"
       Then contact "Mleko company" should be upgraded to lead
+      And lead with header "A great deal" should have tags "tag1, tag2, tag3"
       And I should see translated "contacts.edit.current_agent_label"
 
     @tbr @__campaign_manage_results @_done @_tested @selenium

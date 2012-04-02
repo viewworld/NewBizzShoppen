@@ -1005,4 +1005,13 @@ class User < ActiveRecord::Base
   def subscription_plan
     active_subscription ? active_subscription.subscription_plan : nil
   end
+
+  def tag_with_tags_from(object)
+    unless (tag_list - object.tag_list).size == tag_list.size - object.tag_list.size
+      object.tag_list.each do |tag|
+        self.tag_list << tag
+      end
+      save
+    end
+  end
 end
