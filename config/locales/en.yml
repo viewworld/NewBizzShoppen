@@ -354,6 +354,9 @@ en:
       chain_mail_at_position: "Chain mail at position %{position}"
       attachments: "Attachments"
 
+    update:
+      flash:
+        result_changed: "Result has been changed. Please check if variables are correct in chain mail templates."
   lead_templates:
     table:
       name: Name
@@ -3277,6 +3280,7 @@ en:
         supplier:
           base:
             must_have_interests: "User must have at least one interests category"
+            must_have_unique_categories: "User must have at least one unique category"
       lead:
         purchase_decision_date: "Purchase decision date"
         notify_suppliers_after_update: "Notify supliers about changes"

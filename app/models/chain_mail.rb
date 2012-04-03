@@ -22,12 +22,30 @@ class ChainMail < ActiveRecord::Base
     chain_mail_items.each do |cmi|
       ChainMailer.new(email, self, Country.get_country_from_locale,
                                     {:subject_content => cmi.subject,
-                                     :body_content => StringUtils.replace_urls_for_chain_mail_verification(self, cmi.body),
+                                     :body_content => prepare_body(cmi.body),
                                      :queue => queue,
                                      :run_at => cmi.run_at,
                                      :position => cmi.position},
                                     assets_to_path_names(cmi.chain_mail_materials)).deliver!
     end
+  end
+
+  def variables_for_body
+    if chain_mailable.is_a?(CallResult)
+      if chain_mailable.result.upgrades_to_lead?
+        {:lead => chain_mailable.contact.lead}
+      elsif chain_mailable.result.upgrades_to_any_user?
+        {:user => User.where(:contact_id => chain_mailable.contact_id).first.with_role}
+      else
+        {:contact => chain_mailable.contact}
+      end
+    else
+      {}
+    end
+  end
+
+  def prepare_body(body)
+    StringUtils.replace_urls_for_chain_mail_verification(self, EmailTemplate.new(:body => body, :preview => true).render(variables_for_body))
   end
 
   def register_click!

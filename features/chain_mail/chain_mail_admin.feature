@@ -22,7 +22,12 @@ Feature: Chain mail administration
   @_done @_tested @selenium
   Scenario: I can create new Chain mail
     When campaign named "Testing One" exists with attributes "crm_campaigns:2,crm_option:0"
-    And I click hidden link by url regex "/callers\/chain_mail_types/"
+    And I follow translated "layout.main_menu.admin.campaigns"
+    And I fill in "search_with_keyword" with "Testing one"
+    Then I press translated "campaigns.filter.search_button"
+    And display all hidden actions
+    And I follow translated "campaigns.index.edit"
+    And I follow translated "campaigns.edit.chain_mail_types"
     Then I should not see CSS path "table.chain_mail_types tbody"
     When I follow translated "chain_mail_types.index.new"
     And I fill in "chain_mail_type_name" with "First chain mail type"

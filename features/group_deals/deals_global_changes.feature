@@ -21,9 +21,9 @@ Feature: Deals global changes
   Scenario: I should be able to set social media short deal info
 
   @_done @_tested @tgn
-  Scenario: I should see the saving % (calculated) in browse deals for deals with discounted price
+  Scenario: I should see the saving % (entered) in browse deals for deals with discounted price
     Given a deal named "Zzzzzzz group deal #1" exists within category "Electronics deals"
-    And a deal named "Zzzzzzz group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:100,discounted_price:25,social_media_description:quo vadis"
+    And a deal named "Zzzzzzz group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:100,saving:75%,discounted_price:25,social_media_description:quo vadis"
     And I am on the homepage
     And I make sure current locale is "en"
     And I follow translated "layout.main_menu.shared.browse_deals"

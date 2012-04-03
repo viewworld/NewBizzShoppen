@@ -16,7 +16,7 @@ class Administration::UsersController < Administration::AdministrationController
     if @user.save
        if params[:user_category_supplier]
         @user.reload
-        @user.update_attribute(:buying_category_ids, params[:user_category_supplier][:buying_category_ids])
+        @user.update_attribute(:buying_category_ids, Array(params[:user_category_supplier][:buying_category_ids]) + Array(@user.deal_category_id))
        end
       flash[:notice] = t("administration.users.create.flash.user_creation_successful")
       redirect_to administration_users_path

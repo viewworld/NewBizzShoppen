@@ -1,6 +1,7 @@
 <column-mc:>
   <%= javascript_include_tag :ckeditor %>
   <%= javascript_include_tag "email_template_signature" %>
+  <%= javascript_include_tag "popup_email_template_editor" %>
 
   <header back="true" backurl="#{@campaign ? callers_campaign_chain_mail_types_path(@campaign) : callers_chain_mail_types_path}">
     <param:content>
