@@ -156,23 +156,11 @@ describe NewsletterSource do
         generate_objects_with_tags
       end
 
-      it "should create newsletter subscriber to all objects that are tagged with tag1 OR tag2" do
-        @list.newsletter_subscribers.map(&:subscriber).should include(@contact1, @contact2, @member1.without_role, @member2.without_role)
-      end
-
-      it "should be possible to add subscribers from objects tagged with tag1 OR tag2 before the source was added" do
-        [@contact_before, @member_before].each do |object|
-          object.reload
-          object.newsletter_subscriber.should be_nil
-        end
-
-        execute_delayed_jobs(true)
-
-        [@contact_before, @member_before].each do |object|
-          object.reload
-          object.newsletter_subscriber.should_not be_nil
-          object.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
-        end
+      it "should contain newsletter subscriber to all objects that are tagged with tag1 OR tag2" do
+        @subscribers = @list.newsletter_subscribers.map(&:subscriber)
+        @subscribers.size.should == 6
+        @subscribers.should include(@contact1, @contact2, @member1.without_role, @member2.without_role, @contact_before, @member_before.without_role)
+        @subscribers.should_not include(@supplier1.without_role)
       end
     end
 
@@ -182,37 +170,11 @@ describe NewsletterSource do
         generate_objects_with_tags
       end
 
-      it "should create newsletter subscriber to all objects that are tagged with tag1 AND tag2" do
-        execute_delayed_jobs
-
-        [@contact1, @member1].each do |object|
-          object.reload
-
-          object.newsletter_subscriber.should_not be_nil
-          object.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
-        end
-
-        [@contact2, @member2, @supplier1].each do |object|
-          object.reload
-
-          object.newsletter_subscriber.should be_nil
-        end
-      end
-
-      it "should be possible to add subscribers from objects tagged with tag1 AND tag2 before the source was added" do
-        [@contact_before, @member_before].each do |object|
-          object.reload
-          object.newsletter_subscriber.should be_nil
-        end
-
-        execute_delayed_jobs(true)
-
-        @contact_before.reload
-        @contact_before.newsletter_subscriber.should_not be_nil
-        @contact_before.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
-
-        @member_before.reload
-        @member_before.newsletter_subscriber.should be_nil
+      it "should contain newsletter subscriber to all objects that are tagged with tag1 AND tag2" do
+        @subscribers = @list.newsletter_subscribers.map(&:subscriber)
+        @subscribers.size.should == 3
+        @subscribers.should include(@contact1, @member1.without_role, @contact_before)
+        @subscribers.should_not include(@contact2, @member2.without_role, @supplier1.without_role)
       end
     end
   end
@@ -249,12 +211,8 @@ describe NewsletterSource do
       @contact.tag_list << "some tag1"
       @contact.save
 
-      @contact.newsletter_subscriber.should_not be_nil
-
-      execute_delayed_jobs
-
-      @contact.reload
-      @contact.newsletter_subscriber.newsletter_sources.size.should == 1
+      @list.newsletter_subscribers.map(&:subscriber).size.should == 1
+      @list.newsletter_subscribers.map(&:subscriber).should include(@contact)
 
       @other_list = NewsletterList.make!
       @tag_group = TagGroup.create(:match_all => false)
@@ -263,22 +221,13 @@ describe NewsletterSource do
       @tag_group.save
       @other_list.newsletter_sources.create(:source_type => NewsletterSource::TAG_SOURCE, :sourceable => @tag_group)
 
-      execute_delayed_jobs(true)
-
-      @tag_group.reload
-
-      @contact.reload
-      @contact.newsletter_subscriber.newsletter_sources.size.should == 2
+      @other_list.newsletter_subscribers.map(&:subscriber).size.should == 1
+      @other_list.newsletter_subscribers.map(&:subscriber).should include(@contact)
 
       @new_contact = Contact.make!(:campaign => @campaign, :header => "Contact B")
       @new_contact.tag_list << "some tag1"
       @new_contact.tag_list << "some tag2"
       @new_contact.save
-
-      execute_delayed_jobs
-
-      @new_contact.reload
-      @new_contact.newsletter_subscriber.newsletter_sources.size.should == 2
     end
   end
 end
