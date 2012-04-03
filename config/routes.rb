@@ -93,6 +93,7 @@ Nbs::Application.routes.draw do
   namespace :newsletters do
     root :to => "newsletter_lists#index"
     resources :newsletter_lists do
+      resources :newsletter_synchronizations
       collection do
         get 'sourceable_for_search'
       end
