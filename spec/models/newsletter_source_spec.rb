@@ -151,16 +151,7 @@ describe NewsletterSource do
       end
 
       it "should create newsletter subscriber to all objects that are tagged with tag1 OR tag2" do
-        execute_delayed_jobs
-
-        [@contact1, @contact2, @member1, @member2].each do |object|
-          object.reload
-
-          object.newsletter_subscriber.should_not be_nil
-          object.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
-        end
-
-        @supplier1.newsletter_subscriber.should be_nil
+        @list.newsletter_subscribers.map(&:subscriber).should include(@contact1, @contact2, @member1.without_role, @member2.without_role)
       end
 
       it "should be possible to add subscribers from objects tagged with tag1 OR tag2 before the source was added" do
@@ -240,10 +231,8 @@ describe NewsletterSource do
       #every newly created subscribable object should have two sources
       @new_lead = Lead.make!(:category => @lead_category)
 
-      @list.newsletter_subscribers.all.map(&:subscriber).should include(@lead)
-      @list.newsletter_subscribers.all.map(&:subscriber).should include(@new_lead)
-      @other_list.newsletter_subscribers.all.map(&:subscriber).should include(@lead)
-      @other_list.newsletter_subscribers.all.map(&:subscriber).should include(@new_lead)
+      @list.newsletter_subscribers.all.map(&:subscriber).should include(@lead,@new_lead)
+      @other_list.newsletter_subscribers.all.map(&:subscriber).should include(@lead,@new_lead)
     end
 
     it "should add new sources to existing subscriber of the object when other list request it through the sources of different type/sourceable object (tags and something else)" do
