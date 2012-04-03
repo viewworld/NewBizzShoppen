@@ -2,6 +2,8 @@ class NewsletterList < ActiveRecord::Base
   has_many :newsletter_sources, :dependent => :destroy
   has_many :campaign_monitor_responses, :as => :resource
   has_many :newsletter_synches
+  has_many :newsletter_subscribers
+  has_many :custom_sources, :class_name => "NewsletterSource", :conditions => {:source_type => NewsletterSource::CUSTOM_SOURCE}
 
   after_save :cm_synchronize!, :unless => Proc.new{|nl| nl.cm_list_id_changed?}
   before_save :extract_sourceable_objects, :extract_tag_groups
@@ -72,14 +74,6 @@ class NewsletterList < ActiveRecord::Base
 
   def cm_list
     cm_exists? ? cm_list_id : cm_create!
-  end
-
-  def fetch_all_subscribable_objects
-    newsletter_sources.map(&:fetch_all_subscribable_objects).flatten
-  end
-
-  def custom_source
-    newsletter_sources.detect { |source| source.custom_source? } || self.newsletter_sources.create(:source_type => NewsletterSource::CUSTOM_SOURCE)
   end
 
   def extract_sourceable_objects

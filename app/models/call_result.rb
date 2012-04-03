@@ -103,6 +103,10 @@ class CallResult < ActiveRecord::Base
     end
   end
 
+  def result_name
+    result ? result.name : "-result deleted-"
+  end
+
   class << self
 
     def for_table_header(date_from, date_to)

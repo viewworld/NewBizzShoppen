@@ -6,7 +6,7 @@ class Newsletters::NewsletterListsController < Newsletters::NewslettersControlle
   set_subtab "newsletter_lists"
 
   def edit
-    @newsletter_subscribers = @newsletter_list.fetch_all_subscribable_objects.paginate(:page => params[:page], :per_page => 30)
+    @newsletter_subscribers = @newsletter_list.newsletter_subscribers.paginate(:page => params[:page], :per_page => 30)
   end
 
   def create

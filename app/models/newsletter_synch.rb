@@ -22,10 +22,10 @@ class NewsletterSynch < ActiveRecord::Base
   # -------------------------------------------------------------------------------------------------------------------
 
   def all_local_subscribers
-    @all_local_subscribers ||= newsletter_list.fetch_all_subscribable_objects.map do |obj|
+    @all_local_subscribers ||= newsletter_list.newsletter_subscribers.map do |obj|
       {
-          "EmailAddress" => obj.send(obj.newsletter_config[:email_field]),
-          "Name" => obj.send(obj.newsletter_config[:name_field])
+          "EmailAddress" => obj.email_address,
+          "Name" => obj.name
       }
     end
   end
