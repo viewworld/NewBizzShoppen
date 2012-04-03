@@ -508,6 +508,7 @@ en:
       agent_work_screen_as: "Go to agent work screen as"
       button_move_selected_contacts: "Move selected"
       button_copy_selected_contacts: "Copy selected"
+      button_bulk_add_to_newsletter_list_link: "Add selected to newsletter list"
     index:
       title: Campaigns
       edit: Edit
@@ -639,6 +640,9 @@ en:
       flash:
         moved_successfully: "Selected contacts have been successfully moved to %{campaign}"
         copied_successfully: "Selected contacts have been successfully copied to %{campaign}"
+    batch_add_to_newsletter_list:
+      flash:
+        added_successfully: "%{contacts_count} contacts have been added to list %{newsletter_list}"
   call_results:
     table:
       date: Date

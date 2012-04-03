@@ -31,4 +31,5 @@ Feature: Newsletter backend
 
   Scenario: When subscriber is exported to the Campaign Monitor then email, full name and the following custom fields should be included: company name and zip code
 
+  @_done @_tested_elsewhere @_rspec
   Scenario: When supplier or category supplier has enabled newsletter manager feature then his/her client account should be created in Campaign Monitor (unless previously created)

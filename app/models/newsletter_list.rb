@@ -76,6 +76,12 @@ class NewsletterList < ActiveRecord::Base
     cm_exists? ? cm_list_id : cm_create!
   end
 
+  def add_to_custom_sources!(sourceable_objects)
+    sourceable_objects.each do |sourceable_object|
+      newsletter_sources.create(:source_type => NewsletterSource::CUSTOM_SOURCE, :sourceable => sourceable_object)
+    end
+  end
+
   def extract_sourceable_objects
     if sourceable_items and sourceable_items.is_a?(Array) and valid?
       sourceable_items.each do |source|

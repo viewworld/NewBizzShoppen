@@ -11,3 +11,10 @@ end
 Given /^I view newsletter template preview for last campaign$/ do
   visit "/newsletters/newsletter_campaigns/#{NewsletterCampaign.last.template_key}"
 end
+
+Given /^campaign monitor requests are turned off$/ do
+  CreateSend::List.any_instance.stubs(:details).returns(false)
+  CreateSend::List.stubs(:create).returns("List1023456")
+  CreateSend::List.any_instance.stubs(:active).returns(Hashie::Mash.new(:RecordsOnThisPage => 0, :Results => [])).then.returns(Hashie::Mash.new(:RecordsOnThisPage => 1, :Results => [{:EmailAddress => "asdasd@op.pl"}]))
+  CreateSend::Subscriber.stubs(:import).twice()
+end

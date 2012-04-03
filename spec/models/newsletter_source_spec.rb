@@ -91,11 +91,17 @@ describe NewsletterSource do
     before(:each) do
       @list = NewsletterList.make!
       @contact = Contact.make!
+      @user = User::Member.make!
+      @lead = Lead.make!
+      @list.add_to_custom_sources!([@contact, @user, @lead])
     end
 
     it "should contain subscriber in source when object was added to custom source of the list" do
-      @list.custom_sources.create(:sourceable => @contact)
-      @list.newsletter_subscribers.map(&:subscriber).should include(@contact)
+      [@contact, @user, @lead].each do |object|
+        @list.newsletter_sources.detect{ |ns| ns.sourceable == object and ns.source_type == NewsletterSource::CUSTOM_SOURCE }.should_not be_nil
+        object = User.find(object.id) if object.is_a?(User)
+        @list.newsletter_subscribers.map(&:subscriber).should include(object)
+      end
     end
   end
 
