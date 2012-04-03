@@ -28,7 +28,8 @@
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.currencies")), administration_currencies_path, :subtab => "currencies" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.countries")), administration_countries_path, :subtab => "countries" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.languages")), administration_languages_path, :subtab => "languages" %>
-    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.featured_deals")), administration_featured_deals_path, :subtab => "featured_deals", :additional_class => "last" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.featured_deals")), administration_featured_deals_path, :subtab => "featured_deals" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.tags")), administration_tags_path, :subtab => "tags", :additional_class => "last" %>
 <% end %>
 
 <%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.admin.alerts"), :tab => "alerts" do  %>

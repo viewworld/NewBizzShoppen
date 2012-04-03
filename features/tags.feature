@@ -7,7 +7,23 @@ Feature: Tags
   @_done @_non_testable
   Scenario: As admin/agent/call centre agent I should be able to tag supplier, member, lead, deal, contact
 
+  @_done @_tested @selenium
   Scenario: As admin I should be able to edit/delete/merge/duplicate tags
+    Given lead Test1 exists within category Business
+    And lead with header "Test1" has tags "tag1, tag2"
+    Given lead Test2 exists within category Business
+    And lead with header "Test2" has tags "tag2, tag3"
+    Then I am on the homepage
+    And I sign in as blazejek@gmail.com with password secret
+    And I click hidden link by url regex "/administration\/tags/"
+    And I click hidden link by url regex "/\/administration\/tags\/\d+\/edit/"
+    And I fill in "tag_name" with "test_tag1"
+    And I press translated "administration.tags.edit.view.button_update"
+    Then I should see "test_tag1"
+    And I confirm a js prompt with "duplicated tag" on the next step
+    And display all hidden actions
+    And I follow translated "administration.tags.index.view.duplicate"
+    Then I should see "duplicated tag"
 
   @_done @_tested_elsewhere
   Scenario: When member/supplier/category supplier/lead was upgraded from contact then is should be auto tagged with contact's tags

@@ -19,6 +19,10 @@ When /^all contacts from campaign "([^"]*)" have tags "([^"]*)"$/ do |campaign_n
   end
 end
 
+Given /^lead with header "([^"]*)" has tags "([^"]*)"$/ do |header, tags|
+  add_tags_to_object(Lead.where(:header => header).first, tags)
+end
+
 Given /^deal with header "([^"]*)" has tags "([^"]*)"$/ do |header, tags|
   add_tags_to_object(Deal.where(:header => header).first, tags)
 end

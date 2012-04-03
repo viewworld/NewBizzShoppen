@@ -577,3 +577,7 @@ NewsletterCampaign.blueprint do
   cm_username { "fairletters" }
   cm_password { "secret" }
 end
+
+ActsAsTaggableOn::Tag.blueprint do
+  name { Faker::Lorem.words(1).to_s + "#{Time.now.to_f.to_s.gsub('.','')}" }
+end

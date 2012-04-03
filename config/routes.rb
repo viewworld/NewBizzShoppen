@@ -82,6 +82,11 @@ Nbs::Application.routes.draw do
       end
     end
     resources :paypal_notifications, :only => [:index, :show]
+    resources :tags do
+      member do
+        post 'duplicate'
+      end
+    end
     match '/dashboard' => 'dashboard#index', :as => 'dashboard'
   end
 
