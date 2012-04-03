@@ -44,13 +44,6 @@ module ActsAsSubscribable
         EOV
 
         class_eval do
-
-          def add_to_custom_source_of_newsletter_list!(newsletter_list)
-            if newsletter_list.newsletter_subscribers.where(:email => self.send(newsletter_config[:email_field])).first.nil?
-              newsletter_list.custom_source.newsletter_subscribers << get_or_create_newsletter_subscriber
-            end
-          end
-
           def newsletter_custom_sources_enabled?
             newsletter_subscriber and newsletter_subscriber.newsletter_sources.where(:source_type => NewsletterSource::CUSTOM_SOURCE).first
           end

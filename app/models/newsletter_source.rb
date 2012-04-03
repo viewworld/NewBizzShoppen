@@ -38,7 +38,7 @@ class NewsletterSource < ActiveRecord::Base
       elsif sourceable.is_a?(TagGroup)
         TAG_SOURCE
       else
-        nil
+        CUSTOM_SOURCE
       end
     end
   end

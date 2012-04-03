@@ -226,16 +226,17 @@ describe NewsletterSource do
 
   context "Custom" do
     before(:each) do
+      @list = NewsletterList.make!
       @contact = Contact.make!
-      @contact.add_to_custom_source_of_newsletter_list!(@list)
-      @contact.reload
+      @user = User::Member.make!
+      @lead = Lead.make!
+      @list.add_to_custom_sources!([@contact, @user, @lead])
     end
 
     it "should create subscriber when object was added to custom source of the list" do
-      @contact.newsletter_subscriber.should_not be_nil
-      @contact.newsletter_subscriber.newsletter_sources.first.should be_custom_source
-      @contact.newsletter_subscriber.email.should == @contact.email_address
-      @contact.newsletter_subscriber.name.should == @contact.contact_name
+      [@contact, @user, @lead].each do |object|
+        @list.newsletter_sources.detect{ |ns| ns.sourceable == object and ns.source_type == NewsletterSource::CUSTOM_SOURCE }.should_not be_nil
+      end
     end
 
     it "should update object added to custom source of the list" do
