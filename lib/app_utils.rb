@@ -44,10 +44,6 @@ module ActsAsSubscribable
         EOV
 
         class_eval do
-          def newsletter_custom_sources_enabled?
-            newsletter_subscriber and newsletter_subscriber.newsletter_sources.where(:source_type => NewsletterSource::CUSTOM_SOURCE).first
-          end
-
           def newsletter_sources_enabled?
             newsletter_config[:source_associations].detect do |source_association|
               self.send(source_association).respond_to?(:newsletter_sources) and self.send(source_association).send(:newsletter_sources).any?
