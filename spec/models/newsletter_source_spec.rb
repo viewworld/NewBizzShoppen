@@ -228,6 +228,9 @@ describe NewsletterSource do
       @new_contact.tag_list << "some tag1"
       @new_contact.tag_list << "some tag2"
       @new_contact.save
+
+      @list.newsletter_subscribers.all.map(&:subscriber).size.should == 2
+      @list.newsletter_subscribers.all.map(&:subscriber).should include(@contact,@new_contact)
     end
   end
 end
