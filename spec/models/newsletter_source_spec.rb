@@ -5,7 +5,6 @@ describe NewsletterSource do
 
   before(:each) do
     Delayed::Worker.delay_jobs = true
-    @lead_category = LeadCategory.make!
   end
 
   context "Update & sync" do
@@ -29,229 +28,81 @@ describe NewsletterSource do
 
   context "Lead" do
     before(:each) do
+      @list = NewsletterList.make!
       @lead_category = LeadCategory.make!
-
       @lead_before = Lead.make!(:category => @lead_category)
-
-      @list.newsletter_sources.create(:source_type => NewsletterSource::LEAD_CATEGORY_SOURCE, :sourceable => @lead_category)
-
+      @newsletter_source = @list.newsletter_sources.create(:source_type => NewsletterSource::LEAD_CATEGORY_SOURCE, :sourceable => @lead_category)
       @lead_category.reload
-
       @lead = Lead.make!(:category => @lead_category)
     end
 
-    it "should create subscriber when new lead created" do
-      @lead.newsletter_subscriber.should_not be_nil
-      @lead.newsletter_subscriber.subscribable.should == @lead
-
-      execute_delayed_jobs
-
-      @lead.reload
-
-      @lead.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
-
-      @lead.newsletter_subscriber.email.should == @lead.email_address
-      @lead.newsletter_subscriber.name.should == @lead.contact_name
-    end
-
-    it "should update subscriber when lead was updated" do
-      @lead.update_attributes!(:email_address => "new_email_1331638434@nbs.com", :contact_name => "Tom Jones")
-
-      execute_delayed_jobs
-
-      @lead.reload
-
-      @lead.newsletter_subscriber.email.should == @lead.email_address
-      @lead.newsletter_subscriber.name.should == @lead.contact_name
-    end
-
-    it "should be possible to add subscribers from lead source when leads were created before source was added" do
-      @lead_before.reload
-      @lead_before.newsletter_subscriber.should be_nil
-
-      execute_delayed_jobs(true)
-
-      @lead_before.reload
-      @lead_before.newsletter_subscriber.should_not be_nil
-      @lead_before.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
+    it "should contain subscriber in source when new lead created" do
+      @list.newsletter_subscribers.map(&:subscriber).should include(@lead)
     end
   end
 
   context "Campaign" do
     before(:each) do
+      @list = NewsletterList.make!
       @campaign = Campaign.make!
-
       @contact_before = Contact.make!(:campaign => @campaign)
-
       @list.newsletter_sources.create(:source_type => NewsletterSource::CAMPAIGN_SOURCE, :sourceable => @campaign)
-
       @campaign.reload
-
       @contact = Contact.make!(:campaign => @campaign)
     end
 
-    it "should create subscriber when new contact created" do
-      @contact.newsletter_subscriber.should_not be_nil
-      @contact.newsletter_subscriber.subscribable.should == @contact
-
-      execute_delayed_jobs
-
-      @contact.reload
-
-      @contact.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
-
-      @contact.newsletter_subscriber.email.should == @contact.email_address
-      @contact.newsletter_subscriber.name.should == @contact.contact_name
-    end
-
-    it "should update subscriber when contact was updated" do
-      @contact.update_attributes!(:email_address => "new_email_1331638434@nbs.com", :contact_name => "Tom Jones")
-
-      execute_delayed_jobs
-
-      @contact.reload
-
-      @contact.newsletter_subscriber.email.should == @contact.email_address
-      @contact.newsletter_subscriber.name.should == @contact.contact_name
-    end
-
-    it "should be possible to add subscribers from campaign source when contacts were created before source was added" do
-      @contact_before.reload
-      @contact_before.newsletter_subscriber.should be_nil
-
-      execute_delayed_jobs(true)
-
-      @contact_before.reload
-      @contact_before.newsletter_subscriber.should_not be_nil
-      @contact_before.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
+    it "should contain subscriber in source when new contact created" do
+      @list.newsletter_subscribers.map(&:subscriber).should include(@contact)
     end
   end
 
   context "User role" do
     before(:each) do
+      @list = NewsletterList.make!
       @member_before = User::Member.make!(:first_name => "User0000000001")
-      @role = Role.find(4)
+      @role = Role.find(7)
       @list.newsletter_sources.create(:source_type => NewsletterSource::USER_ROLE_SOURCE, :sourceable => @role)
-
       @member = User::Member.make!
     end
 
-    it "should create subscriber when new user of certain role is created" do
-      @member.newsletter_subscriber.should_not be_nil
-      @member.newsletter_subscriber.subscribable.should == @member
-
-      execute_delayed_jobs
-
-      @member.reload
-
-      @member.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
-
-      @member.newsletter_subscriber.email.should == @member.email
-      @member.newsletter_subscriber.name.should == @member.full_name
-    end
-
-    it "should update subscriber when user was updated" do
-      @member.update_attributes!(:email => "new_email_1331638434@nbs.com", :first_name => "Tom")
-
-      execute_delayed_jobs
-
-      @member.reload
-
-      @member.newsletter_subscriber.email.should == @member.email
-      @member.newsletter_subscriber.name.should == @member.full_name
-    end
-
-    it "should be possible to add subscribers from user role source when users were created before source was added" do
-      @member_before.reload
-      @member_before.newsletter_subscriber.should be_nil
-
-      execute_delayed_jobs(true)
-
-      @member_before.reload
-      @member_before.newsletter_subscriber.should_not be_nil
-      @member_before.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
+    it "should contain subscriber in source when new user of certain role is created" do
+      @list.newsletter_subscribers.map(&:subscriber).map(&:with_role).should include(@member)
     end
   end
 
   context "User Subscription Type" do
     before(:each) do
+      @list = NewsletterList.make!
       @payable_subscription = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :billing_cycle => 3, :can_be_upgraded => false)
       @payable_subscription.subscription_plan_lines.make!(:price => 25)
       @payable_subscription.subscription_plan_lines.make!(:price => 5)
-
       @supplier_before = User::Supplier.make!(:subscription_plan_id => @payable_subscription.id)
-
       @list.newsletter_sources.create(:source_type => NewsletterSource::SUBSCRIPTION_TYPE_SOURCE, :sourceable => @payable_subscription)
-
       @payable_subscription.reload
-
       @supplier = User::Supplier.make!(:subscription_plan_id => @payable_subscription.id)
     end
 
-    it "should create subscriber when new user of certain subscription type is created" do
-      @supplier.newsletter_subscriber.should_not be_nil
-      @supplier.newsletter_subscriber.subscribable.should == @supplier
-
-      execute_delayed_jobs
-
-      @supplier.reload
-
-      @supplier.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
-
-      @supplier.newsletter_subscriber.email.should == @supplier.email
-      @supplier.newsletter_subscriber.name.should == @supplier.full_name
-    end
-
-    it "should update subscriber when user was updated" do
-      @supplier.update_attributes!(:email => "new_email_1331638434@nbs.com", :first_name => "Tom")
-
-      execute_delayed_jobs
-      @supplier.reload
-
-      @supplier.newsletter_subscriber.email.should == @supplier.email
-      @supplier.newsletter_subscriber.name.should == @supplier.full_name
-    end
-
-    it "should be possible to add subscribers from user subscription type source when users were created before source was added" do
-      @supplier_before.reload
-      @supplier_before.newsletter_subscriber.should be_nil
-
-      execute_delayed_jobs(true)
-
-      @supplier_before.reload
-      @supplier_before.newsletter_subscriber.should_not be_nil
-      @supplier_before.newsletter_subscriber.newsletter_sources.first.should == @list.newsletter_sources.first
+    it "should contain subscriber in source when new user of certain subscription type is created" do
+      @list.newsletter_subscribers.map(&:subscriber).map(&:with_role).should include(@supplier)
     end
   end
 
   context "Custom" do
     before(:each) do
+      @list = NewsletterList.make!
       @contact = Contact.make!
-      @contact.add_to_custom_source_of_newsletter_list!(@list)
-      @contact.reload
     end
 
-    it "should create subscriber when object was added to custom source of the list" do
-      @contact.newsletter_subscriber.should_not be_nil
-      @contact.newsletter_subscriber.newsletter_sources.first.should be_custom_source
-      @contact.newsletter_subscriber.email.should == @contact.email_address
-      @contact.newsletter_subscriber.name.should == @contact.contact_name
-    end
-
-    it "should update object added to custom source of the list" do
-      @contact.update_attributes!(:email_address => "new_email_1331638434@nbs.com", :contact_name => "Tom Jones")
-
-      execute_delayed_jobs
-
-      @contact.reload
-
-      @contact.newsletter_subscriber.email.should == @contact.email_address
-      @contact.newsletter_subscriber.name.should == @contact.contact_name
+    it "should contain subscriber in source when object was added to custom source of the list" do
+      @list.custom_sources.create(:sourceable => @contact)
+      @list.newsletter_subscribers.map(&:subscriber).should include(@contact)
     end
   end
 
   context "Tags" do
     before(:each) do
+      @list = NewsletterList.make!
+
       @contact_before = Contact.make!
       @contact_before.tag_list << "some tag1"
       @contact_before.tag_list << "some tag2"
@@ -370,36 +221,29 @@ describe NewsletterSource do
   end
 
   context "New source added to list" do
+    before(:each) do
+      @list = NewsletterList.make!
+    end
+
     it "should add new sources to existing subscriber of the object when other list request it through the sources of the same type/sourceable object" do
       @lead_category = LeadCategory.make!
       @list.newsletter_sources.create(:source_type => NewsletterSource::LEAD_CATEGORY_SOURCE, :sourceable => @lead_category)
       @lead = Lead.make!(:category => @lead_category)
 
-      @lead.newsletter_subscriber.should_not be_nil
-
-      execute_delayed_jobs
-
-      @lead.reload
-      @lead.newsletter_subscriber.newsletter_sources.size.should == 1
+      @list.newsletter_subscribers.map(&:subscriber).should include(@lead)
 
       @other_list = NewsletterList.make!
       @other_list.newsletter_sources.create(:source_type => NewsletterSource::LEAD_CATEGORY_SOURCE, :sourceable => @lead_category)
 
-      execute_delayed_jobs(true)
-
-      @lead.reload
-      @lead.newsletter_subscriber.newsletter_sources.size.should == 2
-
-      @lead_category.reload
-      @lead_category.newsletter_sources.size.should == 2
+      @other_list.newsletter_subscribers.map(&:subscriber).should include(@lead)
 
       #every newly created subscribable object should have two sources
       @new_lead = Lead.make!(:category => @lead_category)
 
-      execute_delayed_jobs
-
-      @new_lead.reload
-      @new_lead.newsletter_subscriber.newsletter_sources.size.should == 2
+      @list.newsletter_subscribers.all.map(&:subscriber).should include(@lead)
+      @list.newsletter_subscribers.all.map(&:subscriber).should include(@new_lead)
+      @other_list.newsletter_subscribers.all.map(&:subscriber).should include(@lead)
+      @other_list.newsletter_subscribers.all.map(&:subscriber).should include(@new_lead)
     end
 
     it "should add new sources to existing subscriber of the object when other list request it through the sources of different type/sourceable object (tags and something else)" do
