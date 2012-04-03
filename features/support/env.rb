@@ -36,6 +36,7 @@ Spork.prefork do
   require "#{Rails.root}/spec/support/blueprints" # or wherever they live
   require 'machinist/active_record'
   require 'webmock/cucumber'
+  require "lib/webmock_fix"
 
   selenium_requests = %r{/((__.+__)|(hub/session.*))$}
   WebMock.disable_net_connect! :allow => selenium_requests
