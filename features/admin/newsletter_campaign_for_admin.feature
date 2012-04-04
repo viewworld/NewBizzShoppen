@@ -67,7 +67,7 @@ Feature: Newsletter campaign for admin
   @_done @_tested_elsewhere
   Scenario: I can save as a draft
 
-  @_done @_tested_elsewhere @_rspect
+  @_done @_tested_elsewhere @_rspec
   Scenario: I can send it to Campaign Monitor
 
   @_done @_tested_elsewhere
