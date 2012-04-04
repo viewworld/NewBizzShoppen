@@ -21,7 +21,7 @@ module DestroyPrevention
    end
  end
 
- ActiveRecord::Base.send(:include, DestroyPrevention)
+ActiveRecord::Base.send(:include, DestroyPrevention)
 
 module ActsAsSubscribable
     def self.included(base)
@@ -29,49 +29,6 @@ module ActsAsSubscribable
     end
 
     module ClassMethods
-      #options: :email_field => "email", :name_field => "full_name", :source_associations => [:category, :campaign, :tags]
-      def acts_as_newsletter_subscribable(options={})
-        if options[:email_field].nil? or options[:name_field].nil?
-          throw "Following fields: email_field and name_field must be specified!"
-        elsif !options[:source_associations].is_a?(Array)
-          throw "Field: source_associations should be an array"
-        end
-
-        class_eval <<-EOV
-           def newsletter_config
-             {:email_field => :#{options[:email_field]}, :name_field => :#{options[:name_field]}, :source_associations => [#{options[:source_associations].map{ |s| ":#{s.to_s}" }.join(", ")}]}
-           end
-        EOV
-
-        class_eval do
-          def newsletter_sources_enabled?
-            newsletter_config[:source_associations].detect do |source_association|
-              self.send(source_association).respond_to?(:newsletter_sources) and self.send(source_association).send(:newsletter_sources).any?
-            end.present? or newsletter_sources_from_tags.any?
-          end
-
-          def all_newsletter_sources
-            (newsletter_config[:source_associations].map do |source_association|
-              self.send(source_association).respond_to?(:newsletter_sources) ? self.send(source_association).send(:newsletter_sources) : []
-            end.flatten + newsletter_sources_from_tags).uniq
-          end
-
-          def newsletter_sources_from_tags
-            if self.respond_to?(:tag_list) and self.tag_list.any?
-              tag_groups = TagGroup.tagged_with(tag_list, :any => true).where(:match_all => false) +
-                  TagGroup.tagged_with(tag_list, :match_all => true).where(:match_all => true)
-
-              tag_groups.map do |tag_group|
-                tag_group.newsletter_sources
-              end.flatten.uniq
-            else
-              []
-            end
-          end
-
-        end
-      end
-
       def acts_as_newsletter_source
         class_eval do
           has_many :newsletter_sources, :as => :sourceable

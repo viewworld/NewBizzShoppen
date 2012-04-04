@@ -23,6 +23,9 @@ class NewsletterList < ActiveRecord::Base
   def cm_create!
     begin
       list_id = CreateSend::List.create(owner.with_role.cm_client, name, "", false, "")
+      list = CreateSend::List.new(list_id)
+      list.create_custom_field "Company Name", "Text"
+      list.create_custom_field "Zip Code", "Text"
       update_attribute(:cm_list_id, list_id)
       list_id
     rescue Exception => e
