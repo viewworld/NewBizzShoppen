@@ -14,7 +14,10 @@ class Newsletters::NewsletterCampaignsController < Newsletters::NewslettersContr
 
   def update
     update! do |success, failure|
-      success.html { redirect_to newsletters_newsletter_campaigns_path }
+      success.html {
+        @newsletter_campaign.send(:cm_synchronize!) if params[:commit_send]
+        redirect_to newsletters_newsletter_campaigns_path
+      }
       failure.html { render 'edit' }
     end
   end
