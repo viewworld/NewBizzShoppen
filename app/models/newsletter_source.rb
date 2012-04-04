@@ -19,8 +19,8 @@ class NewsletterSource < ActiveRecord::Base
   scope :with_tags, where("source_type = ?", TAG_SOURCE)
 
   def assign_custom_source_class
-    self.sourceable_type = case sourceable.class.superclass
-        when ActiveRecord::Base then sourceable.class.to_s
+    self.sourceable_type = case sourceable.class.superclass.to_s
+        when "ActiveRecord::Base" then sourceable.class.to_s
         else sourceable.class.superclass.to_s
     end
   end

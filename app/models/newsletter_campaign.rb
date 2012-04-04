@@ -34,10 +34,10 @@ class NewsletterCampaign < ActiveRecord::Base
 
   def cm_create!
     begin
-      cm_campaign_id = CreateSend::Campaign.create(name, owner.cm_client_id, subject, "Fairleads.com", "admin@fairleads.com",
-                                            "admin@fairleads.com", link_to_template, link_to_template, newsletter_lists.map(&:cm_list_id), [])
+      cm_campaign_id = CreateSend::Campaign.create(owner.cm_client_id, subject, name, "Fairleads.com", "admin@fairleads.com",
+                                            "admin@fairleads.com", link_to_template, link_to_template(true), newsletter_lists.map(&:cm_list_id), [])
       update_attribute(:cm_campaign_id, cm_campaign_id)
-      list_id
+      cm_campaign_id
     rescue Exception => e
       self.campaign_monitor_responses.create(:response => e)
       false
@@ -47,7 +47,8 @@ class NewsletterCampaign < ActiveRecord::Base
 
   public
 
-  def link_to_template
-    "http://#{domain_name}/newsletters/newsletter_campaigns/#{template_key}"
+  def link_to_template(text=false)
+    #"http://#{domain_name}/newsletters/newsletter_campaigns/#{template_key}"
+    %{http://testing.fairleads.com/newsletters/newsletter_campaigns/d96a3191f232352082489e90647b15dcde55bc1e#{text ? "?txt=1" : ""}}
   end
 end

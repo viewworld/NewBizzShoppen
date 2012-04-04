@@ -56,7 +56,7 @@ module User::CampaignMonitorClient
     
     def cm_exists?
       begin
-        CreateSend::Client.new(cm_client_id).details.ClientID == cm_client_id
+        CreateSend::Client.new(cm_client_id).details.BasicDetails.ClientID == cm_client_id
       rescue Exception => e
         self.campaign_monitor_responses.create(:response => e)
         false
