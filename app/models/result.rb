@@ -87,6 +87,10 @@ class Result < ActiveRecord::Base
     template ? template.available_variables : []
   end
 
+  def available_variables
+    EmailTemplate.available_variables_for((upgrades_to_any_user? or upgrades_to_lead?) ? name.downcase.gsub(" ", "_") : "common_result")
+  end
+
   private
 
   def check_is_reported_and_is_success

@@ -93,17 +93,17 @@ Feature: Fairdeals view deal
     And I should see "1" occurrences of css class "countdown" for tag "div"
 
   #7651
-  @m19 @_requested @_tested @_done @tgn
+  @m19 @_requested @_tested @_done @tgn @_deprecated
   Scenario: When deal does not have price but has discounted price, its value should be displayed as saving
-    Given a deal named "Abc group deal #1" exists within category "Electronics deals"
-    And a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:0,discounted_price:25,social_media_description:quo vadis"
-    Given I visit domain http://fairdeals.dk
-    Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow category "Electronics deals"
-    And I follow "Abc group deal #1"
-    Then I should not see translated "deals.listing.price"
-    And I should not see translated "deals.listing.discounted_price"
-    But I should see "25%"
+#    Given a deal named "Abc group deal #1" exists within category "Electronics deals"
+#    And a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:0,discounted_price:25,social_media_description:quo vadis"
+#    Given I visit domain http://fairdeals.dk
+#    Then I follow translated "layout.fairdeals.main_menu.deals"
+#    And I follow category "Electronics deals"
+#    And I follow "Abc group deal #1"
+#    Then I should not see translated "deals.listing.price"
+#    And I should not see translated "deals.listing.discounted_price"
+#    But I should see "25%"
 
   #7831
   @m20 @_requested @is @non_testable @_done

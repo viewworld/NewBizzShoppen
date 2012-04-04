@@ -80,6 +80,9 @@
           <td class="tda ta_r">
             <ul-actions>
                 <li>
+                    <%= link_to t("newsletters.newsletter_lists.index.view.synchronize"),  newsletters_newsletter_list_newsletter_synchronizations_path(newsletter_list), :method => :post %>
+                </li>
+                <li>
                     <%= link_to t("newsletters.newsletter_lists.index.view.edit"),  edit_newsletters_newsletter_list_path(newsletter_list), :class => "default_action" %>
                 </li>
                 <li>

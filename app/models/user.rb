@@ -521,6 +521,10 @@ class User < ActiveRecord::Base
     casted_class.find(id)
   end
 
+  def without_role
+    self.class.superclass.find(id)
+  end
+
   #to handle menu chronology correctly
   def roles_sorted
     if has_role?(:lead_supplier)

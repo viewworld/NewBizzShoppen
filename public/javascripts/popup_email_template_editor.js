@@ -138,9 +138,18 @@
     $('#modal_for_email_template_vars').dialog('open');
   }
 
+  function open_email_variables_multiple_dialog(instance_name){
+    $('#modal_email_vars_' + instance_name).dialog('open');
+  }
+
   function insert_variable_to_editor(variable, instance_name){
       CKEDITOR.instances[instance_name].insertHtml( variable );
       $('#modal_for_email_template_vars').dialog('close');
+  }
+
+  function insert_variable_to_multiple_editor(variable, instance_name){
+      CKEDITOR.instances[instance_name].insertHtml( variable );
+      $('#modal_email_vars_' + instance_name).dialog('close');
   }
 
   function test_send_email_prompt(url, subject_field_id, ckeditor_body_instance_id){

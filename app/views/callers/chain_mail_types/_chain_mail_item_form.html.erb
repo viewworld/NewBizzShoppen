@@ -36,6 +36,8 @@
   </div>
 </div>
 
+<%= render :partial => "shared/email_template_popup/template_vars_multiple_popup", :locals => {:instance_name => "chain_mail_type_chain_mail_items_attributes_#{counter.to_i}_body", :object => f.object.chain_mail_type.result} %>
+
 <script type="text/javascript">
   setup_ckeditor_for_field($('.body_ckeditor_span:last textarea').attr('id'));
 </script>

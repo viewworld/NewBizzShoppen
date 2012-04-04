@@ -36,7 +36,7 @@ CKEDITOR.editorConfig = function( config )
   //config.startupFocus = true;
   
   // works only with en, ru, uk languages
-  config.extraPlugins = "embed,attachment,email_template_vars,deal_links";
+  config.extraPlugins = "embed,attachment,email_template_vars,deal_links,email_template_vars_multiple";
   
   config.toolbar = 'Easy';
   
@@ -81,6 +81,20 @@ CKEDITOR.editorConfig = function( config )
         ['Link','Unlink','Anchor'],
         ['Image', 'Table','HorizontalRule','Smiley','SpecialChar','PageBreak', 'insertEmailTemplVars', 'insertDealLinks']
     ];
+
+    config.toolbar_EmailPopupMulti =
+      [
+          ['Source','-','Preview','Templates'],
+          ['Cut','Copy','Paste','PasteText','PasteFromWord',],
+          ['Maximize','-','About'],
+          ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
+          ['Styles','Format'],
+          ['Bold','Italic','Underline','Strike','-','Subscript','Superscript', 'TextColor'],
+          ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
+          ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+          ['Link','Unlink','Anchor'],
+          ['Image', 'Table','HorizontalRule','Smiley','SpecialChar','PageBreak', 'insertEmailTemplVarsMultiple']
+      ];
 
   config.toolbar_EmailSignature =
     [
