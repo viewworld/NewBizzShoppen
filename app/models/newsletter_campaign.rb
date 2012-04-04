@@ -43,7 +43,7 @@ class NewsletterCampaign < ActiveRecord::Base
 
   def cm_synchronize!
     cm_create! unless cm_exists?
-    cm_send! unless status == SENT_TO_CM
+    cm_send! unless sent?
   end
 
   def cm_create!
@@ -89,5 +89,9 @@ class NewsletterCampaign < ActiveRecord::Base
     else
       "http://#{domain_name}/newsletters/newsletter_campaigns/#{template_key}#{text ? "?txt=1" : ""}"
     end
+  end
+
+  def sent?
+    status == SENT_TO_CM
   end
 end
