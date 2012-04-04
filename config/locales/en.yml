@@ -4708,6 +4708,7 @@ en:
           button_update: "Save"
           button_cancel: "Cancel"
           button_update_and_send: "Save & send"
+          campaign_sent_warning: "Campaign has already been sent. Any changes will be saved locally but NOT synchronized back to Campaign Monitor."
       archive:
         flash:
           notice_archived: "Newsletter list has been successfully archived."

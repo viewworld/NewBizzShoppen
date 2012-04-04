@@ -486,7 +486,9 @@ describe User do
     context "campaign monitor" do
       it "should create campaign monitor client" do
         CreateSend::Client.expects(:create).returns("ClientId10123123")
+
         user = User::Admin.make!
+        user.expects(:cm_exists?).returns(true)
         user.cm_client.should == "ClientId10123123"
       end
 

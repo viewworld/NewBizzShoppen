@@ -67,13 +67,16 @@ Feature: Newsletter campaign for admin
   @_done @_tested_elsewhere
   Scenario: I can save as a draft
 
+  @_done @_tested_elsewhere @_rspec
   Scenario: I can send it to Campaign Monitor
 
   @_done @_tested_elsewhere
   Scenario: When content is sent to Campaign Monitor then new template is added "FDNL current_date"
 
+  @_done @_non_testable
   Scenario: When content is sent to Campaign Monitor then new draft campaign is created
 
+  @_done @_non_testable
   Scenario: When content is sent to Campaign Monitor then new draft campaign is sent
 
   @_done @_tested_elsewhere
@@ -88,4 +91,5 @@ Feature: Newsletter campaign for admin
   @_done @_tested_elsewhere
   Scenario: I should be able to see Archived button beside the New campaign to show only archived
 
+  @_done @_tested_elsewhere @_rspec
   Scenario: When campaign is created in Campaign Monitor then CampaignID is stored locally

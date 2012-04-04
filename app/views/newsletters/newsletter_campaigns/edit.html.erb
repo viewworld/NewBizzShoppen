@@ -3,15 +3,23 @@
   <%= javascript_include_tag "popup_email_template_editor" %>
   <header back="true"><%= t("newsletters.newsletter_campaigns.edit.view.header", :name => @newsletter_campaign.name) %></header>
 
+  <% if @newsletter_campaign.sent?%>
+      <div class="flash flash_notice">
+        <%= t("newsletters.newsletter_campaigns.edit.view.campaign_sent_warning") %>
+      </div>
+  <% end %>
+
   <%= semantic_form_for @newsletter_campaign, :url => newsletters_newsletter_campaign_path do |form| %>
       <frm>
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
-            <%= form.submit t("newsletters.newsletter_campaigns.edit.view.button_update_and_send"), :name => "commit_send", :onclick => "select_options_to_submit('newsletter_campaign_newsletter_list_ids_')" %>
-          </ibt>
+          <% unless @newsletter_campaign.sent? %>
+              <ibt c="fltri" icon="save">
+                <%= form.submit t("newsletters.newsletter_campaigns.edit.view.button_update_and_send"), :name => "commit_send", :onclick => "select_options_to_submit('newsletter_campaign_newsletter_list_ids_')" %>
+              </ibt>
+          <% end %>
           <ibt c="fltri" icon="save">
             <%= form.submit t("newsletters.newsletter_campaigns.edit.view.button_update"), :name => "commit", :onclick => "select_options_to_submit('newsletter_campaign_newsletter_list_ids_')" %>
           </ibt>
