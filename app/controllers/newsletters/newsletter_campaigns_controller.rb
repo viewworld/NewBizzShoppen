@@ -21,7 +21,7 @@ class Newsletters::NewsletterCampaignsController < Newsletters::NewslettersContr
 
   def show
     @newsletter_campaign = NewsletterCampaign.where(:template_key => params[:id]).first
-    render 'show', :layout => "newsletter_template"
+    render 'show', :layout => params[:txt] == "1" ? false : "newsletter_template"
   end
 
   def lists_for_owner
