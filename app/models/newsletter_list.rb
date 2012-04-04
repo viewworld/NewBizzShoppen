@@ -47,6 +47,7 @@ class NewsletterList < ActiveRecord::Base
   def cm_delete!
     begin
       CreateSend::List.new(cm_list_id).delete
+      update_attribute(:cm_list_id, nil)
     rescue Exception => e
       self.campaign_monitor_responses.create(:response => e)
     end
