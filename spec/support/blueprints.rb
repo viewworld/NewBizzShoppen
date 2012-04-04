@@ -577,6 +577,8 @@ NewsletterCampaign.blueprint do
   creator { User::Admin.make! }
   cm_username { "fairletters" }
   cm_password { "secret" }
+  subject { Faker::Lorem.words(5).to_s.capitalize }
+  body { Faker::Lorem.sentences(2).to_s }
 end
 
 ActsAsTaggableOn::Tag.blueprint do
