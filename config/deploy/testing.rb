@@ -8,4 +8,4 @@ set :default_environment, {
 
 set :deploy_to, "/srv/#{application}/testing"
 set :rails_env, "testing"
-set :branch, "tgn_m30"
+set :branch, "m31_newsletter"
