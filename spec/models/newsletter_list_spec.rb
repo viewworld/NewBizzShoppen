@@ -15,7 +15,10 @@ describe NewsletterList do
   end
 
   it "should create in campaign monitor new lists" do
+    CreateSend::Client.expects(:create).returns("ClientId10123123").at_least_once
+    CreateSend::Client.any_instance.stubs(:details).returns(false).then.returns(Hashie::Mash.new(:BasicDetails => {:ClientID => "ClientId10123123"}))
     CreateSend::List.stubs(:create).once().returns("List1023456")
+    CreateSend::List.any_instance.stubs(:create_custom_field).returns(true)
     CreateSend::List.any_instance.stubs(:details).returns(false).then.returns(Hashie::Mash.new(:ListID => "List1023456"))
     @list = NewsletterList.make!
     @list.cm_list_id.should == "List1023456"
@@ -23,6 +26,7 @@ describe NewsletterList do
 
   it "should synchronize list after update" do
     CreateSend::List.stubs(:create).once().returns("List1023456")
+    CreateSend::List.any_instance.stubs(:create_custom_field).returns(true)
     CreateSend::List.any_instance.stubs(:update).once().with("new_name", "", false, "")
     CreateSend::List.any_instance.stubs(:details).twice().returns(false).then.returns(Hashie::Mash.new(:ListID => "List1023456"))
     @list = NewsletterList.make!
@@ -31,7 +35,7 @@ describe NewsletterList do
 
   it "should create campaign monitor client when creating list for the first time" do
     CreateSend::Client.stubs(:create).twice().returns("CallCentre").then.returns("Admin")
-    CreateSend::Client.any_instance.stubs(:details).returns(false).then.returns(Hashie::Mash.new(:ClientID => "CallCentre")).then.returns(Hashie::Mash.new(:ClientID => "CallCentre"))
+    CreateSend::Client.any_instance.stubs(:details).returns(false).then.returns(Hashie::Mash.new(:BasicDetails => {:ClientID => "CallCentre"})).then.returns(Hashie::Mash.new(:BasicDetails => {:ClientID => "CallCentre"}))
     @client = User::CallCentre.make!
     @creator = User::Admin.make!
 
@@ -41,8 +45,12 @@ describe NewsletterList do
   end
 
   it "should export all subscribers from sources when new list is created" do
+    CreateSend::Client.expects(:create).returns("ClientId10123123").at_least_once
+    CreateSend::Client.any_instance.stubs(:details).returns(false).then.returns(Hashie::Mash.new(:BasicDetails => {:ClientID => "ClientId10123123"}))
     CreateSend::List.any_instance.stubs(:details).returns(false)
     CreateSend::List.stubs(:create).returns("List1023456")
+    CreateSend::List.any_instance.stubs(:create_custom_field).returns(true)
+    CreateSend::List.any_instance.stubs(:details).returns(false).then.returns(Hashie::Mash.new(:ListID => "List1023456"))
     @lead = Lead.make!(:category => @lead_category)
     CreateSend::List.any_instance.stubs(:active).returns(Hashie::Mash.new(:RecordsOnThisPage => 0, :Results => []))
     CreateSend::Subscriber.stubs(:import).once()
