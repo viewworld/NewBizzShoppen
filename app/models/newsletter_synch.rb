@@ -1,6 +1,6 @@
 class NewsletterSynch < ActiveRecord::Base
 
-  attr_accessor :use_delay_job, :notify_object
+  attr_accessor :use_delayed_job, :notify_object
 
   validates_presence_of :newsletter_list_id
 
@@ -8,7 +8,7 @@ class NewsletterSynch < ActiveRecord::Base
   belongs_to :newsletter_list
 
   after_create do
-    if use_delay_job
+    if use_delayed_job
       self.delay(:queue => 'campaign_monitor_synchronization').send(:process!)
     else
       self.send(:process!)
@@ -122,7 +122,7 @@ class NewsletterSynch < ActiveRecord::Base
 
   def self.process!
     NewsletterList.all.each do |newsletter_list|
-      newsletter_list.newsletter_synches.create!
+      newsletter_list.newsletter_synches.create
     end
   end
 

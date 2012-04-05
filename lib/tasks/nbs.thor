@@ -864,4 +864,10 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
   def send_end_of_free_period_email
     Subscription.send_reminder_about_end_of_free_period
   end
+
+  desc "synchronize newsletter lists", ""
+
+  def synchronize_newsletter_lists
+    NewsletterSynch.process!
+  end
 end
