@@ -9,7 +9,7 @@ class NewsletterList < ActiveRecord::Base
   before_save :extract_sourceable_objects, :extract_tag_groups
   before_destroy :cm_delete!, :if => :cm_exists?
   after_create do
-    self.newsletter_synches.create(:use_delay_job => true)
+    self.newsletter_synches.create(:use_delayed_job => true)
   end
 
   attr_accessor :sourceable_items, :tag_group_items
