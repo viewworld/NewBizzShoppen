@@ -145,8 +145,6 @@ class User < ActiveRecord::Base
          :screen_name, :first_name, :last_name, :home_page_url
   require 'digest/sha1'
 
-  acts_as_newsletter_subscribable :email_field => "email", :name_field => "full_name", :source_associations => [:user_role, :subscription_plan]
-
   acts_as_taggable
 
   private

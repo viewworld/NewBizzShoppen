@@ -103,8 +103,6 @@ class Lead < AbstractLead
   attr_protected :published
   attr_accessor :dont_send_email_with_deal_details_and_files
 
-  acts_as_newsletter_subscribable :email_field => "email_address", :name_field => "contact_name", :source_associations => [:category]
-
   acts_as_taggable
 
   private

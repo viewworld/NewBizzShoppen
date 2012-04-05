@@ -4623,6 +4623,10 @@ en:
       duplicated:
         title: "Campaign %{campaign_name} has been successfully duplicated"
         text: "<a href=\"%{url}\">Go to the campaign</a> or <a href=\"%{url}\" target=\"_blank\">open it in a new tab</a>"
+    newsletter_synchronization:
+      synchronized:
+        title: "List %{list_name} has been synchronized"
+        text: "<a href=\"%{url}\">Go to the list</a> or <a href=\"%{url}\" target=\"_blank\">open it in a new tab</a>"
 
   newsletters:
     newsletter_lists:
@@ -4643,7 +4647,7 @@ en:
           archive: "Archive"
           new_newsletter_list: "New list"
           retrieve: "Retrieve from archive"
-          synchronization_scheduled: "Synchronization will run in the background. You will be notified when it's finished."
+          synchronization_scheduled: "Synchronization process will perform in the background. You will be notified when it's done."
       new:
         view:
           header: "New newsletter list"

@@ -1,6 +1,6 @@
 class NewsletterSynch < ActiveRecord::Base
 
-  attr_accessor :use_delay_job
+  attr_accessor :use_delay_job, :notify_object
 
   validates_presence_of :newsletter_list_id
 
@@ -25,7 +25,11 @@ class NewsletterSynch < ActiveRecord::Base
     @all_local_subscribers ||= newsletter_list.newsletter_subscribers.map do |obj|
       {
           "EmailAddress" => obj.email_address,
-          "Name" => obj.name
+          "Name" => obj.name,
+          "CustomFields" => [
+              { "Key" => "[CompanyName]", "Value" => obj.company_name, "Clear" => false},
+              { "Key" => "[ZipCode]", "Value" => obj.zip_code, "Clear" => false}
+          ]
       }
     end
   end
@@ -81,7 +85,8 @@ class NewsletterSynch < ActiveRecord::Base
 
   def export_subscribers(subscribers)
     begin
-      CreateSend::Subscriber.import(newsletter_list.cm_list_id, subscribers, false)
+      import_result = CreateSend::Subscriber.import(newsletter_list.cm_list_id, subscribers, false)
+      self.campaign_monitor_responses.create(:response => import_result)
     rescue Exception => e
       self.campaign_monitor_responses.create(:response => e)
       false
@@ -89,13 +94,28 @@ class NewsletterSynch < ActiveRecord::Base
   end
 
   def export_all_local_subscribers
-    export_subscribers(all_local_subscribers)
+    all_local_subscribers.in_groups_of(1000, false) do |subscriber_group|
+      export_subscribers(subscriber_group)
+    end
+  end
+
+  def notify!
+    if notify_object.is_a? User
+      notify_object.notify!(
+          :title => I18n.t("notifications.newsletter_synchronization.synchronized.title", :list_name => newsletter_list.name),
+          :text => I18n.t("notifications.newsletter_synchronization.synchronized.text", :url => "http://#{user_to_notify.domain_name}/newsletters/newsletter_lists/#{newsletter_list.id}/edit"))
+    end
   end
 
   def process!
-    process_locally_deleted_subscribers
-    export_all_local_subscribers
-    touch
+    if newsletter_list.cm_list
+      process_locally_deleted_subscribers
+      export_all_local_subscribers
+      notify!
+      touch
+    else
+      false
+    end
   end
 
   public
