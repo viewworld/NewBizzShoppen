@@ -9,8 +9,11 @@ describe NewsletterSource do
 
   context "Update & sync" do
     it "should remove old subcriber and create new when email address changes" do
+      @lead_category = LeadCategory.make!
       CreateSend::List.any_instance.stubs(:details).returns(false)
       CreateSend::List.stubs(:create).returns("List1023456")
+      CreateSend::List.any_instance.stubs(:create_custom_field).returns(true)
+      CreateSend::List.any_instance.stubs(:details).returns(false).then.returns(Hashie::Mash.new(:ListID => "List1023456"))
       @lead = Lead.make!(:category => @lead_category)
       CreateSend::List.any_instance.stubs(:active).
           returns(Hashie::Mash.new(:RecordsOnThisPage => 0, :Results => [])).then.
