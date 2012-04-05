@@ -1,6 +1,6 @@
 class Newsletters::NewsletterListsController < Newsletters::NewslettersController
   inherit_resources
-  before_filter :fetch_object, :only => [:edit, :update, :archive]
+  before_filter :fetch_object, :only => [:edit, :update, :archive, :unsubscribe]
 
   set_tab "campaigns"
   set_subtab "newsletter_lists"
@@ -36,6 +36,13 @@ class Newsletters::NewsletterListsController < Newsletters::NewslettersControlle
     else
       flash[:notice] = I18n.t("newsletters.newsletter_lists.archive.flash.notice_retrieved")
     end
+    redirect_to newsletters_newsletter_lists_path
+  end
+
+  def unsubscribe
+    @newsletter_list.send(:cm_delete!)
+
+    flash[:notice] = I18n.t("newsletters.newsletter_lists.unsubscribe.flash.notice")
     redirect_to newsletters_newsletter_lists_path
   end
 

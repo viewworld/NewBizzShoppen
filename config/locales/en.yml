@@ -4648,6 +4648,7 @@ en:
           new_newsletter_list: "New list"
           retrieve: "Retrieve from archive"
           synchronization_scheduled: "Synchronization process will perform in the background. You will be notified when it's done."
+          unsubscribe: "Unsubscribe"
       new:
         view:
           header: "New newsletter list"
@@ -4668,6 +4669,9 @@ en:
         flash:
           notice_archived: "Newsletter list has been successfully archived."
           notice_retrieved: "Newsletter list has been successfully retrieved."
+      unsubscribe:
+        flash:
+          notice: "Newsletter list has been unsubscriubed."
     newsletter_campaigns:
       index:
         view:

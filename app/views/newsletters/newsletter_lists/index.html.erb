@@ -88,6 +88,11 @@
                 <li>
                     <%= link_to newsletter_list.is_archived? ? t("newsletters.newsletter_lists.index.view.retrieve") : t("newsletters.newsletter_lists.index.view.archive"), archive_newsletters_newsletter_list_path(newsletter_list), :method => :post %>
                 </li>
+              <% if newsletter_list.cm_list_id %>
+                <li>
+                  <%= link_to t("newsletters.newsletter_lists.index.view.unsubscribe"),  unsubscribe_newsletters_newsletter_list_path(newsletter_list), :method => :post %>
+                </li>
+              <% end %>
             </ul-actions>
           </td>
           <td class="cr"></td>

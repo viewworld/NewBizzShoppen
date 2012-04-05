@@ -99,6 +99,7 @@ Nbs::Application.routes.draw do
       end
       member do
         post 'archive'
+        post 'unsubscribe'
       end
     end
 
