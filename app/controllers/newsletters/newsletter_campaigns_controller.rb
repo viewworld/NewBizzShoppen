@@ -15,8 +15,18 @@ class Newsletters::NewsletterCampaignsController < Newsletters::NewslettersContr
   def update
     update! do |success, failure|
       success.html {
-        @newsletter_campaign.send(:cm_synchronize!) if params[:commit_send]
-        redirect_to newsletters_newsletter_campaigns_path
+        if params[:commit_send]
+          @newsletter_campaign.send(:cm_synchronize!)
+          if @newsletter_campaign.sent?
+            flash[:notice] = I18n.t("newsletters.newsletter_campaigns.update.flash.notice_sent")
+            redirect_to newsletters_newsletter_campaigns_path
+          else
+            flash[:alert] = I18n.t("newsletters.newsletter_campaigns.update.flash.notice_not_sent", :errors => @newsletter_campaign.last_errors)
+            redirect_to :back
+          end
+        else
+          redirect_to newsletters_newsletter_campaigns_path
+        end
       }
       failure.html { render 'edit' }
     end

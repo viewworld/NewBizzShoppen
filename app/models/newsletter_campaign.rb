@@ -94,4 +94,8 @@ class NewsletterCampaign < ActiveRecord::Base
   def sent?
     status == SENT_TO_CM
   end
+
+  def last_errors
+    campaign_monitor_responses.where("created_at BETWEEN ? AND ?", Time.now-2.minutes, Time.now).select { |cr| !cr.response.include?("CreateSend::NotFound") }.map(&:response).join(", ")
+  end
 end
