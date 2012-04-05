@@ -72,6 +72,7 @@ Feature: Newsletter for admin
   @_done @_tested_elsewhere
   Scenario: I should be able to see list of all created lists with headers: Owner, Name, Number of subscribers, Last sync (date)
 
+  @_done @_tested_elsewhere
   Scenario: I should be able to Edit, Archive, Unsubscribe any list from created lists
 
   @_done @_tested_elsewhere
