@@ -19,6 +19,7 @@ Feature: Newsletter backend
   @_done @_tested_elsewhere @_rspec
   Scenario: When a source of the list is updated (new contact, new user or new lead) then is should be synced with Campaign Monitor
 
+  @_done @_tested_elsewhere @_rspec
   Scenario: When a source of the list is removed from the list then the subscribers should be removed from the list in Campaign Monitor (it applies also to tags that may be the source)
 
   Scenario: When a new source is added to existing list then the subscribers should be exported to that list in Campaign Monitor

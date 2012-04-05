@@ -42,6 +42,11 @@ describe NewsletterSource do
     it "should contain subscriber in source when new lead created" do
       @list.newsletter_subscribers.map(&:subscriber).should include(@lead)
     end
+
+    it "should not contain subscriber in source when lead is deleted" do
+      @lead.destroy
+      @list.newsletter_subscribers.map(&:subscriber).should_not include(@lead)
+    end
   end
 
   context "Campaign" do
