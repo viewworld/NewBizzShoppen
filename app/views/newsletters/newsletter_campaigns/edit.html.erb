@@ -3,7 +3,7 @@
   <%= javascript_include_tag "popup_email_template_editor" %>
   <header back="true"><%= t("newsletters.newsletter_campaigns.edit.view.header", :name => @newsletter_campaign.name) %></header>
 
-  <% if @newsletter_campaign.sent?%>
+  <% if @newsletter_campaign.sent? or @newsletter_campaign.queued_for_sending? %>
       <div class="flash flash_notice">
         <%= t("newsletters.newsletter_campaigns.edit.view.campaign_sent_warning") %>
       </div>
@@ -15,7 +15,7 @@
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
-          <% unless @newsletter_campaign.sent? %>
+          <% if !@newsletter_campaign.sent? and !@newsletter_campaign.queued_for_sending? %>
               <ibt c="fltri" icon="save">
                 <%= form.submit t("newsletters.newsletter_campaigns.edit.view.button_update_and_send"), :name => "commit_send", :onclick => "select_options_to_submit('newsletter_campaign_newsletter_list_ids_')" %>
               </ibt>

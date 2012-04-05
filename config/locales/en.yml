@@ -3232,7 +3232,8 @@ en:
     newsletter_campaign:
       statuses:
         status0: "Saved as draft"
-        status1: "Sent to Campaign Monitor"
+        status1: "Queued for sending"
+        status2: "Sent to Campaign Monitor"
   activerecord:
     models:
       article:
@@ -4719,7 +4720,7 @@ en:
           notice_retrieved: "Newsletter list has been successfully retrieved."
       update:
         flash:
-          notice_sent: "Campaign has been successfully sent."
+          notice_queued: "Campaign has been successfully queued for sending."
           notice_not_sent: "Campaign could not be sent due to errors %{errors}"
   tags:
     common:

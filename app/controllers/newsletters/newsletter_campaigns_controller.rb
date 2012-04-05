@@ -17,8 +17,8 @@ class Newsletters::NewsletterCampaignsController < Newsletters::NewslettersContr
       success.html {
         if params[:commit_send]
           @newsletter_campaign.send(:cm_synchronize!)
-          if @newsletter_campaign.sent?
-            flash[:notice] = I18n.t("newsletters.newsletter_campaigns.update.flash.notice_sent")
+          if @newsletter_campaign.queued_for_sending?
+            flash[:notice] = I18n.t("newsletters.newsletter_campaigns.update.flash.notice_queued")
             redirect_to newsletters_newsletter_campaigns_path
           else
             flash[:alert] = I18n.t("newsletters.newsletter_campaigns.update.flash.notice_not_sent", :errors => @newsletter_campaign.last_errors)
