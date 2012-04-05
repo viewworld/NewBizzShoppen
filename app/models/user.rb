@@ -76,6 +76,8 @@ class User < ActiveRecord::Base
   has_many :call_results, :as => :creator
   has_many :campaigns, :as => :creator
   has_many :chain_mails, :primary_key => :email, :foreign_key => :email
+  has_many :campaign_monitor_responses, :as => :resource
+  has_many :newsletter_lists, :foreign_key => :owner_id
 
   alias_method :parent, :user
 
@@ -86,6 +88,7 @@ class User < ActiveRecord::Base
   scope :with_call_centre_agents, lambda { |call_centre| where("(roles_mask & #{2**User.valid_roles.index(:call_centre_agent)} > 0) and parent_id = ?", call_centre.id) }
   scope :with_call_centres, where("roles_mask & #{2**User.valid_roles.index(:call_centre)} > 0")
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
+  scope :with_any_role, lambda { |roles| where( roles.map { |r| "(roles_mask & #{2**User.valid_roles.index(r.to_sym)} > 0)" }.join(" OR ") ) }
   scope :with_roles_except, lambda { |roles| where( roles.map { |r| "NOT(roles_mask & #{2**User.valid_roles.index(r.to_sym)} > 0)" }.join(" AND ") ) }
   scope :with_keyword, lambda { |q| where("lower(first_name) like :keyword OR lower(last_name) like :keyword OR lower(email) like :keyword or lower(company_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :with_subaccounts, lambda { |parent_id| where("parent_id = ?", parent_id) }
@@ -141,6 +144,8 @@ class User < ActiveRecord::Base
   liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_supplier_category_home_url,
          :screen_name, :first_name, :last_name, :home_page_url
   require 'digest/sha1'
+
+  acts_as_taggable
 
   private
 
@@ -512,6 +517,10 @@ class User < ActiveRecord::Base
 
   def with_role
     casted_class.find(id)
+  end
+
+  def without_role
+    self.class.superclass.find(id)
   end
 
   #to handle menu chronology correctly
@@ -922,6 +931,10 @@ class User < ActiveRecord::Base
     active_subscription ? active_subscription.deal_maker? : admin? ? true : has_role?(:deal_maker)
   end
 
+  def newsletter_manager?
+    active_subscription ? (read_attribute(:newsletter_manager) ? true : active_subscription.newsletter_manager?) : parent ? parent.newsletter_manager? : false
+  end
+
   def handle_privileges
     if subaccounts.any?
       if team_buyers?
@@ -985,5 +998,22 @@ class User < ActiveRecord::Base
       :time => nil
     }.merge(options)
     notifications.create(options)
+  end
+
+  def user_role
+    Role.find(ROLES_PRIORITY.index(role))
+  end
+
+  def subscription_plan
+    active_subscription ? active_subscription.subscription_plan : nil
+  end
+
+  def tag_with_tags_from(object)
+    unless (tag_list - object.tag_list).size == tag_list.size - object.tag_list.size
+      object.tag_list.each do |tag|
+        self.tag_list << tag
+      end
+      save
+    end
   end
 end

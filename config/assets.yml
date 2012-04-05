@@ -24,8 +24,8 @@ javascripts:
     - public/javascripts/custom.js
     - public/javascripts/comments.js
     - public/javascripts/jquery.form.js
-    - public/javascripts/jquery.autocomplete.min.js
     - public/javascripts/jquery.gritter.min.js
+    - public/javascripts/tagit.js
 
   fairdeals:
     - public/javascripts/jquery-1.4.2.min.js
@@ -65,6 +65,7 @@ stylesheets:
     - public/stylesheets/ajaxful_rating.css
     - public/stylesheets/shared/shared.css
     - public/stylesheets/jquery.gritter.css
+    - public/stylesheets/tagit.css
 
   fairdeals:
     - public/stylesheets/fairdeals/ocss/reset.css

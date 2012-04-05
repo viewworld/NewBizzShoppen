@@ -68,6 +68,8 @@ class Deal < AbstractLead
   ajaxful_rateable :stars => 5, :allow_update => false, :cache_column => :deal_average_rating
   acts_as_commentable
 
+  acts_as_taggable
+
   def max_auto_buy_reached?
     leads.where("created_at >= ?", current_four_week_period_start_date).count >= max_auto_buy.to_i
   end

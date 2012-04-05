@@ -31,6 +31,7 @@ class SubscriptionPlan < ActiveRecord::Base
 
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
   has_many :subscriptions
+  has_many :users, :through => :subscriptions, :source => :user
   has_one :invoice_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'invoice'", :dependent => :destroy
   belongs_to :currency
   belongs_to :seller
@@ -54,6 +55,8 @@ class SubscriptionPlan < ActiveRecord::Base
   scope :for_roles, lambda { |roles| where( roles.map { |r| "roles_mask & #{2**SubscriptionPlan.valid_roles.index(r.to_sym)} > 0" }.join(" AND ") ) unless roles.empty? }
   scope :ascend_by_billing_price, order("billing_price")
   scope :without_paypal, where(:use_paypal => false)
+
+  acts_as_newsletter_source
 
   private
 
@@ -96,6 +99,7 @@ class SubscriptionPlan < ActiveRecord::Base
       self.team_buyers = false
       self.big_buyer = false
       self.deal_maker = false
+      self.newsletter_manager = false
     elsif has_any_role?(:supplier, :category_supplier)
       self.premium_deals = false
     end

@@ -1,0 +1,12 @@
+<% if @user %>
+    $("#all_lists option").remove();
+    $("#newsletter_campaign_newsletter_list_ids_ option").remove();
+    <% @newsletter_lists.each do |newsletter_list| %>
+    $("#all_lists").
+            append($("<option></option>").
+            attr("value", "<%= newsletter_list.id %>").
+            text("<%= newsletter_list.name %>"));
+    <% end %>
+<% else %>
+alert("<%= t("newsletters.newsletter_campaigns.lists_for_owner.view.user_not_found") %>");
+<% end %>

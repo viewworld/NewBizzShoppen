@@ -10,6 +10,7 @@ class ::User::CategorySupplier < ::User
   include BankAccounts
   include User::CommonSupplier
   include User::Subaccounts
+  include User::CampaignMonitorClient
 
   has_many :lead_purchases, :foreign_key => "owner_id"
   has_many :lead_requests, :foreign_key => "owner_id"

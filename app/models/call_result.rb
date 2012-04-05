@@ -103,6 +103,10 @@ class CallResult < ActiveRecord::Base
     end
   end
 
+  def result_name
+    result ? result.name : "-result deleted-"
+  end
+
   class << self
 
     def for_table_header(date_from, date_to)
@@ -286,6 +290,12 @@ class CallResult < ActiveRecord::Base
 
     if role == "category_supplier"
       user.buying_category_ids = buying_category_ids
+      user.save
+    end
+    if contact.tag_list.any?
+      contact.tag_list.each do |tag|
+        user.tag_list << tag
+      end
       user.save
     end
     self.upgraded_user = user

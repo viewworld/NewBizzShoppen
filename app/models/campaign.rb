@@ -63,6 +63,8 @@ class Campaign < ActiveRecord::Base
   CRM_OPTION_ALL = 4.freeze
   CRM_OPTIONS = [CRM_OPTION_OFF, CRM_OPTION_COMPANY_NAME, CRM_OPTION_CVR, CRM_OPTION_CONTACT_EMAIL, CRM_OPTION_ALL]
 
+  acts_as_newsletter_source
+
   private
 
   def fixed_cost_value_is_valid

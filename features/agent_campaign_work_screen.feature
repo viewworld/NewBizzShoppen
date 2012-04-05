@@ -329,6 +329,7 @@ Feature: Agent campaign - calling session
 
     @m13 @_requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: I can upgrade contact to category buyer
+      Given all contacts from campaign "Testing One" have tags "tag1, tag2, tag3"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category supplier" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
@@ -342,6 +343,7 @@ Feature: Agent campaign - calling session
       And I follow translated "call_results.new.save_button"
       And I wait 2 second
       Then I should see translated "call_results.create.flash.successfully_added"
+      And user with email "newcategory_buyer888@nbs.com" should have tags "tag1, tag2, tag3"
 
     @m13 @_requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: Category buyer upgraded from lead should be subscribed to campaign's category by default
@@ -601,6 +603,7 @@ Feature: Agent campaign - calling session
     #7574
     @m19 @_requested @upgrade_to_buyer @$_call_centre_agent @_done @_tested @tgn
     Scenario: I can upgrade contact to buyer
+      Given all contacts from campaign "Testing One" have tags "tag1, tag2, tag3"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to supplier" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
@@ -628,11 +631,13 @@ Feature: Agent campaign - calling session
       And last email sent should have content "/supplier_home"
       And last email sent should have content "Login: new_buyer888@nbs.com"
       And last email sent should have content "Linked with account: not linked"
+      And user with email "new_buyer888@nbs.com" should have tags "tag1, tag2, tag3"
 
 
     #7574
     @m19 @_requested @upgrade_to_member @$_call_centre_agent @_done @_tested @tgn
     Scenario: I can upgrade contact to member (procurment manager)
+      Given all contacts from campaign "Testing One" have tags "tag1, tag2, tag3"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to member" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
@@ -654,6 +659,7 @@ Feature: Agent campaign - calling session
       And last email sent should have content "fairdeals"
       And last email sent should have content "Fairdeals password: testin"
       And last email sent should have content "Fairdeals username: new_member888@nbs.com"
+      And user with email "new_member888@nbs.com" should have tags "tag1, tag2, tag3"
       Then I am not sign in
       And I am on the homepage
       And I visit domain http://fairdeals.eu

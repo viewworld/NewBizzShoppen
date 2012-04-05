@@ -21,4 +21,20 @@ module DestroyPrevention
    end
  end
 
- ActiveRecord::Base.send(:include, DestroyPrevention)
+ActiveRecord::Base.send(:include, DestroyPrevention)
+
+module ActsAsSubscribable
+    def self.included(base)
+      base.extend(ClassMethods)
+    end
+
+    module ClassMethods
+      def acts_as_newsletter_source
+        class_eval do
+          has_many :newsletter_sources, :as => :sourceable
+        end
+      end
+   end
+end
+
+ActiveRecord::Base.send(:include, ActsAsSubscribable)

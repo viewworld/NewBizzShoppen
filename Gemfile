@@ -47,6 +47,8 @@ gem 'paypal_nvp'
 gem 'activeadmin', :path => 'vendor/gems/active_admin'
 gem 'diff-lcs', :require => false
 gem 'cucumber_fm-core', '0.1', :require => 'cucumber_feature_manager'
+gem 'acts-as-taggable-on', '~> 2.2.2'
+gem 'createsend'
 
 group :production do
   gem 'hoptoad_notifier'
@@ -77,6 +79,8 @@ group :test do
   gem 'mocha'
   gem 'faker', "0.3.1"
   gem 'machinist', '>= 2.0.0.beta1'
+  gem 'fakeweb', :require => false
+  gem 'webmock', :require => false
 
 # Added the following because rake features also complained about spec/expectations
   gem 'rspec', '=2.0.1'

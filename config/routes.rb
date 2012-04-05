@@ -82,7 +82,35 @@ Nbs::Application.routes.draw do
       end
     end
     resources :paypal_notifications, :only => [:index, :show]
+    resources :tags do
+      member do
+        post 'duplicate'
+      end
+    end
     match '/dashboard' => 'dashboard#index', :as => 'dashboard'
+  end
+
+  namespace :newsletters do
+    root :to => "newsletter_lists#index"
+    resources :newsletter_lists do
+      resources :newsletter_synchronizations
+      collection do
+        get 'sourceable_for_search'
+      end
+      member do
+        post 'archive'
+        post 'unsubscribe'
+      end
+    end
+
+    resources :newsletter_campaigns do
+      collection do
+        get 'lists_for_owner'
+      end
+      member do
+        post 'archive'
+      end
+    end
   end
 
   namespace :suppliers do
@@ -207,6 +235,7 @@ Nbs::Application.routes.draw do
           post 'batch_move'
           post 'bulk_contacts_export_csv'
           post 'import_xls'
+          post 'batch_add_to_newsletter_list'
         end
       end
       resources :advanced_import, :only => [:create, :destroy] do
@@ -406,6 +435,8 @@ Nbs::Application.routes.draw do
   resources :remote_deal_requests
 
   resources :notifications, :only => [:index, :update]
+
+  resources :tags, :only => [:index, :create]
 
   resources :email_templates, :only => [:edit, :update] do
     member do

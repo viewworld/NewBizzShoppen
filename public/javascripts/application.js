@@ -197,6 +197,28 @@ function set_contacts_id_hf(field_name) {
     });
 }
 
+function copy_taggable_ids_to_container(taggable_id){
+    $("#taggable_ids option").remove();
+    $("input:checked[id^=" + taggable_id + "]").each(function(){
+        $("#taggable_ids").
+            append($("<option></option>").
+            attr("value", $(this).val()).
+            text($(this).val()));
+    });
+
+    $("#taggable_ids  option").each(function()
+    {
+        $(this).attr("selected","selected");
+    });
+}
+
+function select_tags_for_tagit(){
+    $("selected_tag_names  option").each(function()
+    {
+        $(this).attr("selected","selected");
+    });
+}
+
 function clear_filter() {
     $.each($(".search_box form input"), function(idx, input) {
         switch (input.type) {

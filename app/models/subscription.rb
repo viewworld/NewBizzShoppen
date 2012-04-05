@@ -355,6 +355,14 @@ class Subscription < ActiveRecord::Base
     end
   end
 
+  def newsletter_manager?
+    if unconfirmed_paypal? and !is_today_in_free_period?
+      false
+    else
+      read_attribute(:newsletter_manager)
+    end
+  end
+
   def premium_deals?
     if unconfirmed_paypal? and !is_today_in_free_period?
       false
@@ -425,6 +433,10 @@ class Subscription < ActiveRecord::Base
 
   def handle_user_privileges
     user.handle_privileges
+    if newsletter_manager?
+      user.send(:cm_synchronize!)
+      user.send(:cm_set_access!)
+    end
   end
 
   def create_subscription_sub_periods

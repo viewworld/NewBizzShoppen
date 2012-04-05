@@ -100,6 +100,14 @@
               <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_remove" %>
           <% end %>
 
+          <% if (@newsletter_lists = current_user.admin? ? NewsletterList.all : NewsletterList.created_or_owned_by(current_user)) and @newsletter_lists.present? %>
+          <%= form_tag batch_add_to_newsletter_list_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_add_to_newsletter_list_form" do %>
+              <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_add_to_newsletter_list" %>
+              <%= select_tag "newsletter_list_id", options_for_select((@newsletter_lists).map { |nl| [nl.name, nl.id] }) %>
+              <%= bt_link_to :plus, t("campaigns.edit.button_bulk_add_to_newsletter_list_link"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_add_to_newsletter_list');$('#batch_add_to_newsletter_list_form').submit();" %>
+          <% end %>
+          <% end %>
+
           <% if target_campaigns = (current_user.admin? ? Campaign.all.except(@campaign) : Campaign.available_for_user(current_user)).except(@campaign) %>
               <%= form_tag batch_move_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_move_form" do %>
                   <%= select_tag "target_campaign_id", options_for_select(target_campaigns.map { |u| [u.name, u.id] }) %>
@@ -108,6 +116,10 @@
                   <%= bt_link_to :arrow_right, t("campaigns.edit.button_move_selected_contacts"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_move_form');$('#hf_batch_move_form_action_type').val('move');$('#batch_move_form').submit();" %>
                   <%= bt_link_to :arrow_right, t("campaigns.edit.button_copy_selected_contacts"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_move_form');$('#hf_batch_move_form_action_type').val('copy');$('#batch_move_form').submit();" %>
               <% end %>
+          <% end %>
+          <%= bulk_form do %>
+            <%= hidden_field_tag :route_to %>
+            <%= render :partial => "/shared/tags/assign_tags", :locals => { :ids_container => "cb_contact_", :taggable_class_name => "Contact" } %>
           <% end %>
       <% end %>
   <% end %>

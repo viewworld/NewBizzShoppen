@@ -504,6 +504,7 @@ SubscriptionPlan.blueprint do
   team_buyers { false }
   big_buyer { false }
   deal_maker { false }
+  newsletter_manager { false }
   seller { Seller.make! }
   paypal_retries { 1 }
 end
@@ -557,4 +558,29 @@ ChainMail.blueprint do
   chain_mailable { CallResult.make! }
   chain_mail_type { ChainMailType.make!}
   email { Faker::Internet.email }
+end
+
+NewsletterList.blueprint do
+  name { Faker::Lorem.words(2).to_s.capitalize }
+  owner { User::CallCentre.make! }
+  creator { User::Admin.make! }
+end
+
+NewsletterSource.blueprint(:campaign) do
+  source_type { NewsletterSource::CAMPAIGN_SOURCE }
+  newsletter_list { NewsletterList.make! }
+  sourceable { Campaign.make! }
+end
+
+NewsletterCampaign.blueprint do
+  owner { User::CallCentre.make! }
+  creator { User::Admin.make! }
+  cm_username { "fairletters" }
+  cm_password { "secret" }
+  subject { Faker::Lorem.words(5).to_s.capitalize }
+  body { Faker::Lorem.sentences(2).to_s }
+end
+
+ActsAsTaggableOn::Tag.blueprint do
+  name { Faker::Lorem.words(1).to_s + "#{Time.now.to_f.to_s.gsub('.','')}" }
 end

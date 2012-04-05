@@ -1,0 +1,35 @@
+<column-mc:>
+  <%= javascript_include_tag "jquery.autocomplete.min.js" %>
+
+  <header back="true">
+    <param:content>
+      <%= t("newsletters.newsletter_lists.edit.view.header") %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to :plus, t("newsletters.newsletter_lists.index.view.synchronize"),  newsletters_newsletter_list_newsletter_synchronizations_path(@newsletter_list), :method => :post %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
+
+  <%= semantic_form_for @newsletter_list, :remote => true, :url => newsletters_newsletter_list_path do |form| %>
+      <frm>
+        <param:content>
+          <%= render :partial => 'form', :locals => {:form => form} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("newsletters.newsletter_lists.edit.view.button_update"), :onclick => "serialize_tag_groups_items();select_sourceable_items()" %>
+          </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function t("newsletters.newsletter_lists.edit.view.button_cancel"), "history.go(-1)" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+
+  <%= render :partial => "subscribers_list", :locals => { :newsletter_subscribers => @newsletter_subscribers } %>
+</column-mc:>

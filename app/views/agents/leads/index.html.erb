@@ -67,7 +67,7 @@
   <% if @leads.blank? %>
       <%= blank_state_message %>
   <% else %>
-      <%= leads_table @leads, :show_checkboxes => false do |blocks| %>
+      <%= leads_table @leads, :show_checkboxes => true do |blocks| %>
           <% blocks.tools do |lead| %>
               <ul-actions>
                 <li>

@@ -1,6 +1,10 @@
 <div id="modal_for_deal_links" style="display:none;">
-  <%= button_to_function t("email_templates.common.insert_deal_link"),
-                         "insert_deal_links_into_ckeditor('#{instance_name}', '#{Domain.for_site_and_locale("fairdeals", I18n.locale).name_for_env}')" %>
+  <%= bt_link_to :download, t("email_templates.common.insert_deal_link"), "javascript:void()",
+                         :onclick => "insert_deal_links_into_ckeditor('#{instance_name}', '#{Domain.for_site_and_locale("fairdeals", I18n.locale).name_for_env}')" %>
+
+  <%= text_field_tag :query %> <%= bt_link_to :magnify, t("email_templates.common.search_deal_link"), "javascript:void()", :onclick => "search_deal_links($('#query').val())" %>
+  <%= bt_link_to :invoice, t("email_templates.common.show_all_deals_link"), "javascript:void()", :onclick => "show_all_deal_links()" %>
+  <%= bt_link_to :chbox_selected, t("email_templates.common.show_selected_deals_link"), "javascript:void()", :onclick => "show_selected_deal_links()" %>
   <div id="deal_links_container">
     None.
   </div>

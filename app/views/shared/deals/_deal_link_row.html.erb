@@ -1,5 +1,7 @@
 <% deals.each do |deal| %>
+    <div id="div_link_container_<%= deal.header.downcase.gsub(" ", "_") %>">
     <%= check_box_tag("deal_links_#{deal.id}", deal.slug, false)%>
     <%= hidden_field_tag("deal_links_#{deal.id}_header", deal.header)%>
-    <%= link_to_function deal.header, "check_uncheck_deal_link('#{deal.slug}')" %><br />
+    <%= link_to_function deal.header, "check_uncheck_deal_link('#{deal.slug}')" %>
+    </div>
 <% end %>

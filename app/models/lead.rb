@@ -103,6 +103,8 @@ class Lead < AbstractLead
   attr_protected :published
   attr_accessor :dont_send_email_with_deal_details_and_files
 
+  acts_as_taggable
+
   private
 
   def check_if_category_can_publish_leads

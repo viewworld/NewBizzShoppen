@@ -284,4 +284,24 @@ module ApplicationHelper
       val.to_i
     end
   end
+
+  def humanize_object_class_name(object)
+    if object.is_a?(ActsAsTaggableOn::Tag)
+      "Tag"
+    elsif object.is_a?(SubscriptionPlan)
+      "Subscription"
+    else
+      object.class.to_s.tableize.humanize.singularize
+    end
+  end
+
+  def edit_subscribable_object_path(subscriber)
+    case
+      when subscriber.is_a?(Contact) then edit_callers_campaign_contact_path(subscriber, :campaign_id => subscriber.campaign_id)
+      when subscriber.is_a?(Lead) then current_user.admin? ? edit_administration_lead_path(subscriber) : edit_call_centres_lead_path(subscriber)
+      when subscriber.is_a?(User) then current_user.admin? ? edit_administration_user_path(subscriber) : ""
+      else
+        ""
+    end
+  end
 end

@@ -1,0 +1,3 @@
+<% @items.each do |item| %>
+    <%= item.name %> (<%= humanize_object_class_name(item) %>)|<%= item.class.to_s %>|<%= item.id %>
+<% end %>

@@ -85,7 +85,7 @@
   <% if @leads.blank? %>
     <%= blank_state_message %>
   <% else %>
-      <%= leads_table @leads, :show_checkboxes => false do |blocks| %>
+      <%= leads_table @leads, :show_checkboxes => true do |blocks| %>
           <% blocks.tools do |lead| %>
               <%= bt_link_to nil, t("administration.leads.index.view.edit"), edit_administration_lead_path(lead), :class => "default_action" %>
           <% end %>

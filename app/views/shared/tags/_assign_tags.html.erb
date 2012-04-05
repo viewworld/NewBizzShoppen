@@ -1,0 +1,13 @@
+<%= hidden_field_tag :taggable_class_name, taggable_class_name %>
+<span style="display: none;"><%= select_tag :taggable_ids, options_for_select([]), {:multiple => true} %></span>
+
+<script type="text/javascript">
+      $(function() {
+
+               $('#tags_selection').tagit({tagSource: "/tags.js", triggerKeys: ['enter', 'comma', 'tab'], select: true});
+      })
+</script>
+
+<ul id="tags_selection" name="selected_tag_names"></ul>
+
+<%= bt_link_to :price, t("tags.common.assign_tags"), "javascript:void(0)", :onclick => "select_tags_for_tagit();copy_taggable_ids_to_container('#{ids_container}');submitBulkForm('#{tags_path}#POST');" %>

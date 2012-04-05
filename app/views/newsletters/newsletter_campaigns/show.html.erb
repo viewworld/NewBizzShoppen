@@ -1,0 +1,9 @@
+<% if @newsletter_campaign %>
+    <% if params[:txt] == "1" %>
+        <%= strip_tags @newsletter_campaign.body.to_s %>
+    <% else %>
+        <%= @newsletter_campaign.body.to_s.html_safe %>
+    <% end %>
+<% else %>
+    <%= "404 Not found" %>
+<% end %>

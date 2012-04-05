@@ -482,6 +482,75 @@ describe User do
         @admin.destroy.should be_false
       end
     end
+
+    context "campaign monitor" do
+      it "should create campaign monitor client" do
+        CreateSend::Client.expects(:create).returns("ClientId10123123")
+
+        user = User::Admin.make!
+        user.expects(:cm_exists?).returns(true)
+        user.cm_client.should == "ClientId10123123"
+      end
+
+      it "should update user in camapign monitor" do
+        CreateSend::Client.expects(:create).returns("ClientId10123123")
+        CreateSend::Client.any_instance.expects(:set_basics).with("new_company_name",
+                                                                  "New Lastname",
+                                                                  "new@email.fake",
+                                                                  "(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb",
+                                                                  "Poland")
+        user = User::Admin.make!
+        user.company_name = "new_company_name"
+        user.first_name = "New"
+        user.last_name = "Lastname"
+        user.email = "new@email.fake"
+        user.time_zone = "Warsaw"
+        user.address.country = Country.make!(:name => "Poland")
+        user.save!
+      end
+
+      it "should return correct default newsletter manager value" do
+        User::Admin.make!.should be_newsletter_manager
+        User::CallCentre.make!.should be_newsletter_manager
+        User::Supplier.make!.should_not be_newsletter_manager
+        User::CategorySupplier.make!.should_not be_newsletter_manager
+      end
+
+      it "should not create campaign monitor client if supplier or category supplier is not a newsletter manager" do
+        CreateSend::Client.expects(:create).returns("ClientId10123123")
+        CreateSend::Client.any_instance.expects(:set_access).never
+        User::Admin.make!
+
+        CreateSend::Client.expects(:create).returns("ClientId10123123")
+        CreateSend::Client.any_instance.expects(:set_access).never
+        User::CallCentre.make!
+
+        CreateSend::Client.expects(:create).returns("ClientId10123123").never
+        User::Supplier.make!
+
+        CreateSend::Client.expects(:create).returns("ClientId10123123").never
+        User::CategorySupplier.make!
+      end
+
+      it "should create campaign monitor client and set access if supplier is marked as newsletter manager by admin" do
+        user = User::Supplier.make!
+
+        CreateSend::Client.expects(:create).returns("ClientId10123123")
+        CreateSend::Client.any_instance.expects(:set_access).with(user.send(:generate_cm_username), instance_of(String), instance_of(Fixnum))
+        CreateSend::Client.any_instance.expects(:set_payg_billing).with("EUR", true, true, instance_of(Fixnum))
+        user.update_attribute(:newsletter_manager, true)
+      end
+
+      it "should create campaign monitor client and set access if supplier is marked as newsletter manager by subscription" do
+        @subscription = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :billing_cycle => 3, :newsletter_manager => true)
+        @subscription.subscription_plan_lines.make!(:price => 25)
+
+        CreateSend::Client.expects(:create).returns("ClientId10123123")
+        CreateSend::Client.any_instance.expects(:set_access).with(instance_of(String), instance_of(String), instance_of(Fixnum))
+        CreateSend::Client.any_instance.expects(:set_payg_billing).with("EUR", true, true, instance_of(Fixnum))
+        User::Supplier.make!({:subscription_plan_id => @subscription.id })
+      end
+    end
   end
 end
 

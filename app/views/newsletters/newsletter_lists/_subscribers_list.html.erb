@@ -1,0 +1,46 @@
+<% if newsletter_subscribers.blank? %>
+    <%= blank_state_message %>
+<% else %>
+<table id="newsletter_lists_table" class="generic">
+  <thead>
+  <tr>
+    <th class="hl"></th>
+    <th><%= t("newsletters.newsletter_lists.edit.view.subscribers.email_column") %></th>
+    <th><%= t("newsletters.newsletter_lists.edit.view.subscribers.name_column") %></th>
+    <th class="ta_r"><%= t("newsletters.newsletter_lists.index.view.actions_column") %></th>
+    <th class="hr"></th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td class="fl"></td>
+    <td colspan="3"></td>
+    <td class="fr"></td>
+  </tr>
+  </tfoot>
+  <tbody>
+  <% newsletter_subscribers.each do |newsletter_subscriber| %>
+      <tr class="<%= cycle("odd", "even") %>">
+        <td class="cl"></td>
+        <td><%= newsletter_subscriber.email_address %></td>
+        <td><%= newsletter_subscriber.name %></td>
+        <td class="tda ta_r">
+          <ul-actions>
+              <li>
+                  <%= link_to t("newsletters.newsletter_lists.edit.view.subscribers.edit"), edit_subscribable_object_path(newsletter_subscriber), :class => "default_action" %>
+              </li>
+          </ul-actions>
+        </td>
+        <td class="cr"></td>
+      </tr>
+  <% end %>
+  <% if will_paginate(newsletter_subscribers) %>
+      <tr class="pagination">
+        <td colspan="5" class="ta_c">
+          <%= will_paginate newsletter_subscribers, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<% end %>

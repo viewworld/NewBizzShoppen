@@ -48,7 +48,7 @@
             <td><%= contact.agent_name %></td>
         <% end %>
         <% if current_call_result = contact.current_call_result %>
-            <td><%= current_call_result.result.name %> <%= "(#{current_call_result.creator_full_name})" %></td>
+            <td><%= current_call_result.result_name %> <%= "(#{current_call_result.creator_full_name})" %></td>
             <td><%= current_call_result.note %></td>
         <% else %>
             <td>-</td>
@@ -64,7 +64,7 @@
   <% end %>
   <% if !agent_work_screen and will_paginate collection %>
       <tr class="pagination">
-        <td colspan="<%= cols %>" class="ta_c">
+        <td colspan="<%= cols+3 %>" class="ta_c">
           <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
         </td>
       </tr>

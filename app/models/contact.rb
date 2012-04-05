@@ -15,7 +15,7 @@ class Contact < AbstractLead
 
   belongs_to :agent, :class_name => "User"
   validates_presence_of :company_name, :company_phone_number, :creator_id, :category_id, :country_id, :campaign_id
-  validates_presence_of :price, :if => :process_for_lead_information?
+  validates_presence_of :price, :purchase_decision_date, :if => :process_for_lead_information?
 
   scope :with_keyword, lambda { |q| where("lower(leads.company_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :only_completed, where(:completed => false)
@@ -33,6 +33,9 @@ class Contact < AbstractLead
   acts_as_list :scope => [:campaign_id, :agent_id, :pending]
 
   accepts_nested_attributes_for :call_results, :result_values
+
+  acts_as_taggable
+
 
   class << self
 
@@ -118,6 +121,13 @@ class Contact < AbstractLead
     lead = self.deep_clone!({:with_callbacks => true, :include => [:lead_purchases, :lead_translations, {:lead_template_values => :lead_template_value_translations}]})
     lead.update_attribute :type, "Lead"
     self.update_attribute(:lead_id, lead.id)
+    if tag_list.any?
+      lead = Lead.find(lead.id)
+      tag_list.each do |tag|
+        lead.tag_list << tag
+      end
+      lead.save
+    end
   end
 
   def assign_agent(agent_id)

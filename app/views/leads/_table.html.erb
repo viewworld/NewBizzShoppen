@@ -10,7 +10,7 @@
   <tr>
     <th class="hl"></th>
     <% if show_checkboxes %>
-        <th></th>
+        <th><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></th>
     <% end %>
     <th><%= link_to t("leads.table.id"), order_for_scoped_search(:id) %></th>
     <th><%= link_to t("leads.table.header"), order_for_scoped_search(:header) %></th>
@@ -128,6 +128,19 @@
         <td colspan="<%= cols + 3 %>" class="ta_c">
           <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
         </td>
+      </tr>
+  <% end %>
+
+  <% if user_signed_in? and current_user.has_any_role?(:admin, :call_centre, :call_centre_agent, :agent) %>
+      <tr class="main_actions">
+        <td class="cl"></td>
+        <td colspan="<%= cols +1 %>" class="no_pdd_lr ta_l">
+          <%= bulk_form do %>
+            <%= hidden_field_tag :route_to %>
+            <%= render :partial => "/shared/tags/assign_tags", :locals => { :ids_container => "lead_ids", :taggable_class_name => "Lead" } %>
+          <% end %>
+        </td>
+        <td class="cr"></td>
       </tr>
   <% end %>
 

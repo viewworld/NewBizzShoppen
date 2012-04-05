@@ -136,6 +136,9 @@ en:
         reports: "Reports"
         agent_timesheets: "Timesheets"
         subscription_plans: "Subscriptions"
+        newsletter_lists: "Lists"
+        newsletter_campaigns: "Newsletters"
+        tags: "Tags"
       agent:
         leads: My leads
         deals: My deals
@@ -151,6 +154,7 @@ en:
         campaign_reports: "Campaign"
         agent_timesheets: "Timesheets"
         deals: "My deals"
+        newsletter_lists: "Lists"
       call_centre_agent:
         leads: "My leads"
         lead_templates: "Lead templates"
@@ -168,6 +172,7 @@ en:
         lead_purchases: My leads
         my_deals: My deals
         deals_to_certify: "Deals to certify"
+        newsletter: "Newsletter"
       lead_user:
         lead_purchases: My leads
         lead_requests: My requested leads
@@ -506,6 +511,7 @@ en:
       agent_work_screen_as: "Go to agent work screen as"
       button_move_selected_contacts: "Move selected"
       button_copy_selected_contacts: "Copy selected"
+      button_bulk_add_to_newsletter_list_link: "Add selected to newsletter list"
     index:
       title: Campaigns
       edit: Edit
@@ -637,6 +643,9 @@ en:
       flash:
         moved_successfully: "Selected contacts have been successfully moved to %{campaign}"
         copied_successfully: "Selected contacts have been successfully copied to %{campaign}"
+    batch_add_to_newsletter_list:
+      flash:
+        added_successfully: "%{contacts_count} contacts have been added to list %{newsletter_list}"
   call_results:
     table:
       date: Date
@@ -1898,6 +1907,30 @@ en:
       show:
         view:
           header: "Response details"
+    tags:
+      index:
+        view:
+          title: "Tags"
+          table:
+            name: "Name"
+            actions: "Actions"
+          edit: "Edit"
+          delete: "Destroy"
+          delete_confirmation_message: "Are you sure?"
+          search_button: "Search"
+          duplicate: "Duplicate"
+          enter_name: "Enter name for the duplicated tag"
+        search:
+          keyword_label: "Keyword"
+      edit:
+        view:
+          header: "Edit tag %{name}"
+          button_update: "Save"
+          button_cancel: "Cancel"
+      duplicate:
+        flash:
+          notice_successful: "Tag %{name} has been successfully duplicated to %{new_name}."
+          notice_failure: "Tag %{name} could not be duplicated because new name %{new_name} is already taken."
   agent:
     leads:
       index:
@@ -3188,6 +3221,19 @@ en:
 
     invoice:
       invoice_paypal_name: "Invoice %{number}"
+    newsletter_sources:
+      types:
+        type0: "Campaign"
+        type1: "Lead category"
+        type2: "User role"
+        type3: "Subscription type"
+        type4: "Tags"
+        type5: "Custom"
+    newsletter_campaign:
+      statuses:
+        status0: "Saved as draft"
+        status1: "Queued for sending"
+        status2: "Sent to Campaign Monitor"
   activerecord:
     models:
       article:
@@ -3753,6 +3799,7 @@ en:
         time_zone: "Time zone"
         deal_maker_role_enabled: "Deal maker role enabled"
         big_buyer: "Got credit"
+        newsletter_manager: "Newsletter manager"
       user/call_centre_agent:
         first_name: "First name"
         last_name: "Last name"
@@ -3827,6 +3874,7 @@ en:
         show_my_deals: "Show my deals"
         big_buyer: "Got credit"
         auto_buy_enabled: "Auto buy enabled"
+        newsletter_manager: "Newsletter manager"
       country:
         name: "Country name"
       lead_template:
@@ -3909,6 +3957,20 @@ en:
         free_deals_in_free_period: "Number of free deals in free period"
         free_deal_requests_in_free_period: "Number of free deal requests in free period"
         premium_deals: "Allow premium deals"
+        newsletter_manager: "Newsletter manager"
+      newsletter_list:
+        name: "Name"
+        owner_email: "Owner email"
+      newsletter_campaign:
+        name: "Name"
+        owner_email: "Owner email"
+        cm_username: "Campaign monitor username"
+        cm_password: "Campaign monitor password"
+      acts_as_taggable_on/tag:
+        name: "Name"
+        merge_with_tags: "Merge with other tags"
+        merge_with_cleanup: "Delete merged tags"
+
   users:
     passwords:
       edit:
@@ -4467,6 +4529,9 @@ en:
         test_send_email: "Test send email"
     common:
       insert_deal_link: "Insert deal links"
+      search_deal_link: "Search"
+      show_all_deals_link: "Show all"
+      show_selected_deals_link: "Show selected"
   deal_requests:
     create:
       flash:
@@ -4559,4 +4624,108 @@ en:
       duplicated:
         title: "Campaign %{campaign_name} has been successfully duplicated"
         text: "<a href=\"%{url}\">Go to the campaign</a> or <a href=\"%{url}\" target=\"_blank\">open it in a new tab</a>"
+    newsletter_synchronization:
+      synchronized:
+        title: "List %{list_name} has been synchronized"
+        text: "<a href=\"%{url}\">Go to the list</a> or <a href=\"%{url}\" target=\"_blank\">open it in a new tab</a>"
 
+  newsletters:
+    newsletter_lists:
+      index:
+        view:
+          header: "Newsletter lists"
+          name_column: "Name"
+          owner_column: "Owner"
+          actions_column: "Actions"
+          edit: "Edit"
+          synchronize: "Synchronize"
+          number_of_subscribers_column: "# of subscribers"
+          last_sync_date_column: "Last sync date"
+          search:
+            keyword_label: "Keyword"
+            archived: "Archived"
+            search_button: "Search"
+          archive: "Archive"
+          new_newsletter_list: "New list"
+          retrieve: "Retrieve from archive"
+          synchronization_scheduled: "Synchronization process will perform in the background. You will be notified when it's done."
+          unsubscribe: "Unsubscribe"
+      new:
+        view:
+          header: "New newsletter list"
+          button_create: "Create"
+          button_cancel: "Cancel"
+      edit:
+        view:
+          header: "Edit newsletter list"
+          button_update: "Save"
+          button_cancel: "Cancel"
+          subscribers:
+            email_column: "E-mail"
+            name_column: "Name"
+            edit: "Edit"
+      form:
+        keyword_for_autocompleter: "Enter name of campaign, tag, subscription or role"
+      archive:
+        flash:
+          notice_archived: "Newsletter list has been successfully archived."
+          notice_retrieved: "Newsletter list has been successfully retrieved."
+      unsubscribe:
+        flash:
+          notice: "Newsletter list has been unsubscriubed."
+    newsletter_campaigns:
+      index:
+        view:
+          search:
+            keyword_label: "Keyword"
+            archived: "Archived"
+            search_button: "Search"
+          header: "Newsletter campaigns"
+          owner_column: "Owner"
+          name_column: "Name"
+          list_names_column: "List names"
+          status_column: "Status"
+          actions_column: "Actions"
+          edit: "Edit"
+          retrieve: "Retrieve from archive"
+          archive: "Archive"
+          sign_in_to_cm: "Sign in to CM"
+          new_newsletter_campaign: "New campaign"
+      new:
+        view:
+          button_create: "Create"
+          button_cancel: "Cancel"
+          header: "New newsletter campaign"
+      form:
+        all_lists: "All lists"
+        selected_lists: "Selected lists"
+        move_right: "Add >"
+        move_left: "< Remove"
+        fetch_lists: "Fetch lists"
+        new_list: "New list"
+        test_access: "Test access"
+      lists_for_owner:
+        view:
+          user_not_found: "User not found!"
+      edit:
+        view:
+          header: "Edit newsletter campaign %{name}"
+          button_update: "Save"
+          button_cancel: "Cancel"
+          button_update_and_send: "Save & send"
+          campaign_sent_warning: "Campaign has already been sent. Any changes will be saved locally but NOT synchronized back to Campaign Monitor."
+      archive:
+        flash:
+          notice_archived: "Newsletter list has been successfully archived."
+          notice_retrieved: "Newsletter list has been successfully retrieved."
+      update:
+        flash:
+          notice_queued: "Campaign has been successfully queued for sending."
+          notice_not_sent: "Campaign could not be sent due to errors %{errors}"
+  tags:
+    common:
+      assign_tags: "Assign tags"
+      assigned_tags_label: "Tags"
+    create:
+      flash:
+        tags_successfully_assigned: "%{tags_count} tags successfully assigned to %{taggables_count} objects."
