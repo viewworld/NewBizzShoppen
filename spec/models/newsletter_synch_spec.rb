@@ -72,4 +72,30 @@ describe NewsletterSynch do
     NewsletterSynch.process!
   end
 
+  it "should export subscribers when new source is added to existing list" do
+    CreateSend::List.stubs(:create).times(1).returns("List1")
+    CreateSend::List.any_instance.stubs(:create_custom_field).returns(true)
+    CreateSend::List.any_instance.stubs(:details).returns(false).
+        then.returns(Hashie::Mash.new(:ListID => "List1")).
+        then.returns(Hashie::Mash.new(:ListID => "List1"))
+    CreateSend::List.any_instance.stubs(:active).times(1).returns(Hashie::Mash.new(:RecordsOnThisPage => 0, :Results => []))
+
+    @list = NewsletterList.make!
+    @list.newsletter_sources.create(:source_type => NewsletterSource::LEAD_CATEGORY_SOURCE, :sourceable => @lead_category)
+    @lead = Lead.make!(:category => @lead_category)
+
+    CreateSend::Subscriber.expects(:import).with(@list.cm_list_id, lead_subscriber_hash(@lead), false)
+    Delayed::Worker.new.work_off
+
+    @campaign = Campaign.make!
+    @contact = Contact.make!(:campaign => @campaign)
+    @list.newsletter_sources.create(:source_type => NewsletterSource::CAMPAIGN_SOURCE, :sourceable => @campaign)
+
+    CreateSend::List.any_instance.stubs(:active).times(1).returns(
+        Hashie::Mash.new(:RecordsOnThisPage => 1, :Results => [Hashie::Mash.new(:EmailAddress => @lead.email_address)])
+    )
+    CreateSend::Subscriber.expects(:import).with(@list.cm_list_id, lead_subscriber_hash(@contact)+lead_subscriber_hash(@lead), false)
+    NewsletterSynch.process!
+  end
+
 end
