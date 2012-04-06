@@ -88,7 +88,7 @@ Scenario: As agent I can view 'unsatisfactory' ratings regarding my leads
   And I go to agents leads
   Then I follow translated "leads.table.unsatisfactory_rating"
   Then I follow translated "leads.table.unsatisfactory_rating"
-  Then I should have translated value "leads.listing.has_unsatisfactory_rating_yes" in the css path "tr:nth-child(1) td:nth-child(13)"
+  Then I should have translated value "leads.listing.has_unsatisfactory_rating_yes" in the css path "tr:nth-child(1) td:nth-child(14)"
   Given I follow translated "leads.listing.has_unsatisfactory_rating_yes"
   Then I should see translated "agent.leads.edit.view.rating_level"
 

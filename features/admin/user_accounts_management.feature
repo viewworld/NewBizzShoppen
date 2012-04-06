@@ -194,20 +194,17 @@ Scenario: User can login after changing his account to category buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
   And Category AnotherCategory is created
+  And category "AnotherCategory" is unique for some customers users and is not auto buy
   And I am signed up and confirmed as user with email kastomer@nbs.com and password secret and role supplier
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
-  And I follow translated "administration.users.edit.view.change_supplier_interests_link"
-  And I select "AnotherCategory" from "all_categories_for_interests"
-  And I follow "move_right" within "#category_interests"
-  And I select "Electronics" from "all_categories_for_interests"
-  And I follow "move_right" within "#category_interests"
-  And I select "Leisure" from "all_categories_for_interests"
-  And I follow "move_right" within "#category_interests"
-  And I select "Business" from "all_categories_for_interests"
-  And I follow "move_right" within "#category_interests"
+  And I select "AnotherCategory" from "all_categories"
+  And I follow "move_right" within "#unique_categories"
   Then I press translated "administration.categories.edit.view.button_update"
+  And I fill in "search_with_keyword" with "kastomer"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
   And I follow translated "administration.users.edit.view.change_to_category_supplier"
   And I sign out
   And I sign in as kastomer@nbs.com with password secret
@@ -217,23 +214,19 @@ Scenario: User can login after changing his account to category buyer
 @m6 @added @selenium @_done @_tested @_requested
 Scenario: Subaccounts can login after changing his account to category buyer
   When I follow translated "layout.main_menu.admin.users"
-  And Category CategoryBuyerCategory is created
   And Category AnotherCategory is created
+  And category "AnotherCategory" is unique for some customers users and is not auto buy
   And I am signed up and confirmed as user with email kastomer@nbs.com and password secret and role supplier
   And an user with role lead_supplier and email sub@nbs.com exists as subaccount for customer kastomer@nbs.com
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
-  And I follow translated "administration.users.edit.view.change_supplier_interests_link"
-  And I select "AnotherCategory" from "all_categories_for_interests"
-  And I follow "move_right" within "#category_interests"
-  And I select "Electronics" from "all_categories_for_interests"
-  And I follow "move_right" within "#category_interests"
-  And I select "Leisure" from "all_categories_for_interests"
-  And I follow "move_right" within "#category_interests"
-  And I select "Business" from "all_categories_for_interests"
-  And I follow "move_right" within "#category_interests"
+  And I select "AnotherCategory" from "all_categories"
+  And I follow "move_right" within "#unique_categories"
   Then I press translated "administration.categories.edit.view.button_update"
+  And I fill in "search_with_keyword" with "kastomer"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
   And I follow translated "administration.users.edit.view.change_to_category_supplier"
   And I sign out
   And I sign in as sub@nbs.com with password secret

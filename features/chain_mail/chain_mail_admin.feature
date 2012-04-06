@@ -22,7 +22,7 @@ Feature: Chain mail administration
   @_done @_tested @selenium
   Scenario: I can create new Chain mail
     When campaign named "Testing One" exists with attributes "crm_campaigns:2,crm_option:0"
-    And I follow translated "layout.main_menu.admin.campaigns"
+    And I click hidden link by url regex "/\/callers\/campaigns$/"
     And I fill in "search_with_keyword" with "Testing one"
     Then I press translated "campaigns.filter.search_button"
     And display all hidden actions

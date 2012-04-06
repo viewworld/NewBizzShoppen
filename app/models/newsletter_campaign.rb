@@ -72,7 +72,7 @@ class NewsletterCampaign < ActiveRecord::Base
       cm_synchronize_lists!
 
       if Rails.env.development? or Rails.env.staging?
-        CreateSend::Campaign.new(cm_campaign_id).send_preview("tomasz.noworyta@gmail.com") #fairleads@selleo.com
+        CreateSend::Campaign.new(cm_campaign_id).send_preview("fairleads@selleo.com")
       else
         CreateSend::Campaign.new(cm_campaign_id).send(Settings.cm_confirmation_email)
       end
