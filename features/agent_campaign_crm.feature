@@ -8,14 +8,14 @@ Feature: Agent campaign crm
   @added @selenium @_done @_tested
   Scenario: Admin can enable crm while create are edit campaign
     And I sign in as admin@nbs.com with password secret
-    Then I follow translated "layout.main_menu.admin.campaigns"
+    And I click hidden link by url regex "/\/callers\/campaigns$/"
     Then I can enable crm while create are edit campaign
 
   @added @selenium @_done @_tested @faircalls
   Scenario: Call center can enable crm while create are edit campaign
     Given I visit domain http://faircalls.eu
     And I sign in as translator_call_centre@nbs.com with password secret
-    Then I follow translated "layout.main_menu.call_centre.campaigns"
+  And I click hidden link by url regex "/\/callers\/campaigns$/"
     Then I can enable crm while create are edit campaign
 
   @_done @_tested_elsewhere
