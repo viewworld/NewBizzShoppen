@@ -93,9 +93,5 @@ module User::CommonSupplier
     def deals
       Deal.where("creator_id = ? or email_address = ?", id, email)
     end
-
-    def link_to_campaign_monitor_account
-      "https://fairleads.createsend.com/login.aspx?ReturnUrl=%2f&username=#{cm_username}&password=#{cm_password}"
-    end
   end
 end

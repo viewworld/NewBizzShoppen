@@ -1016,4 +1016,8 @@ class User < ActiveRecord::Base
       save
     end
   end
+
+  def link_to_campaign_monitor_account
+    "https://fairleads.createsend.com/login.aspx?ReturnUrl=%2f&username=#{cm_username}&password=#{cm_password}"
+  end
 end
