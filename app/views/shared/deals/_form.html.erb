@@ -196,11 +196,11 @@
         <% if user_signed_in? %>
             <%= form.input :internal_note, :label => t("shared.deals.form.internal_note_label"), :as => :ckeditor, :input_html => {:width => '320px', :height => '150px', :toolbar => "Lite"}, :wrapper_html => {:class => "text"} %>
         <% end %>
-        <% if user_signed_in? and (current_user.admin? or current_user.agent?)  %>
-          <%= render :partial => "/shared/tags/assigned_tags", :locals => { :object => @deal } %>
-        <% end %>
       </ol>
     </fieldset>
+    <% if user_signed_in? and (current_user.admin? or current_user.agent?)  %>
+      <%= render :partial => "/shared/tags/assigned_tags", :locals => { :object => @deal } %>
+    <% end %>
   </div>
 </div>
 
