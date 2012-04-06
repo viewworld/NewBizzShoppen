@@ -97,12 +97,12 @@
             <%= form.input :billing_rate %>
             <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => true %>
         <% end %>
-
-        <% if ['supplier', 'category_supplier', 'member'].include?(params[:role]) or @user.has_any_role?(:supplier, :category_supplier, :member) %>
-        <%= render :partial => "/shared/tags/assigned_tags", :locals => { :object => @user } %>
-        <% end %>
       </ol>
     </fieldset>
+
+    <% if ['supplier', 'category_supplier', 'member'].include?(params[:role]) or @user.has_any_role?(:supplier, :category_supplier, :member) %>
+      <%= render :partial => "/shared/tags/assigned_tags", :locals => { :object => @user } %>
+    <% end %>
   </div>
 </div>
 

@@ -1,6 +1,6 @@
-<div>
-<%= t("tags.common.assigned_tags_label") %>:
-<ul id="tags_selection" name="<%= "#{object.class.to_s.tableize.singularize.gsub("/", "_")}[tag_list]" %>"></ul>
+<div class="tags_wrapper">
+  <p><%= t("tags.common.assigned_tags_label") %>:</p>
+  <ul id="tags_selection" name="<%= "#{object.class.to_s.tableize.singularize.gsub("/", "_")}[tag_list]" %>"></ul>
 </div>
 
 <script type="text/javascript">

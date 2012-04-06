@@ -296,10 +296,10 @@ module ApplicationHelper
   end
 
   def edit_subscribable_object_path(subscriber)
-    case
-      when subscriber.is_a?(Contact) then edit_callers_campaign_contact_path(subscriber, :campaign_id => subscriber.campaign_id)
-      when subscriber.is_a?(Lead) then current_user.admin? ? edit_administration_lead_path(subscriber) : edit_call_centres_lead_path(subscriber)
-      when subscriber.is_a?(User) then current_user.admin? ? edit_administration_user_path(subscriber) : ""
+    case subscriber.subscriber_type
+      when "Contact" then edit_callers_campaign_contact_path(:id => subscriber.subscriber_id, :campaign_id => subscriber.campaign_id)
+      when "Lead" then current_user.admin? ? edit_administration_lead_path(:id => subscriber.subscriber_id) : edit_call_centres_lead_path(:id => subscriber.subscriber_id)
+      when "User" then current_user.admin? ? edit_administration_user_path(:id => subscriber.subscriber_id) : ""
       else
         ""
     end
