@@ -5,7 +5,7 @@ Feature: Lead Advanced Import
     Given I am on the homepage
     And I visit domain http://faircalls.eu
     And I sign in as translator_call_centre@nbs.com with password secret
-    And I follow translated "layout.main_menu.call_centre.campaigns"
+    And I click hidden link by url regex "/\/callers\/campaigns$/"
     Given I select "all" from "search_with_state"
     Then I press translated "campaigns.filter.search_button"
     And I follow translated "campaigns.table.name"

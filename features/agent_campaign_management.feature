@@ -6,7 +6,7 @@ Feature: Agent campaign - management
     Given I visit domain http://faircalls.eu
     And I make sure current locale is "en"
     And I sign in as translator_call_centre@nbs.com with password secret
-    And I follow translated "layout.main_menu.call_centre.campaigns"
+    And I click hidden link by url regex "/\/callers\/campaigns$/"
     Then I should see "Testing One"
 
 # As campaign administrator - admin or call centre
@@ -80,7 +80,7 @@ Feature: Agent campaign - management
       And I choose "campaign_cost_type_3"
       Then I press "campaign_submit"
       Then I should see "Campaign was successfully created"
-      And I follow translated "layout.main_menu.call_centre.campaigns"
+      And I click hidden link by url regex "/\/callers\/campaigns$/"
       Given I select "all" from "search_with_state"
       And I press translated "campaigns.filter.search_button"
       Then I should see "2011-11-11"
@@ -101,7 +101,7 @@ Feature: Agent campaign - management
       Then I select "United Kingdom" from "campaign_country_id"
       Then I press "campaign_submit"
       Then I should see "Campaign was successfully updated"
-      And I follow translated "layout.main_menu.call_centre.campaigns"
+      And I click hidden link by url regex "/\/callers\/campaigns$/"
       And I select "all" from "search_with_state"
       And I press translated "campaigns.filter.search_button"
       Then I should see "2011-11-11"
@@ -171,14 +171,14 @@ Feature: Agent campaign - management
       Then I click xpath "(//table[@id='campaigns']//input[@type='checkbox'])[2]"
       Then I click xpath "//tr[@class='main_actions']//a"
       Then I click xpath "//div[@class='frm_head']//a"
-      And I follow translated "layout.main_menu.call_centre.campaigns"
+      And I click hidden link by url regex "/\/callers\/campaigns$/"
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
       Then I follow translated "campaigns.edit.agent_assignment_button"
       Then I should not see "1" within "#campaigns tr:nth-of-type(2)"
       Then I click xpath "(//table[@id='campaigns']//input[@type='checkbox'])[2]"
       Then I click xpath "//tr[@class='main_actions']//a"
       Then I click xpath "//div[@class='frm_head']//a"
-      And I follow translated "layout.main_menu.call_centre.campaigns"
+      And I click hidden link by url regex "/\/callers\/campaigns$/"
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
       Then I follow translated "campaigns.edit.agent_assignment_button"
       Then I should see "1" within "#campaigns tr:nth-of-type(2)"
@@ -674,7 +674,7 @@ Feature: Agent campaign - management
         @m12 @$_call_centre @_requested @ao @selenium @_done @_tested
         Scenario: When I create a new campaign the default admin template should be populated and it should be editable by campaign creator
           When there are no campaigns
-          And I follow translated "layout.main_menu.call_centre.campaigns"
+          And I click hidden link by url regex "/\/callers\/campaigns$/"
           And I click xpath "//ul[@class='header_actions']//a"
           And I fill in "campaign_name" with "Testing Template"
           And I fill in "campaign_max_contact_number" with "18"
@@ -700,7 +700,7 @@ Feature: Agent campaign - management
           Given I am not sign in
           And I am on the homepage
           And I sign in as blazejek@gmail.com with password secret
-          And I follow translated "layout.main_menu.admin.campaigns"
+          And I click hidden link by url regex "/\/callers\/campaigns$/"
           Then I follow translated "campaigns.header.new_campaign_button"
           Then I fill in "campaign_name" with "Campaign for call centre"
           Then I fill in "campaign_max_contact_number" with "188"
@@ -711,7 +711,7 @@ Feature: Agent campaign - management
           And I follow translated "campaigns_users.index.button_assign"
           And I am not sign in
           And I sign in as translator_call_centre@nbs.com with password secret
-          And I follow translated "layout.main_menu.call_centre_agent.campaigns"
+          And I click hidden link by url regex "/\/callers\/campaigns$/"
           And I fill in "search_with_keyword" with "Campaign for call centre"
           And I press translated "campaigns.filter.search_button"
           When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
@@ -749,7 +749,7 @@ Feature: Agent campaign - management
           And contact for company "ContactTest2" and campaign "Testing One" is assigned to user "translator_call_centre_agent@nbs.com"
           And contact for company "ContactTest2" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
           And I sign in as blazejek@gmail.com with password secret
-          And I follow translated "layout.main_menu.call_centre.campaigns"
+          And I click hidden link by url regex "/\/callers\/campaigns$/"
           And I follow translated "campaigns.header.my_results_global_button"
           And I should see translated "production.show.view.header"
           And I should see "Campaigns"
@@ -763,7 +763,7 @@ Feature: Agent campaign - management
           And contact for company "ContactTest1" has assigned result "Call back" created by "ccagent01@nbs.com"
           And contact for company "ContactTest2" and campaign "Testing One" is assigned to user "translator_call_centre_agent@nbs.com"
           And contact for company "ContactTest2" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
-          And I follow translated "layout.main_menu.call_centre.campaigns"
+          And I click hidden link by url regex "/\/callers\/campaigns$/"
           And I follow translated "campaigns.header.my_results_global_button"
           And I select "Greg Foam" from "agent_ids"
           And I follow translated "campaigns.show.search_button"
@@ -782,13 +782,13 @@ Feature: Agent campaign - management
           Given I am not sign in
           And I visit domain http://localhost
           And I sign in as blazejek@gmail.com with password secret
-          And I follow translated "layout.main_menu.admin.campaigns"
+          And I click hidden link by url regex "/\/callers\/campaigns$/"
           And display all hidden actions
           And I confirm a js popup on the next step
           When I follow translated action "campaigns.index.duplicate" within row containing "Testing One"
           And I wait 5 second
           And I should see translated "flash.campaigns.duplicate.notice"
-          And I follow translated "layout.main_menu.admin.campaigns"
+          And I click hidden link by url regex "/\/callers\/campaigns$/"
           And I should see "Copy of Testing"
 
         #8315
@@ -806,7 +806,7 @@ Feature: Agent campaign - management
         #9143
         @m25 @_requested @_done @_tested @tgn
         Scenario: As call centre I can go to production from campaign edit
-          And I follow translated "layout.main_menu.admin.campaigns"
+          And I click hidden link by url regex "/\/callers\/campaigns$/"
           And I follow translated "campaigns.edit.edit_button"
           And I should see translated "campaigns.edit.production"
 
@@ -817,7 +817,7 @@ Feature: Agent campaign - management
           And I add user "translator_call_centre_agent@nbs.com" to campaign "Testing Two"
           And user translator_call_centre@nbs.com with role call_centre exists with attributes "first_name: Ted, company_name:translator_call_centre"
           And user translator_call_centre_agent@nbs.com with role call_centre_agent exists with attributes "first_name: Ted2, company_name:translator_call_centre"
-          And I follow translated "layout.main_menu.admin.campaigns"
+          And I click hidden link by url regex "/\/callers\/campaigns$/"
           And I select "all" from "search_with_state"
           And I fill in "search_with_keyword" with "Testing Two"
           And I press translated "campaigns.filter.search_button"
@@ -832,7 +832,7 @@ Feature: Agent campaign - management
         Scenario: As admin I can go to production from campaign edit
           Given I am not sign in
           And I sign in as blazejek@gmail.com with password secret
-          And I follow translated "layout.main_menu.admin.campaigns"
+          And I click hidden link by url regex "/\/callers\/campaigns$/"
           And I follow translated "campaigns.edit.edit_button"
           And I should see translated "campaigns.edit.production"
 
@@ -845,7 +845,7 @@ Feature: Agent campaign - management
           And user translator_call_centre_agent@nbs.com with role call_centre_agent exists with attributes "first_name: Ted2, company_name:translator_call_centre"
           Given I am not sign in
           And I sign in as blazejek@gmail.com with password secret
-          And I follow translated "layout.main_menu.admin.campaigns"
+          And I click hidden link by url regex "/\/callers\/campaigns$/"
           And I select "all" from "search_with_state"
           And I fill in "search_with_keyword" with "Testing Two"
           And I press translated "campaigns.filter.search_button"
@@ -859,7 +859,7 @@ Feature: Agent campaign - management
         Scenario: When I go to production from campaign's edit page the results are already filtered fro that campaign
           Given I am not sign in
           And I sign in as blazejek@gmail.com with password secret
-          And I follow translated "layout.main_menu.admin.campaigns"
+          And I click hidden link by url regex "/\/callers\/campaigns$/"
           And I fill in "search_with_keyword" with "Testing One"
           And I press translated "campaigns.filter.search_button"
           And I follow translated "campaigns.edit.edit_button"
@@ -948,7 +948,7 @@ Feature: Agent campaign - management
           And I sign in as translator_call_centre_agent@nbs.com with password secret
           And I create call result for campaign "Testing One"
           And I create call result for campaign "Testing One"
-          And I follow translated "layout.main_menu.call_centre.campaigns"
+          And I click hidden link by url regex "/\/callers\/campaigns$/"
           And I should see "2"
 
         #When you duplicate a camping you should be asked:

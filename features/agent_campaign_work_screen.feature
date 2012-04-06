@@ -202,7 +202,7 @@ Feature: Agent campaign - calling session
       Given I am on the homepage
       And I make sure current locale is "en"
       And I sign in as translator_call_centre@nbs.com with password secret
-      And I follow translated "layout.main_menu.call_centre.campaigns"
+      And I click hidden link by url regex "/\/callers\/campaigns$/"
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/materials/"
       And attach the file "sample image" to "material_asset"
       And I press translated "materials.views.index.save_material"
@@ -224,7 +224,7 @@ Feature: Agent campaign - calling session
       Given I am on the homepage
       And I make sure current locale is "en"
       And I sign in as translator_call_centre@nbs.com with password secret
-      And I follow translated "layout.main_menu.call_centre.campaigns"
+      And I click hidden link by url regex "/\/callers\/campaigns$/"
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/materials/"
       And attach the file "sample image" to "material_asset"
       And I press translated "materials.views.index.save_material"
@@ -246,7 +246,7 @@ Feature: Agent campaign - calling session
       Given I am on the homepage
       And I make sure current locale is "en"
       And I sign in as translator_call_centre@nbs.com with password secret
-      And I follow translated "layout.main_menu.call_centre.campaigns"
+      And I click hidden link by url regex "/\/callers\/campaigns$/"
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/materials/"
       And attach the file "sample image" to "material_asset"
       And I press translated "materials.views.index.save_material"

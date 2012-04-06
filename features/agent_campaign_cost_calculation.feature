@@ -5,7 +5,7 @@ Feature: Cost calculation
     Given I am on the homepage
     And I make sure current locale is "en"
     And I sign in as blazejek@gmail.com with password secret
-    And I follow translated "layout.main_menu.call_centre.campaigns"
+    And I click hidden link by url regex "/\/callers\/campaigns$/"
 
   # radiobuttons for the following 4 options
   @$_administrator @$_call_centre @selenium @_done @_tested
