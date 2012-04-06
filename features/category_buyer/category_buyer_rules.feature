@@ -290,6 +290,7 @@ Feature: Category buyer rules
     Given I am not sign in
     And I am on the homepage
     And I have user with email category_supplier@nbs.com and role category_supplier
+    And user "category_supplier@nbs.com" with role "category_supplier" has attributes "auto_buy_enabled:true"
     And I sign in as category_supplier@nbs.com with password secret
     And I should not see CSS path "a[tab='browse_leads']"
     And user "category_supplier@nbs.com" with role "category_supplier" has attributes "auto_buy_enabled:false"
