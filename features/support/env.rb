@@ -41,7 +41,6 @@ Spork.prefork do
   selenium_requests = %r{/((__.+__)|(hub/session.*)|(.*paypal\.com.*))$}
   WebMock.disable_net_connect! :allow => selenium_requests
 
-  WebMock
 #  require 'cucumber/rails/capybara_javascript_emulation' # Lets you click links with onclick javascript handlers without using @culerity or @javascript
 
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
