@@ -18,6 +18,7 @@ Feature: Newsletter campaign for admin
     And I select "My contacts 2000" from "all_lists"
     And I follow translated "newsletters.newsletter_campaigns.form.move_right"
     And I should see translated "newsletters.newsletter_campaigns.form.new_list"
+    And I fill in "newsletter_campaign_subject" with "Awesome campaign subject"
     And I fill in "newsletter_campaign_body_editor" ckeditor with "My new awesome template for campaign!"
     And I press translated "newsletters.newsletter_campaigns.edit.view.button_update"
     Then display all hidden actions
