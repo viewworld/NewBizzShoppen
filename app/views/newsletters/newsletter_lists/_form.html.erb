@@ -10,17 +10,17 @@
       </ol>
     </fieldset>
 
-  <ul id="ul_sources_list">
+  <ul id="ul_sources_list" style="margin-left:210px;width:230px;margin-bottom:2px;padding:1px">
   <%= form.fields_for :newsletter_sources, @newsletter_list.newsletter_sources.without_tags_and_custom do |builder| %>
-    <li id="li_source_<%= builder.object.id %>"><%= render :partial => "newsletter_sources_fields", :locals => {:f => builder} %></li>
+    <li id="li_source_<%= builder.object.id %>" style=""><%= render :partial => "newsletter_sources_fields", :locals => {:f => builder} %></li>
   <% end %>
   </ul>
 
   <% tag_groups = @newsletter_list.newsletter_sources.with_tags.map(&:sourceable) %>
   <% tag_groups.each do |tag_group| %>
-      <ul class="droppable" id="tag_group_<%= tag_group.new_record? ? "new#{Time.now.to_f.to_s.gsub(".", "")}" : tag_group.id %>" style="background-color: #609d00; padding: 4px; margin: 4px;">
+      <ul class="droppable" id="tag_group_<%= tag_group.new_record? ? "new#{Time.now.to_f.to_s.gsub(".", "")}" : tag_group.id %>" style="border: 1px solid grey;margin-left:210px;margin-bottom:2px;width:230px;padding:1px;">
         <% tag_group.tags.each do |tag| %>
-            <li class="draggable" style="background-color: #fafad2;margin: 4px;" id="tag_<%= tag.id %>">
+            <li class="draggable" style="" id="tag_<%= tag.id %>">
               <%= tag.name %>
               <%= link_to_function image_tag("/images/icons/remove.png"), "remove_tag('#{tag.id}')" %>
             </li>
@@ -31,7 +31,14 @@
 
   <div id="newsletter_sources_tags"></div>
 
-  <%= t("newsletters.newsletter_lists.form.keyword_for_autocompleter") %><%= text_field_tag "autocompleter", nil %>
+  <fieldset class="inputs labels_ta_r labels_200">
+    <ol class="align_inputs">
+      <li class="string">
+        <label><%= t("newsletters.newsletter_lists.form.keyword_for_autocompleter") %></label>
+        <%= text_field_tag "autocompleter", nil %>
+      </li>
+    </ol>
+  </fieldset>
 
   <a data-remote="true" data-method="get" id="autocompleter_sourceable_form" href="<%= sourceable_for_search_newsletters_newsletter_lists_path(:format => :js) %>" class="display:none"></a>
 
@@ -54,7 +61,7 @@
                         tmp_id = "new" + new Date().getTime().toString();
                         tags_tag_groups[item[2].toString()] = tmp_id;
                         remove_link = "<a href='#' onclick=\"" + "remove_tag('" + item[2].toString() + "')" + "\"><img src='/images/icons/remove.png' border=0></a></li>";
-                        $("<ul  class='droppable' id='tag_group_" + tmp_id + "' style='background-color: #bc8f8f; padding: 4px; margin: 4px;'><li class='draggable' style='background-color: #fafad2;margin: 4px;' id='tag_" + item[2] + "'>" + item[0] + " " + remove_link + "</li></ul>").insertBefore("#newsletter_sources_tags");
+                        $("<ul  class='droppable' id='tag_group_" + tmp_id + "' style='margin-left:210px;width:230px;padding:1px;margin-bottom:2px;'><li class='draggable' style='border: 1px solid grey' id='tag_" + item[2] + "'>" + item[0] + " " + remove_link + "</li></ul>").insertBefore("#newsletter_sources_tags");
                         init_sortable();
                     }
                     else
