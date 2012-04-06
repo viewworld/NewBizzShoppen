@@ -399,7 +399,7 @@ Scenario: When editing call center agent I can navigate to list of leads created
   And I click hidden link by url regex "/users\/\d+\/edit/"
   And I follow translated "administration.users.edit.view.view_created_leads"
   Then I should see "SabKolSenterLead" within "#leads"
-  And I should see "2" rows in a table with headers within "#leads"
+  And I should see "3" rows in a table with headers within "#leads"
 
 @_requested @m8b @_done @_tested
 Scenario: I should have 'Don't verify email address' for every user I create
