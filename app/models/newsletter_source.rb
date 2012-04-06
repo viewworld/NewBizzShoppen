@@ -21,6 +21,7 @@ class NewsletterSource < ActiveRecord::Base
   def assign_custom_source_class
     self.sourceable_type = case sourceable.class.superclass.to_s
         when "ActiveRecord::Base" then sourceable.class.to_s
+        when "Object" then sourceable.class.to_s
         else sourceable.class.superclass.to_s
     end
   end
