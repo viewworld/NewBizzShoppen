@@ -5,10 +5,11 @@ Feature: Agent campaign targets
     Given I am on the homepage
     And I make sure current locale is "en"
     And I sign in as blazejek@gmail.com with password secret
-    And I follow translated "layout.main_menu.call_centre.campaigns"
+    And I click hidden link by url regex "/\/campaigns/"
 
   @_tested @selenium @_tested @_done
   Scenario: When creating new campaign I can select a currency
+    And I open page in browser
     Given I follow translated "campaigns.header.new_campaign_button"
     And I fill in "campaign_name" with "Testing Template"
     And I fill in "campaign_max_contact_number" with "18"
