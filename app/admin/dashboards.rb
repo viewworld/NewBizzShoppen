@@ -42,6 +42,22 @@ ActiveAdmin::Dashboards.build do
     strong { link_to "View All Delayed Jobs", administration_delayed_jobs_path }
   end
 
+  section "Campaign Monitor Responses" do
+    table_for CampaignMonitorResponse.order("created_at DESC").first(5).collect do
+      column :id do |cmr|
+        link_to cmr.id, administration_campaign_monitor_response_path(cmr)
+      end
+      column :response do |cmr|
+        link_to cmr.response, administration_campaign_monitor_response_path(cmr)
+      end
+      column :resource do |cmr|
+        link_to "#{cmr.resource_type} ##{cmr.resource_id}", administration_campaign_monitor_responses_path(:q => {:resource_id_eq => cmr.resource_id, :resource_type_contains => cmr.resource_type})
+      end
+      column :created_at
+    end
+    strong { link_to "View All Campaign Monitor Responses", administration_campaign_monitor_responses_path }
+  end
+
   # == Render Partial Section
   # The block is rendered within the context of the view, so you can
   # easily render a partial rather than build content in ruby.

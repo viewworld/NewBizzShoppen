@@ -51,7 +51,7 @@ class Newsletters::NewsletterListsController < Newsletters::NewslettersControlle
     @items << Campaign.available_for_user(current_user).where("lower(name) LIKE ?", "%#{params[:q].downcase}%").limit(10)
     @items << SubscriptionPlan.active.where("lower(name) LIKE ?", "%#{params[:q].downcase}%").limit(10)
     @items << LeadCategory.without_locked.where("lower(name) LIKE ?", "%#{params[:q].downcase}%").limit(10)
-    @items << Role.find_by_key(params[:q].downcase)
+    @items << Role.find_by_key(params[:q].to_s.downcase.gsub(" ", "_"))
     @items << ActsAsTaggableOn::Tag.where("lower(name) LIKE ?", "%#{params[:q].downcase}%").limit(10)
     @items = @items.flatten
 
