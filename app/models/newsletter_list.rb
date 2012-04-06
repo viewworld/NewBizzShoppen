@@ -144,6 +144,11 @@ class NewsletterList < ActiveRecord::Base
         end
       end
 
+      all_groups = newsletter_sources.with_tags.map(&:sourceable)
+      disposable_groups = all_groups - tag_groups
+      newsletter_sources.with_tags.where(:sourceable_id => disposable_groups.map(&:id)).each(&:destroy)
+      newsletter_sources.with_tags.select { |ns| ns.sourceable.tag_list.empty? }.each(&:destroy)
+
       self.tag_group_items = nil
     end
   end

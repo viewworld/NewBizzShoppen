@@ -61,7 +61,7 @@ class ActsAsTaggableOn::Tag < ActiveRecord::Base
   private
 
   def downcase_name
-    self.name = name.to_s.downcase
+    self.name = name.to_s.strip.downcase
   end
 
   def merge_if_tags_supplied
@@ -75,7 +75,8 @@ class ActsAsTaggableOn::Tag < ActiveRecord::Base
   public
 
   def self.find_or_create(tag_names)
-    existing_tags = ActsAsTaggableOn::Tag.where("name in (?)", tag_names.map{ |w| w.to_s.strip.downcase })
+    tag_names = tag_names.map{ |w| w.to_s.strip.downcase }
+    existing_tags = ActsAsTaggableOn::Tag.where("name in (?)", tag_names)
     new_tags = (tag_names - existing_tags.map(&:name)).map{ |name| ActsAsTaggableOn::Tag.create(:name => name) }
     existing_tags + new_tags
   end
