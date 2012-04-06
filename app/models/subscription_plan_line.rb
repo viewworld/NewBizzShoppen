@@ -42,7 +42,7 @@ class SubscriptionPlanLine < ActiveRecord::Base
 
   def apply_vat_rate
     if price_changed?
-      self.brutto_price = vat_rate > 0 ? price + (price * BigDecimal(vat_rate.to_s).div(100,4)) : price
+      self.brutto_price = vat_rate.to_f > 0 ? price + (price * BigDecimal(vat_rate.to_s).div(100,4)) : price
     end
   end
 
