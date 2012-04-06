@@ -10,4 +10,5 @@
 
 <ul id="tags_selection" name="selected_tag_names"></ul>
 
-<%= bt_link_to :price, t("tags.common.assign_tags"), "javascript:void(0)", :onclick => "select_tags_for_tagit();copy_taggable_ids_to_container('#{ids_container}');submitBulkForm('#{tags_path}#POST');" %>
+<%#= bt_link_to :price, t("tags.common.assign_tags"), "javascript:void(0)", :onclick => "select_tags_for_tagit();copy_taggable_ids_to_container('#{ids_container}');submitBulkForm('#{tags_path}#POST');" %>
+<%= bt_link_to :price, t("tags.common.assign_tags"), "javascript:void(0)", :onclick => "setTimeout(\"select_tags_for_tagit();copy_taggable_ids_to_container('#{ids_container}');submitBulkForm('#{tags_path}#POST');\",1000);" %>
