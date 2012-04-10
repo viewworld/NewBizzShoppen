@@ -209,12 +209,11 @@
   }
 
   function insert_deal_links_into_ckeditor(instance_name, domain_name){
+    link_tmp = "";
     $('input[type=checkbox][id^=deal_links]:checked').each(function(){
-
-        link_tmp = " <a href=\"http://" + domain_name + "/deals/" + $(this).val() + "\">" + $("#" + $(this).attr("id") + "_header").val() + "</a>&nbsp;";
-
-        CKEDITOR.instances[instance_name].insertHtml(link_tmp);
+        link_tmp += "<a href=\"http://" + domain_name + "/deals/" + $(this).val() + "\">" + $("#" + $(this).attr("id") + "_header").val() + "</a><br/>";
     });
+    CKEDITOR.instances[instance_name].insertHtml("<p>&nbsp;</p><p>" + link_tmp + "</p><p>&nbsp;</p>");
     $('#modal_for_deal_links').dialog('close');
   }
 
