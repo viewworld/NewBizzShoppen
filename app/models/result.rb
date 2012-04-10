@@ -88,7 +88,9 @@ class Result < ActiveRecord::Base
   end
 
   def available_variables
-    EmailTemplate.available_variables_for((upgrades_to_any_user? or upgrades_to_lead?) ? name.downcase.gsub(" ", "_") : "common_result")
+    vars = EmailTemplate.available_variables_for((upgrades_to_any_user? or upgrades_to_lead?) ? name.downcase.gsub(" ", "_") : "common_result")
+    vars = vars - ["{{user.category_supplier_category_home_url}}"] if upgrades_to_member? or upgrades_to_supplier?
+    vars
   end
 
   private
