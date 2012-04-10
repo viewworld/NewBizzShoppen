@@ -22,6 +22,8 @@
                 <%= address_form.input :country_id, :required => (@user.is_a?(User::Member) or @user.is_a?(User::Agent) or @user.is_a?(User::CallCentreAgent)), :as => :select, :collection => Country.all, :input_html => { :onchange => "refresh_regions_list('user_#{params[:role].present? ? params[:role] : form.object.role}_address_attributes');" } %>
                 <%= address_form.input :region_id, :as => :select, :collection => regions_collection_for(form.object.address.country) %>
             <% end %>
+        <% end %>
+        <% if ['agent', 'call_centre', 'call_centre_agent'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre, :call_centre_agent) %>
             <%= form.input :time_zone, :wrapper_html => { :class => "select"}, :input_html => {:style => "width: 240px"} %>
         <% end %>
         <% if ['lead_supplier', 'supplier', 'member'].include?(params[:role]) or @user.has_any_role?(:lead_supplier, :supplier, :member) %>
