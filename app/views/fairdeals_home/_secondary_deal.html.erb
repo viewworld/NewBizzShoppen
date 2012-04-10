@@ -13,7 +13,7 @@
                         <%= t("deals.index.view.save") %> <%= featured.saving %>
                     <% else %>
                         <%= t("deals.index.view.price") %>
-                        <%= as_currency(featured.discounted_price, featured.currency) %>
+                        <%= as_currency(featured.deal_price, featured.currency) %>
                         /
                         <%= t("deals.index.view.save") %>
                         <%= featured.saving %>
