@@ -54,3 +54,13 @@ h1
     font-size: 24px;
     padding-bottom: 14px;        
 }
+
+.no_shrink td
+{
+    -pdf-keep-in-frame-mode: overflow;
+}
+
+.no_shrink td.no_shrink_exclude
+{
+    -pdf-keep-in-frame-mode: shrink !important;
+}
