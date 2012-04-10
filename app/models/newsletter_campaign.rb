@@ -63,7 +63,7 @@ class NewsletterCampaign < ActiveRecord::Base
 
   def cm_synchronize_lists!
     newsletter_lists.each do |newsletter_list|
-      newsletter_list.newsletter_synches.create(:use_delay_job => false)
+      newsletter_list.newsletter_synches.create
     end
   end
 

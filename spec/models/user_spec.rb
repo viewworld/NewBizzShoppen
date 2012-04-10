@@ -500,6 +500,7 @@ describe User do
                                                                   "(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb",
                                                                   "Poland")
         user = User::Admin.make!
+        user.expects(:cm_exists?).returns(true)
         user.company_name = "new_company_name"
         user.first_name = "New"
         user.last_name = "Lastname"
