@@ -143,7 +143,7 @@ class Asset::DealInternalDocument < Asset
   belongs_to :deal, :foreign_key => "resource_id", :touch => true
   has_attached_file :asset, attachment_options
   validates_attachment_presence :asset
-  validates_attachment_size :asset, :less_than => 1.megabyte
+  validates_attachment_size :asset, :less_than => 10.megabyte
   validates_attachment_content_type :asset, :content_type => Asset::DOCUMENT_FILE_TYPES, :message => " - #{I18n.t('activerecord.errors.models.asset.validation_asset_document_type')}"
 
   # TODO there must be a better way..
