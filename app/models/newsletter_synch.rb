@@ -1,11 +1,12 @@
 class NewsletterSynch < ActiveRecord::Base
 
-  attr_accessor :use_delayed_job, :notify_object
+  attr_accessor :use_delayed_job
 
   validates_presence_of :newsletter_list_id
 
   has_many :campaign_monitor_responses, :as => :resource
   belongs_to :newsletter_list
+  belongs_to :notificable, :polymorphic => true
 
   after_create do
     if use_delayed_job
@@ -100,10 +101,10 @@ class NewsletterSynch < ActiveRecord::Base
   end
 
   def notify!
-    if notify_object.is_a? User
-      notify_object.notify!(
+    if notificable.is_a? User
+      notificable.notify!(
           :title => I18n.t("notifications.newsletter_synchronization.synchronized.title", :list_name => newsletter_list.name),
-          :text => I18n.t("notifications.newsletter_synchronization.synchronized.text", :url => "http://#{user_to_notify.domain_name}/newsletters/newsletter_lists/#{newsletter_list.id}/edit"))
+          :text => I18n.t("notifications.newsletter_synchronization.synchronized.text", :url => "http://#{notificable.domain_name}/newsletters/newsletter_lists/#{newsletter_list.id}/edit"))
     end
   end
 

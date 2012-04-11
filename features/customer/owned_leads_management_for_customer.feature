@@ -279,3 +279,7 @@ Scenario: I should see hidden lead details on a lead public view if I have bough
   Given lead "Printers ultimate deal" has attributes "hidden_description:Very secret description"
   Given I am on public lead page for Printers ultimate deal
   And I should see "Very secret description"
+  
+#10939
+@m32 @_requested
+Scenario: I should be notified when lead is bought by autobuy (e-mail should include whole lead information)  
