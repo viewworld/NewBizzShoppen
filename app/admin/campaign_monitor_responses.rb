@@ -6,6 +6,7 @@ ActiveAdmin.register CampaignMonitorResponse, :as => "Campaign Monitor Responses
     column :resource do |cmr|
       "#{cmr.resource_type} ##{cmr.resource_id}"
     end
+    column :created_at
     default_actions
   end
 
