@@ -118,3 +118,11 @@ Feature: Result values
   #10861
   @m32 @_requested
   Scenario: I can mark result as local (visible to only one campaign)
+
+  #10861
+  @m32 @_requested
+  Scenario: Global and local result should be applied to campaign report
+
+  #10861
+  @m32 @_requested
+  Scenario: Global and local result should be applied to agent timesheets
