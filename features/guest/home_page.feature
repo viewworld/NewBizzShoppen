@@ -82,3 +82,7 @@ Feature: Home page
     Then I should not see translated "layout.main_menu.shared.browse_leads"
     When I sign in as translator_customer@nbs.com with password secret
     Then I should see translated "layout.main_menu.shared.browse_leads"
+
+  #10977
+  @m32 @_requested
+  Scenario: When I click on the latest deal on the public buyer home page then Fairdeals should open with that deal in new tab

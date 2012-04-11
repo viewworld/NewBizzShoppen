@@ -270,9 +270,13 @@ Scenario: I can see details in accordion when clicking on header
 Scenario: Facebook and Linkedin icons should be displayed next to lead header and be clickable
 
 #10982
-@_requested @m32 @tgn
+@m32 @_requested @tgn
 Scenario: I should not see lead details on lead purchase hidden row and note field should be bigger
 
 #10983
-@_requested @m32 @tgn
+@m32 @_requested @tgn
 Scenario: I should see hidden lead details on a lead public view if I have bought the lead
+
+#10939
+@m32 @_requested
+Scenario: I should be notified when lead is bought by autobuy (e-mail should include whole lead information)

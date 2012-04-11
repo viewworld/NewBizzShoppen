@@ -186,3 +186,7 @@ Feature: Category home pages
     And I sign in as jon@lajoie.ca with password secret
     And I should not see translated "layout.main_menu.shared.browse_leads"
     And I should see translated "category_home.show.view.header_additional_information_label"
+
+  #10678
+  @m32 @_requested
+  Scenario: When I am on the public view of category home page and the category is unique then I should not see the sign up box on the page

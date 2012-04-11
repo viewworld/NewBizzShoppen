@@ -90,3 +90,15 @@ Feature: Result values
   #9889
   @m28 @_requested @tgn @_done @_tested_elsewhere
   Scenario: I can check that value for result should be calculated dynamically based on the sum of fields' values
+
+  #10960
+  @m32 @_requested
+  Scenario: I should be able to mark given result as reported per campaign
+
+  #10960
+  @m32 @_requested
+  Scenario: I should be able to mark given result as success per campaign
+
+  #10960
+  @m32 @_requested
+  Scenario: When I mark one result as reported and/or success in one campaign then it should not be reported/success in others where that I didn't mark it
