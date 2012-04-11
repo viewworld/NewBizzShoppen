@@ -696,6 +696,7 @@ en:
       cancel_button: Cancel
       result: Result
       button_new_result: New result
+      not_in: "Not in"
       my_results: "Production"
       email_sent_to: "sent to"
     create:
