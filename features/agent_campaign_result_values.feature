@@ -102,3 +102,19 @@ Feature: Result values
   #10960
   @m32 @_requested
   Scenario: When I mark one result as reported and/or success in one campaign then it should not be reported/success in others where that I didn't mark it
+
+  #10862
+  @m32 @_requested
+  Scenario: I can archive selected results
+
+  #10862
+  @m32 @_requested
+  Scenario: I can retrieve selected results from archive
+
+  #10861
+  @m32 @_requested
+  Scenario: I can mark result as global
+
+  #10861
+  @m32 @_requested
+  Scenario: I can mark result as local (visible to only one campaign)

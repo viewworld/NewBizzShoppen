@@ -389,3 +389,7 @@ Feature: Front page for procurment
     And deal named "PrimaryDeal" is a primary featured deal
     Given I visit domain http://fairdeals.dk
     And I should see translated "deals.index.view.premium_deal_splash_label"
+
+  #10901
+  @m32 @_requested
+  Scenario: I should see only 5 selected deals rotating on the primary featured deals box
