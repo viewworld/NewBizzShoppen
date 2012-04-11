@@ -107,7 +107,14 @@
 
       jQuery(document).ready(function() {
           jQuery(".solid_list li:not(.no_data)").bind("click", function() {
-              window.location = $(this).find('a.read_more').attr("href");
+              if($(this).find('a.read_more').attr("target") == "_blank")
+              {
+                  window.open($(this).find('a.read_more').attr("href"), "_blank")
+              }
+              else
+              {
+                  window.location = $(this).find('a.read_more').attr("href");
+              }
           });
       });
 

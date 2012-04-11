@@ -84,5 +84,5 @@ Feature: Home page
     Then I should see translated "layout.main_menu.shared.browse_leads"
 
   #10977
-  @m32 @_requested
+  @m32 @_requested @_done @_non_testable @tgn
   Scenario: When I click on the latest deal on the public buyer home page then Fairdeals should open with that deal in new tab
