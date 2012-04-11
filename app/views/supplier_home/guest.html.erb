@@ -68,7 +68,7 @@
     <div class="column_1to3 fltl" style="padding: 0 15px" id="latest_deals">
       <frm title="#{t('supplier_home.show.view.header_latest_deals')}" c="no_marg">
         <param:header>
-          <%= bt_link_to nil, t("supplier_home.show.view.complete_list_link"), deals_path(:search => {:latest => true}), :class => "fltr" %>
+          <%= bt_link_to nil, t("supplier_home.show.view.complete_list_link"), deals_url(:protocol => "http://", :host => Rails.env.production? ? "www.fairdeals.dk" : "fairdeals.dk:3000", :search => {:latest => true}), :class => "fltr", :target => "_blank" %>
         </param:header>
         <param:content>
           <ul class="solid_list">
