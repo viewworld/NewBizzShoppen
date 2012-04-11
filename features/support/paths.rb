@@ -146,6 +146,8 @@ module NavigationHelpers
         members_lead_templates_path
       when /leads/
         leads_path
+      when /public lead page for (.*)/
+        lead_path(Lead.where(:header => $1).first)
       when /lead edit page for (.*)/
         lead = Lead.where(:header => $1).first
         edit_lead_path(lead)
