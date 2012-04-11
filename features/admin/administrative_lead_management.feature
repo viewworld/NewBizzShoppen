@@ -241,3 +241,15 @@ Scenario: I can sort leads by all of the new columns
   Then I should see "Some lead #5" before "Some lead #3"
   When I follow translated "leads.table.sold"
   Then I should see "Some lead #3" before "Some lead #5"
+
+  #10863
+  @m32 @_requested
+  Scenario: I should be able to delete a lead
+
+  #10863
+  @m32 @_requested
+  Scenario: When lead is bought by supplier but not yet invoiced then should be removed from invoiceable leads
+
+  #10863
+  @m32 @_requested
+  Scenario: When lead is bought by supplier and invoiced then it should stay on invoice but be deleted from the system

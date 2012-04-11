@@ -470,3 +470,11 @@ Feature: Callers agent work screen
     Then I add result "Call back" for current contact
     Then notification for user "translator_call_centre@nbs.com" should be created
     And the last notification should not be active
+
+  #10911
+  @m32 @_requested
+  Scenario: I should not see notifications for contacts which were finalised before the time of callback
+
+  #10865
+  @m32 @_requested
+  Scenario: I should be able to click "Not in" on the current contact and a new result Not in is added to that contact plus it is moved to the bottom of calling sheet

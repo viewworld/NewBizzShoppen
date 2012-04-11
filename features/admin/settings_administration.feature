@@ -233,3 +233,7 @@ Scenario: Contact settings should be renamed to fairdeals contact settings
 Scenario: I should be able to set the number of secondary featured deals show on fairdeals home page
   And I fill in "settings[18]" with "4"
   And I press translated "administration.settings.edit.view.button_update_settings"
+
+#10901
+@m32 @_requested
+Scenario: I should be able to select up to 5 deals for the rotating primary featured deals box on the fairdeals homepage
