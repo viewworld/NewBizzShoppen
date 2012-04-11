@@ -1,5 +1,6 @@
 class ::User::Admin < ::User
   ROLES = [:admin, :translator]
+  validates_presence_of :company_name
 
   include Addresses
   include BankAccounts

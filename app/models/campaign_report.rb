@@ -146,7 +146,7 @@ class CampaignReport
 
   def target_value_created
     if cnc = completed_number_of_contacts and cnc > 0
-      (total_number_of_contacts / cnc) * value_created
+      (total_number_of_contacts.to_f / cnc) * value_created
     else
       0
     end
@@ -154,7 +154,7 @@ class CampaignReport
 
   def target_production_cost
     if cnc = completed_number_of_contacts and cnc > 0
-      (total_number_of_contacts / cnc) * total_cost
+      (total_number_of_contacts.to_f / cnc) * total_cost
     else
       0
     end

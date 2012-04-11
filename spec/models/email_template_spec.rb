@@ -5,7 +5,7 @@ describe EmailTemplate do
   it "should return correct set of variables for given template with class defined" do
     @template = EmailTemplate.find_by_uniq_id("deal_request_details")
     variables = @template.available_variables
-    expected_variables = (Deal::LIQUID_METHODS.call(self).keys - ["show_lead_details_url"]).map { |v| "{{deal.#{v}}}" }
+    expected_variables = (Deal::LIQUID_METHODS.call(self).keys - ["show_lead_details_url", "contact_title"]).map { |v| "{{deal.#{v}}}" }
 
     expected_variables.each do |expected_variable|
       variables.should include(expected_variable)

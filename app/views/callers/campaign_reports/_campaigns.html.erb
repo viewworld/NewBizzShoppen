@@ -1,14 +1,14 @@
     <% campaign_reports.each do |campaign_report| %>
-        <tr class="<%= cycle("odd", "even") %>">
+        <tr class="no_shrink <%= cycle("odd", "even") %>">
           <td class="cl"></td>
-          <td><%= campaign_report.campaign.name %></td>
+          <td class="no_shrink_exclude"><%= campaign_report.campaign.name %></td>
           <td><%= number_to_percentage(campaign_report.realised_success_percent, :precision => 0) %> (<%= number_to_percentage(campaign_report.target_success_percent, :precision => 0) %>)</td>
-          <td><%= number_with_precision(campaign_report.realised_finished_contacts_per_hour, :precision => 2) %> (<%= number_with_precision(campaign_report.target_finished_contacts_per_hour, :precision => 2) %>)</td>
-          <td><%= number_with_precision(campaign_report.realised_all_results_per_hour, :precision => 2) %> (<%= number_with_precision(campaign_report.target_all_results_per_hour, :precision => 2) %>)</td>
-          <td><%= number_with_precision(campaign_report.realised_temp_result_per_hour, :precision => 2) %> (<%= number_with_precision(campaign_report.target_temp_result_per_hour, :precision => 2) %>)</td>
+          <td><%= number_with_precision(campaign_report.realised_finished_contacts_per_hour, :precision => 0) %> (<%= number_with_precision(campaign_report.target_finished_contacts_per_hour, :precision => 0) %>)</td>
+          <td><%= number_with_precision(campaign_report.realised_all_results_per_hour, :precision => 0) %> (<%= number_with_precision(campaign_report.target_all_results_per_hour, :precision => 0) %>)</td>
+          <td><%= number_with_precision(campaign_report.realised_temp_result_per_hour, :precision => 0) %> (<%= number_with_precision(campaign_report.target_temp_result_per_hour, :precision => 0) %>)</td>
           <td><%= as_currency(campaign_report.realised_value_per_hour, Currency.euro, 0) %> (<%= as_currency(campaign_report.target_value_per_hour, Currency.euro, 0) %>)</td>
           <td><%= as_currency(campaign_report.realised_cost_per_hour, Currency.euro, 0) %></td>
-          <td><%= campaign_report.contacts_used %></td>
+          <td><%= campaign_report.contacts_used.to_s.split("-").join("-<br/>").html_safe %></td>
           <% CampaignReport.final_results(result_ids, campaign_reports.map { |cr| cr.campaign }).each do |result| %>
               <td><%= number_with_precision(campaign_report.realised_final_result_count(result), :precision => 0) %></td>
           <% end %>
