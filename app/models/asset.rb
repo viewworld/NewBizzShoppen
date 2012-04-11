@@ -3,7 +3,7 @@ class Asset < ActiveRecord::Base
   DOCUMENT_FILE_TYPES = %w(application/x-pdf application/txt text/plain application/msword application/pdf application/vnd.ms-excel application/vnd.oasis.opendocument.text application/vnd.oasis.opendocument.spreadsheet application/octet)
 
   validates_attachment_presence :asset
-  validates_attachment_size :asset, :less_than => 1.megabyte
+  validates_attachment_size :asset, :less_than => 10.megabyte
 
   belongs_to :resource, :polymorphic => true, :foreign_key => "resource_id"
   belongs_to :user
