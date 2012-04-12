@@ -977,7 +977,7 @@ en:
         index:
           header: "Featured deals"
           title: "Select featured deals to be displayed on Faideals home page"
-          main_position: "Main position"
+          main_position: "Main position %{position}"
           position: "Position %{position}"
           backup_position: "Backup position %{position}"
           backup_positions: "Backup positions"

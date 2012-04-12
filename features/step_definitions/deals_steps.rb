@@ -185,9 +185,14 @@ Given /^deal named "([^"]*)" is a primary featured deal$/ do |deal_header|
   FeaturedDeal.create!(:position => 0, :deal_id => deal.id)
 end
 
-Given /^deal named "([^"]*)" is "([^"]*)" secondary featured deal$/ do |deal_header, num|
+Given /^deal named "([^"]*)" is "([^"]*)" primary featured deal$/ do |deal_header, num|
   deal = Deal.where(:header => deal_header).first
   FeaturedDeal.create!(:position => num, :deal_id => deal.id)
+end
+
+Given /^deal named "([^"]*)" is "([^"]*)" secondary featured deal$/ do |deal_header, num|
+  deal = Deal.where(:header => deal_header).first
+  FeaturedDeal.create!(:position => num.to_i+4, :deal_id => deal.id)
 end
 
 When /^I append id of deal "([^"]*)" to url$/ do |deal_header|

@@ -280,4 +280,10 @@ class IntegrationTasks < Thor
       puts "\n"
     end
   end
+
+  desc "m32", ""
+  def m32
+    Translation.where(:key => "administration.featured_deals.view.index.main_position", :locale => "en").first.update_attribute(:value, "Main position %{position}")
+    Translation.where(:key => "administration.featured_deals.view.index.main_position", :locale => "da").first.update_attribute(:value, "Main position %{position}") if Translation.where(:key => "administration.featured_deals.view.index.main_position", :locale => "da").first
+  end
 end

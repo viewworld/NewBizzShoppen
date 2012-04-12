@@ -235,5 +235,10 @@ Scenario: I should be able to set the number of secondary featured deals show on
   And I press translated "administration.settings.edit.view.button_update_settings"
 
 #10901
-@m32 @_requested
+@m32 @_requested @_done @_tested @tgn
 Scenario: I should be able to select up to 5 deals for the rotating primary featured deals box on the fairdeals homepage
+  Given I follow translated "layout.main_menu.admin.featured_deals"
+  And I should see translated "administration.featured_deals.view.index.main_position" with options "position:1"
+  And I should see translated "administration.featured_deals.view.index.main_position" with options "position:5"
+  And I should see translated "administration.featured_deals.view.index.position" with options "position:1"
+  And I should see translated "administration.featured_deals.view.index.position" with options "position:15"
