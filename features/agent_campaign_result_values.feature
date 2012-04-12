@@ -105,11 +105,15 @@ Feature: Result values
 
   #10862
   @m32 @_requested
-  Scenario: I can archive selected results
+  Scenario: I can archive/retrieve selected results
 
   #10862
   @m32 @_requested
-  Scenario: I can retrieve selected results from archive
+  Scenario: When result is assigned to some campaigns and then archived it should not be visible under any other campaign to which it is not assigned
+
+  #10862
+  @m32 @_requested
+  Scenario: I can manage the results globally outside the campaign context from Settings
 
   #10861
   @m32 @_requested
