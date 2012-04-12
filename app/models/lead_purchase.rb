@@ -23,7 +23,8 @@ class LeadPurchase < LeadPurchaseBase
   after_save :deliver_bought_notification
   after_create :refresh_lead_category
 
-  liquid :id, :header, :rating_level_as_text, :rating_reason, :url
+  liquid :id, :header, :description, :hidden_description, :company_name, :contact_name, :contact_title, :email_address, :direct_phone_number,
+         :phone_number, :address, :rating_level_as_text, :rating_reason, :url
 
   private
 

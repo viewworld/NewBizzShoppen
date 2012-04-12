@@ -281,5 +281,10 @@ Scenario: I should see hidden lead details on a lead public view if I have bough
   And I should see "Very secret description"
   
 #10939
-@m32 @_requested
-Scenario: I should be notified when lead is bought by autobuy (e-mail should include whole lead information)  
+@m32 @_requested @_done @_tested @tgn
+Scenario: I should be notified when lead is bought by autobuy (e-mail should include whole lead information)
+  Given I am not sign in
+  And I am signed up and confirmed as user with email category_supplier@person.com and password secret and role category_supplier
+  And user category_supplier@person.com with role category_supplier exists with attributes "company_name:UniqCompanyName001"
+  And bought lead TestAutoBuyNotification exists within category UniqCompanyName001
+  And last email sent should have content "TestAutoBuyNotification"
