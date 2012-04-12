@@ -1,0 +1,15 @@
+<column-mc:>
+  <header><%= t("administration.results.edit.view.title") %>: <%= @result.name %></header>
+  <%= semantic_form_for @result, :url => administration_result_path, :method => :post do |form| %>
+      <frm title="Update existing">
+        <param:content>
+          <%= render :partial => '/callers/results/form', :locals => {:form => form, :result => @result} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("administration.results.edit.view.button_update"), :name => "commit_create" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+</column-mc:>

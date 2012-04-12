@@ -206,6 +206,8 @@ module NavigationHelpers
         notifications_path
       when /category home page for (.*)/
         category_home_page_path(LeadCategory.where(:name => $1).first)
+      when /results management for campaign (.*)/
+        callers_campaign_results_path(Campaign.where(:name =>$1).first)
       # Add more mappings here.
       # Here is an example that pulls values out of the Regexp:
       #

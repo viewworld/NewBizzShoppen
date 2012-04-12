@@ -104,17 +104,40 @@ Feature: Result values
   Scenario: When I mark one result as reported and/or success in one campaign then it should not be reported/success in others where that I didn't mark it
 
   #10862
-  @m32 @_requested
+  @m32 @_requested @_done @_tested_elsewhere @tgn
   Scenario: I can archive/retrieve selected results
 
   #10862
-  @m32 @_requested
+  @m32 @_requested @_done @_tested @tgn
   Scenario: When result is assigned to some campaigns and then archived it should not be visible under any other campaign to which it is not assigned
+    And the custom final result with name "Call disturbed" is created by "blazejek@gmail.com"
+    And result "Call disturbed" is assigned to campaign "Testing One"
+    And I go to results management for campaign Testing One
+    And I should see "Call disturbed"
+    And I go to results management for campaign Testing Two
+    And I should see "Call disturbed"
+    And result named "Call disturbed" has attributes "is_archived:1"
+    And I go to results management for campaign Testing One
+    And I should see "Call disturbed"
+    And I go to results management for campaign Testing Two
+    And I should not see "Call disturbed"
 
   #10862
-  @m32 @_requested
+  @m32 @_requested @_done @_tested @tgn
   Scenario: I can manage the results globally outside the campaign context from Settings
-
+    Given I click hidden link by url regex "/administration\/results/"
+    And I should see "Upgrade to supplier"
+    And I should see "Not in"
+    And I fill in "search_with_keyword" with "upgrade to member"
+    And I press translated "administration.results.index.view.search.search_button"
+    And display all hidden actions
+    And I follow translated "administration.results.index.view.edit"
+    And I check "result_is_archived"
+    And I press translated "administration.results.edit.view.button_update"
+    Then I should not see "Upgrade to member"
+    And I select "Yes" from "search_with_archived"
+    And I press translated "administration.results.index.view.search.search_button"
+    Then I should see "Upgrade to member"
   #10861
   @m32 @_requested
   Scenario: I can mark result as global

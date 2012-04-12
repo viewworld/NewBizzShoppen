@@ -17,16 +17,20 @@
   </fieldset>
 </div>
 
-<%= form.fields_for :result_fields, @result.result_fields do |builder| %>
-    <%= render :partial => "/shared/results/result_field_fields", :locals => {:f => builder} %>
+<% if @campaign %>
+    <%= form.fields_for :result_fields, @result.result_fields do |builder| %>
+        <%= render :partial => "/shared/results/result_field_fields", :locals => {:f => builder} %>
+    <% end %>
 <% end %>
 
 <div class="nested_result_fields_container"></div>
 
-<hl/>
-<div class="pdd_20" style="padding-top:10px">
-  <%= bt_link_to :plus, t("shared.lead_templates.form.new_lead_template_field"), "javascript:void(0)", :onclick => "#{fields_for_result_fields(form)}" %>
-</div>
+<% if @campaign %>
+    <hl/>
+    <div class="pdd_20" style="padding-top:10px">
+      <%= bt_link_to :plus, t("shared.lead_templates.form.new_lead_template_field"), "javascript:void(0)", :onclick => "#{fields_for_result_fields(form)}" %>
+    </div>
+    <% end %>
 <% end %>
 
 <% if result.created_by_or_admin?(current_user) %>
@@ -35,25 +39,30 @@
     <ol>
         <%= form.input :is_reported %>
         <%= form.input :is_success %>
+        <% if current_user.admin? %>
+            <%= form.input :is_archived %>
+        <% end %>
     </ol>
   </fieldset>
 </div>
 <% end %>
 
-<% if !@result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id }.nil? %>
-    <%= form.fields_for :campaigns_results, @result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id } do |builder| %>
-        <%= render :partial => "campaign_result", :locals => {:f => builder, :campaign => @campaign} %>
+<% if @campaign %>
+    <% if !@result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id }.nil? %>
+        <%= form.fields_for :campaigns_results, @result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id } do |builder| %>
+            <%= render :partial => "campaign_result", :locals => {:f => builder, :campaign => @campaign} %>
+        <% end %>
+    <% else %>
+        <div class="pdd_10 no_pdd_t">
+          <fieldset class="inputs labels_100 labels_ta_r">
+            <ol>
+              <li class="string">
+                <%= t("results.edit.value_assignment_hint") %>
+              </li>
+            </ol>
+          </fieldset>
+        </div>
     <% end %>
-<% else %>
-    <div class="pdd_10 no_pdd_t">
-      <fieldset class="inputs labels_100 labels_ta_r">
-        <ol>
-          <li class="string">
-            <%= t("results.edit.value_assignment_hint") %>
-          </li>
-        </ol>
-      </fieldset>
-    </div>
 <% end %>
 
 <script>

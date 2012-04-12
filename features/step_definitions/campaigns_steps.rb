@@ -355,4 +355,9 @@ end
 When /^result named "([^"]*)" has field with attributes "([^"]*)"$/ do |result_name, result_field_attrs|
   result = Result.find_by_name(result_name)
   result.result_fields << ResultField.create(Hash[*result_field_attrs.split(/[,:]/).map(&:strip)].symbolize_keys)
+  end
+
+When /^result named "([^"]*)" has attributes "([^"]*)"$/ do |result_name, attrs|
+  result = Result.find_by_name(result_name)
+  result.update_attributes(Hash[*attrs.split(/[,:]/).map(&:strip)].symbolize_keys)
 end

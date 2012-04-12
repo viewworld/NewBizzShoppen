@@ -47,7 +47,7 @@ class Callers::ResultsController < Callers::CallerController
   protected
 
   def collection
-    @results = Result
+    @results = Result.not_archived_or_assigned_to_campaign(@campaign)
   end
 
   private

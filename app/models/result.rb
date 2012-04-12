@@ -17,9 +17,14 @@ class Result < ActiveRecord::Base
   scope :generic_results, where(:generic => true)
   scope :custom_results, where(:generic => false)
   scope :not_in_result, where("name = 'Not in'")
+  scope :not_archived_or_assigned_to_campaign, lambda { |campaign| joins(:campaigns_results).where("campaigns_results.campaign_id = ? or results.is_archived is false", campaign.id).select("distinct(results.id), results.*") }
+  scope :with_keyword, lambda { |q| where("lower(name) like ?", "%#{q.to_s.downcase}%") }
+  scope :with_archived, lambda{ |q| where("is_archived = ?", q.to_i == 1) }
 
   validates :name, :presence => true
   validate :check_is_reported_and_is_success
+
+  include ScopedSearch::Model
 
   def to_s
     name
