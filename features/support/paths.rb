@@ -204,6 +204,8 @@ module NavigationHelpers
         callers_campaign_agent_work_screen_index_path(Campaign.find_by_name("Testing One"))
       when /notifications/
         notifications_path
+      when /category home page for (.*)/
+        category_home_page_path(LeadCategory.where(:name => $1).first)
       # Add more mappings here.
       # Here is an example that pulls values out of the Regexp:
       #
