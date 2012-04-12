@@ -476,5 +476,8 @@ Feature: Callers agent work screen
   Scenario: I should not see notifications for contacts which were finalised before the time of callback
 
   #10865
-  @m32 @_requested
+  @m32 @_requested @selenium @_done @_tested
   Scenario: I should be able to click "Not in" on the current contact and a new result Not in is added to that contact plus it is moved to the bottom of calling sheet
+    Given I should not see "Bon Jovi inc." within "#call_sheet"
+    When I follow translated "call_results.edit.not_in"
+    Then I should see "Bon Jovi inc." within "#call_sheet"

@@ -180,6 +180,7 @@ end
   last_name { Faker::Name.last_name }
   agreement_read { true }
   address { Address.make! }
+  company_name { Faker::Company.name }
 end
 
 ::User::Supplier.blueprint do

@@ -1,6 +1,23 @@
 <% if @contact and @campaign.active? and !@contact.completed? %>
-    <%= select_tag :selected_result_id, options_for_select(@campaign.results_for_select) %>
+    <% if not_in_result = @campaign.results.generic_results.not_in_result.first %>
+        <%= bt_link_to nil, t("call_results.edit.not_in"), "javascript:void(0)", :onclick => "create_call_result(#{@campaign.id},#{@contact.id},#{not_in_result.id})", :class => "quick_call_result" %>
+    <% end %>
+
+    <%= select_tag :selected_result_id, options_for_select(@campaign.results_for_select), :style => "margin-left:20px" %>
     <%= bt_link_to nil, t("call_results.edit.button_new_result"), "javascript:void(0)", :onclick => "$('#result_id').val($('#selected_result_id').val());$('#new_result_form').submit()" %>
 <% end %>
 
 <%= bt_link_to nil, t("agent_work_screen.index.show_briefing_area"), "javascript:void(0)", :onclick => "$.get('/callers/campaigns/#{campaign.id}/campaigns_description.js')" %>
+
+<script>
+  function create_call_result(campaign_id, contact_id, result_id) {
+      $.post(
+              '/callers/campaigns/'+campaign_id+'/agent_work_screen/contacts/'+contact_id+'/call_results',
+              { call_result: { note: '', result_id: result_id }, _method: 'post' },
+              function(data){},
+              "script"
+      ).error(function(){
+        alert('Error: Call result not created');
+      });
+  }
+</script>

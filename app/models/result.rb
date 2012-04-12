@@ -16,6 +16,7 @@ class Result < ActiveRecord::Base
   scope :final_results, where(:final => true)
   scope :generic_results, where(:generic => true)
   scope :custom_results, where(:generic => false)
+  scope :not_in_result, where("name = 'Not in'")
 
   validates :name, :presence => true
   validate :check_is_reported_and_is_success
