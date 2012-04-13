@@ -139,9 +139,9 @@ Feature: Debtors
  Scenario: Not invoiced items should be added to the subscription invoice at billing time
 
  #8337
- @m22 @_requested @tgn @_done @_tested
+ @m22 @_requested @tgn @_done @_tested @wip
  Scenario: When I issue an invoice for subscriber then I should not see the screen to select user/seller
-   Given there is a seller with attributes "name:TestSeller88, first_name:John, last_name:Koval, company_name:Trust"
+   Given there is a seller with attributes "first_name:John, last_name:Koval, company_name:TestSeller88"
    And subscription plan exists with attributes "name:TestSubPlan, subscription_period:4"
    And subscription plan has seller "TestSeller88"
    And subscription plan has following lines
