@@ -172,11 +172,11 @@ Given /^campaign report data is generated$/ do
   @campaign2.users = [@call_centre, @call_centre_agent1, @call_centre_agent2]
 
   # create results
-  @result1 = Result.make!(:final_reported_success, :name => "TEST Result 01")
-  @result2 = Result.make!(:final_reported_success, :name => "TEST Result 02")
+  @result1 = Result.make!(:final, :name => "TEST Result 01")
+  @result2 = Result.make!(:final, :name => "TEST Result 02")
   @result3 = Result.make!(:upgrades_to_lead)
   @result4 = Result.make!(:upgrades_to_lead)
-  @result_final_reported = Result.make!(:final_reported, :name => "TEST Result 03")
+  @result_final_reported = Result.make!(:final, :name => "TEST Result 03")
   @result_final = Result.make!(:final)
   @result_not_final = Result.make!
 
@@ -189,6 +189,11 @@ Given /^campaign report data is generated$/ do
   @result2.campaigns_results.last.update_attributes(:value => 10, :expected_completed_per_hour => 10)
   @result_final_reported.campaigns_results.first.update_attributes(:value => 23, :expected_completed_per_hour => 5)
   @result_final_reported.campaigns_results.last.update_attributes(:value => 23, :expected_completed_per_hour => 10)
+
+  #mark as reported & success
+  [@result1, @result2, @result3, @result4, @result_final_reported].each do |result|
+    result.campaigns_results.each { |cr| cr.update_attributes(:is_reported => true, :is_success => true) }
+  end
 
   # create contacts
   @contact1_1 = Contact.make!(:campaign => @campaign1)
