@@ -53,7 +53,7 @@ class AddIsReportedToCampaignsResults < ActiveRecord::Migration
                          JOIN leads contacts ON call_results.contact_id = contacts.id AND contacts.type::text = 'Contact'::text
                     JOIN leads leads ON leads.id = contacts.lead_id AND leads.type::text = 'Lead'::text
                     JOIN campaigns_results ON results.id = campaigns_results.result_id
-                   WHERE results.final = true AND contacts.type::text = 'Contact'::text AND results.upgrades_to_lead IS TRUE AND campaigns_results.is_reported IS TRUE
+                   WHERE results.final = true AND contacts.type::text = 'Contact'::text AND results.upgrades_to_lead IS TRUE AND campaigns_results.is_reported IS TRUE AND campaigns_results.campaign_id = leads.campaign_id
                    GROUP BY leads.campaign_id, call_results.created_at::date, call_results.creator_id)
                 UNION ALL
                          SELECT dynamic_result_values.creator_id AS user_id, sum(dynamic_result_values.value * dynamic_result_values.euro_value) AS sum, dynamic_result_values.created_at::date AS created_at, dynamic_result_values.campaign_id
