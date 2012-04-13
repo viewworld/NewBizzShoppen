@@ -3,11 +3,11 @@
       <ol>
         <li class="boolean">
           <%= f.label :is_reported, t("shared.results.form.is_reported") %>
-          <%= f.check_box :is_reported %>
+          <%= f.check_box :is_reported, :disabled => f.object.result.has_any_call_results?(campaign) %>
         </li>
         <li class="boolean">
           <%= f.label :is_success, t("shared.results.form.is_success") %>
-          <%= f.check_box :is_success %>
+          <%= f.check_box :is_success, :disabled => f.object.result.has_any_call_results?(campaign) %>
         </li>
         <li class="string">
           <%= f.label :value %>

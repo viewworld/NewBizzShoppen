@@ -24,7 +24,6 @@ class Result < ActiveRecord::Base
   scope :with_reported, where("is_reported is true")
 
   validates :name, :presence => true
-  #validate :check_is_reported_and_is_success
 
   include ScopedSearch::Model
 
@@ -101,16 +100,7 @@ class Result < ActiveRecord::Base
     vars
   end
 
-  #private
-  #
-  #def check_is_reported_and_is_success
-  #  if call_results.any?
-  #    if !is_reported? and is_reported_changed?
-  #      self.errors.add(:is_reported, I18n.t("models.result_field.is_reported_cannot_be_disabled"))
-  #    end
-  #    if !is_success? and is_success_changed?
-  #      self.errors.add(:is_success, I18n.t("models.result_field.is_success_cannot_be_disabled"))
-  #    end
-  #  end
-  #end
+  def has_any_call_results?(campaign)
+    CallResult.joins(:contact).where("result_id = ? and campaign_id = ?", id, campaign.id).first
+  end
 end
