@@ -20,7 +20,7 @@ class Result < ActiveRecord::Base
   scope :not_archived_or_assigned_to_campaign, lambda { |campaign| joins(:campaigns_results).where("campaigns_results.campaign_id = ? or results.is_archived is false", campaign.id).select("distinct(results.id), results.*") }
   scope :with_keyword, lambda { |q| where("lower(name) like ?", "%#{q.to_s.downcase}%") }
   scope :with_archived, lambda{ |q| where("is_archived = ?", q.to_i == 1) }
-  scope :for_campaigns, lambda { |campaign_ids| joins(:campaigns_results).where(:campaign_id => campaign_ids).select("distinct(results.id), results.*")  }
+  scope :for_campaigns, lambda { |campaign_ids| joins(:campaigns_results).where("campaigns_results.campaign_id IN (?)", campaign_ids).select("distinct(results.id), results.*")  }
   scope :with_reported, where("is_reported is true")
 
   validates :name, :presence => true
