@@ -337,7 +337,10 @@ class Campaign < ActiveRecord::Base
     end
 
     if user_to_notify
-      user_to_notify.notify!(:title => I18n.t("notifications.campaign.duplicated.title", :campaign_name => name), :text => I18n.t("notifications.campaign.duplicated.text", :url => "http://#{user_to_notify.domain_name}/callers/campaigns/#{campaign.id}/edit"))
+      user_to_notify.notify!(
+          :title => I18n.t("notifications.campaign.duplicated.title", :campaign_name => name),
+          :text => I18n.t("notifications.campaign.duplicated.text", :url => "http://#{user_to_notify.domain_name}/callers/campaigns/#{campaign.id}/edit"),
+          :notifier => self)
     end
 
     campaign

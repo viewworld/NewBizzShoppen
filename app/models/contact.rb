@@ -12,6 +12,7 @@ class Contact < AbstractLead
   belongs_to :lead
   has_many :contact_past_user_assignments, :foreign_key => "contact_id", :dependent => :destroy
   has_many :past_user_assignments, :through => :contact_past_user_assignments, :source => :user
+  has_many :notifications, :as => :notifier
 
   belongs_to :agent, :class_name => "User"
   validates_presence_of :company_name, :company_phone_number, :creator_id, :category_id, :country_id, :campaign_id

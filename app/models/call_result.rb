@@ -194,7 +194,7 @@ class CallResult < ActiveRecord::Base
     if Date.parse(result_values.first.value) > contact.campaign.end_date
       process_for_final_result
     else
-      add_call_back_notification!
+      notify!
       process_for_call_log_result
     end
   end
@@ -230,6 +230,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def process_for_final_result
+    contact.notifications.pending.dismiss_all
     contact.remove_from_list
     contact.update_attributes(:completed => true, :agent_id => nil)
     contact.insert_at
@@ -237,7 +238,7 @@ class CallResult < ActiveRecord::Base
 
   def process_for_send_material
     deliver_material
-    add_call_back_notification!
+    notify!
     process_for_call_log_result
   end
 
@@ -348,13 +349,14 @@ class CallResult < ActiveRecord::Base
     end
   end
 
-  def add_call_back_notification!(options={})
+  def notify!(options={})
     options = {
       :title => I18n.t("notifications.call_result.call_back.title", :contact => contact.company_name),
       :text => I18n.t("notifications.call_result.call_back.text", :url => "/callers/campaigns/#{contact.campaign_id}/agent_work_screen?selected_contact_id=#{contact.id}"),
       :notify_at => Time.zone.parse(result_values.dates.first.value),
       :sticky => true,
-      :time => nil
+      :time => nil,
+      :notifier => contact
     }.merge(options)
     creator.notifications.create(options)
   end

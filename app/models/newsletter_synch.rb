@@ -104,7 +104,8 @@ class NewsletterSynch < ActiveRecord::Base
     if notificable.is_a? User
       notificable.notify!(
           :title => I18n.t("notifications.newsletter_synchronization.synchronized.title", :list_name => newsletter_list.name),
-          :text => I18n.t("notifications.newsletter_synchronization.synchronized.text", :url => "http://#{notificable.domain_name}/newsletters/newsletter_lists/#{newsletter_list.id}/edit"))
+          :text => I18n.t("notifications.newsletter_synchronization.synchronized.text", :url => "http://#{notificable.domain_name}/newsletters/newsletter_lists/#{newsletter_list.id}/edit"),
+          :notifier => self)
     end
   end
 

@@ -465,6 +465,14 @@ CallResult.blueprint(:upgraded_to_member) do
   result_values { [ResultValue.new(:result_field => Result.where("name = ? and generic IS TRUE", "Upgrade to member").first.result_fields.first, :field_type => ResultField::MATERIAL, :value => "")] }
 end
 
+CallResult.blueprint(:call_back) do
+  contact { Contact.make! }
+  result { Result.where("name = ? and generic IS TRUE", "Call back").first || Result.make!(:not_final_reported, :name => "Call back", :is_generic => true) }
+  note { Faker::Lorem.words(5).to_s.capitalize }
+  creator { ::User::CallCentreAgent.make! }
+  result_values { [ResultValue.new(:result_field => Result.where("name = ? and generic IS TRUE", "Call back").first.result_fields.first, :field_type => ResultField::DATETIME, :value => Time.zone.now.strftime("%Y-%m-%d %H:%M"))] }
+end
+
 UserSessionLog.blueprint do
   user { ::User::CallCentreAgent.make! }
   start_time { Time.now }

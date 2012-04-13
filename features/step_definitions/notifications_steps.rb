@@ -10,6 +10,14 @@ Then /^the last notification should not be active$/ do
   Notification.last.notify_at.should > Time.now
 end
 
+Then /^the last notification should be dismissed$/ do
+  Notification.last.dismissed_at.should_not be_nil
+end
+
+Then /^the last notification should not be dismissed$/ do
+  Notification.last.dismissed_at.should be_nil
+end
+
 Given /^there is pending notification for user "([^"]*)"$/ do |email|
   User.where(:email => email).first.with_role.notifications.create!(
       :title => "Notification title",

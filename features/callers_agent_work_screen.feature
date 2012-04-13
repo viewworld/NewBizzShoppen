@@ -472,8 +472,15 @@ Feature: Callers agent work screen
     And the last notification should not be active
 
   #10911
-  @m32 @_requested
+  @m32 @_requested @_done @_tested_elsewhere @_rspec
   Scenario: I should not see notifications for contacts which were finalised before the time of callback
+#    When I add result "Call back" for current contact
+#    And notification for user "translator_call_centre@nbs.com" should be created
+#    And the last notification should not be dismissed
+#    When I follow translated "agent_work_screen.index.show_pending_calls"
+#    And I follow contact action "campaigns.edit.show_button" within tr "Bon Jovi inc."
+#    And I add result "Not interested" for current contact
+#    And the last notification should be dismissed
 
   #10865
   @m32 @_requested @selenium @_done @_tested
