@@ -20,8 +20,8 @@ describe TopAgent do
     @campaign.users << @call_centre_agent2
 
     # create results
-    @result1 = Result.make!(:final_reported_success)
-    @result2 = Result.make!(:final_reported_success)
+    @result1 = Result.make!(:final)
+    @result2 = Result.make!(:final)
     @result3 = Result.make!(:upgrades_to_lead)
     @result4 = Result.make!(:upgrades_to_lead)
 
@@ -29,6 +29,11 @@ describe TopAgent do
     @campaign.results = [@result1,@result2,@result3,@result4]
     @result1.campaigns_results.first.update_attribute(:value, 100)
     @result2.campaigns_results.first.update_attribute(:value, 10)
+
+    #mark as reported & success
+    [@result1, @result2, @result3, @result4].each do |result|
+      result.campaigns_results.each { |cr| cr.update_attributes(:is_reported => true, :is_success => true) }
+    end
 
     # create contacts
     @contact1 = Contact.make!(:campaign => @campaign)
