@@ -92,16 +92,29 @@ Feature: Result values
   Scenario: I can check that value for result should be calculated dynamically based on the sum of fields' values
 
   #10960
-  @m32 @_requested
+  @m32 @_requested @_done @_tested_elsewhere @_rspec @tgn
   Scenario: I should be able to mark given result as reported per campaign
 
   #10960
-  @m32 @_requested
+  @m32 @_requested @_done @_tested_elsewhere @_rspec @tgn
   Scenario: I should be able to mark given result as success per campaign
 
   #10960
-  @m32 @_requested
+  @m32 @_requested @_done @_tested @tgn
   Scenario: When I mark one result as reported and/or success in one campaign then it should not be reported/success in others where that I didn't mark it
+    And the custom final result with name "Call disturbed" is created by "blazejek@gmail.com"
+    And result "Call disturbed" is assigned to campaign "Testing One"
+    And I go to edit result "Call disturbed" for campaign "Testing One"
+    And I check "result_campaigns_results_attributes_0_is_reported"
+    And I check "result_campaigns_results_attributes_0_is_success"
+    And I press translated "campaigns.edit.button_update"
+    And I go to edit result "Call disturbed" for campaign "Testing One"
+    And the "result_campaigns_results_attributes_0_is_reported" checkbox should be checked
+    And the "result_campaigns_results_attributes_0_is_success" checkbox should be checked
+    And result "Call disturbed" is assigned to campaign "Testing Two"
+    And I go to edit result "Call disturbed" for campaign "Testing Two"
+    And the "result_campaigns_results_attributes_0_is_reported" checkbox should not be checked
+    And the "result_campaigns_results_attributes_0_is_success" checkbox should not be checked
 
   #10862
   @m32 @_requested @_done @_tested_elsewhere @tgn
