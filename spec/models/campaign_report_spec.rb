@@ -21,16 +21,15 @@ describe CampaignReport do
 
     # create results
     @result_upgrade_to_member = Result.where("name = ? and generic IS TRUE", "Upgrade to member").first
-    @result_upgrade_to_member.update_attribute(:is_reported, true)
-    @result1 = Result.make!(:final_reported_success)
-    @result2 = Result.make!(:final_reported_success)
+    @result1 = Result.make!(:final)
+    @result2 = Result.make!(:final)
     @result3 = Result.make!(:upgrades_to_lead)
     @result4 = Result.make!(:upgrades_to_lead)
-    @result_final_reported = Result.make!(:final_reported)
+    @result_final_reported = Result.make!(:final)
     @result_final = Result.make!(:final)
     @result_not_final = Result.make!
-    @result_not_final_reported = Result.make!(:not_final_reported)
-    @result_dyn_value = Result.make!(:final_reported_success)
+    @result_not_final_reported = Result.make!
+    @result_dyn_value = Result.make!(:final)
     @result_dyn_value.result_fields.create(:name => "test field 1", :field_type => ResultField::INTEGER)
     @result_dyn_value.result_fields.create(:name => "test field 2", :field_type => ResultField::INTEGER)
     @result_dyn_value.result_fields.create(:name => "test field 3", :field_type => ResultField::INTEGER)
@@ -55,6 +54,17 @@ describe CampaignReport do
     @contact2_2 = Contact.make!(:campaign => @campaign2)
     @contact2_3 = Contact.make!(:campaign => @campaign2, :price => 130)
     @contact2_4 = Contact.make!(:campaign => @campaign2, :price => 13)
+
+    #mark as reported
+    [@result_upgrade_to_member, @result1, @result2, @result3, @result4,
+     @result_final_reported, @result_not_final_reported, @result_dyn_value].each do |result|
+      result.campaigns_results.each { |cr| cr.update_attribute(:is_reported, true) }
+    end
+
+    #mark as success
+    [@result1, @result2, @result3, @result4, @result_dyn_value].each do |result|
+      result.campaigns_results.each { |cr| cr.update_attribute(:is_success, true) }
+    end
   end
 
   context "Initialization" do
@@ -86,10 +96,11 @@ describe CampaignReport do
     end
 
     it "should return correct realised finished contacts per hour" do
-      CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_1, :result => @result_not_final_reported, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
       CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset-1.day)
       CallResult.make!(:contact => @contact1_1, :result => @result_final_reported, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
+      CallResult.make!(:contact => @contact1_2, :result => @result_final_reported, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
       (1..4).each do |i|
         UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
@@ -100,7 +111,7 @@ describe CampaignReport do
     end
 
     it "should return all reported result types" do
-      CampaignReport.final_results.size.should == 7
+      CampaignReport.final_results.size.should == 6
     end
 
     it "should return correct target final results of given type per hour" do
@@ -179,7 +190,7 @@ describe CampaignReport do
         campaign.results << @result_dyn_value
         campaign.save
         @result_dyn_value.reload
-        @result_dyn_value.campaigns_results.detect{ |cr| cr.campaign == campaign }.update_attributes(:value => 100, :expected_completed_per_hour => 5, :is_dynamic_value => true)
+        @result_dyn_value.campaigns_results.detect{ |cr| cr.campaign == campaign }.update_attributes(:value => 100, :expected_completed_per_hour => 5, :is_dynamic_value => true, :is_reported => true)
         @result_dyn_value.result_fields.each do |result_field|
           result_field.campaigns_result_fields.create(:campaign => campaign, :is_dynamic_value => result_field.name != "test field 3" ? true : false, :dynamic_euro_value => 17)
         end
@@ -192,6 +203,7 @@ describe CampaignReport do
         #config upgrade to member with deals  (deals' leads' sum price => 42)
         campaign.results << @result_upgrade_to_member
         campaign.save
+        campaign.campaigns_results.detect { |cr| cr.result == @result_upgrade_to_member }.update_attribute(:is_reported, true)
 
         cr = CallResult.make!(:upgraded_to_member, :contact => (campaign == @campaign1) ? @contact1_5 : @contact2_5,
                               :result => @result_upgrade_to_member, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)

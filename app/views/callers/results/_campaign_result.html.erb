@@ -1,6 +1,14 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_100 labels_ta_r">
       <ol>
+        <li class="boolean">
+          <%= f.label :is_reported, t("shared.results.form.is_reported") %>
+          <%= f.check_box :is_reported %>
+        </li>
+        <li class="boolean">
+          <%= f.label :is_success, t("shared.results.form.is_success") %>
+          <%= f.check_box :is_success %>
+        </li>
         <li class="string">
           <%= f.label :value %>
           <%= f.text_field :value %>

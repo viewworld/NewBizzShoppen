@@ -20,9 +20,11 @@ class Result < ActiveRecord::Base
   scope :not_archived_or_assigned_to_campaign, lambda { |campaign| joins(:campaigns_results).where("campaigns_results.campaign_id = ? or results.is_archived is false", campaign.id).select("distinct(results.id), results.*") }
   scope :with_keyword, lambda { |q| where("lower(name) like ?", "%#{q.to_s.downcase}%") }
   scope :with_archived, lambda{ |q| where("is_archived = ?", q.to_i == 1) }
+  scope :for_campaigns, lambda { |campaign_ids| joins(:campaigns_results).where(:campaign_id => campaign_ids).select("distinct(results.id), results.*")  }
+  scope :with_reported, where("is_reported is true")
 
   validates :name, :presence => true
-  validate :check_is_reported_and_is_success
+  #validate :check_is_reported_and_is_success
 
   include ScopedSearch::Model
 
@@ -99,16 +101,16 @@ class Result < ActiveRecord::Base
     vars
   end
 
-  private
-
-  def check_is_reported_and_is_success
-    if call_results.any?
-      if !is_reported? and is_reported_changed?
-        self.errors.add(:is_reported, I18n.t("models.result_field.is_reported_cannot_be_disabled"))
-      end
-      if !is_success? and is_success_changed?
-        self.errors.add(:is_success, I18n.t("models.result_field.is_success_cannot_be_disabled"))
-      end
-    end
-  end
+  #private
+  #
+  #def check_is_reported_and_is_success
+  #  if call_results.any?
+  #    if !is_reported? and is_reported_changed?
+  #      self.errors.add(:is_reported, I18n.t("models.result_field.is_reported_cannot_be_disabled"))
+  #    end
+  #    if !is_success? and is_success_changed?
+  #      self.errors.add(:is_success, I18n.t("models.result_field.is_success_cannot_be_disabled"))
+  #    end
+  #  end
+  #end
 end

@@ -40,7 +40,7 @@ class CampaignReport
   end
 
   def target_all_results_per_hour
-    campaign.campaigns_results.joins(:result).where("results.is_reported is TRUE").sum(:expected_completed_per_hour)
+    campaign.campaigns_results.where("is_reported is TRUE").sum(:expected_completed_per_hour)
   end
 
   def realised_all_results_per_hour
@@ -91,13 +91,13 @@ class CampaignReport
   end
 
   def self.final_results(_selected_result_ids=nil, selected_campaigns=nil)
-    res = Result.where(:final => true, :is_reported => true).order("name")
+    res = Result.joins(:campaigns_results).where("is_reported is true").where(:final => true).order("name").select("distinct(results.id), results.*")
     res = res.where(:id => _selected_result_ids) if _selected_result_ids
 
     if selected_campaigns
-      res = res.joins(:campaigns_results).select("DISTINCT results.id, results.*").where("campaigns_results.campaign_id IN (?)", selected_campaigns.map(&:id))
+      res = res.where("campaigns_results.campaign_id IN (?)", selected_campaigns.map(&:id))
     end
-    res
+    res.all
   end
 
   def target_value_per_hour
@@ -334,8 +334,8 @@ class CampaignReport
   end
 
   def finished_contacts
-    fc = Contact.with_completed_status(true).where("campaign_id = ? and call_results.created_at::DATE BETWEEN ? AND ? and results.final is true and results.is_reported is true", campaign.id, date_from, date_to).
-        joins(:call_results => [:result])
+    fc = Contact.with_completed_status(true).where("leads.campaign_id = ? and campaigns_results.campaign_id = ? and call_results.created_at::DATE BETWEEN ? AND ? and results.final is true and campaigns_results.is_reported is true",
+                                                   campaign.id, campaign.id, date_from, date_to).joins(:call_results => [:result => [:campaigns_results]])
     fc = fc.where("results.id IN (?)", selected_result_ids) if selected_result_ids
     if selected_users?
       fc = fc.where("call_results.creator_id in (?)", user.map(&:id))

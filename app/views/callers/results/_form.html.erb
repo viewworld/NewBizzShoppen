@@ -37,8 +37,6 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs_vertical">
     <ol>
-        <%= form.input :is_reported %>
-        <%= form.input :is_success %>
         <% if current_user.admin? %>
             <%= form.input :is_archived %>
         <% end %>

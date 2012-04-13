@@ -3056,6 +3056,8 @@ en:
           is_dynamic_value: "Is dynamically calculated"
           dynamic_euro_value: "Value"
         is_dynamic_value: "Value dynamically calculated"
+        is_reported: "Is reported"
+        is_success: "Is success"
     leads:
       form:
         country_local_label: Local

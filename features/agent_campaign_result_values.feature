@@ -39,7 +39,7 @@ Feature: Result values
   Scenario: I can specify that a given final result counts as success
     And I follow translated "campaigns.edit.button_manage_result_types"
     And I click hidden link by url regex "/callers\/campaigns\/\d+\/results\/\d+\/edit/"
-    And I check "result_is_success"
+    And I check "result_campaigns_results_attributes_0_is_success"
     And I press translated "campaigns.edit.button_update"
 
   # checkbox
@@ -47,7 +47,7 @@ Feature: Result values
   Scenario: I can specify whether a given final result type should be included in campaign reporting or not
     And I follow translated "campaigns.edit.button_manage_result_types"
     And I click hidden link by url regex "/callers\/campaigns\/\d+\/results\/\d+\/edit/"
-    And I check "result_is_reported"
+    And I check "result_campaigns_results_attributes_0_is_reported"
     And I press translated "campaigns.edit.button_update"
 
   # like  "0,4" for result pr. hour means that 10 hours of work creates 4 result of the given type.
