@@ -547,6 +547,10 @@ Feature: Deals from procurement manager perspective
   And a deal named "deal004" exists within category "Electronics deals"
   And a deal named "deal005" exists within category "Electronics deals"
   Given deal named "deal000" is a primary featured deal
+  Given deal named "deal000" is "1" primary featured deal
+  Given deal named "deal000" is "2" primary featured deal
+  Given deal named "deal000" is "3" primary featured deal
+  Given deal named "deal000" is "4" primary featured deal
   And deal named "deal001" is "1" secondary featured deal
   And deal named "deal002" is "2" secondary featured deal
   And deal named "deal003" is "3" secondary featured deal
