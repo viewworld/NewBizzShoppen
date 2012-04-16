@@ -139,6 +139,7 @@ en:
         newsletter_lists: "Lists"
         newsletter_campaigns: "Newsletters"
         tags: "Tags"
+        results: "Results"
       agent:
         leads: My leads
         deals: My deals
@@ -977,7 +978,7 @@ en:
         index:
           header: "Featured deals"
           title: "Select featured deals to be displayed on Faideals home page"
-          main_position: "Main position"
+          main_position: "Main position %{position}"
           position: "Position %{position}"
           backup_position: "Backup position %{position}"
           backup_positions: "Backup positions"
@@ -1932,6 +1933,23 @@ en:
         flash:
           notice_successful: "Tag %{name} has been successfully duplicated to %{new_name}."
           notice_failure: "Tag %{name} could not be duplicated because new name %{new_name} is already taken."
+    results:
+      index:
+        view:
+          search:
+            keyword_label: "Keyword"
+            archived: "Archived"
+            search_button: "Search"
+          header: "Results"
+          name: "Name"
+          generic: "Generic?"
+          final: "Final?"
+          actions_column: "Actions"
+          edit: "Edit"
+      edit:
+        view:
+          title: "Edit result"
+          button_update: "Save"
   agent:
     leads:
       index:
@@ -3038,6 +3056,8 @@ en:
           is_dynamic_value: "Is dynamically calculated"
           dynamic_euro_value: "Value"
         is_dynamic_value: "Value dynamically calculated"
+        is_reported: "Is reported"
+        is_success: "Is success"
     leads:
       form:
         country_local_label: Local
@@ -3235,6 +3255,8 @@ en:
         status0: "Saved as draft"
         status1: "Queued for sending"
         status2: "Sent to Campaign Monitor"
+    result:
+      is_global_cannot_be_disabled: "Result is assigned to more than one campaings"
   activerecord:
     models:
       article:

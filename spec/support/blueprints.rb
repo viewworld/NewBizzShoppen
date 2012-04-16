@@ -393,24 +393,6 @@ end
 Result.blueprint do
   name { Faker::Lorem.words(3).to_s.capitalize }
   final { false }
-  is_reported { false }
-  is_success { false }
-end
-
-Result.blueprint(:final_reported_success) do
-  final { true }
-  is_reported { true }
-  is_success { true }
-end
-
-Result.blueprint(:final_reported) do
-  final { true }
-  is_reported { true }
-end
-
-Result.blueprint(:not_final_reported) do
-  final { false }
-  is_reported { true }
 end
 
 Result.blueprint(:final) do
@@ -420,8 +402,6 @@ end
 Result.blueprint(:upgrades_to_lead) do
   name { "Upgraded to lead" }
   final { true }
-  is_reported { true }
-  is_success { true }
   upgrades_to_lead { true }
   generic { true }
 end

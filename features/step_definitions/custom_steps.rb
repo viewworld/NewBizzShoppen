@@ -116,6 +116,14 @@ Then /^checkbox with name like "([^"]*)" should not be checked in the "([^"]*)" 
   page.all(:css, "#{table_selector} tr:nth-of-type(#{row_num}) input[name*='#{cb_name}']").first['checked'].should eql(false)
 end
 
+Then /^the div with id like "([^"]*)" should contain "([^"]*)"$/ do |id_like,val|
+  page.all(:css, "div[id*='#{id_like}']").detect { |el| el.text.include?(val) }.should_not be_nil
+end
+
+Then /^the div with id like "([^"]*)" should not contain "([^"]*)"$/ do |id_like,val|
+  page.all(:css, "div[id*='#{id_like}']").detect { |el| el.text.include?(val) }.should be_nil
+end
+
 Then /^the "([^"]*)" field with id like "([^"]*)" should contain "([^"]*)"$/ do |num,id_like,val|
   page.all(:css, "input:nth-of-type(#{num})[id*='#{id_like}']").first['value'].should eql(val)
 end

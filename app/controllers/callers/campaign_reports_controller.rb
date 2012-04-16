@@ -23,8 +23,6 @@ class Callers::CampaignReportsController < Callers::CallerController
     @call_centre_id = params[:call_centre_id] || nil
     @call_centre_agent_ids = params[:call_centre_agent_ids] || []
 
-    @all_results = Result.where(:final => true, :is_reported => true)
-
     if current_user.has_role?(:admin)
       @call_centre = User.find_by_id(@call_centre_id)
       @all_call_centres = User.with_call_centres
@@ -41,6 +39,8 @@ class Callers::CampaignReportsController < Callers::CallerController
     end
 
     @campaign_ids = params[:campaign_ids] || @campaigns.map(&:id)
+
+    @all_results = Result.for_campaigns(@campaign_ids).with_reported.where(:final => true)
 
     @all_campaigns = @campaigns
 

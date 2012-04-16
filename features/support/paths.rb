@@ -146,6 +146,8 @@ module NavigationHelpers
         members_lead_templates_path
       when /leads/
         leads_path
+      when /public lead page for (.*)/
+        lead_path(Lead.where(:header => $1).first)
       when /lead edit page for (.*)/
         lead = Lead.where(:header => $1).first
         edit_lead_path(lead)
@@ -202,6 +204,12 @@ module NavigationHelpers
         callers_campaign_agent_work_screen_index_path(Campaign.find_by_name("Testing One"))
       when /notifications/
         notifications_path
+      when /category home page for (.*)/
+        category_home_page_path(LeadCategory.where(:name => $1).first)
+      when /results management for campaign (.*)/
+        callers_campaign_results_path(Campaign.where(:name =>$1).first)
+      when /edit result "([^"]*)" for campaign "([^"]*)"/
+        edit_callers_campaign_result_path(Campaign.where(:name => $2).first, Result.where(:name => $1).first)
       # Add more mappings here.
       # Here is an example that pulls values out of the Regexp:
       #

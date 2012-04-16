@@ -88,6 +88,7 @@ Nbs::Application.routes.draw do
       end
     end
     match '/dashboard' => 'dashboard#index', :as => 'dashboard'
+    resources :results
   end
 
   namespace :newsletters do

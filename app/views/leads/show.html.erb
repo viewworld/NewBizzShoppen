@@ -1,6 +1,8 @@
 <column-mc:>
   <header back="true"><%= t("leads.show.view.header") %></header>
-
+  <% if user_signed_in? and current_user.has_role?(:lead_supplier) and (lead_purchase = User::LeadSupplier.find(current_user.id).accessible_lead_purchases.where(:lead_id => @lead.id).first) %>
+      <%= render :partial => "suppliers/lead_purchases/lead_details", :locals => { :lead_purchase => lead_purchase } %>
+  <% else %>
   <div class="grid_800 fltl pdd_10 no_pdd_r">
     <div class="element_description">
       <h2><%= @lead.header %></h2>      
@@ -71,4 +73,5 @@
     </div>
   </div>
   <clb/>
+  <% end %>
 </column-mc:>

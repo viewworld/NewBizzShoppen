@@ -20,11 +20,11 @@ describe AgentInformation do
     @campaign.users << @call_centre_agent2
 
     # create results
-    @result1 = Result.make!(:final_reported_success)
-    @result2 = Result.make!(:final_reported_success)
+    @result1 = Result.make!(:final)
+    @result2 = Result.make!(:final)
     @result3 = Result.make!(:upgrades_to_lead)
     @result4 = Result.make!(:upgrades_to_lead)
-    @result_dyn_value = Result.make!(:final_reported_success)
+    @result_dyn_value = Result.make!(:final)
     @result_dyn_value.result_fields.create(:name => "test field 1", :field_type => ResultField::INTEGER)
     @result_dyn_value.result_fields.create(:name => "test field 2", :field_type => ResultField::INTEGER)
 
@@ -32,6 +32,11 @@ describe AgentInformation do
     @campaign.results = [@result1,@result2,@result3,@result4]
     @result1.campaigns_results.first.update_attribute(:value, 100)
     @result2.campaigns_results.first.update_attribute(:value, 10)
+
+    #mark as reported & success
+    [@result1, @result2, @result3, @result4].each do |result|
+      result.campaigns_results.each { |cr| cr.update_attributes(:is_reported => true, :is_success => true) }
+    end
 
     # create contacts
     @contact1 = Contact.make!(:campaign => @campaign)
@@ -106,7 +111,7 @@ describe AgentInformation do
       @campaign.results << @result_dyn_value
       @campaign.save
       @result_dyn_value.reload
-      @result_dyn_value.campaigns_results.first.update_attributes(:value => 100, :expected_completed_per_hour => 5, :is_dynamic_value => true)
+      @result_dyn_value.campaigns_results.first.update_attributes(:value => 100, :expected_completed_per_hour => 5, :is_dynamic_value => true, :is_reported => true, :is_success => true)
       @result_dyn_value.result_fields.sort{ |x,y| x.name <=> y.name }.each_with_index do |result_field, i|
         result_field.campaigns_result_fields.create(:campaign => @campaign, :is_dynamic_value => true, :dynamic_euro_value => 17+i)
       end
