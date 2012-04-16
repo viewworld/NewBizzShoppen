@@ -230,7 +230,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def process_for_final_result
-    contact.notifications.pending.dismiss_all
+    contact.notifications.dismiss_all
     contact.remove_from_list
     contact.update_attributes(:completed => true, :agent_id => nil)
     contact.insert_at
