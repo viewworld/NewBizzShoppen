@@ -65,7 +65,7 @@
            <%= link_to t("comments.shared.hide_comments"), "#", :class => "toggle_row hide_comments", :style => "display:none" %>
            </div>
           <% end %>
-          <% if lead.creator == current_user or lead.creator.parent == current_user %>
+          <% if lead.creator and (lead.creator == current_user or lead.creator.parent == current_user) %>
             <% if lead.lead_certification_requests.last %>
               <br/>
               <%= t("leads.listing.certification_status") %>: <%= lead.lead_certification_requests.last.current_status %>
