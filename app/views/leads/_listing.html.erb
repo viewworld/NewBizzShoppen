@@ -51,7 +51,9 @@
           <% if lead.facebook_url_present? %>
                 <%= image_tag("icons/fb_icon.png") %>
           <% end %>
-            <%= link_to_edit_lead(lead) %></h4>
+            <%= link_to_edit_lead(lead) %>
+            <%#= link_to_delete_lead(lead) %>
+          </h4>
 
           <% if session[:site] == "fairdeals" and lead.deal %>
               <p class="element"><%= t("leads.listing.date_label") %>

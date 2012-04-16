@@ -11,6 +11,13 @@ namespace :nbs do
     `pg_dump -i -a -x #{excluded_tables} -O #{ActiveRecord::Base.configurations[ENV["RAILS_ENV"]]["database"]} -f db/snapshots/cucumber.sql`
   end
 
+  desc "Make a snapshot of current db"
+  task :make_snapshot => :environment do
+    ActiveRecord::Base.connection.disconnect!
+    excluded_tables = ["schema_migrations"].collect { |t| "-T #{t}" }.join(" ")
+    `pg_dump -i -a -x #{excluded_tables} -O #{ActiveRecord::Base.configurations[ENV["RAILS_ENV"]]["database"]} -f db/snapshots/cucumber.sql`
+  end
+
   desc "Refresh db dump for tests from snapshot"
   task :refresh_snapshot => :environment do
     ActiveRecord::Base.connection.disconnect!

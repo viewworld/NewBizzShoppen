@@ -86,8 +86,6 @@ class Lead < AbstractLead
 
   scoped_order :id, :header, :sale_limit, :price, :lead_purchases_counter, :published, :has_unsatisfactory_rating, :purchase_value, :created_at
 
-  check_associations_before_destroy :lead_purchases
-
   after_find :set_suppliers_notification
   before_update :notify_suppliers_about_changes
   before_create :set_deal_code
@@ -298,7 +296,7 @@ class Lead < AbstractLead
   end
 
   def can_be_commented?
-    !creator.has_role?(:member)
+    creator and !creator.has_role?(:member)
   end
 
   def has_unread_comments_for_user?(user)

@@ -804,6 +804,7 @@ en:
       has_unsatisfactory_rating_yes: "Yes"
       has_unsatisfactory_rating_no: "No"
       edit_label: Edit
+      delete_label: Delete
       certification_status: "Certification status"
       details_label: "Details"
       company_name_label: "Company name"
@@ -1197,6 +1198,7 @@ en:
           title: "Leads"
           search_button: "Search"
           edit: "Edit"
+          delete: "Delete"
           destroy: "Destroy"
           edit: "Edit"
           destroy_confirmation: "Are you sure?"
