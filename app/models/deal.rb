@@ -167,7 +167,7 @@ class Deal < AbstractLead
   end
 
   def self.all_deals_for_select
-    without_inactive.map { |gd| [gd.to_s_for_group_deals_for_select, gd.id] }
+    without_inactive.published_only.map { |gd| [gd.to_s_for_group_deals_for_select, gd.id] }
   end
 
   def to_s_for_group_deals_for_select
