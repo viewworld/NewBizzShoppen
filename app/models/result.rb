@@ -17,9 +17,17 @@ class Result < ActiveRecord::Base
   scope :generic_results, where(:generic => true)
   scope :custom_results, where(:generic => false)
   scope :not_in_result, where("name = 'Not in'")
+  scope :not_archived_or_assigned_to_campaign, lambda { |campaign| joins("LEFT JOIN campaigns_results ON campaigns_results.result_id = results.id").where("campaigns_results.campaign_id = ? or (results.is_global is true and results.is_archived is false)", campaign.id).select("distinct(results.id), results.*") }
+  scope :with_keyword, lambda { |q| where("lower(name) like ?", "%#{q.to_s.downcase}%") }
+  scope :with_archived, lambda{ |q| where("is_archived = ?", q.to_i == 1) }
+  scope :for_campaigns, lambda { |campaign_ids| joins(:campaigns_results).where("campaigns_results.campaign_id IN (?)", campaign_ids).select("distinct(results.id), results.*")  }
+  scope :with_reported, where("is_reported is true")
 
   validates :name, :presence => true
-  validate :check_is_reported_and_is_success
+
+  validate :check_is_global
+
+  include ScopedSearch::Model
 
   def to_s
     name
@@ -94,16 +102,24 @@ class Result < ActiveRecord::Base
     vars
   end
 
-  private
+  def has_any_call_results?(campaign)
+    CallResult.joins(:contact).where("result_id = ? and campaign_id = ?", id, campaign.id).first
+  end
 
-  def check_is_reported_and_is_success
-    if call_results.any?
-      if !is_reported? and is_reported_changed?
-        self.errors.add(:is_reported, I18n.t("models.result_field.is_reported_cannot_be_disabled"))
-      end
-      if !is_success? and is_success_changed?
-        self.errors.add(:is_success, I18n.t("models.result_field.is_success_cannot_be_disabled"))
-      end
+  def can_be_local?
+    campaigns_results.count <= 1
+  end
+
+  def check_is_global
+    if is_global_changed? and !is_global? and !can_be_local?
+      self.errors.add(:is_global, I18n.t("models.result.is_global_cannot_be_disabled"))
+    end
+  end
+
+  def assign_to_campaign_if_local(campaign)
+    unless is_global?
+      campaign.results << self
+      campaign.save
     end
   end
 end

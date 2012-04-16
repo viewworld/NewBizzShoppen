@@ -35,8 +35,14 @@ Given /^result "([^\"]*)" is assigned to campaign "([^\"]*)"$/ do |result_name, 
   Campaign.find_by_name(campaign_name).results << Result.find_by_name(result_name)
 end
 
-Given /^result "([^\"]*)" should be assigned to campaign "([^\"]*)"$/ do |result_name, campaign_name|
-  Campaign.find_by_name(campaign_name).results.include? Result.find_by_name(result_name)
+Given /^result "([^\"]*)" should (be|not be) assigned to campaign "([^\"]*)"$/ do |result_name, assigned, campaign_name|
+  campaign = Campaign.find_by_name(campaign_name)
+  result = Result.find_by_name(result_name)
+  if assigned == "be"
+    campaign.results.should include(result)
+  else
+    campaign.results.should_not include(result)
+  end
 end
 
 Given /^result "([^\"]*)" has (mandatory|optional) "([^\"]*)" field$/ do |result_name, type, field|
@@ -172,11 +178,11 @@ Given /^campaign report data is generated$/ do
   @campaign2.users = [@call_centre, @call_centre_agent1, @call_centre_agent2]
 
   # create results
-  @result1 = Result.make!(:final_reported_success, :name => "TEST Result 01")
-  @result2 = Result.make!(:final_reported_success, :name => "TEST Result 02")
+  @result1 = Result.make!(:final, :name => "TEST Result 01")
+  @result2 = Result.make!(:final, :name => "TEST Result 02")
   @result3 = Result.make!(:upgrades_to_lead)
   @result4 = Result.make!(:upgrades_to_lead)
-  @result_final_reported = Result.make!(:final_reported, :name => "TEST Result 03")
+  @result_final_reported = Result.make!(:final, :name => "TEST Result 03")
   @result_final = Result.make!(:final)
   @result_not_final = Result.make!
 
@@ -189,6 +195,11 @@ Given /^campaign report data is generated$/ do
   @result2.campaigns_results.last.update_attributes(:value => 10, :expected_completed_per_hour => 10)
   @result_final_reported.campaigns_results.first.update_attributes(:value => 23, :expected_completed_per_hour => 5)
   @result_final_reported.campaigns_results.last.update_attributes(:value => 23, :expected_completed_per_hour => 10)
+
+  #mark as reported & success
+  [@result1, @result2, @result3, @result4, @result_final_reported].each do |result|
+    result.campaigns_results.each { |cr| cr.update_attributes(:is_reported => true, :is_success => true) }
+  end
 
   # create contacts
   @contact1_1 = Contact.make!(:campaign => @campaign1)
@@ -355,4 +366,9 @@ end
 When /^result named "([^"]*)" has field with attributes "([^"]*)"$/ do |result_name, result_field_attrs|
   result = Result.find_by_name(result_name)
   result.result_fields << ResultField.create(Hash[*result_field_attrs.split(/[,:]/).map(&:strip)].symbolize_keys)
+  end
+
+When /^result named "([^"]*)" has attributes "([^"]*)"$/ do |result_name, attrs|
+  result = Result.find_by_name(result_name)
+  result.update_attributes(Hash[*attrs.split(/[,:]/).map(&:strip)].symbolize_keys)
 end

@@ -80,11 +80,14 @@
               </p>
             </div>
           </frm>
+
+          <% unless @home_category.is_customer_unique? %>
           <frm title="#{t('category_home.show.view.i_want_to_register')}" c="10">
             <div class="pdd_10">
               <%= bt_link_to :user, t("category_home.show.view.category_supplier_signup"), new_category_home_page_account_path %>
             </div>
           </frm>
+          <% end %>
         </div>
     <% elsif user_signed_in? and current_user.has_role? :category_supplier %>
         <div class="column_1to3 fltl" style="padding-right:15px" id="my_leads">

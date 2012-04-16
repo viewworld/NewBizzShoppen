@@ -17,7 +17,7 @@
             <div id="primary_group_deal">
               <%= render :partial => 'primary_deal', :locals => {:primary_deal => @primary_deal} %>
             </div>
-            <% @featured_deals[1..9].each do |deal| %>
+            <% @featured_deals[1..4].each do |deal| %>
                 <div style="display:none">
                   <%= render :partial => 'primary_deal', :locals => {:primary_deal => deal} %>
                 </div>
@@ -27,7 +27,7 @@
     <% end %>
 
     <!--- other deals --->
-    <% [(1..3)].each do |array| %>
+    <% [(5..7)].each do |array| %>
         <div class="other_deals">
           <% array.each do |position| %>
               <% if @featured_deals[position] %>

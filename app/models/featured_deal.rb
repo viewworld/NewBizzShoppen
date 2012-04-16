@@ -5,7 +5,7 @@ class FeaturedDeal < ActiveRecord::Base
   scope :with_active_deals, lambda { |date| joins("LEFT JOIN leads ON featured_deals.deal_id = leads.id").order("featured_deals.position ASC").
       where("leads.published IS true AND leads.start_date <= :date AND leads.end_date >= :date ", :date => date).select("leads.*") }
 
-  POSITIONS = (0..15).to_a
+  POSITIONS = (0..19).to_a
 
   class << self
 

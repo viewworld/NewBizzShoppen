@@ -188,5 +188,14 @@ Feature: Category home pages
     And I should see translated "category_home.show.view.header_additional_information_label"
 
   #10678
-  @m32 @_requested
+  @m32 @_requested @_done @_tested @tgn
   Scenario: When I am on the public view of category home page and the category is unique then I should not see the sign up box on the page
+    Given Category UniqueCategoryHomePage is created
+    And category "UniqueCategoryHomePage" is unique for some customers users and is auto buy
+    Given Category NonUniqueCategoryHomePage is created
+    Given I am on the homepage
+    And I am not sign in
+    And I am on category home page for UniqueCategoryHomePage
+    Then I should not see translated "category_home.show.view.i_want_to_register"
+    And I am on category home page for NonUniqueCategoryHomePage
+    Then I should see translated "category_home.show.view.i_want_to_register"

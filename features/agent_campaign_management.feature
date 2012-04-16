@@ -323,7 +323,7 @@ Feature: Agent campaign - management
       And I follow translated "campaigns.edit.button_manage_result_types"
       Then I should see "Don't give a damn"
 
-    @tbr @__campaign_manage_result_types @_done @_requested
+    @tbr @__campaign_manage_result_types @_done @_requested @selenium
     Scenario: I can assign custom results to campaign
       Given the custom final result with name "Don't give a damn" is created by "translator_call_centre@nbs.com"
       When I edit campaign "Testing One"
@@ -331,6 +331,7 @@ Feature: Agent campaign - management
       And I should see "Don't give a damn"
       And I check result "Don't give a damn"
       And I press translated "results.index.button_assign_result_types"
+      And I go to results management for campaign Testing One
       Then result "Don't give a damn" should be assigned to campaign "Testing One"
 
     @tbr @__campaign_manage_result_types @_done @_requested

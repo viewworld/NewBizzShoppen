@@ -201,9 +201,9 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :name => "bought lead notification",
             :uniq_id => "bought_lead_notification",
             :en => {:subject => "Bought lead notification",
-                    :body => "<p>Link to lead: {{lead_purchase.url}}</p>"},
+                    :body => "<p>{{lead_purchase.header}}</p><p>{{lead_purchase.description}}</p><p>{{lead_purchase.hidden_description}}</p><p>Contact: {{lead_purchase.contact_title}} {{lead_purchase.contact_name}}</p><p>Company: {{lead_purchase.company_name}}</p><p>E-mail: {{lead_purchase.email_address}}</p><p>Phone: {{lead_purchase.phone_number}}, direct phone: {{lead_purchase.direct_phone_number}}</p><p>Address: {{lead_purchase.address}}</p><p>Link to lead: {{lead_purchase.url}}</p>"},
             :da => {:subject => "[DK] Bought lead notification",
-                    :body => "[DK] <p>Link to lead: {{lead_purchase.url}}</p>"}
+                    :body => "[DK] <p>{{lead_purchase.header}}</p><p>{{lead_purchase.description}}</p><p>{{lead_purchase.hidden_description}}</p><p>Contact: {{lead_purchase.contact_title}} {{lead_purchase.contact_name}}</p><p>Company: {{lead_purchase.company_name}}</p><p>E-mail: {{lead_purchase.email_address}}</p><p>Phone: {{lead_purchase.phone_number}}, direct phone: {{lead_purchase.direct_phone_number}}</p><p>Address: {{lead_purchase.address}}</p><p>Link to lead: {{lead_purchase.url}}</p>"}
         },
         {
             :name => "Certification request reminder",

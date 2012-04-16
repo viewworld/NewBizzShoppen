@@ -103,6 +103,10 @@ Feature: Front page for procurment
     Given a deal named "PrimaryGroupDeal" exists within category "Electronics deals"
     And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "PrimaryGroupDeal" is a primary featured deal
+    And deal named "PrimaryGroupDeal" is "1" primary featured deal
+    And deal named "PrimaryGroupDeal" is "2" primary featured deal
+    And deal named "PrimaryGroupDeal" is "3" primary featured deal
+    And deal named "PrimaryGroupDeal" is "4" primary featured deal
     And a deal named "SecondaryGroupDealOne" exists within category "Electronics deals"
     And a deal named "SecondaryGroupDealOne" exists with attributes "published:1,group_deal:1,price:99,deal_price:200,discounted_price:50,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "SecondaryGroupDealOne" is "1" secondary featured deal
@@ -114,15 +118,19 @@ Feature: Front page for procurment
     And deal named "SecondaryGroupDealThree" is "3" secondary featured deal
     And I visit domain http://fairdeals.dk
     Then I should see "PrimaryGroupDeal" within "div#primary_group_deal"
-    Then I should see "SecondaryGroupDealOne" within "div#secondary_featured_deal_1"
-    Then I should see "SecondaryGroupDealTwo" within "div#secondary_featured_deal_2"
-    Then I should see "SecondaryGroupDealThree" within "div#secondary_featured_deal_3"
+    And the div with id like "secondary_featured_deal_" should contain "SecondaryGroupDealOne"
+    And the div with id like "secondary_featured_deal_" should contain "SecondaryGroupDealTwo"
+    And the div with id like "secondary_featured_deal_" should contain "SecondaryGroupDealThree"
 
   @_done @_tested
   Scenario: I should not see three minor deals when they have been disabled or expired (the expired are excluded and next one takes his place)
     Given a deal named "PrimaryGroupDeal" exists within category "Electronics deals"
     And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "PrimaryGroupDeal" is a primary featured deal
+    And deal named "PrimaryGroupDeal" is "1" primary featured deal
+    And deal named "PrimaryGroupDeal" is "2" primary featured deal
+    And deal named "PrimaryGroupDeal" is "3" primary featured deal
+    And deal named "PrimaryGroupDeal" is "4" primary featured deal
     And a deal named "SecondaryGroupDealOne" exists within category "Electronics deals"
     And a deal named "SecondaryGroupDealOne" exists with attributes "published:1,group_deal:1,price:99,deal_price:200,discounted_price:50,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "SecondaryGroupDealOne" is "1" secondary featured deal
@@ -135,9 +143,9 @@ Feature: Front page for procurment
     And deal named "SecondaryGroupDealTwo" has been unpublished
     And I visit domain http://fairdeals.dk
     Then I should see "PrimaryGroupDeal" within "div#primary_group_deal"
-    Then I should see "SecondaryGroupDealOne" within "div#secondary_featured_deal_1"
-    Then I should not see "SecondaryGroupDealTwo" within "div#secondary_featured_deal_2"
-    Then I should see "SecondaryGroupDealThree" within "div#secondary_featured_deal_2"
+    And the div with id like "secondary_featured_deal_" should contain "SecondaryGroupDealOne"
+    And the div with id like "secondary_featured_deal_" should not contain "SecondaryGroupDealTwo"
+    And the div with id like "secondary_featured_deal_" should contain "SecondaryGroupDealThree"
 
   #Compare with: huddlebuy.co.uk
   @_done @_tested
@@ -317,6 +325,10 @@ Feature: Front page for procurment
     Given a deal named "PrimaryDeal" exists within category "Electronics deals"
     And a deal named "PrimaryDeal" exists with attributes "featured_description:FeaturedDescriptionText,published:1,group_deal:0,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "PrimaryDeal" is a primary featured deal
+    And deal named "PrimaryDeal" is "1" primary featured deal
+    And deal named "PrimaryDeal" is "2" primary featured deal
+    And deal named "PrimaryDeal" is "3" primary featured deal
+    And deal named "PrimaryDeal" is "4" primary featured deal
     When a deal named "SecondaryGroupDeal" exists within category "Electronics deals"
     And a deal named "SecondaryGroupDeal" exists with attributes "short_featured_description:ShortDescription,published:1,group_deal:1,price:99,deal_price:200,discounted_price:50,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "SecondaryGroupDeal" is "1" secondary featured deal
@@ -391,5 +403,30 @@ Feature: Front page for procurment
     And I should see translated "deals.index.view.premium_deal_splash_label"
 
   #10901
-  @m32 @_requested
+  @m32 @_requested @_done @_tested @tgn
   Scenario: I should see only 5 selected deals rotating on the primary featured deals box
+    Given a deal named "PrimaryGroupDeal1" exists within category "Electronics deals"
+    And a deal named "PrimaryGroupDeal2" exists within category "Electronics deals"
+    And a deal named "PrimaryGroupDeal3" exists within category "Electronics deals"
+    And a deal named "PrimaryGroupDeal4" exists within category "Electronics deals"
+    And a deal named "PrimaryGroupDeal5" exists within category "Electronics deals"
+    And a deal named "SecondaryGroupDeal1" exists within category "Electronics deals"
+    And a deal named "SecondaryGroupDeal2" exists within category "Electronics deals"
+    And a deal named "SecondaryGroupDeal3" exists within category "Electronics deals"
+    And deal named "PrimaryGroupDeal1" is a primary featured deal
+    And deal named "PrimaryGroupDeal2" is "1" primary featured deal
+    And deal named "PrimaryGroupDeal3" is "2" primary featured deal
+    And deal named "PrimaryGroupDeal4" is "3" primary featured deal
+    And deal named "PrimaryGroupDeal5" is "4" primary featured deal
+    And deal named "SecondaryGroupDeal1" is "1" secondary featured deal
+    And deal named "SecondaryGroupDeal2" is "2" secondary featured deal
+    And deal named "SecondaryGroupDeal3" is "3" secondary featured deal
+    Given I visit domain http://fairdeals.dk
+    Then I should see "PrimaryGroupDeal1" within "div#primary_group_deal"
+    And I should see "PrimaryGroupDeal2" within "div#primary_deals"
+    And I should see "PrimaryGroupDeal3" within "div#primary_deals"
+    And I should see "PrimaryGroupDeal4" within "div#primary_deals"
+    And I should see "PrimaryGroupDeal5" within "div#primary_deals"
+    And I should see "SecondaryGroupDeal1"
+    And I should see "SecondaryGroupDeal2"
+    And I should see "SecondaryGroupDeal3"

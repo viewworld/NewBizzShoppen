@@ -10,7 +10,7 @@
                 <ol class="align_inputs">
                   <% FeaturedDeal::POSITIONS.each do |position| %>
                       <li class="select">
-                        <%= label_tag position == 0 ? t("administration.featured_deals.view.index.main_position") : t("administration.featured_deals.view.index.position", {:position => position }) %>
+                        <%= label_tag (0..4).include?(position) ? t("administration.featured_deals.view.index.main_position", {:position => position+1 }) : t("administration.featured_deals.view.index.position", {:position => position-4 }) %>
                         <%= select_tag "featured_deals[#{position}]", options_for_select(@deals_for_select, FeaturedDeal.find_by_position(position).deal_id) %>
                       </li>
                   <% end %>
