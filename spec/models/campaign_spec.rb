@@ -12,10 +12,14 @@ describe Campaign do
 
       @campaign = Campaign.make!(:creator => @call_centre)
       @campaign.users = [@call_centre, @call_centre_agent1, @call_centre_agent2]
-      @result1 = Result.make!(:final_reported_success, :name => "TEST Result 01")
-      @result2 = Result.make!(:final_reported_success, :name => "TEST Result 02")
+      @result1 = Result.make!(:final, :name => "TEST Result 01")
+      @result2 = Result.make!(:final, :name => "TEST Result 02")
 
       @campaign.results = [@result1, @result2]
+
+      [@result1, @result2].each do |result|
+        result.campaigns_results.each { |cr| cr.update_attributes(:is_reported => true, :is_success => true) }
+      end
 
       @contact1 = Contact.make!(:campaign => @campaign)
       @contact2 = Contact.make!(:campaign => @campaign)

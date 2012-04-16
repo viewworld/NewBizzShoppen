@@ -35,11 +35,11 @@ describe AgentTimesheet::General do
     @campaign3.users << @call_centre_agent2
 
     # create results
-    @result1 = Result.make!(:final_reported_success)
-    @result2 = Result.make!(:final_reported_success)
+    @result1 = Result.make!(:final)
+    @result2 = Result.make!(:final)
     @result3 = Result.make!(:upgrades_to_lead)
     @result4 = Result.make!(:upgrades_to_lead)
-    @result5 = Result.make!(:not_final_reported)
+    @result5 = Result.make!
 
     # assign results to campaign
     @campaign.results = [@result1,@result2,@result3,@result4]
@@ -51,6 +51,11 @@ describe AgentTimesheet::General do
     @result2.campaigns_results.each do |cr|
       cr.update_attribute(:value, 10)
     end
+
+    [@result1, @result2, @result3, @result4].each do |result|
+      result.campaigns_results.each { |cr| cr.update_attributes(:is_reported => true, :is_success => true) }
+    end
+    @result5.campaigns_results.each { |cr| cr.update_attribute(:is_reported, true) }
 
     # create contacts
     @contact1 = Contact.make!(:campaign => @campaign)
