@@ -132,10 +132,10 @@ Scenario: I can email the lead if email information were provided
   And I press translated "lead_user.contact_lead_by_email.new.view.send_email_button"
   Then I should see translated "flash.contact_lead_by_email.create.notice"
 
-#changed by #10111
+#changed by #10111, further changes by #10982
 @tgn @_done @_tested
 Scenario: I should see hottness, publish date, exposure, clicks
-  Then I should see translated "models.lead.hotness.lvl2"
+  Then I should not see translated "models.lead.hotness.lvl2"
   And I should not see "01-01-2011"
 
 @tgn @_tested @_done
