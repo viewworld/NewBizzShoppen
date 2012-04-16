@@ -249,20 +249,20 @@ Scenario: I can't see purchase value on my leads listing
   When I go to supplier lead purchases
   And I should not see "89.93"
 
-# Add creator name under purchase date (should display Agent’s screen name) in details in accordion
-@m7 @_requested @selenium @tgn @_tested @_done
+# Add creator name under purchase date (should display Agent’s screen name) in details in accordion, changed by #10982
+@m7 @_requested @selenium @tgn @_tested @_done @_deprecated
 Scenario: I can see creator name under purchase date
-  When I go to supplier lead purchases
-  Given I show accordion details for row "#lead_single_purchase_1"
-  And I should see "SomeAgent Joe"
+#  When I go to supplier lead purchases
+#  Given I show accordion details for row "#lead_single_purchase_1"
+#  And I should see "SomeAgent Joe"
 
-# My leads accordion - do not trigger accordion on mouse hover but on link-click instead (i.e. show more details)
-@m7 @_requested @selenium @tgn @_tested @_done
+# My leads accordion - do not trigger accordion on mouse hover but on link-click instead (i.e. show more details), changed by #10982
+@m7 @_requested @selenium @tgn @_tested @_done @_deprecated
 Scenario: I can see details in accordion when clicking on header
-  When I go to supplier lead purchases
-  And I show accordion details for row "#lead_single_purchase_1"
-  And I should see "Uniqueness"
-  And I should see "Purchase date"
+#  When I go to supplier lead purchases
+#  And I show accordion details for row "#lead_single_purchase_1"
+#  And I should see "Uniqueness"
+#  And I should see "Purchase date"
 
 # 5768
 # when facebook/linked URL is specified
