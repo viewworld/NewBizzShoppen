@@ -35,8 +35,14 @@ Given /^result "([^\"]*)" is assigned to campaign "([^\"]*)"$/ do |result_name, 
   Campaign.find_by_name(campaign_name).results << Result.find_by_name(result_name)
 end
 
-Given /^result "([^\"]*)" should be assigned to campaign "([^\"]*)"$/ do |result_name, campaign_name|
-  Campaign.find_by_name(campaign_name).results.include? Result.find_by_name(result_name)
+Given /^result "([^\"]*)" should (be|not be) assigned to campaign "([^\"]*)"$/ do |result_name, assigned, campaign_name|
+  campaign = Campaign.find_by_name(campaign_name)
+  result = Result.find_by_name(result_name)
+  if assigned == "be"
+    campaign.results.should include(result)
+  else
+    campaign.results.should_not include(result)
+  end
 end
 
 Given /^result "([^\"]*)" has (mandatory|optional) "([^\"]*)" field$/ do |result_name, type, field|

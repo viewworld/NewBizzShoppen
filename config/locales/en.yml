@@ -3255,6 +3255,8 @@ en:
         status0: "Saved as draft"
         status1: "Queued for sending"
         status2: "Sent to Campaign Monitor"
+    result:
+      is_global_cannot_be_disabled: "Result is assigned to more than one campaings"
   activerecord:
     models:
       article:

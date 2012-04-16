@@ -15,7 +15,10 @@ class Callers::ResultsController < Callers::CallerController
     @result = Result.new(params[:result])
     @result.creator = current_user
     create! do |success, failure|
-      success.html { redirect_to callers_campaign_results_path(@campaign) }
+      success.html {
+        @result.assign_to_campaign_if_local(@campaign)
+        redirect_to callers_campaign_results_path(@campaign)
+      }
       failure.html { render 'new' }
     end
   end

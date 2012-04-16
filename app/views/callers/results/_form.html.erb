@@ -39,6 +39,7 @@
     <ol>
         <% if current_user.admin? %>
             <%= form.input :is_archived %>
+            <%= form.input :is_global, :disabled => (result.is_global? and !result.can_be_local?) %>
         <% end %>
     </ol>
   </fieldset>

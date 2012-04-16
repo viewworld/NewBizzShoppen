@@ -466,3 +466,7 @@ end
 Then /^element "([^\"]*)" with id "([^\"]*)" has class "([^\"]*)"$/ do |element_type, name, css_class|
   page.all(:css, "#{element_type}[id='#{name}'][class*='#{css_class}']").size.should == 1
 end
+
+Then /^the "([^\"]*)" field should (be|not be) disabled$/ do |field_id, disabled|
+  page.find("input[id='#{field_id}']")['disabled'].should == ((disabled == "be") ? "true" : "false")
+end

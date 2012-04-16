@@ -151,18 +151,47 @@ Feature: Result values
     And I select "Yes" from "search_with_archived"
     And I press translated "administration.results.index.view.search.search_button"
     Then I should see "Upgrade to member"
-  #10861
-  @m32 @_requested
-  Scenario: I can mark result as global
 
   #10861
-  @m32 @_requested
+  @m32 @_requested @tgn @_done @_tested
+  Scenario: I can mark result as global
+    Given I go to results management for campaign Testing One
+    And I follow translated "results.index.button_add_result_type"
+    And I fill in "result_name" with "Global call interrupted"
+    And I press translated "campaigns.new.button_create"
+    Then I should see "Global call interrupted"
+    And result "Global call interrupted" should not be assigned to campaign "Testing One"
+    Given I go to results management for campaign Testing Two
+    Then I should see "Global call interrupted"
+    Given I go to results management for campaign Testing One
+    And I follow translated "results.index.button_add_result_type"
+    And I fill in "result_name" with "Local call interrupted"
+    And I uncheck "result_is_global"
+    And I press translated "campaigns.new.button_create"
+    Then I should see "Local call interrupted"
+    And result "Local call interrupted" should be assigned to campaign "Testing One"
+    Given I go to results management for campaign Testing Two
+    Then I should not see "Local call interrupted"
+    Given I go to edit result "Local call interrupted" for campaign "Testing One"
+    And I check "result_is_global"
+    And I press translated "campaigns.edit.button_update"
+    And result "Local call interrupted" should be assigned to campaign "Testing One"
+    Given I go to results management for campaign Testing Two
+    Then I should see "Local call interrupted"
+    And I check result "Local call interrupted"
+    And I press translated "results.index.button_assign_result_types"
+    And result "Local call interrupted" should be assigned to campaign "Testing Two"
+    Given I go to edit result "Local call interrupted" for campaign "Testing Two"
+    And the "result_is_global" field should be disabled
+
+  #10861
+  @m32 @_requested @tgn @_done @_tested_elsewhere
   Scenario: I can mark result as local (visible to only one campaign)
 
   #10861
-  @m32 @_requested
+  @m32 @_requested @tgn @_done @_tested_elsewhere
   Scenario: Global and local result should be applied to campaign report
 
   #10861
-  @m32 @_requested
+  @m32 @_requested @tgn @_done @_tested_elsewhere
   Scenario: Global and local result should be applied to agent timesheets
