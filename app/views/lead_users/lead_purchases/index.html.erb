@@ -114,3 +114,11 @@
 
   <% end %>
 </column-mc:>
+<js:>
+  <script type="text/javascript">
+      function save_owner_note(lead_purchase_id) {
+          $.post('/lead_users/lead_purchases/' + lead_purchase_id.toString(), {'_method':'put', 'lead_purchase[owner_note]':$('#owner_note_' + lead_purchase_id.toString()).val(), 'owner_note_changed':1, 'format':'js'});
+          $('#owner_note_form_' + lead_purchase_id.toString()).parents(".row_tooltip").effect("highlight", {color: "#d8ff9a"}, 500);
+      }
+  </script>
+</js:>
