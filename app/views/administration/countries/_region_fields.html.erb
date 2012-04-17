@@ -1,4 +1,5 @@
-<div id="region_field_form_<%= f.object.new_record? ? 'country_regions_attributes_0' : f.object.id %>">
+<% div_region_html_id = f.object.new_record? ? "country_regions_attributes_#{defined?(counter) ? counter.to_i : 0}" : f.object.id %>
+<div id="region_field_form_<%= div_region_html_id %>">
   <hl/>
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs_vertical">
@@ -14,7 +15,7 @@
           <% end %>
         </li>
         <li class="commit">
-          <%= bt_link_to :remove, t("administration.countries.form.delete_region"), "javascript:void(0)", :onclick => "remove_region('#{f.object.new_record? ? 'country_regions_attributes_0' : f.object.id}', #{f.object.new_record? ? 'null' : f.object.id})" %>
+          <%= bt_link_to :remove, t("administration.countries.form.delete_region"), "javascript:void(0)", :onclick => "remove_region('#{div_region_html_id}', #{f.object.new_record? ? 'null' : f.object.id})" %>
         </li>
       </ol>
     </fieldset>

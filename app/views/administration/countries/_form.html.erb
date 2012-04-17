@@ -15,8 +15,9 @@
 
 <clb/>
 
+<% counter = -1 %>
 <%= form.fields_for :regions, @country.regions do |builder| %>
-    <%= render :partial => "region_fields", :locals => {:f => builder} %>
+    <%= render :partial => "region_fields", :locals => { :f => builder, :counter => (counter += 1) } %>
 <% end %>
 
 <div class="nested_region_fields_container"></div>

@@ -20,8 +20,9 @@
   </fieldset>
 </div>
 
+<% counter = -1 %>
 <%= form.fields_for :lead_template_fields, @lead_template.lead_template_fields do |builder| %>
-    <%= render :partial => "/shared/lead_templates/lead_template_field_fields", :locals => {:f => builder} %>
+    <%= render :partial => "/shared/lead_templates/lead_template_field_fields", :locals => { :f => builder, :counter => (counter += 1) } %>
 <% end %>
 
 <div class="nested_template_fields_container"></div>
