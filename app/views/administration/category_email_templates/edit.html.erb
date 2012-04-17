@@ -1,5 +1,7 @@
 <column-mc:>
   <%= javascript_include_tag :ckeditor %>
+  <%= javascript_include_tag "popup_email_template_editor" %>
+  <%= javascript_include_tag "email_template_signature" %>
   <header back="true"><%= t("administration.email_templates.edit.view.title", :name => "#{@category.name} - #{@email_template.subject}") %><%= image_tag_for_locale %></header>
 
   <%= semantic_form_for @email_template, :url => administration_category_email_template_path(@category), :method => :put do |form| %>
@@ -18,4 +20,15 @@
       </frm>
   <% end %>
 
+  <%= render :partial => "shared/email_template_popup/template_vars_popup", :locals => {:instance_name => "email_template_body_editor", :email_template => @email_template} %>
+  <%= render :partial => "shared/email_template_popup/template_deal_links", :locals => {:instance_name => "email_template_body_editor"} %>
 </column-mc:>
+
+<js:>
+  <script type="text/javascript">
+    setup_jquery_vars_popup_dialog();
+    setup_jquery_deal_links_dialog();
+    setup_ckeditor_for_field('email_template_email_template_signature_attributes_body');
+    show_hide_custom_signature();
+  </script>
+</js:>

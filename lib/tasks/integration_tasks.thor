@@ -284,6 +284,9 @@ class IntegrationTasks < Thor
   desc "m32", ""
   def m32
     Translation.where(:key => "administration.featured_deals.view.index.main_position", :locale => "en").first.update_attribute(:value, "Main position %{position}")
-    Translation.where(:key => "administration.featured_deals.view.index.main_position", :locale => "da").first.update_attribute(:value, "Main position %{position}") if Translation.where(:key => "administration.featured_deals.view.index.main_position", :locale => "da").first
+    if Translation.where(:key => "administration.featured_deals.view.index.main_position", :locale => "da").first
+      Translation.where(:key => "administration.featured_deals.view.index.main_position", :locale => "da").first.update_attribute(:value, "Main position %{position}")
+    end
+    EmailTemplate.where(:resource_type => "Category").each { |c| c.update_attribute(:uniq_id, "bought_lead_notification") }
   end
 end

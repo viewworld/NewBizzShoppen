@@ -4,8 +4,8 @@ class Administration::CategoryEmailTemplatesController < Administration::Adminis
   before_filter :set_category, :only => [:edit, :update]
 
   def edit
-    global_et = EmailTemplate.find_by_uniq_id('bought_lead_notification')
-    @email_template = @category.email_template ? @category.email_template : @category.create_email_template(:subject => global_et.subject, :body => global_et.body, :from => global_et.from)
+    global_et = EmailTemplate.global.where(:uniq_id => 'bought_lead_notification').first
+    @email_template = @category.email_template ? @category.email_template : @category.create_email_template(:subject => global_et.subject, :body => global_et.body, :from => global_et.from, :uniq_id => global_et.uniq_id)
   end
 
   def update
