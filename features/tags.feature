@@ -1,4 +1,4 @@
-@tags @m31
+@tags @m31 @tgn
 Feature: Tags
 
   @_done @_non_testable

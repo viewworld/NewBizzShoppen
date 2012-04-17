@@ -1,4 +1,4 @@
-@newsletter @_requested @$_admin @m31
+@newsletter @_requested @$_admin @m31 @tgn
 Feature: Newsletter campaign for admin
 
   Background:

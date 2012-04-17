@@ -1,4 +1,4 @@
-@newsletter @_requested @$_call_centre @m31
+@newsletter @_requested @$_call_centre @m31 @tgn
 Feature: Newsletter for call centre
 
   Background:
