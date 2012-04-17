@@ -94,8 +94,9 @@
         <hl/>
     <% end %>
 
+    <% counter = -1 %>
     <%= form.fields_for :lead_translations, @lead.lead_translations.select { |lt| lt.locale != I18n.locale.to_s } do |builder| %>
-        <%= render :partial => "/shared/leads/lead_fields", :locals => {:f => builder} %>
+        <%= render :partial => "/shared/leads/lead_fields", :locals => { :f => builder, :counter =>  (counter += 1) } %>
     <% end %>
 
     <div class="nested_locale_container"></div>

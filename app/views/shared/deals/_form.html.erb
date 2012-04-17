@@ -242,9 +242,9 @@
 <clb/>
 
 <div class="nested_locale_container"></div>
-
+<% counter = -1 %>
 <%= form.fields_for :lead_translations, deal.lead_translations.select { |lt| lt.locale != I18n.locale.to_s } do |builder| %>
-    <%= render :partial => "/shared/deals/deal_fields", :locals => {:f => builder} %>
+    <%= render :partial => "/shared/deals/deal_fields", :locals => { :f => builder, :counter => (counter += 1) } %>
 <% end %>
 
 <clb/>

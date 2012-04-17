@@ -1,6 +1,7 @@
-<div id="lead_translation_form_<%= f.object.new_record? ? 'deal_lead_translations_attributes_0' : f.object.id %>">
+<% div_deal_html_id = f.object.new_record? ? "deal_lead_translations_attributes_#{defined?(counter) ? counter.to_i : 0}" : f.object.id %>
+<div id="lead_translation_form_<%= div_deal_html_id %>">
   <div class="pdd_10 no_pdd_t rltv">
-    <%= bt_link_to :remove, t("agent.leads.new.view.remove_language"), "javascript:void(0)", :onclick => "remove_language('#{f.object.new_record? ? 'deal_lead_translations_attributes_0' : f.object.id}', '#{f.object.locale.blank? ? 'LOCALE_LANG' : f.object.locale}', #{f.object.new_record? ? 'null' : f.object.id})", :style => "position: absolute; left:8px; top:2px" %>
+    <%= bt_link_to :remove, t("agent.leads.new.view.remove_language"), "javascript:void(0)", :onclick => "remove_language('#{div_deal_html_id}', '#{f.object.locale.blank? ? 'LOCALE_LANG' : f.object.locale}', #{f.object.new_record? ? 'null' : f.object.id})", :style => "position: absolute; left:8px; top:2px" %>
     <fieldset class="inputs labels_ta_r labels_200">
       <ol class="align_inputs">
         <li class="header">
