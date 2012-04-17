@@ -18,8 +18,9 @@
 </div>
 
 <% if @campaign %>
+    <% counter = -1 %>
     <%= form.fields_for :result_fields, @result.result_fields do |builder| %>
-        <%= render :partial => "/shared/results/result_field_fields", :locals => {:f => builder} %>
+        <%= render :partial => "/shared/results/result_field_fields", :locals => { :f => builder, :counter => (counter += 1) } %>
     <% end %>
 <% end %>
 
@@ -65,12 +66,12 @@
 <% end %>
 
 <script>
-    var nestedFormsCount = <%= result.result_fields.size %>;
+    var nestedFormsCount = <%= @result.result_fields.size %>;
 
     function add_result_field(link, content) {
         var new_id = new Date().getTime();
-        content = content.replace(/result_result_fields_attributes_0/g, "result_result_fields_attributes_" + nestedFormsCount.toString());
-        content = content.replace(/result\[result_fields_attributes\]\[0\]/g, "result[result_fields_attributes][" + new_id.toString() + "]");
+        content = content.replace(/result_result_fields_attributes_\d+/g, "result_result_fields_attributes_" + nestedFormsCount.toString());
+        content = content.replace(/result\[result_fields_attributes\]\[\d+\]/g, "result[result_fields_attributes][" + new_id.toString() + "]");
         $('.nested_result_fields_container:last').append(content);
         nestedFormsCount = nestedFormsCount + 1;
     }
