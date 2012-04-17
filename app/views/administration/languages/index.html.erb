@@ -34,6 +34,7 @@
               <td><%= lang.code %></td>
               <td><%= check_box_tag "locale_#{lang.id}_enabled", 1, lang.enabled?, :disabled => true %></td>
               <td class="tda ta_r" id="locales_actions_td_<%= lang.language.gsub(" ", "_") %>">
+                <% unless I18n.locale.to_s == lang.code %>
                 <ul-actions>
                   <li>
                   <% if lang.enabled? %>
@@ -43,6 +44,7 @@
                   <% end %>
                   </li>
                 </ul-actions>
+                <% end %>
               </td>
               <td class="cr"></td>
             </tr>
