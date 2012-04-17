@@ -560,7 +560,7 @@ Feature: Agent campaign - management
       Then I create call result
       Then I execute js for display action block for "campaigns"
       Then I follow translated "campaigns.index.result"
-      Then I click xpath "((//table[@id='call_results']//tr)[3]//td)[4]"
+      Then I click xpath "((//table[@id='call_results']//tr)[3]//td)[18]"
       Then I wait 1 second
       Then I should see "Bon Jovi inc." within "#call_result_details"
       Then I should see "John Smith" within "#call_result_details"

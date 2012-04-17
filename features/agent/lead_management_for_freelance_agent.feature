@@ -54,7 +54,7 @@ Scenario: I can change lead status from lead list
   And "lead_published" should be selected for value translated "agent.leads.index.view.option_not_published"
 
 @tgn @_tested @_done
-Scenario: I can delete lead if the lead is not sold yet
+Scenario: I can delete lead even if the lead is sold
   Given I fill in "search_with_keyword" with "Lead 1"
   And I press translated "agent.leads.index.view.search_button"
   And I follow translated "agent.leads.index.view.destroy"
@@ -62,7 +62,7 @@ Scenario: I can delete lead if the lead is not sold yet
   Given I fill in "search_with_keyword" with "Lead 4"
   And I press translated "agent.leads.index.view.search_button"
   And I follow translated "agent.leads.index.view.destroy"
-  Then I should see translated "agent.leads.destroy.flash.lead_deletion_failure"
+  Then I should see translated "agent.leads.destroy.flash.lead_deletion_successful"
 
 @tgn @_tested @_done
 Scenario: I can see uniqueness, price per lead

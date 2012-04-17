@@ -50,6 +50,7 @@ Scenario: I can add a language
   And User bigbuyer1@person.com with role supplier is big buyer
   And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role supplier
   And I follow translated "layout.main_menu.admin.leads"
+  And display all hidden actions
   And I follow translated "administration.leads.index.view.edit"
   And I select translated "models.locale.da" from "locale_picker"
   And I fill in "lead_lead_translations_attributes_0_header" with "dk Header"
@@ -57,6 +58,7 @@ Scenario: I can add a language
   And I fill in "lead_lead_translations_attributes_0_hidden_description" with "dk Hidden description"
   And I press translated "administration.leads.edit.view.button_update"
   Then I should be on administration leads page
+  And display all hidden actions
   And I follow translated "administration.leads.index.view.edit"
   Then the "lead_lead_translations_attributes_0_header" field should contain "dk Header"
   And the "lead_lead_translations_attributes_0_description" field should contain "dk Description"
@@ -69,16 +71,20 @@ Scenario: I can delete a language
   And User bigbuyer1@person.com with role supplier is big buyer
   And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role supplier
   And I follow translated "layout.main_menu.admin.leads"
+  And display all hidden actions
   And I follow translated "administration.leads.index.view.edit"
   And I select translated "models.locale.da" from "locale_picker"
   And I fill in "lead_lead_translations_attributes_0_header" with "dk Header"
   And I fill in "lead_lead_translations_attributes_0_description" with "dk Description"
   And I fill in "lead_lead_translations_attributes_0_hidden_description" with "dk Hidden description"
   And I press translated "administration.leads.edit.view.button_update"
+  And display all hidden actions
   And I follow translated "administration.leads.index.view.edit"
   And I follow translated "agent.leads.new.view.remove_language"
   And I press translated "administration.leads.edit.view.button_update"
+  And display all hidden actions
   And I follow translated "administration.leads.index.view.edit"
+  And display all hidden actions
   Then I should not see translated "agent.leads.new.view.remove_language"
 
 #deprecated by #10277
@@ -243,7 +249,7 @@ Scenario: I can sort leads by all of the new columns
   Then I should see "Some lead #3" before "Some lead #5"
 
   #10863
-  @m32 @_requested @selenium @wip
+  @m32 @_requested @selenium @_done @_tested
   Scenario: I should be able to delete a lead
     When there are no leads
     And lead Monitors ultimate deal exists with attributes "price:999.99"

@@ -9,7 +9,6 @@ Feature: Agent campaign targets
 
   @_tested @selenium @_tested @_done
   Scenario: When creating new campaign I can select a currency
-    And I open page in browser
     Given I follow translated "campaigns.header.new_campaign_button"
     And I fill in "campaign_name" with "Testing Template"
     And I fill in "campaign_max_contact_number" with "18"

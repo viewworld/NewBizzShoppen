@@ -52,7 +52,7 @@ Scenario: I can change lead status from lead list
   And "lead_published" should be selected for value translated "call_centre.leads.index.view.option_not_published"
 
 @_tested @_done
-Scenario: I can delete lead if the lead is not sold yet
+Scenario: I can delete lead even if the lead is sold
   Given I fill in "search_with_keyword" with "Ultimate mouses deal"
   And I press translated "call_centre.leads.index.view.search_button"
   And I follow translated "call_centre.leads.index.view.destroy"
@@ -63,7 +63,7 @@ Scenario: I can delete lead if the lead is not sold yet
   And I uncheck "search_without_inactive"
   And I press translated "call_centre.leads.index.view.search_button"
   And I follow translated "call_centre.leads.index.view.destroy"
-  Then I should see translated "call_centre.leads.destroy.flash.lead_deletion_failure"
+  Then I should see translated "call_centre.leads.destroy.flash.lead_deletion_successful"
 
 @_done @_tested_elsewhere
 Scenario: I can see clicks, exposure, hottness, novelty, unikness, price per lead
