@@ -208,7 +208,7 @@ Then /^User (.+) with role (.+) is from country (.+)$/ do |email, role, country_
 end
 
 Then /^user (.+) with role (.+) exists with attributes "([^"]*)"$/ do |email, role, options|
-  user = "User::#{role.camelize}".constantize.first(:conditions => {:email => email})
+  user = "User::#{role.camelize}".constantize.first(:conditions => {:email => email}) || "User::#{role.camelize}".constantize.make!(:email => email)
   options_hash = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
   options_hash.each_pair do |k, v|
     if v.include?("true") or v.include?("false")

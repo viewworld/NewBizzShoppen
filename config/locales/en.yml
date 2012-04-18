@@ -1025,6 +1025,7 @@ en:
           delete_confirmation_message: "Are you sure?"
           leads_created: "Leads created"
           unpaid_leads: "Unpaid leads"
+          go_to_campaign_monitor: "Go to Campaign Monitor"
       new:
         view:
           new_account: "New %{role} account"

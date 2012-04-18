@@ -25,6 +25,9 @@
           <% unless @user.id == current_user.id %>
               <%= bt_link_to nil, @user.locked_at.blank? ? t("administration.users.index.view.lock") : t("administration.users.index.view.unlock"), administration_user_path(@user, {"user_#{@user.role.to_s}".to_sym  => {:locked =>  @user.locked_at.blank? ? "lock" : "unlock"}}), {:method => :put, :class => "fltr"} %>
           <% end %>
+          <% if @user.newsletter_manager? %>
+              <%= bt_link_to nil, t("administration.users.index.view.go_to_campaign_monitor"), @user.link_to_campaign_monitor_account, {:target => "_blank", :class => "fltr"} %>
+          <% end %>
         </param:header>
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>

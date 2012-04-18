@@ -987,5 +987,10 @@ Scenario: I can mark supplier or category supplier as newsletter manager (overri
 Scenario: I can search for users with given tags
 
 #11051
-@m33 @_requested
+@m33 @_requested @_done @_tested @tgn
 Scenario: I should be able to login into customer's CM account from user edit page (button Go to campaign monitor)
+  Given user newsl_manager@nbs.com with role supplier exists with attributes "newsletter_manager:1"
+  And I fill in "search_with_keyword" with "newsl_manager@nbs.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
+  And I should see translated "administration.users.index.view.go_to_campaign_monitor"
