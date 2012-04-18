@@ -1,4 +1,4 @@
-@newsletter @_requested @$_customer @m31
+@newsletter @_requested @$_customer @m31 @tgn
 Feature: Newsletter for customer
 
   Background:

@@ -1,4 +1,4 @@
-@newsletter @_requested @$_admin @m31 @selenium
+@newsletter @_requested @$_admin @m31 @selenium @tgn
 Feature: Newsletter for admin
 
   Background:
