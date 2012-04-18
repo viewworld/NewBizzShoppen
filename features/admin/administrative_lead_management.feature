@@ -273,3 +273,7 @@ Scenario: I can sort leads by all of the new columns
   #10863
   @m32 @_requested @_done @_tested_elsewhere
   Scenario: When lead is bought by supplier and invoiced then it should stay on invoice but be deleted from the system
+
+  #11044
+  @m33 @_requested
+  Scenario: I can search for leads with given tags

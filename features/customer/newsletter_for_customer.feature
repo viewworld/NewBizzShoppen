@@ -15,3 +15,7 @@ Feature: Newsletter for customer
 
   @_done @_non_testable
   Scenario: When I go to Newsletters tab then I am automatically logged in to Campaign monitor with my client account
+
+  #11053
+  @m33 @_requested
+  Scenario: When I become newsletter manager I should have first newsletter list created in CM

@@ -142,3 +142,7 @@ Feature: Deals from admin perspective
   #10252
   @m29 @_requested @tgn @_done @_tested_elsewhere
   Scenario: I can click to see all deals on one page
+
+  #11044
+  @m33 @_requested
+  Scenario: I can search for deals with given tags

@@ -981,3 +981,11 @@ Scenario: I can mark supplier or category supplier as newsletter manager (overri
   And I click hidden link by url regex "/users\/\d+\/edit/"
   And I check "user_supplier_newsletter_manager"
   When I press translated "administration.users.edit.view.button_update_user"
+
+#11044
+@m33 @_requested
+Scenario: I can search for users with given tags
+
+#11051
+@m33 @_requested
+Scenario: I should be able to login into customer's CM account from user edit page (button Go to campaign monitor)

@@ -956,3 +956,7 @@ Feature: Agent campaign - management
         #Move agent time and result to new camping (yes / no / cancel)
         @m30 @_requested @_done @_tested_elsewhere @tgn
         Scenario: I should be asked to move results/time when I duplicate a campaign
+
+        #11049
+        @m33 @_requested
+        Scenario: Tab for campaigns should be renamed to TLE

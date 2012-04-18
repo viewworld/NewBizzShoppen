@@ -779,3 +779,7 @@ Feature: Agent campaign - calling session
   #9989
   @m28 @_requested @tgn @_done @_tested_elsewhere
   Scenario: A free subscription should be selected by default when upgrading contact to account
+
+  #11050
+  @m33 @_requested
+  Scenario: When call result is added to contact then result's tags are added to the contact

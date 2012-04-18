@@ -94,3 +94,23 @@ Feature: Newsletter campaign for admin
 
   @_done @_tested_elsewhere @_rspec
   Scenario: When campaign is created in Campaign Monitor then CampaignID is stored locally
+
+  #11046
+  @m33 @_requested
+  Scenario: I should see a notification when newsletter campaign is sent
+
+  #11047
+  @m33 @_requested
+  Scenario: I should be able to send campaign as a draft to Campaign Monitor
+
+  #11048
+  @m33 @_requested
+  Scenario: I should be able to insert formatted info about selected deals (whole featured deal info with picture) to the body of template
+
+  #11048
+  @m33 @_requested
+  Scenario: Inserted deal info should be linked to deal from fairdeals.dk in the body of template
+
+  #11052
+  @m33 @_requested
+  Scenario: Before campaign is sent to CM then all links for fairleads or fairdeals are refactored as autologins with custom field as CM variable
