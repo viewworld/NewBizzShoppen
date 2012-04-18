@@ -101,10 +101,7 @@
         <% end %>
       </ol>
     </fieldset>
-
-    <% if ['supplier', 'category_supplier', 'member'].include?(params[:role]) or @user.has_any_role?(:supplier, :category_supplier, :member) %>
       <%= render :partial => "/shared/tags/assigned_tags", :locals => { :object => @user } %>
-    <% end %>
   </div>
 </div>
 

@@ -2,7 +2,7 @@
   <p><%= t("tags.common.assigned_tags_label") %>:</p>
   <ul id="tags_selection" name="<%= "#{object.class.to_s.tableize.singularize.gsub("/", "_")}[tag_list]" %>"></ul>
 </div>
-
+<%= hidden_field_tag "#{object.class.to_s.tableize.singularize.gsub("/", "_")}[tag_list][]", "" %>
 <script type="text/javascript">
       $(function() {
         $('#tags_selection').tagit({tagSource: "/tags.js", triggerKeys: ['enter', 'comma', 'tab'], select: true, initialTags: [<%= object.tag_list.map{ |w| %{"#{w}"} }.join(",").html_safe %>]});
