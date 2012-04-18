@@ -15,6 +15,13 @@ class Administration::TagsController < Administration::AdministrationController
     end
   end
 
+  def destroy
+    @tag = ActsAsTaggableOn::Tag.find(params[:id])
+    destroy! do |success, fauilure|
+      success.html { redirect_to administration_tags_path }
+    end
+  end
+
   def duplicate
     @tag = ActsAsTaggableOn::Tag.find(params[:id])
     if @tag.duplicate!(params[:name])
