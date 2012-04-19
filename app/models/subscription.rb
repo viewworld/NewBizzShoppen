@@ -436,6 +436,7 @@ class Subscription < ActiveRecord::Base
     if newsletter_manager?
       user.send(:cm_synchronize!)
       user.send(:cm_set_access!)
+      user.setup_empty_list!
     end
   end
 
