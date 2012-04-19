@@ -117,6 +117,8 @@ class User < ActiveRecord::Base
   scope :created_by, lambda { |user_id| where(:created_by => user_id) }
   scope :all_subscribers, where("roles_mask & #{2**User.valid_roles.index(:lead_supplier)} > 0 OR roles_mask & #{2**User.valid_roles.index(:member)} > 0")
 
+  scope :with_tags, lambda { |tag_names| tagged_with(tag_names) }
+
   scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department, :mobile_phone, :completed_leads_counter, :leads_requested_counter,
                :leads_assigned_month_ago_counter, :leads_assigned_year_ago_counter, :total_leads_assigned_counter, :leads_created_counter,
                :leads_volume_sold_counter, :leads_revenue_counter, :leads_purchased_month_ago_counter, :leads_purchased_year_ago_counter,

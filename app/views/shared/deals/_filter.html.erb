@@ -31,6 +31,9 @@
               </li>
             </ol>
           </fieldset>
+          <% if current_user.admin? %>
+            <%= render :partial => "shared/tags/search_with_tags", :locals => { :search => search } %>
+          <% end %>
       <% end %>
     </div>
   </div>

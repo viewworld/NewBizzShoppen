@@ -29,6 +29,7 @@ class Deal < AbstractLead
   scope :without_vouchers, where(:voucher_enabled => false)
   scope :without_premium_deals, where(:premium_deal => false)
   scope :with_id_and_header, select("id, header")
+  scope :with_tags, lambda { |tag_names| tagged_with(tag_names) }
 
   scoped_order :header, :end_date, :published, :created_at, :company_name
 
