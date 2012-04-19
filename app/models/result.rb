@@ -29,6 +29,8 @@ class Result < ActiveRecord::Base
 
   include ScopedSearch::Model
 
+  acts_as_taggable
+
   def to_s
     name
   end
