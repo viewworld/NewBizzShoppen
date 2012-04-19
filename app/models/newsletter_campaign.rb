@@ -6,9 +6,11 @@ class NewsletterCampaign < ActiveRecord::Base
   validates_presence_of :subject, :cm_username, :cm_password, :unless => Proc.new{|n| n.skip_validations}
 
   SAVED_AS_DRAFT = 0.freeze
-  QUEUED_FOR_SENDING = 1.freeze
-  SENT_TO_CM = 2.freeze
-  STATUSES = [SAVED_AS_DRAFT, QUEUED_FOR_SENDING, SENT_TO_CM]
+  QUEUED_FOR_SENDING_TO_SUBSCRIBERS = 1.freeze
+  SENT_TO_CM_TO_SUBSCRIBERS = 2.freeze
+  QUEUED_FOR_SENDING_AS_DRAFT = 3.freeze
+  SENT_TO_CM_AS_DRAFT = 4.freeze
+  STATUSES = [SAVED_AS_DRAFT, QUEUED_FOR_SENDING_TO_SUBSCRIBERS, SENT_TO_CM_TO_SUBSCRIBERS, QUEUED_FOR_SENDING_AS_DRAFT, SENT_TO_CM_AS_DRAFT]
 
   include CommonNewsletter
 
@@ -42,18 +44,18 @@ class NewsletterCampaign < ActiveRecord::Base
     end
   end
 
-  def cm_synchronize!
-    if (cm_exists? or cm_create!) and !sent?
+  def cm_synchronize!(as_draft=false)
+    if (cm_exists? or cm_create!(as_draft)) and !sent?
       self.delay(:queue => "campaign_monitor_synchronization").cm_send!
     end
   end
 
-  def cm_create!
+  def cm_create!(as_draft=false)
     begin
       cm_campaign_id = CreateSend::Campaign.create(owner.cm_client_id, subject, name, "Fairleads.com", "admin@fairleads.com",
                                             "admin@fairleads.com", link_to_template, link_to_template(true), newsletter_lists.map(&:cm_list_id), [])
       update_attribute(:cm_campaign_id, cm_campaign_id)
-      update_attribute(:status, QUEUED_FOR_SENDING)
+      update_attribute(:status, as_draft ? QUEUED_FOR_SENDING_AS_DRAFT : QUEUED_FOR_SENDING_TO_SUBSCRIBERS)
       cm_campaign_id
     rescue Exception => e
       self.campaign_monitor_responses.create(:response => e)
@@ -71,12 +73,14 @@ class NewsletterCampaign < ActiveRecord::Base
     begin
       cm_synchronize_lists!
 
-      if Rails.env.development? or Rails.env.staging?
-        CreateSend::Campaign.new(cm_campaign_id).send_preview("fairleads@selleo.com")
-      else
-        CreateSend::Campaign.new(cm_campaign_id).send(Settings.cm_confirmation_email)
+      if status == QUEUED_FOR_SENDING_TO_SUBSCRIBERS
+        if Rails.env.development? or Rails.env.staging?
+          CreateSend::Campaign.new(cm_campaign_id).send_preview("fairleads@selleo.com")
+        else
+          CreateSend::Campaign.new(cm_campaign_id).send(Settings.cm_confirmation_email)
+        end
       end
-      update_attribute(:status, SENT_TO_CM)
+      update_attribute(:status, status == QUEUED_FOR_SENDING_TO_SUBSCRIBERS ? SENT_TO_CM_TO_SUBSCRIBERS : SENT_TO_CM_AS_DRAFT)
     rescue Exception => e
       self.campaign_monitor_responses.create(:response => e)
       false
@@ -103,11 +107,11 @@ class NewsletterCampaign < ActiveRecord::Base
   end
 
   def sent?
-    status == SENT_TO_CM
+    status == SENT_TO_CM_TO_SUBSCRIBERS or status == SENT_TO_CM_AS_DRAFT
   end
 
   def queued_for_sending?
-    status == QUEUED_FOR_SENDING
+    status == QUEUED_FOR_SENDING_TO_SUBSCRIBERS or status == QUEUED_FOR_SENDING_AS_DRAFT
   end
 
   def last_errors

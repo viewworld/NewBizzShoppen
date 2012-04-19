@@ -17,7 +17,10 @@
         <param:actions>
           <% if !@newsletter_campaign.sent? and !@newsletter_campaign.queued_for_sending? %>
               <ibt c="fltri" icon="save">
-                <%= form.submit t("newsletters.newsletter_campaigns.edit.view.button_update_and_send"), :name => "commit_send", :onclick => "select_options_to_submit('newsletter_campaign_newsletter_list_ids_')" %>
+                <%= form.submit t("newsletters.newsletter_campaigns.edit.view.button_update_and_send"), :name => "commit_send_to_subscribers", :onclick => "select_options_to_submit('newsletter_campaign_newsletter_list_ids_')" %>
+              </ibt>
+              <ibt c="fltri" icon="save">
+                <%= form.submit t("newsletters.newsletter_campaigns.edit.view.button_update_and_send_as_draft"), :name => "commit_send_as_draft", :onclick => "select_options_to_submit('newsletter_campaign_newsletter_list_ids_')" %>
               </ibt>
           <% end %>
           <ibt c="fltri" icon="save">

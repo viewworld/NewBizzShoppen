@@ -289,4 +289,17 @@ class IntegrationTasks < Thor
     end
     EmailTemplate.where(:resource_type => "Category").each { |c| c.update_attribute(:uniq_id, "bought_lead_notification") }
   end
+
+  desc "m33", ""
+  def m33
+    [
+        ["newsletters.newsletter_campaigns.edit.view.button_update_and_send", "Save & send to subscribers"],
+        ["models.newsletter_campaign.statuses.status1", "Queued for sending to CM & subscribers"],
+        ["models.newsletter_campaign.statuses.status2", "Sent to Campaign Monitor & subscribers"]
+    ].each do |key, value|
+      Translation.where(:key => key, :locale => "en").first.update_attribute(:value, value)
+    end
+    Translation.where(:key => "newsletters.newsletter_campaigns.update.flash.notice_queued", :locale => "en").first.destroy
+
+  end
 end

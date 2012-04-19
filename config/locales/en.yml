@@ -3256,8 +3256,10 @@ en:
     newsletter_campaign:
       statuses:
         status0: "Saved as draft"
-        status1: "Queued for sending"
-        status2: "Sent to Campaign Monitor"
+        status1: "Queued for sending to CM & subscribers"
+        status2: "Sent to Campaign Monitor & subscribers"
+        statis3: "Queued for sending to CM as draft"
+        status4: "Sent to Campaign Monitor as draft"
     result:
       is_global_cannot_be_disabled: "Result is assigned to more than one campaings"
   activerecord:
@@ -4738,15 +4740,17 @@ en:
           header: "Edit newsletter campaign %{name}"
           button_update: "Save"
           button_cancel: "Cancel"
-          button_update_and_send: "Save & send"
+          button_update_and_send: "Save & send to subscribers"
           campaign_sent_warning: "Campaign has already been sent. Any changes will be saved locally but NOT synchronized back to Campaign Monitor."
+          button_update_and_send_as_draft: "Save & send as draft"
       archive:
         flash:
           notice_archived: "Newsletter list has been successfully archived."
           notice_retrieved: "Newsletter list has been successfully retrieved."
       update:
         flash:
-          notice_queued: "Campaign has been successfully queued for sending."
+          notice_queued_for_sending_to_subscribers: "Campaign has been successfully queued for sending to subscribers."
+          notice_queued_for_sending_as_draft: "Campaign has been successfully queued for sending as draft."
           notice_not_sent: "Campaign could not be sent due to errors %{errors}"
   tags:
     common:

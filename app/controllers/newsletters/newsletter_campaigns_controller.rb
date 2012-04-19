@@ -15,10 +15,11 @@ class Newsletters::NewsletterCampaignsController < Newsletters::NewslettersContr
   def update
     update! do |success, failure|
       success.html {
-        if params[:commit_send]
-          @newsletter_campaign.send(:cm_synchronize!)
+        if params[:commit_send_to_subscribers] or params[:commit_send_as_draft]
+          @newsletter_campaign.send(:cm_synchronize!, params[:commit_send_as_draft])
           if @newsletter_campaign.queued_for_sending?
-            flash[:notice] = I18n.t("newsletters.newsletter_campaigns.update.flash.notice_queued")
+            flash[:notice] = params[:commit_send_as_draft] ? I18n.t("newsletters.newsletter_campaigns.update.flash.notice_queued_for_sending_as_draft") :
+                I18n.t("newsletters.newsletter_campaigns.update.flash.notice_queued_for_sending_to_subscribers")
             redirect_to newsletters_newsletter_campaigns_path
           else
             flash[:alert] = I18n.t("newsletters.newsletter_campaigns.update.flash.notice_not_sent", :errors => @newsletter_campaign.last_errors)

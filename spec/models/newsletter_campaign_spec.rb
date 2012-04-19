@@ -33,7 +33,7 @@ describe NewsletterCampaign do
     @campaign.link_to_template(true).should == "http://fairleads.com/newsletters/newsletter_campaigns/#{@campaign.template_key}?txt=1"
   end
 
-  it "should synchronise to CM" do
+  it "should synchronise to CM and send campaign to subscribers instantly" do
     CreateSend::Campaign.expects(:create).with(@user.cm_client_id, instance_of(String), instance_of(String), "Fairleads.com", "admin@fairleads.com",
                                                 "admin@fairleads.com", instance_of(String), instance_of(String), ["List1023456"], []).returns("CampaignId948484848")
 
@@ -45,10 +45,33 @@ describe NewsletterCampaign do
     @campaign.cm_campaign_id.should == "CampaignId948484848"
 
     @campaign.should be_queued_for_sending
+    @campaign.status.should == NewsletterCampaign::QUEUED_FOR_SENDING_TO_SUBSCRIBERS
 
     Delayed::Worker.new.work_off
 
     @campaign.reload
     @campaign.should be_sent
+    @campaign.status.should == NewsletterCampaign::SENT_TO_CM_TO_SUBSCRIBERS
+  end
+
+  it "should synchronise to CM and send campaign as draft only" do
+    CreateSend::Campaign.expects(:create).with(@user.cm_client_id, instance_of(String), instance_of(String), "Fairleads.com", "admin@fairleads.com",
+                                                "admin@fairleads.com", instance_of(String), instance_of(String), ["List1023456"], []).returns("CampaignId948484848")
+
+    CreateSend::Campaign.any_instance.expects(:summary).returns(nil)
+    CreateSend::Campaign.any_instance.expects(:send).with(Settings.cm_confirmation_email).never
+
+    @campaign.send(:cm_synchronize!, true)
+
+    @campaign.cm_campaign_id.should == "CampaignId948484848"
+
+    @campaign.should be_queued_for_sending
+    @campaign.status.should == NewsletterCampaign::QUEUED_FOR_SENDING_AS_DRAFT
+
+    Delayed::Worker.new.work_off
+
+    @campaign.reload
+    @campaign.should be_sent
+    @campaign.status.should == NewsletterCampaign::SENT_TO_CM_AS_DRAFT
   end
 end
