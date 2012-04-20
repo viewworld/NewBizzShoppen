@@ -100,7 +100,7 @@ Feature: Newsletter campaign for admin
   Scenario: I should see a notification when newsletter campaign is sent
 
   #11047
-  @m33 @_requested
+  @m33 @_requested @_done @_tested_elsewhere @tgn @_rspec
   Scenario: I should be able to send campaign as a draft to Campaign Monitor
 
   #11048
