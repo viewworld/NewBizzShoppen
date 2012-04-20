@@ -14,7 +14,11 @@ describe NewsletterCampaign do
     NewsletterSynch.any_instance.expects(:all_cm_subscribers).returns([]).at_least_once
     @list = NewsletterList.make!(:owner_email => @user.email)
 
-    @campaign = NewsletterCampaign.make!(:owner => @user, :creator => @user)
+    body = %{
+    <p><a href="http://www.fairdeals.dk/deals/11275-fri-1">Fri tale sms</a><br/><a href="http://test.com/1">outside link</a></p>
+    <p>Test paragraph <a href="http://www.fairleads.com/leads/1">Cool lead</a></p>
+    }
+    @campaign = NewsletterCampaign.make!(:owner => @user, :creator => @user, :body => body)
     @campaign.newsletter_lists << @list
     @campaign.save
     Delayed::Worker.new.work_off
@@ -75,5 +79,19 @@ describe NewsletterCampaign do
     @campaign.should be_sent
     @campaign.status.should == NewsletterCampaign::SENT_TO_CM_AS_DRAFT
     @campaign.creator.notifications.last.notifier.should == @campaign
+  end
+
+  it "should process the template's body: change links to autologins and turn off CM tracking for fairleads/fairdeals/faircalls links only" do
+    @campaign.save
+    [
+      %{<a href="http://www.fairdeals.dk/login_keys/?key=[LoginKey,fallback=]&redirect=http%3A%2F%2Fwww.fairdeals.dk%2Fdeals%2F11275-fri-1" cm_dontconvertlink>Fri tale sms</a>},
+      %{<a href="http://test.com/1">outside link</a>},
+      %{<a href="http://www.fairleads.com/login_keys/?key=[LoginKey,fallback=]&redirect=http%3A%2F%2Fwww.fairleads.com%2Fleads%2F1" cm_dontconvertlink>Cool lead</a>}
+    ].each do |link|
+      @campaign.body.should include(link)
+    end
+
+    @campaign.body.scan(/<a/).size.should == 3
+    @campaign.body.scan(/cm_dontconvertlink/).size.should == 2
   end
 end

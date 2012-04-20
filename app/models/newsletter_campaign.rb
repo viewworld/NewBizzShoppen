@@ -104,6 +104,7 @@ class NewsletterCampaign < ActiveRecord::Base
 
   def process_template_body
     if owner.present? and (owner.admin? or owner.call_centre?)
+      self.body = body.gsub(/(?i)<a([^>]+)>(.+?)<\/a>/i){ |i| ((i.to_s.include?("fairdeals.") or i.to_s.include?("fairleads.") or i.to_s.include?("faircalls.")) and !i.include?("cm_dontconvertlink")) ? %{<a #{$1.strip} cm_dontconvertlink>#{$2}</a>} : i }
       self.body = body.gsub(/(http:\/\/\S+)"/) { |i | ( (i.to_s.include?("fairdeals.") or i.to_s.include?("fairleads.") or i.to_s.include?("faircalls.")) and !i.to_s.include?("login_keys/")) ? %{http://#{URI.parse($1).host}/login_keys/?key=[LoginKey,fallback=]&redirect=#{CGI::escape($1)}"} : i }
     end
   end
