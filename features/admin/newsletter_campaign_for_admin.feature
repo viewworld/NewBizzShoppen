@@ -96,7 +96,7 @@ Feature: Newsletter campaign for admin
   Scenario: When campaign is created in Campaign Monitor then CampaignID is stored locally
 
   #11046
-  @m33 @_requested
+  @m33 @_requested @_done @_tested_elsewhere @tgn @_rspec
   Scenario: I should see a notification when newsletter campaign is sent
 
   #11047

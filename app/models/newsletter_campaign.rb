@@ -81,6 +81,11 @@ class NewsletterCampaign < ActiveRecord::Base
         end
       end
       update_attribute(:status, status == QUEUED_FOR_SENDING_TO_SUBSCRIBERS ? SENT_TO_CM_TO_SUBSCRIBERS : SENT_TO_CM_AS_DRAFT)
+      creator.notify!(
+          :title => I18n.t("notifications.newsletter_campaign.sent.title", :name => name),
+          :text => I18n.t("notifications.newsletter_campaign.sent.text", :url => "http://#{creator.domain_name}/newsletters/newsletter_campaigns/#{id}/edit",
+                                                                         :cm_url => creator.link_to_admin_campaign_monitor_account(self)),
+          :notifier => self) if creator
     rescue Exception => e
       self.campaign_monitor_responses.create(:response => e)
       false

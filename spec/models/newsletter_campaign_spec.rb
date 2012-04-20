@@ -14,7 +14,7 @@ describe NewsletterCampaign do
     NewsletterSynch.any_instance.expects(:all_cm_subscribers).returns([]).at_least_once
     @list = NewsletterList.make!(:owner_email => @user.email)
 
-    @campaign = NewsletterCampaign.make!(:owner => @user)
+    @campaign = NewsletterCampaign.make!(:owner => @user, :creator => @user)
     @campaign.newsletter_lists << @list
     @campaign.save
     Delayed::Worker.new.work_off
@@ -52,6 +52,7 @@ describe NewsletterCampaign do
     @campaign.reload
     @campaign.should be_sent
     @campaign.status.should == NewsletterCampaign::SENT_TO_CM_TO_SUBSCRIBERS
+    @campaign.creator.notifications.last.notifier.should == @campaign
   end
 
   it "should synchronise to CM and send campaign as draft only" do
@@ -73,5 +74,6 @@ describe NewsletterCampaign do
     @campaign.reload
     @campaign.should be_sent
     @campaign.status.should == NewsletterCampaign::SENT_TO_CM_AS_DRAFT
+    @campaign.creator.notifications.last.notifier.should == @campaign
   end
 end

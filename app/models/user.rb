@@ -1022,4 +1022,9 @@ class User < ActiveRecord::Base
   def link_to_campaign_monitor_account
     "https://#{Rails.env.production? ? 'fairleads' : 'selleo-mariachi'}.createsend.com/login.aspx?ReturnUrl=%2f&username=#{cm_username}&password=#{cm_password}"
   end
+
+  def link_to_admin_campaign_monitor_account(newsletter_campaign, redirect_to=nil)
+    redirect_to = "%2f" if redirect_to.nil?
+    "https://#{Rails.env.production? ? 'fairleads' : 'selleo-mariachi'}.createsend.com/login.aspx?ReturnUrl=#{redirect_to}&username=#{newsletter_campaign.cm_username}&password=#{newsletter_campaign.cm_password}"
+  end
 end
