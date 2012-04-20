@@ -132,7 +132,7 @@ en:
         content: "Content"
         global: "Global"
         refunds: "Refunds"
-        campaigns: TLE
+        campaigns: Tele
         reports: "Reports"
         agent_timesheets: "Timesheets"
         subscription_plans: "Subscriptions"
@@ -151,7 +151,7 @@ en:
         call_centre_agents: "Team"
         leads: "My leads"
         lead_templates: "Lead templates"
-        campaigns: TLE
+        campaigns: Tele
         reports: "Reports"
         campaign_reports: "Campaign"
         agent_timesheets: "Timesheets"

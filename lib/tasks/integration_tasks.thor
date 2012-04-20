@@ -296,8 +296,8 @@ class IntegrationTasks < Thor
         ["newsletters.newsletter_campaigns.edit.view.button_update_and_send", "Save & send to subscribers"],
         ["models.newsletter_campaign.statuses.status1", "Queued for sending to CM & subscribers"],
         ["models.newsletter_campaign.statuses.status2", "Sent to Campaign Monitor & subscribers"],
-        ["layout.main_menu.admin.campaigns", "TLE"],
-        ["layout.main_menu.call_centre.campaigns", "TLE"]
+        ["layout.main_menu.admin.campaigns", "Tele"],
+        ["layout.main_menu.call_centre.campaigns", "Tele"]
     ].each do |key, value|
       Translation.where(:key => key, :locale => "en").first.update_attribute(:value, value)
     end
