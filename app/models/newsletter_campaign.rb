@@ -4,6 +4,7 @@ class NewsletterCampaign < ActiveRecord::Base
   before_create :generate_template_key
   before_validation :set_name
   validates_presence_of :subject, :cm_username, :cm_password, :unless => Proc.new{|n| n.skip_validations}
+  before_save :process_template_body
 
   SAVED_AS_DRAFT = 0.freeze
   QUEUED_FOR_SENDING_TO_SUBSCRIBERS = 1.freeze
@@ -98,6 +99,12 @@ class NewsletterCampaign < ActiveRecord::Base
     rescue Exception => e
       self.campaign_monitor_responses.create(:response => e)
       false
+    end
+  end
+
+  def process_template_body
+    if owner.present? and (owner.admin? or owner.call_centre?)
+      self.body = body.gsub(/(http:\/\/\S+)"/) { |i | ( (i.to_s.include?("fairdeals.") or i.to_s.include?("fairleads.") or i.to_s.include?("faircalls.")) and !i.to_s.include?("login_keys/")) ? %{http://#{URI.parse($1).host}/login_keys/?key=[LoginKey,fallback=]&redirect=#{CGI::escape($1)}"} : i }
     end
   end
 

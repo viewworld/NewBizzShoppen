@@ -303,5 +303,8 @@ class IntegrationTasks < Thor
     end
     Translation.where(:key => "newsletters.newsletter_campaigns.update.flash.notice_queued", :locale => "en").first.destroy
 
+    User.where(:login_key => nil).each do |user|
+      user.generate_login_key!
+    end
   end
 end

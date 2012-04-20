@@ -140,6 +140,7 @@ class User < ActiveRecord::Base
   validate :check_billing_rate, :check_subscription_plan
   before_validation :set_auto_generated_password_if_required, :set_role
   after_initialize :set_auto_buy_enabled
+  before_create :generate_login_key
 
   check_associations_before_destroy :leads, :lead_purchases, :lead_templates, :assigned_lead_purchases, :lead_requests, :leads_in_cart, :deals, :requested_deals, :campaigns, :contacts, :call_results, :subaccounts, :invoices
 

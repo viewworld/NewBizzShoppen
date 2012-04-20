@@ -64,7 +64,7 @@ class Newsletters::NewsletterCampaignsController < Newsletters::NewslettersContr
     @search = NewsletterCampaign.scoped_search(params[:search])
     @search.with_archived ||= 0
     @search.created_or_owned_by = current_user unless current_user.admin?
-    @newsletter_campaigns = @search.paginate(:page => params[:page], :per_page => NewsletterCampaign.per_page)
+    @newsletter_campaigns = @search.order("created_at DESC").paginate(:page => params[:page], :per_page => NewsletterCampaign.per_page)
   end
 
   def authorize_user_for_namespace!

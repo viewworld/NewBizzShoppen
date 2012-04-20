@@ -2,7 +2,7 @@
     <fieldset class="inputs labels_ta_r labels_200">
       <ol class="align_inputs">
         <%= form.input :name %>
-        <%= form.input :owner_email, :required => true %>
+        <%= form.input :owner_email, :required => true, :input_html => { :disabled => @newsletter_list.persisted? } %>
         <div style="display: none">
         <%= form.input :sourceable_items, :collection => [], :as => :select, :multiple => true %>
         <%= form.input :tag_group_items, :collection => [], :as => :select, :multiple => true %>
