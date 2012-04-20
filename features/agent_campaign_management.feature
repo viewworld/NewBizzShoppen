@@ -958,5 +958,5 @@ Feature: Agent campaign - management
         Scenario: I should be asked to move results/time when I duplicate a campaign
 
         #11049
-        @m33 @_requested
+        @m33 @_requested @_done @_non_testable
         Scenario: Tab for campaigns should be renamed to TLE

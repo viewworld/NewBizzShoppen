@@ -132,7 +132,7 @@ en:
         content: "Content"
         global: "Global"
         refunds: "Refunds"
-        campaigns: Campaigns
+        campaigns: TLE
         reports: "Reports"
         agent_timesheets: "Timesheets"
         subscription_plans: "Subscriptions"
@@ -140,6 +140,7 @@ en:
         newsletter_campaigns: "Newsletters"
         tags: "Tags"
         results: "Results"
+        campaigns_tab: "Campaigns"
       agent:
         leads: My leads
         deals: My deals
@@ -150,12 +151,13 @@ en:
         call_centre_agents: "Team"
         leads: "My leads"
         lead_templates: "Lead templates"
-        campaigns: Campaigns
+        campaigns: TLE
         reports: "Reports"
         campaign_reports: "Campaign"
         agent_timesheets: "Timesheets"
         deals: "My deals"
         newsletter_lists: "Lists"
+        campaigns_tab: "Campaigns"
       call_centre_agent:
         leads: "My leads"
         lead_templates: "Lead templates"

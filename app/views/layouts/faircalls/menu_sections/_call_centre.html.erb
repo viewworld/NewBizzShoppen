@@ -8,7 +8,7 @@
 <%= main_menu_link_to t("layout.main_menu.shared.notifications"), notifications_path, :tab => "notifications" %>
 <%= main_menu_link_to t("layout.main_menu.call_centre_agent.news"), call_centres_news_index_path, :tab =>"news" %>
 
-<%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.call_centre.campaigns"), :tab => "campaigns" do  %>
+<%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.call_centre.campaigns_tab"), :tab => "campaigns" do  %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.call_centre.campaigns")), callers_campaigns_path, :subtab => "campaigns" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.call_centre.newsletter_lists")), newsletters_newsletter_lists_path, :subtab => "newsletter_lists" %>
 <% end %>
