@@ -20,15 +20,15 @@
   <tr>
     <td>
       <div class="deal_description">
-        <%= image_tag featured.logo.url(:featured), :class => "logo" if featured.logo %>
-        <p><%= st(featured.short_featured_description.to_s, {}, {:length => 300}) %></p>
-        <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_url(featured.slug, :host => params[:domain_name]), :class => 'default_action' %>
+        <%= link_to(image_tag(featured.logo.url(:featured), :class => "logo"), deal_url(featured.slug)) if featured.logo %>
+        <p><%= link_to st(featured.short_featured_description.to_s, {}, {:length => 300}), deal_url(featured.slug, :host => params[:domain_name]), :style => "color:black; text-decoration: none;" %></p>
+        <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_url(featured.slug, :host => params[:domain_name]) %>
       </div>
     </td>
     <td>
      <div class="deal_thumb">
        <p>
-         <%= image_tag featured.images.first.url(:medium), :class => "thumb" if featured.images.first %>
+         <%= link_to(image_tag(featured.images.first.url(:medium), :class => "thumb"), deal_url(featured.slug, :host => params[:domain_name])) if featured.images.first %>
        </p>
      </div>
     </td>
