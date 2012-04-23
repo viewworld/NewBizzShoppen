@@ -49,6 +49,7 @@ en:
       loading: "Loading..."
       deals_chosen: "deals chosen"
       ajax_in_progress: "The requested action cannot be performed because other action is still in progress. Please try again in a while."
+      fetching_content: "Fetching content in progress..."
     no_categories_for_category_supplier: "Your Category Supplier account has no associated categories. You can't sign in."
     edit_hint: "Edit hint"
     agree_to: "Agree to"

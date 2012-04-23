@@ -17,6 +17,7 @@ describe NewsletterCampaign do
     body = %{
     <p><a href="http://www.fairdeals.dk/deals/11275-fri-1">Fri tale sms</a><br/><a href="http://test.com/1">outside link</a></p>
     <p>Test paragraph <a href="http://www.fairleads.com/leads/1">Cool lead</a></p>
+    <img alt="model" height="210" src="https://fairleads.s3.amazonaws.com/production/assets/292/original/model_arketype_hjul.png" width="300">
     }
     @campaign = NewsletterCampaign.make!(:owner => @user, :creator => @user, :body => body)
     @campaign.newsletter_lists << @list
@@ -86,7 +87,8 @@ describe NewsletterCampaign do
     [
       %{<a href="http://www.fairdeals.dk/login_keys/?key=[LoginKey,fallback=]&redirect=http%3A%2F%2Fwww.fairdeals.dk%2Fdeals%2F11275-fri-1" cm_dontconvertlink>Fri tale sms</a>},
       %{<a href="http://test.com/1">outside link</a>},
-      %{<a href="http://www.fairleads.com/login_keys/?key=[LoginKey,fallback=]&redirect=http%3A%2F%2Fwww.fairleads.com%2Fleads%2F1" cm_dontconvertlink>Cool lead</a>}
+      %{<a href="http://www.fairleads.com/login_keys/?key=[LoginKey,fallback=]&redirect=http%3A%2F%2Fwww.fairleads.com%2Fleads%2F1" cm_dontconvertlink>Cool lead</a>},
+      %{https://fairleads.s3.amazonaws.com/production/assets/292/original/model_arketype_hjul.png}
     ].each do |link|
       @campaign.body.should include(link)
     end

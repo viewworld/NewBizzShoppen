@@ -1,0 +1,36 @@
+<table>
+  <tr>
+    <td colspan="2">
+      <h2>
+        <%= link_to st(featured.header,{},{:length => (featured.general_discount? ? 62 : 42)}), deal_url(featured.slug, :host => params[:domain_name]) %>
+        <span class="highlighted">/
+            <% if featured.general_discount? %>
+                <%= t("deals.index.view.save") %> <%= featured.saving %>
+            <% else %>
+                <%= t("deals.index.view.price") %>
+                <%= as_currency(featured.deal_price, featured.currency) %>
+                /
+                <%= t("deals.index.view.save") %>
+                <%= featured.saving %>
+            <% end %>
+        </span>
+      </h2>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <div class="deal_description">
+        <%= image_tag featured.logo.url(:featured), :class => "logo" if featured.logo %>
+        <p><%= st(featured.short_featured_description.to_s, {}, {:length => 300}) %></p>
+        <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_url(featured.slug, :host => params[:domain_name]), :class => 'default_action' %>
+      </div>
+    </td>
+    <td>
+     <div class="deal_thumb">
+       <p>
+         <%= image_tag featured.images.first.url(:medium), :class => "thumb" if featured.images.first %>
+       </p>
+     </div>
+    </td>
+  </tr>
+</table>

@@ -327,6 +327,7 @@ Nbs::Application.routes.draw do
     end
     collection do
       get 'show_all'
+      get 'insert_rich_content'
     end
   end
 

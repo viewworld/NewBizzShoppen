@@ -32,7 +32,7 @@
         </param:actions>
       </frm>
   <% end %>
-  <%= render :partial => "shared/email_template_popup/template_deal_links", :locals => {:instance_name => "newsletter_campaign_body_editor"} %>
+  <%= render :partial => "shared/email_template_popup/template_deal_links", :locals => {:instance_name => "newsletter_campaign_body_editor", :rich_description => true} %>
 
   <script type="text/javascript">
     setup_jquery_deal_links_dialog();
