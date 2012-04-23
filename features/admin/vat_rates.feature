@@ -50,10 +50,12 @@ Feature: VAT rates
   Scenario: Agents/PurchaseManagers can edit vat number in profile
     When I am signed up and confirmed as user with email ejdzent@lajoie.ca and password secret and role agent
     And I am signed up and confirmed as user with email piem@lajoie.ca and password secret and role member
+    Given I visit domain http://faircalls.eu
     And I sign in as ejdzent@lajoie.ca with password secret
     And I follow translated "layout.my_profile_link"
     Then I should not see translated "formtastic.labels.user.vat_number"
     When I sign out
+    Given I visit domain http://fairdeals.eu
     And I sign in as piem@lajoie.ca with password secret
     And I follow translated "layout.my_profile_link"
     Then I should not see translated "formtastic.labels.user.vat_number"
