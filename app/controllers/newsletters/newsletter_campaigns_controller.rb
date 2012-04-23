@@ -3,6 +3,7 @@ class Newsletters::NewsletterCampaignsController < Newsletters::NewslettersContr
 
   skip_filter :authorize_user_for_namespace!, :only => [:show]
   skip_filter :authenticate_user!, :only => [:show]
+  before_filter :authorize_with_http_basic_for_staging, :except => [:show]
 
   set_tab "campaigns"
   set_subtab "newsletter_campaigns"
