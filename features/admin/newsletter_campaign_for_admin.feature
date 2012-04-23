@@ -112,5 +112,5 @@ Feature: Newsletter campaign for admin
   Scenario: Inserted deal info should be linked to deal from fairdeals.dk in the body of template
 
   #11052
-  @m33 @_requested
+  @m33 @_requested @_done @_tested_elsewhere @_rspec @tgn
   Scenario: Before campaign is sent to CM then all links for fairleads or fairdeals are refactored as autologins with custom field as CM variable

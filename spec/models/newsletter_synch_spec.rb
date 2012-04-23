@@ -14,19 +14,24 @@ describe NewsletterSynch do
          "Name" => obj.contact_name,
          "CustomFields" => [
              { "Key" => "[CompanyName]", "Value" => obj.company_name, "Clear" => false},
-             { "Key" => "[ZipCode]", "Value" => obj.zip_code, "Clear" => false}
+             { "Key" => "[ZipCode]", "Value" => obj.zip_code, "Clear" => false},
+             { "Key" => "[LoginKey]", "Value" => nil, "Clear" => false}
          ]
      }]
   end
 
-  def user_subscriber_hash(obj)
+  def user_subscriber_hash(obj, with_autologin=true)
+    custom_fields = [
+          { "Key" => "[CompanyName]", "Value" => obj.company_name, "Clear" => false},
+          { "Key" => "[ZipCode]", "Value" => obj.address.zip_code, "Clear" => false},
+        ]
+
+    custom_fields << { "Key" => "[LoginKey]", "Value" => obj.login_key, "Clear" => false} if with_autologin
+
     [{
          "EmailAddress" => obj.email,
          "Name" => obj.full_name,
-         "CustomFields" => [
-             { "Key" => "[CompanyName]", "Value" => obj.company_name, "Clear" => false},
-             { "Key" => "[ZipCode]", "Value" => obj.address.zip_code, "Clear" => false}
-         ]
+         "CustomFields" => custom_fields
      }]
   end
 
@@ -96,6 +101,23 @@ describe NewsletterSynch do
     )
     CreateSend::Subscriber.expects(:import).with(@list.cm_list_id, lead_subscriber_hash(@contact)+lead_subscriber_hash(@lead), false)
     NewsletterSynch.process!
+  end
+
+  it "should not export autologins in custom fields when the owner of the list is a supplier" do
+    CreateSend::List.stubs(:create).returns("List1")
+    CreateSend::List.any_instance.stubs(:create_custom_field).returns(true)
+    CreateSend::List.any_instance.stubs(:details).returns(false).then.returns(Hashie::Mash.new(:ListID => "List1"))
+     CreateSend::List.any_instance.stubs(:active).returns(Hashie::Mash.new(:RecordsOnThisPage => 0, :Results => []))
+
+    @role = Role.find(7)
+    @list_role = NewsletterList.make!(:owner => User::Supplier.make!)
+    @list_role.newsletter_sources.create(:source_type => NewsletterSource::USER_ROLE_SOURCE, :sourceable => @role)
+    User::Member.delete_all
+    @member = User::Member.make!
+
+    CreateSend::Subscriber.expects(:import).with(@list_role.cm_list_id, user_subscriber_hash(@member, false), false)
+
+    Delayed::Worker.new.work_off
   end
 
 end

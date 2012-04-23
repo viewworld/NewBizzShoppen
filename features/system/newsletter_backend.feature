@@ -41,5 +41,5 @@ Feature: Newsletter backend
   Scenario: When supplier or category supplier has enabled newsletter manager feature then his/her client account should be created in Campaign Monitor (unless previously created)
 
   #11052
-  @m33 @_requested
+  @m33 @_requested @_done @_tested_elsewhere @_rspec @tgn
   Scenario: When user is synchronised to CM then his autologin key is sent as custom field autologin_key
