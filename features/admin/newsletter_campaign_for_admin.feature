@@ -104,11 +104,11 @@ Feature: Newsletter campaign for admin
   Scenario: I should be able to send campaign as a draft to Campaign Monitor
 
   #11048
-  @m33 @_requested
+  @m33 @_requested @_done @_non_testable @tgn
   Scenario: I should be able to insert formatted info about selected deals (whole featured deal info with picture) to the body of template
 
   #11048
-  @m33 @_requested
+  @m33 @_requested @_done @_non_testable @tgn
   Scenario: Inserted deal info should be linked to deal from fairdeals.dk in the body of template
 
   #11052
