@@ -16,7 +16,13 @@
                 <%= f.label "Active" %>
                 <%= f.select :active_is, [[t("common.yes_label"), 1], [t("common.no_label"), 0]], {:include_blank => true} %>
               </li>
-              <li>
+              <% if current_user.admin? %>
+                  <li class="string">
+                    <label>Tags</label>
+                    <%= render :partial => "shared/tags/search_with_tags", :locals => {:search => search} %>
+                  </li>
+              <% end %>
+              <li style="display: none">
                 <%= hidden_field_tag :show_all, params[:show_all] %>
               </li>
             </ol>
@@ -31,9 +37,6 @@
               </li>
             </ol>
           </fieldset>
-          <% if current_user.admin? %>
-            <%= render :partial => "shared/tags/search_with_tags", :locals => { :search => search } %>
-          <% end %>
       <% end %>
     </div>
   </div>
