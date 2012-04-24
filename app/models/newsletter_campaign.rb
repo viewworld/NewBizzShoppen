@@ -15,6 +15,8 @@ class NewsletterCampaign < ActiveRecord::Base
 
   include CommonNewsletter
 
+  scope :not_sent_to_campaign_monitor, where("status NOT IN (?)", [NewsletterCampaign::SENT_TO_CM_TO_SUBSCRIBERS, NewsletterCampaign::SENT_TO_CM_AS_DRAFT])
+
   private
 
   def set_name

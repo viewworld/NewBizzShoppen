@@ -60,4 +60,18 @@ describe NewsletterList do
     Delayed::Worker.new.work_off
   end
 
+  it "when owner is changed then list is deleted and created again" do
+    CreateSend::Client.expects(:create).returns("ClientId10123123").at_least_once
+    CreateSend::Client.any_instance.stubs(:details).returns(false).then.returns(Hashie::Mash.new(:BasicDetails => {:ClientID => "ClientId10123123"})).returns(false).then.returns(Hashie::Mash.new(:BasicDetails => {:ClientID => "ClientId993939393993"}))
+    CreateSend::List.stubs(:create).twice().returns("List1023456")
+    CreateSend::List.any_instance.stubs(:create_custom_field).returns(true)
+    CreateSend::List.any_instance.stubs(:delete).once.returns(true)
+    CreateSend::List.any_instance.stubs(:details).returns(false).then.returns(Hashie::Mash.new(:ListID => "List1023456"))
+    @list = NewsletterList.make!
+    @list.cm_list_id.should == "List1023456"
+
+    @list.owner = User::Admin.make!
+
+    @list.save
+  end
 end

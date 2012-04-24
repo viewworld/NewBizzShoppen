@@ -4,6 +4,7 @@ class NewsletterList < ActiveRecord::Base
   has_many :newsletter_synches
   has_many :newsletter_subscribers
   has_many :custom_sources, :class_name => "NewsletterSource", :conditions => {:source_type => NewsletterSource::CUSTOM_SOURCE}
+  has_and_belongs_to_many :newsletter_campaigns
 
   after_save :cm_synchronize!, :unless => Proc.new{|nl| nl.cm_list_id_changed?}
   before_save :extract_sourceable_objects, :extract_tag_groups
@@ -11,6 +12,8 @@ class NewsletterList < ActiveRecord::Base
   after_create do
     self.newsletter_synches.create(:use_delayed_job => true)
   end
+
+  after_save :check_if_owner_is_changed
 
   attr_accessor :sourceable_items, :tag_group_items
 
@@ -64,6 +67,16 @@ class NewsletterList < ActiveRecord::Base
     rescue Exception => e
       self.campaign_monitor_responses.create(:response => e)
       false
+    end
+  end
+
+  def check_if_owner_is_changed
+    if owner_id_changed? and !owner_id_was.nil? and !cm_list_id_changed?
+      if cm_exists?
+        cm_delete!
+      end
+      cm_synchronize!
+      newsletter_synches.create(:use_delayed_job => true)
     end
   end
 
