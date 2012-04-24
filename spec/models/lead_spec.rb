@@ -103,10 +103,10 @@ describe Lead do
       @lead = Lead.make!
     end
 
-    it "should not be destroyed when lead purchases are created" do
+    it "should be destroyed even if lead purchases are created" do
       LeadPurchase.make!(:lead => @lead)
       @lead.reload
-      @lead.destroy.should be_false
+      @lead.destroy.should be_true
     end
   end
 end
