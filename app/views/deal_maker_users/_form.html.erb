@@ -28,7 +28,7 @@
       <ol class="align_inputs">
         <%= form.input :phone %>
         <%= form.input :email %>
-        <%= form.input :subscription_plan_id, :as => :select, :collection => SubscriptionPlan.active.for_role(params[:user_type].to_sym).without_paypal, :include_blank => false %>
+        <%= form.input :subscription_plan_id, :as => :select, :collection => SubscriptionPlan.active.for_role(params[:user_type].to_sym).without_online_payment, :include_blank => false %>
 
 
         <%= form.input :agreement_read, :as => :hidden %>

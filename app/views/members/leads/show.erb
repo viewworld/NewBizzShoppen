@@ -22,7 +22,7 @@
     <div class="pdd_10 grid_50 grid_c">
       <ibt>
         <% if @lead.deal.voucher_enabled and !@lead.deal.voucher_numbers.available_for_now(Time.now).blank? %>
-            <%= button_to t("member.leads.show.view.go_to_paypal"), redirect_to_paypal_members_lead_path(@lead), :method => :get %>
+            <%= button_to t("member.leads.show.view.go_to_paypal"), redirect_to_payment_gateway_members_lead_path(@lead), :method => :get %>
         <% else %>
             <%= button_to t("member.leads.show.view.ok_confirmation"), deal_path(@lead.deal), :method => :get %>
         <% end %>

@@ -200,7 +200,7 @@ Nbs::Application.routes.draw do
     root :to => "leads#index"
     resources :leads, :path => :requests do
       member do
-        get 'redirect_to_paypal'
+        get 'redirect_to_payment_gateway'
         get 'pdf'
       end
     end
@@ -406,10 +406,10 @@ Nbs::Application.routes.draw do
       member do
         get 'upgrade'
         get 'downgrade'
-        get 'paypal_subscription'
-        get 'paypal_confirmed'
-        get 'paypal_canceled'
-        get 'paypal_renew'
+        get 'payment_subscription'
+        get 'payment_confirmed'
+        get 'payment_canceled'
+        get 'payment_renew'
       end
     end
   end
