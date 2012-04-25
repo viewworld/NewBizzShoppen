@@ -28,7 +28,7 @@
     <td>
      <div class="deal_thumb">
        <p>
-         <%= link_to(image_tag(featured.images.first.url(:medium), :class => "thumb"), deal_url(featured.slug, :host => params[:domain_name])) if featured.images.first %>
+         <%= link_to(image_tag(featured.images.first.url(:medium), :class => "thumb", :width => "150"), deal_url(featured.slug, :host => params[:domain_name])) if featured.images.first %>
        </p>
      </div>
     </td>

@@ -572,6 +572,23 @@ table tr:last-child td
     padding-bottom: 20px;
 }
 
+.deal_description
+{
+    width: 590px;
+}
+
+.deal_thumb
+{
+    text-align: right;
+}
+
+.thumb
+{
+    border: 1px solid #ddd;
+    padding: 1px;
+    background-color: white;
+}
+
 
 a
 {
