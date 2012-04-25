@@ -9,7 +9,7 @@ class SubscriptionPlan < ActiveRecord::Base
 
   roles ROLES
 
-  PAYPAL_BILLING_TYPE = [
+  PAYMENT_BILLING_TYPE = [
     [:at_start, true],
     [:at_end, false]
   ]
@@ -17,17 +17,17 @@ class SubscriptionPlan < ActiveRecord::Base
   DISABLE_PAYPAL_SUBSCRIPTIONS = false
 
   validates_presence_of :name, :subscription_period, :billing_cycle, :assigned_roles, :currency_id, :currency, :seller, :seller_id
-  validates_presence_of :billing_period, :unless => :use_paypal?
+  validates_presence_of :billing_period, :unless => :use_online_payment?
   validates_numericality_of :subscription_period, :greater_than_or_equal_to => 0
-  validates_numericality_of :billing_period, :less_than => :billing_cycle, :if => Proc.new { |sp| sp.billing_cycle.to_i > 0 and !sp.use_paypal? }
+  validates_numericality_of :billing_period, :less_than => :billing_cycle, :if => Proc.new { |sp| sp.billing_cycle.to_i > 0 and !sp.use_online_payment? }
   validates_numericality_of :lockup_period, :free_period, :allow_nil => true
   validates_numericality_of :billing_cycle, :greater_than => 0, :less_than_or_equal_to => :subscription_period, :if => Proc.new{|sp| sp.subscription_period.to_i > 0}
   validates_numericality_of :billing_cycle, :equal_to => 0, :if => Proc.new{|sp| sp.subscription_period.to_i == 0}
-  validates_presence_of :automatic_downgrade_subscription_plan_id, :if => Proc.new { |sp| sp.use_paypal and sp.automatic_downgrading }
+  validates_presence_of :automatic_downgrade_subscription_plan_id, :if => Proc.new { |sp| sp.use_online_payment? and sp.automatic_downgrading }
   validate :check_roles
   validate :subscription_period_in_context_of_billing_cycle
   validates_associated :subscription_plan_lines
-  validates_numericality_of :paypal_retries, :greater_than => 0, :if => Proc.new { |sp| sp.use_paypal? }
+  validates_numericality_of :payment_retries, :greater_than => 0, :if => Proc.new { |sp| sp.use_online_payment? }
 
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
   has_many :subscriptions
@@ -48,13 +48,13 @@ class SubscriptionPlan < ActiveRecord::Base
   scope :active, where(:is_active => true)
   scope :only_public, where(:is_public => true)
   scope :exclude_free, lambda{ |exclude| exclude ? where("billing_price > 0.0") : where("") }
-  scope :include_paypal, lambda{ |include| include ? where("") : where("use_paypal IS FALSE") }
+  scope :include_online_payment, lambda{ |include| include ? where("") : where("use_online_payment IS FALSE") }
   scope :exclude_current_plan, lambda{ |plan| where("billing_price <> ? and id <> ?", plan.billing_price.to_f, plan.id)}
   scope :free, where(:subscription_period => 0)
   scope :for_role, lambda { |role| where("roles_mask & #{2**SubscriptionPlan.valid_roles.index(role.to_sym)} > 0 ") }
   scope :for_roles, lambda { |roles| where( roles.map { |r| "roles_mask & #{2**SubscriptionPlan.valid_roles.index(r.to_sym)} > 0" }.join(" AND ") ) unless roles.empty? }
   scope :ascend_by_billing_price, order("billing_price")
-  scope :without_paypal, where(:use_paypal => false)
+  scope :without_online_payment, where(:use_online_payment => false)
 
   acts_as_newsletter_source
 

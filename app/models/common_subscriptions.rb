@@ -2,8 +2,8 @@ module CommonSubscriptions
 
   def self.included(base)
     base.class_eval do
-      scope :without_paypal, where(:use_paypal => false)
-      scope :with_paypal, where(:use_paypal => true)
+      scope :without_online_payment, where(:use_online_payment => false)
+      scope :with_online_payment, where(:use_online_payment => true)
     end
     base.send(:include, InstanceMethods)
   end
@@ -21,7 +21,7 @@ module CommonSubscriptions
     end
 
     def is_free?
-      !payable? or (respond_to?(:unconfirmed_paypal?) and unconfirmed_paypal?)
+      !payable? or (respond_to?(:unconfirmed_payment?) and unconfirmed_payment?)
     end
 
     def cache_prices!

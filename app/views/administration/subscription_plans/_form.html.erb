@@ -45,17 +45,17 @@
         <%= form.input :newsletter_manager %>
         <%= form.input :free_deals_in_free_period %>
         </span>
-        <%= form.input :use_paypal, :as => :boolean, :onclick => "switch_use_paypal_features()" %>
+        <%= form.input :use_online_payment, :as => :boolean, :onclick => "switch_use_paypal_features()" %>
         <span id="use_paypal_features">
-            <%= form.input :paypal_retries %>
+            <%= form.input :payment_retries %>
             <%= form.input :automatic_downgrading, :as => :boolean, :onclick => "switch_automatic_downgrading()" %>
             <span id="automatic_downgrading_subscription_selection">
                 <%= form.input :automatic_downgrade_subscription_plan_id, :as => :select,
-                               :collection => SubscriptionPlan.without_paypal.for_roles(@subscription_plan.assigned_roles).where("id NOT in (?)", @subscription_plan.new_record? ? 0 : @subscription_plan.id),
+                               :collection => SubscriptionPlan.without_online_payment.for_roles(@subscription_plan.assigned_roles).where("id NOT in (?)", @subscription_plan.new_record? ? 0 : @subscription_plan.id),
                                :required => true, :include_blank => false %>
             </span>
           <span id="paypal_billing_at_start_selection">
-            <%= form.input :paypal_billing_at_start, :as => :radio, :collection => SubscriptionPlan::PAYPAL_BILLING_TYPE.map { |bt| [t("models.subscription_plan.billing_types.#{bt.first}"), bt.last] } %>
+            <%= form.input :payment_billing_at_start, :as => :radio, :collection => SubscriptionPlan::PAYMENT_BILLING_TYPE.map { |bt| [t("models.subscription_plan.billing_types.#{bt.first}"), bt.last] } %>
           </span>
         </span>
       </ol>

@@ -1,7 +1,7 @@
 class PaypalUnpaidInvoicesController < SecuredController
   before_filter :fetch_objects
   before_filter :authorize_for_controller!
-  before_filter :redirect_to_paypal_confirmation, :except => [:show]
+  before_filter :redirect_to_payment_confirmation, :except => [:show]
 
   def show
 

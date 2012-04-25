@@ -4,7 +4,7 @@ class Members::LeadsController < Members::MemberController
   set_tab "created_leads"
 
   before_filter :check_if_deal_is_already_requested, :only => [:new, :create]
-  before_filter :get_lead, :only => [:edit, :show, :redirect_to_paypal, :update, :destroy, :pdf]
+  before_filter :get_lead, :only => [:edit, :show, :redirect_to_payment_gateway, :update, :destroy, :pdf]
 
   protected
 
@@ -80,7 +80,7 @@ class Members::LeadsController < Members::MemberController
   def show
   end
 
-  def redirect_to_paypal
+  def redirect_to_payment_gateway
     return redirect_to root_path unless @lead.deal.voucher_numbers.where(:user_id => current_user.id, :state => "used").first.blank?
     @voucher_number = @lead.deal.voucher_numbers.available_for_now(Time.now).first
     return redirect_to root_path if @voucher_number.blank?

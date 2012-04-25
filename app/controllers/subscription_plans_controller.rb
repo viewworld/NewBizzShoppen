@@ -2,14 +2,14 @@ class SubscriptionPlansController < SecuredController
 
   before_filter :fetch_user
   before_filter :fetch_subscription_plan, :except => [:cancel]
-  before_filter :handle_paypal_subscription, :except => [:paypal_confirmed, :paypal_canceled, :cancel]
-  skip_before_filter :redirect_to_paypal_confirmation
+  before_filter :handle_online_payable_subscription, :except => [:payment_confirmed, :payment_canceled, :cancel]
+  skip_before_filter :redirect_to_payment_confirmation
 
   private
 
-  def handle_paypal_subscription
-    if (@subscription_plan.is_a?(SubscriptionPlan) and @subscription_plan.use_paypal? and (!@subscription_plan.free_period_can_be_applied_to?(current_user) or @subscription_plan.paypal_billing_at_start?)) or
-        (@subscription_plan.is_a?(Subscription) and @subscription_plan.cancelled_in_paypal? and @subscription_plan.next_billing_cycle_for_recurring_payment_renewal)
+  def handle_online_payable_subscription
+    if (@subscription_plan.is_a?(SubscriptionPlan) and @subscription_plan.use_online_payment? and (!@subscription_plan.free_period_can_be_applied_to?(current_user) or @subscription_plan.payment_billing_at_start?)) or
+        (@subscription_plan.is_a?(Subscription) and @subscription_plan.cancelled_in_payment_gateway? and @subscription_plan.next_billing_cycle_for_recurring_payment_renewal)
       paypal_recurring = PaypalRecurringPayment.new(:subscription_plan => @subscription_plan,
                                                     :return_url => paypal_confirmed_my_profile_subscription_plan_url(@subscription_plan),
                                                     :cancel_url => paypal_canceled_my_profile_subscription_plan_url(@subscription_plan),
@@ -28,15 +28,15 @@ class SubscriptionPlansController < SecuredController
   end
 
   def fetch_subscription_plan
-    @subscription_plan = (current_user.active_subscription.unconfirmed_paypal? or current_user.active_subscription.cancelled_in_paypal?) ?
+    @subscription_plan = (current_user.active_subscription.unconfirmed_payment? or current_user.active_subscription.cancelled_in_payment_gateway?) ?
                           current_user.active_subscription : SubscriptionPlan.find(params[:id])
   end
 
   public
 
-  def paypal_confirmed
-    if @user.active_subscription.unconfirmed_paypal?
-      @user.active_subscription.confirm_paypal!
+  def payment_confirmed
+    if @user.active_subscription.unconfirmed_payment?
+      @user.active_subscription.confirm_payment!
     elsif @user.active_subscription.total_billing < @subscription_plan.total_billing
       @user.upgrade_subscription!(@subscription_plan)
     else
@@ -58,12 +58,12 @@ class SubscriptionPlansController < SecuredController
     redirect_to my_profile_path(:scp => true)
   end
 
-  def paypal_canceled
+  def payment_canceled
     flash[:alert] = I18n.t("subscriptions.paypal_subscription_not_confirmed")
     redirect_to my_profile_path
   end
 
-  def paypal_renew
+  def payment_renew
 
   end
 
@@ -74,7 +74,7 @@ class SubscriptionPlansController < SecuredController
       flash[:alert] = @user.errors.full_messages
     end
 
-    if current_user.member? and deal = Deal.find_by_id(session[:deal_id])
+    if current_user.member? and (deal = Deal.find_by_id(session[:deal_id]))
       session[:deal_id] = nil
       redirect_to deal_path(:id => deal.slug, :scp => true)
     else

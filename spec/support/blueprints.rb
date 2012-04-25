@@ -495,7 +495,7 @@ SubscriptionPlan.blueprint do
   deal_maker { false }
   newsletter_manager { false }
   seller { Seller.make! }
-  paypal_retries { 1 }
+  payment_retries { 1 }
 end
 
 SubscriptionPlanLine.blueprint do

@@ -3,7 +3,7 @@ class MyProfileController < SecuredController
   actions :all, :except => [:update]
   before_filter :redirect_if_my_profile_hidden
   before_filter :cache_referer_deal_id
-  skip_before_filter :redirect_to_paypal_confirmation
+  skip_before_filter :redirect_to_payment_confirmation
 
   def show
 

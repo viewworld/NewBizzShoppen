@@ -6,7 +6,7 @@ class Administration::SubscriptionPlansController < Administration::Administrati
   cache_sweeper :subscription_plan_sweeper
 
   def new
-    @subscription_plan = SubscriptionPlan.new(:seller => Seller.default, :paypal_retries => 1)
+    @subscription_plan = SubscriptionPlan.new(:seller => Seller.default, :payment_retries => 1)
   end
 
   def create
@@ -34,7 +34,7 @@ class Administration::SubscriptionPlansController < Administration::Administrati
   
   def fetch_subscription_plans
     @subscription_plans = params[:assigned_roles].to_s == "null" ? [] :
-                          SubscriptionPlan.without_paypal.for_roles(params[:assigned_roles].to_s.split(",")).where("id NOT in (?)", params[:id].to_i)
+                          SubscriptionPlan.without_online_payment.for_roles(params[:assigned_roles].to_s.split(",")).where("id NOT in (?)", params[:id].to_i)
     respond_to do |format|
       format.js {  }
     end

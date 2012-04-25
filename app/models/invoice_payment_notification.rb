@@ -11,7 +11,7 @@ class InvoicePaymentNotification < PaymentNotification
         invoice.update_attribute(:paid_at, Time.now)
 
         if ssp = SubscriptionSubPeriod.where(:invoice_id => invoice.id).first
-          ssp.update_attribute(:paypal_paid_manual, true)
+          ssp.update_attribute(:payment_paid_manual, true)
         else
           EmailNotification.notify("cart: Matching subperiod for given invoice not found", "<p>SubscriptionPaymentNotification: #{payment_notification.id}</p> <>br /> Backtrace: <p>Invoice: #{invoice.id}</p> <p>#{payment_notification.params.inspect}</p>")
         end

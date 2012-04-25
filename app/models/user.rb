@@ -788,7 +788,7 @@ class User < ActiveRecord::Base
 
   def downgrade_subscription!(subscription_plan)
     if subscription_can_be_changed_to?(subscription_plan) and active_subscription.can_be_downgraded_to?(subscription_plan)
-      active_subscription.use_paypal? ? downgrade_paypal(subscription_plan, active_subscription.subscription_sub_periods.size) : downgrade_regular(subscription_plan)
+      active_subscription.use_online_payment? ? downgrade_paypal(subscription_plan, active_subscription.subscription_sub_periods.size) : downgrade_regular(subscription_plan)
     else
       self.errors.add(:base, I18n.t("subscriptions.cant_be_downgraded"))
       false
@@ -812,7 +812,7 @@ class User < ActiveRecord::Base
 
   def upgrade_subscription!(subscription_plan)
     if subscription_can_be_changed_to?(subscription_plan) and active_subscription.can_be_upgraded_to?(subscription_plan)
-      active_subscription.cancel_paypal_profile if active_subscription.use_paypal?
+      active_subscription.cancel_payment_profile if active_subscription.use_online_payment?
       as = active_subscription
       as.next_subscription_plan = subscription_plan
       if as.may_upgrade?
@@ -846,9 +846,9 @@ class User < ActiveRecord::Base
 
   def cancel_subscription!
     if active_subscription.may_cancel?
-      active_subscription.use_paypal? ? cancel_paypal(:cancel!, active_subscription.subscription_sub_periods.size) : cancel_regular(:cancel!)
+      active_subscription.use_online_payment? ? cancel_paypal(:cancel!, active_subscription.subscription_sub_periods.size) : cancel_regular(:cancel!)
     elsif active_subscription.may_cancel_during_lockup?
-      active_subscription.use_paypal? ? cancel_paypal(:cancel_during_lockup!, active_subscription.subscription_sub_periods.size*2) : cancel_regular(:cancel_during_lockup!)
+      active_subscription.use_online_payment? ? cancel_paypal(:cancel_during_lockup!, active_subscription.subscription_sub_periods.size*2) : cancel_regular(:cancel_during_lockup!)
     else
       self.errors.add(:base, I18n.t("subscriptions.cant_be_canceled"))
       false
@@ -861,7 +861,7 @@ class User < ActiveRecord::Base
   end
 
   def cancel_paypal(_method, totalbillingcycles)
-    if profile = PaypalRecurringProfile.new(active_subscription.paypal_profile_id) and profile.update_profile(:totalbillingcycles => totalbillingcycles)
+    if profile = PaypalRecurringProfile.new(active_subscription.payment_profile_id) and profile.update_profile(:totalbillingcycles => totalbillingcycles)
       cancel_regular(_method)
     else
       self.errors.add(:base, profile.result["L_LONGMESSAGE0"])

@@ -6,6 +6,7 @@ describe SubscriptionSubPeriod do
   def setup_customer(subscription_plan, attributes={})
     attrs_hash = { :subscription_plan_id => subscription_plan.id }.merge!(attributes)
     @customer = User::Supplier.make!(attrs_hash)
+    @customer.active_subscription.update_attribute(:payment_type, Subscription::PAYPAL_PAYMENT_TYPE)
     @customer.active_subscription.subscription_plan.should == subscription_plan
     @prev_subscription = @customer.active_subscription
   end
@@ -96,19 +97,19 @@ describe SubscriptionSubPeriod do
     end
 
     it "should recalculate subperiod when upgrading" do
-      sp = SubscriptionPlan.make!(:subscription_period => 12, :billing_cycle => 3, :use_paypal => true)
+      sp = SubscriptionPlan.make!(:subscription_period => 12, :billing_cycle => 3, :use_online_payment => true)
       sp.subscription_plan_lines.make!(:price => 9)
       sp.subscription_plan_lines.make!(:price => 21.36)
       sp.reload
       setup_customer(sp)
 
       #paypal payment
-      @customer.active_subscription.confirm_paypal!
+      @customer.active_subscription.confirm_payment!
       @prev_subscription = @customer.active_subscription
-      @customer.active_subscription.subscription_sub_periods.first.update_attribute(:paypal_paid_auto, true)
+      @customer.active_subscription.subscription_sub_periods.first.update_attribute(:payment_paid_auto, true)
 
       set_date_today_to(Date.today + 2.weeks)
-      Subscription.any_instance.expects(:cancel_paypal_profile).returns(nil).at_least(1)
+      Subscription.any_instance.expects(:cancel_payment_profile).returns(nil).at_least(1)
       expect {
         @customer.upgrade_subscription!(@payable_subscription3)
       }.to change { Refund.count }.by(1)
@@ -120,19 +121,19 @@ describe SubscriptionSubPeriod do
     end
 
     it "should generate Refund associated with invoice" do
-      sp = SubscriptionPlan.make!(:subscription_period => 12, :billing_cycle => 3, :use_paypal => true)
+      sp = SubscriptionPlan.make!(:subscription_period => 12, :billing_cycle => 3, :use_online_payment => true)
       sp.subscription_plan_lines.make!(:price => 9)
       sp.subscription_plan_lines.make!(:price => 21.36)
       sp.reload
       setup_customer(sp)
 
       #paypal payment
-      @customer.active_subscription.confirm_paypal!
+      @customer.active_subscription.confirm_payment!
       @prev_subscription = @customer.active_subscription
-      @customer.active_subscription.subscription_sub_periods.first.update_attribute(:paypal_paid_auto, true)
+      @customer.active_subscription.subscription_sub_periods.first.update_attribute(:payment_paid_auto, true)
 
       set_date_today_to(Date.today + 2.weeks)
-      Subscription.any_instance.expects(:cancel_paypal_profile).returns(nil).at_least(1)
+      Subscription.any_instance.expects(:cancel_payment_profile).returns(nil).at_least(1)
       expect {
         @customer.upgrade_subscription!(@payable_subscription3)
       }.to change { Refund.count }.by(1)
@@ -154,7 +155,7 @@ describe SubscriptionSubPeriod do
     end
 
     it "should generate invoice based on the values in sub periods of all the billable subscriptions when no paypal" do
-      @payable_subscription1.update_attribute(:use_paypal, false)
+      @payable_subscription1.update_attribute(:use_online_payment, false)
       setup_customer(@payable_subscription1)
 
       @invoice = Invoice.create(:user_id => @customer.id, :currency => @payable_subscription1.currency)
@@ -165,12 +166,12 @@ describe SubscriptionSubPeriod do
     end
 
     it "should generate invoice based on the values in sub period of the subscription handled by paypal" do
-      @payable_subscription2.update_attribute(:use_paypal, true)
+      @payable_subscription2.update_attribute(:use_online_payment, true)
       setup_customer(@payable_subscription2)
 
       #subperiod is payed by paypal
-      @customer.active_subscription.confirm_paypal!
-      @customer.active_subscription.subscription_sub_periods.first.update_attribute(:paypal_paid_auto, true)
+      @customer.active_subscription.confirm_payment!
+      @customer.active_subscription.subscription_sub_periods.first.update_attribute(:payment_paid_auto, true)
 
       @invoice = @customer.active_subscription.subscription_sub_periods.first.invoice
       @invoice.invoice_lines.size.should == @customer.active_subscription.subscription_sub_periods[0].subscription_plan_lines.size
@@ -209,12 +210,12 @@ describe SubscriptionSubPeriod do
     end
 
     it "should generate unpaid invoice when number of retries is exceeded" do
-      @payable_subscription2.update_attributes(:use_paypal => true, :paypal_retries => 2)
+      @payable_subscription2.update_attributes(:use_online_payment => true, :payment_retries => 2)
       setup_customer(@payable_subscription2)
-      @customer.active_subscription.confirm_paypal!
+      @customer.active_subscription.confirm_payment!
 
       profile_id = "I-ZXCVBFGH"
-      @customer.active_subscription.update_attribute(:paypal_profile_id, profile_id)
+      @customer.active_subscription.update_attribute(:payment_profile_id, profile_id)
 
       expect {
         #first try
@@ -232,34 +233,34 @@ describe SubscriptionSubPeriod do
     it "should auto downgrade when number of retries is exceeded AND auto downgrading is enabled" do
       @payable_subscription4 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12)
       @payable_subscription4.subscription_plan_lines.make!(:price => 200)
-      @payable_subscription2.update_attributes(:use_paypal => true, :paypal_retries => 2, :automatic_downgrading => true,
+      @payable_subscription2.update_attributes(:use_online_payment => true, :payment_retries => 2, :automatic_downgrading => true,
                                                :automatic_downgrade_subscription_plan_id => @payable_subscription4.id)
 
       setup_customer(@payable_subscription2)
-      @customer.active_subscription.confirm_paypal!
+      @customer.active_subscription.confirm_payment!
       @prev_subscription = @customer.active_subscription
 
       profile_id = "I-ZXCVBFGH"
-      @customer.active_subscription.update_attribute(:paypal_profile_id, profile_id)
+      @customer.active_subscription.update_attribute(:payment_profile_id, profile_id)
 
-      Subscription.any_instance.expects(:cancel_paypal_profile).returns(nil)
+      Subscription.any_instance.expects(:cancel_payment_profile).returns(nil)
 
       #when payment suspended notification is received
       Subscription.payment_suspended(profile_id, SubscriptionPaymentNotification.create)
 
       @customer.active_subscription.subscription_plan.should == @payable_subscription4
       @prev_subscription.reload
-      @prev_subscription.should be_downgraded_paypal
+      @prev_subscription.should be_downgraded_payment
       @customer.active_subscription.should be_normal
     end
 
     it "should generate paid invoice when marked as paid by paypal IPN and send email to user" do
-      @payable_subscription2.update_attributes(:use_paypal => true)
+      @payable_subscription2.update_attributes(:use_online_payment => true)
       setup_customer(@payable_subscription2)
-      @customer.active_subscription.confirm_paypal!
+      @customer.active_subscription.confirm_payment!
 
       expect {
-        @customer.active_subscription.subscription_sub_periods[0].update_attribute(:paypal_paid_auto, true)
+        @customer.active_subscription.subscription_sub_periods[0].update_attribute(:payment_paid_auto, true)
       }.to change { Invoice.count }.by(1)
 
       @customer.active_subscription.subscription_sub_periods[0].invoice.should be_paid
@@ -268,34 +269,34 @@ describe SubscriptionSubPeriod do
     end
 
     it "should become normal when renewed after it was cancelled in paypal" do
-      @payable_subscription2.update_attributes(:use_paypal => true)
+      @payable_subscription2.update_attributes(:use_online_payment => true)
       setup_customer(@payable_subscription2)
-      @customer.active_subscription.confirm_paypal!
+      @customer.active_subscription.confirm_payment!
 
       profile_id = "I-ZXCVBFGH"
-      @customer.active_subscription.update_attribute(:paypal_profile_id, profile_id)
+      @customer.active_subscription.update_attribute(:payment_profile_id, profile_id)
 
       @customer.active_subscription.should be_normal
 
-      Subscription.canceled_in_paypal(profile_id, SubscriptionPaymentNotification.create)
+      Subscription.canceled_in_payment_gateway(profile_id, SubscriptionPaymentNotification.create)
 
       @customer.active_subscription.should be_cancelled
-      @customer.active_subscription.should be_cancelled_in_paypal
+      @customer.active_subscription.should be_cancelled_in_payment_gateway
 
       @customer.active_subscription.normalize!
 
       @customer.active_subscription.should be_normal
-      @customer.active_subscription.should_not be_cancelled_in_paypal
+      @customer.active_subscription.should_not be_cancelled_in_payment_gateway
       @customer.active_subscription.should_not be_prolongs_as_free
     end
 
     it "should become normal when renewed after it was cancelled in paypal during lockup" do
-      @payable_subscription2.update_attributes(:use_paypal => true, :lockup_period => 6)
+      @payable_subscription2.update_attributes(:use_online_payment => true, :lockup_period => 6)
       setup_customer(@payable_subscription2)
-      @customer.active_subscription.confirm_paypal!
+      @customer.active_subscription.confirm_payment!
 
       profile_id = "I-ZXCVBFGH"
-      @customer.active_subscription.update_attribute(:paypal_profile_id, profile_id)
+      @customer.active_subscription.update_attribute(:payment_profile_id, profile_id)
 
       set_date_today_to(Date.today+7.weeks)
 
@@ -303,15 +304,15 @@ describe SubscriptionSubPeriod do
 
       @customer.active_subscription.should be_lockup
 
-      Subscription.canceled_in_paypal(profile_id, SubscriptionPaymentNotification.create)
+      Subscription.canceled_in_payment_gateway(profile_id, SubscriptionPaymentNotification.create)
 
       @customer.active_subscription.should be_cancelled_during_lockup
-      @customer.active_subscription.should be_cancelled_in_paypal
+      @customer.active_subscription.should be_cancelled_in_payment_gateway
 
       @customer.active_subscription.normalize!
 
       @customer.active_subscription.should be_normal
-      @customer.active_subscription.should_not be_cancelled_in_paypal
+      @customer.active_subscription.should_not be_cancelled_in_payment_gateway
       @customer.active_subscription.should_not be_prolongs_as_free
     end
   end

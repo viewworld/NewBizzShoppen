@@ -65,7 +65,7 @@
             <%= form.input :big_buyer_purchase_limit %>
         <% end %>
         <% if ["supplier", "category_supplier", "member"].include?(params[:role]) and @user.new_record? %>
-            <%= form.input :subscription_plan_id, :as => :select, :collection => SubscriptionPlan.active.for_role(params[:role].present? ? params[:role].to_sym : @user.role).without_paypal, :include_blank => false %>
+            <%= form.input :subscription_plan_id, :as => :select, :collection => SubscriptionPlan.active.for_role(params[:role].present? ? params[:role].to_sym : @user.role).without_online_payment, :include_blank => false %>
         <% end %>
         <% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
             <%= form.input :payout, :required => true, :hint => "%" %>

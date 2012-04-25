@@ -1,6 +1,6 @@
 class UnconfirmedPaypalSubscriptionsController < ApplicationController
 
-  before_filter :redirect_to_paypal_confirmation, :except => [:show]
+  before_filter :redirect_to_payment_confirmation, :except => [:show]
 
   def show
     @subscription_plan = current_user.active_subscription

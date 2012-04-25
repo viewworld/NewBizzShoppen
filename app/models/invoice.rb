@@ -154,10 +154,10 @@ class Invoice < ActiveRecord::Base
   end
 
   def generate_invoice_lines_for_subscriber
-    if user and !subscription_sub_period_id and user.subscriptions.without_paypal.billable.with_currency(currency).any?
+    if user and !subscription_sub_period_id and user.subscriptions.without_online_payment.billable.with_currency(currency).any?
       user = self.user.with_role
       user.update_attribute(:subscriber_type, User::SUBSCRIBER_TYPE_SUBSCRIBER) if user.ad_hoc?
-      user.with_role.subscriptions.without_paypal.billable.each do |subscription|
+      user.with_role.subscriptions.without_online_payment.billable.each do |subscription|
         subscription.update_attribute(:invoiced_at, Time.now)
         subscription.subscription_sub_periods.each do |subscription_sub_period|
           invoice_lines_based_on_subscription_sub_period(subscription_sub_period)
@@ -171,7 +171,7 @@ class Invoice < ActiveRecord::Base
       user = self.user.with_role
       user.update_attribute(:subscriber_type, User::SUBSCRIBER_TYPE_SUBSCRIBER) if user.ad_hoc?
       invoice_lines_based_on_subscription_sub_period(subscription_sub_period)
-      update_attribute(:paid_at, Time.now) if subscription_sub_period.paypal_paid_auto? or subscription_sub_period.paypal_paid_manual?
+      update_attribute(:paid_at, Time.now) if subscription_sub_period.payment_paid_auto? or subscription_sub_period.payment_paid_manual?
     elsif subscription_sub_period_id
       EmailNotification.notify("Invoice created without lines for paypal subscription", "Invoice: #{id}, subscription_sub_period_id: #{subscription_sub_period_id}")
     end

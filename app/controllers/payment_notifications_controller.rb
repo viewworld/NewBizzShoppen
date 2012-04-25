@@ -38,15 +38,15 @@ class PaymentNotificationsController < ApplicationController
   end
 
   def recurring_payment_profile_cancel
-    Subscription.canceled_in_paypal(params[:recurring_payment_id],
+    Subscription.canceled_in_payment_gateway(params[:recurring_payment_id],
                                     SubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id]))
   end
 
   def recurring_payment
     spn = SubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
-    sub_periods = SubscriptionSubPeriod.paypal_unpaid.for_recurring_payment(params[:recurring_payment_id]).readonly(false)
+    sub_periods = SubscriptionSubPeriod.for_paypal.payment_unpaid.for_recurring_payment(params[:recurring_payment_id]).readonly(false)
 
-    if subscription_sub_period = sub_periods.where(:paypal_txn_id => params[:txn_id]).first || sub_periods.where(:paypal_txn_id => nil).first
+    if subscription_sub_period = sub_periods.where(:payment_txn_id => params[:txn_id]).first || sub_periods.where(:paypal_txn_id => nil).first
       subscription_sub_period.update_recurring_payment_status(spn)
     else
       EmailNotification.notify("recurring_payment: Matching sub period not found", "<p>SubscriptionPaymentNotification: #{spn.id}</p> <>br /> Backtrace: <p>#{spn.params.inspect}</p>")

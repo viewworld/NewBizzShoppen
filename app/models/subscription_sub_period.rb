@@ -6,7 +6,7 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   belongs_to :invoice
   belongs_to :refund
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
-  has_many :subscription_payment_notifications, :primary_key => :paypal_txn_id, :foreign_key => :transaction_id
+  has_many :subscription_payment_notifications, :primary_key => :payment_txn_id, :foreign_key => :transaction_id
 
   validates_presence_of :start_date, :subscription
 
@@ -18,13 +18,15 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   scope :with_date, lambda{|date| where("start_date <= :date AND end_date >= :date", {:date => date})}
   scope :without_invoice, where(:invoice_id => nil)
   scope :billable, lambda { where("billing_date IS NOT NULL AND billing_date <= ? AND invoice_id IS NULL", Date.today) }
-  scope :with_paypal_txn_id, lambda {|txn_id| where(:paypal_txn_id => txn_id)}
-  scope :paypal_unpaid, where("paypal_paid_auto IS NOT TRUE AND paypal_paid_manual IS NOT TRUE")
-  scope :for_recurring_payment, lambda { |recurring_payment_id| where("subscriptions.paypal_profile_id = ?", recurring_payment_id).joins(:subscription).order("subscription_sub_periods.id") }
+  scope :with_payment_txn_id, lambda {|txn_id| where(:payment_txn_id => txn_id)}
+  scope :payment_unpaid, where("payment_paid_auto IS NOT TRUE AND payment_paid_manual IS NOT TRUE")
+  scope :for_paypal, joins(:subscription).where("subscriptions.payment_type = ?", Subscription::PAYPAL_PAYMENT_TYPE)
+  scope :for_quickpay, joins(:subscription).where("subscriptions.payment_type = ?", Subscription::QUICKPAY_PAYMENT_TYPE)
+  scope :for_recurring_payment, lambda { |recurring_payment_id| where("subscriptions.payment_profile_id = ?", recurring_payment_id).joins(:subscription).order("subscription_sub_periods.id") }
   scope :without_invoice, where(:invoice_id => nil)
   scope :with_billing_date_greater_or_equal, lambda { |date| where("billing_date >= ?", date) }
   scope :with_billing_date_less_or_equal, lambda { |date| where("subscription_sub_periods.billing_date <= ?", date) }
-  scope :with_paypal_cancelled, where("subscriptions.cancelled_in_paypal = ?", true).joins(:subscription)
+  scope :with_payment_cancelled, where("subscriptions.cancelled_in_payment_gateway = ?", true).joins(:subscription)
 
   private
 
@@ -47,7 +49,7 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   end
 
   def create_invoice_when_marked_as_paid
-    if !invoice and paypal_paid_auto_changed? and paypal_paid_auto?
+    if !invoice and payment_paid_auto_changed? and payment_paid_auto?
       create_and_send_invoice!
     end
   end
@@ -77,18 +79,18 @@ class SubscriptionSubPeriod < ActiveRecord::Base
     subscription.subscription_period > 0 and billing_date and billing_date <= Date.today and !invoice
   end
 
-  def paypal_paid?
-    paypal_paid_auto? or paypal_paid_manual?
+  def payment_paid?
+    payment_paid_auto? or payment_paid_manual?
   end
 
   def update_recurring_payment_status(spn)
-    if !paypal_paid? and spn.status == "Completed"
-      update_attribute(:paypal_paid_auto, true)
+    if !payment_paid? and spn.status == "Completed"
+      update_attribute(:payment_paid_auto, true)
     end
   end
 
   def self.create_unpaid_invoices_for_unpaid_sub_periods
-    SubscriptionSubPeriod.without_invoice.with_billing_date_less_or_equal(Date.today).with_paypal_cancelled.readonly(false).each do |sp|
+    SubscriptionSubPeriod.without_invoice.with_billing_date_less_or_equal(Date.today).with_payment_cancelled.readonly(false).each do |sp|
       sp.send(:create_and_send_invoice!)
     end
   end

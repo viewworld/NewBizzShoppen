@@ -167,12 +167,12 @@ describe Subscription do
     end
 
     it "should create special type of subscription when paypal subscription is chosen at signup" do
-      @subscription_plan.update_attributes(:use_paypal => true, :big_buyer => true, :team_buyers => true, :deal_maker => true, :can_be_upgraded => false,
+      @subscription_plan.update_attributes(:use_online_payment => true, :big_buyer => true, :team_buyers => true, :deal_maker => true, :can_be_upgraded => false,
                                           :can_be_downgraded => true)
 
       @customer = User::Supplier.make!(:subscription_plan_id => @subscription_plan.id)
       @customer.active_subscription.subscription_plan.should == @subscription_plan
-      @customer.active_subscription.should be_unconfirmed_paypal
+      @customer.active_subscription.should be_unconfirmed_payment
 
       @customer.big_buyer?.should_not == @subscription_plan.big_buyer?
       @customer.team_buyers?.should_not == @subscription_plan.team_buyers?
@@ -186,12 +186,12 @@ describe Subscription do
     end
 
     it "should behave as normal subscription when paypal is confirmed after signup" do
-      @subscription_plan.update_attributes(:use_paypal => true, :big_buyer => true, :team_buyers => true, :deal_maker => true, :can_be_upgraded => false,
+      @subscription_plan.update_attributes(:use_online_payment => true, :big_buyer => true, :team_buyers => true, :deal_maker => true, :can_be_upgraded => false,
                                           :can_be_downgraded => true)
 
       @customer = User::Supplier.make!(:subscription_plan_id => @subscription_plan.id)
 
-      @customer.active_subscription.confirm_paypal!
+      @customer.active_subscription.confirm_payment!
 
       @customer.big_buyer?.should == @subscription_plan.big_buyer?
       @customer.team_buyers?.should == @subscription_plan.team_buyers?
@@ -203,12 +203,12 @@ describe Subscription do
     end
 
     it "should create special type of subscription when paypal subscription is chosen at signup and free period is applied (all features should be turned on)" do
-      @subscription_plan.update_attributes(:use_paypal => true, :big_buyer => true, :team_buyers => true, :deal_maker => true, :can_be_upgraded => false,
+      @subscription_plan.update_attributes(:use_online_payment => true, :big_buyer => true, :team_buyers => true, :deal_maker => true, :can_be_upgraded => false,
                                           :can_be_downgraded => true, :free_period => 7)
 
       @customer = User::Supplier.make!(:subscription_plan_id => @subscription_plan.id, :vat_number => "VAT39438928282")
       @customer.active_subscription.subscription_plan.should == @subscription_plan
-      @customer.active_subscription.should be_unconfirmed_paypal
+      @customer.active_subscription.should be_unconfirmed_payment
 
       @customer.big_buyer?.should == @subscription_plan.big_buyer?
       @customer.team_buyers?.should == @subscription_plan.team_buyers?

@@ -307,4 +307,12 @@ class IntegrationTasks < Thor
       user.generate_login_key!
     end
   end
+
+  desc "m34", ""
+  def m34
+    states = {'unconfirmed_paypal' => 'unconfirmed_payment', 'confirmed_paypal' => 'confirmed_payment', 'downgraded_paypal' => 'downgraded_payment'}
+    Subscription.where(:state => states.keys).each do |subscription|
+      subscription.update_attribute(:aasm_state, states[subscription.aasm_state.to_s])
+    end
+  end
 end

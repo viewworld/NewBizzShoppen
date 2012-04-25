@@ -73,7 +73,7 @@
               <td><%= subscription_plan.name %></td>
               <td><%= subscription_plan.roles_as_text %></td>
               <td><%= as_currency(subscription_plan.total_billing, subscription_plan.currency, 2)  %></td>
-              <td><%= subscription_plan.use_paypal? ? t("common.yes_label") : t("common.no_label") %></td>
+              <td><%= subscription_plan.use_online_payment? ? t("common.yes_label") : t("common.no_label") %></td>
               <td><%= subscription_plan.is_active? ? t("common.yes_label") : t("common.no_label") %></td>
               <td><%= subscription_plan.is_public? ? t("common.yes_label") : t("common.no_label") %></td>
 
