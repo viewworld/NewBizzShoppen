@@ -48,7 +48,7 @@ ul.tagit {
     overflow: auto;
     font-size: 14px;
     width: 97%;
-    padding: 3px;
+    padding: 1px 3px 2px;
     margin-right: 6px;
     margin-bottom: 16px;
     border: 1px solid #D0D0D0;
@@ -71,12 +71,14 @@ ul.tagit li {
     float: left;
     margin: 2px 5px 2px 0;
     position: relative;
+    font-size: 13px;
 }
 
 ul.tagit li.tagit-choice {
     background-color: #dff8de;
     border: 1px solid #caf3cd;
-    padding: 2px 13px 3px 4px;
+    padding: 1px 13px 2px 4px;
+    margin-bottom: 0;
 }
 
 ul.tagit li.tagit-choice.selected {
@@ -153,4 +155,15 @@ ul.tagit input[type="text"] {
     display: inline-block;
     *display: inline;
     *zoom: 1;
+}
+
+.inputs_vertical .string .tags_wrapper
+{
+    padding: 0;
+}
+
+.inputs_vertical .string ul.tagit
+{
+    width: auto;
+    min-width: 200px;
 }
