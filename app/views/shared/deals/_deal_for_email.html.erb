@@ -3,7 +3,7 @@
     <td colspan="2">
       <h2>
         <%= link_to st(featured.header,{},{:length => (featured.general_discount? ? 62 : 42)}), deal_url(featured.slug, :host => params[:domain_name]) %>
-        <span class="highlighted">/
+        <span class="highlighted">
             <% if featured.general_discount? %>
                 <%= t("deals.index.view.save") %> <%= featured.saving %>
             <% else %>
