@@ -44,6 +44,7 @@
                               :width => '1085px',
                               :height => '300px',
                           :toolbar => "EmailPopup",
+                          :contentsCss => "/stylesheets/newsletter.css",
                           :swf_params => {
                               :resource_type => @newsletter_campaign.class.name,
                               :resource_id => @newsletter_campaign.id
@@ -64,4 +65,9 @@
     function test_cm_access(){
         $('#test_access_link').attr('href', "https://fairleads.createsend.com/login.aspx?ReturnUrl=%2f&username=" + $('#newsletter_campaign_cm_username').val() + "&password=" + $('#newsletter_campaign_cm_password').val())
     }
+
+    $(function(){
+        var cke = CKEDITOR.instances.newsletter_campaign_body_editor;
+        cke.config.contentsCss = '/stylesheets/newsletter.css';
+    });
 </script>
