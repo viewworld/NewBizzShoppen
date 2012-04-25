@@ -49,6 +49,7 @@ gem 'diff-lcs', :require => false
 gem 'cucumber_fm-core', '0.1', :require => 'cucumber_feature_manager'
 gem 'acts-as-taggable-on', '~> 2.2.2'
 gem 'createsend'
+gem 'activemerchant'
 
 group :production do
   gem 'hoptoad_notifier'
