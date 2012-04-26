@@ -311,8 +311,12 @@ class IntegrationTasks < Thor
   desc "m34", ""
   def m34
     states = {'unconfirmed_paypal' => 'unconfirmed_payment', 'confirmed_paypal' => 'confirmed_payment', 'downgraded_paypal' => 'downgraded_payment'}
-    Subscription.where(:state => states.keys).each do |subscription|
+    Subscription.where(:aasm_state => states.keys).each do |subscription|
       subscription.update_attribute(:aasm_state, states[subscription.aasm_state.to_s])
+    end
+
+    PaymentNotification.all.each do |pn|
+      pn.update_attribute(:type, "Paypal#{pn.class.to_s}")
     end
   end
 end

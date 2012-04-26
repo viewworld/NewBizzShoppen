@@ -412,7 +412,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def create_recurring_profile_from_next_billing_cycle_link
-    "http://#{user.domain_name}/my_profile/subscription_plans/#{id}/paypal_renew"
+    "http://#{user.domain_name}/my_profile/subscription_plans/#{id}/payment_renew"
   end
 
 

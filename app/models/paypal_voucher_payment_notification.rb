@@ -1,0 +1,3 @@
+class PaypalVoucherPaymentNotification < VoucherPaymentNotification
+
+end

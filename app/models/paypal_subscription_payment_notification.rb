@@ -1,0 +1,3 @@
+class PaypalSubscriptionPaymentNotification < SubscriptionPaymentNotification
+
+end

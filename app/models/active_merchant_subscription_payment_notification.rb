@@ -1,0 +1,3 @@
+class ActiveMerchantSubscriptionPaymentNotification < SubscriptionPaymentNotification
+
+end

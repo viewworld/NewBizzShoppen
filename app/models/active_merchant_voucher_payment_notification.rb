@@ -1,0 +1,3 @@
+class ActiveMerchantVoucherPaymentNotification < VoucherPaymentNotification
+
+end

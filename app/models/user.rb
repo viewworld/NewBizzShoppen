@@ -788,7 +788,7 @@ class User < ActiveRecord::Base
 
   def downgrade_subscription!(subscription_plan)
     if subscription_can_be_changed_to?(subscription_plan) and active_subscription.can_be_downgraded_to?(subscription_plan)
-      active_subscription.use_online_payment? ? downgrade_paypal(subscription_plan, active_subscription.subscription_sub_periods.size) : downgrade_regular(subscription_plan)
+      active_subscription.use_online_payment? ? downgrade_online_payment(subscription_plan, active_subscription.subscription_sub_periods.size) : downgrade_regular(subscription_plan)
     else
       self.errors.add(:base, I18n.t("subscriptions.cant_be_downgraded"))
       false
@@ -801,7 +801,7 @@ class User < ActiveRecord::Base
     as.downgrade!
   end
 
-  def downgrade_paypal(subscription_plan, totalbillingcycles)
+  def downgrade_online_payment(subscription_plan, totalbillingcycles)
     if profile = PaypalRecurringProfile.new(active_subscription.paypal_profile_id) and profile.update_profile(:totalbillingcycles => totalbillingcycles)
       downgrade_regular(subscription_plan)
     else
@@ -846,9 +846,9 @@ class User < ActiveRecord::Base
 
   def cancel_subscription!
     if active_subscription.may_cancel?
-      active_subscription.use_online_payment? ? cancel_paypal(:cancel!, active_subscription.subscription_sub_periods.size) : cancel_regular(:cancel!)
+      active_subscription.use_online_payment? ? cancel_online_payment(:cancel!, active_subscription.subscription_sub_periods.size) : cancel_regular(:cancel!)
     elsif active_subscription.may_cancel_during_lockup?
-      active_subscription.use_online_payment? ? cancel_paypal(:cancel_during_lockup!, active_subscription.subscription_sub_periods.size*2) : cancel_regular(:cancel_during_lockup!)
+      active_subscription.use_online_payment? ? cancel_online_payment(:cancel_during_lockup!, active_subscription.subscription_sub_periods.size*2) : cancel_regular(:cancel_during_lockup!)
     else
       self.errors.add(:base, I18n.t("subscriptions.cant_be_canceled"))
       false
@@ -860,7 +860,7 @@ class User < ActiveRecord::Base
     update_attribute(:subscriber_type, SUBSCRIBER_TYPE_AD_HOC)
   end
 
-  def cancel_paypal(_method, totalbillingcycles)
+  def cancel_online_payment(_method, totalbillingcycles)
     if profile = PaypalRecurringProfile.new(active_subscription.payment_profile_id) and profile.update_profile(:totalbillingcycles => totalbillingcycles)
       cancel_regular(_method)
     else

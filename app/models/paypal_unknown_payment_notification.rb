@@ -1,0 +1,3 @@
+class PaypalUnknownPaymentNotification < UnknownPaymentNotification
+
+end
