@@ -6,6 +6,12 @@ Nbs::Application.routes.draw do
     end
   end
 
+  resources :active_merchant_payment_notifications, :only => [:create] do
+    member do
+      post 'show'
+    end
+  end
+
   get "agent_home/show"
   get "supplier_home/show"
 

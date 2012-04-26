@@ -3980,11 +3980,11 @@ en:
         deal_maker: "Deal maker role enabled?"
         seller_id: "Seller"
         assigned_roles: "Roles"
-        use_paypal: "Use PayPal"
+        use_online_payment: "Use PayPal/Quickpay"
         automatic_downgrading: "Automatic downgrading"
         automatic_downgrade_subscription_plan_id: "Automatic downgrading to"
-        paypal_retries: "PayPal payment retries"
-        paypal_billing_at_start: "Billing type"
+        payment_retries: "PayPal/Quickpay payment retries"
+        payment_billing_at_start: "Billing type"
         free_deals_in_free_period: "Number of free deals in free period"
         free_deal_requests_in_free_period: "Number of free deal requests in free period"
         premium_deals: "Allow premium deals"
@@ -4613,14 +4613,14 @@ en:
 
     subscription_upgrade_to_payable: "You need to upgrade to any payable subscription in order to get the deal %{header}"
     subscription_upgrade_to_premium_deals: "You need to upgrade to subscription that allows premium deals in order to get deal %{header}"
-  unconfirmed_paypal_subscriptions:
+  unconfirmed_payable_subscriptions:
     show:
       view:
-        header: "Unconfirmed Paypal subscription"
-        message: "Please go to PayPal and confirm payment on Your subscription named %{subscription}"
+        header: "Unconfirmed %{payment_gateway} subscription"
+        message: "Please go to %{payment_gateway} and confirm payment on Your subscription named %{subscription}"
         button_confirm: "Confirm Your payment"
         message_failure: "It is not possible to confirm Your subscription named %{subscription} right now. Please try again later."
-  paypal_unpaid_invoices:
+  payment_gateway_unpaid_invoices:
     flash:
       notice:
         invoice_already_paid: "Invoice %{number} has already been paid!"
@@ -4628,7 +4628,7 @@ en:
       view:
         header: "Unpaid invoice %{number}"
         pay_invoice: "Pay invoice"
-        message: "Go to Paypal to pay for the invoice %{number}"
+        message: "Go to %{payment_gateway} to pay for the invoice %{number}"
         amount: "Amount:"
   remote_deal_requests:
     new:

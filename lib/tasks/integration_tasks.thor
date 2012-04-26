@@ -318,5 +318,8 @@ class IntegrationTasks < Thor
     PaymentNotification.all.each do |pn|
       pn.update_attribute(:type, "Paypal#{pn.class.to_s}")
     end
+
+    Translation.where(:locale => "en").where("key like ?", "paypal_unpaid_invoices.%").each(&:destroy)
+    Translation.where(:locale => "en").where("key like ?", "unconfirmed_paypal_subscriptions.%").each(&:destroy)
   end
 end

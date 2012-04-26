@@ -1,4 +1,4 @@
-class PaypalUnpaidInvoicesController < SecuredController
+class PaymentGatewayUnpaidInvoicesController < SecuredController
   before_filter :fetch_objects
   before_filter :authorize_for_controller!
   before_filter :redirect_to_payment_confirmation, :except => [:show]
@@ -17,7 +17,7 @@ class PaypalUnpaidInvoicesController < SecuredController
     @invoice = Invoice.where(:user_id => current_user.id).find_by_id(params[:id])
 
     if !@invoice or @invoice.paid?
-      flash[:notice] = I18n.t("paypal_unpaid_invoices.flash.notice.invoice_already_paid", :number => @invoice.full_number) if @invoice and @invoice.paid?
+      flash[:notice] = I18n.t("payment_gateway_unpaid_invoices.flash.notice.invoice_already_paid", :number => @invoice.full_number) if @invoice and @invoice.paid?
       redirect_to root_path
     end
   end
