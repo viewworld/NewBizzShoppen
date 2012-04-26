@@ -4,7 +4,7 @@ Feature: Vouchers
   Background:
   Given I am on the homepage
 
-  @_done @_tested @tc_file_mgmt
+  @_done @_tested @tc_file_mgmt @selenium
   Scenario: When voucher is enabled for deal then 'get deal' request redirect to deal information request page, after click on "ok" user is redirected to paypal for payment
     And I visit domain http://fairdeals.eu
     And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
@@ -19,9 +19,7 @@ Feature: Vouchers
     Then I should see "software components"
     Then I follow translated "deals.index.view.view_deal"
     Then I follow translated "deals.index.view.contact_me"
-    And I press translated "member.leads.new.view.button_create"
-    Then I press translated "member.leads.show.view.go_to_paypal"
-    Then I should see "redirecting to paypal, please wait..."
+    And I wait 2 second
     #check paypal response
     Then paypal voucher payment succeeded for deal "software components" and user with email "translator_purchase_manager@nbs.com" and role "member"
     Then last email sent should have been sent to recipient "translator_purchase_manager@nbs.com"
@@ -29,7 +27,7 @@ Feature: Vouchers
     #check displaying
     And I visit domain http://fairdeals.eu
     Then I follow translated "layout.fairdeals.main_menu.member.my_requests"
-    And I click hidden link by url regex "/members\/requests\/\d+\/edit/"
+    And I click hidden link by url regex "/\/deals\/\d+/"
   And I should see "you can redeem it by calling me"
     Then I should see translated "member.leads.edit.view.voucher_label"
     Then I follow translated "member.leads.edit.view.voucher_link"

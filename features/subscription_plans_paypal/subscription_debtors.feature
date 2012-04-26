@@ -10,7 +10,7 @@ Feature: Subscription debtors
   @_done @_tested
   Scenario: Payments for Paypal subperiods should not be displayed on Debtors page
     Given someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Steve,last_name:Vai,company_name:Vaicom"
-    And subscription plan exists with attributes "name:Premium supplier,subscription_period:12,use_paypal:true"
+    And subscription plan exists with attributes "name:Premium supplier,subscription_period:12,use_online_payment:true"
     And subscription plan has currency named "DKK"
     And subscription plan has following lines
       | name                 | price |
@@ -25,7 +25,7 @@ Feature: Subscription debtors
   @added @_done @_tested
   Scenario: Payments for non-Paypal subperiods should be displayed on Debtors page
     Given someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Steve,last_name:Vai,company_name:Vaicom"
-    And subscription plan exists with attributes "name:Premium supplier,subscription_period:12,use_paypal:false"
+    And subscription plan exists with attributes "name:Premium supplier,subscription_period:12,use_online_payment:false"
     And subscription plan has currency named "DKK"
     And subscription plan has following lines
       | name                 | price |

@@ -1,10 +1,12 @@
 class PaypalCartPaymentNotification < CartPaymentNotification
+  before_create :check_if_duplicated
+  after_create :generate_invoice
 
   private
 
   def check_if_duplicated
     if status == "Completed"
-      unless CartPaymentNotification.first(:conditions => { :transaction_id => transaction_id, :buyer_id => buyer_id, :status => "Completed" }).nil?
+      unless PaypalCartPaymentNotification.first(:conditions => { :transaction_id => transaction_id, :buyer_id => buyer_id, :status => "Completed" }).nil?
         self.status = "Duplicated"
       end
     end
@@ -23,7 +25,7 @@ class PaypalCartPaymentNotification < CartPaymentNotification
 
   def self.process(params)
     params[:invoice].to_s.slice!(0..7)
-    payment_notification = CartPaymentNotification.create!(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
+    payment_notification = PaypalCartPaymentNotification.create!(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
     if payment_notification.status == "Completed" &&
         params[:secret] == APP_CONFIG[:paypal_secret] &&
         params[:receiver_email] == APP_CONFIG[:paypal_email] &&

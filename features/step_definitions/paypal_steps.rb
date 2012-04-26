@@ -50,5 +50,5 @@ end
 
 When /^I visit link to pay unpaid invoice for user "([^"]*)"$/ do |email|
   u = User.where(:email => email).first.with_role
-  visit "/paypal_unpaid_invoices/#{u.invoices.detect { |i| !i.paid? }.id}"
+  visit "/payment_gateway_unpaid_invoices/#{u.invoices.detect { |i| !i.paid? }.id}"
 end

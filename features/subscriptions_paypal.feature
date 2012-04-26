@@ -47,7 +47,7 @@ Feature: Subscriptions Paypal
     Given I am on the homepage
     And I sign in as kastomer@nbs.fake with password secret
     And I visit link to pay unpaid invoice for user "kastomer@nbs.fake"
-    And I press translated "paypal_unpaid_invoices.show.view.pay_invoice"
+    And I press translated "payment_gateway_unpaid_invoices.show.view.pay_invoice"
 
   @_done @_tested_elsewhere
   Scenario: User should be able to pay the missing amount using link/button in the email he receives

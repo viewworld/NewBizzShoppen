@@ -10,7 +10,7 @@ Feature: Signing up with PayPal
   Scenario: When must enter billing information at start is enabled then I must confirm recurring payment in Paypal as part of signup
     Given setting for "email_verification_for_suppliers" is set to "0"
     And there are no subscription plans
-    And there is subscription plan named "Supplier Paypal" for role "category_supplier" with attributes "subscription_period:2,lockup_period:1,billing_period:0,free_period:0,use_paypal:1" and price "200"
+    And there is subscription plan named "Supplier Paypal" for role "category_supplier" with attributes "subscription_period:2,lockup_period:1,billing_period:0,free_period:0,use_online_payment:1" and price "200"
     When I go to supplier sign up
     And I fill in the following:
       | user_category_supplier_first_name            | Bob             |
@@ -30,7 +30,7 @@ Feature: Signing up with PayPal
     And I choose "user_category_supplier_subscription_plan_id"
     And I press translated "supplier_accounts.new.view.button_create_account"
     And I should be signed in
-    Then I should see translated "unconfirmed_paypal_subscriptions.show.view.message" with options "subscription:Supplier Paypal"
+    Then I should see translated "unconfirmed_payable_subscriptions.show.view.message" with options "subscription:Supplier Paypal:payment_gateway:Paypal"
 
   @_done @_non_testable
   Scenario: When must enter billing information at start is enabled then free period is handled by Paypal
@@ -39,7 +39,7 @@ Feature: Signing up with PayPal
   Scenario: When must enter billing information at end of free period is enabled for my subscription I should recevive an email to confirm recurring payent in Paypal before free period ends
     Given setting for "email_verification_for_suppliers" is set to "0"
     And there are no subscription plans
-    And there is subscription plan named "Supplier Paypal" for role "category_supplier" with attributes "subscription_period:3,lockup_period:0,billing_period:0,free_period:1,use_paypal:1, paypal_billing_at_start:0" and price "200"
+    And there is subscription plan named "Supplier Paypal" for role "category_supplier" with attributes "subscription_period:3,lockup_period:0,billing_period:0,free_period:1,use_online_payment:1, payment_billing_at_start:0" and price "200"
     When I go to supplier sign up
     And I fill in the following:
       | user_category_supplier_first_name            | Bob             |
@@ -60,7 +60,7 @@ Feature: Signing up with PayPal
     And I choose "user_category_supplier_subscription_plan_id"
     And I press translated "supplier_accounts.new.view.button_create_account"
     And I should be signed in
-    And I should not see translated "unconfirmed_paypal_subscriptions.show.view.header"
+    And I should not see translated "unconfirmed_payable_subscriptions.show.view.header"
     And I am not sign in
     And subscriptions are checked if any of them has ending free period
     And no email has been send
@@ -68,7 +68,7 @@ Feature: Signing up with PayPal
     And subscriptions are checked if any of them has ending free period
     And last email sent should have been sent to recipient "kastomer@nbs.fake"
     And I sign in as kastomer@nbs.fake with password secret
-    And I should see translated "unconfirmed_paypal_subscriptions.show.view.header"
+    And I should see translated "unconfirmed_payable_subscriptions.show.view.header" with options "payment_gateway:Paypal"
 
   @_done @_tested_elsewhere
   Scenario: If I do not confirm recurring payments in Paypal the subscrption should behave as it has been canceled (issue unpaid invoice and send email, sing in restrictions)

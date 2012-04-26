@@ -396,7 +396,7 @@ Nbs::Application.routes.draw do
   resources :articles
   resources :help_popups
   resources :login_keys
-  resources :paypal_unpaid_invoices
+  resources :payment_gateway_unpaid_invoices
 
   resource :my_profile, :controller => "my_profile", :only => [:update] do
     member do
@@ -452,7 +452,7 @@ Nbs::Application.routes.draw do
     end
   end
 
-  resource :unconfirmed_paypal_subscriptions, :only => [:show]
+  resource :unconfirmed_payable_subscriptions, :only => [:show]
 
   constraints(Fairdeals) do
     match '/all_deals' => "fairdeals_home#index"

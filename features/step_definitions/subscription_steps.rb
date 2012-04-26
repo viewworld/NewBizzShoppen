@@ -44,21 +44,22 @@ end
 
 Given /^user with email "([^"]*)" and password "([^"]*)" and role "([^"]*)" exists with confirmed paypal subscription named "([^"]*)" with attributes "([^"]*)"$/ do |email, password, role, name, options|
   options_hash = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
-  @subscription_plan = SubscriptionPlan.make!(options_hash.merge(:name => name, :use_paypal => true))
+  @subscription_plan = SubscriptionPlan.make!(options_hash.merge(:name => name, :use_online_payment => true))
   @user = "User::#{role.camelize}".constantize.make!(:email => email, :password => password, :password_confirmation => password, :subscription_plan_id => @subscription_plan.id)
-  @user.active_subscription.confirm_paypal!
-  @user.active_subscription.update_attribute(:paypal_profile_id, "TEST-123")
+  @user.active_subscription.update_attribute(:payment_type, Subscription::PAYPAL_PAYMENT_TYPE)
+  @user.active_subscription.confirm_payment!
+  @user.active_subscription.update_attribute(:payment_profile_id, "TEST-123")
 end
 
 Given /^active subscription for user "([^"]*)" has been canceled in paypal$/ do |email|
    @user = User.where(:email => email).first.with_role
-   Subscription.canceled_in_paypal(@user.active_subscription.paypal_profile_id, nil)
+   Subscription.canceled_in_payment_gateway(@user.active_subscription.payment_profile_id, nil)
 end
 
 Given /^the current subperiod for user "([^"]*)" is auto paid by paypal$/ do |email|
   @user = User.where(:email => email).first.with_role
   @user.active_subscription.subscription_sub_periods.with_date(Date.today).each do |ssp|
-    ssp.update_attribute(:paypal_paid_auto, true)
+    ssp.update_attribute(:payment_paid_auto, true)
   end
 end
 
