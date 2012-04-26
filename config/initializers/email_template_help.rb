@@ -49,6 +49,7 @@ module EmailTemplateHelp
 
       "deal_request_details" => {:classes => ["Deal"], :custom => []},
       "deal_request_for_deal_admin" => {:classes => [], :custom => ["name", "phone_number", "email_from", "deal_description"] },
+      "voucher_payment_failed_notification" => {:classes => ["Deal"], :custom => []},
 
 
       #custom fake templates for chain mail result-based dynamic variables
@@ -64,6 +65,9 @@ module EmailTemplateHelp
 
     def extract_variables(hash)
       result = []
+
+      return result unless hash
+
       hash[:custom].each do |item|
         result << "{{#{item}}}"
       end
