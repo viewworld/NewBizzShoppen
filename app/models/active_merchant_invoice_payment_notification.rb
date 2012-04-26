@@ -1,0 +1,3 @@
+class ActiveMerchantInvoicePaymentNotification < InvoicePaymentNotification
+
+end

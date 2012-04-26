@@ -108,7 +108,7 @@ class Cart
   end
 
   def fake_paypal_payment
-    payment_notification = CartPaymentNotification.create!(
+    payment_notification = PaypalCartPaymentNotification.create!(
         :params => {
             :mc_gross => total,
             :receiver_email => APP_CONFIG[:paypal_email],

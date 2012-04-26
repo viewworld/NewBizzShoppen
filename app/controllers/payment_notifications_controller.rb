@@ -6,8 +6,8 @@ class PaymentNotificationsController < ApplicationController
     if respond_to?(params[:txn_type], true)
       send params[:txn_type]
     else
-      upn = UnknownPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
-      EmailNotification.notify("Unhandled txn_type: #{params[:txn_type]}", "<p>UnknownPaymentNotification: #{upn.id}</p> <>br /> Backtrace: <p>#{upn.params.inspect}</p>")
+      upn = PaypalUnknownPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
+      EmailNotification.notify("Unhandled txn_type: #{params[:txn_type]}", "<p>PaypalUnknownPaymentNotification: #{upn.id}</p> <>br /> Backtrace: <p>#{upn.params.inspect}</p>")
     end
     render :nothing => true
   end
@@ -21,43 +21,43 @@ class PaymentNotificationsController < ApplicationController
   def cart
     case params[:invoice]
       when /^v_/
-        VoucherPaymentNotification.process(params)
+        PaypalVoucherPaymentNotification.process(params)
       when /^i_/
-        InvoicePaymentNotification.process(params)
+        PaypalInvoicePaymentNotification.process(params)
       else
-        CartPaymentNotification.process(params)
+        PaypalCartPaymentNotification.process(params)
     end
   end
 
   def recurring_payment_profile_created
-    SubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
+    PaypalSubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
   end
 
   def recurring_payment_expired
-    SubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
+    PaypalSubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
   end
 
   def recurring_payment_profile_cancel
     Subscription.canceled_in_payment_gateway(params[:recurring_payment_id],
-                                    SubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id]))
+                                    PaypalSubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id]))
   end
 
   def recurring_payment
-    spn = SubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
+    spn = PaypalSubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
     sub_periods = SubscriptionSubPeriod.for_paypal.payment_unpaid.for_recurring_payment(params[:recurring_payment_id]).readonly(false)
 
     if subscription_sub_period = sub_periods.where(:payment_txn_id => params[:txn_id]).first || sub_periods.where(:paypal_txn_id => nil).first
       subscription_sub_period.update_recurring_payment_status(spn)
     else
-      EmailNotification.notify("recurring_payment: Matching sub period not found", "<p>SubscriptionPaymentNotification: #{spn.id}</p> <>br /> Backtrace: <p>#{spn.params.inspect}</p>")
+      EmailNotification.notify("recurring_payment: Matching sub period not found", "<p>PaypalSubscriptionPaymentNotification: #{spn.id}</p> <>br /> Backtrace: <p>#{spn.params.inspect}</p>")
     end
   end
 
   def recurring_payment_failed
-    Subscription.payment_failed(params[:recurring_payment_id], SubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i))
+    Subscription.payment_failed(params[:recurring_payment_id], PaypalSubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i))
   end
 
   def recurring_payment_suspended_due_to_max_failed_payment
-    Subscription.payment_suspended(params[:recurring_payment_id], SubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i))
+    Subscription.payment_suspended(params[:recurring_payment_id], PaypalSubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i))
   end
 end

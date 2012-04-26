@@ -1,0 +1,3 @@
+class ActiveMerchantUnknownPaymentNotification < UnknownPaymentNotification
+
+end
