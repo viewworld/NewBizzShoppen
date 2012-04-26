@@ -49,6 +49,7 @@ en:
       loading: "Loading..."
       deals_chosen: "deals chosen"
       ajax_in_progress: "The requested action cannot be performed because other action is still in progress. Please try again in a while."
+      fetching_content: "Fetching content in progress..."
     no_categories_for_category_supplier: "Your Category Supplier account has no associated categories. You can't sign in."
     edit_hint: "Edit hint"
     agree_to: "Agree to"
@@ -132,7 +133,7 @@ en:
         content: "Content"
         global: "Global"
         refunds: "Refunds"
-        campaigns: Campaigns
+        campaigns: Tele
         reports: "Reports"
         agent_timesheets: "Timesheets"
         subscription_plans: "Subscriptions"
@@ -140,6 +141,7 @@ en:
         newsletter_campaigns: "Newsletters"
         tags: "Tags"
         results: "Results"
+        campaigns_tab: "Campaigns"
       agent:
         leads: My leads
         deals: My deals
@@ -150,12 +152,13 @@ en:
         call_centre_agents: "Team"
         leads: "My leads"
         lead_templates: "Lead templates"
-        campaigns: Campaigns
+        campaigns: Tele
         reports: "Reports"
         campaign_reports: "Campaign"
         agent_timesheets: "Timesheets"
         deals: "My deals"
         newsletter_lists: "Lists"
+        campaigns_tab: "Campaigns"
       call_centre_agent:
         leads: "My leads"
         lead_templates: "Lead templates"
@@ -1025,6 +1028,7 @@ en:
           delete_confirmation_message: "Are you sure?"
           leads_created: "Leads created"
           unpaid_leads: "Unpaid leads"
+          go_to_campaign_monitor: "Go to Campaign Monitor"
       new:
         view:
           new_account: "New %{role} account"
@@ -3255,8 +3259,10 @@ en:
     newsletter_campaign:
       statuses:
         status0: "Saved as draft"
-        status1: "Queued for sending"
-        status2: "Sent to Campaign Monitor"
+        status1: "Queued for sending to CM & subscribers"
+        status2: "Sent to Campaign Monitor & subscribers"
+        status3: "Queued for sending to CM as draft"
+        status4: "Sent to Campaign Monitor as draft"
     result:
       is_global_cannot_be_disabled: "Result is assigned to more than one campaings"
   activerecord:
@@ -4653,7 +4659,10 @@ en:
       synchronized:
         title: "List %{list_name} has been synchronized"
         text: "<a href=\"%{url}\">Go to the list</a> or <a href=\"%{url}\" target=\"_blank\">open it in a new tab</a>"
-
+    newsletter_campaign:
+      sent:
+        title: "Newsletter %{name} sent to CM!"
+        text: "<a href=\"%{url}\">Go to the newsletter</a> or <a href=\"%{url}\" target=\"_blank\">open it in a new tab</a> or <a href=\"%{cm_url}\" target=\"_blank\">go directly to CM</a>"
   newsletters:
     newsletter_lists:
       index:
@@ -4737,15 +4746,17 @@ en:
           header: "Edit newsletter campaign %{name}"
           button_update: "Save"
           button_cancel: "Cancel"
-          button_update_and_send: "Save & send"
+          button_update_and_send: "Save & send to subscribers"
           campaign_sent_warning: "Campaign has already been sent. Any changes will be saved locally but NOT synchronized back to Campaign Monitor."
+          button_update_and_send_as_draft: "Save & send as draft"
       archive:
         flash:
           notice_archived: "Newsletter list has been successfully archived."
           notice_retrieved: "Newsletter list has been successfully retrieved."
       update:
         flash:
-          notice_queued: "Campaign has been successfully queued for sending."
+          notice_queued_for_sending_to_subscribers: "Campaign has been successfully queued for sending to subscribers."
+          notice_queued_for_sending_as_draft: "Campaign has been successfully queued for sending as draft."
           notice_not_sent: "Campaign could not be sent due to errors %{errors}"
   tags:
     common:

@@ -51,5 +51,5 @@ Feature: Reports
   Scenario: When I choose some results for campaign then the results set shown in table's column Status should be scoped but not the numerical values in the report
 
   #11050
-  @m33 @_requested
+  @m33 @_requested @_done @_non_testable @tgn
   Scenario: I should be able to add tags to results

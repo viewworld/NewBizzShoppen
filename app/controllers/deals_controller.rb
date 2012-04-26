@@ -75,4 +75,11 @@ class DealsController < ApplicationController
       format.js {  }
     end
   end
+
+  def insert_rich_content
+    @deals = params[:deal_ids] ? Deal.where(:id => params[:deal_ids]) : []
+    respond_to do |format|
+      format.js {  }
+    end
+  end
 end

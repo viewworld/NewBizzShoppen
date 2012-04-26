@@ -983,9 +983,25 @@ Scenario: I can mark supplier or category supplier as newsletter manager (overri
   When I press translated "administration.users.edit.view.button_update_user"
 
 #11044
-@m33 @_requested
-Scenario: I can search for users with given tags
+@m33 @_requested @_done @_tested @tgn
+  Scenario: I can search for users with given tags
+  Given user with email "translator_purchase_manager@nbs.com" has tags "vendor"
+  And user with email "translator_customer@nbs.com" has tags "vendor, partner"
+  And user with email "translator_category_buyer@nbs.com" has tags "vendor, partner"
+  And I visit page "/administration/users" with tags "vendor" set as search
+  Then I should see "translator_purchase_manager@nbs.com"
+  And I should see "translator_customer@nbs.com"
+  And I should see "translator_category_buyer@nbs.com"
+  And I visit page "/administration/users" with tags "vendor, partner" set as search
+  Then I should not see "translator_purchase_manager@nbs.com"
+  And I should see "translator_customer@nbs.com"
+  And I should see "translator_category_buyer@nbs.com"
 
 #11051
-@m33 @_requested
+@m33 @_requested @_done @_tested @tgn
 Scenario: I should be able to login into customer's CM account from user edit page (button Go to campaign monitor)
+  Given user newsl_manager@nbs.com with role supplier exists with attributes "newsletter_manager:1"
+  And I fill in "search_with_keyword" with "newsl_manager@nbs.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
+  And I should see translated "administration.users.index.view.go_to_campaign_monitor"

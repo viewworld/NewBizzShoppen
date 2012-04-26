@@ -535,21 +535,24 @@ describe User do
 
       it "should create campaign monitor client and set access if supplier is marked as newsletter manager by admin" do
         user = User::Supplier.make!
-
+        CreateSend::Client.any_instance.stubs(:details).returns(false).then.returns(Hashie::Mash.new(:BasicDetails => {:ClientID => "ClientId10123123"}))
         CreateSend::Client.expects(:create).returns("ClientId10123123")
         CreateSend::Client.any_instance.expects(:set_access).with(user.send(:generate_cm_username), instance_of(String), instance_of(Fixnum))
         CreateSend::Client.any_instance.expects(:set_payg_billing).with("EUR", true, true, instance_of(Fixnum))
         user.update_attribute(:newsletter_manager, true)
+        NewsletterList.where("name like ?", "First #{user.company_name} list%").first.should_not be_nil
       end
 
       it "should create campaign monitor client and set access if supplier is marked as newsletter manager by subscription" do
         @subscription = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :billing_cycle => 3, :newsletter_manager => true)
         @subscription.subscription_plan_lines.make!(:price => 25)
 
+        CreateSend::Client.any_instance.stubs(:details).returns(false).then.returns(Hashie::Mash.new(:BasicDetails => {:ClientID => "ClientId10123123"}))
         CreateSend::Client.expects(:create).returns("ClientId10123123")
         CreateSend::Client.any_instance.expects(:set_access).with(instance_of(String), instance_of(String), instance_of(Fixnum))
         CreateSend::Client.any_instance.expects(:set_payg_billing).with("EUR", true, true, instance_of(Fixnum))
-        User::Supplier.make!({:subscription_plan_id => @subscription.id })
+        user = User::Supplier.make!({:subscription_plan_id => @subscription.id })
+        NewsletterList.where("name like ?", "First #{user.company_name} list%").first.should_not be_nil
       end
     end
   end

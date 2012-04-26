@@ -275,5 +275,22 @@ Scenario: I can sort leads by all of the new columns
   Scenario: When lead is bought by supplier and invoiced then it should stay on invoice but be deleted from the system
 
   #11044
-  @m33 @_requested
+  @m33 @_requested @_tested @_done @tgn
   Scenario: I can search for leads with given tags
+    Given Lead named "Lead01" exists within "Leisure" category
+    And Lead named "Lead02" exists within "Leisure" category
+    And Lead named "Lead03" exists within "Leisure" category
+    And Lead named "Lead04" exists within "Leisure" category
+    And lead with header "Lead01" has tags "vendor"
+    And lead with header "Lead02" has tags "vendor, partner"
+    And lead with header "Lead03" has tags "vendor, partner"
+    When I visit page "/administration/leads" with tags "vendor" set as search
+    Then I should see "Lead01"
+    And I should see "Lead02"
+    And I should see "Lead03"
+    And I should not see "Lead04"
+    When I visit page "/administration/leads" with tags "vendor, partner" set as search
+    Then I should not see "Lead01"
+    And I should see "Lead02"
+    And I should see "Lead03"
+    And I should not see "Lead04"

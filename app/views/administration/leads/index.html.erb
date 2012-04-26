@@ -58,6 +58,7 @@
                 <%= f.check_box :purchased, {}, "true", "false" %>
                 <%= f.label :purchased, t("administration.leads.index.view.filter_purchased") %>
               </li>
+
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
                   <%= f.hidden_field :with_created_by %>
@@ -66,6 +67,15 @@
                 <p>
                   <%= bt_clear_filter %>
                 </p>
+              </li>
+            </ol>
+          </fieldset>
+
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <label class="no_pdd_t">Tags</label>
+                <%= render :partial => "shared/tags/search_with_tags", :locals => { :search => @search } %>
               </li>
             </ol>
           </fieldset>

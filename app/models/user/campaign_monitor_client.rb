@@ -4,7 +4,11 @@ module User::CampaignMonitorClient
     base.class_eval do
       after_save do
         cm_synchronize! if newsletter_manager? and (newsletter_manager_changed? or company_name_changed? or first_name_changed? or last_name_changed? or email_changed? or time_zone_changed?)
-        cm_set_access! if newsletter_manager? and newsletter_manager_changed?
+        if newsletter_manager? and newsletter_manager_changed?
+          if cm_set_access!
+            setup_empty_list!
+          end
+        end
       end
     end
     base.send(:include, InstanceMethods)
@@ -90,5 +94,8 @@ module User::CampaignMonitorClient
       cm_exists? ? cm_client_id : cm_create!
     end
 
+    def setup_empty_list!
+      NewsletterList.create(:name => "First #{company_name} list #{Date.today.to_s}", :owner => self)
+    end
   end
 end

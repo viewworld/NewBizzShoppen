@@ -117,6 +117,8 @@ class User < ActiveRecord::Base
   scope :created_by, lambda { |user_id| where(:created_by => user_id) }
   scope :all_subscribers, where("roles_mask & #{2**User.valid_roles.index(:lead_supplier)} > 0 OR roles_mask & #{2**User.valid_roles.index(:member)} > 0")
 
+  scope :with_tags, lambda { |tag_names| tagged_with(tag_names) }
+
   scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department, :mobile_phone, :completed_leads_counter, :leads_requested_counter,
                :leads_assigned_month_ago_counter, :leads_assigned_year_ago_counter, :total_leads_assigned_counter, :leads_created_counter,
                :leads_volume_sold_counter, :leads_revenue_counter, :leads_purchased_month_ago_counter, :leads_purchased_year_ago_counter,
@@ -138,6 +140,7 @@ class User < ActiveRecord::Base
   validate :check_billing_rate, :check_subscription_plan
   before_validation :set_auto_generated_password_if_required, :set_role
   after_initialize :set_auto_buy_enabled
+  before_create :generate_login_key
 
   check_associations_before_destroy :leads, :lead_purchases, :lead_templates, :assigned_lead_purchases, :lead_requests, :leads_in_cart, :deals, :requested_deals, :campaigns, :contacts, :call_results, :subaccounts, :invoices
 
@@ -1019,5 +1022,10 @@ class User < ActiveRecord::Base
 
   def link_to_campaign_monitor_account
     "https://#{Rails.env.production? ? 'fairleads' : 'selleo-mariachi'}.createsend.com/login.aspx?ReturnUrl=%2f&username=#{cm_username}&password=#{cm_password}"
+  end
+
+  def link_to_admin_campaign_monitor_account(newsletter_campaign, redirect_to=nil)
+    redirect_to = "%2f" if redirect_to.nil?
+    "https://#{Rails.env.production? ? 'fairleads' : 'selleo-mariachi'}.createsend.com/login.aspx?ReturnUrl=#{redirect_to}&username=#{newsletter_campaign.cm_username}&password=#{newsletter_campaign.cm_password}"
   end
 end

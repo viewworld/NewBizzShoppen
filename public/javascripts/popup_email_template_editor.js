@@ -209,12 +209,25 @@
   }
 
   function insert_deal_links_into_ckeditor(instance_name, domain_name){
+    $('#modal_for_deal_links_buttons_panel').hide();
     link_tmp = "";
     $('input[type=checkbox][id^=deal_links]:checked').each(function(){
         link_tmp += "<a href=\"http://" + domain_name + "/deals/" + $(this).val() + "\">" + $("#" + $(this).attr("id") + "_header").val() + "</a><br/>";
     });
     CKEDITOR.instances[instance_name].insertHtml("<p>&nbsp;</p><p>" + link_tmp + "</p><p>&nbsp;</p>");
     $('#modal_for_deal_links').dialog('close');
+  }
+
+  function insert_deal_rich_description_into_ckeditor(instance_name, domain_name){
+      $('#modal_for_deal_links_buttons_panel').hide();
+      deal_ids = [];
+      $('input[type=checkbox][id^=deal_links]:checked').each(function(){
+          deal_ids.push($(this).attr("id").split("_").reverse()[0]);
+      });
+
+      $('#deal_links_container').html(I18n.t("common.js.fetching_content"));
+
+      $.get('/deals/insert_rich_content.js', {deal_ids: deal_ids, instance_name: instance_name, domain_name: domain_name});
   }
 
   function search_deal_links(query){

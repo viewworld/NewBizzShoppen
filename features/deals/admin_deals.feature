@@ -144,5 +144,22 @@ Feature: Deals from admin perspective
   Scenario: I can click to see all deals on one page
 
   #11044
-  @m33 @_requested
+  @m33 @_requested @_done @_tested @tgn
   Scenario: I can search for deals with given tags
+    Given a deal named "Deal01" exists within category "Leisure Deals"
+    And a deal named "Deal02" exists within category "Leisure Deals"
+    And a deal named "Deal03" exists within category "Leisure Deals"
+    And a deal named "Deal04" exists within category "Leisure Deals"
+    And deal with header "Deal01" has tags "vendor"
+    And deal with header "Deal02" has tags "vendor, partner"
+    And deal with header "Deal03" has tags "vendor, partner"
+    When I visit page "/administration/deals" with tags "vendor" set as search
+    Then I should see "Deal01"
+    And I should see "Deal02"
+    And I should see "Deal03"
+    And I should not see "Deal04"
+    When I visit page "/administration/deals" with tags "vendor, partner" set as search
+    Then I should not see "Deal01"
+    And I should see "Deal02"
+    And I should see "Deal03"
+    And I should not see "Deal04"

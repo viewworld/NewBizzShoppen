@@ -7,7 +7,7 @@ Feature: Agent campaign - calling session
     And I am not sign in
     And I make sure current locale is "en"
     And I sign in as translator_call_centre_agent@nbs.com with password secret
-    And I follow translated "layout.main_menu.call_centre.campaigns"
+    And I follow translated "layout.main_menu.call_centre_agent.campaigns"
 
     #
     #
@@ -211,7 +211,7 @@ Feature: Agent campaign - calling session
       Given I am on the homepage
       And I make sure current locale is "en"
       And I sign in as translator_call_centre_agent@nbs.com with password secret
-      And I follow translated "layout.main_menu.call_centre.campaigns"
+      And I follow translated "layout.main_menu.call_centre_agent.campaigns"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Send material" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
@@ -233,7 +233,7 @@ Feature: Agent campaign - calling session
       Given I am on the homepage
       And I make sure current locale is "en"
       And I sign in as translator_call_centre_agent@nbs.com with password secret
-      And I follow translated "layout.main_menu.call_centre.campaigns"
+      And I follow translated "layout.main_menu.call_centre_agent.campaigns"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Send material" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
@@ -255,7 +255,7 @@ Feature: Agent campaign - calling session
       Given I am on the homepage
       And I make sure current locale is "en"
       And I sign in as translator_call_centre_agent@nbs.com with password secret
-      And I follow translated "layout.main_menu.call_centre.campaigns"
+      And I follow translated "layout.main_menu.call_centre_agent.campaigns"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Send material" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
@@ -574,12 +574,12 @@ Feature: Agent campaign - calling session
     Scenario: It should not be possible to create new results when campaign expired
     Given campaign named "Expired campaign" exists with attributes "start_date:10-01-2011,end_date:02-04-2011"
     And contact for company "Xena1" and campaign "Expired campaign" is assigned to user "translator_call_centre_agent@nbs.com"
-    And I follow translated "layout.main_menu.call_centre.campaigns"
+    And I follow translated "layout.main_menu.call_centre_agent.campaigns"
     And I select "all" from "search_with_state"
     And I press translated "campaigns.filter.search_button"
     When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
     Then I should see translated "call_results.edit.button_new_result"
-    And I follow translated "layout.main_menu.call_centre.campaigns"
+    And I follow translated "layout.main_menu.call_centre_agent.campaigns"
     And I select "all" from "search_with_state"
     And I press translated "campaigns.filter.search_button"
     When I follow translated action "campaigns.table.work_screen" within row containing "Expired campaign"
@@ -589,7 +589,7 @@ Feature: Agent campaign - calling session
     Scenario: I should be able to edit the result type of the final types
     And contact for company "Xena1" and campaign "Testing One" is assigned to user "translator_call_centre_agent@nbs.com"
     And contact for company "Xena1" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
-    And I follow translated "layout.main_menu.call_centre.campaigns"
+    And I follow translated "layout.main_menu.call_centre_agent.campaigns"
     When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
     And I follow translated "agent_work_screen.index.show_call_log_for_current_contact"
     When I follow action "Edit" within row containing "Call back"
@@ -634,10 +634,11 @@ Feature: Agent campaign - calling session
       And user with email "new_buyer888@nbs.com" should have tags "tag1, tag2, tag3"
 
 
-    #7574
+    #7574 #11050
     @m19 @_requested @upgrade_to_member @$_call_centre_agent @_done @_tested @tgn
     Scenario: I can upgrade contact to member (procurment manager)
       Given all contacts from campaign "Testing One" have tags "tag1, tag2, tag3"
+      And result with name "Upgrade to member" has tags "member_upgrade, 24native"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to member" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
@@ -659,7 +660,8 @@ Feature: Agent campaign - calling session
       And last email sent should have content "fairdeals"
       And last email sent should have content "Fairdeals password: testin"
       And last email sent should have content "Fairdeals username: new_member888@nbs.com"
-      And user with email "new_member888@nbs.com" should have tags "tag1, tag2, tag3"
+      And user with email "new_member888@nbs.com" should have tags "tag1, tag2, tag3, member_upgrade, 24native"
+      And contact with email address "new_member888@nbs.com" should have tags "member_upgrade, 24native"
       Then I am not sign in
       And I am on the homepage
       And I visit domain http://fairdeals.eu
@@ -781,5 +783,5 @@ Feature: Agent campaign - calling session
   Scenario: A free subscription should be selected by default when upgrading contact to account
 
   #11050
-  @m33 @_requested
+  @m33 @_requested @_done @_tested_elsewhere @tgn
   Scenario: When call result is added to contact then result's tags are added to the contact

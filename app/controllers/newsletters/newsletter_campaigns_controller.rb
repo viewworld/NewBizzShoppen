@@ -3,6 +3,7 @@ class Newsletters::NewsletterCampaignsController < Newsletters::NewslettersContr
 
   skip_filter :authorize_user_for_namespace!, :only => [:show]
   skip_filter :authenticate_user!, :only => [:show]
+  before_filter :authorize_with_http_basic_for_staging, :except => [:show]
 
   set_tab "campaigns"
   set_subtab "newsletter_campaigns"
@@ -15,10 +16,11 @@ class Newsletters::NewsletterCampaignsController < Newsletters::NewslettersContr
   def update
     update! do |success, failure|
       success.html {
-        if params[:commit_send]
-          @newsletter_campaign.send(:cm_synchronize!)
+        if params[:commit_send_to_subscribers] or params[:commit_send_as_draft]
+          @newsletter_campaign.send(:cm_synchronize!, params[:commit_send_as_draft])
           if @newsletter_campaign.queued_for_sending?
-            flash[:notice] = I18n.t("newsletters.newsletter_campaigns.update.flash.notice_queued")
+            flash[:notice] = params[:commit_send_as_draft] ? I18n.t("newsletters.newsletter_campaigns.update.flash.notice_queued_for_sending_as_draft") :
+                I18n.t("newsletters.newsletter_campaigns.update.flash.notice_queued_for_sending_to_subscribers")
             redirect_to newsletters_newsletter_campaigns_path
           else
             flash[:alert] = I18n.t("newsletters.newsletter_campaigns.update.flash.notice_not_sent", :errors => @newsletter_campaign.last_errors)
@@ -63,7 +65,7 @@ class Newsletters::NewsletterCampaignsController < Newsletters::NewslettersContr
     @search = NewsletterCampaign.scoped_search(params[:search])
     @search.with_archived ||= 0
     @search.created_or_owned_by = current_user unless current_user.admin?
-    @newsletter_campaigns = @search.paginate(:page => params[:page], :per_page => NewsletterCampaign.per_page)
+    @newsletter_campaigns = @search.order("created_at DESC").paginate(:page => params[:page], :per_page => NewsletterCampaign.per_page)
   end
 
   def authorize_user_for_namespace!

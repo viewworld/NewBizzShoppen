@@ -24,13 +24,17 @@ class NewsletterSynch < ActiveRecord::Base
 
   def all_local_subscribers
     @all_local_subscribers ||= newsletter_list.newsletter_subscribers.map do |obj|
+      custom_fields_array = [
+                    { "Key" => "[CompanyName]", "Value" => obj.company_name, "Clear" => false},
+                    { "Key" => "[ZipCode]", "Value" => obj.zip_code, "Clear" => false}
+                ]
+      if newsletter_list.owner.admin? or newsletter_list.owner.call_centre?
+        custom_fields_array << { "Key" => "[LoginKey]", "Value" => obj.login_key, "Clear" => false}
+      end
       {
           "EmailAddress" => obj.email_address,
           "Name" => obj.name,
-          "CustomFields" => [
-              { "Key" => "[CompanyName]", "Value" => obj.company_name, "Clear" => false},
-              { "Key" => "[ZipCode]", "Value" => obj.zip_code, "Clear" => false}
-          ]
+          "CustomFields" => custom_fields_array
       }
     end
   end

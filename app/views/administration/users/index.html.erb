@@ -18,6 +18,10 @@
                 <%= f.label t("administration.leads.index.search.user_role_label") %>
                 <%= f.select :with_role, User::BASIC_USER_ROLES_WITH_LABELS + [["Call centre agent", "call_centre_agent"]], :include_blank => true %>
               </li>
+              <li class="string">
+                <label>Tags</label>
+                <%= render :partial => "shared/tags/search_with_tags", :locals => { :search => @search } %>
+              </li>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
                   <%= submit_tag t("administration.users.index.view.search_button") %>

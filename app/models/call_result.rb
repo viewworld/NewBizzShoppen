@@ -182,7 +182,17 @@ class CallResult < ActiveRecord::Base
     end
   end
 
+  def process_result_tags
+    unless result.tag_list.empty?
+      result.tag_list.each do |tag|
+        contact.tag_list << tag
+      end
+      contact.save
+    end
+  end
+
   def process_side_effects
+    process_result_tags
     if result.generic?
       send "process_for_#{result.label.to_s}"
     else

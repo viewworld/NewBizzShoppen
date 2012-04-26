@@ -81,6 +81,7 @@ class Lead < AbstractLead
   scope :descend_by_category, joins(:category).order("categories.name DESC")
 
   scope :descend_by_leads_id, order("leads.id DESC")
+  scope :with_tags, lambda { |tag_names| tagged_with(tag_names) }
 
   delegate :certification_level, :to => :creator
 
