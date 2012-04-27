@@ -72,6 +72,10 @@ class Cart
     BigDecimal.new(lead_purchases.sum('price * quantity')) + total_vat_value
   end
 
+  def total_in_cents
+    (total * 100).to_i
+  end
+
   def total_netto
     BigDecimal.new(lead_purchases.sum('price * quantity'))
   end

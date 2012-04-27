@@ -17,4 +17,16 @@ class ActiveMerchantPaymentNotificationsController < ApplicationController
     create
   end
 
+  private
+
+  def cart
+    case params[:invoice]
+      when /^v_/
+        ActiveMerchantVoucherPaymentNotification.process(params)
+      when /^i_/
+        ActiveMerchantInvoicePaymentNotification.process(params)
+      else
+        ActiveMerchantCartPaymentNotification.process(params)
+    end
+  end
 end

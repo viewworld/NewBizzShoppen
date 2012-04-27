@@ -119,4 +119,61 @@ describe Cart do
     end
   end
 
+  context "Paid for lead in the card by online payment" do
+
+    def params_for_response_from(payment_gateway, successful=true)
+      if payment_gateway == :paypal
+        { :txn_type => "cart", :txn_id => "irek", :payment_status => successful ? "Completed" : "Pending",
+          :secret => APP_CONFIG[:paypal_secret], :receiver_email => APP_CONFIG[:paypal_email],
+          :mc_gross => BigDecimal(@buyer.cart.total.to_s).to_s, :invoice => @buyer.cart.id}
+      elsif payment_gateway == :quickpay
+        params = { :transaction => "irek", :qpstat => successful ? "000" : "003",
+          :merchantemail => APP_CONFIG[:quickpay_email],
+          :amount => "#{@buyer.cart.total_in_cents}", :ordernumber => @buyer.cart.id,
+          :msgtype => "capture", :merchant => "John Merchant"}
+
+        params[:md5check] = QuickpayPayment.calculate_md5_check(:capture, params)
+        params
+      end
+    end
+
+    before(:each) do
+      currency = Currency.make!
+      lead1 = Lead.make!(:currency => currency)
+      lead2 = Lead.make!(:currency => currency)
+
+      cart  = Cart.new(@buyer)
+
+      cart.add_lead(lead1)
+      cart.add_lead(lead2)
+    end
+
+    context "Paypal" do
+      it "should decrease lead purchases in cart and increase accessible lead purchases when payment is completed" do
+        lambda {
+          lambda { PaypalCartPaymentNotification.process(params_for_response_from(:paypal)) }.should change(@buyer.lead_purchases.in_cart, :count).by(-2)
+        }.should change(@buyer.lead_purchases.accessible, :count).by(2)
+      end
+
+      it "should NOT decrease lead purchases in cart and increase accessible lead purchases when payment failed" do
+        lambda {
+          lambda { PaypalCartPaymentNotification.process(params_for_response_from(:paypal, false)) }.should change(@buyer.lead_purchases.in_cart, :count).by(0)
+        }.should change(@buyer.lead_purchases.accessible, :count).by(0)
+      end
+    end
+
+    context "Quickpay" do
+      it "should decrease lead purchases in cart and increase accessible lead purchases when payment is completed" do
+        lambda {
+          lambda { ActiveMerchantCartPaymentNotification.process(params_for_response_from(:quickpay)) }.should change(@buyer.lead_purchases.in_cart, :count).by(-2)
+        }.should change(@buyer.lead_purchases.accessible, :count).by(2)
+      end
+
+      it "should NOT decrease lead purchases in cart and increase accessible lead purchases when payment failed" do
+        lambda {
+          lambda { ActiveMerchantCartPaymentNotification.process(params_for_response_from(:quickpay, false)) }.should change(@buyer.lead_purchases.in_cart, :count).by(0)
+        }.should change(@buyer.lead_purchases.accessible, :count).by(0)
+      end
+    end
+  end
 end
