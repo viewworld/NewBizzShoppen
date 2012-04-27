@@ -330,6 +330,6 @@ class Invoice < ActiveRecord::Base
   end
 
   def pay_via_paypal_link
-    "http://#{user.domain_name}/paypal_unpaid_invoices/#{id}"
+    "http://#{user.domain_name}/payment_gateway_unpaid_invoices/#{id}"
   end
 end

@@ -227,7 +227,7 @@ describe SubscriptionSubPeriod do
       @customer.active_subscription.subscription_sub_periods[0].invoice.should_not be_paid
 
       ActionMailer::Base.deliveries.last.to.should include(@customer.email)
-      ActionMailer::Base.deliveries.last.body.raw_source.should include "/paypal_unpaid_invoices/#{@customer.active_subscription.subscription_sub_periods[0].invoice_id}"
+      ActionMailer::Base.deliveries.last.body.raw_source.should include "/payment_gateway_unpaid_invoices/#{@customer.active_subscription.subscription_sub_periods[0].invoice_id}"
     end
 
     it "should auto downgrade when number of retries is exceeded AND auto downgrading is enabled" do
@@ -314,6 +314,57 @@ describe SubscriptionSubPeriod do
       @customer.active_subscription.should be_normal
       @customer.active_subscription.should_not be_cancelled_in_payment_gateway
       @customer.active_subscription.should_not be_prolongs_as_free
+    end
+  end
+
+  context "online payment for unpaid subperiod's invoice" do
+
+    def params_for_response_from(payment_gateway, successful=true)
+      if payment_gateway == :paypal
+        { :txn_type => "cart", :txn_id => "irek", :payment_status => successful ? "Completed" : "Pending",
+          :secret => APP_CONFIG[:paypal_secret], :receiver_email => APP_CONFIG[:paypal_email],
+          :mc_gross => BigDecimal(@buyer.cart.total.to_s).to_s, :invoice => @buyer.cart.id}
+      elsif payment_gateway == :quickpay
+        params = { :transaction => "irek", :qpstat => successful ? "000" : "003",
+          :merchantemail => APP_CONFIG[:quickpay_email],
+          :amount => "#{@buyer.cart.total_in_cents}", :ordernumber => @buyer.cart.id,
+          :msgtype => "capture", :merchant => "John Merchant"}
+
+        params[:md5check] = ActiveMerchantCartPaymentNotification.new.calculate_md5_check(:capture, params)
+        params
+      end
+    end
+
+    before(:each) do
+      @payable_subscription2 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :billing_cycle => 3)
+      @payable_subscription2.subscription_plan_lines.make!(:price => 21.36)
+      @payable_subscription2.update_attributes(:use_online_payment => true, :payment_retries => 2)
+      setup_customer(@payable_subscription2)
+      @customer.active_subscription.confirm_payment!
+
+      profile_id = "I-ZXCVBFGH"
+      @customer.active_subscription.update_attribute(:payment_profile_id, profile_id)
+
+        Subscription.payment_failed(profile_id, SubscriptionPaymentNotification.create)
+        Subscription.payment_failed(profile_id, SubscriptionPaymentNotification.create)
+
+      @customer.active_subscription.subscription_sub_periods[0].invoice.should_not be_paid
+    end
+
+    context "Paypal" do
+      it "invoice should be marked as paid when payment is completed" do
+        PaypalInvoicePaymentNotification.process(params)
+      end
+
+      it "invoice should be marked as unpaid when payment failed" do
+
+      end
+    end
+
+    context "Quickpay" do
+      it "invoice should be marked as paid when payment is completed" do
+
+      end
     end
   end
 
