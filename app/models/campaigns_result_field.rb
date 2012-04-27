@@ -4,7 +4,7 @@ class CampaignsResultField < ActiveRecord::Base
 
   validate :euro_value_present_if_is_dynamic_value
   before_save :disable_dynamic_value_if_not_number
-
+  validates_uniqueness_of :result_field_id, :scope => :campaign_id
   private
 
   def disable_dynamic_value_if_not_number
