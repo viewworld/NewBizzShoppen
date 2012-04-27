@@ -1,4 +1,5 @@
 module QuickpayPayment
+
   TRANSACTION_STATES = { 0 => 'Initial', 1 => 'Authorized', 3 => 'Captured', 5 => 'Cancelled', 7 => 'Refunded', 9 => 'Subscribed' }
 
   APPROVED =                "000".freeze
@@ -25,9 +26,17 @@ module QuickpayPayment
       ABORTED                 => "Payment aborted by shopper"
   }.freeze
 
-  def calculate_md5_check(action, params)
-    Digest::MD5.hexdigest(ActiveMerchant::Billing::QuickpayGateway::MD5_CHECK_FIELDS[4][action.to_sym].map{ |key| params[key.to_sym] }.join + APP_CONFIG[:quickpay_secret])
+  def self.included(base)
+    base.class_eval do
+
+    end
+    base.send(:include, InstanceMethods)
   end
 
-  module_function :calculate_md5_check
+  module InstanceMethods
+    public
+    def calculate_md5_check(action, params)
+      Digest::MD5.hexdigest(ActiveMerchant::Billing::QuickpayGateway::MD5_CHECK_FIELDS[4][action.to_sym].map{ |key| params[key.to_sym] }.join + APP_CONFIG[:quickpay_secret])
+    end
+  end
 end
