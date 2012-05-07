@@ -17,7 +17,7 @@ class ActiveMerchantCartPaymentNotification < CartPaymentNotification
   def generate_invoice
     if completed?
       invoice = Invoice.create(:user_id => supplier.parent.present? ? supplier.parent_id : supplier.id, :paid_at => self.created_at, :seller => Seller.default, :currency => supplier.cart.currency)
-      PaypalTransaction.create(:invoice => invoice, :payment_notification => self, :amount => supplier.cart.total, :paid_at => self.created_at)
+      ActiveMerchantTransaction.create(:invoice => invoice, :payment_notification => self, :amount => supplier.cart.total, :paid_at => self.created_at)
     end
   end
 
