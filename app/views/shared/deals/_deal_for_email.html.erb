@@ -18,12 +18,12 @@
     </td>
   </tr>
   <tr>
-    <td style="width:600px">
+    <td style="width:600px;padding:5px;">
       <div class="deal_description">
-        <%= link_to(image_tag(featured.logo.url(:featured), :class => "logo"), deal_url(featured.slug)) if featured.logo %>
+        <%= link_to(image_tag(featured.logo.url(:featured), :class => "logo", :style => "border: none;"), deal_url(featured.slug)) if featured.logo %>
         <p>
           <%= link_to deal_url(featured.slug, :host => params[:domain_name]), :style => "color:#000; text-decoration: none;" do %>
-            <%= content_tag(:span, st(featured.short_featured_description.to_s, {}, {:length => 300}), :class => "color:#000; text-decoration: none;") %>
+            <%= content_tag(:span, st(featured.short_featured_description.to_s, {}, {:length => 300}), :style => "color:#000; text-decoration: none;") %>
           <% end %>
         </p>
         <%= link_to deal_url(featured.slug, :host => params[:domain_name]), :style => "font-size: 13px;color: #fff;" do %>
@@ -31,10 +31,10 @@
         <% end %>
       </div>
     </td>
-    <td style="width:165px;">
-     <div class="deal_thumb">
+    <td style="width:165px;padding:5px;">
+     <div class="deal_thumb" style="text-align: right">
        <p>
-         <%= link_to(image_tag(featured.images.first.url(:medium), :class => "thumb", :width => "150"), deal_url(featured.slug, :host => params[:domain_name])) if featured.images.first %>
+         <%= link_to(image_tag(featured.images.first.url(:medium), :class => "thumb", :width => "150", :style => "border: 1px solid #ddd;padding: 1px;background-color: white;"), deal_url(featured.slug, :host => params[:domain_name])) if featured.images.first %>
        </p>
      </div>
     </td>
