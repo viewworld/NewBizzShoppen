@@ -154,7 +154,7 @@ describe Cart do
           lambda { PaypalCartPaymentNotification.process(params_for_response_from(:paypal)) }.should change(@buyer.lead_purchases.in_cart, :count).by(-2)
         }.should change(@buyer.lead_purchases.accessible, :count).by(2)
 
-        PaymentTransaction.last.is_a?(PaypalTransaction)
+        PaymentTransaction.last.class.should == PaypalTransaction
       end
 
       it "should NOT decrease lead purchases in cart and increase accessible lead purchases when payment failed" do
@@ -169,7 +169,7 @@ describe Cart do
         lambda {
           lambda { ActiveMerchantCartPaymentNotification.process(params_for_response_from(:quickpay)) }.should change(@buyer.lead_purchases.in_cart, :count).by(-2)
         }.should change(@buyer.lead_purchases.accessible, :count).by(2)
-        PaymentTransaction.last.is_a?(ActiveMerchantTransaction)
+        PaymentTransaction.last.class.should == ActiveMerchantTransaction
       end
 
       it "should NOT decrease lead purchases in cart and increase accessible lead purchases when payment failed" do

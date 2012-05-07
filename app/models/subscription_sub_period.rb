@@ -45,7 +45,8 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   def create_and_send_invoice!
     _invoice = Invoice.create(:user => subscription.user, :subscription_sub_period_id => self.id, :currency => subscription.currency)
     _invoice.send_by_email(user)
-    PaypalTransaction.create(:invoice => _invoice, :amount => _invoice.total, :paid_at => Time.now) if _invoice.paid?
+    transaction_klass = subscription.payment_type == Subscription::PAYPAL_PAYMENT_TYPE ? PaypalTransaction : ActiveMerchantTransaction
+    transaction_klass.create(:invoice => _invoice, :amount => _invoice.total, :paid_at => Time.now) if _invoice.paid?
   end
 
   def create_invoice_when_marked_as_paid

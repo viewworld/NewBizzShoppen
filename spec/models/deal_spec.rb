@@ -109,9 +109,11 @@ describe Deal do
         PaypalVoucherPaymentNotification.process(params_for_response_from(:paypal))
         @voucher_number.reload
         @voucher_number.state.should == "active"
+
+        PaymentTransaction.last.class.should == PaypalTransaction
       end
 
-      it "should activate the voucher when payment failed" do
+      it "should NOT activate the voucher when payment failed" do
         PaypalVoucherPaymentNotification.process(params_for_response_from(:paypal, false))
         @voucher_number.reload
         @voucher_number.state.should_not == "active"
@@ -124,9 +126,10 @@ describe Deal do
         ActiveMerchantVoucherPaymentNotification.process(params_for_response_from(:quickpay))
         @voucher_number.reload
         @voucher_number.state.should == "active"
+        PaymentTransaction.last.class.should == ActiveMerchantTransaction
       end
 
-      it "should activate the voucher when payment failed" do
+      it "should NOT activate the voucher when payment failed" do
         ActiveMerchantVoucherPaymentNotification.process(params_for_response_from(:quickpay, false))
         @voucher_number.reload
         @voucher_number.state.should_not == "active"

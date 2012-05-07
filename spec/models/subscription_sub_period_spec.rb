@@ -1,5 +1,5 @@
-require 'spec_helper'
 
+require 'spec_helper'
 describe SubscriptionSubPeriod do
   fixtures :all
 
@@ -335,6 +335,16 @@ describe SubscriptionSubPeriod do
       end
     end
 
+    def recurring_payment_failed_for(payment_gateway)
+      @customer.active_subscription.update_attribute(:payment_type, payment_gateway == :paypal ? Subscription::PAYPAL_PAYMENT_TYPE : Subscription::QUICKPAY_PAYMENT_TYPE)
+      subscription_payment_notification_klass = payment_gateway == :paypal ? PaypalSubscriptionPaymentNotification : ActiveMerchantSubscriptionPaymentNotification
+      Subscription.payment_failed(@profile_id, subscription_payment_notification_klass.create)
+      Subscription.payment_failed(@profile_id, subscription_payment_notification_klass.create)
+
+      @invoice = @customer.active_subscription.subscription_sub_periods[0].invoice
+      @invoice.should_not be_paid
+    end
+
     before(:each) do
       @payable_subscription2 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :billing_cycle => 3)
       @payable_subscription2.subscription_plan_lines.make!(:price => 21.36)
@@ -342,21 +352,20 @@ describe SubscriptionSubPeriod do
       setup_customer(@payable_subscription2)
       @customer.active_subscription.confirm_payment!
 
-      profile_id = "I-ZXCVBFGH"
-      @customer.active_subscription.update_attribute(:payment_profile_id, profile_id)
-
-        Subscription.payment_failed(profile_id, SubscriptionPaymentNotification.create)
-        Subscription.payment_failed(profile_id, SubscriptionPaymentNotification.create)
-
-      @invoice = @customer.active_subscription.subscription_sub_periods[0].invoice
-      @invoice.should_not be_paid
+      @profile_id = "I-ZXCVBFGH"
+      @customer.active_subscription.update_attribute(:payment_profile_id, @profile_id)
     end
 
     context "Paypal" do
+      before(:each) do
+        recurring_payment_failed_for(:paypal)
+      end
+
       it "invoice should be marked as paid when payment is completed" do
         PaypalInvoicePaymentNotification.process(params_for_response_from(:paypal))
         @invoice.reload
         @invoice.should be_paid
+        PaymentTransaction.last.class.should == PaypalTransaction
       end
 
       it "invoice should be marked as unpaid when payment failed" do
@@ -367,10 +376,15 @@ describe SubscriptionSubPeriod do
     end
 
     context "Quickpay" do
+      before(:each) do
+        recurring_payment_failed_for(:quickpay)
+      end
+
       it "invoice should be marked as paid when payment is completed" do
         ActiveMerchantInvoicePaymentNotification.process(params_for_response_from(:quickpay))
         @invoice.reload
         @invoice.should be_paid
+        PaymentTransaction.last.class.should == ActiveMerchantTransaction
       end
 
       it "invoice should be marked as unpaid when payment failed" do

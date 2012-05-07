@@ -108,7 +108,9 @@ class Subscription < ActiveRecord::Base
   end
 
   def self.payment_failed(prof_id, spn)
-    subscription = SubscriptionSubPeriod.payment_unpaid.for_paypal.for_recurring_payment(prof_id).readonly(false).first.subscription
+    subscription = SubscriptionSubPeriod.payment_unpaid.for_recurring_payment(prof_id)
+    subscription = spn.is_a?(PaypalSubscriptionPaymentNotification) ? subscription.for_paypal : subscription.for_quickpay
+    subscription = subscription.readonly(false).first.subscription
 
     if subscription
      subscription.update_attribute(:payment_retries_counter, subscription.payment_retries_counter + 1)
