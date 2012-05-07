@@ -102,6 +102,13 @@
       </ol>
     </fieldset>
       <%= render :partial => "/shared/tags/assigned_tags", :locals => { :object => @user } %>
+
+    <% if @user.persisted? and @user.newsletter_manager? %>
+        <b><%= t("administration.users.edit.view.campaign_monitor_credentials") %></b><br />
+        <%= t("administration.users.edit.view.cm_username") %>: <%= @user.cm_username %>
+        <br />
+        <%= t("administration.users.edit.view.cm_password") %>: <%= @user.cm_password %>
+    <% end %>
   </div>
 </div>
 
