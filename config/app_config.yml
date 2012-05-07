@@ -7,8 +7,8 @@ development:
   paypal_api_password: 1292244690
   paypal_api_key: AUVjzPkoCJAf1p9N6vEssI4hIPVVA6XjBKUpjBLNogHCfw29dQWFK6bF
   paypal_api_url: "https://api-3t.sandbox.paypal.com/nvp"
-  quickpay_email: "qp_seller32434234@nbs.com"
-  quickpay_secret: "dj38dhj39d3dx3tdsg3d2e2ef23rd232"
+  quickpay_email: "admin@fairleads.com"
+  quickpay_secret: "dsjnM6rG4TUqZ2S81YQ3WK9989iLFm3v2Jplu12I7R3PH9xB3Db8fV1761ey5Xgh"
   quickpay_api_key: "f1ds2wk39fej329ew29rk92392"
 
 test:
@@ -33,8 +33,8 @@ production:
   paypal_api_password: "8T7H3529UWE775HK"
   paypal_api_key: "ACeUiIrWgxnYT8IMF-wJwdgl.sjEA5RpsViJ6SPhHx2TT4xITs8R8CKt"
   paypal_api_url: "https://api-3t.paypal.com/nvp"
-  quickpay_email: ""
-  quickpay_secret: ""
+  quickpay_email: "admin@fairleads.com"
+  quickpay_secret: "dsjnM6rG4TUqZ2S81YQ3WK9989iLFm3v2Jplu12I7R3PH9xB3Db8fV1761ey5Xgh"
   quickpay_api_key: ""
 
 staging:
