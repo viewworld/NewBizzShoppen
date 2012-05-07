@@ -18,20 +18,20 @@
     </td>
   </tr>
   <tr>
-    <td>
+    <td style="width:600px">
       <div class="deal_description">
         <%= link_to(image_tag(featured.logo.url(:featured), :class => "logo"), deal_url(featured.slug)) if featured.logo %>
-        <p><%= link_to st(featured.short_featured_description.to_s, {}, {:length => 300}), deal_url(featured.slug, :host => params[:domain_name]), :style => "color:black; text-decoration: none;" %></p>
-        <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_url(featured.slug, :host => params[:domain_name]) %>
-        <%= link_to deal_url(featured.slug, :host => params[:domain_name]) do %>
-            <%= content_tag(:span, t("deals.index.view.view_deal"), :style => "display: inline-block;*display: inline;*zoom: 1;padding: 4px 10px 4px;margin-bottom: 0;font-size: 13px;line-height: 18px;*line-height: 20px;color: #fff;text-align: center;text-shadow: 1px 1px 0 #9c5d09;text-decoration: none;vertical-align: middle;cursor: pointer;background-color: #ff8500;background-image: -ms-linear-gradient(top, #ffb423, #ff8500);background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffb423), to(#ff8500));background-image: -webkit-linear-gradient(top, #ffb423, #ff8500);background-image: -o-linear-gradient(top, #ffb423, #ff8500);background-image: linear-gradient(top, #ffb423, #ff8500);background-image: -moz-linear-gradient(top, #ffb423, #ff8500);background-repeat: repeat-x;border: 1px solid #ff9b00;border-color: #ff9b00 #fc9600 #bd7100;") %>
-        <% end %>
-        <%= link_to deal_url(featured.slug, :host => params[:domain_name]) do %>
-            <%= content_tag(:span, t("deals.index.view.view_deal"), :style => "display: inline-block;padding: 4px 10px 4px;margin-bottom: 0;font-size: 13px;line-height: 18px;color: #fff;text-align: center;background-color: #ff8500;") %>
+        <p>
+          <%= link_to deal_url(featured.slug, :host => params[:domain_name]), :style => "color:#000; text-decoration: none;" do %>
+            <%= content_tag(:span, st(featured.short_featured_description.to_s, {}, {:length => 300}), :class => "color:#000; text-decoration: none;") %>
+          <% end %>
+        </p>
+        <%= link_to deal_url(featured.slug, :host => params[:domain_name]), :style => "font-size: 13px;color: #fff;" do %>
+            <%= content_tag(:span, t("deals.index.view.view_deal"), :style => "display: inline-block;padding: 4px 10px 4px;margin-bottom: 0;font-size: 13px;line-height: 18px;color: #fff;text-align: center;background-color: #ff8500;border: 1px solid #ff9b00;") %>
         <% end %>
       </div>
     </td>
-    <td>
+    <td style="width:165px;">
      <div class="deal_thumb">
        <p>
          <%= link_to(image_tag(featured.images.first.url(:medium), :class => "thumb", :width => "150"), deal_url(featured.slug, :host => params[:domain_name])) if featured.images.first %>
