@@ -323,11 +323,11 @@ describe SubscriptionSubPeriod do
       if payment_gateway == :paypal
         { :txn_type => "cart", :txn_id => "irek", :payment_status => successful ? "Completed" : "Pending",
           :secret => APP_CONFIG[:paypal_secret], :receiver_email => APP_CONFIG[:paypal_email],
-          :mc_gross => BigDecimal(@buyer.cart.total.to_s).to_s, :invoice => @buyer.cart.id}
+          :mc_gross => BigDecimal(@invoice.total.to_s).to_s, :invoice => "i_#{@invoice.id}"}
       elsif payment_gateway == :quickpay
         params = { :transaction => "irek", :qpstat => successful ? "000" : "003",
           :merchantemail => APP_CONFIG[:quickpay_email],
-          :amount => "#{@buyer.cart.total_in_cents}", :ordernumber => @buyer.cart.id,
+          :amount => "#{@invoice.total * 100}", :ordernumber => "i_#{@invoice.id}",
           :msgtype => "capture", :merchant => "John Merchant"}
 
         params[:md5check] = ActiveMerchantCartPaymentNotification.new.calculate_md5_check(:capture, params)
@@ -348,22 +348,35 @@ describe SubscriptionSubPeriod do
         Subscription.payment_failed(profile_id, SubscriptionPaymentNotification.create)
         Subscription.payment_failed(profile_id, SubscriptionPaymentNotification.create)
 
-      @customer.active_subscription.subscription_sub_periods[0].invoice.should_not be_paid
+      @invoice = @customer.active_subscription.subscription_sub_periods[0].invoice
+      @invoice.should_not be_paid
     end
 
     context "Paypal" do
       it "invoice should be marked as paid when payment is completed" do
-        PaypalInvoicePaymentNotification.process(params)
+        PaypalInvoicePaymentNotification.process(params_for_response_from(:paypal))
+        @invoice.reload
+        @invoice.should be_paid
       end
 
       it "invoice should be marked as unpaid when payment failed" do
-
+        PaypalInvoicePaymentNotification.process(params_for_response_from(:paypal, false))
+        @invoice.reload
+        @invoice.should_not be_paid
       end
     end
 
     context "Quickpay" do
       it "invoice should be marked as paid when payment is completed" do
+        ActiveMerchantInvoicePaymentNotification.process(params_for_response_from(:quickpay))
+        @invoice.reload
+        @invoice.should be_paid
+      end
 
+      it "invoice should be marked as unpaid when payment failed" do
+        ActiveMerchantInvoicePaymentNotification.process(params_for_response_from(:quickpay, false))
+        @invoice.reload
+        @invoice.should_not be_paid
       end
     end
   end
