@@ -4,6 +4,7 @@ class ActiveMerchantPaymentNotificationsController < ApplicationController
 
 
   def create
+    throw params
     if respond_to?(params[:msgtype], true)
       send params[:msgtype]
     else
