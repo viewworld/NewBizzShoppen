@@ -20,6 +20,8 @@ class ChangeUsePaypalInSubscriptions < ActiveRecord::Migration
     rename_column :subscription_sub_periods, :paypal_retries, :payment_retries
     rename_column :subscription_sub_periods, :paypal_txn_id, :payment_txn_id
 
+    add_column :lead_purchases, :payment_type, :integer, :default => 0
+
     Subscription.all.each do |s|
       s.update_attributes(:payment_type => s.use_online_payment? ? Subscription::PAYPAL_PAYMENT_TYPE : Subscription::MANUAL_PAYMENT_TYPE)
     end

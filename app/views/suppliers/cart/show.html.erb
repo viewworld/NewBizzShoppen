@@ -1,6 +1,14 @@
 <column-mc:>
   <header back="true"><%= t("supplier.cart.show.view.header") %></header>
 
+  <%= t("common.payment_methods.choose_payment_method") %>
+  <%= form_tag suppliers_cart_path, {:method => :get} do %>
+      <%= radio_button_tag :payment_type, LeadPurchase::PAYPAL_PAYMENT_TYPE, @payment_type == LeadPurchase::PAYPAL_PAYMENT_TYPE, :onclick => "this.form.submit()" %>
+      <%= label_tag :payment_type_1, t("common.payment_methods.paypal") %>
+      <%= radio_button_tag :payment_type, LeadPurchase::QUICKPAY_PAYMENT_TYPE, @payment_type == LeadPurchase::QUICKPAY_PAYMENT_TYPE, :onclick => "this.form.submit()" %>
+      <%= label_tag :payment_type_2,  t("common.payment_methods.quickpay") %>
+  <% end %>
+
   <table class="cart_table">
     <cols>
       <col style="width: 50px"/>
@@ -45,24 +53,24 @@
       <td class="ta_c">
         <span class="green"><%= as_currency(@cart.total_netto, @cart.currency) %></span></td>
       <td class="ta_r">
-        <% if false %>
-        <%= form_tag APP_CONFIG[:paypal_url] do %>
-            <%= hidden_field_tag :cmd, "_s-xclick" %>
-            <%= hidden_field_tag :encrypted, @cart.paypal_encrypted(suppliers_lead_purchases_url, payment_notifications_url(:secret => APP_CONFIG[:paypal_secret])) %>
-            <ibt c="fltri">
-              <%= submit_tag t("supplier.cart.show.view.checkout_link") %>
-            </ibt>
-        <% end %>
-        <% end %>
-
-        <%= form_tag APP_CONFIG[:quickpay_window_url] do %>
-            <% @cart.hash_for_quickpay(suppliers_lead_purchases_url, suppliers_lead_purchases_url, active_merchant_payment_notifications_url, I18n.locale).each_pair do |key, value|  %>
-                <%= hidden_field_tag key, value %>
+        <% if @payment_type == LeadPurchase::PAYPAL_PAYMENT_TYPE %>
+            <%= form_tag APP_CONFIG[:paypal_url] do %>
+                <%= hidden_field_tag :cmd, "_s-xclick" %>
+                <%= hidden_field_tag :encrypted, @cart.paypal_encrypted(suppliers_lead_purchases_url, payment_notifications_url(:secret => APP_CONFIG[:paypal_secret])) %>
+                <ibt c="fltri">
+                  <%= submit_tag t("supplier.cart.show.view.checkout_link") %>
+                </ibt>
             <% end %>
+        <% else %>
+            <%= form_tag APP_CONFIG[:quickpay_window_url] do %>
+                <% @cart.hash_for_quickpay(suppliers_lead_purchases_url, suppliers_lead_purchases_url, active_merchant_payment_notifications_url, I18n.locale).each_pair do |key, value|  %>
+                    <%= hidden_field_tag key, value %>
+                <% end %>
 
-            <ibt c="fltri">
-              <%= submit_tag t("supplier.cart.show.view.checkout_link") %>
-            </ibt>
+                <ibt c="fltri">
+                  <%= submit_tag t("supplier.cart.show.view.checkout_link") %>
+                </ibt>
+            <% end %>
         <% end %>
       </td>
     </tr>

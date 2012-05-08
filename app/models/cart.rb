@@ -24,7 +24,7 @@ class Cart
           if @supplier.purchase_limit_reached?(lead)
             return :big_supplier_purchase_limit_reached
           end
-          purchase = @supplier.lead_single_purchases.create(:lead_id => lead.id, :paid => false, :purchased_by => @supplier.id)
+          purchase = @supplier.lead_single_purchases.create(:lead_id => lead.id, :paid => false, :purchased_by => @supplier.id, :payment_type => payment_type)
           if @supplier.big_buyer?
             purchase.update_attribute(:accessible_from, Time.now)
             return :bought_successful
@@ -136,4 +136,15 @@ class Cart
     vat_value
   end
 
+  def payment_type
+    if lead_purchases.empty?
+      if @supplier.big_buyer?
+        LeadPurchase::MANUAL_PAYMENT_TYPE
+      else
+        LeadPurchase::PAYPAL_PAYMENT_TYPE
+      end
+    else
+      lead_purchases.first.payment_type
+    end
+  end
 end

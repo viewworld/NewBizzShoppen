@@ -28,6 +28,10 @@ class LeadPurchaseBase < ActiveRecord::Base
                           RATING_ANOTHER_SUPPLIER, RATING_OTHER_REASON]
   RATING_LEVELS = [RATING_EXCELLENT, RATING_VERY_GOOD, RATING_SATISFACTORY] + UNSATISFACTORY_RATING_LEVELS
 
+  MANUAL_PAYMENT_TYPE = 0.freeze
+  PAYPAL_PAYMENT_TYPE = 1.freeze
+  QUICKPAY_PAYMENT_TYPE = 2.freeze
+
   scope :accessible, where("accessible_from IS NOT NULL")
   scope :with_owner, lambda { |owner_id| where("owner_id = ?", owner_id) }
   scope :with_assignee, lambda { |assignee_id| where("assignee_id = ?", assignee_id) }

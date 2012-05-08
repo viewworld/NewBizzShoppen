@@ -59,6 +59,10 @@ en:
     cache_cleared: "Cache has been cleared"
     show_all: "Show all"
     show_paginated: "Show paginated"
+    payment_methods:
+      choose_payment_method: "Choose payment method"
+      paypal: "PayPal"
+      quickpay: "Dankort"
   datetime:
     distance_in_words:
       x_minutes: "%{count} minutes"
