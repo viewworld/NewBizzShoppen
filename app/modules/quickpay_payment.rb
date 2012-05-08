@@ -28,7 +28,7 @@ module QuickpayPayment
 
   def self.included(base)
     base.class_eval do
-
+      attr_accessor :quickpay_params
     end
     base.send(:include, InstanceMethods)
   end
@@ -37,6 +37,17 @@ module QuickpayPayment
     public
     def calculate_md5_check(action, params)
       Digest::MD5.hexdigest(ActiveMerchant::Billing::QuickpayGateway::MD5_CHECK_FIELDS[4][action.to_sym].map{ |key| params[key.to_sym] }.join + APP_CONFIG[:quickpay_secret])
+    end
+
+    def quickpay_set_window_params(params)
+      self.quickpay_params = {:protocol => "4", :msgtype => "authorize",  :merchant => APP_CONFIG[:quickpay_merchant_id],
+                              :language => I18n.locale, :callbackurl => "http://testing.fairleads.com/active_menrchant_payment_notification",
+                              :autocapture => "1", :cardtypelock => "dankort", :splitpayment => "1" }.merge(params)
+      quickpay_params
+    end
+
+    def quickpay_md5_check
+      calculate_md5_check(quickpay_params[:msgtype], quickpay_params)
     end
   end
 end
