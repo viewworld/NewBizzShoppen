@@ -1,5 +1,6 @@
 class Cart
   include CartPaypalPayment
+  include CartQuickpayPayment
 
   attr_accessor :supplier
 

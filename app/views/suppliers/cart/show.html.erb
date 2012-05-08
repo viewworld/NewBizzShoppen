@@ -56,22 +56,13 @@
         <% end %>
 
         <%= form_tag APP_CONFIG[:quickpay_window_url] do %>
-            <%= hidden_field_tag :protocol, "4"  %>
-            <%= hidden_field_tag :msgtype, "authorize"  %>
-            <%= hidden_field_tag :merchant, APP_CONFIG[:quickpay_merchant_id]  %>
-            <%= hidden_field_tag :language, I18n.locale %>
-            <%= hidden_field_tag :ordernumber, @cart.id %>
-            <%= hidden_field_tag :amount, @cart.total_in_cents %>
-            <%= hidden_field_tag :currency, @cart.currency.to_s %>
-            <%= hidden_field_tag :continueurl, "http://quickpay.net/features/payment-window/ok.php" %>
-            <%= hidden_field_tag :cancelurl, "http://quickpay.net/features/payment-window/error.php" %>
-            <%= hidden_field_tag :callbackurl, "http://testing.fairleads.com/active_menrchant_payment_notification" %>
-            <%= hidden_field_tag :autocapture, "1" %>
-            <%= hidden_field_tag :cardtypelock, "dankort" %>
-            <%= hidden_field_tag :splitpayment, "1" %>
-            <%= hidden_field_tag :md5check, "?" %>
+            <% @cart.hash_for_quickpay(suppliers_lead_purchases_url, suppliers_lead_purchases_url, active_merchant_payment_notifications_url, I18n.locale).each_pair do |key, value|  %>
+                <%= hidden_field_tag key, value %>
+            <% end %>
 
-            <input type="submit" value="Open Quickpay payment window" />
+            <ibt c="fltri">
+              <%= submit_tag t("supplier.cart.show.view.checkout_link") %>
+            </ibt>
         <% end %>
       </td>
     </tr>
