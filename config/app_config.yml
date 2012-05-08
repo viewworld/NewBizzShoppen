@@ -55,7 +55,7 @@ staging:
 testing:
   paypal_email: seller_1292244681_biz@gmail.com
   paypal_secret: secret
-  paypal_cert_id: LHHDMRYKCAU8U
+  paypal_cert_id: 9BRAS4HRS3EXS
   paypal_url: "https://www.sandbox.paypal.com/cgi-bin/webscr"
   paypal_api_email: seller_1292244681_biz_api1.gmail.com
   paypal_api_password: 1292244690
