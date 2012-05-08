@@ -42,10 +42,6 @@ module QuickpayPayment
          :window_response => [:msgtype, :ordernumber, :amount, :currency, :time, :state, :qpstat, :qpstatmsg, :chstat, :chstatmsg, :merchant, :merchantemail, :transaction, :cardtype, :cardnumber, :cardexpire, :splitpayment, :fraudprobability, :fraudremarks, :fraudreport, :fee]
       }
 
-      if fields_type == :window_response and params[:msgtype] != "subscribe"
-        keys[:window_response] = keys[:window_response].delete(:cardexpire)
-      end
-
       Digest::MD5.hexdigest(keys[fields_type].map{ |key| params[key] }.join + APP_CONFIG[:quickpay_secret])
     end
 
