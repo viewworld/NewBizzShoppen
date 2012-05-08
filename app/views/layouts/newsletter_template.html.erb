@@ -3,13 +3,15 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <title>Fairleads</title>
-  <%= stylesheet_link_tag "newsletter" %>
+  <%#= stylesheet_link_tag "newsletter" %>
   <%= csrf_meta_tag %>
 </head>
 <body>
 
-<div class="content">
+<div class="content" style="background: #EDEDED;padding: 60px 40px;">
+  <div style="background:#fff;border:1px solid #ddd;width:800px;padding:15px;margin:0 auto;font-family: Helvetica, Arial, sans-serif;">
     <%= yield %>
+  </div>
 </div>
 
 </body>

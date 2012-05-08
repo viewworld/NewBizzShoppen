@@ -195,7 +195,7 @@ class Contact < AbstractLead
     if crm_option == Campaign::CRM_OPTION_OFF
       call_results
     else
-      select = "campaign_id IN (#{campaign.crm_campaigns+",#{campaign_id}"})"
+      select = "campaign_id IN (#{campaign.crm_campaigns})"
       if crm_option == Campaign::CRM_OPTION_COMPANY_NAME
         crm_select(select, ["company_name"])
       elsif crm_option == Campaign::CRM_OPTION_CVR

@@ -18,17 +18,25 @@
     </td>
   </tr>
   <tr>
-    <td>
+    <td style="width:600px;padding:5px;">
       <div class="deal_description">
-        <%= link_to(image_tag(featured.logo.url(:featured), :class => "logo"), deal_url(featured.slug)) if featured.logo %>
-        <p><%= link_to st(featured.short_featured_description.to_s, {}, {:length => 300}), deal_url(featured.slug, :host => params[:domain_name]), :style => "color:black; text-decoration: none;" %></p>
-        <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_url(featured.slug, :host => params[:domain_name]) %>
+        <%= link_to(image_tag(featured.logo.url(:featured), :class => "logo", :style => "border: none;"), deal_url(featured.slug)) if featured.logo %>
+        <p style="color:#000">
+          <%= link_to deal_url(featured.slug, :host => params[:domain_name]), :style => "text-decoration: none;" do %>
+              <span style="color:#000; text-decoration: none;">
+                <%= st(featured.short_featured_description.to_s, {}, {:length => 300}) %>
+              </span>
+          <% end %>
+        </p>
+        <%= link_to deal_url(featured.slug, :host => params[:domain_name]), :style => "font-size: 13px;color: #fff;" do %>
+            <%= content_tag(:span, t("deals.index.view.view_deal"), :style => "display: inline-block;padding: 4px 10px 4px;margin-bottom: 0;font-size: 13px;line-height: 18px;color: #fff;text-align: center;background-color: #ff8500;border: 1px solid #CC7A00;") %>
+        <% end %>
       </div>
     </td>
-    <td>
-     <div class="deal_thumb">
+    <td style="width:165px;padding:5px;">
+     <div class="deal_thumb" style="text-align: right">
        <p>
-         <%= link_to(image_tag(featured.images.first.url(:medium), :class => "thumb", :width => "150"), deal_url(featured.slug, :host => params[:domain_name])) if featured.images.first %>
+         <%= link_to(image_tag(featured.images.first.url(:medium), :class => "thumb", :width => "150", :style => "border:none;"), deal_url(featured.slug, :host => params[:domain_name])) if featured.images.first %>
        </p>
      </div>
     </td>
