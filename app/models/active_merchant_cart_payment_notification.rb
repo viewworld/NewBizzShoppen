@@ -30,7 +30,7 @@ class ActiveMerchantCartPaymentNotification < CartPaymentNotification
   end
 
   def self.process(params)
-    original_params = params.clone
+    original_params = Marshal.load(Marshal.dump(params))
     params[:ordernumber].to_s.slice!(0..7)
     payment_notification = ActiveMerchantCartPaymentNotification.create!(:params => original_params, :buyer_id => params[:ordernumber].to_i, :status => TRANSACTION_STATUSES[params[:qpstat]], :transaction_id => params[:transaction])
     if payment_notification.completed?
