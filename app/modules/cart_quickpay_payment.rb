@@ -12,7 +12,7 @@ module CartQuickpayPayment
         :language => language.to_s
     }
     values = base_hash_for_quickpay.merge(cart_values)
-    values.merge!(:md5check => calculate_md5_check(values[:msgtype], values))
+    values.merge!(:md5check => calculate_md5_check(values, :window_request))
 
     values
   end

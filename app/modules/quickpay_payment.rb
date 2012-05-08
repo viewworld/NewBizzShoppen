@@ -35,9 +35,18 @@ module QuickpayPayment
 
   module InstanceMethods
     public
-    def calculate_md5_check(action, params)
-      keys = [:protocol, :msgtype, :merchant, :language, :ordernumber, :amount, :currency, :continueurl, :cancelurl, :callbackurl, :autocapture, :autofee, :cardtypelock, :description, :group, :testmode, :splitpayment]
-      Digest::MD5.hexdigest(keys.map{ |key| params[key] }.join + APP_CONFIG[:quickpay_secret])
+    def calculate_md5_check(params, fields_type)
+      keys = {
+         :window_request => [:protocol, :msgtype, :merchant, :language, :ordernumber, :amount, :currency, :continueurl, :cancelurl, :callbackurl,
+                             :autocapture, :autofee, :cardtypelock, :description, :group, :testmode, :splitpayment],
+         :window_response => [:msgtype, :ordernumber, :amount, :currency, :time, :state, :qpstat, :qpstatmsg, :chstat, :chstatmsg, :merchant, :merchantemail, :transaction, :cardtype, :cardnumber, :cardexpire, :splitpayment, :fraudprobability, :fraudremarks, :fraudreport, :fee]
+      }
+
+      if fields_type == :window_response and params[:msgtype] != "subscribe"
+        keys[:window_response] = keys[:window_response].delete(:cardexpire)
+      end
+
+      Digest::MD5.hexdigest(keys[fields_type].map{ |key| params[key] }.join + APP_CONFIG[:quickpay_secret])
     end
 
     def base_hash_for_quickpay

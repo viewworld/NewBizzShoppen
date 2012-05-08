@@ -25,13 +25,14 @@ class ActiveMerchantCartPaymentNotification < CartPaymentNotification
   public
 
   def completed?
-   status == TRANSACTION_STATUSES[APPROVED] && params[:md5check] == calculate_md5_check(:capture, params) &&
+   status == TRANSACTION_STATUSES[APPROVED] && params[:md5check] == calculate_md5_check(params, :window_response) &&
         params[:merchantemail] == APP_CONFIG[:quickpay_email] && params[:amount].to_i == supplier.cart.total_in_cents
   end
 
   def self.process(params)
+    original_params = params.clone
     params[:ordernumber].to_s.slice!(0..7)
-    payment_notification = ActiveMerchantCartPaymentNotification.create!(:params => params, :buyer_id => params[:ordernumber].to_i, :status => TRANSACTION_STATUSES[params[:qpstat]], :transaction_id => params[:transaction])
+    payment_notification = ActiveMerchantCartPaymentNotification.create!(:params => original_params, :buyer_id => params[:ordernumber].to_i, :status => TRANSACTION_STATUSES[params[:qpstat]], :transaction_id => params[:transaction])
     if payment_notification.completed?
       payment_notification.supplier.cart.paid!
     end
