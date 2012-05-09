@@ -132,7 +132,7 @@ describe Cart do
           :amount => "#{@buyer.cart.total_in_cents}", :ordernumber => @buyer.cart.id,
           :msgtype => "capture", :merchant => "John Merchant"}
 
-        params[:md5check] = ActiveMerchantCartPaymentNotification.new.calculate_md5_check(:capture, params)
+        params[:md5check] = ActiveMerchantCartPaymentNotification.new.calculate_md5_check(params, :window_response)
         params
       end
     end
