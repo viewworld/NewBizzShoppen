@@ -82,9 +82,11 @@ class Members::LeadsController < Members::MemberController
 
   def redirect_to_payment_gateway
     return redirect_to root_path unless @lead.deal.voucher_numbers.where(:user_id => current_user.id, :state => "used").first.blank?
-    @voucher_number = @lead.deal.voucher_numbers.available_for_now(Time.now).first
+    @voucher_number = @lead.deal.voucher_numbers.reserved_for_user_now(current_user, Time.now).first
+
+    @voucher_number = @lead.deal.voucher_numbers.available_for_now(Time.now).first if @voucher_number.nil? and params[:check_voucher] != "1"
     return redirect_to root_path if @voucher_number.blank?
-    @voucher_number.reserve!(current_user)
+    @voucher_number.reserve!(current_user) unless params[:check_voucher] == "1"
   end
 
   def pdf

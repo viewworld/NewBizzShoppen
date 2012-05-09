@@ -86,7 +86,7 @@ describe Deal do
           :ordernumber => "v_#{@voucher_number.deal_unique_id}_#{@voucher_number.number}_#{@voucher_number.user_id}",
           :msgtype => "capture", :merchant => "John Merchant"}
 
-        params[:md5check] = ActiveMerchantVoucherPaymentNotification.new.calculate_md5_check(:capture, params)
+        params[:md5check] = ActiveMerchantVoucherPaymentNotification.new.calculate_md5_check(params, :window_response)
         params
       end
     end

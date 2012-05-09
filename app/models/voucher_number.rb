@@ -1,5 +1,6 @@
 class VoucherNumber < ActiveRecord::Base
   include VoucherPaypalPayment
+  include VoucherQuickpayPayment
 
   belongs_to :deal
   belongs_to :user
@@ -15,6 +16,7 @@ class VoucherNumber < ActiveRecord::Base
   validates_format_of :number, :with => /\A[A-Z\d]{9}\z/, :message => I18n.t("models.voucher_number.validates_format_of_number")
   validates_inclusion_of :state, :in => STATES
 
+  scope :reserved_for_user_now, lambda { |user, time| where("state = '#{STATE_NEW}' and user_id = ? and reserved_until > ?", user.id, time) }
   scope :available_for_now, lambda { |time| where("state = '#{STATE_NEW}' and (reserved_until is NULL or reserved_until < ?)", time) }
   scope :can_be_deleted, lambda { |time| where("state = '#{STATE_NEW}' and (reserved_until is NULL or reserved_until < ?)", time-DELETE_PERMISSION_DELAY) }
   scope :can_not_be_deleted, lambda { |time| where("state <> '#{STATE_NEW}' or (state = '#{STATE_NEW}' and reserved_until > ?)", time-DELETE_PERMISSION_DELAY) }
