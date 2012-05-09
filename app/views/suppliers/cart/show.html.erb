@@ -1,12 +1,14 @@
 <column-mc:>
   <header back="true"><%= t("supplier.cart.show.view.header") %></header>
 
-  <%= t("common.payment_methods.choose_payment_method") %>
-  <%= form_tag suppliers_cart_path, {:method => :get} do %>
-      <%= radio_button_tag :payment_type, LeadPurchase::PAYPAL_PAYMENT_TYPE, @payment_type == LeadPurchase::PAYPAL_PAYMENT_TYPE, :onclick => "this.form.submit()" %>
-      <%= label_tag :payment_type_1, t("common.payment_methods.paypal") %>
-      <%= radio_button_tag :payment_type, LeadPurchase::QUICKPAY_PAYMENT_TYPE, @payment_type == LeadPurchase::QUICKPAY_PAYMENT_TYPE, :onclick => "this.form.submit()" %>
-      <%= label_tag :payment_type_2,  t("common.payment_methods.quickpay") %>
+  <% if !@cart.empty? and @cart.currency.to_s == "DKK" %>
+      <%= t("common.payment_methods.choose_payment_method") %>
+      <%= form_tag suppliers_cart_path, {:method => :get} do %>
+          <%= radio_button_tag :payment_type, LeadPurchase::PAYPAL_PAYMENT_TYPE, @payment_type == LeadPurchase::PAYPAL_PAYMENT_TYPE, :onclick => "this.form.submit()" %>
+          <%= label_tag :payment_type_1, t("common.payment_methods.paypal") %>
+          <%= radio_button_tag :payment_type, LeadPurchase::QUICKPAY_PAYMENT_TYPE, @payment_type == LeadPurchase::QUICKPAY_PAYMENT_TYPE, :onclick => "this.form.submit()" %>
+          <%= label_tag :payment_type_2,  t("common.payment_methods.quickpay") %>
+      <% end %>
   <% end %>
 
   <table class="cart_table">
