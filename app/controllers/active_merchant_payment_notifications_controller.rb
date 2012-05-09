@@ -7,8 +7,8 @@ class ActiveMerchantPaymentNotificationsController < ApplicationController
     if respond_to?(params[:msgtype], true)
       send params[:msgtype]
     else
-      upn = ActiveMerchantUnknownPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
-      EmailNotification.notify("Unhandled txn_type: #{params[:txn_type]}", "<p>ActiveMerchantUnknownPaymentNotification: #{upn.id}</p> <>br /> Backtrace: <p>#{upn.params.inspect}</p>")
+      upn = ActiveMerchantUnknownPaymentNotification.create(:params => params, :buyer_id => params[:ordernumber].to_i, :status => QuickpayPayment::TRANSACTION_STATUSES[params[:qpstat]], :transaction_id => params[:txn_id])
+      EmailNotification.notify("Unhandled txn_type: #{params[:msgtype]}", "<p>ActiveMerchantUnknownPaymentNotification: #{upn.id}</p> <>br /> Backtrace: <p>#{upn.params.inspect}</p>")
     end
     render :nothing => true
   end
@@ -20,7 +20,7 @@ class ActiveMerchantPaymentNotificationsController < ApplicationController
   private
 
   def capture
-    case params[:invoice]
+    case params[:ordernumber]
       when /^v_/
         ActiveMerchantVoucherPaymentNotification.process(params)
       when /^i_/

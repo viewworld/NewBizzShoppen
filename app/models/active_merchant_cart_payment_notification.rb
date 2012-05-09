@@ -8,7 +8,7 @@ class ActiveMerchantCartPaymentNotification < CartPaymentNotification
 
   def check_if_duplicated
     if status == "Completed"
-      unless ActiveMerchantCartPaymentNotification.first(:conditions => { :transaction_id => transaction_id, :buyer_id => buyer_id, :status => "Completed" }).nil?
+      unless ActiveMerchantCartPaymentNotification.first(:conditions => { :transaction_id => transaction_id, :buyer_id => buyer_id, :status => TRANSACTION_STATUSES[APPROVED] }).nil?
         self.status = "Duplicated"
       end
     end
