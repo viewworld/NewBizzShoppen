@@ -2,15 +2,29 @@
   <header><%= t("unconfirmed_payable_subscriptions.show.view.header", :payment_gateway => "Paypal") %></header>
 
   <div class="frm_tiny pdd_15 ta_c">
-  <% if @paypal_recurring.checkout? %>
-    <h2><%= t("unconfirmed_payable_subscriptions.show.view.message", :payment_gateway => "Paypal", :subscription => current_user.active_subscription.name) %></h2>
-    <p class="pdd_10 grid_c">
-      <%= bt_link_to nil, t("unconfirmed_payable_subscriptions.show.view.button_confirm"), @paypal_recurring.checkout_url, :method => :get %>
-    </p>
+
+  <% if current_user.active_subscription.paypal? %>
+      <% if @paypal_recurring.checkout? %>
+        <h2><%= t("unconfirmed_payable_subscriptions.show.view.message", :payment_gateway => "PayPal", :subscription => current_user.active_subscription.name) %></h2>
+        <p class="pdd_10 grid_c">
+          <%= bt_link_to nil, t("unconfirmed_payable_subscriptions.show.view.button_confirm"), @paypal_recurring.checkout_url, :method => :get %>
+        </p>
+      <% else %>
+        <h2><%= t("unconfirmed_payable_subscriptions.show.view.message_failure", :subscription => current_user.active_subscription.name) %></h2>
+            <br/>
+            <%=@paypal_recurring.response_errors  %>
+      <% end %>
   <% else %>
-    <h2><%= t("unconfirmed_payable_subscriptions.show.view.message_failure", :subscription => current_user.active_subscription.name) %></h2>
-        <br/>
-        <%=@paypal_recurring.response_errors  %>
+    <h2><%= t("unconfirmed_payable_subscriptions.show.view.message", :payment_gateway => "Quickpay", :subscription => current_user.active_subscription.name) %></h2>
+    <%= form_tag APP_CONFIG[:quickpay_window_url] do %>
+        <% current_user.active_subscription.hash_for_quickpay(my_profile_url, my_profile_url, active_merchant_payment_notifications_url, I18n.locale).each_pair do |key, value|  %>
+            <%= hidden_field_tag key, value %>
+        <% end %>
+
+        <ibt c="fltri">
+          <%= submit_tag t("unconfirmed_payable_subscriptions.show.view.button_confirm") %>
+        </ibt>
+    <% end %>
   <% end %>
     <clb/>
   </div>

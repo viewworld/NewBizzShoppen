@@ -1,6 +1,7 @@
 class Subscription < ActiveRecord::Base
 
   include CommonSubscriptions
+  include SubscriptionQuickpayPayment
 
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
   has_many :subscription_sub_periods, :order => "start_date ASC", :dependent => :destroy
@@ -433,6 +434,14 @@ class Subscription < ActiveRecord::Base
 
   def total_brutto_billing_for_sub_period
     subscription_sub_periods.first.total_brutto_billing
+  end
+
+  def paypal?
+    use_online_payment? and payment_type == PAYPAL_PAYMENT_TYPE
+  end
+
+  def quickpay?
+    use_online_payment? and payment_type == QUICKPAY_PAYMENT_TYPE
   end
 
   private
