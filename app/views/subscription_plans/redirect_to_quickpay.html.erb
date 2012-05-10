@@ -1,7 +1,9 @@
 <column-mc:>
   <header back="true">Redirecting to quickpay...</header>
     <%= form_tag APP_CONFIG[:quickpay_window_url], :id => "quickpay_form" do %>
-        <% @subscription_plan.hash_for_quickpay(my_profile_url, my_profile_url, active_merchant_payment_notifications_url(:target_subscription_plan_id => @subscription_plan.id), I18n.locale).each_pair do |key, value|  %>
+        <% @subscription_plan.hash_for_quickpay(my_profile_url, my_profile_url,
+                                                              active_merchant_payment_notifications_url(:target_subscription_plan_id => @subscription_plan.id),
+                                                              I18n.locale, current_user.active_subscription).each_pair do |key, value|  %>
             <%= hidden_field_tag key, value %>
         <% end %>
     <% end %>
