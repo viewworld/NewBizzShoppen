@@ -12,15 +12,18 @@ class ActiveMerchantSubscriptionPaymentNotification < SubscriptionPaymentNotific
             params[:merchantemail] == APP_CONFIG[:quickpay_email]
 
       if active_subscription
+        user = active_subscription.user
         if active_subscription.unconfirmed_payment?
           active_subscription.confirm_payment!
         elsif subscription_plan and active_subscription.total_billing < subscription_plan.total_billing
-          active_subscription.user.upgrade_subscription!(subscription_plan)
+          user.upgrade_subscription!(subscription_plan)
         elsif subscription_plan and active_subscription.total_billing > subscription_plan.total_billing
-          active_subscription.user.downgrade_subscription!(subscription_plan)
+          user.downgrade_subscription!(subscription_plan)
         else
           EmailNotification.notify("Quickpay subscription confirmation failed: target subscription not found", "<p>ActiveMerchantSubscriptionPaymentNotification: #{payment_notification.id}</p> <>br /> Backtrace: <p>#{payment_notification.params.inspect}</p>")
+          return false
         end
+          user.active_subscription.update_attributes(:payment_profile_id => payment_notification.transaction_id)
       else
         EmailNotification.notify("Quickpay subscription confirmation failed: subscription not found", "<p>ActiveMerchantSubscriptionPaymentNotification: #{payment_notification.id}</p> <>br /> Backtrace: <p>#{payment_notification.params.inspect}</p>")
       end

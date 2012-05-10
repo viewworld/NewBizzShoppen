@@ -11,8 +11,8 @@ class SubscriptionPlansController < SecuredController
     if (@subscription_plan.is_a?(SubscriptionPlan) and @subscription_plan.use_online_payment? and (!@subscription_plan.free_period_can_be_applied_to?(current_user) or @subscription_plan.payment_billing_at_start?)) or
         (@subscription_plan.is_a?(Subscription) and @subscription_plan.cancelled_in_payment_gateway? and @subscription_plan.next_billing_cycle_for_recurring_payment_renewal)
       paypal_recurring = PaypalRecurringPayment.new(:subscription_plan => @subscription_plan,
-                                                    :return_url => paypal_confirmed_my_profile_subscription_plan_url(@subscription_plan),
-                                                    :cancel_url => paypal_canceled_my_profile_subscription_plan_url(@subscription_plan),
+                                                    :return_url => payment_confirmed_my_profile_subscription_plan_url(@subscription_plan),
+                                                    :cancel_url => payment_canceled_my_profile_subscription_plan_url(@subscription_plan),
                                                     :ipn_url => payment_notification_url)
 
       if paypal_recurring.checkout?
