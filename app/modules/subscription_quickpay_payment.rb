@@ -15,7 +15,7 @@ module SubscriptionQuickpayPayment
     }
     values = base_hash_for_quickpay.merge(voucher_values)
     values.merge!(:md5check => calculate_md5_check(values, :window_request))
-
+    values.delete(:autocapture)
     values
   end
 end
