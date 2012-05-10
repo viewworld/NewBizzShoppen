@@ -41,6 +41,9 @@ class SignInController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        if @user.subscription_required? and @user.active_subscription.use_online_payment?
+          @user.active_subscription.update_attribute(:payment_type, params[:payment_by_quickpay] ? Subscription::QUICKPAY_PAYMENT_TYPE : Subscription::PAYPAL_PAYMENT_TYPE)
+        end
         success_notice = I18n.t("flash.accounts.create.no_verification") if @user.confirmed?
 
         if ["fairdeals", "fairleads"].include?(session[:site]) and @user.has_any_role?(:member, :category_supplier, :supplier) and @user.confirmed? and @user.rpx_identifier.blank?

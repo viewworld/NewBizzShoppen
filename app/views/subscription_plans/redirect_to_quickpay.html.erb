@@ -1,0 +1,14 @@
+<column-mc:>
+    <%= form_tag APP_CONFIG[:quickpay_window_url], :id => "quickpay_form" do %>
+        <% @subscription_plan.hash_for_quickpay(my_profile_url, my_profile_url, active_merchant_payment_notifications_url, I18n.locale).each_pair do |key, value|  %>
+            <%= hidden_field_tag key, value %>
+        <% end %>
+    <% end %>
+</column-mc:>
+<js:>
+  <script type="text/javascript">
+      $(document).ready(function() {
+          $('#quickpay_form').submit();
+      });
+  </script>
+</js:>

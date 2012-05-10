@@ -478,3 +478,19 @@ function check_notifications() {
     });
     setTimeout("check_notifications()", notification_interval);
 }
+
+function show_hide_payment_buttons(online_payment, currency_code){
+    $('#online_payment_quickapay_button_div').hide();
+    $('#online_payment_paypal_button_div').hide();
+    $('#common_button_div').hide();
+    if(online_payment){
+        $('#online_payment_paypal_button_div').show();
+        if(currency_code == "DKK"){
+            $('#online_payment_quickapay_button_div').show();
+        }
+    }
+    else
+    {
+        $('#common_button_div').show();
+    }
+}

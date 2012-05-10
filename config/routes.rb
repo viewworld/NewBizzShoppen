@@ -416,6 +416,7 @@ Nbs::Application.routes.draw do
         get 'payment_confirmed'
         get 'payment_canceled'
         get 'payment_renew'
+        get 'redirect_to_quickpay'
       end
     end
   end

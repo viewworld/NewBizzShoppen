@@ -2,7 +2,7 @@ class SubscriptionPlansController < SecuredController
 
   before_filter :fetch_user
   before_filter :fetch_subscription_plan, :except => [:cancel]
-  before_filter :handle_online_payable_subscription, :except => [:payment_confirmed, :payment_canceled, :cancel]
+  before_filter :handle_online_payable_subscription, :except => [:payment_confirmed, :payment_canceled, :cancel, :redirect_to_quickpay]
   skip_before_filter :redirect_to_payment_confirmation
 
   private
@@ -10,15 +10,20 @@ class SubscriptionPlansController < SecuredController
   def handle_online_payable_subscription
     if (@subscription_plan.is_a?(SubscriptionPlan) and @subscription_plan.use_online_payment? and (!@subscription_plan.free_period_can_be_applied_to?(current_user) or @subscription_plan.payment_billing_at_start?)) or
         (@subscription_plan.is_a?(Subscription) and @subscription_plan.cancelled_in_payment_gateway? and @subscription_plan.next_billing_cycle_for_recurring_payment_renewal)
-      paypal_recurring = PaypalRecurringPayment.new(:subscription_plan => @subscription_plan,
-                                                    :return_url => payment_confirmed_my_profile_subscription_plan_url(@subscription_plan),
-                                                    :cancel_url => payment_canceled_my_profile_subscription_plan_url(@subscription_plan),
-                                                    :ipn_url => payment_notification_url)
 
-      if paypal_recurring.checkout?
-        redirect_to paypal_recurring.checkout_url
+      if params[:payment_type].nil? or params[:payment_type].to_i == Subscription::PAYPAL_PAYMENT_TYPE
+        paypal_recurring = PaypalRecurringPayment.new(:subscription_plan => @subscription_plan,
+                                                      :return_url => payment_confirmed_my_profile_subscription_plan_url(@subscription_plan),
+                                                      :cancel_url => payment_canceled_my_profile_subscription_plan_url(@subscription_plan),
+                                                      :ipn_url => payment_notification_url)
+
+        if paypal_recurring.checkout?
+          redirect_to paypal_recurring.checkout_url
+        else
+          redirect_to :back
+        end
       else
-        redirect_to :back
+        redirect_to redirect_to_quickpay_my_profile_subscription_plan_path(@subscription_plan)
       end
     end
   end
@@ -98,6 +103,10 @@ class SubscriptionPlansController < SecuredController
       flash[:alert] = @user.errors.full_messages
     end
     redirect_to my_profile_path
+  end
+
+  def redirect_to_quickpay
+    @subscription_plan = SubscriptionPlan.find(params[:id])
   end
 
 end

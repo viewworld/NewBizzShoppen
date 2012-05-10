@@ -82,9 +82,21 @@
               <% end %>
           <% end %>
         </div>
-        <ibt c="fltri" icon="plus">
-          <%= form.submit t("member_accounts.new.view.button_create_account") %>
-        </ibt>
+        <div id="online_payment_quickapay_button_div" style="display: none;">
+            <ibt c="fltri" icon="plus">
+              <%= form.submit t("common.payment_methods.quickpay_button"), :name => "payment_by_quickpay" %>
+            </ibt>
+        </div>
+        <div id="online_payment_paypal_button_div" style="display: none;">
+            <ibt c="fltri" icon="plus">
+              <%= form.submit t("common.payment_methods.paypal_button"), :name => "payment_by_paypal" %>
+            </ibt>
+        </div>
+        <div id="common_button_div">
+            <ibt c="fltri" icon="plus">
+              <%= form.submit t("member_accounts.new.view.button_create_account") %>
+            </ibt>
+        </div>
         <%= bt_link_to nil, t("shared.accounts.new_account_form.button_cancel"), modal_box ? "javascript:$.colorbox.close()" : root_path, :class => "bt_grey fltr" %>
       </param:actions>
     </frm>
