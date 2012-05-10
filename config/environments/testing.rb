@@ -26,8 +26,17 @@ Nbs::Application.configure do
   #Required by Devise
   config.action_mailer.default_url_options = {:host => 'testing.fairleads.com'}
 
-  config.action_mailer.delivery_method     = :postmark
-  config.action_mailer.postmark_settings = { :api_key => "a132d83a-7585-444a-b3cf-a522acfcb9fb" }
+  # Enable serving of images, stylesheets, and javascripts from an asset server
+  #config.action_controller.asset_host = "http://static-fairleads.s3.amazonaws.com"
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {:address => "smtp.gmail.com",
+                                        :port => 587,
+                                        :domain => 'newbizzshoppen.com',
+                                        :user_name => 'selleo.test1@gmail.com',
+                                        :password => 'selleotest',
+                                        :authentication => 'plain',
+                                        :enable_starttls_auto => true}
 end
 
 I18n.default_locale = :"en"
