@@ -4,6 +4,7 @@ class SubscriptionPlan < ActiveRecord::Base
   include RoleModel
   include CommonSubscriptions
   include PaypalPayment
+  include SubscriptionQuickpayPayment
 
   ROLES = [:supplier, :category_supplier, :member]
 
