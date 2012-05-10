@@ -1,5 +1,7 @@
 class ActiveMerchantSubscriptionPaymentNotification < SubscriptionPaymentNotification
 
+  include QuickpayPayment
+
   def self.process(params)
     subscription_id = params[:ordernumber].split("_").last
     active_subscription = Subscription.find_by_id(subscription_id)
