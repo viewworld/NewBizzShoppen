@@ -330,7 +330,7 @@ describe SubscriptionSubPeriod do
           :amount => "#{@invoice.total * 100}", :ordernumber => "i_#{@invoice.id}",
           :msgtype => "capture", :merchant => "John Merchant"}
 
-        params[:md5check] = ActiveMerchantCartPaymentNotification.new.calculate_md5_check(:capture, params)
+        params[:md5check] = ActiveMerchantCartPaymentNotification.new.calculate_md5_check(params, :window_response)
         params
       end
     end
