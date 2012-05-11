@@ -17,7 +17,7 @@
   <% else %>
     <h2><%= t("unconfirmed_payable_subscriptions.show.view.message", :payment_gateway => "Quickpay", :subscription => current_user.active_subscription.name) %></h2>
     <%= form_tag APP_CONFIG[:quickpay_window_url] do %>
-        <% current_user.active_subscription.hash_for_quickpay(my_profile_url, my_profile_url, active_merchant_payment_notifications_url, I18n.locale).each_pair do |key, value|  %>
+        <% current_user.active_subscription.hash_for_quickpay(my_profile_url(:scp => true), my_profile_url, active_merchant_payment_notifications_url, I18n.locale).each_pair do |key, value|  %>
             <%= hidden_field_tag key, value %>
         <% end %>
 
