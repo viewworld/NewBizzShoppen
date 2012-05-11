@@ -58,7 +58,8 @@ class SubscriptionPlansController < SecuredController
     end
 
 
-    @user.active_subscription.update_attributes(:payment_profile_id => paypal_recurring.profile_id, :payment_invoice_id => @user.active_subscription.id)
+    @user.active_subscription.update_attributes(:payment_profile_id => paypal_recurring.profile_id, :payment_invoice_id => @user.active_subscription.id,
+                                                :payment_type => Subscription::PAYPAL_PAYMENT_TYPE)
 
     redirect_to my_profile_path(:scp => true)
   end
