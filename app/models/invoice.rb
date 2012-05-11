@@ -17,6 +17,7 @@ class Invoice < ActiveRecord::Base
   include ScopedSearch::Model
   include MultiScopedOrder
   include InvoicePaypalPayment
+  include InvoiceQuickpayPayment
 
   belongs_to :user
   belongs_to :currency
