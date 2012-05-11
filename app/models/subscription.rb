@@ -403,7 +403,11 @@ class Subscription < ActiveRecord::Base
   end
 
   def cancel_payment_profile
-    PaypalRecurringProfile.new(payment_profile_id).cancel_profile if payment_profile_id
+    if paypal?
+      PaypalRecurringProfile.new(payment_profile_id).cancel_profile if payment_profile_id
+    else
+      ActiveMerchantRecurringProfile.new(payment_profile_id).cancel_profile if payment_profile_id
+    end
   end
 
   def send_payment_profile_reactivation_link

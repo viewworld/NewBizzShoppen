@@ -802,11 +802,16 @@ class User < ActiveRecord::Base
   end
 
   def downgrade_online_payment(subscription_plan, totalbillingcycles)
-    if profile = PaypalRecurringProfile.new(active_subscription.paypal_profile_id) and profile.update_profile(:totalbillingcycles => totalbillingcycles)
-      downgrade_regular(subscription_plan)
+    if active_subscription.paypal?
+      if profile = PaypalRecurringProfile.new(active_subscription.paypal_profile_id) and profile.update_profile(:totalbillingcycles => totalbillingcycles)
+        downgrade_regular(subscription_plan)
+      else
+        self.errors.add(:base, profile.result["L_LONGMESSAGE0"])
+        false
+      end
     else
-      self.errors.add(:base, profile.result["L_LONGMESSAGE0"])
-      false
+      downgrade_regular(subscription_plan)
+      true
     end
   end
 
@@ -861,10 +866,11 @@ class User < ActiveRecord::Base
   end
 
   def cancel_online_payment(_method, totalbillingcycles)
-    if profile = PaypalRecurringProfile.new(active_subscription.payment_profile_id) and profile.update_profile(:totalbillingcycles => totalbillingcycles)
+    if (active_subscription.paypal? and profile = PaypalRecurringProfile.new(active_subscription.payment_profile_id) and profile.update_profile(:totalbillingcycles => totalbillingcycles)) or
+        profile = ActiveMerchantRecurringProfile.new(active_subscription.payment_profile_id) and profile.cancel_profile
       cancel_regular(_method)
     else
-      self.errors.add(:base, profile.result["L_LONGMESSAGE0"])
+      self.errors.add(:base, active_subscription.paypal? ? profile.result["L_LONGMESSAGE0"] : profile.result.message)
       false
     end
   end
