@@ -86,7 +86,11 @@ class Members::LeadsController < Members::MemberController
 
     @voucher_number = @lead.deal.voucher_numbers.available_for_now(Time.now).first if @voucher_number.nil? and params[:check_voucher] != "1"
     return redirect_to root_path if @voucher_number.blank?
-    @voucher_number.reserve!(current_user) unless params[:check_voucher] == "1"
+    unless params[:check_voucher] == "1"
+      @voucher_number.reserve!(current_user)
+      @voucher_number.update_attribute(:payment_type, (params[:payment_type].nil? or params[:payment_type] == "1") ?
+                                        Subscription::PAYPAL_PAYMENT_TYPE : Subscription::QUICKPAY_PAYMENT_TYPE)
+    end
   end
 
   def pdf

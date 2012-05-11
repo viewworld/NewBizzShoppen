@@ -13,6 +13,7 @@ class ChangeUsePaypalInSubscriptions < ActiveRecord::Migration
     rename_column :subscriptions, :paypal_retries, :payment_retries
     rename_column :subscriptions, :paypal_retries_counter, :payment_retries_counter
     add_column :subscriptions, :payment_type, :integer, :default => 0
+    add_column :voucher_numbers, :payment_type, :integer, :default => 1
 
     rename_column :subscription_sub_periods, :paypal_paid_auto, :payment_paid_auto
     rename_column :subscription_sub_periods, :paypal_paid_manual, :payment_paid_manual
@@ -25,6 +26,8 @@ class ChangeUsePaypalInSubscriptions < ActiveRecord::Migration
     Subscription.all.each do |s|
       s.update_attributes(:payment_type => s.use_online_payment? ? Subscription::PAYPAL_PAYMENT_TYPE : Subscription::MANUAL_PAYMENT_TYPE)
     end
+
+    execute "UPDATE voucher_numbers SET payment_type = 1 WHERE payment_type is NULL"
 
     execute %{
               CREATE OR REPLACE VIEW debtors as

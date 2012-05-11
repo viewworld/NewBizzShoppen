@@ -2351,6 +2351,7 @@ en:
         view:
           redirecting_to_paypal: "redirecting to paypal, please wait..."
           checkout_link: "Pay"
+          header: "Payment for voucher"
     lead_templates:
       index:
         view:
@@ -4630,6 +4631,7 @@ en:
 
     subscription_upgrade_to_payable: "You need to upgrade to any payable subscription in order to get the deal %{header}"
     subscription_upgrade_to_premium_deals: "You need to upgrade to subscription that allows premium deals in order to get deal %{header}"
+    redirecting_to_quickpay: "Redirecting to quickpay..."
   unconfirmed_payable_subscriptions:
     show:
       view:

@@ -1,5 +1,6 @@
 <column-mc:>
   <% if @voucher_number.deal.currency.to_s == "DKK" %>
+      <header back="false"><%= t("member.leads.redirect_to_payment_gateway.view.header") %></header>
       <%= t("common.payment_methods.choose_payment_method") %>
       <%= form_tag redirect_to_payment_gateway_members_lead_path(@lead), {:method => :get} do %>
           <%= radio_button_tag :payment_type, LeadPurchase::PAYPAL_PAYMENT_TYPE, (params[:payment_type].to_i == 0 or params[:payment_type].to_i == LeadPurchase::PAYPAL_PAYMENT_TYPE), :onclick => "this.form.submit()" %>
@@ -21,10 +22,8 @@
           });
       </script>
 
-      redirecting to paypal, please wait...
       <%= t("member.leads.redirect_to_payment_gateway.view.redirecting_to_paypal") %>
   <% end %>
-
 
   <% if params[:payment_type].to_i == 0 or params[:payment_type].to_i == LeadPurchase::PAYPAL_PAYMENT_TYPE %>
       <%= form_tag APP_CONFIG[:paypal_url], :id => "submit_voucher" do %>
@@ -47,5 +46,5 @@
           </ibt>
       <% end %>
   <% end %>
-
+    <clb/>
 </column-mc:>
