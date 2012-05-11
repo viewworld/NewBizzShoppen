@@ -20,7 +20,7 @@ class PaymentGatewayUnpaidInvoicesController < SecuredController
       flash[:notice] = I18n.t("payment_gateway_unpaid_invoices.flash.notice.invoice_already_paid", :number => @invoice.full_number) if @invoice and @invoice.paid?
       redirect_to root_path
     else
-      @subscription = SubscriptionSubPeriod.where(:invoice_id => invoice.id).first.subscription
+      @subscription = SubscriptionSubPeriod.where(:invoice_id => @invoice.id).first.subscription
     end
   end
 end
