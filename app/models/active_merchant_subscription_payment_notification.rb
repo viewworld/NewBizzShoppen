@@ -23,7 +23,8 @@ class ActiveMerchantSubscriptionPaymentNotification < SubscriptionPaymentNotific
           EmailNotification.notify("Quickpay subscription confirmation failed: target subscription not found", "<p>ActiveMerchantSubscriptionPaymentNotification: #{payment_notification.id}</p> <>br /> Backtrace: <p>#{payment_notification.params.inspect}</p>")
           return false
         end
-          user.active_subscription.update_attributes(:payment_profile_id => payment_notification.transaction_id, :payment_type => Subscription::QUICKPAY_PAYMENT_TYPE)
+          user.active_subscription.update_attributes(:payment_profile_id => payment_notification.transaction_id, :payment_type => Subscription::QUICKPAY_PAYMENT_TYPE,
+                                                     :payment_order_number => params[:ordernumber])
       else
         EmailNotification.notify("Quickpay subscription confirmation failed: subscription not found", "<p>ActiveMerchantSubscriptionPaymentNotification: #{payment_notification.id}</p> <>br /> Backtrace: <p>#{payment_notification.params.inspect}</p>")
       end

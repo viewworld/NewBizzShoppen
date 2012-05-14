@@ -13,6 +13,7 @@ class ChangeUsePaypalInSubscriptions < ActiveRecord::Migration
     rename_column :subscriptions, :paypal_retries, :payment_retries
     rename_column :subscriptions, :paypal_retries_counter, :payment_retries_counter
     add_column :subscriptions, :payment_type, :integer, :default => 0
+    add_column :subscriptions, :payment_order_number, :string
     add_column :voucher_numbers, :payment_type, :integer, :default => 1
 
     rename_column :subscription_sub_periods, :paypal_paid_auto, :payment_paid_auto
