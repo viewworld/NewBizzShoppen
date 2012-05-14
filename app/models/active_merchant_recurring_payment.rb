@@ -13,8 +13,8 @@ class ActiveMerchantRecurringPayment
 
     if @result.success?
       @subperiod.update_attributes(:payment_paid_auto => true, :payment_retry_at => nil)
-      if @subperiod.subscription.subscription_sub_periods.last == @subperiod and
-          @subperiod.subscription.subscription_sub_periods.where("payment_paid_auto is false and payment_paid_manual is false").empty?
+      if  @subperiod.subscription.subscription_sub_periods.where("payment_paid_auto is false and payment_paid_manual is false").empty? and
+          (@subperiod.subscription.downgraded? or @subperiod.subscription.prolongs_as_free?)
         ActiveMerchantRecurringProfile.new(@subperiod.subscription.payment_profile_id).cancel_profile
       end
     else
