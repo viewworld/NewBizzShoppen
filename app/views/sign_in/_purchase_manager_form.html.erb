@@ -42,6 +42,7 @@
                     <% unless I18n.locale == :da %>
                         <%= address_form.input :region_id, :as => :select, :hint => hint_for(user, :address_region_id), :collection => regions_collection_for(user.address.country) %>
                     <% end %>
+                    <%= form.input :vat_number, :hint => hint_for(user, :vat_number) %>
                 <% end %>
               </ol>
             </fieldset>
