@@ -1,7 +1,8 @@
-ActiveAdmin.register ArchivedPaypalResponse, :as => "Archived Paypal Response" do
+ActiveAdmin.register ArchivedPaymentResponse, :as => "Archived Payment Response" do
 
   index do
     column :id
+    column :type
     column :user_id
     column :subscription_type
     column :subscription_id
@@ -14,6 +15,7 @@ ActiveAdmin.register ArchivedPaypalResponse, :as => "Archived Paypal Response" d
   show do |resp|
     attributes_table do
       row :id
+      row :type
       row :user_id
       row :subscription do
         resp.subscription.name
@@ -28,4 +30,10 @@ ActiveAdmin.register ArchivedPaypalResponse, :as => "Archived Paypal Response" d
     end
   end
 
+  filter :type, :as => :select, :collection => [["Paypal","ArchivedPaypalResponse"], ["ActiveMerchant","ArchivedActiveMerchantResponse"]]
+  filter :user
+  filter :subscription_type
+  filter :response_type
+  filter :response_details
+  filter :created_at
 end

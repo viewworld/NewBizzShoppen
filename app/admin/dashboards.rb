@@ -17,15 +17,15 @@ ActiveAdmin::Dashboards.build do
     strong { link_to "View All Emails", administration_archived_emails_path }
   end
 
-  section "Recent Paypal Responses" do
-    table_for ArchivedPaypalResponse.order("id DESC").first(5).collect do
+  section "Recent Payment Responses" do
+    table_for ArchivedPaymentResponse.order("id DESC").first(5).collect do
       column :response_type do |resp|
-        link_to resp.response_type, administration_archived_paypal_response_path(resp)
+        link_to resp.response_type, administration_archived_payment_response_path(resp)
       end
       column :has_errors
       column :created_at
     end
-    strong { link_to "View All Paypal Responses", administration_archived_paypal_responses_path }
+    strong { link_to "View All Payment Responses", administration_archived_payment_responses_path }
   end
 
   section "Awaiting Delayed Jobs" do
