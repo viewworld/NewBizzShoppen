@@ -22,7 +22,8 @@ class ApplicationController < ActionController::Base
   helper_method :locale
 
   def redirect_to_payment_confirmation
-    if user_signed_in? and current_user and current_user.subscription_required? and current_user.active_subscription.unconfirmed_payment? and !current_user.active_subscription.is_today_in_free_period?
+    if user_signed_in? and current_user and current_user.subscription_required? and current_user.active_subscription.unconfirmed_payment? and
+        (!current_user.active_subscription.is_today_in_free_period? or current_user.active_subscription.payment_billing_at_start?)
       redirect_to unconfirmed_payable_subscriptions_path
     end
   end
