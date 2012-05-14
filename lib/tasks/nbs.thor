@@ -874,7 +874,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
   desc "active_merchant_payment_for_subperiods", ""
 
   def active_merchant_payment_for_subperiods
-    SubscriptionSubPeriod.include(:subscription).where("subscriptions.payment_type = ? and (billing_date <= ? or payment_retry_at <= ?) and payment_paid_auto is false and payment_paid_manual is false",
+    SubscriptionSubPeriod.includes(:subscription).where("subscriptions.payment_type = ? and (subscription_sub_periods.billing_date <= ? or payment_retry_at <= ?) and payment_paid_auto is false and payment_paid_manual is false",
                                                        Subscription::QUICKPAY_PAYMENT_TYPE, Date.today, Date.today).each do |subperiod|
       ActiveMerchantRecurringPayment.new(subperiod).make_payment!
     end

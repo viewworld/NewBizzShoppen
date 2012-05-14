@@ -9,7 +9,7 @@ class ActiveMerchantRecurringPayment
 
   def make_payment!
     return true if @subperiod.payment_paid?
-    @result = @gateway.purchase((@subperiod.billing_price * 100).to_i, @subperiod.subscription.payment_profile_id, :order_id => @subperiod.subscription.payment_order_number)
+    @result = @gateway.purchase((@subperiod.billing_price * 100).to_i, @subperiod.subscription.payment_profile_id, :order_id => "sp_#{@subperiod.subscription.id}_#{@subperiod.id}")
 
     if @result.success?
       @subperiod.update_attributes(:payment_paid_auto => true, :payment_retry_at => nil)
@@ -18,7 +18,7 @@ class ActiveMerchantRecurringPayment
       end
     else
       subscription = @subperiod.subscription
-      subscription.update_attribute(:payment_retries_counter => subscription.payment_retries_counter.to_i + 1)
+      subscription.update_attribute(:payment_retries_counter, subscription.payment_retries_counter.to_i + 1)
 
       ArchivedActiveMerchantResponse.create(:subscription => subscription, :user => subscription.user, :has_errors => true,
                                             :response_type => "purchase", :response_details => "Payment for subperiod #{@subperiod.id} failed: \n #{@result.message}")
