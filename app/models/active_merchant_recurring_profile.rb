@@ -15,8 +15,8 @@ class ActiveMerchantRecurringProfile
       subscription = Subscription.where(:payment_profile_id => @profile_id).first
       ArchivedActiveMerchantResponse.create(:subscription => subscription, :subscription_type => subscription.class.to_s,
                                             :user_id => subscription ? subscription.user : nil, :response_type => "void", :has_errors => true,
-                                            :response_details => "Cancel profile #{@profile_id} failed with error: \n #{result.message}")
-      #EmailNotification.notify("ActiveMerchantRecurringProfile error", "<p>Profile ID: #{@profile_id}<br /> Response:<br />#{result.message}</p>")
+                                            :response_details => "Cancel profile #{@profile_id} failed with error: \n #{result.message} \n Params: #{result.params.select { |k,v| !v.blank? and k != "qpstatmsg" }.map { |p| p.join(": ") }.join(", \n")}")
     end
+    result
   end
 end

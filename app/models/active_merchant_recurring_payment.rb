@@ -22,7 +22,8 @@ class ActiveMerchantRecurringPayment
       subscription.update_attribute(:payment_retries_counter, subscription.payment_retries_counter.to_i + 1)
 
       ArchivedActiveMerchantResponse.create(:subscription => subscription, :user => subscription.user, :has_errors => true,
-                                            :response_type => "purchase", :response_details => "Payment for subperiod #{@subperiod.id} failed: \n #{@result.message}")
+                                            :response_type => "purchase",
+                                            :response_details => "Payment for subperiod #{@subperiod.id} failed: \n #{@result.message} \n Params: #{result.params.select { |k,v| !v.blank? and k != "qpstatmsg" }.map { |p| p.join(": ") }.join(", \n")}")
       if subscription.payment_retries_counter < subscription.payment_retries
         @subperiod.update_attribute(:payment_retry_at, Date.today + 2)
       end
