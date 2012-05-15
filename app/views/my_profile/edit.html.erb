@@ -1,6 +1,13 @@
 <column-mc:>
   <header><%= (current_user.contact.present? and current_user.sign_in_count == 1) ?  t("my_profile.edit.view.header_contact_confirmation") : t("my_profile.edit.view.header") %></header>
 
+
+  <% if @deal_for_request and current_user.member? %>
+      <div class="flash flash_notice">
+        <%= t("my_profile.edit.view.request_deal", :link => link_to(@deal_for_request.header, deals_path(@deal_for_request.slug))).html_safe %>
+      </div>
+  <% end %>
+
   <% if SubscriptionPlan.valid_roles.include?(current_user.with_role.role) and current_user.parent.nil? %>
   <frm title="#{t('my_profile.edit.view.subscription_management')}">
     <div class="pdd_10">

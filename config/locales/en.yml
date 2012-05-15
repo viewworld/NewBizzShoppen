@@ -2977,6 +2977,7 @@ en:
         social_unlink_link: "unlink from my profile"
         disable_bought_notification_label: "Don't send me e-mails when I buy a lead"
         subscription_management: "Subscription management"
+        request_deal: "You can now get deal %{link}"
     update:
       controller:
         successful_update_notice: "Your profile has been successfully updated!"

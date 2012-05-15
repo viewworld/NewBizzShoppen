@@ -65,6 +65,8 @@ class MyProfileController < SecuredController
   protected
 
   def redirect_if_my_profile_hidden
+    @deal_for_request = Deal.find_by_id(session[:deal_request_id])
+    session[:deal_request_id] = nil
     if current_user and current_user.hide_profile_page?
       redirect_to root_path
     end
