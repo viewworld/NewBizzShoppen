@@ -38,6 +38,10 @@ every 8.hours do
   command File.join(dir_pwd, "RAILS_ENV=production thor nbs:synchronize_newsletter_lists")
 end
 
-every 1.day, :at => "0:30" do
+every 1.day, :at => "6:00 am" do
   command File.join(dir_pwd, "RAILS_ENV=production thor nbs:active_merchant_payment_for_subperiods")
+end
+
+every 1.day, :at => "7:00 am" do
+  command File.join(dir_pwd, "RAILS_ENV=production thor nbs:send_end_of_free_period_email")
 end
