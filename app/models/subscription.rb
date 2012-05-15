@@ -157,7 +157,7 @@ class Subscription < ActiveRecord::Base
       self.end_date = start_date + subscription_period.weeks - 1.day
       if free_period_can_be_applied?
         self.end_date =  end_date + free_period.weeks
-        CompanyVat.create(:vat_number => user.vat_number.strip)
+        CompanyVat.create(:vat_number => user.vat_number.strip) unless payment_billing_at_start? and unconfirmed_paypal?
       end
       self.billing_date = start_date + billing_period.to_i.weeks
     end
