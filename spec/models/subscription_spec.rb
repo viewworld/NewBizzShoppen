@@ -122,6 +122,7 @@ describe Subscription do
         @customer.active_subscription.start_date.should == Date.today
         @customer.active_subscription.end_date.should == Date.today + 14.weeks - 1.day
         @customer.has_free_period_available?.should be_false
+        @customer.active_subscription.subscription_sub_periods[0].start_date.should == Date.today + 2.weeks
         @customer.upgrade_subscription!(@payable_subscription2)
         @customer.active_subscription.end_date.should == Date.today + 12.weeks - 1.day
       end

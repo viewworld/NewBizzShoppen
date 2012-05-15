@@ -26,7 +26,7 @@ describe PaypalRecurringPayment do
       paypal_recurring.free_period_hash.should == {
           :trial_amount => 0.0,
           :trial_total_billing_cycles => 1,
-          :trial_billing_period => :daily,
+          :trial_billing_period => :weekly,
           :trial_billing_frequency => 1
       }
     end

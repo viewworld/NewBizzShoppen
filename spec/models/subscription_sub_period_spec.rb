@@ -3,11 +3,19 @@ require 'spec_helper'
 describe SubscriptionSubPeriod do
   fixtures :all
 
-  def setup_customer(subscription_plan, attributes={})
+  def setup_customer(subscription_plan, attributes={}, payment_type=:paypal)
     attrs_hash = { :subscription_plan_id => subscription_plan.id }.merge!(attributes)
     @customer = User::Supplier.make!(attrs_hash)
     @customer.active_subscription.update_attribute(:payment_type, Subscription::PAYPAL_PAYMENT_TYPE)
     @customer.active_subscription.subscription_plan.should == subscription_plan
+
+    if @customer.active_subscription.use_online_payment?
+      payment_type = (payment_type == :paypal) ? Subscription::PAYPAL_PAYMENT_TYPE : Subscription::QUICKPAY_PAYMENT_TYPE
+    else
+      payment_type = Subscription::MANUAL_PAYMENT_TYPE
+    end
+
+    @customer.active_subscription.update_attribute(:payment_type, payment_type)
     @prev_subscription = @customer.active_subscription
   end
 
@@ -219,9 +227,9 @@ describe SubscriptionSubPeriod do
 
       expect {
         #first try
-        Subscription.payment_failed(profile_id, SubscriptionPaymentNotification.create)
+        Subscription.payment_failed(profile_id, PaypalSubscriptionPaymentNotification.create)
         #second try
-        Subscription.payment_failed(profile_id, SubscriptionPaymentNotification.create)
+        Subscription.payment_failed(profile_id, PaypalSubscriptionPaymentNotification.create)
       }.to change { Invoice.count }.by(1)
 
       @customer.active_subscription.subscription_sub_periods[0].invoice.should_not be_paid
