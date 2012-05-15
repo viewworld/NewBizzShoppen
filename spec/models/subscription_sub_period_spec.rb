@@ -441,6 +441,9 @@ describe SubscriptionSubPeriod do
       @customer.active_subscription.subscription_sub_periods[0].invoice.should_not be_paid
 
       @customer.active_subscription.subscription_sub_periods[0].payment_retry_at.should be_nil
+
+      ActionMailer::Base.deliveries.last.to.should include(@customer.email)
+      ActionMailer::Base.deliveries.last.body.raw_source.should include "/payment_gateway_unpaid_invoices/#{@customer.active_subscription.subscription_sub_periods[0].invoice_id}"
     end
   end
 

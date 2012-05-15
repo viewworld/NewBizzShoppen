@@ -3,9 +3,11 @@ Feature: Signing up with Quickpay
 
   Scenario: User can choose either paypal or quickpay
 
+  @_done @_non_testable
   Scenario: When must enter billing information at start is enabled then I must confirm recurring payment in Quickpay as part of signup
 
-  Scenario: When must enter billing information at start is enabled and user choses Quickpay then it is ignored and confirmation is done at the end of free period
+  @_done @_non_testable
+  Scenario: When must enter billing information at start is enabled and user choses Quickpay then confirmation is done as part of signup and free period is applied
 
   Scenario: When must enter billing information at end of free period is enabled for my subscription I should recevive an email to confirm recurring payent in Quickpay before free period ends
 
