@@ -24,7 +24,7 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   scope :for_quickpay, joins(:subscription).where("subscriptions.payment_type = ?", Subscription::QUICKPAY_PAYMENT_TYPE)
   scope :for_recurring_payment, lambda { |recurring_payment_id| where("subscriptions.payment_profile_id = ?", recurring_payment_id).joins(:subscription).order("subscription_sub_periods.id") }
   scope :without_invoice, where(:invoice_id => nil)
-  scope :with_billing_date_greater_or_equal, lambda { |date| where("billing_date >= ?", date) }
+  scope :with_billing_date_greater_or_equal, lambda { |date| where("subscription_sub_periods.billing_date >= ?", date) }
   scope :with_billing_date_less_or_equal, lambda { |date| where("subscription_sub_periods.billing_date <= ?", date) }
   scope :with_payment_cancelled, where("subscriptions.cancelled_in_payment_gateway = ?", true).joins(:subscription)
 
