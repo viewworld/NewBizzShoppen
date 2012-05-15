@@ -403,4 +403,45 @@ describe SubscriptionSubPeriod do
     end
   end
 
+  context "online payment for subperiods by quickpay" do
+
+    before(:each) do
+      @payable_subscription = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :billing_cycle => 3,
+                                                     :use_online_payment => true, :payment_retries => 2)
+      @payable_subscription.subscription_plan_lines.make!(:price => 21.36)
+      setup_customer(@payable_subscription, {}, :quickpay)
+      @customer.active_subscription.confirm_payment!
+    end
+
+    it "should generate paid invoice when api successfully marks period as paid" do
+      profile_id = "1" #reference which causes Bogus gateway operation to succeed
+      @customer.active_subscription.update_attribute(:payment_profile_id, profile_id)
+
+      ActiveMerchantRecurringPayment.new(@customer.active_subscription.subscription_sub_periods[0]).make_payment!
+
+      @customer.active_subscription.subscription_sub_periods[0].should be_payment_paid_auto
+
+      @customer.active_subscription.subscription_sub_periods[0].invoice.should be_paid
+
+      @customer.active_subscription.subscription_sub_periods[0].payment_retry_at.should be_nil
+    end
+
+    it "should generate unpaid invoice when number of retries is exceeded" do
+      profile_id = "2" #reference which causes Bogus gateway operation to fail
+      @customer.active_subscription.update_attribute(:payment_profile_id, profile_id)
+
+      #first attempt
+      ActiveMerchantRecurringPayment.new(@customer.active_subscription.subscription_sub_periods[0]).make_payment!
+
+      @customer.active_subscription.subscription_sub_periods[0].payment_retry_at.should == Date.today + 2
+
+      #second attempt
+      ActiveMerchantRecurringPayment.new(@customer.active_subscription.subscription_sub_periods[0]).make_payment!
+
+      @customer.active_subscription.subscription_sub_periods[0].invoice.should_not be_paid
+
+      @customer.active_subscription.subscription_sub_periods[0].payment_retry_at.should be_nil
+    end
+  end
+
 end

@@ -26,6 +26,8 @@ class ActiveMerchantRecurringPayment
                                             :response_details => "Payment for subperiod #{@subperiod.id} failed: \n #{@result.message} \n Params: #{result.params.select { |k,v| !v.blank? and k != "qpstatmsg" }.map { |p| p.join(": ") }.join(", \n")}")
       if subscription.payment_retries_counter < subscription.payment_retries
         @subperiod.update_attribute(:payment_retry_at, Date.today + 2)
+      elsif  subscription.payment_retries_counter == subscription.payment_retries
+        @subperiod.update_attribute(:payment_retry_at, nil)
       end
     end
   end
