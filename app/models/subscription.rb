@@ -462,7 +462,7 @@ class Subscription < ActiveRecord::Base
   def create_subscription_sub_periods
     number_of_periods = billing_cycle.eql?(0) ? 1 : (subscription_period/billing_cycle)
     number_of_periods.times do |n|
-      period_start_date = start_date + (n * billing_cycle).weeks
+      period_start_date = (is_free_period_applied? ? start_date + free_period.weeks : start_date) + (n * billing_cycle).weeks
       period_end_date   = period_start_date + billing_cycle.weeks - 1.day
       subscription_sub_periods.create!(:start_date => period_start_date,
                                       :end_date => (is_free? and !unconfirmed_payment?) ? nil : period_end_date,
