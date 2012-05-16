@@ -133,6 +133,10 @@ class SubscriptionPlan < ActiveRecord::Base
     has_free_period? and user.has_free_period_available?
   end
 
+  def total_brutto_billing(user)
+    total_brutto_billing_for_sub_period(user) * subscription_period.to_i
+  end
+
   def total_brutto_billing_for_sub_period(user)
     total = subscription_plan_lines.sum(:price)
     vat_rate = user.not_charge_vat? ? 0 : seller.vat_rate
