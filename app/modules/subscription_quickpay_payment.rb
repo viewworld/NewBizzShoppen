@@ -8,7 +8,7 @@ module SubscriptionQuickpayPayment
         :cancelurl => cancel_url,
         :callbackurl => notify_url,
         :ordernumber => "s#{Time.now.strftime("%y%m%d%S")}_#{subscription_ordernumber ? subscription_ordernumber.id : id}",
-        :amount => (total_billing * 100).to_i,
+        :amount => (is_a?(Subscription) ? total_brutto_billing_for_sub_period : total_brutto_billing_for_sub_period(subscription_ordernumber.user) * 100).to_i,
         :currency => currency.to_s,
         :language => language.to_s,
         :description => "#{name.first(20)}"
