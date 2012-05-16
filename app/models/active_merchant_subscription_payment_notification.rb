@@ -14,8 +14,8 @@ class ActiveMerchantSubscriptionPaymentNotification < SubscriptionPaymentNotific
       if active_subscription
         user = active_subscription.user
         if active_subscription.unconfirmed_payment?
-          update_subscription(user.active_subscription, payment_notification, params)
           active_subscription.confirm_payment!
+          update_subscription(user.active_subscription, payment_notification, params)
         elsif subscription_plan and active_subscription.total_billing < subscription_plan.total_billing
           user.upgrade_subscription!(subscription_plan)
           update_subscription(user.active_subscription, payment_notification, params)
