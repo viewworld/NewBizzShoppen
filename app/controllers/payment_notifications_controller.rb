@@ -46,7 +46,7 @@ class PaymentNotificationsController < ApplicationController
     spn = PaypalSubscriptionPaymentNotification.create(:params => params, :buyer_id => params[:invoice].to_i, :status => params[:payment_status], :transaction_id => params[:txn_id])
     sub_periods = SubscriptionSubPeriod.for_paypal.payment_unpaid.for_recurring_payment(params[:recurring_payment_id]).readonly(false)
 
-    if subscription_sub_period = sub_periods.where(:payment_txn_id => params[:txn_id]).first || sub_periods.where(:paypal_txn_id => nil).first
+    if subscription_sub_period = sub_periods.where(:payment_txn_id => params[:txn_id]).first || sub_periods.where(:payment_txn_id => nil).first
       subscription_sub_period.update_recurring_payment_status(spn)
     else
       EmailNotification.notify("recurring_payment: Matching sub period not found", "<p>PaypalSubscriptionPaymentNotification: #{spn.id}</p> <>br /> Backtrace: <p>#{spn.params.inspect}</p>")
