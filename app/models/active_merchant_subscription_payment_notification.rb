@@ -21,7 +21,7 @@ class ActiveMerchantSubscriptionPaymentNotification < SubscriptionPaymentNotific
           update_subscription(user.active_subscription, payment_notification, params)
         elsif subscription_plan and active_subscription.total_billing > subscription_plan.total_billing
           user.downgrade_subscription!(subscription_plan)
-          update_subscription(user.subscriptions.last, payment_notification, params)
+          update_subscription(user.subscriptions.order("created_at").last, payment_notification, params)
         else
           EmailNotification.notify("Quickpay subscription confirmation failed: target subscription not found", "<p>ActiveMerchantSubscriptionPaymentNotification: #{payment_notification.id}</p> <>br /> Backtrace: <p>#{payment_notification.params.inspect}</p>")
           return false
