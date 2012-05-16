@@ -363,9 +363,9 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         {:name => "Free period ended for PayPal subscription",
          :uniq_id => "subscription_free_period_ended_for_paypal",
          :en => {:subject => "Free period ended for Paypal subscription. Update billing information!",
-                 :body => "<p>Your free period for the Fairleads subscription has ended. <a href=\"{{subscription.create_recurring_profile_from_next_billing_cycle_link}}\">Click here to update your billing information</a></p>"},
+                 :body => "<p>Your free period for the Fairleads subscription has ended. <a href=\"{{subscription.confirm_payable_subscription_link}}\">Click here to update your billing information</a></p>"},
          :da => {:subject => "[DK] Free period ended for Paypal subscription. Update billing information!",
-                 :body => "<p>[DK] Your free period for the Fairleads subscription has ended. <a href=\"{{subscription.create_recurring_profile_from_next_billing_cycle_link}}\">Click here to update your billing information</a></p>"}
+                 :body => "<p>[DK] Your free period for the Fairleads subscription has ended. <a href=\"{{subscription.confirm_payable_subscription_link}}\">Click here to update your billing information</a></p>"}
         },
         {:name => "Voucher notification for member",
          :uniq_id => "voucher_notification",

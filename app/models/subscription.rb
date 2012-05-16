@@ -23,7 +23,7 @@ class Subscription < ActiveRecord::Base
 
   attr_accessor :next_subscription_plan, :next_subscription_plan_start_date
 
-  liquid :create_recurring_profile_from_next_billing_cycle_link
+  liquid :create_recurring_profile_from_next_billing_cycle_link, :confirm_payable_subscription_link
 
   MANUAL_PAYMENT_TYPE = 0.freeze
   PAYPAL_PAYMENT_TYPE = 1.freeze
@@ -420,6 +420,10 @@ class Subscription < ActiveRecord::Base
 
   def create_recurring_profile_from_next_billing_cycle_link
     "http://#{user.domain_name}/my_profile/subscription_plans/#{id}/payment_renew"
+  end
+
+  def confirm_payable_subscription_link
+    "http://#{user.domain_name}/unconfirmed_payable_subscriptions"
   end
 
 
