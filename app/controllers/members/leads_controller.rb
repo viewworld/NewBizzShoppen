@@ -62,7 +62,7 @@ class Members::LeadsController < Members::MemberController
     @lead = (@deal.voucher_enabled? ? UnconfirmedLead : Lead).new(params[:lead])
     @lead.based_on_deal(@deal, current_user)
     session[:selected_category] = @lead.category_id
-
+    session[:deal_request_id] = nil
     @lead.creation_step = 3
     current_user.decrement_free_deal_requests_in_free_period! if @lead.valid?
     create! do |success, failure|
