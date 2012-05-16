@@ -4,7 +4,7 @@
 
   <% if @deal_for_request and current_user.member? %>
       <div class="flash flash_notice">
-        <%= t("my_profile.edit.view.request_deal", :link => link_to(@deal_for_request.header, deals_path(@deal_for_request.slug))).html_safe %>
+        <%= t("my_profile.edit.view.request_deal", :link => link_to(@deal_for_request.header, deals_path(:id => @deal_for_request.slug))).html_safe %>
       </div>
   <% end %>
 
