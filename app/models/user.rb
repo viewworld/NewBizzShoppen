@@ -803,7 +803,7 @@ class User < ActiveRecord::Base
 
   def downgrade_online_payment(subscription_plan, totalbillingcycles)
     if active_subscription.paypal?
-      if profile = PaypalRecurringProfile.new(active_subscription.paypal_profile_id) and profile.update_profile(:totalbillingcycles => totalbillingcycles)
+      if profile = PaypalRecurringProfile.new(active_subscription.payment_profile_id) and profile.update_profile(:totalbillingcycles => totalbillingcycles)
         downgrade_regular(subscription_plan)
       else
         self.errors.add(:base, profile.result["L_LONGMESSAGE0"])
