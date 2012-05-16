@@ -14,20 +14,26 @@ class ActiveMerchantSubscriptionPaymentNotification < SubscriptionPaymentNotific
       if active_subscription
         user = active_subscription.user
         if active_subscription.unconfirmed_payment?
+          update_subscription(user.active_subscription, payment_notification, params)
           active_subscription.confirm_payment!
         elsif subscription_plan and active_subscription.total_billing < subscription_plan.total_billing
           user.upgrade_subscription!(subscription_plan)
+          update_subscription(user.active_subscription, payment_notification, params)
         elsif subscription_plan and active_subscription.total_billing > subscription_plan.total_billing
           user.downgrade_subscription!(subscription_plan)
+          update_subscription(user.subscriptions.last, payment_notification, params)
         else
           EmailNotification.notify("Quickpay subscription confirmation failed: target subscription not found", "<p>ActiveMerchantSubscriptionPaymentNotification: #{payment_notification.id}</p> <>br /> Backtrace: <p>#{payment_notification.params.inspect}</p>")
           return false
         end
-          user.active_subscription.update_attributes(:payment_profile_id => payment_notification.transaction_id, :payment_type => Subscription::QUICKPAY_PAYMENT_TYPE,
-                                                     :payment_order_number => params[:ordernumber])
       else
         EmailNotification.notify("Quickpay subscription confirmation failed: subscription not found", "<p>ActiveMerchantSubscriptionPaymentNotification: #{payment_notification.id}</p> <>br /> Backtrace: <p>#{payment_notification.params.inspect}</p>")
       end
     end
+  end
+
+  def self.update_subscription(subscription, payment_notification, params)
+    subscription.update_attributes(:payment_profile_id => payment_notification.transaction_id, :payment_type => Subscription::QUICKPAY_PAYMENT_TYPE,
+                                   :payment_order_number => params[:ordernumber])
   end
 end
