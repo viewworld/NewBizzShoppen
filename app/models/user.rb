@@ -866,12 +866,15 @@ class User < ActiveRecord::Base
   end
 
   def cancel_online_payment(_method, totalbillingcycles)
-    if (active_subscription.paypal? and profile = PaypalRecurringProfile.new(active_subscription.payment_profile_id) and profile.update_profile(:totalbillingcycles => totalbillingcycles)) or
-        profile = ActiveMerchantRecurringProfile.new(active_subscription.payment_profile_id) and profile.cancel_profile
-      cancel_regular(_method)
+    if active_subscription.paypal?
+      if profile = PaypalRecurringProfile.new(active_subscription.payment_profile_id) and profile.update_profile(:totalbillingcycles => totalbillingcycles)
+        cancel_regular(_method)
+      else
+        self.errors.add(:base, active_subscription.paypal? ? profile.result["L_LONGMESSAGE0"] : profile.result.message)
+        false
+      end
     else
-      self.errors.add(:base, active_subscription.paypal? ? profile.result["L_LONGMESSAGE0"] : profile.result.message)
-      false
+      cancel_regular(_method)
     end
   end
 
