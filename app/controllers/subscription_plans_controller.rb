@@ -42,10 +42,13 @@ class SubscriptionPlansController < SecuredController
   def payment_confirmed
     if @user.active_subscription.unconfirmed_payment?
       @user.active_subscription.confirm_payment!
+      subscription_to_update = @user.active_subscription
     elsif @user.active_subscription.total_billing < @subscription_plan.total_billing
       @user.upgrade_subscription!(@subscription_plan)
+      subscription_to_update = @user.active_subscription
     else
       @user.downgrade_subscription!(@subscription_plan)
+      subscription_to_update = @user.subscriptions.order("created_at").last
     end
 
     paypal_recurring = PaypalRecurringPayment.new(:subscription_plan => @subscription_plan, :user => @user, :token => params[:token], :payer_id => params[:PayerID],
@@ -58,7 +61,7 @@ class SubscriptionPlansController < SecuredController
     end
 
 
-    @user.active_subscription.update_attributes(:payment_profile_id => paypal_recurring.profile_id, :payment_invoice_id => @user.active_subscription.id,
+    subscription_to_update.update_attributes(:payment_profile_id => paypal_recurring.profile_id, :payment_invoice_id => @user.active_subscription.id,
                                                 :payment_type => Subscription::PAYPAL_PAYMENT_TYPE)
 
     redirect_to my_profile_path(:scp => true)
