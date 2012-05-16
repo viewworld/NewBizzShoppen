@@ -1,4 +1,4 @@
-class UnconfirmedPayableSubscriptionsController < ApplicationController
+class UnconfirmedPayableSubscriptionsController < SecuredController
 
   before_filter :redirect_to_payment_confirmation, :except => [:show]
 
