@@ -11,5 +11,10 @@ class UnconfirmedPayableSubscriptionsController < SecuredController
                                                     :cancel_url => payment_canceled_my_profile_subscription_plan_url(@subscription_plan),
                                                     :ipn_url => payment_notifications_url)
     end
+
+    respond_to do |format|
+      format.html { }
+      format.js { }
+    end
   end
 end
