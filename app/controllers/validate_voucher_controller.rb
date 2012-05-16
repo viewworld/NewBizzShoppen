@@ -4,8 +4,8 @@ class ValidateVoucherController < ApplicationController
   end
 
   def create
-    @deal_unique_id = params[:deal_unique_id]
-    @voucher_number = params[:voucher_number]
+    @deal_unique_id = params[:deal_unique_id].to_s.strip
+    @voucher_number = params[:voucher_number].to_s.strip
     result = VoucherNumber.validate_voucher(@deal_unique_id, @voucher_number)
     flash[:notice] = result[1] unless result[0]
     redirect_to result[0] ? use_voucher_path(:deal_unique_id => @deal_unique_id, :voucher_number => @voucher_number) : validate_voucher_path
