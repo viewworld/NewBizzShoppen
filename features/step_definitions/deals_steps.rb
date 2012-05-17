@@ -230,3 +230,11 @@ Given /^deal named "([^"]*)" has deal template "([^"]*)" assigned$/ do |deal_hea
   deal.deal_templates << LeadTemplate.where(:name => deal_template_name).first
   deal.save
 end
+
+When /^deal "([^"]*)" has currency "([^"]*)"$/ do |deal_header, currency_name|
+  deal = Deal.where(:header => deal_header).first
+  deal = Deal.make!(:header => deal_header) if deal.nil?
+  currency = Currency.where(:name => currency_name).first
+  deal.currency = currency
+  deal.save
+end

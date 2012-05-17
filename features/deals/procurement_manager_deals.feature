@@ -427,6 +427,7 @@ Feature: Deals from procurement manager perspective
     And I am not sign in
     And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL|voucher_enabled:true|voucher_until_type:1|deal_price:2|discounted_price:1|voucher_max_number:3|voucher_how_to_redeem:you can redeem it by calling me"
+    And deal "software components" has currency "EUR"
     Then voucher number with index "0" for deal "software components" has number "000000001" and state "new"
     And I am signed up and confirmed as user with email translator_purchase_manager@nbs.com and password supersecret and role member
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10,billing_cycle:10"
@@ -472,6 +473,7 @@ Feature: Deals from procurement manager perspective
     And I am not sign in
     And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL|voucher_enabled:true|voucher_until_type:1|deal_price:2|discounted_price:1|voucher_max_number:3|voucher_how_to_redeem:you can redeem it by calling me"
+    And deal "software components" has currency "EUR"
     Then voucher number with index "0" for deal "software components" has number "000000001" and state "new"
     And I am signed up and confirmed as user with email translator_purchase_manager@nbs.com and password supersecret and role member
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10,billing_cycle:10"

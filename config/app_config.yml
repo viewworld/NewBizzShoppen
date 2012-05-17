@@ -22,6 +22,7 @@ test:
   paypal_api_password: 1292244690
   paypal_api_key: AUVjzPkoCJAf1p9N6vEssI4hIPVVA6XjBKUpjBLNogHCfw29dQWFK6bF
   paypal_api_url: "https://api-3t.sandbox.paypal.com/nvp"
+  quickpay_window_url: "test/quickpay/url"
   quickpay_email: "qp_seller32434234@nbs.com"
   quickpay_secret: "dj38dhj39d3dx3tdsg3d2e2ef23rd232"
   quickpay_api_key: "f1ds2wk39fej329ew29rk92392"

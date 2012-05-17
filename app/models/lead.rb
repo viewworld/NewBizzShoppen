@@ -286,7 +286,8 @@ class Lead < AbstractLead
         :lead_id => self.id,
         :paid => false,
         :accessible_from => (supplier.big_buyer? ? Time.now : nil),
-        :quantity => buyout_quantity)
+        :quantity => buyout_quantity,
+        :payment_type => supplier.cart.payment_type)
       :buyout_successful
     end
   end
