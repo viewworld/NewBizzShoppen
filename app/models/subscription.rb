@@ -95,7 +95,7 @@ class Subscription < ActiveRecord::Base
   def self.canceled_in_payment_gateway(prof_id, spn)
     if sub_period = SubscriptionSubPeriod.payment_unpaid.for_paypal.for_recurring_payment(prof_id).readonly(false).first
       subscription = sub_period.subscription
-      unless subscription.admin_changed?
+      if !subscription.admin_changed? and !subscription.upgraded?
         if subscription.may_cancel?
           subscription.cancel!
         else
