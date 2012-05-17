@@ -4683,6 +4683,10 @@ en:
       sent:
         title: "Newsletter %{name} sent to CM!"
         text: "<a href=\"%{url}\">Go to the newsletter</a> or <a href=\"%{url}\" target=\"_blank\">open it in a new tab</a> or <a href=\"%{cm_url}\" target=\"_blank\">go directly to CM</a>"
+    subscription:
+      downgrade_failed:
+        title: "Subscription downgrade failed"
+        body: "%{error}"
   newsletters:
     newsletter_lists:
       index:

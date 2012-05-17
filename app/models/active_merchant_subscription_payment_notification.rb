@@ -25,6 +25,7 @@ class ActiveMerchantSubscriptionPaymentNotification < SubscriptionPaymentNotific
             update_subscription(user.subscriptions.order("created_at").last, payment_notification, params)
           else
             ActiveMerchantRecurringProfile.new(payment_notification.transaction_id).cancel_profile
+            user.notify!(:title => I18n.t("notifications.subscription.downgrade_failed.title"), :body => I18n.t("notifications.subscription.downgrade_failed.body", :error => user.errors.full_messages))
           end
         else
           EmailNotification.notify("Quickpay subscription confirmation failed: target subscription not found", "<p>ActiveMerchantSubscriptionPaymentNotification: #{payment_notification.id}</p> <>br /> Backtrace: <p>#{payment_notification.params.inspect}</p>")
