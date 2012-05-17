@@ -30,7 +30,8 @@ Feature: Signing up with PayPal
     And I choose "user_category_supplier_subscription_plan_id"
     And I press translated "supplier_accounts.new.view.button_create_account"
     And I should be signed in
-    Then I should see translated "unconfirmed_payable_subscriptions.show.view.message" with options "subscription:Supplier Paypal:payment_gateway:Paypal"
+  And I open page in browser
+    Then I should see translated "unconfirmed_payable_subscriptions.show.view.message" with options "subscription:Supplier Paypal:payment_gateway:PayPal"
 
   @_done @_non_testable
   Scenario: When must enter billing information at start is enabled then free period is handled by Paypal

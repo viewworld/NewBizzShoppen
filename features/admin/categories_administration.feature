@@ -85,7 +85,7 @@ Scenario: I cannot delete a category if it is not empty
   Then I press translated "administration.categories.index.view.search.search_button"
   And Lead named "Super printers" exists within "New test category" category
   And I follow translated "administration.categories.index.view.destroy_link" within "New test category" category
-  Then I should see translated "flash.categories.destroy.error"
+  Then I should see translated "flash.categories.destroy.notice"
 
 @question
 Scenario: I can see statistics for a selected category
