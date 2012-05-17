@@ -49,7 +49,7 @@ class SubscriptionPlansController < SecuredController
       subscription_to_update = @user.active_subscription
     else
       @user.downgrade_subscription!(@subscription_plan)
-      success = @user.valid?
+      success = !@user.errors.present?
       subscription_to_update = @user.subscriptions.order("created_at").last
     end
 
