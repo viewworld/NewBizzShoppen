@@ -211,7 +211,7 @@
 
     <% end %>
 
-    <% if current_user and !Rails.env.development? %>
+    <% if current_user and !Rails.env.testing? and !Rails.env.development? %>
         start_notifications();
     <% end %>
 
