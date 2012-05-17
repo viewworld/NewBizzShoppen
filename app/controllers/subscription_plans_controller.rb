@@ -40,6 +40,7 @@ class SubscriptionPlansController < SecuredController
   public
 
   def payment_confirmed
+    success = true
     if @user.active_subscription.unconfirmed_payment?
       @user.active_subscription.confirm_payment!
       subscription_to_update = @user.active_subscription
@@ -48,23 +49,28 @@ class SubscriptionPlansController < SecuredController
       subscription_to_update = @user.active_subscription
     else
       @user.downgrade_subscription!(@subscription_plan)
+      success = @user.valid?
       subscription_to_update = @user.subscriptions.order("created_at").last
     end
 
-    paypal_recurring = PaypalRecurringPayment.new(:subscription_plan => @subscription_plan, :user => @user, :token => params[:token], :payer_id => params[:PayerID],
-                                                  :ipn_url => payment_notification_url)
+    if success
+      paypal_recurring = PaypalRecurringPayment.new(:subscription_plan => @subscription_plan, :user => @user, :token => params[:token], :payer_id => params[:PayerID],
+                                                    :ipn_url => payment_notification_url)
 
-    paypal_recurring.create_profile
+      paypal_recurring.create_profile
 
-    if @user.active_subscription.cancelled_in_payment_gateway? and !paypal_recurring.response_has_errors?
-      @user.active_subscription.normalize!
+      if @user.active_subscription.cancelled_in_payment_gateway? and !paypal_recurring.response_has_errors?
+        @user.active_subscription.normalize!
+      end
+
+
+      subscription_to_update.update_attributes(:payment_profile_id => paypal_recurring.profile_id, :payment_invoice_id => @user.active_subscription.id,
+                                                  :payment_type => Subscription::PAYPAL_PAYMENT_TYPE)
+    else
+      flash[:alert] = @user.errors.full_messages
     end
 
-
-    subscription_to_update.update_attributes(:payment_profile_id => paypal_recurring.profile_id, :payment_invoice_id => @user.active_subscription.id,
-                                                :payment_type => Subscription::PAYPAL_PAYMENT_TYPE)
-
-    redirect_to my_profile_path(:scp => true)
+    redirect_to my_profile_path(:scp => success)
   end
 
   def payment_canceled
