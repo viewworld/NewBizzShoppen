@@ -47,7 +47,7 @@ module QuickpayPayment
 
     def base_hash_for_quickpay
       {:protocol => "4", :msgtype => "authorize",  :merchant => APP_CONFIG[:quickpay_merchant_id],
-       :autocapture => "1", :cardtypelock => "dankort" }
+       :autocapture => "1", :cardtypelock => "dankort", :testmode => Rails.env.production? ? "0" : "1" }
     end
   end
 end
