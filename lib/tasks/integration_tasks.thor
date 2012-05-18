@@ -326,16 +326,16 @@ class IntegrationTasks < Thor
     Translation.where(:locale => "en").where("key like ?", "paypal_unpaid_invoices.%").each(&:destroy)
     Translation.where(:locale => "en").where("key like ?", "unconfirmed_paypal_subscriptions.%").each(&:destroy)
 
-    orig_locale = I18n.locale
+    orig_locale = ::I18n.locale
 
     [:en, :da].each do |locale|
-      I18n.locale = locale
+      ::I18n.locale = locale
       EmailTemplate.where(:uniq_id => "subscription_free_period_ended_for_paypal").each do |template|
         template.body = template.body.gsub("create_recurring_profile_from_next_billing_cycle_link", "confirm_payable_subscription_link")
         template.save
       end
     end
 
-    I18n.locale = orig_locale
+    ::I18n.locale = orig_locale
   end
 end
