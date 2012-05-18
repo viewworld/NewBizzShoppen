@@ -215,3 +215,8 @@ Then /^I follow edit for email template named "([^"]*)"$/ do |template_uniq_id|
    template = EmailTemplate.find_by_uniq_id(template_uniq_id)
   visit "/administration/email_templates/#{template.id}/edit"
 end
+
+Then /^I choose subscription named "([^"]*)"$/ do |sub_name|
+  subscription_plan = SubscriptionPlan.where(:name => sub_name).first
+  And %{I click div "subscription_plan_#{subscription_plan.id}"}
+end
