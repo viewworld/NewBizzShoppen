@@ -484,6 +484,7 @@ div.pagination .disabled
     border-bottom: none;
     font-size: 18px;
     font-weight: bold;
+    white-space: nowrap;
 }
 
 .cart_table tbody tr.total_row td .green

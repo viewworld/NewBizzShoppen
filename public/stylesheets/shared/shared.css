@@ -239,3 +239,55 @@
     vertical-align: -3px;
     padding-right: 5px;
 }
+
+/* --- cart --------------------------------------------------------------------------------------------------------- */
+
+.payment_methods
+{
+    padding: 8px 10px;
+    margin: 0 0 15px;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    text-align: right;
+    float: right;
+    text-align: center;
+
+
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+}
+
+.payment_methods.centered
+{
+    float: none;
+    width: 250px;
+    margin: 0 auto;
+}
+
+.payment_methods h2
+{
+    padding-bottom: 5px;
+}
+
+.payment_methods ul li
+{
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    vertical-align: top;
+    text-align: center;
+    padding: 5px 0 5px;
+}
+
+.payment_methods ul li label
+{
+    display: block;
+    text-align: center;
+}
+
+.payment_methods .bt
+{
+    margin-top: 5px;
+    width: 150px;
+}

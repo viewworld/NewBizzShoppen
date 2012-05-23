@@ -1,50 +1,62 @@
 <column-mc:>
-  <% if @voucher_number.deal.currency.to_s == "DKK" %>
-      <header back="false"><%= t("member.leads.redirect_to_payment_gateway.view.header") %></header>
-      <%= t("common.payment_methods.choose_payment_method") %>
-      <%= form_tag redirect_to_payment_gateway_members_lead_path(@lead), {:method => :get} do %>
-          <%= radio_button_tag :payment_type, LeadPurchase::PAYPAL_PAYMENT_TYPE, (params[:payment_type].to_i == 0 or params[:payment_type].to_i == LeadPurchase::PAYPAL_PAYMENT_TYPE), :onclick => "this.form.submit()" %>
-          <%= label_tag :payment_type_1, t("common.payment_methods.paypal") %>
-          <%= radio_button_tag :payment_type, LeadPurchase::QUICKPAY_PAYMENT_TYPE, params[:payment_type].to_i == LeadPurchase::QUICKPAY_PAYMENT_TYPE, :onclick => "this.form.submit()" %>
-          <%= label_tag :payment_type_2,  t("common.payment_methods.quickpay") %>
-      <% end %>
-      <script type="text/javascript">
-        function refresh_page(){
-            location.href = "<%= redirect_to_payment_gateway_members_lead_path(@lead, :payment_type => params[:payment_type], :check_voucher => "1") %>"
-        }
+  <header back="false"><%= t("member.leads.redirect_to_payment_gateway.view.header") %></header>
 
-        setTimeout("refresh_page()", 50000);
-      </script>
-  <% else %>
-      <script language="javascript">
-          $(document).ready(function() {
-              $('#submit_voucher').submit();
-          });
-      </script>
+  <div class="payment_methods centered">
+    <% if @voucher_number.deal.currency.to_s == "DKK" %>
 
-      <%= t("member.leads.redirect_to_payment_gateway.view.redirecting_to_paypal") %>
-  <% end %>
+        <h2><%= t("common.payment_methods.choose_payment_method") %></h2>
+        <%= form_tag redirect_to_payment_gateway_members_lead_path(@lead), {:method => :get} do %>
+            <ul>
+              <li>
+                <%= radio_button_tag :payment_type, LeadPurchase::PAYPAL_PAYMENT_TYPE, (params[:payment_type].to_i == 0 or params[:payment_type].to_i == LeadPurchase::PAYPAL_PAYMENT_TYPE), :onclick => "this.form.submit()" %>
+                <% label_tag :payment_type_1 do %>
+                    <%= image_tag("logos/paypal.png") %>
+                <% end %>
+              </li>
+              <li>
+                <%= radio_button_tag :payment_type, LeadPurchase::QUICKPAY_PAYMENT_TYPE, params[:payment_type].to_i == LeadPurchase::QUICKPAY_PAYMENT_TYPE, :onclick => "this.form.submit()" %>
+                <% label_tag :payment_type_2 do %>
+                    <%= image_tag("logos/dk.png") %>
+                <% end %>
+              </li>
+            </ul>
+        <% end %>
 
-  <% if params[:payment_type].to_i == 0 or params[:payment_type].to_i == LeadPurchase::PAYPAL_PAYMENT_TYPE %>
-      <%= form_tag APP_CONFIG[:paypal_url], :id => "submit_voucher" do %>
-          <%= hidden_field_tag :cmd, "_s-xclick" %>
-          <%= hidden_field_tag :encrypted, @voucher_number.paypal_encrypted(root_url, payment_notifications_url(:secret => APP_CONFIG[:paypal_secret])) %>
-          <% if @voucher_number.deal.currency.to_s == "DKK" %>
-              <ibt c="fltri">
-              <%= submit_tag t("member.leads.redirect_to_payment_gateway.view.checkout_link") %>
-              </ibt>
+        <script type="text/javascript">
+            function refresh_page() {
+                location.href = "<%= redirect_to_payment_gateway_members_lead_path(@lead, :payment_type => params[:payment_type], :check_voucher => "1") %>"
+            }
+
+            setTimeout("refresh_page()", 50000);
+        </script>
+    <% else %>
+        <script language="javascript">
+            $(document).ready(function () {
+                $('#submit_voucher').submit();
+            });
+        </script>
+
+        <%= t("member.leads.redirect_to_payment_gateway.view.redirecting_to_paypal") %>
+    <% end %>
+
+    <div class="ta_c">
+      <% if params[:payment_type].to_i == 0 or params[:payment_type].to_i == LeadPurchase::PAYPAL_PAYMENT_TYPE %>
+          <%= form_tag APP_CONFIG[:paypal_url], :id => "submit_voucher" do %>
+              <%= hidden_field_tag :cmd, "_s-xclick" %>
+              <%= hidden_field_tag :encrypted, @voucher_number.paypal_encrypted(root_url, payment_notifications_url(:secret => APP_CONFIG[:paypal_secret])) %>
+              <% if @voucher_number.deal.currency.to_s == "DKK" %>
+                  <%= bt_link_to nil, t("member.leads.redirect_to_payment_gateway.view.checkout_link"), "javascript:;", :onclick => "$(this).parents('form:first').submit();", :class => "bt_big" %>
+              <% end %>
+          <% end %>
+      <% else %>
+          <%= form_tag APP_CONFIG[:quickpay_window_url] do %>
+              <% @voucher_number.hash_for_quickpay(root_url, root_url, active_merchant_payment_notifications_url, I18n.locale).each_pair do |key, value| %>
+                  <%= hidden_field_tag key, value %>
+              <% end %>
+              <%= bt_link_to nil, t("member.leads.redirect_to_payment_gateway.view.checkout_link"), "javascript:;", :onclick => "$(this).parents('form:first').submit();", :class => "bt_big" %>
           <% end %>
       <% end %>
-  <% else %>
-      <%= form_tag APP_CONFIG[:quickpay_window_url] do %>
-          <% @voucher_number.hash_for_quickpay(root_url, root_url, active_merchant_payment_notifications_url, I18n.locale).each_pair do |key, value|  %>
-              <%= hidden_field_tag key, value %>
-          <% end %>
-
-          <ibt c="fltri">
-            <%= submit_tag t("member.leads.redirect_to_payment_gateway.view.checkout_link") %>
-          </ibt>
-      <% end %>
-  <% end %>
-    <clb/>
+      <clb/>
+    </div>
+  </div>
 </column-mc:>

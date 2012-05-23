@@ -2,17 +2,31 @@
   <header back="true"><%= t("supplier.cart.show.view.header") %></header>
 
   <% if !@cart.empty? and @cart.currency.to_s == "DKK" %>
-      <%= t("common.payment_methods.choose_payment_method") %>
-      <%= form_tag suppliers_cart_path, {:method => :get} do %>
-          <%= radio_button_tag :payment_type, LeadPurchase::PAYPAL_PAYMENT_TYPE, @payment_type == LeadPurchase::PAYPAL_PAYMENT_TYPE, :onclick => "this.form.submit()" %>
-          <%= label_tag :payment_type_1, t("common.payment_methods.paypal") %>
-          <%= radio_button_tag :payment_type, LeadPurchase::QUICKPAY_PAYMENT_TYPE, @payment_type == LeadPurchase::QUICKPAY_PAYMENT_TYPE, :onclick => "this.form.submit()" %>
-          <%= label_tag :payment_type_2,  t("common.payment_methods.quickpay") %>
-      <% end %>
+      <div class="payment_methods">
+          <h2><%= t("common.payment_methods.choose_payment_method") %></h2>
+          <%= form_tag suppliers_cart_path, {:method => :get} do %>
+            <ul>
+              <li>
+                <%= radio_button_tag :payment_type, LeadPurchase::PAYPAL_PAYMENT_TYPE, @payment_type == LeadPurchase::PAYPAL_PAYMENT_TYPE, :onclick => "this.form.submit()" %>
+
+                <% label_tag :payment_type_1 do %>
+                    <%= image_tag("logos/paypal.png", :width => 110) %>
+                <% end %>
+              </li>
+              <li>
+                <%= radio_button_tag :payment_type, LeadPurchase::QUICKPAY_PAYMENT_TYPE, @payment_type == LeadPurchase::QUICKPAY_PAYMENT_TYPE, :onclick => "this.form.submit()" %>
+
+                <% label_tag :payment_type_2 do %>
+                    <%= image_tag("logos/dk.png", :width => 110) %>
+                <% end %>
+              </li>
+            </ul>
+          <% end %>
+      </div>
   <% end %>
 
   <table class="cart_table">
-    <cols>
+    <colgroup>
       <col style="width: 50px"/>
       <col style="width: auto"/>
       <col style="width: 100px"/>
@@ -21,7 +35,7 @@
       <col style="width: 15px"/>
       <col style="width: 100px"/>
       <col style="width: 120px"/>
-    </cols>
+    </colgroup>
     <thead>
     <tr>
       <th>#</th>
