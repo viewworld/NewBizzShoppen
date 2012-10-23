@@ -13,7 +13,13 @@ module CampaignActions
     campaign_result_ids =  Array(@campaign).map(&:results).flatten.uniq.map(&:id)
     @all_results = Result.where("results.id IN (?)", campaign_result_ids)
     @result_ids = params[:result_ids] || @all_results.map(&:id)
-    @date_from = params[:date_from] ? params[:date_from].to_date : @campaign.is_a?(Array) ? @campaign.map(&:start_date).sort.first : @campaign.start_date
+
+    if current_user.admin? and params[:campaign_ids].blank? and params[:date_from].blank?
+      @date_from = Date.today - 5.months
+    else
+      @date_from = params[:date_from] ? params[:date_from].to_date : @campaign.is_a?(Array) ? @campaign.map(&:start_date).sort.first : @campaign.start_date
+    end
+
     @date_to = params[:date_to] ? params[:date_to].to_date : @campaign.is_a?(Array) ? @campaign.map(&:end_date).sort.reverse.first : @campaign.end_date
     @final = (params[:final] and params[:final] == "yes") ? true : false
     @agent_ids = params[:agent_ids] || []
@@ -26,9 +32,9 @@ module CampaignActions
     @results = (@final ? @all_results.where(:final => true) : @all_results).where(:id => @result_ids)
     @headers = CallResult.for_table_header(@date_from, @date_to)
     @campaign_users = @campaign.is_a?(Array) ? (current_user.has_role?(:admin) ?
-                          User.assigned_to_campaigns.with_results.with_agents_without_call_centres :
-                          User.assigned_to_campaigns.with_results.for_campaigns(@campaign).with_agents_without_call_centres.where("parent_id = ?", current_user.id)) :
-                          @campaign.users.with_agents_without_call_centres
+        User.assigned_to_campaigns.with_results.with_agents_without_call_centres :
+        User.assigned_to_campaigns.with_results.for_campaigns(@campaign).with_agents_without_call_centres.where("parent_id = ?", current_user.id)) :
+        @campaign.users.with_agents_without_call_centres
   end
 
   def set_contacts
