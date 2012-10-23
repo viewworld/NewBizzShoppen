@@ -27,7 +27,8 @@ module CampaignActions
     @results = (@final ? @all_results.where(:final => true) : @all_results).where(:id => @result_ids)
     @headers = CallResult.for_table_header(@date_from, @date_to)
     @campaign_users = @campaign.is_a?(Array) ? (current_user.has_role?(:admin) ?
-        User.assigned_to_campaigns.with_results.with_agents_without_call_centres :
+        User.where(:id => CampaignsUser.joins("inner join call_results on campaigns_users.user_id=call_results.creator_id").select("distinct(campaigns_users.user_id)").map(&:user_id)).select { |u|  !u.call_centre?} :
+        #User.assigned_to_campaigns.with_results.with_agents_without_call_centres :
         User.assigned_to_campaigns.with_results.for_campaigns(@campaign).with_agents_without_call_centres.where("parent_id = ?", current_user.id)) :
         @campaign.users.with_agents_without_call_centres
   end
