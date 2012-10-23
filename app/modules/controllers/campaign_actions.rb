@@ -14,12 +14,7 @@ module CampaignActions
     @all_results = Result.where("results.id IN (?)", campaign_result_ids)
     @result_ids = params[:result_ids] || @all_results.map(&:id)
 
-    if current_user.admin? and params[:campaign_ids].blank? and params[:date_from].blank?
-      @date_from = Date.today - 5.months
-    else
-      @date_from = params[:date_from] ? params[:date_from].to_date : @campaign.is_a?(Array) ? @campaign.map(&:start_date).sort.first : @campaign.start_date
-    end
-
+    @date_from = params[:date_from] ? params[:date_from].to_date : @campaign.is_a?(Array) ? @campaign.map(&:start_date).sort.first : @campaign.start_date
     @date_to = params[:date_to] ? params[:date_to].to_date : @campaign.is_a?(Array) ? @campaign.map(&:end_date).sort.reverse.first : @campaign.end_date
     @final = (params[:final] and params[:final] == "yes") ? true : false
     @agent_ids = params[:agent_ids] || []
