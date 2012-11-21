@@ -83,7 +83,7 @@ class Category < ActiveRecord::Base
   scope :with_keyword, lambda { |keyword| where("lower(name) like ?", "%#{keyword.to_s.downcase}%") }
   scope :with_unique, where("is_customer_unique IS true or is_agent_unique IS true")
   scope :with_locked, where("is_locked IS true")
-  scope :with_public, where("auto_buy IS false")
+  scope :with_public, where("auto_buy IS false AND is_customer_unique IS false AND is_agent_unique IS false")
   before_destroy :check_if_category_is_empty
   before_destroy :mark_articles_to_destroy
 
