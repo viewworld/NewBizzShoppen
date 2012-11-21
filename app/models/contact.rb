@@ -121,6 +121,9 @@ class Contact < AbstractLead
     self.reload
     lead = self.deep_clone!({:with_callbacks => true, :include => [:lead_purchases, :lead_translations, {:lead_template_values => :lead_template_value_translations}]})
     lead.update_attribute :type, "Lead"
+    new_lead = Lead.find(lead.id)
+    new_lead.update_attribute(:published, false)
+    new_lead.update_attribute(:published, true)
     self.update_attribute(:lead_id, lead.id)
     if tag_list.any?
       lead = Lead.find(lead.id)
