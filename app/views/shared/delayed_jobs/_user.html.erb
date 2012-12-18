@@ -14,7 +14,7 @@
           <tr id="delayed_job_<%= dj.id %>">
             <td class="cl"></td>
             <td><%= l dj.created_at, :format => :long %></td>
-            <td><%= dj.human_name %></td>
+            <td><%= dj.human_name rescue "Error" %></td>
             <td><%= t("delayed_jobs.shared.view.statuses.#{dj.status}") %></td>
             <td class="cr"></td>
           </tr>
