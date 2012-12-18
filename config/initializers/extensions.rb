@@ -35,8 +35,12 @@ end
 
 class Delayed::Backend::ActiveRecord::Job
   def human_name
-    klass = YAML.load(handler).object.class
-    klass.respond_to?(:human_name) ? klass.human_name : klass.name
+    begin
+      klass = YAML.load(handler).object.class
+      klass.respond_to?(:human_name) ? klass.human_name : klass.name
+    rescue
+      "[invalid]"
+    end
   end
 
   def status
