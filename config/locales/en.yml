@@ -2865,6 +2865,7 @@ en:
             zip_code: "Zip code"
           comments_count: "comments"
           post_comment: "Post new comment"
+          bulk_download_csv_link_all: "Download all"
       show:
         view:
           header: "Lead details"
@@ -2933,6 +2934,7 @@ en:
             paid_label: "Paid"
             search_button: "Search"
             zip_code: "Zip code"
+          bulk_download_csv_all: "Download all"
     bulk_lead_share_by_email:
       new:
         view:
