@@ -279,7 +279,7 @@
       var nestedFormsCount = <%= deal.lead_translations.reject{ |lt| lt.locale == I18n.locale.to_s }.size %>;
       var language_names = [];
       <% Locale.enabled.each do |locale| %>
-      <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';" -%>
+      <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';".html_safe -%>
       <% end %>
 
       function mark_as_required(field_id, is_enabled) {

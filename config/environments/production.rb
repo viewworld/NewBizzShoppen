@@ -60,4 +60,8 @@ Nbs::Application.configure do
   #                                            :password             => 'myfairleads',
   #                                            :authentication       => 'plain',
   #                                            :enable_starttls_auto => true}
+
+  config.middleware.swap ActionDispatch::ParamsParser,
+                         ActionDispatch::ParamsParser,
+                         Mime::JSON => lambda { |body| Yajl.load(body).with_indifferent_access }
 end

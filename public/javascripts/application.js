@@ -20,6 +20,10 @@ submitBulkForm = function(url, target) {
     $('#bulk_actions_form').submit();
 };
 
+$(document).ajaxSend(function(e, xhr, options) {
+    var sid = $("meta[name='csrf-token']").attr("content");
+    xhr.setRequestHeader("X-CSRF-Token", sid);
+});
 
 jQuery(document).ready(function() {
     loadScripts();
