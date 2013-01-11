@@ -131,7 +131,7 @@
      var all_campaigns = [
       #{@all_campaigns.map { |c| "['#{c.name}', #{c.id}]" }.join(',')}
      ]
-     }
+     }.html_safe
       %>
 
       <% @all_campaigns.partition { |c| c.active? }.each_with_index do |campaigns_group, i| %>
@@ -140,7 +140,7 @@
       var #{i == 0 ? 'active' : 'inactive'}_campaigns = [
        #{campaigns_group.map { |c| "['#{c.name}', #{c.id}]" }.join(',')}
       ]
-      }
+      }.html_safe
 
       %>
       <% end %>
