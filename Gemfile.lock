@@ -155,9 +155,10 @@ GEM
     gem_plugin (0.2.3)
     gherkin (2.3.5)
       json (>= 1.4.6)
-    globalize3 (0.0.10)
+    globalize3 (0.3.0)
       activemodel (>= 3.0.0)
       activerecord (>= 3.0.0)
+      paper_trail (~> 2)
     google-spreadsheet-ruby (0.1.5)
       nokogiri (>= 1.4.3.1)
       oauth (>= 0.3.6)
@@ -226,6 +227,9 @@ GEM
     nokogiri (1.5.0)
     oauth (0.4.5)
     open4 (1.1.0)
+    paper_trail (2.7.0)
+      activerecord (~> 3.0)
+      railties (~> 3.0)
     paperclip (2.3.6)
       activerecord
       activesupport
@@ -357,7 +361,7 @@ DEPENDENCIES
   fakeweb
   fastercsv
   formtastic (= 1.1.0)
-  globalize3 (= 0.0.10)
+  globalize3 (= 0.3.0)
   google-spreadsheet-ruby
   hoptoad_notifier
   i18n-active_record
