@@ -39,4 +39,7 @@ Nbs::Application.configure do
   Machinist.configure do |config|
     config.cache_objects = false
   end
+  config.middleware.swap ActionDispatch::ParamsParser,
+                         ActionDispatch::ParamsParser,
+                         Mime::JSON => lambda { |body| Yajl.load(body).with_indifferent_access }
 end

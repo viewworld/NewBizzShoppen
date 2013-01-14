@@ -21,7 +21,7 @@ class Suppliers::LeadPurchasesController < Suppliers::BasicSupplierController
     @categories = LeadCategory.with_lead_purchase_owner(current_user).map{|c| [c.name, c.id]}
     @assignees = User.assignees_for_lead_purchase_owner(current_user).map{|c| [c.screen_name, c.id]}
     @search = LeadPrimaryPurchase.scoped_search(params[:search])
-    @lead_purchases = @search.order("accessible_from DESC").paginate(:page => params[:page], :per_page => LeadPurchase.per_page)
+    @lead_purchases = @search.order("accessible_from DESC").paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
   end
 
   def check_access_to_lead_purchase

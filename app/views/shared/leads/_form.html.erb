@@ -181,9 +181,9 @@
 
 
         <% if !@lead.new_record? or (@lead.new_record? and @lead.country.present?) %>
-        <%= "if($('#lead_direct_phone_number').val() == ''){set_phone_code('lead_direct_phone_number', #{@lead.country.phone_dialling_code})}" -%>
-        <%= "if($('#lead_phone_number').val() == ''){set_phone_code('lead_phone_number', #{@lead.country.phone_dialling_code})}" -%>
-        <%= "if($('#lead_company_phone_number').val() == ''){set_phone_code('lead_company_phone_number', #{@lead.country.phone_dialling_code})}" -%>
+        <%= "if($('#lead_direct_phone_number').val() == ''){set_phone_code('lead_direct_phone_number', #{@lead.country.phone_dialling_code})}".html_safe -%>
+        <%= "if($('#lead_phone_number').val() == ''){set_phone_code('lead_phone_number', #{@lead.country.phone_dialling_code})}".html_safe -%>
+        <%= "if($('#lead_company_phone_number').val() == ''){set_phone_code('lead_company_phone_number', #{@lead.country.phone_dialling_code})}".html_safe -%>
         <% end %>
 
         <% if params[:action] == "new" or params[:action] == "create" %>
@@ -200,7 +200,7 @@
 
         var language_names = [];
         <% Locale.enabled.each do |locale| %>
-        <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';" -%>
+        <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';".html_safe -%>
         <% end %>
     </script>
 

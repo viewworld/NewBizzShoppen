@@ -2,8 +2,9 @@ source 'http://rubygems.org'
 
 gem 'bundler'
 
-gem 'rails', '3.0.3'
+gem 'rails', '3.0.19'
 gem 'railties'
+gem 'yajl-ruby', "1.1.0", :require => 'yajl'
 
 gem 'mongrel'
 gem 'pg'
@@ -18,7 +19,7 @@ gem 'aasm'
 gem 'paperclip', "2.3.6"
 gem 'scoped-search', '0.7.1', :require => "scoped_search"
 gem 'json_pure', '>= 1.4.6'
-gem 'globalize3', '0.0.10'
+gem 'globalize3', "0.3.0"
 gem 'role_model', :require => "role_model"
 gem 'cancan'
 gem 'rails-settings', :require => "settings"

@@ -121,6 +121,13 @@ class Contact < AbstractLead
     self.reload
     lead = self.deep_clone!({:with_callbacks => true, :include => [:lead_purchases, :lead_translations, {:lead_template_values => :lead_template_value_translations}]})
     lead.update_attribute :type, "Lead"
+
+    utl_cr = call_results.select { |cr| cr.result.name == "Upgraded to lead" }.sort { |cr1,cr2| cr1.created_at<=>cr2.created_at  }.last
+    new_lead = Lead.find(lead.id)
+    new_lead.creator = utl_cr.creator.admin? ? User.find(new_lead.agent_id).with_role : utl_cr.creator
+    new_lead.save
+    new_lead.update_attribute(:published, false)
+    new_lead.update_attribute(:published, true)
     self.update_attribute(:lead_id, lead.id)
     if tag_list.any?
       lead = Lead.find(lead.id)

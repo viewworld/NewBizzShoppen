@@ -181,10 +181,10 @@
     <div class="column_left">
       <div class="deal_bt">
         <% if !user_signed_in? and @deal.active? %>
-            <%= bt_link_to nil, t("deals.index.view.contact_me"), "#", :onclick => "javascript:show_sign_up_or_sign_in_modal()", :class => "bt_max bt_big" %>
+            <%= bt_link_to nil, t("deals.index.view.contact_me"), "javascript:void(0)", :onclick => "javascript:show_sign_up_or_sign_in_modal()", :class => "bt_max bt_big" %>
         <% elsif (user_signed_in? and current_user.has_role?(:member) and !@deal.requested_by?(current_user) and !@deal.awaiting_payment_requested_by?(current_user)) and @deal.active? %>
             <% if current_user.can_request?(@deal) %>
-                <%= bt_link_to nil, t("deals.index.view.contact_me"), "#", :onclick => "javascript:remote_get_deal_for_member('#{@deal.id}')", :class => "bt_max bt_big" %>
+                <%= bt_link_to nil, t("deals.index.view.contact_me"), "javascript:void(0)", :onclick => "javascript:remote_get_deal_for_member('#{@deal.id}')", :class => "bt_max bt_big" %>
             <% else %>
                 <%= bt_link_to nil, t("deals.index.view.upgrade_subscription_to_get_deal"), my_profile_path(:deal_id => @deal.id), :class => "bt_max bt_big" %>
             <% end %>

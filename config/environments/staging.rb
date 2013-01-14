@@ -31,6 +31,9 @@ Nbs::Application.configure do
 
   config.action_mailer.delivery_method     = :postmark
   config.action_mailer.postmark_settings = { :api_key => "a132d83a-7585-444a-b3cf-a522acfcb9fb" }
+  config.middleware.swap ActionDispatch::ParamsParser,
+                         ActionDispatch::ParamsParser,
+                         Mime::JSON => lambda { |body| Yajl.load(body).with_indifferent_access }
 end
 
 I18n.default_locale = :"en"

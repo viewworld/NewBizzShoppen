@@ -107,6 +107,7 @@
 
               <% blocks.bottom do |lead_purchase| %>
                   <%= bt_link_to :download, t("lead_user.lead_purchases.index.view.bulk_download_csv_link_short"), "javascript:void(0)", :onclick => "copy_checkboxes_to_bulk_form();submitBulkForm('#{lead_users_bulk_lead_purchase_csv_path}#POST');" %>
+                  <%= bt_link_to :download, t("lead_user.lead_purchases.index.view.bulk_download_csv_link_all"), "javascript:void(0)", :onclick => "$('#bulk_form_inputs').html('');submitBulkForm('#{lead_users_bulk_lead_purchase_csv_path}#POST');" %>
                   <%= bt_link_to :printer, t("lead_user.lead_purchases.index.view.bulk_print_link_short"), "javascript:void(0)", :onclick => "copy_checkboxes_to_bulk_form();submitBulkForm('#{lead_users_bulk_lead_purchase_print_path}#POST', '_blank');" %>
               <% end %>
           <% end %>

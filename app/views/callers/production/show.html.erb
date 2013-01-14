@@ -10,13 +10,15 @@
   <header back="true" backurl="javascript:history.back(-1)"><%=  @campaign.is_a?(Array) ? t("production.show.view.header") : @campaign.name %></header>
 
   <div class="frm_tiny pdd_10">
-
+  <% if !params[:campaign_ids].blank? %>
   <%= render :partial => "shared/results_production/table", :locals => { :search => @search, :campaign => @campaign,
                                                                          :agent_ids => @agent_ids, :all_results =>@all_results,
                                                                          :result_ids => @result_ids, :date_from => @date_from,
                                                                          :date_to => @date_to, :final => @final,
                                                                          :results => @results, :headers => @headers, :campaign_users => @campaign_users } %>
-
+  <% else %>
+     <%= blank_state_message "Set the constraints and press Search button to view production report." %>
+  <% end %>
 </column-mc:>
 
 <js:>

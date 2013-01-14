@@ -149,6 +149,13 @@
             }
         });
 
+        if(tags_tag_groups.filter(function(e){return e}).length == 0){
+            $("#newsletter_list_tag_group_items").
+                    append($("<option></option>").
+                    attr("value", "").
+                    text("1"));
+        }
+
         $.each(tag_groups_tags_count, function(index, value) {
             if(value != undefined && parseInt(value) == 0){
                 $("#newsletter_list_tag_group_items").

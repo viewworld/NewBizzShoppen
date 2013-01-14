@@ -52,7 +52,7 @@
     </tbody>
   </table>
 
-  <%= form_tag result_details_callers_campaign_path(campaign.is_a?(Array) ? campaign.first : campaign), :method => :get, :id => "result_details_form", :remote => true do %>
+  <%= form_tag result_details_callers_campaign_path(campaign.is_a?(Array) ? campaign.first : campaign), :method => :post, :id => "result_details_form", :remote => true do %>
       <%= hidden_field_tag :call_result_ids, "" %>
   <% end %>
 

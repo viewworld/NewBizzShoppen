@@ -46,6 +46,9 @@ Nbs::Application.configure do
 #    Bullet.rails_logger = false
 #    Bullet.disable_browser_cache = true
 #  end
+  config.middleware.swap ActionDispatch::ParamsParser,
+                         ActionDispatch::ParamsParser,
+                         Mime::JSON => lambda { |body| Yajl.load(body).with_indifferent_access }
 end
 
 I18n.default_locale = :"en"

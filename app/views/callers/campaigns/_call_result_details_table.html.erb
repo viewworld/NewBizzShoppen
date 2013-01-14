@@ -37,13 +37,29 @@
         <td class="cr"></td>
       </tr>
   <% end %>
+  <tr class="pagination">
+    <td colspan="8" class="ta_c">
+      <div class="pagination">
+      <% if call_results.current_page > 1 %>
+         <a href="javascript:void(0)" onclick="$.post('<%= result_details_callers_campaign_path(campaign, :page => call_results.current_page-1) %>', {call_result_ids: '<%= params[:call_result_ids] %>'})" class="previous_page">&laquo; Prev</a>
+      <% else %>
+         <span class="previous_page disabled">&laquo; Prev</span>
+      <% end %>
+      <% if call_results.current_page < call_results.total_pages %>
+         <a href="javascript:void(0)" onclick="$.post('<%= result_details_callers_campaign_path(campaign, :page => call_results.current_page+1) %>', {call_result_ids: '<%= params[:call_result_ids] %>'})" class="next_page">Next &raquo;</a>
+      <% else %>
+         <span class="next_page disabled">Next &raquo;</span>
+      <% end %>
+      </div>
+    </td>
+  </tr>
   <tr class="main_actions">
     <td colspan="8" class="ta_r"><%= bt_link_to_function :download, t("call_results.table.export_to_csv"), "$('#result_details_to_csv_form').submit()", :class => "fltr" %></td>
   </tr>
   </tbody>
 </table>
-<%= form_tag result_details_to_csv_callers_campaign_path(campaign), :method => :get, :id => "result_details_to_csv_form" do %>
-    <%= hidden_field_tag :call_result_ids, "#{call_results.map(&:id).* ','}" %>
+<%= form_tag result_details_to_csv_callers_campaign_path(campaign), :method => :post, :id => "result_details_to_csv_form" do %>
+    <%= hidden_field_tag :call_result_ids, "#{params[:call_result_ids]}" %>
 <% end %>
 
 <% call_results.each do |call_result| %>

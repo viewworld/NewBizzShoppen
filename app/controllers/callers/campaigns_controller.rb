@@ -62,7 +62,7 @@ class Callers::CampaignsController < Callers::CallerController
   end
 
   def result_details
-    @call_results = CallResult.find_all_by_id(params[:call_result_ids].split(","))
+    @call_results = CallResult.where(:id => params[:call_result_ids].split(",")).paginate(:page => params[:page], :per_page => 50)
   end
 
   def result_details_to_csv

@@ -223,8 +223,8 @@ Nbs::Application.routes.draw do
     resources :campaigns do
       resources :materials
       member do
-        get 'result_details'
-        get 'result_details_to_csv'
+        post 'result_details'
+        post 'result_details_to_csv'
         get 'contacts_for_search'
         post 'duplicate'
       end
