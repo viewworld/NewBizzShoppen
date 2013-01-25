@@ -19,7 +19,7 @@
 
 <% if @campaign %>
     <% counter = -1 %>
-    <%= form.fields_for :result_fields, @result.result_fields do |builder| %>
+    <%= form.fields_for :result_fields, @result.result_fields.order(:created_at) do |builder| %>
         <%= render :partial => "/shared/results/result_field_fields", :locals => { :f => builder, :counter => (counter += 1) } %>
     <% end %>
 <% end %>

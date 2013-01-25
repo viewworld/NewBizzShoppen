@@ -59,7 +59,7 @@ class CallResult < ActiveRecord::Base
 
   def all_result_values(selected_result)
     result = Result.find(selected_result)
-    result.result_fields.map do |field|
+    result.result_fields.order(:created_at).map do |field|
       result_value = result_values.detect { |rv| rv.result_field == field }
       result_value = ResultValue.new(:result_field => field) if result_value.nil?
       result_value

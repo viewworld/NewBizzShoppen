@@ -48,7 +48,7 @@ class Result < ActiveRecord::Base
   end
 
   def list_of_fields
-    result_fields.map(&:name).join(", ")
+    result_fields.order(:created_at).map(&:name).join(", ")
   end
 
   def send_material?
