@@ -23,7 +23,8 @@ class Category < ActiveRecord::Base
   after_create :generate_blurb
 
   validates_presence_of :name
-  validates_uniqueness_of :name, :scope => [:type, :parent_id]
+  #validates_uniqueness_of :name, :scope => [:type, :parent_id]
+  validate :name_is_unique_within_type_and_parent
 
   has_many :leads do
     def including_subcategories
@@ -90,6 +91,26 @@ class Category < ActiveRecord::Base
   accepts_nested_attributes_for :image
 
   private
+
+  def name_is_unique_within_type_and_parent
+    val_scope = self.class.joins(:category_translations).where("lower(category_translations.name) like ? AND category_translations.locale = ?",
+                                                         name.to_s.downcase, Globalize.locale)
+    if parent_id
+      val_scope = val_scope.where("parent_id = ?", parent_id)
+    else
+      val_scope = val_scope.where("parent_id IS NULL")
+    end
+
+    if persisted?
+      val_scope = val_scope.where("categories.id NOT IN (?)", [id])
+    end
+
+    if val_scope.first.present?
+      self.errors.add(:name, "is not unique")
+      return false
+    end
+    true
+  end
 
   def handle_image_removal
     if remove_image == "1"
