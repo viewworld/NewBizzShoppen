@@ -7,6 +7,7 @@ class Result < ActiveRecord::Base
   has_many :campaigns_results, :foreign_key => "result_id"
   has_many :campaigns, :through => :campaigns_results, :foreign_key => "result_id"
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
+  before_destroy :check_call_results
 
   has_many :result_fields, :dependent => :destroy
   accepts_nested_attributes_for :result_fields, :allow_destroy => true
@@ -123,5 +124,9 @@ class Result < ActiveRecord::Base
       campaign.results << self
       campaign.save
     end
+  end
+
+  def check_call_results
+    !call_results.present?
   end
 end

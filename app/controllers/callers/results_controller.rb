@@ -36,10 +36,12 @@ class Callers::ResultsController < Callers::CallerController
   end
 
   def destroy
-    destroy! do |success, failure|
-      success.html { redirect_to callers_campaign_results_path(@campaign) }
-      failure.html {}
+    if @result.destroy
+      flash[:notice] = "Result was successfully deleted."
+    else
+      flash[:alert] = "Result could not be deleted because there are call results linked to it."
     end
+    redirect_to callers_campaign_results_path(@campaign)
   end
 
   def batch_assign
