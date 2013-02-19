@@ -307,7 +307,9 @@ class User < ActiveRecord::Base
       user = user.with_role
       user.password = 'secret'
       user.password_confirmation = 'secret'
-      user.save!
+      unless user.save
+        puts "User##{user.id} has the following errors: #{user.errors.full_messages}"
+      end
     end
   end
 

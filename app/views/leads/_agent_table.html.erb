@@ -1,0 +1,168 @@
+<%
+   cols = 8
+   cols += 1 if show_checkboxes
+   cols += 1 if not block_tools.nil?
+-%>
+
+
+<table id="leads" class="generic">
+  <thead>
+  <tr>
+    <th class="hl"></th>
+    <% if show_checkboxes %>
+        <th><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></th>
+    <% end %>
+    <th><%= link_to t("leads.table.id"), order_for_scoped_search(:id) %></th>
+    <th><%= link_to t("leads.table.header"), order_for_scoped_search(:header) %></th>
+    <th class="ta_c"><%= link_to t("leads.table.company"), order_for_scoped_search(:company_name) %></th>
+    <th class="ta_c"><%= link_to t("leads.table.contact_name"), order_for_scoped_search(:contact_name) %></th>
+    <th class="ta_c"><%= link_to t("leads.table.category"), order_for_scoped_search(:category) %></th>
+    <th class="ta_c"><%= link_to t("leads.table.campaign"), order_for_scoped_search(:campaign) %></th>
+    <th class="ta_c"><%= link_to t("leads.table.payout"), order_for_scoped_search(:payout) %></th>
+    <th class="ta_c"><%= link_to t("leads.table.unsatisfactory_rating"), order_for_scoped_search(:has_unsatisfactory_rating) %></th>
+    <th><%= link_to t("leads.table.status"), order_for_scoped_search(:published) %></th>
+    <% if block_tools %>
+        <th class="ta_r">
+          <%= t("leads.table.actions") %>
+        </th>
+    <% end %>
+    <th class="hr"></th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td class="fl"></td>
+    <td colspan="<%= cols + 1 %>"></td>
+    <td class="fr"></td>
+  </tr>
+  </tfoot>
+  <tbody>
+  <% if collection.any? %>
+    <% collection.each do |lead| %>
+      <tr id="lead_<%= lead.id %>" class="<%= cycle("odd", "even") %>">
+        <td class="cl"></td>
+        <% if show_checkboxes %>
+            <td><%= check_box_tag("lead_ids[]", lead.id) %></td>
+        <% end %>
+        <td><%= lead.id %></td>
+        <td>
+          <div class="rltv" style="padding-bottom: 20px;">
+          <%= lead.header %>
+          <% if lead.can_be_commented? %>
+           <div class="row_tooltip_actions">
+           <%= link_to t("comments.shared.show_comments")+" (#{lead.comments_count_for(current_user)})", "#", :class => "toggle_row show_comments#{' toggle_row_unread' if lead.has_unread_comments_for_user?(current_user)}", :onclick => "mark_comments_as_read(#{lead.id}); mark_row_as_read('lead_#{lead.id}')" %>
+           <%= link_to t("comments.shared.hide_comments"), "#", :class => "toggle_row hide_comments", :style => "display:none" %>
+           </div>
+          <% end %>
+          <% if lead.creator and (lead.creator == current_user or lead.creator.parent == current_user) %>
+            <% if lead.lead_certification_requests.last %>
+              <br/>
+              <%= t("leads.listing.certification_status") %>: <%= lead.lead_certification_requests.last.current_status %>
+            <% end %>
+          <% end %>
+              </div>
+        </td>
+
+        <td class="ta_c"><%= lead.company_name %></td>
+        <td class="ta_c"><%= lead.contact_name %></td>
+        <td class="ta_c"><%= lead.category %></td>
+        <td class="ta_c"><%= lead.campaign %></td>
+        <td class="ta_r"><%#= as_currency(lead.purchase_value, lead.currency) %></td>
+        <td class="ta_c"><%= link_to lead.has_unsatisfactory_rating ? t("leads.listing.has_unsatisfactory_rating_yes") : t("leads.listing.has_unsatisfactory_rating_no"), current_user.has_any_role?(:agent, :call_centre_agent) ? send("edit_#{current_user.role.to_s.pluralize}_lead_path".to_sym, lead) : edit_administration_lead_path(lead, :anchor => "lead_rating") %></td>
+        <td>
+          <% if block_status_column %>
+              <%= with_output_buffer { block_status_column.call(lead) } %>
+          <% else %>
+              <%= lead.published %>
+          <% end %>
+        </td>
+
+        <% if block_tools %>
+            <td class="tda ta_r">
+              <%= with_output_buffer { block_tools.call(lead) } %>
+            </td>
+        <% end %>
+        <td class="cr"></td>
+      </tr>
+
+      <% if block_rowtooltip %>
+          <tr class="row_tooltip">
+            <td class="cl no_pdd"></td>
+            <td colspan="<%= cols + 1 %>" class="no_pdd">
+              <div class="row_tooltip_content pdd_10">
+                <%= with_output_buffer { block_rowtooltip.call(lead) } %>
+              </div>
+            </td>
+            <td class="cr no_pdd"></td>
+          </tr>
+      <% end %>
+    <% end %>
+  <% else %>
+    <tr>
+      <td colspan="<%= cols + 3 %>" class="ta_c">
+        <h2><%= t("leads.table.no_leads_matches_criteria") %></h2>
+      </td>
+    </tr>
+  <% end %>
+
+  <% if will_paginate %>
+      <tr class="pagination">
+        <td colspan="<%= cols + 3 %>" class="ta_c">
+          <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+        </td>
+      </tr>
+  <% end %>
+
+  <% if user_signed_in? and current_user.has_any_role?(:admin, :call_centre, :call_centre_agent, :agent) %>
+      <tr class="main_actions">
+        <td class="cl"></td>
+        <td colspan="<%= cols +1 %>" class="no_pdd_lr ta_l">
+          <%= bulk_form do %>
+            <%= hidden_field_tag :route_to %>
+            <%= render :partial => "/shared/tags/assign_tags", :locals => { :ids_container => "lead_ids", :taggable_class_name => "Lead" } %>
+          <% end %>
+        </td>
+        <td class="cr"></td>
+      </tr>
+  <% end %>
+
+  </tbody>
+</table>
+
+<script type=text/javascript>
+
+    function hideRowButtons()
+    {
+        $(".toggle_row.hide_comments:visible").hide().prev().show();
+    }
+
+    jQuery(document).ready(function()
+    {
+        $(".toggle_row.show_comments").bind("click", function()
+        {
+            $(".row_tooltip").filter(":not(:eq(" + $(this).parents("tr:first").next().index(".row_tooltip") + "))")
+                    .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {
+                $(this).parents("tr.row_tooltip").hide()
+            });
+
+            hideRowButtons();
+
+
+            $(this).hide().next().show().parents("tr:first")
+                    .next("tr.row_tooltip").show()
+                    .find(".row_tooltip_content").slideDown();
+        });
+
+        $(".toggle_row.hide_comments").bind("click", function()
+        {
+            hideRowButtons();
+
+            $(this).hide().prev().show().parents("tr:first")
+                    .next("tr.row_tooltip")
+                    .find(".row_tooltip_content").slideUp('normal', function() {
+                $(this).parents("tr.row_tooltip").hide();
+            });
+        });
+    });
+
+</script>

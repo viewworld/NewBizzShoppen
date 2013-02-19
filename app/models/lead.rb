@@ -18,6 +18,7 @@ class Lead < AbstractLead
   belongs_to :currency
   belongs_to :region
   belongs_to :deal, :class_name => "Deal", :foreign_key => "deal_id"
+  belongs_to :campaign
   has_many :lead_certification_requests, :dependent => :destroy
   has_many :lead_translations, :dependent => :destroy
   has_many :lead_purchases
@@ -82,6 +83,8 @@ class Lead < AbstractLead
 
   scope :descend_by_leads_id, order("leads.id DESC")
   scope :with_tags, lambda { |tag_names| tagged_with(tag_names) }
+  scope :purchase_decision_date_from, lambda { |from| where("leads.purchase_decision_date >= ?", from) }
+  scope :purchase_decision_date_to, lambda { |to| where("leads.purchase_decision_date <= ?", to) }
 
   delegate :certification_level, :to => :creator
 
@@ -353,6 +356,10 @@ class Lead < AbstractLead
 
   def can_be_shown_to?(cu)
     published? or (cu and ((cu == creator) or (cu.has_role?(:admin))))
+  end
+
+  def campaign_name
+    campaign.name if campaign
   end
 
 end

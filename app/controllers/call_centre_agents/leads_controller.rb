@@ -69,8 +69,8 @@ class CallCentreAgents::LeadsController < CallCentreAgents::CallCentreAgentContr
     params[:search]||={}
 
     @search = Lead.scoped_search(params[:search])
-    @search.without_inactive = true if params[:search][:without_inactive].nil?
-    @search.without_outdated = true if params[:search][:without_outdated].nil?
+    @search.purchase_decision_date_from = Date.today if params[:search][:purchase_decision_date_from].nil?
+    @search.purchase_decision_date_to = Date.today if params[:search][:purchase_decision_date_to].nil?
     @leads = @search.where(:creator_id => current_user.id).order("id DESC").paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
   end
 

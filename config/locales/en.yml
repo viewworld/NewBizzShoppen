@@ -469,6 +469,7 @@ en:
         this_month: this month
         this_week: this week
         today: today
+        all: all
       search:
         date_from: Date from
         date_to: Date to
@@ -841,6 +842,12 @@ en:
       source: "Source"
       category: "Category"
       deal_source: "Deal"
+      company: "Company"
+      contact_name: "Contact name"
+      category: "Category"
+      campaign: "Campaign"
+      payout: "Payout"
+      no_leads_matches_criteria: "No leads matches the current search criteria"
     index:
       header: Leads
       header_for: "for"

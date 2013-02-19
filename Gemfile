@@ -50,6 +50,7 @@ gem 'diff-lcs', :require => false
 gem 'cucumber_fm-core', '0.1', :require => 'cucumber_feature_manager'
 gem 'acts-as-taggable-on', '~> 2.2.2'
 gem 'createsend'
+gem 'gherkin', '2.4.0'
 
 group :production do
   gem 'hoptoad_notifier'
@@ -72,7 +73,7 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'capybara'
-  gem 'cucumber', "0.10.0"
+  gem 'cucumber', "0.10.1"
   gem 'cucumber-rails', '0.3.2'
   gem 'test-unit'
   gem 'pickle'
@@ -89,6 +90,7 @@ group :test do
   gem "rspec-rails", "= 2.0.1"
   gem 'autotest-rails'
   gem 'autotest'
+  gem 'ZenTest', '4.5.0'
   gem 'culerity'
   gem 'celerity', :require => nil # JRuby only.
 end

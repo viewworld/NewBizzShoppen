@@ -14,10 +14,6 @@
         <%= label_tag t("share_deal_by_email.new.view.email_to") %>
         <%= text_field_tag :email_to %>
       </li>
-      <li id="template_editor_body_input" class="text">
-        <%= label_tag t("share_deal_by_email.new.view.message") %>
-        <%= text_area_tag :body, deal.social_media_description.to_s, :style => "width:230px;height:120px" %>
-      </li>
       <%= hidden_field_tag :deal_id, deal.id %>
     </ol>
   </fieldset>
