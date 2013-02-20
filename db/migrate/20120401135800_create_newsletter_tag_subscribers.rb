@@ -16,7 +16,7 @@ class CreateNewsletterTagSubscribers < ActiveRecord::Migration
         end as email_address,
         case
           when taggings.taggable_type ~ 'User' then users.first_name||' '||users.last_name
-          when taggings.taggable_type ~ 'AbstractLead|Lead|Contact' then leads.name
+          when taggings.taggable_type ~ 'AbstractLead|Lead|Contact' then leads.contact_name
         end as name,
         case
           when taggings.taggable_type ~ 'User' then users.company_name
@@ -53,7 +53,7 @@ class CreateNewsletterTagSubscribers < ActiveRecord::Migration
         end as email_address,
         case
           when taggings.taggable_type ~ 'User' then users.first_name||' '||users.last_name
-          when taggings.taggable_type ~ 'AbstractLead|Lead|Contact' then leads.name
+          when taggings.taggable_type ~ 'AbstractLead|Lead|Contact' then leads.contact_name
         end as name,
         case
           when taggings.taggable_type ~ 'User' then users.company_name

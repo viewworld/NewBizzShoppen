@@ -1,6 +1,6 @@
 ## features/support/mocha.rb
 
-require "mocha"
+require "mocha/setup"
 
 World(Mocha::API)
 
