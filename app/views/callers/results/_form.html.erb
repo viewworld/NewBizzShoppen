@@ -1,37 +1,38 @@
 <% unless result.generic? %>
-<div class="pdd_10 no_pdd_t">
-  <fieldset class="inputs labels_100 labels_ta_r">
-    <ol>
-      <%= form.input :name %>
-      <li class="string">
-        <label><%= t("results.new.type") %></label>
+  <div class="pdd_10 no_pdd_t">
+      <fieldset class="inputs labels_100 labels_ta_r">
+        <ol>
+          <%= form.input :name %>
+          <li class="string">
+            <label><%= t("results.new.type") %></label>
 
-        <div class="txt">
-          <strong>
-            <%= result.final? ? t("results.new.final_result") : t("results.new.call_log_result") %>
-          </strong>
-        </div>
-      </li>
-        <%= form.input :final, :as => :hidden %>
-    </ol>
-  </fieldset>
-</div>
+            <div class="txt">
+              <strong>
+                <%= result.final? ? t("results.new.final_result") : t("results.new.call_log_result") %>
+              </strong>
+            </div>
+          </li>
+            <%= form.input :final, :as => :hidden %>
+        </ol>
+      </fieldset>
+  </div>
 
-<% if @campaign %>
+  <% if @campaign %>
     <% counter = -1 %>
-    <%= form.fields_for :result_fields, @result.result_fields.order(:created_at) do |builder| %>
+    <%= form.fields_for :result_fields, @result.result_fields do |builder| %>
         <%= render :partial => "/shared/results/result_field_fields", :locals => { :f => builder, :counter => (counter += 1) } %>
     <% end %>
-<% end %>
+  <% end %>
 
-<div class="nested_result_fields_container"></div>
+  <div class="nested_result_fields_container"></div>
 
-<% if @campaign %>
+  <% if @campaign %>
     <hl/>
     <div class="pdd_20" style="padding-top:10px">
-      <%= bt_link_to :plus, t("shared.lead_templates.form.new_lead_template_field"), "javascript:void(0)", :onclick => "#{fields_for_result_fields(form)}" %>
+      <%= bt_link_to :plus, t("shared.lead_templates.form.new_lead_template_field"), "javascript:void(0)", :onclick => "#{fields_for_result_fields(form)}", :class => "new_field" %>
     </div>
-    <% end %>
+  <% end %>
+
 <% end %>
 
 <% if result.created_by_or_admin?(current_user) %>

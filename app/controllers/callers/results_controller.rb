@@ -9,6 +9,7 @@ class Callers::ResultsController < Callers::CallerController
 
   def new
     @result = Result.new(:final => params[:type].eql?("final"))
+    @result.result_fields.build(:name => 'Call back', :field_type => 4) unless @result.final?
   end
 
   def create

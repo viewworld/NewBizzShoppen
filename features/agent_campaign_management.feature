@@ -496,6 +496,10 @@ Feature: Agent campaign - management
       Then contact "Mleko company" should be at bottom of the list
       And I should see translated "contacts.edit.current_agent_label"
 
+    @ao @_requested @_hr_feb_2013
+    Scenario: I can see callback result added by default when creating new temp result (call log)
+      # TODO
+
     @tbr @__campaign_manage_results @_done @_requested @selenium
     Scenario: I can add custom call result (final)
       Given the custom final result with name "Just a final result" is created by "translator_call_centre@nbs.com"

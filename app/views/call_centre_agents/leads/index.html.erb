@@ -24,6 +24,15 @@
                 <%= label_tag :date_to, t("campaigns.show.search.date_to") %>
                 <%= f.text_field :purchase_decision_date_to, :class => "datepicker" %>
               </li>
+              <li>
+                <p class="pdd_10">
+                <%= t("campaign_reports.index.ranges_label") %>:<br/>
+                <%= link_to_function t("campaigns.show.ranges.all"), "$('#search_purchase_decision_date_from').val('');$('#search_purchase_decision_date_to').val('');$('#search_new').submit()" %>
+                <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#search_purchase_decision_date_from').val('#{Date.today.beginning_of_month}');$('#search_purchase_decision_date_to').val('#{Date.today.end_of_month}');$('#search_new').submit()" %>
+                <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#search_purchase_decision_date_from').val('#{Date.today.beginning_of_week}');$('#search_purchase_decision_date_to').val('#{Date.today.end_of_week}');$('#search_new').submit()" %>
+                <%= link_to_function t("campaigns.show.ranges.today"), "$('#search_purchase_decision_date_from').val('#{Date.today}');$('#search_purchase_decision_date_to').val('#{Date.today}');$('#search_new').submit()" %>
+                </p>
+              </li>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
                   <%= submit_tag t("call_centre_agent.leads.index.view.search_button") %>
@@ -34,13 +43,6 @@
               </li>
             </ol>
           </fieldset>
-          <p class="pdd_10">
-            <%= t("campaign_reports.index.ranges_label") %>:<br/>
-            <%= link_to_function t("campaigns.show.ranges.all"), "$('#search_purchase_decision_date_from').val('');$('#search_purchase_decision_date_to').val('');$('#search_new').submit()" %>
-            <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#search_purchase_decision_date_from').val('#{Date.today.beginning_of_month}');$('#search_purchase_decision_date_to').val('#{Date.today.end_of_month}');$('#search_new').submit()" %>
-            <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#search_purchase_decision_date_from').val('#{Date.today.beginning_of_week}');$('#search_purchase_decision_date_to').val('#{Date.today.end_of_week}');$('#search_new').submit()" %>
-            <%= link_to_function t("campaigns.show.ranges.today"), "$('#search_purchase_decision_date_from').val('#{Date.today}');$('#search_purchase_decision_date_to').val('#{Date.today}');$('#search_new').submit()" %>
-          </p>
       <% end %>
     </div>
   </div>
