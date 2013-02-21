@@ -16,7 +16,7 @@ class ChangeNewsletterViews < ActiveRecord::Migration
         end as email_address,
         case
           when taggings.taggable_type ~ 'User' then users.first_name||' '||users.last_name
-          when taggings.taggable_type ~ 'AbstractLead|Lead|Contact' then leads.name
+          when taggings.taggable_type ~ 'AbstractLead|Lead|Contact' then leads.contact_name
         end as name,
         case
           when taggings.taggable_type ~ 'User' then users.company_name
@@ -39,7 +39,7 @@ class ChangeNewsletterViews < ActiveRecord::Migration
       left join campaigns on campaigns.id = taggings.taggable_id
       left join leads on leads.id = taggings.taggable_id
       where taggings.taggable_type<>'TagGroup' and newsletter_sources.source_type = 4 and tag_groups.match_all is false
-      group by newsletter_sources.id,newsletter_sources.newsletter_list_id,taggings.taggable_type,taggings.taggable_id,users.email,leads.email_address,users.first_name,users.last_name,leads.name,leads.company_name,users.company_name,addresses.zip_code,leads.zip_code,users.login_key
+      group by newsletter_sources.id,newsletter_sources.newsletter_list_id,taggings.taggable_type,taggings.taggable_id,users.email,leads.email_address,users.first_name,users.last_name,leads.contact_name,leads.company_name,users.company_name,addresses.zip_code,leads.zip_code,users.login_key
 
       union all
 
@@ -57,7 +57,7 @@ class ChangeNewsletterViews < ActiveRecord::Migration
         end as email_address,
         case
           when taggings.taggable_type ~ 'User' then users.first_name||' '||users.last_name
-          when taggings.taggable_type ~ 'AbstractLead|Lead|Contact' then leads.name
+          when taggings.taggable_type ~ 'AbstractLead|Lead|Contact' then leads.contact_name
         end as name,
         case
           when taggings.taggable_type ~ 'User' then users.company_name
@@ -80,7 +80,7 @@ class ChangeNewsletterViews < ActiveRecord::Migration
       left join campaigns on campaigns.id = taggings.taggable_id
       left join leads on leads.id = taggings.taggable_id
       where taggings.taggable_type<>'TagGroup' and newsletter_sources.source_type = 4 and tag_groups.match_all is true
-      group by newsletter_sources.id, newsletter_sources.newsletter_list_id, newsletter_sources.sourceable_id, taggings.taggable_type,taggings.taggable_id,users.email,leads.email_address,users.first_name,users.last_name,leads.name,users.company_name,leads.company_name,addresses.zip_code,leads.zip_code,users.login_key
+      group by newsletter_sources.id, newsletter_sources.newsletter_list_id, newsletter_sources.sourceable_id, taggings.taggable_type,taggings.taggable_id,users.email,leads.email_address,users.first_name,users.last_name,leads.contact_name,users.company_name,leads.company_name,addresses.zip_code,leads.zip_code,users.login_key
       having count(*) = (select count(*) from taggings where taggable_type='TagGroup' and taggable_id=newsletter_sources.sourceable_id)
     }
 
