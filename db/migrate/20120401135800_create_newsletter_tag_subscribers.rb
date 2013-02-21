@@ -35,7 +35,7 @@ class CreateNewsletterTagSubscribers < ActiveRecord::Migration
       left join campaigns on campaigns.id = taggings.taggable_id
       left join leads on leads.id = taggings.taggable_id
       where taggings.taggable_type<>'TagGroup' and newsletter_sources.source_type = 4 and tag_groups.match_all is false
-      group by newsletter_sources.id,newsletter_sources.newsletter_list_id,taggings.taggable_type,taggings.taggable_id,users.email,leads.email_address,users.first_name,users.last_name,leads.name,leads.company_name,users.company_name,addresses.zip_code,leads.zip_code
+      group by newsletter_sources.id,newsletter_sources.newsletter_list_id,taggings.taggable_type,taggings.taggable_id,users.email,leads.email_address,users.first_name,users.last_name,leads.contact_name,leads.company_name,users.company_name,addresses.zip_code,leads.zip_code
 
       union all
 
@@ -72,7 +72,7 @@ class CreateNewsletterTagSubscribers < ActiveRecord::Migration
       left join campaigns on campaigns.id = taggings.taggable_id
       left join leads on leads.id = taggings.taggable_id
       where taggings.taggable_type<>'TagGroup' and newsletter_sources.source_type = 4 and tag_groups.match_all is true
-      group by newsletter_sources.id, newsletter_sources.newsletter_list_id, newsletter_sources.sourceable_id, taggings.taggable_type,taggings.taggable_id,users.email,leads.email_address,users.first_name,users.last_name,leads.name,users.company_name,leads.company_name,addresses.zip_code,leads.zip_code
+      group by newsletter_sources.id, newsletter_sources.newsletter_list_id, newsletter_sources.sourceable_id, taggings.taggable_type,taggings.taggable_id,users.email,leads.email_address,users.first_name,users.last_name,leads.contact_name,users.company_name,leads.company_name,addresses.zip_code,leads.zip_code
       having count(*) = (select count(*) from taggings where taggable_type='TagGroup' and taggable_id=newsletter_sources.sourceable_id)
     }
   end
