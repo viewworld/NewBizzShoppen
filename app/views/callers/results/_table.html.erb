@@ -1,4 +1,4 @@
-<table class="generic">
+<table class="generic campaigns_results">
   <thead>
   <tr>
     <th class="hl"></th>
@@ -6,6 +6,7 @@
     <th style="width:300px"><%= t("results.index.table.result_name") %></th>
     <th style="width:250px"><%= t("results.index.table.fields") %></th>
     <% if final %>
+        <th><%= t("results.index.table.payout") %></th>
         <th><%= t("results.index.table.value") %></th>
         <th><%= t("results.index.table.expected_completed_per_hour") %></th>
     <% end %>
@@ -16,7 +17,7 @@
   <tfoot>
   <tr>
     <td class="fl"></td>
-    <td colspan="<%= final ? '6' : '4' %>"></td>
+    <td colspan="<%= final ? '7' : '4' %>"></td>
     <td class="fr"></td>
   </tr>
   </tfoot>
@@ -24,7 +25,7 @@
     <% if results.generic_results.present? %>
         <tr class="header">
           <td class="cl"></td>
-          <td colspan="<%= final ? '6' : '4' %>"><%= t("results.index.table.generic_types") %></td>
+          <td colspan="<%= final ? '7' : '4' %>"><%= t("results.index.table.generic_types") %></td>
           <td class="cr"></td>
         </tr>
         <%= render :partial => "callers/results/result", :collection => results.generic_results, :locals => {:campaign => campaign} %>
@@ -32,7 +33,7 @@
     <% if results.custom_results.present? %>
         <tr class="header">
           <td class="cl"></td>
-          <td colspan="<%= final ? '6' : '4' %>"><%= t("results.index.table.custom_types") %></td>
+          <td colspan="<%= final ? '7' : '4' %>"><%= t("results.index.table.custom_types") %></td>
           <td class="cr"></td>
         </tr>
         <%= render :partial => "callers/results/result", :collection => results.custom_results, :locals => {:campaign => campaign} %>

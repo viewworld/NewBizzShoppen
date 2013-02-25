@@ -27,7 +27,7 @@
                 <%= check_box_tag "campaign_user_id_#{call_centre.id}", call_centre.id, @campaign.users.include?(call_centre), :name => "campaign_user_ids[]", :class => "cb_cu_#{call_centre.id}" %>
               </td>
               <td><%= call_centre.screen_name %>
-                <%= link_to_function "(select all in call centre)", "$.each($('.cb_cu_3'), function(index, val){$('#' + this.id).attr('checked',true)})" if call_centre.has_role?(:call_centre) %>
+                <%= link_to_function "(select all in call centre)", "$.each($('.cb_cu_#{call_centre.id}'), function(index, val){$('#' + this.id).attr('checked', !$('#' + this.id).attr('checked'))})" if call_centre.has_role?(:call_centre) %>
               </td>
               <td class="ta_c"><%= call_centre.campaigns.size %></td>
               <td class="cr"></td>

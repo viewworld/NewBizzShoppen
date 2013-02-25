@@ -420,6 +420,7 @@ en:
       cost_type1: "Agent's billing rate"
       cost_type2: "Fixed hourly rate"
       cost_type3: "Don't calculate cost"
+      cost_type4: "PayOut"
     crm_options:
       crm_option0: "Disabled"
       crm_option1: "Select by Company Name"
@@ -738,6 +739,7 @@ en:
         custom_types: Custom types
         fields: Fields
         value: Value
+        payout: "PayOut"
         expected_completed_per_hour: 'Expected completed per hour'
     new:
       title: Add result type
@@ -2805,6 +2807,7 @@ en:
           email: "E-mail"
           date: "Date"
           status: "Status"
+          header_graph: "Graph"
   member_home:
     show:
       view:

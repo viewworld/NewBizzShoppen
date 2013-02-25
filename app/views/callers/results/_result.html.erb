@@ -7,7 +7,8 @@
   <td><%= result.list_of_fields %></td>
   <% if result.final? and result.can_be_managed_by?(current_user) %>
       <% cr = result.campaigns_results.detect { |cr| cr.campaign_id == campaign.id } %>
-      <td><%= text_field_tag "result[#{result.id}][campaign_result][value]", cr ? cr.value : '' %>&nbsp;<%= campaign.currency.to_s %></td>
+      <td><%= text_field_tag "result[#{result.id}][campaign_result][payout]", cr ? cr.payout : '' %>&nbsp;<%= campaign.currency.symbol.to_s.html_safe %></td>
+      <td><%= text_field_tag "result[#{result.id}][campaign_result][value]", cr ? cr.value : '' %>&nbsp;<%= campaign.currency.symbol.to_s.html_safe %></td>
       <td><%= text_field_tag "result[#{result.id}][campaign_result][expected_completed_per_hour]", cr ? cr.expected_completed_per_hour : '' %></td>
   <% elsif result.final? %>
     <td colspan="2"><%= t("campaigns.index.not_allowed_to_edit") %></td>

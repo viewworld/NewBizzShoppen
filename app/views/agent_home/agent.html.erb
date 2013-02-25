@@ -64,6 +64,44 @@
   <hl pdd="15"></hl>
 
   <% if user_signed_in? %>
+  <div id="agent_performance">
+    <div class="column_2to3 fltl" style="padding: 0 15px 0 0" id="agent_performance_table">
+      <frm title="#{t('agent_home.show.view.header_campaigns')}" c="no_marg">
+        <param:content>
+          <table class="generic">
+            <thead>
+              <tr>
+                <th>Campaign</th>
+                <th>Payout</th>
+                <th>Hours</th>
+                <th>Rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @campaigns.to_a.each do |campaign| %>
+                <tr>
+                  <td><%= campaign %></td>
+                  <td><%= as_currency(AgentPerformance.new(params[:from], params[:to], current_user, campaign).payout, Currency.euro, 0) %></td>
+                  <td><%= AgentPerformance.new(params[:from], params[:to], current_user, campaign).time.to_f.as_hours_and_minutes %></td>
+                  <td><%= as_currency(AgentPerformance.new(params[:from], params[:to], current_user, campaign).rate, Currency.euro, 0) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </param:content>
+      </frm>
+    </div>
+    <div class="column_1to3 fltl" id="agent_performance_graph">
+      <frm title="#{t('agent_home.show.view.header_graph')}" c="no_marg">
+        <param:content>
+        </param:content>
+      </frm>
+    </div>
+    <clb/>
+  </div>
+
+  <hl pdd="15"></hl>
+
   <div id="leads_summary">
     <div class="column_1to3 fltl" id="campaigns">
       <frm title="#{t('agent_home.show.view.header_campaigns')}" c="no_marg">

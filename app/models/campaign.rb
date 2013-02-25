@@ -50,7 +50,8 @@ class Campaign < ActiveRecord::Base
   AGENT_BILLING_RATE_COST = 1.freeze
   FIXED_HOURLY_RATE_COST = 2.freeze
   NO_COST = 3.freeze
-  COST_TYPES = [FIXED_COST, AGENT_BILLING_RATE_COST, FIXED_HOURLY_RATE_COST, NO_COST]
+  PAYOUT = 4.freeze
+  COST_TYPES = [PAYOUT, FIXED_COST, AGENT_BILLING_RATE_COST, FIXED_HOURLY_RATE_COST, NO_COST]
   CLONED_TEMPLATES = {
       :send_material_email_template => 'result_send_material', :upgrade_contact_to_category_buyer_email_template => 'upgrade_contact_to_category_buyer',
       :upgrade_contact_to_buyer_email_template => 'upgrade_contact_to_buyer', :upgrade_contact_to_member_email_template => 'upgrade_contact_to_member'
@@ -141,6 +142,7 @@ class Campaign < ActiveRecord::Base
     self.results = params[:campaign_result_ids].blank? ? [] : Result.find(params[:campaign_result_ids])
     self.results.each do |r|
       if params["result"] and params["result"][r.id.to_s] and params["result"][r.id.to_s]["campaign_result"] and cr = r.campaigns_results.detect { |cr| cr.campaign_id == self.id }
+        cr.payout = params["result"][r.id.to_s]["campaign_result"]["payout"] if params["result"][r.id.to_s]["campaign_result"]["payout"]
         cr.value = params["result"][r.id.to_s]["campaign_result"]["value"] if params["result"][r.id.to_s]["campaign_result"]["value"]
         cr.expected_completed_per_hour = params["result"][r.id.to_s]["campaign_result"]["expected_completed_per_hour"] if params["result"][r.id.to_s]["campaign_result"]["expected_completed_per_hour"]
         cr.save

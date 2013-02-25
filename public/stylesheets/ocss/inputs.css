@@ -189,6 +189,7 @@
 {
     width: auto;
     float: left;
+    max-width: 300px;
 }
 
 .inputs ol li.multiple

@@ -599,3 +599,11 @@ div.pagination .disabled
     background: #fafafa;
     border-right: 1px solid #ccc;
 }
+
+.campaigns_results td {
+    width: 150px;
+}
+
+.campaigns_results td input {
+    width: 70px;
+}

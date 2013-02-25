@@ -7,6 +7,7 @@ class CallResult < ActiveRecord::Base
   belongs_to :contact
   belongs_to :result
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
+  belongs_to :payout_currency, :class_name => "Currency"
   has_one :call_log, :dependent => :destroy
   has_many :result_values, :dependent => :destroy
   has_one :send_material_result_value, :class_name => "ResultValue", :conditions => "result_values.field_type = '#{ResultField::MATERIAL}'"
@@ -37,6 +38,7 @@ class CallResult < ActiveRecord::Base
       chain_mail.destroy
     end
   end
+  before_create :set_payout
 
   PENDING_RESULT_TYPES = [:call_back, :not_interested_now]
 
@@ -52,6 +54,14 @@ class CallResult < ActiveRecord::Base
   scope :with_dynamic_value, lambda { |is_dynamic| where("campaigns_results.is_dynamic_value = ?", is_dynamic) }
   scope :with_leads_from_deals_requested_during_upgrade_to_member, joins("INNER JOIN users as members ON members.contact_id = contacts.id  AND members.roles_mask & 128 > 0").joins("INNER JOIN leads as generated_leads ON members.id = generated_leads.requested_by AND generated_leads.requested_during_upgrade_to_member IS TRUE")
   default_scope :order => 'call_results.created_at DESC'
+
+  def set_payout
+    if campaign = contact.campaign and campaign_result = CampaignsResult.where(:campaign_id => campaign.id, :result_id => result_id).first
+      self.payout = campaign_result.payout
+      self.payout_currency_id = campaign.currency_id
+      self.euro_payout = payout_currency.to_euro(payout.to_f)
+    end
+  end
 
   def called?
     call_log.present?
