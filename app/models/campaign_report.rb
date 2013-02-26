@@ -420,6 +420,8 @@ class CampaignReport
       user ? selected_users? ? user.map { |u| u.euro_billing_rate.to_f * total_hours(u)}.sum : (user.euro_billing_rate.to_f * total_hours(user)) : campaign.users.map { |u| total_billing(u) }.sum.to_f
     elsif campaign.cost_type == Campaign::NO_COST
       0.0
+    elsif campaign.cost_type == Campaign::PAYOUT
+      user ? AgentTimesheetsPayout.for_user(user).sum(:euro_payout) : AgentTimesheetsPayout.sum(:euro_payout)
     end
   end
 end

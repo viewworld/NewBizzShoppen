@@ -471,6 +471,7 @@ en:
         this_week: this week
         today: today
         all: all
+        this_year: "this year"
       search:
         date_from: Date from
         date_to: Date to
@@ -2796,7 +2797,7 @@ en:
 
         new_lead: "New lead"
         new_deal: "New deal"
-        header_campaigns: "Campaigns"
+        header_campaigns: "Agent performance"
         campaigns:
           pending_contacts: "Pending contacts"
           call_backs: "Call backs"
@@ -2807,7 +2808,15 @@ en:
           email: "E-mail"
           date: "Date"
           status: "Status"
-          header_graph: "Graph"
+        header_graph: "Performance graph"
+        agent_performance:
+          time_range: "Select time range"
+          table:
+            campaign: "Campaign"
+            payout: "PayOut"
+            hours: "Hours"
+            rate: "Rate"
+          filter: "Filter"
   member_home:
     show:
       view:

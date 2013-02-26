@@ -1,0 +1,40 @@
+<column-mc:>
+  <header>
+    <param:content>
+      Call Results
+    </param:content>
+  </header>
+
+  <% if @call_results.empty? %>
+      <%= blank_state_message %>
+  <% else %>
+      <table class="generic call_results">
+        <thead>
+        <tr>
+          <th class="th_l"></th>
+          <th>Name</th>
+          <th>PayOut</th>
+          <th>Value</th>
+          <th>Created at</th>
+          <th class="th_r"></th>
+        </tr>
+        </thead>
+        <tbody>
+          <% @call_results.each do |call_result| %>
+            <tr>
+              <td></td>
+              <td><%= call_result.result.name %></td>
+              <td><%= as_currency(call_result.euro_payout, Currency.euro, 0) %></td>
+              <td>
+                <% if campaign_result = call_result.result.campaigns_results.where(:campaign_id => @campaign.id).first %>
+                  <%= as_currency(campaign_result.value, @campaign.currency, 0) %>
+                <% end %>
+              </td>
+              <td><%= call_result.created_at %></td>
+              <td></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+  <% end %>
+</column-mc:>

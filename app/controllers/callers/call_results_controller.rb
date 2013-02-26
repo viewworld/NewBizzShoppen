@@ -2,11 +2,12 @@ class Callers::CallResultsController < Callers::CallerController
   inherit_resources
   set_tab "campaigns"
 
-  before_filter :set_contact
-  before_filter :set_result, :only => :new 
+  before_filter :set_contact, :except => :index
+  before_filter :set_campaign, :only => :index
+  before_filter :set_result, :only => :new
   before_filter :set_call_result, :only => [:edit, :update, :destroy]
   before_filter :set_category, :only => [:new, :edit]
-  before_filter lambda {authorize_manage_rights(@contact)}
+  before_filter lambda {authorize_manage_rights(@contact)}, :except => :index
   before_filter lambda {authorize_manage_rights(@call_result)}, :only => [:edit,:update,:destroy]  
 
   def new
@@ -58,10 +59,18 @@ class Callers::CallResultsController < Callers::CallerController
     end
   end
 
+  def index
+    @call_results = CallResult.joins(:contact).includes(:result).where(:leads => {:campaign_id => @campaign.id})
+  end
+
   private
 
   def set_contact
     @contact = @lead = Contact.find(params[:contact_id])
+  end
+
+  def set_campaign
+    @campaign = Campaign.find(params[:campaign_id])
   end
 
   def set_call_result

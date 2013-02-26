@@ -26,6 +26,7 @@ javascripts:
     - public/javascripts/jquery.form.js
     - public/javascripts/jquery.gritter.min.js
     - public/javascripts/tagit.js
+    - public/javascripts/jquery.flot.js
 
   fairdeals:
     - public/javascripts/jquery-1.4.2.min.js

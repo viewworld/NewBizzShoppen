@@ -261,6 +261,7 @@ Nbs::Application.routes.draw do
         end
       end
       resources :chain_mail_types, :controller => "chain_mail_types"
+      resources :call_results
     end
 
     resource :production, :controller => "production", :only => [:show] do

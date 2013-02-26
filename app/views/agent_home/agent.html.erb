@@ -68,32 +68,83 @@
     <div class="column_2to3 fltl" style="padding: 0 15px 0 0" id="agent_performance_table">
       <frm title="#{t('agent_home.show.view.header_campaigns')}" c="no_marg">
         <param:content>
-          <table class="generic">
+          <%= form_tag '', :id => "performance_form", :method => :get do %>
+              <fieldset class="inputs_vertical" style="width:95%;margin:auto;">
+                <ol class="no_pdd">
+                  <li class="date">
+                    <%= label_tag :date_from, t("campaigns.show.search.date_from") %>
+                    <%= text_field_tag :date_from, params[:date_from], :class => "datepicker" %>
+                  </li>
+                  <li class="date">
+                    <%= label_tag :date_to, t("campaigns.show.search.date_to") %>
+                    <%= text_field_tag :date_to, params[:date_to], :class => "datepicker" %>
+                  </li>
+                  <li>
+                    <p class="pdd_10">
+                      <%= t("agent_home.show.view.agent_performance.time_range") %>:<br/>
+                      <%= link_to_function t("campaigns.show.ranges.all"), "$('#date_from').val('#{Date.new(2010)}');$('#date_to').val('#{Date.today}');$('#performance_form').submit()" %>
+                      <%= link_to_function t("campaigns.show.ranges.this_year"), "$('#date_from').val('#{Date.today.beginning_of_year}');$('#date_to').val('#{Date.today.end_of_year}');$('#performance_form').submit()" %>
+                      <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#date_from').val('#{Date.today.beginning_of_month}');$('#date_to').val('#{Date.today.end_of_month}');$('#performance_form').submit()" %>
+                      <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}');$('#performance_form').submit()" %>
+                      <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}');$('#performance_form').submit()" %>
+                    </p>
+                  </li>
+                  <li style="padding-top:15px;float:right">
+                    <ibt c="bt_green" icon="magnify" style="margin-top:20px;">
+                      <%= submit_tag t("agent_home.show.view.agent_performance.filter") %>
+                    </ibt>
+                  </li>
+                 </ol>
+              </fieldset>
+          <% end %>
+
+          <table class="generic" style="width:95%;margin:auto;margin-top:10px;">
             <thead>
               <tr>
-                <th>Campaign</th>
-                <th>Payout</th>
-                <th>Hours</th>
-                <th>Rate</th>
+                <th class="hl"></th>
+                <th><%= t("agent_home.show.view.agent_performance.table.campaign") %></th>
+                <th><%= t("agent_home.show.view.agent_performance.table.payout") %></th>
+                <th><%= t("agent_home.show.view.agent_performance.table.hours") %></th>
+                <th><%= t("agent_home.show.view.agent_performance.table.rate") %></th>
+                <th class="hr"></th>
               </tr>
             </thead>
             <tbody>
-              <% @campaigns.to_a.each do |campaign| %>
+              <% @performance_campaigns.to_a.each do |campaign| %>
                 <tr>
+                  <td></td>
                   <td><%= campaign %></td>
-                  <td><%= as_currency(AgentPerformance.new(params[:from], params[:to], current_user, campaign).payout, Currency.euro, 0) %></td>
-                  <td><%= AgentPerformance.new(params[:from], params[:to], current_user, campaign).time.to_f.as_hours_and_minutes %></td>
-                  <td><%= as_currency(AgentPerformance.new(params[:from], params[:to], current_user, campaign).rate, Currency.euro, 0) %></td>
+                  <td><%= as_currency(AgentPerformance.new(params[:date_from], params[:date_to], current_user, campaign).payout, Currency.euro, 0) %></td>
+                  <td><%= AgentPerformance.new(params[:date_from], params[:date_to], current_user, campaign).time.to_f.as_hours_and_minutes %></td>
+                  <td><%= as_currency(AgentPerformance.new(params[:date_from], params[:date_to], current_user, campaign).rate, Currency.euro, 0) %></td>
+                  <td></td>
                 </tr>
               <% end %>
+              <tr style="font-weight: bold;">
+                <td></td>
+                <td></td>
+                <td><%= as_currency(AgentPerformance.new(params[:date_from], params[:date_to], current_user, @performance_campaigns).payout, Currency.euro, 0) %></td>
+                <td><%= AgentPerformance.new(params[:date_from], params[:date_to], current_user, @performance_campaigns).time.to_f.as_hours_and_minutes %></td>
+                <td><%= as_currency(AgentPerformance.new(params[:date_from], params[:date_to], current_user, @performance_campaigns).rate, Currency.euro, 0) %></td>
+                <td></td>
+              </tr>
             </tbody>
+            <tfoot>
+              <td class="fl"></td>
+              <td colspan="4"></td>
+              <td class="fr"></td>
+            </tfoot>
           </table>
         </param:content>
       </frm>
     </div>
+
     <div class="column_1to3 fltl" id="agent_performance_graph">
       <frm title="#{t('agent_home.show.view.header_graph')}" c="no_marg">
         <param:content>
+          <div style="padding:10px">
+            <div id="agent_performance_graph_container" style="height:<%= 136+(@performance_campaigns.count*34) %>px; padding:10px"></div>
+          </div>
         </param:content>
       </frm>
     </div>
@@ -111,7 +162,7 @@
         <param:content>
           <ul class="solid_list row_4">
             <% if @campaigns.any? %>
-                <%= render :partial => 'campaigns', :collection => @campaigns, :as => :campaign %>
+                <%= render :partial => 'campaigns', :collection => @campaigns.last(4), :as => :campaign %>
             <% else %>
                 <%= render :partial => 'shared/blank_data_li' %>
             <% end %>
@@ -220,6 +271,53 @@
           jQuery(".solid_list li:not(.no_data)").bind("click", function() {
               window.location = $(this).find('a.read_more').attr("href");
           });
+      });
+
+      $(function(){
+          $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+      });
+
+      $(function () {
+          var performance_data = <%= AgentPerformance.new(params[:date_from], params[:date_to], current_user, @performance_campaigns).flot_chart.to_json.html_safe %>;
+
+          function euroFormatter(v, axis) {
+              return v.toFixed(axis.tickDecimals) +"€";
+          }
+
+          function doPlot(position) {
+              $.plot($("#agent_performance_graph_container"),
+                      [
+                          {
+                              data: performance_data.hours, label: "Hours",
+                              bars:
+                                    {
+                                        show: true,
+                                        barWidth: 1000*60*60*6,
+                                    },
+                          },
+                          {
+                              data: performance_data.payout, label: "PayOut", yaxis: 2,
+                              bars:
+                                    {
+                                        show: true,
+                                        barWidth: 1000*60*60*6,
+                                    },
+                          }
+                      ],
+                      {
+                          xaxes: [ { mode: 'time', minTickSize: [1, "day"] } ],
+                          yaxes: [ { min: 0 },
+                              {
+                                  // align if we are to the right
+                                  alignTicksWithAxis: position == "right" ? 1 : null,
+                                  position: position,
+                                  tickFormatter: euroFormatter
+                              } ],
+                          legend: { position: 'sw' }
+                      });
+          }
+
+          doPlot("right");
       });
 
   </script>

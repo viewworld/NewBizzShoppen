@@ -32,6 +32,7 @@ class Campaign < ActiveRecord::Base
       else
         where("")
     end }
+  scope :active_between, lambda {|from, to| where("(start_date BETWEEN '#{from}' AND '#{to}') OR (end_date BETWEEN '#{from}' AND '#{to}') or ('#{from}' BETWEEN start_date and end_date) or ('#{to}' BETWEEN start_date and end_date)")}
 
   default_scope where(:deleted_at => nil)
   scoped_order :name, :start_date, :end_date

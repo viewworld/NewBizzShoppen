@@ -1,25 +1,60 @@
 class AgentPerformance
 
-  attr_accessor :date_from, :date_to, :user, :campaign
+  attr_accessor :date_from, :date_to, :user, :campaigns
 
   def initialize(date_from, date_to, user, campaign)
-    self.date_from = (date_from||Date.today).to_date
-    self.date_to = (date_to||Date.today).to_date
-    self.user = user
-    self.campaign = campaign
+    self.date_from = (date_from||Date.today.beginning_of_week).to_date
+    self.date_to = (date_to||Date.today.end_of_week).to_date
+    self.user = user.with_role
+    self.campaigns = campaign.to_a.map(&:id)
   end
 
   def time
-    @time ||= UserSessionLog.for_campaign(campaign).campaign_type.for_user(user).started_between(date_from, date_to+1.day).sum(:hours_count)
+    @time ||= user_session_logs.sum(:hours_count)
   end
 
   def payout
-    @payout ||= AgentTimesheetsPayout.for_campaign(campaign).for_user(user).created_between(date_from, date_to+1.day).sum(:euro_payout)
+    @payout ||= payouts.sum(:euro_payout)
   end
 
   def rate
     time > 0 ? payout / time : 0
   end
+
+  def flot_chart
+    if (date_to+1-date_from).to_i > 31
+      flot_months
+    else
+      flot_days
+    end
+  end
+
+  def flot_days
+    {
+        :hours => user_session_logs.select("end_date, sum(hours_count) as hours").group("end_date").reorder("end_date").map{|usl| [usl.end_date.to_time.to_i*1000, usl.hours]},
+        :payout => payouts.select("created_at, sum(euro_payout) as payout").group("created_at").reorder("created_at").map{|usl| [(usl.created_at.to_time.to_i+jitter)*1000, usl.payout]},
+    }
+  end
+
+  def flot_months
+    flot_days
+  end
+
+  private
+
+  def jitter
+    60*60*8 # 10 hours
+  end
+
+  def user_session_logs
+    @user_session_logs ||= UserSessionLog.for_campaigns(campaigns).campaign_type.for_user(user).started_between(date_from, date_to+1.day)
+  end
+
+  def payouts
+    @payouts ||= AgentTimesheetsPayout.for_campaigns(campaigns).for_user(user).created_between(date_from, date_to+1.day)
+  end
+
+  public
 
   # helper initializers
 
