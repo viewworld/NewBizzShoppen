@@ -15,7 +15,6 @@ class ::User::CallCentre < ::User
   has_many :news, :as => :resource, :class_name => "User::CallCentre", :dependent => :destroy
   has_many :materials, :as => :resource, :class_name => "Material", :dependent => :destroy
 
-  validates_inclusion_of :payout, :in => 0..100, :message => I18n.t("models.user.payout_validation_message")
   validates_presence_of :company_name
 
   before_create :allow_payout_information_editing

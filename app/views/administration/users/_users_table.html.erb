@@ -12,7 +12,6 @@
     <th class="ta_r"><%= link_to t("administration.users.index.view.leads_created"), order_for_scoped_search(:leads_created_counter) %></th>
     <th class="ta_r"><%= link_to t("administration.users.index.view.leads_sold"), order_for_scoped_search(:leads_volume_sold_counter) %></th>
     <th class="ta_r"><%= link_to t("administration.users.index.view.revenue"), order_for_scoped_search(:leads_revenue_counter) %></th>
-    <th class="ta_r"><%= link_to t("administration.users.index.view.payout"), order_for_scoped_search(:payout) %></th>
     <th class="ta_c"><%= t("administration.users.index.view.locked") %></th>
     <th class="ta_r"><%= t("administration.users.index.view.actions") %></th>
     <th class="hr"></th>
@@ -39,7 +38,6 @@
         <td class="ta_r"><%= user.leads_created_counter %></td>
         <td class="ta_r"><%= user.leads_volume_sold_counter %></td>
         <td class="ta_r"><%= user.leads_revenue_counter %></td>
-        <td class="ta_r"><%= user.payout %></td>
         <td class="tda" style="text-align:center;">
           <% unless user.id == current_user.id %>
               <%= link_to user.locked_at.blank? ? t("administration.users.index.view.lock") : t("administration.users.index.view.unlock"), administration_user_path(user, {"user_#{user.role.to_s}".to_sym  => {:locked =>  user.locked_at.blank? ? "lock" : "unlock"}}), {:method => :put} %>

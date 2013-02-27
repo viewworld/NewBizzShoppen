@@ -67,9 +67,6 @@
         <% if ["supplier", "category_supplier", "member"].include?(params[:role]) and @user.new_record? %>
             <%= form.input :subscription_plan_id, :as => :select, :collection => SubscriptionPlan.active.for_role(params[:role].present? ? params[:role].to_sym : @user.role).without_paypal, :include_blank => false %>
         <% end %>
-        <% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
-            <%= form.input :payout, :required => true, :hint => "%" %>
-        <% end %>
 
         <%= form.input :agreement_read, :as => :hidden %>
         <%= form.input :newsletter_on %>

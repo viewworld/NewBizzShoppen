@@ -77,7 +77,6 @@
             <%= form.input :paypal_email, :hint => hint_for("my_profile", :paypal_email) %>
             <%= form.input :bank_swift_number, :hint => hint_for("my_profile", :bank_swift_number) %>
             <%= form.input :bank_iban_number, :hint => hint_for("my_profile", :bank_iban_number) %>
-            <%= form.input :payout, :hint => "% #{hint_for('my_profile', :payout)}".html_safe if current_user.has_role?(:call_centre) %>
           </ol>
         </fieldset>
       </div>
