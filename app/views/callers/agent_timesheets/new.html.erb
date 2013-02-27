@@ -60,7 +60,7 @@
                 <div class="grid_210 fltl">&nbsp;</div>
                 <div class="grid_240 fltl">
                   <h3><%= t("agent_timesheets.new.campaigns_selection.all_campaigns") %></h3>
-                  <%= select_tag "all_campaigns", options_for_select((current_user.admin? ? Campaign.all : Campaign.available_for_user(current_user)).map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                  <%= select_tag "all_campaigns", options_for_select((current_user.admin? ? Campaign : Campaign.available_for_user(current_user)).reorder("name ASC").map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
                 </div>
 
                 <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
@@ -84,11 +84,11 @@
                 <div class="grid_210 fltl">&nbsp;</div>
                 <div class="grid_240 fltl">
                   <h3><%= t("agent_timesheets.new.agents_selection.all_agents") %></h3>
-                  <%= select_tag "all_agents", options_for_select((current_user.admin? ? User.with_agents.with_roles_except([:member]) : current_user.subaccounts).map { |c| [c.screen_name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                  <%= select_tag "all_agents", options_for_select((current_user.admin? ? User.with_agents.with_roles_except([:member]) : current_user.subaccounts).without_locked.map { |c| [c.screen_name, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
 
                   <% if current_user.admin? %>
                     <h3 style="padding-top:10px"><%= t("agent_timesheets.new.agents_selection.all_call_centres") %></h3>
-                    <%= select_tag "all_call_centres", options_for_select(User.with_call_centres.map { |c| [c.screen_name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                    <%= select_tag "all_call_centres", options_for_select(User.with_call_centres.map { |c| [c.screen_name, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
                   <% end %>
                 </div>
 

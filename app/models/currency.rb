@@ -62,4 +62,8 @@ class Currency < ActiveRecord::Base
   def self.euro
     Currency.where(:name => "EUR").first
   end
+
+  def self.dkk
+    Currency.where(:name => "DKK").first
+  end
 end

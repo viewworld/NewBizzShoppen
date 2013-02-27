@@ -215,4 +215,13 @@ class AbstractLead < ActiveRecord::Base
       self.linkedin_url = user.rpx_identifier
     end
   end
+
+  def set_lead_default_values
+    self.purchase_value = 0 if purchase_value.blank?
+    self.price = 0 if price.blank?
+    self.currency = Currency.dkk if currency.blank?
+    self.sale_limit = 1 if sale_limit.blank?
+    self.purchase_decision_date = Date.today + 1.year if purchase_decision_date.blank?
+  end
+
 end
