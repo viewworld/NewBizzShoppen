@@ -49,12 +49,18 @@ Scenario: I can delete a language
 @_tested @noguess @_done
 Scenario: When the lead is bought and I want to edit it then "Notify the lead buyers" checkbox is present
   Given I go to agents leads
+  And I fill in "search_purchase_decision_date_from" with ""
+  And I fill in "search_purchase_decision_date_to" with ""
+  And I press translated "agent.leads.index.view.search_button"
   And I follow translated "agent.leads.index.view.edit"
   Then I should see translated "activerecord.attributes.lead.notify_suppliers_after_update"
 
 @m3 @tgn @_tested @noguess @_done
 Scenario: When the lead is bought and I update it and check "Notify the lead buyers" then email is sent to all buyers
   Given I go to agents leads
+  And I fill in "search_purchase_decision_date_from" with ""
+  And I fill in "search_purchase_decision_date_to" with ""
+  And I press translated "agent.leads.index.view.search_button"
   And I follow translated "agent.leads.index.view.edit"
   Then I press translated "agent.leads.edit.view.button_update"
   And last email sent should have been sent to recipient "john.buyer@person.com"
@@ -63,6 +69,9 @@ Scenario: When the lead is bought and I update it and check "Notify the lead buy
 @_tested @_done
 Scenario: Datepicker - after selecting form the select box it should automatically fill in the date
   Given I go to agents leads
+  And I fill in "search_purchase_decision_date_from" with ""
+  And I fill in "search_purchase_decision_date_to" with ""
+  And I press translated "agent.leads.index.view.search_button"
   Then I follow translated "agent.leads.index.view.edit"
   And I fill in "datepicker" with "2010-01-01"
 
