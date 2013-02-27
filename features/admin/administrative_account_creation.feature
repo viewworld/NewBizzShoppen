@@ -21,7 +21,6 @@ Scenario: I can create a user account by seleceting its type and filling in the 
   And I fill in "user_agent_address_attributes_address_line_2" with "Paris"
   And I fill in "user_agent_address_attributes_zip_code" with "22-232"
   And I fill in "user_agent_address_attributes_address_line_3" with "Orange"
-  And I fill in "user_agent_payout" with "2.0"
   And I fill in "user_agent_password" with "secret"
   And I fill in "user_agent_password_confirmation" with "secret"
   And I select "Denmark" from "user_agent_address_attributes_country_id"

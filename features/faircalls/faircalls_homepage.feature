@@ -65,7 +65,7 @@ Scenario: I should see my active "Campaigns" in the left box
   And I should see "Pending contacts: 2"
   And I should see "Call backs: 1"
   And I should see "Completion: 66%"
-  When I follow "TestCampaignReport1"
+  When I follow "TestCampaignReport1" within "#campaigns"
   Then I should see "Agent work screen - TestCampaignReport1"
 
 #8387
