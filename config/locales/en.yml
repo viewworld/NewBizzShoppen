@@ -472,6 +472,7 @@ en:
         today: today
         all: all
         this_year: "this year"
+        this_quarter: "this quarter"
       search:
         date_from: Date from
         date_to: Date to

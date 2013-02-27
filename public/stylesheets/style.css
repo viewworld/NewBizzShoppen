@@ -2136,3 +2136,7 @@ li.disabled
 {
     padding-top: 185px;
 }
+
+.strikethrough {
+    text-decoration: line-through;
+}

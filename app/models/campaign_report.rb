@@ -421,7 +421,7 @@ class CampaignReport
     elsif campaign.cost_type == Campaign::NO_COST
       0.0
     elsif campaign.cost_type == Campaign::PAYOUT
-      user ? AgentTimesheetsPayout.for_user(user).sum(:euro_payout) : AgentTimesheetsPayout.sum(:euro_payout)
+      user ? AgentTimesheetsPayout.for_campaign(campaign).for_user(user).sum(:euro_payout) : AgentTimesheetsPayout.for_campaign(campaign).sum(:euro_payout)
     end
   end
 end

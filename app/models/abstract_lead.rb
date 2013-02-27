@@ -31,7 +31,7 @@ class AbstractLead < ActiveRecord::Base
   attr_accessor :creation_step
 
   validates_presence_of :header, :company_name, :contact_name, :phone_number, :country_id, :currency, :address_line_1, :address_line_3, :zip_code, :if => :process_for_lead_information?
-  validates_presence_of :hidden_description, :unless => Proc.new { |l| l.created_by?('Member') }, :if => :process_for_lead_information?
+  #validates_presence_of :hidden_description, :unless => Proc.new { |l| l.created_by?('Member') }, :if => :process_for_lead_information?
   validates_presence_of :email_address, :if => Proc.new { |l| l.validate_contact_email }
   validates_format_of :email_address, :allow_blank => true, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   validate :check_category, :if => :process_for_lead_information?

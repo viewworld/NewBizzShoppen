@@ -84,6 +84,7 @@
                       <%= t("agent_home.show.view.agent_performance.time_range") %>:<br/>
                       <%= link_to_function t("campaigns.show.ranges.all"), "$('#date_from').val('#{Date.new(2010)}');$('#date_to').val('#{Date.today}');$('#performance_form').submit()" %>
                       <%= link_to_function t("campaigns.show.ranges.this_year"), "$('#date_from').val('#{Date.today.beginning_of_year}');$('#date_to').val('#{Date.today.end_of_year}');$('#performance_form').submit()" %>
+                      <%= link_to_function t("campaigns.show.ranges.this_quarter"), "$('#date_from').val('#{Date.today.beginning_of_quarter}');$('#date_to').val('#{Date.today.end_of_quarter}');$('#performance_form').submit()" %>
                       <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#date_from').val('#{Date.today.beginning_of_month}');$('#date_to').val('#{Date.today.end_of_month}');$('#performance_form').submit()" %>
                       <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}');$('#performance_form').submit()" %>
                       <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}');$('#performance_form').submit()" %>
@@ -113,19 +114,19 @@
               <% @performance_campaigns.to_a.each do |campaign| %>
                 <tr>
                   <td></td>
-                  <td><%= campaign %></td>
-                  <td><%= as_currency(AgentPerformance.new(params[:date_from], params[:date_to], current_user, campaign).payout, Currency.euro, 0) %></td>
+                  <td><%= link_to campaign, callers_campaign_call_results_path(campaign), :class => "default_action" %></td>
+                  <td><%= as_currency(AgentPerformance.new(params[:date_from], params[:date_to], current_user, campaign).payout, Currency.euro, 2) %></td>
                   <td><%= AgentPerformance.new(params[:date_from], params[:date_to], current_user, campaign).time.to_f.as_hours_and_minutes %></td>
-                  <td><%= as_currency(AgentPerformance.new(params[:date_from], params[:date_to], current_user, campaign).rate, Currency.euro, 0) %></td>
+                  <td><%= as_currency(AgentPerformance.new(params[:date_from], params[:date_to], current_user, campaign).rate, Currency.euro, 2) %></td>
                   <td></td>
                 </tr>
               <% end %>
               <tr style="font-weight: bold;">
                 <td></td>
                 <td></td>
-                <td><%= as_currency(AgentPerformance.new(params[:date_from], params[:date_to], current_user, @performance_campaigns).payout, Currency.euro, 0) %></td>
+                <td><%= as_currency(AgentPerformance.new(params[:date_from], params[:date_to], current_user, @performance_campaigns).payout, Currency.euro, 2) %></td>
                 <td><%= AgentPerformance.new(params[:date_from], params[:date_to], current_user, @performance_campaigns).time.to_f.as_hours_and_minutes %></td>
-                <td><%= as_currency(AgentPerformance.new(params[:date_from], params[:date_to], current_user, @performance_campaigns).rate, Currency.euro, 0) %></td>
+                <td><%= as_currency(AgentPerformance.new(params[:date_from], params[:date_to], current_user, @performance_campaigns).rate, Currency.euro, 2) %></td>
                 <td></td>
               </tr>
             </tbody>

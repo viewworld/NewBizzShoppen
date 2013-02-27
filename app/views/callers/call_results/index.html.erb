@@ -1,7 +1,7 @@
 <column-mc:>
-  <header>
+  <header back="true">
     <param:content>
-      Call Results
+      Call Results for campaign "<%= @campaign %>"
     </param:content>
   </header>
 
@@ -11,30 +11,53 @@
       <table class="generic call_results">
         <thead>
         <tr>
-          <th class="th_l"></th>
-          <th>Name</th>
+          <th class="hl"></th>
+          <th>Contact</th>
+          <th>Result</th>
           <th>PayOut</th>
           <th>Value</th>
+          <th>Euro value</th>
           <th>Created at</th>
-          <th class="th_r"></th>
+          <th></th>
+          <th class="hr"></th>
         </tr>
         </thead>
         <tbody>
           <% @call_results.each do |call_result| %>
             <tr>
               <td></td>
-              <td><%= call_result.result.name %></td>
+              <td><%= call_result.contact ? call_result.contact.contact_name : "[Contact deleted]" %></td>
+              <td><%= (call_result.contact and call_result.contact.lead) ? link_to(call_result.result.name, edit_agents_lead_path(call_result.contact.lead), :class => "default_action")  : call_result.result.name %> </td>
               <td><%= as_currency(call_result.euro_payout, Currency.euro, 0) %></td>
               <td>
                 <% if campaign_result = call_result.result.campaigns_results.where(:campaign_id => @campaign.id).first %>
-                  <%= as_currency(campaign_result.value, @campaign.currency, 0) %>
+                  <% if call_result.contact and call_result.contact.lead and call_result.contact.lead.has_unsatisfactory_rating %>
+                    <%= as_currency(0, @campaign.currency, 2) %>
+                  <% else %>
+                    <%= as_currency(campaign_result.value, @campaign.currency, 2) %>
+                  <% end %>
                 <% end %>
               </td>
-              <td><%= call_result.created_at %></td>
+              <td>
+                <% if campaign_result = call_result.result.campaigns_results.where(:campaign_id => @campaign.id).first %>
+                    <% if call_result.contact and call_result.contact.lead and call_result.contact.lead.has_unsatisfactory_rating %>
+                        <%= as_currency(0, @campaign.currency, 2) %>
+                    <% else %>
+                        <%= as_currency(campaign_result.euro_value, @campaign.currency, 2) %>
+                    <% end %>
+                <% end %>
+              </td>
+              <td><%= format_date call_result.created_at, true %></td>
+              <td><%= image_tag('icons/red_flag.png') if call_result.contact and call_result.contact.lead and call_result.contact.lead.has_unsatisfactory_rating %></td>
               <td></td>
             </tr>
           <% end %>
         </tbody>
+        <tfoot>
+            <td class="fl"></td>
+            <td colspan="7"></td>
+            <td class="fr"></td>
+        </tfoot>
       </table>
   <% end %>
 </column-mc:>
