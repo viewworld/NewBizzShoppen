@@ -42,14 +42,14 @@
               <ol class="align_inputs">
                 <li class="string">
                   <%= f.label :email %>
-                  <%= f.text_field :email %>
+                  <%= f.text_field :email, :tabindex => 1 %>
                 </li>
                 <li class="password rltv">
                   <label>
                     <%= t("activerecord.attributes.user.password") %>
                     <%= content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link") %>
                   </label>
-                  <%= f.password_field :password %>
+                  <%= f.password_field :password, :tabindex => 1 %>
                 </li>
                 <% if devise_mapping.rememberable? -%>
                     <li class="boolean">
