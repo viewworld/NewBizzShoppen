@@ -2140,3 +2140,7 @@ li.disabled
 .strikethrough {
     text-decoration: line-through;
 }
+
+div#agent_information {
+    height: 40px;
+}

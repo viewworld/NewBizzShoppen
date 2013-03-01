@@ -12,8 +12,7 @@
       <%= form_tag self.send((user_signed_in? and !current_user.call_centre? and current_user.agent?) ? "new_#{current_user.role.to_s.pluralize}_lead_path" : "root_path"), :method => :get, :id => "form_new_lead" do %>
       <% if user_signed_in? and !current_user.call_centre? and current_user.agent? %>
       <span style="position:absolute;top: 5px; right: 300px;">
-        <% categories = LeadCategory.without_locked.with_agent_unique(current_user).all %>
-        <%= select_tag :category_id, options_for_select(nested_set_options(categories), :selected => default_category_for_select(categories), :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id)) %>
+        <%= select_tag :category_id %>
       </span>
       <% end %>
       <ul class="header_actions">
@@ -23,7 +22,7 @@
               <div class="hidden">
                 <%= submit_tag "New" %>
               </div>
-              <%= bt_link_to :plus, t("agent_home.show.view.new_lead"), "javascript:void", :onclick => "$('#form_new_lead').submit()" %>
+              <%= bt_link_to :plus, t("agent_home.show.view.new_lead"), "#", :id => "new_lead_button" %>
             </li>
             <% end %>
             <% if current_user.deal_maker? %>
@@ -44,7 +43,7 @@
   </header>
 
   <div class="pdd_5">
-    <%= render :partial => '/callers/agent_work_screen/agent_information' %>
+    <div id="agent_information"></div>
   </div>
 
   <div class="pdd_5 no_pdd_b">
@@ -276,6 +275,13 @@
 
       $(function(){
           $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+          $.get('<%= callers_agent_information_path %>');
+
+          $.get('<%= categories_path(:format => :js) %>', function() {
+              $('#new_lead_button').bind('click', function(){
+                  $('#form_new_lead').submit();
+              });
+          });
       });
 
       $(function () {

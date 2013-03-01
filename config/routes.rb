@@ -250,7 +250,6 @@ Nbs::Application.routes.draw do
         resources :contacts, :only => [:create, :show, :destroy, :update] do
           resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
         end
-        resource :agent_information, :only => [:show]
         resource :call_sheet, :only => [:show]
         resource :pending_call, :only => [:show]
         resource :complete_contact, :only => [:show]
@@ -285,6 +284,8 @@ Nbs::Application.routes.draw do
     resources :agent_timesheets, :only => [:index,:show,:destroy,:create,:new]
 
     resources :cached_timesheets, :only => [:index]
+
+    resource :agent_information, :only => [:show]
   end
 
   namespace :comments do
