@@ -4204,6 +4204,8 @@ en:
         value_for_completion: "Value for completion"
         status: "Status"
       report_per_users: "Report per users"
+      with_results: "Active results"
+      dont_show_results: "Don't show results"
       header: "Reports"
       download_pdf: "Download PDF"
       ranges_label: "Predefined time ranges"

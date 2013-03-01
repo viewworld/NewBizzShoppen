@@ -1,23 +1,18 @@
-<% total_columns = 15 + CampaignReport.final_results(result_ids, campaign_reports.map { |cr| cr.campaign }).count %>
+<% total_columns = options[:dont_show_results] ? 15 : 15 + CampaignReport.final_results(result_ids, campaign_reports.map { |cr| cr.campaign }).count %>
+
 <table id="reports_table" class="generic">
   <thead>
   <tr>
     <th class="hl"></th>
     <th><%= t("campaign_reports.index.table.campaign_name") %></th>
     <th colspan="6" class="ta_c pointer"><%= t("campaign_reports.index.table.campaign_targets") %></th>
-    <th colspan="<%= 1 + CampaignReport.final_results(result_ids, campaign_reports.map { |cr| cr.campaign }).count %>" class="ta_c pointer"><%= t("campaign_reports.index.table.status") %></th>
+    <th colspan="<%= options[:dont_show_results] ? 1 : 1 + CampaignReport.final_results(result_ids, campaign_reports.map { |cr| cr.campaign }).count %>" class="ta_c pointer"><%= t("campaign_reports.index.table.status") %></th>
     <th colspan="4" class="ta_c pointer"><%= t("campaign_reports.index.table.campaign_results") %></th>
     <th colspan="3" class="ta_c pointer"><%= t("campaign_reports.index.table.predicted_results") %></th>
     <th class="hr"></th>
   </tr>
   </thead>
-  <tfoot>
-  <tr>
-    <td class="fl"></td>
-    <td colspan="<%= total_columns %>"></td>
-    <td class="fr"></td>
-  </tr>
-  </tfoot>
+
   <tbody>
   <tr>
     <td class="cl"></td>
@@ -30,8 +25,10 @@
     <td><%= t("campaign_reports.index.table.cost_ph") %></td>
 
     <td><%= t("campaign_reports.index.table.contacts_used") %></td>
-    <% CampaignReport.final_results(result_ids, campaign_reports.map { |cr| cr.campaign }).each do |result| %>
+    <% unless options[:dont_show_results] %>
+      <% CampaignReport.final_results(result_ids, campaign_reports.map { |cr| cr.campaign }).each do |result| %>
         <td><%= result.name %></td>
+      <% end %>
     <% end %>
     <td><%= t("campaign_reports.index.table.value_created") %></td>
     <td><%= t("campaign_reports.index.table.production_cost") %></td>
@@ -45,17 +42,40 @@
 
   <% if per_user %>
       <% campaign_users.each do |user| %>
+        <% if user_campaigns = campaign_reports.select { |cr| cr.user == user } and user_campaigns.any? %>
           <tr>
             <td class="cl"></td>
             <td colspan="<%= total_columns %>"><b><%= user.screen_name %></b></td>
             <td class="cr"></td>
           </tr>
-          <%= render :partial => "callers/campaign_reports/campaigns", :locals => {:campaign_reports => campaign_reports.select { |cr| cr.user == user }, :result_ids => result_ids} %>
+          <%= render :partial => "callers/campaign_reports/campaigns", :locals => {:campaign_reports => user_campaigns, :result_ids => result_ids, :options => options} %>
+        <% end %>
       <% end %>
   <% else %>
-      <%= render :partial => "callers/campaign_reports/campaigns", :locals => {:campaign_reports => campaign_reports, :result_ids => result_ids} %>
+      <%= render :partial => "callers/campaign_reports/campaigns", :locals => {:campaign_reports => campaign_reports, :result_ids => result_ids, :options => options} %>
   <% end %>
 
+  <tr style="font-weight: bold;">
+    <td class="fl"></td>
+    <td colspan="<%= total_columns - 7 %>"></td>
+    <td><%= as_currency(campaign_reports.sum(&:value_created), Currency.euro, 0) %> (<%= as_currency(campaign_reports.sum(&:target_value_created), Currency.euro, 0) %>)</td>
+    <td><%= as_currency(campaign_reports.sum(&:production_cost), Currency.euro, 0) %> (<%= as_currency(campaign_reports.sum(&:target_production_cost), Currency.euro, 0) %>)</td>
+    <td><%= number_to_percentage(((campaign_reports.sum(&:value_created) / (campaign_reports.sum(&:total_cost).nonzero? || 1) - 1) * 100), :precision => 0) %> (<%= number_to_percentage(campaign_reports.sum(&:target_db_value), :precision => 0) %>)</td>
+    <td><%= campaign_reports.sum(&:hours_used).as_hours_and_minutes %></td>
+    <td><%= campaign_reports.sum(&:predicted_hours_to_completion).as_hours_and_minutes %></td>
+    <td><%= as_currency(campaign_reports.sum(&:predicted_cost_for_completion), Currency.euro, 0) %></td>
+    <td><%= as_currency(campaign_reports.sum(&:predicted_value_for_completion), Currency.euro, 0) %></td>
+    <td class="fr"></td>
+  </tr>
+
   </tbody>
+
+  <tfoot style="height:39px">
+  <tr>
+    <td class="fl"></td>
+    <td colspan="<%= total_columns %>"></td>
+    <td class="fr"></td>
+  </tr>
+  </tfoot>
 
 </table>

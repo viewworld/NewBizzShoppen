@@ -265,16 +265,20 @@ class CampaignReport
     pdf_path
   end
 
-  def self.table(report_cache,campaign_reports,campaign_users,per_user=false,result_ids=nil)
+  def self.table(report_cache,campaign_reports,campaign_users,per_user=false,result_ids=nil,options={})
     av = ActionView::Base.new
     av.view_paths << File.join(::Rails.root.to_s, "app", "views")
     av.instance_eval do
       extend ApplicationHelper
     end
-    html = av.render(:partial => 'callers/campaign_reports/report', :type => :erb, :locals => { :per_user => per_user, :campaign_users => campaign_users, :campaign_reports => campaign_reports, :result_ids => result_ids })
-    markup = File.read(Rails.root.join("app/views/layouts/pdf_report.html")) % html
+    html = av.render(:partial => 'callers/campaign_reports/report', :type => :erb, :locals => { :per_user => per_user, :campaign_users => campaign_users, :campaign_reports => campaign_reports, :result_ids => result_ids, :options => options })
+    markup = File.read(Rails.root.join("app/views/layouts/pdf_report.html")) % [options[:date_from], options[:date_to], html]
     File.open(Rails.root.join("public/html2pdf/campaign_reports_cache/#{report_cache}.html"), 'w') {|f| f.write(markup) }
     html
+  end
+
+  def has_results?
+    !all_call_results.count.eql?(0)
   end
 
   private

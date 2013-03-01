@@ -16,6 +16,8 @@ class Callers::CampaignReportsController < Callers::CallerController
     @date_from = params[:date_from] ? params[:date_from].to_date : Date.today-7
     @date_to = params[:date_to] ? params[:date_to].to_date : Date.today
     @per_user = params[:per_user].to_i == 1 ? true : false
+    @with_results = params[:with_results].to_i == 1 ? true : false
+    @dont_show_results = params[:dont_show_results].to_i == 1 ? true : false
     @per_user = true if current_user.has_any_role?(:call_centre_agent, :agent)
     @views_count = params[:views_count].to_i
     @campaign_selection = params[:campaign_selection] || "active"
@@ -70,6 +72,8 @@ class Callers::CampaignReportsController < Callers::CallerController
       @campaign_reports = []
       @campaign_users = []
     end
+
+    @campaign_reports.delete_if{ |cr| !cr.has_results? } if @with_results
   end
 
   def load_agents

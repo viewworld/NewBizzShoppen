@@ -55,7 +55,7 @@
                 </fieldset>
               </div>
           <% end %>
-          <div class="fltl">
+          <div class="grid_250 fltl">
             <fieldset class="inputs_vertical">
               <ol class="no_pdd">
                 <li class="date">
@@ -66,12 +66,33 @@
                   <%= label_tag :date_to, t("campaigns.show.search.date_to") %>
                   <%= text_field_tag :date_to, @date_to, :class => "datepicker" %>
                 </li>
+              </ol>
+            </fieldset>
+            <p class="pdd_10">
+              <%= t("campaign_reports.index.ranges_label") %>:<br/>
+              <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#date_from').val('#{Date.today.beginning_of_month}');$('#date_to').val('#{Date.today.end_of_month}');$('#form_campaign_reports_search').submit()" %>
+              <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}');$('#form_campaign_reports_search').submit()" %>
+              <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}');$('#form_campaign_reports_search').submit()" %>
+            </p>
+          </div>
+
+          <div class="grid_400 fltl">
+            <fieldset class="inputs_vertical">
+              <ol class="no_pdd">
                 <% unless current_user.has_any_role?(:call_centre_agent, :agent) %>
                     <li class="boolean">
                       <%= label_tag :per_user, t("campaign_reports.index.report_per_users") %>
                       <%= check_box_tag :per_user, "1", @per_user %>
                     </li>
                 <% end %>
+                <li class="boolean">
+                  <%= label_tag :with_results, t("campaign_reports.index.with_results") %>
+                  <%= check_box_tag :with_results, "1", @with_results %>
+                </li>
+                <li class="boolean">
+                  <%= label_tag :dont_show_results, t("campaign_reports.index.dont_show_results") %>
+                  <%= check_box_tag :dont_show_results, "1", @dont_show_results %>
+                </li>
                 <li class="hidden">
                   <%= hidden_field_tag :views_count, @views_count+1 %>
                 </li>
@@ -82,12 +103,6 @@
                 </li>
               </ol>
             </fieldset>
-            <p class="pdd_10">
-              <%= t("campaign_reports.index.ranges_label") %>:<br/>
-              <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#date_from').val('#{Date.today.beginning_of_month}');$('#date_to').val('#{Date.today.end_of_month}');$('#form_campaign_reports_search').submit()" %>
-              <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}');$('#form_campaign_reports_search').submit()" %>
-              <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}');$('#form_campaign_reports_search').submit()" %>
-            </p>
           </div>
           <clb/>
       <% end %>
@@ -118,7 +133,7 @@
       <%= blank_state_message t("campaign_reports.index.empty_report_msg") %>
   <% else %>
       <div class="reports_table_wrapper">
-        <%= render(:text => CampaignReport.table(report_cache, @campaign_reports, @campaign_users, @per_user, @result_ids)).html_safe %>
+        <%= render(:text => CampaignReport.table(report_cache, @campaign_reports, @campaign_users, @per_user, @result_ids, {:date_from => @date_from, :date_to => @date_to, :dont_show_results => @dont_show_results})).html_safe %>
       </div>
   <% end %>
 </column-mc:>
