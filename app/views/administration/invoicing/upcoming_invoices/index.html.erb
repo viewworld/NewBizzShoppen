@@ -22,11 +22,11 @@
               </li>
               <li class="select">
                 <%= f.label :with_subscriber_type, t("administration.upcoming_invoices.index.view.search.with_subscriber_type") %>
-                <%= f.select :with_subscriber_type, User::SUBSCRIBER_TYPES, :include_blank => true %>
+                <%= f.select :with_subscriber_type, User::SUBSCRIBER_TYPES.sort, :include_blank => true %>
               </li>
               <li class="select">
                 <%= f.label :with_role, t("administration.upcoming_invoices.index.view.search.with_role") %>
-                <%= f.select :with_role, [[t("administration.upcoming_invoices.index.view.search.role_supplier"),'lead_supplier'], [t("administration.upcoming_invoices.index.view.search.role_member"), 'member']], :include_blank => true %>
+                <%= f.select :with_role, [[t("administration.upcoming_invoices.index.view.search.role_supplier"),'lead_supplier'], [t("administration.upcoming_invoices.index.view.search.role_member"), 'member']].sort, :include_blank => true %>
               </li>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">

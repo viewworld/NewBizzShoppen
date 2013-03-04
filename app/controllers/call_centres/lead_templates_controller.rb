@@ -51,6 +51,6 @@ class CallCentres::LeadTemplatesController < CallCentres::CallCentreController
 
     @search = LeadTemplate.scoped_search(params[:search])
     @lead_templates = @search.paginate(:page => params[:page], :per_page => LeadTemplate.per_page)
-    @categories = LeadCategory.without_locked.with_call_centre_unique(current_user).map { |c| [c.name, c.id] }
+    @categories = LeadCategory.without_locked.with_call_centre_unique(current_user).map { |c| [c.name, c.id] }.sort
   end
 end

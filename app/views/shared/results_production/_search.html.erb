@@ -12,7 +12,7 @@
               <ol class="no_pdd">
                 <li class="select">
                   <%= label_tag t("campaigns.show.search.campaigns") %>
-                  <%= select_tag :campaign_ids, options_from_collection_for_select(all_campaigns, "id", "name", campaign.map(&:id)), :include_blank => true, :multiple => true, :style => "height:80px;width:140px;" %>
+                  <%= select_tag :campaign_ids, options_from_collection_for_select(all_campaigns.sort_by(&:name), "id", "name", campaign.map(&:id)), :include_blank => true, :multiple => true, :style => "height:80px;width:140px;" %>
                 </li>
               </ol>
             </fieldset>
@@ -23,7 +23,7 @@
               <ol class="no_pdd">
                 <li class="select">
                   <%= label_tag t("campaigns.show.search.agents") %>
-                  <%= select_tag :agent_ids, options_from_collection_for_select(campaign_users, "id", "full_name", agent_ids), :include_blank => true, :multiple => true, :style => "height:80px;width:140px;" %>
+                  <%= select_tag :agent_ids, options_from_collection_for_select(campaign_users.sort_by(&:full_name), "id", "full_name", agent_ids), :include_blank => true, :multiple => true, :style => "height:80px;width:140px;" %>
                 </li>
               </ol>
             </fieldset>
@@ -33,7 +33,7 @@
               <ol class="no_pdd">
                 <li class="select">
                   <%= label_tag t("campaigns.show.search.results") %>
-                  <%= select_tag :result_ids, options_from_collection_for_select(all_results, "id", "name", result_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
+                  <%= select_tag :result_ids, options_from_collection_for_select(all_results.sort_by(&:name), "id", "name", result_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
                 </li>
               </ol>
             </fieldset>

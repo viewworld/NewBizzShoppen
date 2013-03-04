@@ -51,7 +51,7 @@
             <ol class="no_pdd">
               <li class="select">
                 <%= label_tag :bulk_state, t("lead_user.lead_purchases.index.view.bulk_state_field") %>
-                <%= select_tag :bulk_state, options_for_select([[nil, nil]]+LeadPurchaseBase.statuses_for_select) %>
+                <%= select_tag :bulk_state, options_for_select([[nil, nil]]+LeadPurchaseBase.statuses_for_select.sort) %>
               </li>
               <li class="commit no_pdd_l">
                 <%= bt_link_to nil, t("lead_user.lead_purchases.index.view.bulk_update_button"), "javascript:void(0)", :onclick => "copy_checkboxes_to_bulk_form();submitBulkForm('#{lead_users_bulk_lead_purchase_update_path}#POST');" %>
@@ -71,7 +71,7 @@
                         <%= label_tag :assignee_id, t("lead_supplier.lead_purchases.index.view.bulk_assigned_field") %>
                         <br/>
                         <%= select_tag :assignee_id,
-                                       options_for_select([[nil, nil]]+@subaccounts.map { |sa| [sa.screen_name, sa.id] }, lead_purchase.assignee_id),
+                                       options_for_select([[nil, nil]]+@subaccounts.map { |sa| [sa.screen_name, sa.id] }.sort, lead_purchase.assignee_id),
                                        :onchange => "$.post('#{lead_users_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[assignee_id]':this.value} );",
                                        :style => "width: 140px" %>
                       </p>
@@ -82,7 +82,7 @@
                   <p>
                     <%= label_tag :state, t("lead_user.lead_purchases.index.view.state") %>
                     <br/>
-                    <%= select_tag :state, options_for_select(LeadPurchaseBase.statuses_for_select, lead_purchase.state), :onchange => "$.post('#{lead_users_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[state]':this.value} );" %>
+                    <%= select_tag :state, options_for_select(LeadPurchaseBase.statuses_for_select.sort, lead_purchase.state), :onchange => "$.post('#{lead_users_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[state]':this.value} );" %>
                   </p>
               <% end %>
 

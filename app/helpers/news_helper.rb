@@ -11,7 +11,7 @@ module NewsHelper
       [I18n.t('administration.news.index.view.suppliers'),'Supplier'],
       [I18n.t('administration.news.index.view.members'),'Member'],
       [I18n.t('administration.news.index.view.category_homes'),'CategoryHome']
-    ]
+    ].sort
   end
 
   def st(text, sanitize_options={},truncate_options={})

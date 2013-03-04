@@ -1,7 +1,7 @@
 <column-mc:>
 
   <header><%= t("contacts_advanced_import.show.view.header") %></header>
-  <% objects = Campaign.available_for_user(current_user).map { |c| [c.name, c.id] } %>
+  <% objects = Campaign.available_for_user(current_user).map { |c| [c.name, c.id] }.sort %>
 
   <% form_tag choose_contacts_advanced_import_path, :method => :post, :multipart => true, :id => "advanced_import_form" do %>
       <frm title="#{t('contacts_advanced_import.show.view.title')}">

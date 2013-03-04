@@ -10,7 +10,7 @@
               <ol class="align_inputs">
                 <%= file_field_tag 'attachment', :accept => 'spreadsheet/ods,spreadsheet/doc,spreadsheet/xdoc', :class => "fltl" %>
                 <% if current_user.admin? %>
-                    <%= select_tag :creator_id, options_for_select(User.with_agents.map { |user| [user.to_s, user.id] }), :onchange => current_user.admin? ? "load_user_categories()" : "" %>
+                    <%= select_tag :creator_id, options_for_select(User.with_agents.map { |user| [user.to_s, user.id] }.sort), :onchange => current_user.admin? ? "load_user_categories()" : "" %>
               <% end %>
               <% if current_user.admin? %>
                 <span id="categories_selection"></span>

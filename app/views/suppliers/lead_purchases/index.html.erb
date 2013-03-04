@@ -67,14 +67,14 @@
             </li>
             <% if current_user.team_buyers? and @subaccounts.present? %>
                 <li class="select">
-                  <% opts = @subaccounts.insert(0, current_user).map { |sa| [sa.screen_name, sa.id] } %>
+                  <% opts = @subaccounts.insert(0, current_user).map { |sa| [sa.screen_name, sa.id] }.sort %>
                   <%= label_tag :bulk_assignee_id, t("lead_supplier.lead_purchases.index.view.bulk_assigned_field") %>
                   <%= select_tag :bulk_assignee_id, options_for_select(opts), :include_blank => true, :style => "width: 140px" %>
                 </li>
             <% end %>
             <li class="select">
               <%= label_tag :bulk_rating_level, t("lead_supplier.lead_purchases.index.view.bulk_rating") %>
-              <%= select_tag :bulk_rating_level, options_for_select(LeadPurchase::RATING_LEVELS.map { |l| [t("activerecord.attributes.lead_purchase.rating_levels.rating_level#{l}"), l] }, nil), :include_blank => true, :onchange => "set_rating_level(this.value, 'bulk')", :id => "rating_level_bulk", :style => "width: 160px" %>
+              <%= select_tag :bulk_rating_level, options_for_select(LeadPurchase::RATING_LEVELS.map { |l| [t("activerecord.attributes.lead_purchase.rating_levels.rating_level#{l}"), l] }.sort, nil), :include_blank => true, :onchange => "set_rating_level(this.value, 'bulk')", :id => "rating_level_bulk", :style => "width: 160px" %>
             </li>
             <li class="text" id="rating_reson_div_bulk" style="display:none;">
               <%= label_tag :bulk_rating_reason, t("lead_supplier.lead_purchases.index.view.rating_reason") %>
@@ -103,7 +103,7 @@
         <%= lead_purchases_listing @lead_purchases, :show_checkboxes => true do |blocks| %>
             <% blocks.assigned_to do |lead_purchase| %>
                 <% if @subaccounts.present? %>
-                    <% opts = @subaccounts.insert(0, current_user).map { |sa| [sa.screen_name, sa.id] } %>
+                    <% opts = @subaccounts.insert(0, current_user).map { |sa| [sa.screen_name, sa.id] }.sort %>
                     <%= select_tag :assignee_id,
                                    options_for_select(opts, lead_purchase.assignee_id),
                                    :include_blank => true,
@@ -118,7 +118,7 @@
                       <%= label_tag :assignee_id, t("lead_supplier.lead_purchases.index.view.bulk_assigned_field") %>
                       <br/>
                       <%= select_tag :assignee_id,
-                                     options_for_select((@subaccounts.include?(current_user) ? @subaccounts : @subaccounts.insert(0, current_user)).map { |sa| [sa.screen_name, sa.id] }, lead_purchase.assignee_id),
+                                     options_for_select((@subaccounts.include?(current_user) ? @subaccounts : @subaccounts.insert(0, current_user)).map { |sa| [sa.screen_name, sa.id] }.sort, lead_purchase.assignee_id),
                                      :include_blank => true,
                                      :onchange => "$.post('#{suppliers_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[assignee_id]':this.value} );",
                                      :style => "width: 140px" %>
@@ -147,7 +147,7 @@
                 <p>
                   <%= t("lead_supplier.lead_purchases.index.view.rating_level") %>
                   <br/>
-                  <%= select_tag :rating_level, options_for_select(LeadPurchase::RATING_LEVELS.map { |l| [t("activerecord.attributes.lead_purchase.rating_levels.rating_level#{l}"), l] }, lead_purchase.rating_level), :include_blank => true, :onchange => "set_rating_level(this.value, #{lead_purchase.id})", :id => "rating_level_#{lead_purchase.id}", :style => "width: 140px" %>
+                  <%= select_tag :rating_level, options_for_select(LeadPurchase::RATING_LEVELS.map { |l| [t("activerecord.attributes.lead_purchase.rating_levels.rating_level#{l}"), l] }.sort, lead_purchase.rating_level), :include_blank => true, :onchange => "set_rating_level(this.value, #{lead_purchase.id})", :id => "rating_level_#{lead_purchase.id}", :style => "width: 140px" %>
                 </p>
 
                 <div id="rating_reson_div_<%= lead_purchase.id %>" style="<%= 'display:none;' unless lead_purchase.is_rated_as_unsatisfactory? %>">

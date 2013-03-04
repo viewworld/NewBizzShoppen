@@ -1,7 +1,7 @@
 <% if ["default_deal_admin_email"].include?(setting.var) %>
     <li class="select">
       <%= label_tag t("administration.settings.common.view.vars.#{setting.var}") %>
-      <%= select_tag "settings", options_for_select(User.with_possible_deal_admins.map(&:email), setting.value), :id => "setting_#{i}", :name => "settings[#{setting.id}]" %>
+      <%= select_tag "settings", options_for_select(User.with_possible_deal_admins.map(&:email).sort, setting.value), :id => "setting_#{i}", :name => "settings[#{setting.id}]" %>
     </li>
 <% elsif ["email_verification_for_members","email_verification_for_suppliers"].include?(setting.var) %>
     <li class="boolean">

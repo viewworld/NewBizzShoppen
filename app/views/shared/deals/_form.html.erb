@@ -214,7 +214,7 @@
             <div class="grid_210 fltl">&nbsp;</div>
             <div class="grid_240 fltl">
               <h3><%= t("supplier.deals.form.all_templates") %></h3>
-              <%= select_tag "all_templates", options_for_select((LeadTemplate.with_category(current_user.deal_category_id).with_creator(current_user.id)-(@deal.deal_templates + [@template]).compact.uniq).map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+              <%= select_tag "all_templates", options_for_select((LeadTemplate.with_category(current_user.deal_category_id).with_creator(current_user.id)-(@deal.deal_templates + [@template]).compact.uniq).map { |c| [c.name, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
             </div>
 
             <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
@@ -231,7 +231,7 @@
 
             <div class="grid_240 fltl">
               <h3><%= t("supplier.deals.form.selected_templates") %></h3>
-              <%= select_tag "deal[deal_template_ids][]", options_for_select(([@template]+@deal.deal_templates).compact.uniq.map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+              <%= select_tag "deal[deal_template_ids][]", options_for_select(([@template]+@deal.deal_templates).compact.uniq.map { |c| [c.name, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
             </div>
             <clb/>
           </div>

@@ -37,12 +37,12 @@
           <% end %>
           <li class="select">
             <%= label_tag "call_result[contact_country_id]", "#{t("call_results.new.contact_country")}<abbr>*</abbr>".html_safe %>
-            <%= select_tag "call_result[contact_country_id]", options_for_select(Country.all.map{|c| [c.name, c.id]}, call_result.contact_country_id || (contact.country_id if contact.respond_to?(:country_id))) %>
+            <%= select_tag "call_result[contact_country_id]", options_for_select(Country.all.map{|c| [c.name, c.id]}.sort, call_result.contact_country_id || (contact.country_id if contact.respond_to?(:country_id))) %>
             <%= custom_error_for_object_and_field(call_result, :contact_country_id) %>
           </li>
           <li class="select">
             <%= label_tag "call_result[contact_subscription_plan_id]", "#{t("call_results.new.contact_subscription_plan")}<abbr>*</abbr>".html_safe %>
-            <%= select_tag "call_result[contact_subscription_plan_id]", options_for_select(SubscriptionPlan.active.for_role(call_result.result.upgrades_to_user_role).without_paypal.map{ |s| [s.name, s.id] }, call_result.contact_subscription_plan_id.nil? ? SubscriptionPlan.active.free.for_role(call_result.result.upgrades_to_user_role).first.id : call_result.contact_subscription_plan_id), :onchange => "if($('#call_result_contact_requested_deal_ids').val()) { select_deals_for_request_from_upgrade_panel(); }" %>
+            <%= select_tag "call_result[contact_subscription_plan_id]", options_for_select(SubscriptionPlan.active.for_role(call_result.result.upgrades_to_user_role).without_paypal.map{ |s| [s.name, s.id] }.sort, call_result.contact_subscription_plan_id.nil? ? SubscriptionPlan.active.free.for_role(call_result.result.upgrades_to_user_role).first.id : call_result.contact_subscription_plan_id), :onchange => "if($('#call_result_contact_requested_deal_ids').val()) { select_deals_for_request_from_upgrade_panel(); }" %>
             <%= custom_error_for_object_and_field(call_result, :contact_subscription_plan_id) %>
           </li>
           <li class="boolean">
@@ -64,7 +64,7 @@
                 <div class="grid_210 fltl">&nbsp;</div>
                 <div class="grid_240 fltl">
                   <h3><%= t("administration.users.edit.view.available_categories") %></h3>
-                  <%= select_tag "all_categories", options_for_select((LeadCategory.roots.without_unique-call_result.buying_categories).map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                  <%= select_tag "all_categories", options_for_select((LeadCategory.roots.without_unique-call_result.buying_categories).map { |c| [c.name, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
                 </div>
 
                 <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
@@ -75,7 +75,7 @@
 
                 <div class="grid_240 fltl">
                   <h3><%= t("administration.users.edit.view.selected_categories") %></h3>
-                  <%= select_tag "call_result[buying_category_ids][]", options_for_select(call_result.buying_categories.map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                  <%= select_tag "call_result[buying_category_ids][]", options_for_select(call_result.buying_categories.map { |c| [c.name, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
                 </div>
                 <clb/>
               </div>

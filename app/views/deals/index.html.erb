@@ -23,11 +23,11 @@
                     </li>
                     <li class="select">
                       <%= f.label t("deals.index.search.country_label") %>
-                      <%= f.select :with_country, @countries.map { |c| [c.name, c.id] }, {:include_blank => true}, :onchange => "refresh_regions_list_custom('search_with_country', 'search_with_region');" %>
+                      <%= f.select :with_country, @countries.map { |c| [c.name, c.id] }.sort, {:include_blank => true}, :onchange => "refresh_regions_list_custom('search_with_country', 'search_with_region');" %>
                     </li>
                     <li class="select">
                       <%= f.label t("deals.index.search.region_label") %>
-                      <%= f.select :with_region, regions_collection_for(Country.find_by_id(@search.with_country)).map { |r| [r.name, r.id] }, :include_blank => true %>
+                      <%= f.select :with_region, regions_collection_for(Country.find_by_id(@search.with_country)).map { |r| [r.name, r.id] }.sort, :include_blank => true %>
                     </li>
                   </ol>
                 </div>
@@ -42,7 +42,7 @@
                       <% if @nested_category.present? or @category.present? %>
                           <%
                              category = @nested_category.present? ? @nested_category : @category
-                             subcategories_for_select = [[' ', category.id]] + category.children.select { |c| c.deals_count_for_user(current_user) > 0 }.map { |c| [c.name, c.cached_slug] }
+                             subcategories_for_select = [[' ', category.id]] + category.children.select { |c| c.deals_count_for_user(current_user) > 0 }.map { |c| [c.name, c.cached_slug] }.sort
                           %>
                           <% if subcategories_for_select.size > 1 %>
                               <%= select_tag :category_selector, options_for_select(subcategories_for_select), {:include_blank => false, :onchange => "redirect_to_subcategory()"} %>

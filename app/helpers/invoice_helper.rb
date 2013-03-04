@@ -16,7 +16,7 @@ module InvoiceHelper
     [
         [t('administration.invoices.index.view.paid'),1],
         [t('administration.invoices.index.view.not_paid'),0],
-    ]
+    ].sort
   end
 
   def invoice_preview_path(filename)

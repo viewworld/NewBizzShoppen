@@ -1,7 +1,7 @@
 <div class="fltr pdd_5">
   <%= form_for callers_campaign_agent_work_screen_index_path(campaign), :html => {:method => :get} do %>
       <label><%= t("agent_work_screen.index.select_campaign") %></label>
-      <%= select_tag :change_campaign_id, options_for_select(Campaign.available_for_user(agent).map { |c| [c.name, c.id] }, campaign.id) %>
+      <%= select_tag :change_campaign_id, options_for_select(Campaign.available_for_user(agent).map { |c| [c.name, c.id] }.sort, campaign.id) %>
   <% end %>
 </div>
 

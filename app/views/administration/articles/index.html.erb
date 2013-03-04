@@ -14,7 +14,7 @@
               </li>
               <li class="select">
                 <%= f.label :with_subclass, t("administration.leads.index.search.article_label") %>
-                <%= f.select :with_subclass, article_scope_for_select, :include_blank => true %>
+                <%= f.select :with_subclass, article_scope_for_select.sort, :include_blank => true %>
               </li>
 
               <li class="commit">

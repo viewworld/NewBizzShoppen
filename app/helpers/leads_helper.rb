@@ -61,14 +61,14 @@ module LeadsHelper
   end
 
   def categories_for_select
-    Category.roots.map{|c| [c.name,c.id]}
+    Category.roots.map{|c| [c.name,c.id]}.sort
   end
 
   def statuses_for_select
     [
         [t("administration.leads.index.view.option_not_published"), 0],
         [t("administration.leads.index.view.option_published"), 1]
-    ]
+    ].sort
   end
 
   def currencies_for_select
@@ -76,7 +76,7 @@ module LeadsHelper
   end
 
   def creator_types
-    Lead.select("DISTINCT creator_type").map{|ct| ct.creator_type.split('::').last}
+    Lead.select("DISTINCT creator_type").map{|ct| ct.creator_type.split('::').last}.sort
   end
 
   def advanced_search_active?(search_params={})

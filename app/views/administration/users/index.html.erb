@@ -16,7 +16,7 @@
               </li>
               <li class="select">
                 <%= f.label t("administration.leads.index.search.user_role_label") %>
-                <%= f.select :with_role, User::BASIC_USER_ROLES_WITH_LABELS + [["Call centre agent", "call_centre_agent"]], :include_blank => true %>
+                <%= f.select :with_role, (User::BASIC_USER_ROLES_WITH_LABELS + [["Call centre agent", "call_centre_agent"]]).sort, :include_blank => true %>
               </li>
               <li class="string">
                 <label>Tags</label>
@@ -53,7 +53,7 @@
     <param:actions>
       <%= form_tag new_administration_user_path, :method => :get, :id => "form_new_user" do %>
           <span style="position:absolute;top: 5px; right: 110px;">
-            <%= select_tag "role", options_for_select(User::BASIC_USER_ROLES_WITH_LABELS), {} %>
+            <%= select_tag "role", options_for_select(User::BASIC_USER_ROLES_WITH_LABELS.sort), {} %>
           </span>
           <ul class="header_actions">
             <li class="last">

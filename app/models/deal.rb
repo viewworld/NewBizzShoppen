@@ -164,11 +164,11 @@ class Deal < AbstractLead
   end
 
   def self.group_deals_for_select
-    group_deals.without_inactive.map { |gd| [gd.to_s_for_group_deals_for_select, gd.id] }
+    group_deals.without_inactive.map { |gd| [gd.to_s_for_group_deals_for_select, gd.id] }.sort
   end
 
   def self.all_deals_for_select
-    without_inactive.published_only.map { |gd| [gd.to_s_for_group_deals_for_select, gd.id] }
+    without_inactive.published_only.map { |gd| [gd.to_s_for_group_deals_for_select, gd.id] }.sort
   end
 
   def to_s_for_group_deals_for_select

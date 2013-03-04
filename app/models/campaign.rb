@@ -158,7 +158,7 @@ class Campaign < ActiveRecord::Base
   end
 
   def results_for_select
-    results.map { |result| [result.name, result.id] }
+    results.map { |result| [result.name, result.id] }.sort
   end
 
   def completion

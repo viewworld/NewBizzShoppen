@@ -28,7 +28,7 @@
 
     <div id="agent_time_sheet">
       <!-- cut -->
-      <%= t("agent_timesheets.index.agent_time_sheet.select_agent") %>: <%= select_tag "agent_timesheet_agent_id", options_for_select(timesheet.agents.map{|a| [a.screen_name, a.id]}), :onchange => "show_timesheet($(this).attr('value'))" %>
+      <%= t("agent_timesheets.index.agent_time_sheet.select_agent") %>: <%= select_tag "agent_timesheet_agent_id", options_for_select(timesheet.agents.map{|a| [a.screen_name, a.id]}.sort), :onchange => "show_timesheet($(this).attr('value'))" %>
       <%= t("agent_timesheets.index.agent_time_sheet.show_all") %> <%= check_box_tag "show_all_agents", "1", false, :onchange => "show_all_timesheets($(this).is(':checked'))" %>
       <!-- cut -->
       <% if timesheet.agent_timesheet %>

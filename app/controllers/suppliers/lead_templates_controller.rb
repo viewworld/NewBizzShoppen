@@ -51,6 +51,6 @@ class Suppliers::LeadTemplatesController < Suppliers::AdvancedSupplierController
 
     @search = LeadTemplate.scoped_search(params[:search])
     @lead_templates = @search.paginate(:page => params[:page], :per_page => LeadTemplate.per_page)
-    @categories = LeadCategory.where(:id => current_user.deal_category_id).map { |c| [c.name, c.id] }
+    @categories = LeadCategory.where(:id => current_user.deal_category_id).map { |c| [c.name, c.id] }.sort
   end
 end

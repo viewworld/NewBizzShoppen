@@ -11,7 +11,7 @@
         </li>
         <li class="select">
           <%= f.label :field_type %>
-          <%= f.select :field_type, options_for_select(LeadTemplateField::FIELD_TYPES.map { |ft| [t("models.lead_template_field.field_type.type#{ft}"), ft] }, f.object.field_type) %>
+          <%= f.select :field_type, options_for_select(LeadTemplateField::FIELD_TYPES.map { |ft| [t("models.lead_template_field.field_type.type#{ft}"), ft] }.sort, f.object.field_type) %>
           <%= custom_error_for_field(f, :field_type) %>
         </li>
         <li class="boolean">
