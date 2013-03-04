@@ -50,6 +50,7 @@ gem 'diff-lcs', :require => false
 gem 'cucumber_fm-core', '0.1', :require => 'cucumber_feature_manager'
 gem 'acts-as-taggable-on', '~> 2.2.2'
 gem 'createsend'
+gem "selenium-webdriver", "~> 2.31.0"
 
 group :production do
   gem 'hoptoad_notifier'
@@ -71,7 +72,7 @@ end
 
 group :test do
   gem 'database_cleaner'
-  gem 'capybara'
+  gem 'capybara', '1.0.1'
   gem 'cucumber', "0.10.0"
   gem 'cucumber-rails', '0.3.2'
   gem 'test-unit'
