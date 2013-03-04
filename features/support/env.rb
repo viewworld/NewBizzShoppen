@@ -37,6 +37,7 @@ Spork.prefork do
   require 'machinist/active_record'
   require 'webmock/cucumber'
   require "lib/webmock_fix"
+  require 'headless'
 
   selenium_requests = %r{/((__.+__)|(hub/session.*)|(.*paypal\.com.*))$}
   WebMock.disable_net_connect! :allow => selenium_requests
@@ -108,5 +109,8 @@ Spork.each_run do
 #  at_exit do
 #    DatabaseCleaner.clean
 #  end
+  require 'headless'
 
+  headless = Headless.new
+  headless.start
 end

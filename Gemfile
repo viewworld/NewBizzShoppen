@@ -92,6 +92,7 @@ group :test do
   gem 'autotest'
   gem 'culerity'
   gem 'celerity', :require => nil # JRuby only.
+  gem 'headless'
 end
 
 gem 'capistrano'
