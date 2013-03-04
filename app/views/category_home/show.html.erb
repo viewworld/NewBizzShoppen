@@ -26,7 +26,7 @@
     <% end %>
 
     <div style="overflow:hidden">
-      <p><%= blurb(@home_category) %></p>
+      <p><%= blurb("#{@home_category.blurb_key}#{'_logged_in' if user_signed_in?}") %></p>
     </div>
 
     <clb/>

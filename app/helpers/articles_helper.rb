@@ -7,7 +7,7 @@ module ArticlesHelper
 
   def blurb(object=nil)
     raise "Specify object or key to display blurb" unless object
-    if blurb = (object.is_a?(ActiveRecord::Base) ? object.blurb : Article::Cms::InterfaceContentText.where(:key => object).first)
+    if blurb = (object.is_a?(ActiveRecord::Base) ? object.blurb : Article::Cms::InterfaceContentText.find_or_create_by_key(object))
       raw %{
         #{(link_to image_tag("icons/edit.png"), edit_administration_article_path(blurb)) if current_user and current_user.has_any_role?(:admin, :translator)}
         #{blurb.content}

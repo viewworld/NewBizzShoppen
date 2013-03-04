@@ -187,8 +187,11 @@ class Category < ActiveRecord::Base
     end
   end
 
-
   public
+
+  def blurb_key
+    "blurb_category_home_page_#{id}"
+  end
 
   def move_leads_to_subcategory
     if parent and parent.root? and parent.descendants.size == 1 and parent.leads.present?
