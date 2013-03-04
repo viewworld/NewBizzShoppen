@@ -76,9 +76,9 @@
             </p>
           </div>
 
-          <div class="grid_400 fltl">
-            <fieldset class="inputs_vertical">
-              <ol class="no_pdd">
+          <div class="grid_250 fltl">
+            <fieldset class="">
+              <ol class="pdd_10">
                 <% unless current_user.has_any_role?(:call_centre_agent, :agent) %>
                     <li class="boolean">
                       <%= label_tag :per_user, t("campaign_reports.index.report_per_users") %>
@@ -96,7 +96,7 @@
                 <li class="hidden">
                   <%= hidden_field_tag :views_count, @views_count+1 %>
                 </li>
-                <li class="commit">
+                <li class="commit pdd_10 no_pdd_l">
                   <ibt c="bt_green" icon="magnify">
                     <%= submit_tag t("campaign_reports.index.search_button") %>
                   </ibt>
