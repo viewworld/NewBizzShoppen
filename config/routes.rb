@@ -282,10 +282,9 @@ Nbs::Application.routes.draw do
     end
 
     resources :agent_timesheets, :only => [:index,:show,:destroy,:create,:new]
-
     resources :cached_timesheets, :only => [:index]
-
     resource :agent_information, :only => [:show]
+    resource :agent_performance
   end
 
   namespace :comments do

@@ -142,6 +142,7 @@ en:
         tags: "Tags"
         results: "Results"
         campaigns_tab: "Campaigns"
+        agent_performance: "Agent perf."
       agent:
         leads: My leads
         deals: My deals
@@ -159,6 +160,7 @@ en:
         deals: "My deals"
         newsletter_lists: "Lists"
         campaigns_tab: "Campaigns"
+        agent_performance: "Agent perf."
       call_centre_agent:
         leads: "My leads"
         lead_templates: "Lead templates"
