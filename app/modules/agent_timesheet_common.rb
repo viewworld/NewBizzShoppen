@@ -50,7 +50,7 @@ module AgentTimesheetCommon
       @campaigns = Campaign.find_all_by_id((UserSessionLog.for_users(@agents).select("DISTINCT(campaign_id)").map(&:campaign_id) + CampaignsUser.for_users(@agents).select("DISTINCT(campaign_id)").map(&:campaign_id)).uniq)
     end
 
-    @agents.reject!{|a| results.for_agent(a).sum(:results).eql?(0) } if @only_show_results
+    @agents.reject!{|a| scoped(:results).for_agent(a).sum(:results).eql?(0) } if @only_show_results
 
   end
 
