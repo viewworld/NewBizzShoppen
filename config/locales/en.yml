@@ -4283,7 +4283,17 @@ en:
       agents_selection:
         all_agents: "All available agents"
         selected_agents: "Selected agents"
+        selected_call_centres: "Selected call centres"
         all_call_centres: "All available call centres"
+  agent_performance:
+    show:
+      view:
+        header: "Agent performance report"
+        time_period: "Select time period"
+        move_right: "Add selected >"
+        move_all_right: "Add all >"
+        move_left: "< Remove selected"
+        move_all_left: "< Remove all"
   advanced_import:
     show:
       view:

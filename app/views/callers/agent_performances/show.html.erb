@@ -1,0 +1,223 @@
+<column-mc:>
+  <header>
+    <param:content>
+      <%= t("agent_performance.show.view.header") %>
+    </param:content>
+  </header>
+
+  <%= semantic_form_for @search, :url => callers_agent_performance_path, :as => :search, :html => {:method => :get} do |form| %>
+      <frm title="Search options">
+        <param:content>
+          <div class="pdd_10" id="search_box" style="<%= 'display:none;' if @search.all_agents.any? %>">
+            <div class="column_left">
+              <h3><%= t("agent_performance.show.view.time_period") %></h3>
+
+              <fieldset class="inputs labels_ta_r">
+                <ol class="align_inputs">
+                  <%= form.input :date_from, :as => :weekpicker, :input_html => {:id => 'search_date_from'}, :wrapper_html => {:class => "date"} %>
+                  <%= form.input :date_to, :as => :weekpicker, :input_html => {:id => 'search_date_to'}, :wrapper_html => {:class => "date"} %>
+                </ol>
+              </fieldset>
+
+              <clb/>
+            </div>
+
+            <div class="column_right">
+              <h3><%= t("agent_home.show.view.agent_performance.time_range") %></h3>
+
+              <fieldset class="inputs labels_ta_r">
+                <ol class="align_inputs">
+                    <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.all"), "$('#search_date_from').val('#{Date.new(2010)}');$('#search_date_to').val('#{Date.today}');" %></span>
+                    <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.this_year"), "$('#search_date_from').val('#{Date.today.beginning_of_year}');$('#search_date_to').val('#{Date.today.end_of_year}');" %></span>
+                    <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.this_quarter"), "$('#search_date_from').val('#{Date.today.beginning_of_quarter}');$('#search_date_to').val('#{Date.today.end_of_quarter}');" %></span>
+                    <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.this_month"), "$('#search_date_from').val('#{Date.today.beginning_of_month}');$('#search_date_to').val('#{Date.today.end_of_month}');" %></span>
+                    <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.this_week"), "$('#search_date_from').val('#{Date.today.beginning_of_week}');$('#search_date_to').val('#{Date.today.end_of_week}');" %></span>
+                    <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.today"), "$('#search_date_from').val('#{Date.today}');$('#search_date_to').val('#{Date.today}');" %></span>
+                </ol>
+              </fieldset>
+              <clb/>
+
+              <clb/>
+            </div>
+            <clb/>
+
+            <br/>
+
+            <h3><%= t("agent_timesheets.new.select_team") %></h3>
+
+            <div id="agents_selection_div">
+              <div class="pdd_10">
+                <div class="grid_210 fltl">&nbsp;</div>
+                <div class="grid_240 fltl">
+                  <h3><%= t("agent_timesheets.new.agents_selection.all_agents") %></h3>
+                  <%= select_tag "all_agents", options_for_select((current_user.admin? ? User.with_agents_without_call_centres.with_roles_except([:member]) : current_user.subaccounts).without_locked.without_ids(@search.all_agent_ids).map { |c| [c.screen_name, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+
+                  <% if current_user.admin? %>
+                      <h3 style="padding-top:10px"><%= t("agent_timesheets.new.agents_selection.all_call_centres") %></h3>
+                      <%= select_tag "all_call_centres", options_for_select(User.with_call_centres.without_ids(@search.all_agent_ids).map { |c| [c.screen_name, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                  <% end %>
+                </div>
+
+                <div class="grid_160 fltl" style="margin-right: 10px;margin-top:75px;">
+                  <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("agent_timesheets.new.move_right"), "javascript:move_selected('all_agents','search_agents');", :id => "move_right" %></p>
+                  <p class="ta_c"><%= bt_link_to nil, t("agent_timesheets.new.move_left"), "javascript:move_selected('search_agents','all_agents');", :id => "move_left" %></p>
+
+                  <% if current_user.admin? %>
+                    <div style="margin-top:160px">
+                      <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("agent_timesheets.new.move_right"), "javascript:move_selected('all_call_centres','search_call_centres');", :id => "move_right" %></p>
+                      <p class="ta_c"><%= bt_link_to nil, t("agent_timesheets.new.move_left"), "javascript:move_selected('search_call_centres','all_call_centres');", :id => "move_left" %></p>
+                    </div>
+                  <% end %>
+                </div>
+
+                <div class="grid_240 fltl">
+                  <h3><%= t("agent_timesheets.new.agents_selection.selected_agents") %></h3>
+                  <%= select_tag "search[agents]", options_for_select(@search.agents.map { |c| [c.screen_name, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+
+                  <% if current_user.admin? %>
+                      <h3 style="padding-top:10px"><%= t("agent_timesheets.new.agents_selection.selected_call_centres") %></h3>
+                      <%= select_tag "search[call_centres]", options_for_select(@search.call_centres.map { |c| [c.screen_name, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                  <% end %>
+                </div>
+
+                <clb/>
+              </div>
+            </div>
+
+          </div>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri show">
+            <%= link_to_function "Show", "$('#search_box, .frm_foot_actions .bt').toggle('slow');" %>
+          </ibt>
+          <ibt c="fltri hide">
+            <%= link_to_function "Hide", "$('#search_box, .frm_foot_actions .bt').toggle('slow');" %>
+          </ibt>
+          <ibt c="fltri generate">
+            <%= form.submit t("agent_timesheets.new.generate"), :onclick => "$('#search_agents option, #search_call_centres option').attr('selected', true);" %>
+          </ibt>
+
+          <script>
+          <% if @search.all_agents.any? %>
+            $('.hide, .generate').hide();
+          <% else %>
+            $('.show').hide();
+          <% end %>
+          </script>
+        </param:actions>
+      </frm>
+  <% end %>
+
+  <hl pdd="15"></hl>
+
+    <% @search.all_agents.each do |agent| %>
+      <% if @performance_campaigns = Campaign.active_between(@search.date_from, @search.date_to).available_for_user(agent) and @performance_campaigns.count > 0 %>
+         <div id="agent_performance">
+        <header>
+          <param:content>
+            <%= agent.screen_name %>
+          </param:content>
+        </header>
+        <div class="column_2to3 fltl" style="padding: 0 15px 0 0" id="agent_performance_table">
+          <table class="generic" style="margin: 0px">
+            <thead>
+            <tr>
+              <th class="hl"></th>
+              <th><%= t("agent_home.show.view.agent_performance.table.campaign") %></th>
+              <th><%= t("agent_home.show.view.agent_performance.table.payout") %></th>
+              <th><%= t("agent_home.show.view.agent_performance.table.hours") %></th>
+              <th><%= t("agent_home.show.view.agent_performance.table.rate") %></th>
+              <th class="hr"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @performance_campaigns.to_a.each do |campaign| %>
+                <tr>
+                  <td></td>
+                  <td><%= link_to campaign, callers_campaign_call_results_path(campaign), :class => "default_action" %></td>
+                  <td><%= as_currency(AgentPerformance.new(@search.date_from, @search.date_to, agent, campaign).payout, Currency.euro, 2) %></td>
+                  <td><%= AgentPerformance.new(@search.date_from, @search.date_to, agent, campaign).time.to_f.as_hours_and_minutes %></td>
+                  <td><%= as_currency(AgentPerformance.new(@search.date_from, @search.date_to, agent, campaign).rate, Currency.euro, 2) %></td>
+                  <td></td>
+                </tr>
+            <% end %>
+            <tr style="font-weight: bold;">
+              <td></td>
+              <td></td>
+              <td><%= as_currency(AgentPerformance.new(@search.date_from, @search.date_to, agent, @performance_campaigns).payout, Currency.euro, 2) %></td>
+              <td><%= AgentPerformance.new(@search.date_from, @search.date_to, agent, @performance_campaigns).time.to_f.as_hours_and_minutes %></td>
+              <td><%= as_currency(AgentPerformance.new(@search.date_from, @search.date_to, agent, @performance_campaigns).rate, Currency.euro, 2) %></td>
+              <td></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <td class="fl"></td>
+            <td colspan="4"></td>
+            <td class="fr"></td>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="column_1to3 fltl" id="agent_performance_graph">
+          <frm title="#{t('agent_home.show.view.header_graph')}" c="no_marg">
+            <param:content>
+              <div style="padding:10px">
+                <div id="agent_performance_graph_container_<%= agent.id %>" style="height:300px; padding:10px"></div>
+              </div>
+            </param:content>
+          </frm>
+        </div>
+        <clb/>
+      </div>
+  <% end %>
+
+    <% if @performance_campaigns.count > 0 %>
+    <script>
+        $(function () {
+            var performance_data = <%= AgentPerformance.new(@search.date_from, @search.date_to, agent, @performance_campaigns).flot_chart.to_json.html_safe %>;
+
+            function euroFormatter(v, axis) {
+                return v.toFixed(axis.tickDecimals) +"€";
+            }
+
+            function doPlot(position) {
+                $.plot($("#agent_performance_graph_container_<%= agent.id %>"),
+                        [
+                            {
+                                data: performance_data.hours, label: "Hours",
+                                bars:
+                                {
+                                    show: true,
+                                    barWidth: 1000*60*60*6,
+                                },
+                            },
+                            {
+                                data: performance_data.payout, label: "PayOut", yaxis: 2,
+                                bars:
+                                {
+                                    show: true,
+                                    barWidth: 1000*60*60*6,
+                                },
+                            }
+                        ],
+                        {
+                            xaxes: [ { mode: 'time', minTickSize: [1, "day"] } ],
+                            yaxes: [ { min: 0 },
+                                {
+                                    // align if we are to the right
+                                    alignTicksWithAxis: position == "right" ? 1 : null,
+                                    position: position,
+                                    tickFormatter: euroFormatter
+                                } ],
+                            legend: { position: 'sw' }
+                        });
+            }
+
+            doPlot("right");
+        });
+
+    </script>
+    <% end %>
+  <% end %>
+
+</column-mc:>

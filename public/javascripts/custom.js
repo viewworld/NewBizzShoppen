@@ -52,8 +52,26 @@ $("#" + src + " option:selected").each(function()
 });
 }
 
+function move_all(src,dst){
+$("#" + src + " option").each(function()
+{
+    append_element(dst, $(this).val(), $(this).text());
+    $(this).remove();
+});
+}
+
 function move_selected_unique(src,dst){
 $("#" + src + " option:selected").each(function()
+{
+    if( $("#" + dst + " option:contains('" + $(this).text() + "')").length == 0 ){
+        append_element(dst, $(this).val(), $(this).text());
+        $(this).remove();
+    }
+});
+}
+
+function move_all_unique(src,dst){
+$("#" + src + " option").each(function()
 {
     if( $("#" + dst + " option:contains('" + $(this).text() + "')").length == 0 ){
         append_element(dst, $(this).val(), $(this).text());
