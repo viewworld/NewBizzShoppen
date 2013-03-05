@@ -131,7 +131,11 @@ class Campaign < ActiveRecord::Base
   end
 
   def return_contact_to_the_pool
-    contacts.where("agent_id NOT IN (?)", user_ids).each { |c| c.update_attribute(:agent_id, nil) }
+    if user_ids.empty?
+      contacts
+    else
+      contacts.where("agent_id NOT IN (?)", user_ids)
+    end.each { |c| c.update_attribute(:agent_id, nil) }
   end
 
   def assign(ids)
