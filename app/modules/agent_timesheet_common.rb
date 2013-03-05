@@ -1,11 +1,14 @@
 module AgentTimesheetCommon
 
-  attr_accessor :start_date, :end_date, :campaigns, :agents, :call_centres, :overview, :team_result_sheet, :agent_timesheet, :display_hours, :display_results, :display_value, :display_cost
+  attr_accessor :start_date, :end_date, :campaigns, :agents, :call_centres, :overview, :team_result_sheet,
+                :agent_timesheet, :display_hours, :display_results, :display_value, :display_cost, :only_show_results,
+                :currency_id
 
   TIMESHEETS_PATH = "public/system/agent_timesheets_cache"
 
   DEFAULT_OPTIONS = {
       :show_weekends     => true,
+      :only_show_results => true,
       :start_date        => (Date.today-1.year).beginning_of_week,
       :end_date          => Date.today.end_of_week,
       :campaigns         => [],
@@ -19,12 +22,13 @@ module AgentTimesheetCommon
       :team_result_sheet => true,
       :agent_timesheet   => true,
       :current_user      => nil,
-      :filename          => nil
+      :filename          => nil,
+      :currency_id       => Currency.euro.id
   }
 
   def initialize(options = {})
     DEFAULT_OPTIONS.merge(options.symbolize_keys).each do |k,v|
-      if [:show_weekends,:display_hours,:display_results,:display_value,:display_cost,:overview,:team_result_sheet,:agent_timesheet].include?(k)
+      if [:show_weekends,:only_show_results,:display_hours,:display_results,:display_value,:display_cost,:overview,:team_result_sheet,:agent_timesheet].include?(k)
         instance_variable_set("@#{k}".to_sym, ActiveRecord::ConnectionAdapters::Column.value_to_boolean(v))
       elsif k == :agents
         instance_variable_set("@#{k}".to_sym, User.find_all_by_id(v))
@@ -45,6 +49,8 @@ module AgentTimesheetCommon
     elsif @campaigns.empty?
       @campaigns = Campaign.find_all_by_id((UserSessionLog.for_users(@agents).select("DISTINCT(campaign_id)").map(&:campaign_id) + CampaignsUser.for_users(@agents).select("DISTINCT(campaign_id)").map(&:campaign_id)).uniq)
     end
+
+    @agents.reject!{|a| results.for_agent(a).sum(:results).eql?(0) } if @only_show_results
 
   end
 

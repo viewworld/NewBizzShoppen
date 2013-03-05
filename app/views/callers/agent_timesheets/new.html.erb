@@ -17,6 +17,8 @@
                   <%= f.input :start_date, :as => :weekpicker, :input_html => {:id => 'search_start_date'}, :wrapper_html => {:class => "date"} %>
                   <%= f.input :end_date, :as => :weekpicker, :input_html => {:id => 'search_end_date'}, :wrapper_html => {:class => "date"} %>
                   <%= f.input :show_weekends, :as => :boolean %>
+                  <%= f.input :only_show_results, :as => :boolean %>
+                  <%= f.input :currency_id, :collection => Currency.active, :include_blank => false %>
                 </ol>
               </fieldset>
 
