@@ -58,13 +58,13 @@
   <tr style="font-weight: bold;">
     <td class="fl"></td>
     <td colspan="<%= total_columns - 7 %>"></td>
-    <td><%= as_currency(campaign_reports.sum(&:value_created), Currency.euro, 0) %> (<%= as_currency(campaign_reports.sum(&:target_value_created), Currency.euro, 0) %>)</td>
-    <td><%= as_currency(campaign_reports.sum(&:production_cost), Currency.euro, 0) %> (<%= as_currency(campaign_reports.sum(&:target_production_cost), Currency.euro, 0) %>)</td>
+    <td><%= as_currency(campaign_reports.sum(&:value_created), Currency.find(options[:currency_id]), 0) %> (<%= as_currency(campaign_reports.sum(&:target_value_created), Currency.find(options[:currency_id]), 0) %>)</td>
+    <td><%= as_currency(campaign_reports.sum(&:production_cost), Currency.find(options[:currency_id]), 0) %> (<%= as_currency(campaign_reports.sum(&:target_production_cost), Currency.find(options[:currency_id]), 0) %>)</td>
     <td><%= number_to_percentage(((campaign_reports.sum(&:value_created) / (campaign_reports.sum(&:total_cost).nonzero? || 1) - 1) * 100), :precision => 0) %> (<%= number_to_percentage(campaign_reports.sum(&:target_db_value), :precision => 0) %>)</td>
     <td><%= campaign_reports.sum(&:hours_used).as_hours_and_minutes %></td>
     <td><%= campaign_reports.sum(&:predicted_hours_to_completion).as_hours_and_minutes %></td>
-    <td><%= as_currency(campaign_reports.sum(&:predicted_cost_for_completion), Currency.euro, 0) %></td>
-    <td><%= as_currency(campaign_reports.sum(&:predicted_value_for_completion), Currency.euro, 0) %></td>
+    <td><%= as_currency(campaign_reports.sum(&:predicted_cost_for_completion), Currency.find(options[:currency_id]), 0) %></td>
+    <td><%= as_currency(campaign_reports.sum(&:predicted_value_for_completion), Currency.find(options[:currency_id]), 0) %></td>
     <td class="fr"></td>
   </tr>
 

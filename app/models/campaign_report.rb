@@ -1,13 +1,14 @@
 class CampaignReport
 
-  attr_accessor :campaign, :date_from, :date_to, :user, :selected_result_ids
+  attr_accessor :campaign, :date_from, :date_to, :user, :selected_result_ids, :currency_id
 
-  def initialize(campaign, date_from, date_to, user=nil, selected_result_ids=nil)
+  def initialize(campaign, date_from, date_to, options)
     self.campaign = campaign
     self.date_from = date_from.to_date
     self.date_to = date_to.to_date
-    self.user = user
-    self.selected_result_ids = selected_result_ids unless selected_result_ids.nil? or selected_result_ids.empty?
+    self.user = options[:user]
+    self.currency_id = options[:currency_id]
+    self.selected_result_ids = options[:selected_result_ids] unless options[:selected_result_ids].nil? or options[:selected_result_ids].empty?
   end
 
   def selected_users?(_user=nil)
@@ -101,7 +102,7 @@ class CampaignReport
   end
 
   def target_value_per_hour
-    campaign.euro_production_value_per_hour.to_f
+    currency.from_euro(campaign.euro_production_value_per_hour.to_f)
   end
 
   def realised_value_per_hour
@@ -200,9 +201,10 @@ class CampaignReport
   end
 
   def value_created
-    total_value
+    currency.from_euro(total_value)
   end
 
+  # EUR
   def leads_sold_total_value
     leads_sold.sum("lead_purchases.euro_price * lead_purchases.quantity").to_f
   end
@@ -215,14 +217,17 @@ class CampaignReport
     total_hours
   end
 
+  # converted
   def production_cost
     total_cost
   end
 
+  # converted
   def target_result
     value_created - production_cost
   end
 
+  # EUR
   def realised_result
     leads_sold_total_value - production_cost
   end
@@ -281,6 +286,10 @@ class CampaignReport
     !all_call_results.count.eql?(0)
   end
 
+  def currency
+    @currency ||= Currency.find(currency_id)
+  end
+
   private
 
   def all_call_results
@@ -332,6 +341,7 @@ class CampaignReport
     th.sum(:hours_count).to_f
   end
 
+  # EUR
   def total_billing(_user=nil)
     th = user_session_logs(_user || user)
     th.sum("hours_count * euro_billing_rate").to_f
@@ -349,6 +359,7 @@ class CampaignReport
     fc
   end
 
+  # EUR
   def total_value_not_upgraded
     not_upgraded = CallResult.final_for_campaign(campaign).where("results.upgrades_to_lead is false and call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported
     if selected_users?
@@ -360,6 +371,7 @@ class CampaignReport
     not_upgraded.with_dynamic_value(false)
   end
 
+  # EUR
   def total_value_not_upgraded_dynamic
     not_upgraded_dynamic = DynamicResultValue.for_campaign(campaign).between_dates(date_from, date_to)
     if selected_users?
@@ -371,6 +383,7 @@ class CampaignReport
     not_upgraded_dynamic
   end
 
+  # EUR
   def total_value_upgraded
     upgraded = CallResult.final_for_campaign(campaign).where("results.upgrades_to_lead is true and call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported.
         joins(:contact => :lead)
@@ -383,6 +396,7 @@ class CampaignReport
     upgraded
   end
 
+  # EUR
   def total_value_generated_leads_during_upgrade
     upgrade_to_member = Result.where("name = ? and generic IS TRUE", "Upgrade to member").first
     generated_leads = CallResult.final_for_campaign(campaign).where("results.id = ? and call_results.created_at::DATE BETWEEN ? AND ?", upgrade_to_member.id, date_from, date_to).with_reported
@@ -399,7 +413,7 @@ class CampaignReport
 
     generated_leads = total_value_generated_leads_during_upgrade
 
-    not_upgraded.sum("campaigns_results.euro_value").to_f + not_upgraded_dynamic.sum("value * euro_value").to_f + upgraded.sum("leads_leads.euro_price").to_f + generated_leads.sum("generated_leads.euro_price").to_f
+    currency.from_euro(not_upgraded.sum("campaigns_results.euro_value").to_f + not_upgraded_dynamic.sum("value * euro_value").to_f + upgraded.sum("leads_leads.euro_price").to_f + generated_leads.sum("generated_leads.euro_price").to_f)
   end
 
   def leads_sold
@@ -416,16 +430,18 @@ class CampaignReport
   end
 
   def total_cost
-    if campaign.cost_type == Campaign::FIXED_COST
-      user ?  (campaign.euro_fixed_cost_value / campaign.users.with_results.count) : campaign.euro_fixed_cost_value
-    elsif campaign.cost_type == Campaign::FIXED_HOURLY_RATE_COST
-      campaign.euro_fixed_cost_value * total_hours
-    elsif campaign.cost_type == Campaign::AGENT_BILLING_RATE_COST
-      user ? selected_users? ? user.map { |u| u.euro_billing_rate.to_f * total_hours(u)}.sum : (user.euro_billing_rate.to_f * total_hours(user)) : campaign.users.map { |u| total_billing(u) }.sum.to_f
-    elsif campaign.cost_type == Campaign::NO_COST
-      0.0
-    elsif campaign.cost_type == Campaign::PAYOUT
-      user ? AgentTimesheetsPayout.for_campaign(campaign).for_user(user).sum(:euro_payout) : AgentTimesheetsPayout.for_campaign(campaign).sum(:euro_payout)
-    end
+    currency.from_euro(
+      if campaign.cost_type == Campaign::FIXED_COST
+        user ?  (campaign.euro_fixed_cost_value / campaign.users.with_results.count) : campaign.euro_fixed_cost_value
+      elsif campaign.cost_type == Campaign::FIXED_HOURLY_RATE_COST
+        campaign.euro_fixed_cost_value * total_hours
+      elsif campaign.cost_type == Campaign::AGENT_BILLING_RATE_COST
+        user ? selected_users? ? user.map { |u| u.euro_billing_rate.to_f * total_hours(u)}.sum : (user.euro_billing_rate.to_f * total_hours(user)) : campaign.users.map { |u| total_billing(u) }.sum.to_f
+      elsif campaign.cost_type == Campaign::NO_COST
+        0.0
+      elsif campaign.cost_type == Campaign::PAYOUT
+        user ? AgentTimesheetsPayout.for_campaign(campaign).for_user(user).sum(:euro_payout) : AgentTimesheetsPayout.for_campaign(campaign).sum(:euro_payout)
+      end
+    )
   end
 end

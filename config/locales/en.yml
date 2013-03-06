@@ -4214,6 +4214,7 @@ en:
       download_pdf: "Download PDF"
       ranges_label: "Predefined time ranges"
       empty_report_msg: "Set the constraints and press Generate button to view report."
+      currency: "Currency"
       search:
         active: "Active"
         inactive: "Inactive"

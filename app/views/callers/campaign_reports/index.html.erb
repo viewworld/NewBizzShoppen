@@ -96,6 +96,10 @@
                 <li class="hidden">
                   <%= hidden_field_tag :views_count, @views_count+1 %>
                 </li>
+                <li class="select">
+                  <%=  label_tag :currency_id, t("campaign_reports.index.currency") %>
+                  <%= select_tag :currency_id, options_for_select(Currency.active.map{|c| [c.name, c.id]}.sort, @currency_id) %>
+                </li>
                 <li class="commit pdd_10 no_pdd_l">
                   <ibt c="bt_green" icon="magnify">
                     <%= submit_tag t("campaign_reports.index.search_button") %>
@@ -133,7 +137,7 @@
       <%= blank_state_message t("campaign_reports.index.empty_report_msg") %>
   <% else %>
       <div class="reports_table_wrapper">
-        <%= render(:text => CampaignReport.table(report_cache, @campaign_reports, @campaign_users, @per_user, @result_ids, {:date_from => @date_from, :date_to => @date_to, :dont_show_results => @dont_show_results})).html_safe %>
+        <%= render(:text => CampaignReport.table(report_cache, @campaign_reports, @campaign_users, @per_user, @result_ids, {:date_from => @date_from, :date_to => @date_to, :dont_show_results => @dont_show_results, :currency_id => @currency_id})).html_safe %>
       </div>
   <% end %>
 </column-mc:>
