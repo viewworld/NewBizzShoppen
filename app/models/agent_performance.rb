@@ -1,12 +1,13 @@
 class AgentPerformance
 
-  attr_accessor :date_from, :date_to, :user, :campaigns
+  attr_accessor :date_from, :date_to, :user, :campaigns, :currency
 
-  def initialize(date_from, date_to, user, campaign)
+  def initialize(date_from, date_to, user, campaign, currency_id)
     self.date_from = (date_from||Date.today.beginning_of_week).to_date
     self.date_to = (date_to||Date.today.end_of_week).to_date
     self.user = user.with_role
     self.campaigns = campaign.to_a.map(&:id)
+    self.currency = Currency.find_by_id(currency_id) || Currency.euro
   end
 
   def time
@@ -14,7 +15,7 @@ class AgentPerformance
   end
 
   def payout
-    @payout ||= payouts.sum(:euro_payout)
+    @payout ||= currency.from_euro(payouts.sum(:euro_payout))
   end
 
   def rate
@@ -32,7 +33,7 @@ class AgentPerformance
   def flot_days
     {
         :hours => user_session_logs.select("end_date, sum(hours_count) as hours").group("end_date").reorder("end_date").map{|usl| [usl.end_date.to_time.to_i*1000, usl.hours]},
-        :payout => payouts.select("created_at, sum(euro_payout) as payout").group("created_at").reorder("created_at").map{|usl| [(usl.created_at.to_time.to_i+jitter)*1000, usl.payout]},
+        :payout => payouts.select("created_at, sum(euro_payout) as payout").group("created_at").reorder("created_at").map{|usl| [(usl.created_at.to_time.to_i+jitter)*1000, currency.from_euro(usl.payout)]},
     }
   end
 

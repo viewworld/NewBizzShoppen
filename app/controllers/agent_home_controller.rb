@@ -8,6 +8,7 @@ class AgentHomeController < ApplicationController
     @communications = Communication.for_user(current_user.call_centre? ? current_user.subaccount_ids+[current_user.id] : current_user.id).descending_by_created_at.first(4)
     params[:date_from] ||= Date.today
     params[:date_to] ||= Date.today
+    params[:currency_id] ||= Currency.active.first.id
     @performance_campaigns = Campaign.active_between(params[:date_from], params[:date_to]).available_for_user(current_user)
     render :agent
   end
