@@ -41,14 +41,14 @@ class Currency < ActiveRecord::Base
 
   def to_euro(amount)
     if exchange_rate.to_f > 0
-      (amount.to_f * (1.0 / exchange_rate)).round(2)
+      ((amount||0).to_f * (1.0 / exchange_rate)).round(2)
     else
       0
     end
   end
 
   def from_euro(amount)
-    (amount.to_f * exchange_rate).round(2)
+    ((amount||0).to_f * exchange_rate).round(2)
   end
 
   def to_s
