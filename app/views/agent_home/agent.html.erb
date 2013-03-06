@@ -281,7 +281,7 @@
 
       $(function(){
           $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-          $.get('<%= callers_agent_information_path %>');
+          $.get('<%= callers_agent_information_path(:currency_id => params[:currency_id]) %>');
 
           $.get('<%= categories_path(:format => :js) %>', function() {
               $('#new_lead_button').bind('click', function(){

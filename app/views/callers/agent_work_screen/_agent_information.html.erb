@@ -4,17 +4,17 @@
   <p>
     <span style="float:left">
         <strong><%= t("agent_work_screen.index.agent_information.value_created") %>: </strong>
-        <%= t("agent_work_screen.index.agent_information.today") %>: <%= as_currency(AgentInformation.today(@agent).value_created, Currency.euro, 0) %> (<%= as_currency(TopAgent.value_for(:today), Currency.euro, 0) %>),
-        <%= t("agent_work_screen.index.agent_information.this_week") %>: <%= as_currency(AgentInformation.week(@agent).value_created, Currency.euro, 0) %> (<%= as_currency(TopAgent.value_for(:week), Currency.euro, 0) %>),
-        <%= t("agent_work_screen.index.agent_information.this_quarter") %>: <%= as_currency(AgentInformation.quarter(@agent).value_created, Currency.euro, 0) %> (<%= as_currency(TopAgent.value_for(:quarter), Currency.euro, 0) %>),
-        <%= t("agent_work_screen.index.agent_information.this_year") %>: <%= as_currency(AgentInformation.year(@agent).value_created, Currency.euro, 0) %> (<%= as_currency(TopAgent.value_for(:year), Currency.euro, 0) %>)
+        <%= t("agent_work_screen.index.agent_information.today") %>: <%= as_currency(AgentInformation.today(@agent, @currency).value_created, @currency, 0) %> (<%= as_currency(TopAgent.value_for(:today, @currency), @currency, 0) %>),
+        <%= t("agent_work_screen.index.agent_information.this_week") %>: <%= as_currency(AgentInformation.week(@agent, @currency).value_created, @currency, 0) %> (<%= as_currency(TopAgent.value_for(:week, @currency), @currency, 0) %>),
+        <%= t("agent_work_screen.index.agent_information.this_quarter") %>: <%= as_currency(AgentInformation.quarter(@agent, @currency).value_created, @currency, 0) %> (<%= as_currency(TopAgent.value_for(:quarter, @currency), @currency, 0) %>),
+        <%= t("agent_work_screen.index.agent_information.this_year") %>: <%= as_currency(AgentInformation.year(@agent, @currency).value_created, @currency, 0) %> (<%= as_currency(TopAgent.value_for(:year, @currency), @currency, 0) %>)
     </span>
 
     <span style="float:right">
         <strong><%= t("agent_work_screen.index.agent_information.time") %>: </strong>
-        <%= t("agent_work_screen.index.agent_information.today") %> (<%= AgentInformation.today(@agent).time.to_f.as_hours_and_minutes %>),
-        <%= t("agent_work_screen.index.agent_information.this_week") %> (<%= AgentInformation.week(@agent).time.to_f.as_hours_and_minutes %>),
-        <%= t("agent_work_screen.index.agent_information.last_four_weeks") %> (<%= AgentInformation.last_four_weeks(@agent).time.to_f.as_hours_and_minutes %>)
+        <%= t("agent_work_screen.index.agent_information.today") %> (<%= AgentInformation.today(@agent, @currency).time.to_f.as_hours_and_minutes %>),
+        <%= t("agent_work_screen.index.agent_information.this_week") %> (<%= AgentInformation.week(@agent, @currency).time.to_f.as_hours_and_minutes %>),
+        <%= t("agent_work_screen.index.agent_information.last_four_weeks") %> (<%= AgentInformation.last_four_weeks(@agent, @currency).time.to_f.as_hours_and_minutes %>)
     </span>
   </p>
 

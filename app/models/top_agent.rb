@@ -1,44 +1,45 @@
 class TopAgent
 
-  attr_accessor :date_from, :date_to, :user_id, :value, :user
+  attr_accessor :date_from, :date_to, :user_id, :value, :user, :currency
 
-  def initialize(date_from, date_to)
+  def initialize(date_from, date_to, currency)
     self.date_from = date_from
     self.date_to = date_to
     self.user_id, self.value = top_agent
     self.user = User.find_by_id(user_id).with_role if user_id
+    self.currency = currency
   end
 
   def valid?
     user.present?
   end
 
-  def self.today
-    new(Date.today,Date.today)
+  def self.today(currency)
+    new(Date.today,Date.today, currency)
   end
 
-  def self.value_for(symbol)
-    if ta = TopAgent.send(symbol) and ta.valid?
+  def self.value_for(symbol, currency)
+    if ta = TopAgent.send(symbol, currency) and ta.valid?
       ta.value_created
     else
       0.0
     end
   end
 
-  def self.week
-    new(Time.now.beginning_of_week.to_date, Time.now.end_of_week.to_date)
+  def self.week(currency)
+    new(Time.now.beginning_of_week.to_date, Time.now.end_of_week.to_date, currency)
   end
 
-  def self.quarter
-    new(Time.now.beginning_of_quarter.to_date, Time.now.end_of_quarter.to_date)
+  def self.quarter(currency)
+    new(Time.now.beginning_of_quarter.to_date, Time.now.end_of_quarter.to_date, currency)
   end
 
-  def self.year
-    new(Time.now.beginning_of_year.to_date, Time.now.end_of_year.to_date)
+  def self.year(currency)
+    new(Time.now.beginning_of_year.to_date, Time.now.end_of_year.to_date, currency)
   end
 
   def value_created
-    self.value.to_f
+    currency.from_euro(self.value.to_f)
   end
 
   def top_agent
