@@ -6,6 +6,7 @@ class Callers::AgentWorkScreenController < Callers::CallerController
   before_filter :set_contacts
   before_filter :set_contact
   before_filter :set_contact_managing
+  before_filter :set_currency
 
   def index
     authorize_manage_rights(@contact) if @contact
@@ -16,8 +17,13 @@ class Callers::AgentWorkScreenController < Callers::CallerController
   end
 
   private
+
   def set_campaign
     @campaign = Campaign.find(params[:campaign_id])
+  end
+
+  def set_currency
+    @currency = @campaign.currency
   end
 
   def set_agent

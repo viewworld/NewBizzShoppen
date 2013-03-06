@@ -166,7 +166,7 @@
           $.get('<%= callers_campaign_agent_work_screen_call_sheet_path(@campaign, :other_user_id => params[:other_user_id]) %>')
           $.get('<%= callers_campaign_agent_work_screen_pending_call_path(@campaign, :other_user_id => params[:other_user_id]) %>')
           $.get('<%= callers_campaign_agent_work_screen_complete_contact_path(@campaign, :other_user_id => params[:other_user_id]) %>')
-          $.get('<%= callers_agent_information_path %>')
+          $.get('<%= callers_agent_information_path(:currency_id => @campaign.currency_id) %>')
       });
 
       $('#modal_new_contact_form_div').dialog({
