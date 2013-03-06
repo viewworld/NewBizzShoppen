@@ -123,4 +123,8 @@ module AgentTimesheetCommon
     end
   end
 
+  def currency
+    @currency ||= Currency.find(currency_id)
+  end
+
 end

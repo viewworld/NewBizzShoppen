@@ -1415,6 +1415,8 @@ en:
             subunit_name: "Subunit name"
             active: "Active"
             global_default: "Default"
+            exchange_rate: "Exchange rate"
+            updated_at: "Updated at"
       new:
         view:
           header: "New currency"
@@ -4226,6 +4228,7 @@ en:
       total_average: "Total / average"
       na: "n/a"
       timesheet_queued: "Requested Agent Timesheet report has been queued. You will be notified by email when it's generated."
+      currency: "All values were converted from EUR to %{currency} with an exchange rate of %{exchange_rate}"
       overview:
         header: "Overview"
         hours_header: "Hours"

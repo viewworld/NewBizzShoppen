@@ -29,13 +29,13 @@
         <% team_result_sheet.days_of_week.each do |dow| %>
           <% team_result_sheet.variables.each do |type| %>
             <% if team_result_sheet.send("display_#{type}") %>
-              <td><%= format_for_timesheet(team_result_sheet.send(type).for_dow(dow).sum(type), type) %></td>
+              <td><%= format_for_timesheet(team_result_sheet, team_result_sheet.send(type).for_dow(dow).sum(type), type) %></td>
             <% end %>
           <% end %>
         <% end %>
         <% team_result_sheet.variables.each do |type| %>
           <% if team_result_sheet.send("display_#{type}") %>
-            <td><%= format_for_timesheet(team_result_sheet.send(type).sum(type), type) %></td>
+            <td><%= format_for_timesheet(team_result_sheet, team_result_sheet.send(type).sum(type), type) %></td>
           <% end %>
         <% end %>
       </tr>

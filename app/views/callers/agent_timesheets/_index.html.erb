@@ -70,6 +70,10 @@
 
   </div>
 
+  <% if timesheet.currency != Currency.euro %>
+    <h3 class="pdd_10"><%= t("agent_timesheets.index.currency", :currency => timesheet.currency, :exchange_rate => timesheet.currency.exchange_rate) %></h3>
+  <% end %>
+
   <script type="text/javascript">
     function show_timesheet(agent_id) {
         $("div[id^='agent_time_sheet_']").hide();

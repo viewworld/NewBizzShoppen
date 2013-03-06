@@ -280,12 +280,14 @@ module ApplicationHelper
     raw sanitize(text, sanitize_options)
   end
 
-  def format_for_timesheet(val, type)
+  def format_for_timesheet(timesheet, val, type)
     if type.to_sym == :hours
       hours = val.to_i.abs
       minutes = ((val-val.to_i)*60).round.abs
       minutes = "0#{minutes}" if minutes < 10
       "#{'-' if val < 0}#{hours}:#{minutes}"
+    elsif [:value, :cost].include?(type.to_sym)
+      timesheet.currency.from_euro(val).to_i
     else
       val.to_i
     end

@@ -29,8 +29,8 @@
           <th style="width:10px"><%= t("administration.currencies.index.view.table.name") %></th>
           <th><%= t("administration.currencies.index.view.table.symbol") %></th>
           <th><%= t("administration.currencies.index.view.table.format") %></th>
-          <th><%= t("administration.currencies.index.view.table.separator") %></th>
-          <th><%= t("administration.currencies.index.view.table.delimiter") %></th>
+          <th><%= t("administration.currencies.index.view.table.exchange_rate") %></th>
+          <th><%= t("administration.currencies.index.view.table.updated_at") %></th>
           <th><%= t("administration.currencies.index.view.table.unit_name") %></th>
           <th><%= t("administration.currencies.index.view.table.subunit_name") %></th>
           <th class="ta_c"><%= t("administration.currencies.index.view.table.active") %></th>
@@ -55,8 +55,8 @@
               <td>
                 <%= currency.format %> (<%= raw as_currency(1000, currency) %>)
               </td>
-              <td><%= currency.separator %></td>
-              <td><%= currency.delimiter %></td>
+              <td><%= currency.exchange_rate %></td>
+              <td><%= l currency.updated_at %></td>
               <td><%= currency.unit_name %></td>
               <td><%= currency.subunit_name %></td>
               <td class="ta_c"><%= translate_boolean(currency.active) %></td>

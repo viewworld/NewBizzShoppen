@@ -24,12 +24,12 @@
                       <% if log_out = agent_time_sheet.stats.for_cweek(cweek).for_dow(dow).for_agent(agent).maximum(:log_out) and log_in = agent_time_sheet.stats.for_cweek(cweek).for_dow(dow).for_agent(agent).minimum(:log_in) %>
                           <% log_out_time = ((log_out - log_in)/3600 - agent_time_sheet.hours.for_cweek(cweek).for_dow(dow).for_agent(agent).sum(:hours)).round(2)  %>
                           <% @log_out_times[agent.id][dow] << log_out_time if log_out_time > 0 %>
-                          <%= format_for_timesheet(log_out_time, :hours) %>
+                          <%= format_for_timesheet(agent_time_sheet, log_out_time, :hours) %>
                       <% else %>
                         -
                       <% end %>
                   <% else %>
-                      <%= format_for_timesheet(agent_time_sheet.send(key).for_cweek(cweek).for_dow(dow).for_agent(agent).sum(key), key) %>
+                      <%= format_for_timesheet(agent_time_sheet, agent_time_sheet.send(key).for_cweek(cweek).for_dow(dow).for_agent(agent).sum(key), key) %>
                   <% end %>
                 </td>
             <% end %>
@@ -37,7 +37,7 @@
                 <td><%= t("agent_timesheets.index.na") %></td>
             <% else %>
                 <td class="total_h_<%= key.to_s.first %>">
-                  <%= format_for_timesheet(agent_time_sheet.send(key).for_cweek(cweek).for_agent(agent).sum(key), key) %>
+                  <%= format_for_timesheet(agent_time_sheet, agent_time_sheet.send(key).for_cweek(cweek).for_agent(agent).sum(key), key) %>
                 </td>
             <% end %>
           </tr>

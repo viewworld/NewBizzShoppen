@@ -14,11 +14,11 @@
         <td class="cell_week"><%= t("agent_timesheets.index.week") %> <%= cweek.to_s %></td>
         <% timesheet.days_of_week.each do |dow| %>
             <td class="ta_r val_<%= type.to_s.first %>">
-              <%= format_for_timesheet(timesheet.send(type).for_cweek(cweek).for_dow(dow).sum(type), type) %>
+              <%= format_for_timesheet(timesheet, timesheet.send(type).for_cweek(cweek).for_dow(dow).sum(type), type) %>
             </td>
         <% end %>
         <td class="val_<%= type.to_s.first %>">
-          <%= format_for_timesheet(timesheet.send(type).for_cweek(cweek).sum(type), type) %>
+          <%= format_for_timesheet(timesheet, timesheet.send(type).for_cweek(cweek).sum(type), type) %>
         </td>
       </tr>
   <% end %>
@@ -26,11 +26,11 @@
     <td class="ta_l"><%= t("agent_timesheets.index.total") %></td>
     <% timesheet.days_of_week.each do |dow| %>
         <td class="val_<%= type.to_s.first %>">
-          <%= format_for_timesheet(timesheet.send(type).for_dow(dow).sum(type), type) %>
+          <%= format_for_timesheet(timesheet, timesheet.send(type).for_dow(dow).sum(type), type) %>
         </td>
     <% end %>
     <td class="val_<%= type.to_s.first %>">
-      <%= format_for_timesheet(timesheet.send(type).sum(type), type) %>
+      <%= format_for_timesheet(timesheet, timesheet.send(type).sum(type), type) %>
     </td>
   </tr>
   </tbody>

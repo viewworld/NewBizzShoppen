@@ -34,11 +34,11 @@ class CWeek
   end
 
   def year
-    @date.year
+    [@date.beginning_of_week.year, @date.end_of_week.year].uniq
   end
 
   def inspect
-    "#{cweek}/#{year}"
+    "#{cweek}/#{year.last}"
   end
 
   def to_s
