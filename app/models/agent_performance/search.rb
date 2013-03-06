@@ -1,6 +1,6 @@
 class AgentPerformance::Search
 
-  attr_accessor :date_from, :date_to, :agents, :call_centres
+  attr_accessor :date_from, :date_to, :agents, :call_centres, :currency_id
 
   include ActiveModel::Conversion
   extend ActiveModel::Naming
@@ -10,6 +10,7 @@ class AgentPerformance::Search
       :date_to           => Date.today,
       :agents            => [],
       :call_centres      => [],
+      :currency_id       => nil
   }
 
   def persisted?
@@ -17,7 +18,6 @@ class AgentPerformance::Search
   end
 
   def initialize(options)
-    #throw options
     options ||= {}
 
     DEFAULT_OPTIONS.merge(options.symbolize_keys).each do |k,v|
