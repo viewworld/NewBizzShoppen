@@ -23,7 +23,7 @@ module AgentTimesheetCommon
       :agent_timesheet   => true,
       :current_user      => nil,
       :filename          => nil,
-      :currency_id       => Currency.euro.id
+      :currency_id       => nil
   }
 
   def initialize(options = {})
