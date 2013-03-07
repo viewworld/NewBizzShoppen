@@ -69,14 +69,14 @@ describe CampaignReport do
 
   context "Initialization" do
     it "should initialize properly with hand given dates" do
-      cr = CampaignReport.new(@campaign, Date.today+5.days,Date.today+50.days, @campaign.currency)
+      cr = CampaignReport.new(@campaign1, Date.today+5.days,Date.today+50.days, :currency_id => @campaign1.currency_id)
       cr.date_from.should == Date.today+5.days and cr.date_to.should == Date.today+50.days
     end
   end
 
   context "Report for given campaign" do
     it "should return correct target success percent" do
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.target_success_percent.should == @campaign1.success_rate.to_f
     end
 
@@ -86,12 +86,12 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact1_1, :result => @result_final_reported, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.realised_success_percent.should == 50.0
     end
 
     it "should return correct target finished contacts per hour" do
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.target_finished_contacts_per_hour.should == @campaign1.finished_contacts_per_hour.to_f
     end
 
@@ -106,7 +106,7 @@ describe CampaignReport do
         UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
       end
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign2, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+15.minutes)
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.realised_finished_contacts_per_hour.should == 2.0 and cr.send(:total_hours).should == 1.0
     end
 
@@ -115,7 +115,7 @@ describe CampaignReport do
     end
 
     it "should return correct target final results of given type per hour" do
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.target_final_result(@result1).should == 5.0 and cr.target_final_result(@result2).should == 10.0
     end
 
@@ -129,12 +129,12 @@ describe CampaignReport do
         UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
       end
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign2, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+15.minutes)
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.realised_final_result(@result1).should == 1.0
     end
 
     it "should return correct target value per hour" do
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.target_value_per_hour.should == @campaign1.euro_production_value_per_hour.to_f
     end
 
@@ -149,12 +149,12 @@ describe CampaignReport do
         UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
       end
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign2, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+15.minutes)
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.realised_value_per_hour.should == 253.0
     end
 
     it "should return correct number of contacts" do
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.total_number_of_contacts.should == @campaign1.contacts.count
     end
 
@@ -166,7 +166,7 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact1_2, :result => @result_final_reported, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.completed_number_of_contacts.should == 3
     end
 
@@ -177,7 +177,7 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact1_2, :result => @result_final_reported, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.completion_percent.should == 50.0
     end
 
@@ -227,7 +227,7 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
 
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.value_created.should == 346.0
     end
 
@@ -238,7 +238,7 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact1_2, :result => @result_final_reported, :creator => @call_centre_agent1) #this
       CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.number_of_call_results.should == 3
     end
 
@@ -246,7 +246,7 @@ describe CampaignReport do
       (1..4).each do |i| # total 1 hour
         UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
       end
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.average_number_of_minutes_per_final_result.should == "-"
       CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset) # this
       CallResult.make!(:contact => @contact1_3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset) # this
@@ -258,7 +258,7 @@ describe CampaignReport do
     end
 
     it "should return average number of call results per finished contact" do
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.average_number_of_call_results_per_finished_contact.should == "-"
       CallResult.make!(:contact => @contact1_1, :result => @result_not_final_reported, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
       CallResult.make!(:contact => @contact1_1, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
@@ -266,7 +266,7 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact1_3, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
       CallResult.make!(:contact => @contact1_2, :result => @result_not_final_reported, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact1_2, :result => @result_final_reported, :creator => @call_centre_agent1)
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.average_number_of_call_results_per_finished_contact.should == 2.0
     end
 
@@ -277,7 +277,7 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact1_3, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
       CallResult.make!(:contact => @contact1_2, :result => @result_not_final_reported, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact1_2, :result => @result_final_reported, :creator => @call_centre_agent1)
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.number_of_results_per_minute.should == "-"
 
       (1..4).each do |i| # total 1 hour
@@ -296,7 +296,7 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
       LeadPurchase.make!(:lead => @contact1_3.lead)
       LeadPurchase.make!(:lead => @contact1_4.lead)
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.leads_sold_total_value.should == 143.0
     end
 
@@ -310,7 +310,7 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
       LeadPurchase.make!(:lead => @contact1_3.lead)
       LeadPurchase.make!(:lead => @contact1_4.lead)
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.leads_sold_count.should == 2
     end
 
@@ -319,7 +319,7 @@ describe CampaignReport do
         UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
       end
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign2, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+15.minutes)
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.hours_used.should == 1.0
     end
 
@@ -329,7 +329,7 @@ describe CampaignReport do
         UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
       end
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign2, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+15.minutes)
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.production_cost.should == 10.0
     end
 
@@ -339,19 +339,19 @@ describe CampaignReport do
         UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
       end
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign2, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+15.minutes)
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.production_cost.should == 11.0
     end
 
     it "should return correct fixed cost" do
       @campaign1.update_attributes(:cost_type => Campaign::FIXED_COST, :fixed_cost_value => 666)
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.production_cost.should == 666.0
     end
 
     it "should return correct no cost" do
       @campaign1.update_attributes(:cost_type => Campaign::NO_COST, :fixed_cost_value => 666)
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.production_cost.should == 0.0
     end
 
@@ -367,7 +367,7 @@ describe CampaignReport do
         UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
       end
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign2, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+15.minutes)
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.target_result.should == 243.0
     end
 
@@ -386,7 +386,7 @@ describe CampaignReport do
         UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
       end
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign2, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+15.minutes)
-      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+      cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.realised_result.should == 133.0
     end
 
@@ -409,69 +409,69 @@ describe CampaignReport do
       end
 
       it "should return correct realised finished results per hour" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
         cr.realised_finished_results_per_hour.should == 2
       end
 
       it "should return correct target all results per hour" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
         cr.target_all_results_per_hour.should == 20.0
       end
 
       it "should return correct realised all results per hour" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
         cr.realised_all_results_per_hour.should be_close(2.66, 0.01)
       end
 
       it "should return correct target realised temp results per hour" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
         cr.target_temp_result_per_hour.should be_close(1.33, 0.01)
       end
 
       it "should return correct realised temp results per hour" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
         cr.realised_temp_result_per_hour.should be_close(0.66, 0.01)
       end
 
       it "should return correct realised cost per hour" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
         cr.realised_cost_per_hour.should == 100.0
       end
 
       it "should return correct contacts used" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
         cr.contacts_used.should == "2-4:75%"
       end
 
       it "should return correct realised final result count" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
         [@result1,@result2,@result_final_reported].each do |result|
           cr.realised_final_result_count(result).should == 1
         end
       end
 
       it "should return correct target value" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
         cr.target_value_created.should == 466.0 #(4/2)*233
       end
 
       it "should return correct target cost" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
         cr.target_production_cost.should == 300.0 #(4/2)*150
       end
 
       it "should return correct target DB value" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
         cr.target_db_value.should be_close(55.33, 0.01)
       end
 
       it "should return correct realised DB value" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
         cr.realised_db_value.should be_close(55.33, 0.01)
       end
 
       it "should return correct predictions for hours, cost, and value for completion" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
         cr.predicted_hours_to_completion.should == 1.5
         cr.predicted_cost_for_completion.should == 50.0
         cr.predicted_value_for_completion.should be_close(77.66, 0.01)
@@ -488,8 +488,8 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact1_1, :result => @result_final_reported, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
-      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
-      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
+      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
       cr1.realised_success_percent.should == 50.0 and cr2.realised_success_percent.should == 100.0
     end
 
@@ -507,8 +507,8 @@ describe CampaignReport do
         UserSessionLog.make!(:user => @call_centre_agent2, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
       end
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign2, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+15.minutes)
-      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
-      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
+      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
       cr1.realised_finished_contacts_per_hour.should == 2.0 and cr1.send(:total_hours).should == 1.0 and cr2.realised_finished_contacts_per_hour.should == 0.5 and cr2.send(:total_hours).should == 2.0
     end
 
@@ -526,8 +526,8 @@ describe CampaignReport do
         UserSessionLog.make!(:user => @call_centre_agent2, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
       end
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign2, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+15.minutes)
-      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
-      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
+      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
       cr1.realised_final_result(@result1).should == 1.0 and cr2.realised_final_result(@result1).should == 0.5 and cr1.realised_final_result(@result2).should == 0.0 and
               cr2.realised_final_result(@result2).should == 0.0
     end
@@ -547,8 +547,8 @@ describe CampaignReport do
         UserSessionLog.make!(:user => @call_centre_agent2, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
       end
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign2, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+15.minutes)
-      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
-      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
+      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
       cr1.realised_value_per_hour.should == 253.0 and cr2.realised_value_per_hour.should == 50.0
     end
 
@@ -561,8 +561,8 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact1_2, :result => @result_final_reported, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
-      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
-      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
+      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
       cr1.completed_number_of_contacts.should == 3 and cr2.completed_number_of_contacts.should == 1
     end
 
@@ -574,8 +574,8 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact1_1, :result => @result_final_reported, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
-      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
-      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
+      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
       cr1.value_created.should == 253.0 and cr2.value_created.should == 100.0
     end
 
@@ -589,8 +589,8 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
       LeadPurchase.make!(:lead => @contact1_3.lead)
       LeadPurchase.make!(:lead => @contact1_4.lead)
-      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
-      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
+      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
       cr1.leads_sold_total_value.should == 130.0 and cr2.leads_sold_total_value.should == 13.0
     end
 
@@ -604,8 +604,8 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
       LeadPurchase.make!(:lead => @contact1_3.lead)
       LeadPurchase.make!(:lead => @contact1_4.lead)
-      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
-      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
+      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
       cr1.leads_sold_count.should == 1 and cr2.leads_sold_count == 1
     end
 
@@ -617,8 +617,8 @@ describe CampaignReport do
         UserSessionLog.make!(:user => @call_centre_agent2, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
       end
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign2, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+15.minutes)
-      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
-      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
+      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
       cr1.hours_used.should == 1.0 and cr2.hours_used.should == 2.0
     end
 
@@ -640,8 +640,8 @@ describe CampaignReport do
       end
 
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign2, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+15.minutes)
-      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
-      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
+      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
       cr1.target_result.should == 243.0 and cr2.target_result.should == 3.0
     end
 
@@ -665,8 +665,8 @@ describe CampaignReport do
       end
 
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign2, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+15.minutes)
-      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
-      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
+      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
       cr1.realised_result.should == 120.0
       cr2.realised_result.should == 45.0
     end
@@ -691,93 +691,93 @@ describe CampaignReport do
       end
 
       it "should return correct realised finished results per hour" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
         cr.realised_finished_results_per_hour.should == 1
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
         cr.realised_finished_results_per_hour.should be_close(1.33, 0.01)
       end
 
       it "should return correct target all results per hour" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency) #global
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id) #global
         cr.target_all_results_per_hour.should == 20.0
       end
 
       it "should return correct realised all results per hour" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
         cr.realised_all_results_per_hour.should == 1.0
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
         cr.realised_all_results_per_hour.should be_close(2.66, 0.01)
       end
 
       it "should return correct target realised temp results per hour" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
         cr.target_temp_result_per_hour.should == 0.0
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
         cr.target_temp_result_per_hour.should == 4.0
       end
 
       it "should return correct realised temp results per hour" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
         cr.realised_temp_result_per_hour.should == 0
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
         cr.realised_temp_result_per_hour.should be_close(1.33, 0.01)
       end
 
       it "should return correct realised cost per hour" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
         cr.realised_cost_per_hour.should == 100.0
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
         cr.realised_cost_per_hour.should == 100.0
       end
 
       it "should return correct contacts used" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
         cr.contacts_used.should == "1-4:75%"
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
         cr.contacts_used.should == "1-4:75%"
       end
 
       it "should return correct realised final result count" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
         cr.realised_final_result_count(@result1).should == 1
         cr.realised_final_result_count(@result2).should == 0
         cr.realised_final_result_count(@result_final_reported).should == 0
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
         cr.realised_final_result_count(@result1).should == 0
         cr.realised_final_result_count(@result2).should == 1
         cr.realised_final_result_count(@result_final_reported).should == 0
       end
 
       it "should return correct target value" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
         cr.target_value_created.should == 800.0 #(4/1)*200
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
         cr.target_value_created.should == 40.0 #(4/1)*10
       end
 
       it "should return correct target cost" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
         cr.target_production_cost.should == 400.0 #(4/1)*100
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
         cr.target_production_cost.should == 300.0 #(4/1)*75
       end
 
       it "should return correct target DB value" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
         cr.target_db_value.should == 100.0
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
         cr.target_db_value.should be_close(-86.66, 0.01)
       end
 
       it "should return correct realised DB value" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
         cr.realised_db_value.should == 100.0
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
         cr.realised_db_value.should be_close(-86.66, 0.01)
       end
 
       it "should return correct predictions for hours, cost, and value for completion" do
-        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1, @campaign1.currency)
+        cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
         cr.predicted_hours_to_completion.should == 3.0
         cr.predicted_cost_for_completion.should be_close(33.33, 0.01)
         cr.predicted_value_for_completion.should be_close(66.66, 0.01)
