@@ -1,190 +1,22 @@
 <head:>
   <style type="text/css">
-    .c
-    {
-        width: 1300px;
-    }
+      .c
+      {
+          width: 1300px;
+      }
   </style>
 </head:>
 
-<search-box:>
-  <div class="search_box">
-    <div class="search_left"></div>
-    <div class="search_right"></div>
-    <h2><%= t("campaign_reports.index.search_label") %></h2>
-
-    <div class="search_content">
-      <%= form_tag callers_campaign_reports_path, :method => :get, :id => "form_campaign_reports_search" do %>
-          <div class="grid_310 fltl">
-            <fieldset class="inputs_vertical">
-              <ol class="no_pdd">
-                <li class="select">
-                  <%= label_tag t("campaigns.show.search.campaigns") %>
-                  <%= select_tag :campaign_ids, options_from_collection_for_select((@campaign_selection == "all" ? @all_campaigns : @all_campaigns.select { |c| @campaign_selection == "active" ? c.active? : !c.active? }).sort_by(&:name), "id", "name", @campaign_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
-                </li>
-                <li class="select">
-                  <%= label_tag t("campaigns.show.search.results") %>
-                  <%= select_tag :result_ids, options_from_collection_for_select(@all_results.sort_by(&:name), "id", "name", @result_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
-                </li>
-                <li class="radio no_pdd_t" style="padding-left: 10px">
-                  <%= radio_button_tag :campaign_selection, :all, @campaign_selection == "all", {:onclick => "load_campaigns('all');"} %>
-                  <%= label_tag t("campaign_reports.index.search.all") %>
-
-                  <%= radio_button_tag :campaign_selection, :active, @campaign_selection == "active", {:onclick => "load_campaigns('active');"} %>
-                  <%= label_tag t("campaign_reports.index.search.active") %>
-
-                  <%= radio_button_tag :campaign_selection, :inactive, @campaign_selection == "inactive", {:onclick => "load_campaigns('inactive');"} %>
-                  <%= label_tag t("campaign_reports.index.search.inactive") %>
-                </li>
-              </ol>
-            </fieldset>
-          </div>
-          <% if current_user.has_role?(:admin) %>
-              <div class="grid_310 fltl">
-                <fieldset id="agents_selection" class="inputs_vertical">
-                  <ol class="no_pdd">
-                    <li class="select">
-                      <%= label_tag t("campaigns.show.search.call_centres") %>
-                      <%= select_tag :call_centre_id, options_from_collection_for_select(@all_call_centres.sort_by(&:email), "id", "email", @call_centre_id), :include_blank => true, :multiple => false, :style => "width:140px;", :onchange => "load_agents_for_call_centre($('#call_centre_id').val())" %>
-                    </li>
-                    <li class="select">
-                      <%= label_tag t("campaigns.show.search.call_centre_agents") %>
-                      <%= select_tag :call_centre_agent_ids, options_from_collection_for_select(@all_call_centre_agents.sort_by(&:email), "id", "email", @call_centre_agent_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
-                    </li>
-                  </ol>
-                </fieldset>
-              </div>
-          <% end %>
-          <div class="grid_250 fltl">
-            <fieldset class="inputs_vertical">
-              <ol class="no_pdd">
-                <li class="date">
-                  <%= label_tag :date_to, t("campaigns.show.search.date_from") %>
-                  <%= text_field_tag :date_from, @date_from, :class => "datepicker" %>
-                </li>
-                <li class="date">
-                  <%= label_tag :date_to, t("campaigns.show.search.date_to") %>
-                  <%= text_field_tag :date_to, @date_to, :class => "datepicker" %>
-                </li>
-              </ol>
-            </fieldset>
-            <p class="pdd_10">
-              <%= t("campaign_reports.index.ranges_label") %>:<br/>
-              <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#date_from').val('#{Date.today.beginning_of_month}');$('#date_to').val('#{Date.today.end_of_month}');$('#form_campaign_reports_search').submit()" %>
-              <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}');$('#form_campaign_reports_search').submit()" %>
-              <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}');$('#form_campaign_reports_search').submit()" %>
-            </p>
-          </div>
-
-          <div class="grid_250 fltl">
-            <fieldset class="">
-              <ol class="pdd_10">
-                <% unless current_user.has_any_role?(:call_centre_agent, :agent) %>
-                    <li class="boolean">
-                      <%= label_tag :per_user, t("campaign_reports.index.report_per_users") %>
-                      <%= check_box_tag :per_user, "1", @per_user %>
-                    </li>
-                <% end %>
-                <li class="boolean">
-                  <%= label_tag :with_results, t("campaign_reports.index.with_results") %>
-                  <%= check_box_tag :with_results, "1", @with_results %>
-                </li>
-                <li class="boolean">
-                  <%= label_tag :dont_show_results, t("campaign_reports.index.dont_show_results") %>
-                  <%= check_box_tag :dont_show_results, "1", @dont_show_results %>
-                </li>
-                <li class="hidden">
-                  <%= hidden_field_tag :views_count, @views_count+1 %>
-                </li>
-                <li class="select">
-                  <%=  label_tag :currency_id, t("campaign_reports.index.currency") %>
-                  <%= select_tag :currency_id, options_for_select(Currency.active.map{|c| [c.name, c.id]}.sort, @currency_id) %>
-                </li>
-                <li class="commit pdd_10 no_pdd_l">
-                  <ibt c="bt_green" icon="magnify">
-                    <%= submit_tag t("campaign_reports.index.search_button") %>
-                  </ibt>
-                </li>
-              </ol>
-            </fieldset>
-          </div>
-          <clb/>
-      <% end %>
-    </div>
-  </div>
-</search-box:>
-
+<%= render :partial => 'search' %>
 
 <column-mc:>
-  <% report_cache = "#{current_user.id}#{(Time.now.to_f*100000).to_i}" %>
   <header>
     <param:content>
-      <%= t("campaign_reports.index.header") %>
+      <%= t("campaign_reports.index.your_queued_tasks") %>
     </param:content>
-
-    <% if @campaign_reports.any? %>
-        <param:actions>
-          <ul class="header_actions">
-            <li class="last">
-              <%= bt_link_to nil, t("campaign_reports.index.download_pdf"), callers_campaign_reports_path(:report => report_cache, :format => 'pdf') %>
-            </li>
-          </ul>
-        </param:actions>
-    <% end %>
   </header>
 
-  <% if @campaign_reports.empty? %>
-      <%= blank_state_message t("campaign_reports.index.empty_report_msg") %>
-  <% else %>
-      <div class="reports_table_wrapper">
-        <%= render(:text => CampaignReport.table(report_cache, @campaign_reports, @campaign_users, @per_user, @result_ids, {:date_from => @date_from, :date_to => @date_to, :dont_show_results => @dont_show_results, :currency_id => @currency_id})).html_safe %>
-      </div>
-  <% end %>
+  <%= render :partial => 'shared/delayed_jobs/user', :locals => {:user => current_user, :delayed_jobs => current_user.delayed_jobs.limit(5)} %>
 </column-mc:>
 
-<js:>
-  <script type="text/javascript">
-
-      <%=
-     %{
-     var all_campaigns = [
-      #{@all_campaigns.map { |c| "['#{c.name}', #{c.id}]" }.join(',')}
-     ]
-     }.html_safe
-      %>
-
-      <% @all_campaigns.partition { |c| c.active? }.each_with_index do |campaigns_group, i| %>
-      <%=
-      %{
-      var #{i == 0 ? 'active' : 'inactive'}_campaigns = [
-       #{campaigns_group.map { |c| "['#{c.name}', #{c.id}]" }.join(',')}
-      ]
-      }.html_safe
-
-      %>
-      <% end %>
-
-      $(function() {
-          $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-      });
-
-      function load_campaigns(campaign_selection) {
-          c_array = eval(campaign_selection + "_campaigns");
-
-          $('#campaign_ids option').each(function()
-          {
-              $(this).remove();
-          });
-          $.each(c_array, function(index, value) {
-              $('#campaign_ids').
-                      append($("<option></option>").
-                      attr("value", value[1]).
-                      text(value[0]));
-          });
-          $("#campaign_ids option").each(function()
-          {
-              $(this).attr("selected", "selected");
-          });
-      }
-  </script>
-</js:>
+<%= render :partial => 'js' %>
