@@ -23,8 +23,8 @@
         <td colspan="5" class="ta_c" style="padding-top:5px;">
           <% if delayed_jobs.is_a?(WillPaginate::Collection) %>
               <%= will_paginate delayed_jobs %>
-          <% else %>
-              <%= bt_link_to :arrow_down, t("common.view_all"), callers_cached_timesheets_path %>
+          <%# else %>
+              <%#= bt_link_to :arrow_down, t("common.view_all"), callers_cached_timesheets_path %>
           <% end %>
         </td>
       </tr>

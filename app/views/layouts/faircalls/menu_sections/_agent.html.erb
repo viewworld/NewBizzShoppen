@@ -6,7 +6,7 @@
 <%= main_menu_link_to t("layout.main_menu.shared.comments"), comments_threads_path, :tab => "comments" %>
 <%= main_menu_link_to t("layout.main_menu.shared.notifications"), notifications_path, :tab => "notifications" %>
 <%= main_menu_link_to t("layout.main_menu.agent.campaigns"), callers_campaigns_path, :tab =>"campaigns" %>
-<%= main_menu_link_to t("layout.main_menu.agent.reports"), callers_campaign_reports_path, :tab =>"financial" %>
+<%= main_menu_link_to t("layout.main_menu.agent.reports"), new_callers_campaign_report_path, :tab =>"financial" %>
 
 <%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.shared.import"), :tab => "import" do  %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.shared.import_contacts")), contacts_advanced_import_path, :tab => "import_contacts" %>

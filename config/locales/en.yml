@@ -4173,6 +4173,7 @@ en:
     index:
       search_label: "Search"
       search_button: "Generate"
+      report_queued: "Requested Campaign Report has been queued. You will be notified when it's generated."
       table:
         campaign_name: "Campaign name"
         campaign_targets: "Campaign targets"
@@ -4212,6 +4213,7 @@ en:
       with_results: "Active results"
       dont_show_results: "Don't show results"
       header: "Reports"
+      your_queued_tasks: "Your queued tasks"
       download_pdf: "Download PDF"
       ranges_label: "Predefined time ranges"
       empty_report_msg: "Set the constraints and press Generate button to view report."
@@ -4694,6 +4696,10 @@ en:
     agent_timesheet:
       ready:
         title: "The Agent Timesheet report you've requested is now ready"
+        text: "<a href=\"%{url}\">Go to the report</a> or <a href=\"%{url}\" target=\"_blank\">open it in a new tab</a>"
+    campaign_report:
+      ready:
+        title: "The Campaign Report you've requested is now ready"
         text: "<a href=\"%{url}\">Go to the report</a> or <a href=\"%{url}\" target=\"_blank\">open it in a new tab</a>"
     campaign:
       duplicated:

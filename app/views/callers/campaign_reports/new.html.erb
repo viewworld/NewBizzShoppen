@@ -1,0 +1,38 @@
+<head:>
+  <style type="text/css">
+    .c
+    {
+        width: 1300px;
+    }
+  </style>
+</head:>
+
+<%= render :partial => 'search' %>
+
+<column-mc:>
+  <header>
+    <param:content>
+      <%= t("campaign_reports.index.header") %>
+    </param:content>
+
+    <% if @search.campaign_reports.any? %>
+        <param:actions>
+          <ul class="header_actions">
+            <li class="last">
+              <%= bt_link_to nil, t("campaign_reports.index.download_pdf"), callers_campaign_reports_path(:report => report_cache, :format => 'pdf') %>
+            </li>
+          </ul>
+        </param:actions>
+    <% end %>
+  </header>
+
+  <% if @search.campaign_reports.empty? %>
+      <%= blank_state_message t("campaign_reports.index.empty_report_msg") %>
+  <% else %>
+      <div class="reports_table_wrapper">
+        <%= render(:text => "").html_safe %>
+      </div>
+  <% end %>
+</column-mc:>
+
+<%= render :partial => 'js' %>

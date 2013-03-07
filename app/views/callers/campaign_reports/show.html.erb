@@ -1,0 +1,32 @@
+<head:>
+  <style type="text/css">
+    .c
+    {
+        width: 1300px;
+    }
+  </style>
+</head:>
+
+<%= render :partial => 'search' %>
+
+<column-mc:>
+  <header>
+    <param:content>
+      <%= t("campaign_reports.index.header") %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to nil, t("campaign_reports.index.download_pdf"), callers_campaign_report_path(params[:id], :format => 'pdf') %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
+
+  <div class="reports_table_wrapper">
+    <%= render(:text => @html).html_safe %>
+  </div>
+</column-mc:>
+
+<%= render :partial => 'js' %>

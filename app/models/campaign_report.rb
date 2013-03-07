@@ -262,24 +262,11 @@ class CampaignReport
 
   def self.store_pdf(report_cache)
     pdf_path = Rails.root.join "public/html2pdf/campaign_reports_cache/#{report_cache}.pdf"
-    html_path = Rails.root.join "public/html2pdf/campaign_reports_cache/#{report_cache}.html"
+    html_path = Rails.root.join "public/html2pdf/campaign_reports_cache/#{report_cache}.pdf.html"
     unless File.exists? pdf_path
       `python public/html2pdf/pisa.py #{html_path} #{pdf_path}`
-      File.delete(html_path)
     end
     pdf_path
-  end
-
-  def self.table(report_cache,campaign_reports,campaign_users,per_user=false,result_ids=nil,options={})
-    av = ActionView::Base.new
-    av.view_paths << File.join(::Rails.root.to_s, "app", "views")
-    av.instance_eval do
-      extend ApplicationHelper
-    end
-    html = av.render(:partial => 'callers/campaign_reports/report', :type => :erb, :locals => { :per_user => per_user, :campaign_users => campaign_users, :campaign_reports => campaign_reports, :result_ids => result_ids, :options => options })
-    markup = File.read(Rails.root.join("app/views/layouts/pdf_report.html")) % [options[:date_from], options[:date_to], html]
-    File.open(Rails.root.join("public/html2pdf/campaign_reports_cache/#{report_cache}.html"), 'w') {|f| f.write(markup) }
-    html
   end
 
   def has_results?
@@ -288,6 +275,10 @@ class CampaignReport
 
   def currency
     @currency ||= Currency.find(currency_id)
+  end
+
+  def self.human_name
+    "Campaign Report"
   end
 
   private
