@@ -4695,11 +4695,11 @@ en:
         text: "<a href=\"%{url}\">Go to the contact</a> or <a href=\"%{url}\" target=\"_blank\">open it in a new tab</a>"
     agent_timesheet:
       ready:
-        title: "The Agent Timesheet report you've requested is now ready"
+        title: "The Agent Timesheet report you've requested is ready"
         text: "<a href=\"%{url}\">Go to the report</a> or <a href=\"%{url}\" target=\"_blank\">open it in a new tab</a>"
     campaign_report:
       ready:
-        title: "The Campaign Report you've requested is now ready"
+        title: "The Campaign Report you've requested is ready"
         text: "<a href=\"%{url}\">Go to the report</a> or <a href=\"%{url}\" target=\"_blank\">open it in a new tab</a>"
     campaign:
       duplicated:
