@@ -258,7 +258,6 @@ GEM
       activesupport (= 3.0.19)
       bundler (~> 1.0)
       railties (= 3.0.19)
-    rails-settings (1.0.0)
     railties (3.0.19)
       actionpack (= 3.0.19)
       activesupport (= 3.0.19)
@@ -386,7 +385,6 @@ DEPENDENCIES
   pickle
   postmark-rails
   rails (= 3.0.19)
-  rails-settings
   railties
   rake (~> 0.8.7)
   role_model

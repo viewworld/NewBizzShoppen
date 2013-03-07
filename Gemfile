@@ -22,7 +22,7 @@ gem 'json_pure', '>= 1.4.6'
 gem 'globalize3', "0.3.0"
 gem 'role_model', :require => "role_model"
 gem 'cancan'
-gem 'rails-settings', :require => "settings"
+#gem 'rails-settings', :require => "settings"
 gem 'nested_set', '1.5.4'
 gem 'fastercsv'
 gem 'thor'
