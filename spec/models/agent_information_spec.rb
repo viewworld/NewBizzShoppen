@@ -47,27 +47,27 @@ describe AgentInformation do
 
   context "Initialization" do
     it "should initialize properly with hand given dates" do
-      ai = AgentInformation.new(Date.today+5.days,Date.today+50.days,@call_centre_agent1)
+      ai = AgentInformation.new(Date.today+5.days,Date.today+50.days,@call_centre_agent1, @campaign.currency)
       ai.user.should == @call_centre_agent1 and ai.date_from.should == Date.today+5.days and ai.date_to.should == Date.today+50.days
     end
 
     it "should initialize properly for today" do
-      ai = AgentInformation.today(@call_centre_agent1)
+      ai = AgentInformation.today(@call_centre_agent1, @campaign.currency)
       ai.user.should == @call_centre_agent1 and ai.date_from.should == Date.today and ai.date_to.should == Date.today
     end
 
     it "should initialize properly for week" do
-      ai = AgentInformation.week(@call_centre_agent1)
+      ai = AgentInformation.week(@call_centre_agent1, @campaign.currency)
       ai.user.should == @call_centre_agent1 and ai.date_from.should == Time.now.beginning_of_week.to_date and ai.date_to.should == Time.now.end_of_week.to_date
     end
 
     it "should initialize properly for quarter" do
-      ai = AgentInformation.quarter(@call_centre_agent1)
+      ai = AgentInformation.quarter(@call_centre_agent1, @campaign.currency)
       ai.user.should == @call_centre_agent1 and ai.date_from.should == Time.now.beginning_of_quarter.to_date and ai.date_to.should == Time.now.end_of_quarter.to_date
     end
 
     it "should initialize properly for year" do
-      ai = AgentInformation.year(@call_centre_agent1)
+      ai = AgentInformation.year(@call_centre_agent1, @campaign.currency)
       ai.user.should == @call_centre_agent1 and ai.date_from.should == Time.now.beginning_of_year.to_date and ai.date_to.should == Time.now.end_of_year.to_date
     end
   end
@@ -78,7 +78,7 @@ describe AgentInformation do
       CallResult.make!(:contact => @contact2, :result => @result2, :creator => @call_centre_agent1) # 10
       CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact2, :result => @result2, :creator => @call_centre_agent1, :created_at => Time.now-1.day)
-      AgentInformation.today(@call_centre_agent1).value_created.should == 110.0
+      AgentInformation.today(@call_centre_agent1, @campaign.currency).value_created.should == 110.0
     end
 
     it "should return correct value for week when there are no upgraded to lead results" do
@@ -86,7 +86,7 @@ describe AgentInformation do
       CallResult.make!(:contact => @contact2, :result => @result2, :creator => @call_centre_agent1, :created_at => Time.now.end_of_week+Time.now.end_of_week.utc_offset) # 10
       CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact2, :result => @result2, :creator => @call_centre_agent1, :created_at => Time.now-2.weeks)
-      AgentInformation.week(@call_centre_agent1).value_created.should == 110.0
+      AgentInformation.week(@call_centre_agent1, @campaign.currency).value_created.should == 110.0
     end
 
     it "should return correct value for quarter when there are no upgraded to lead results" do
@@ -94,7 +94,7 @@ describe AgentInformation do
       CallResult.make!(:contact => @contact2, :result => @result2, :creator => @call_centre_agent1, :created_at => Time.now.end_of_quarter+Time.now.end_of_quarter.utc_offset) # 10
       CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact2, :result => @result2, :creator => @call_centre_agent1, :created_at => Time.now-4.months)
-      AgentInformation.quarter(@call_centre_agent1).value_created.should == 110.0
+      AgentInformation.quarter(@call_centre_agent1, @campaign.currency).value_created.should == 110.0
     end
 
     it "should return correct value for year when there are no upgraded to lead results" do
@@ -102,7 +102,7 @@ describe AgentInformation do
       CallResult.make!(:contact => @contact2, :result => @result2, :creator => @call_centre_agent1, :created_at => Time.now.end_of_year+Time.now.end_of_year.utc_offset) # 10
       CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact2, :result => @result2, :creator => @call_centre_agent1, :created_at => Time.now-2.years)
-      AgentInformation.year(@call_centre_agent1).value_created.should == 110.0
+      AgentInformation.year(@call_centre_agent1, @campaign.currency).value_created.should == 110.0
     end
   end
 
@@ -127,37 +127,37 @@ describe AgentInformation do
 
     it "should return correct value for today" do
       CallResult.make!(:contact => @contact1, :result => @result_dyn_value, :creator => @call_centre_agent1, :result_values => result_values_array(@result_dyn_value)) #1*17+2*18 = 53
-      AgentInformation.today(@call_centre_agent1).value_created.should == 53.0
+      AgentInformation.today(@call_centre_agent1, @campaign.currency).value_created.should == 53.0
 
       CallResult.make!(:contact => @contact2, :result => @result1, :creator => @call_centre_agent1) #100
-      AgentInformation.today(@call_centre_agent1).value_created.should == 153.0
+      AgentInformation.today(@call_centre_agent1, @campaign.currency).value_created.should == 153.0
     end
 
     it "should return correct value for week" do
       CallResult.make!(:contact => @contact1, :result => @result_dyn_value, :creator => @call_centre_agent1, :result_values => result_values_array(@result_dyn_value), :created_at => Time.now.end_of_week+Time.now.end_of_week.utc_offset) #1*17+2*18 = 53
       CallResult.make!(:contact => @contact2, :result => @result_dyn_value, :creator => @call_centre_agent1, :result_values => result_values_array(@result_dyn_value), :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset) #1*17+2*18 = 53
-      AgentInformation.week(@call_centre_agent1).value_created.should == 106.0
+      AgentInformation.week(@call_centre_agent1, @campaign.currency).value_created.should == 106.0
 
       CallResult.make!(:contact => @contact3, :result => @result1, :creator => @call_centre_agent1) #100
-      AgentInformation.week(@call_centre_agent1).value_created.should == 206.0
+      AgentInformation.week(@call_centre_agent1, @campaign.currency).value_created.should == 206.0
     end
 
      it "should return correct value for quarter" do
       CallResult.make!(:contact => @contact1, :result => @result_dyn_value, :creator => @call_centre_agent1, :result_values => result_values_array(@result_dyn_value), :created_at => Time.now.beginning_of_quarter+Time.now.beginning_of_quarter.utc_offset) #1*17+2*18 = 53
       CallResult.make!(:contact => @contact2, :result => @result_dyn_value, :creator => @call_centre_agent1, :result_values => result_values_array(@result_dyn_value), :created_at => Time.now.end_of_quarter+Time.now.end_of_quarter.utc_offset) #1*17+2*18 = 53
-      AgentInformation.quarter(@call_centre_agent1).value_created.should == 106.0
+      AgentInformation.quarter(@call_centre_agent1, @campaign.currency).value_created.should == 106.0
 
       CallResult.make!(:contact => @contact3, :result => @result1, :creator => @call_centre_agent1) #100
-      AgentInformation.quarter(@call_centre_agent1).value_created.should == 206.0
+      AgentInformation.quarter(@call_centre_agent1, @campaign.currency).value_created.should == 206.0
      end
 
     it "should return correct value for year" do
       CallResult.make!(:contact => @contact1, :result => @result_dyn_value, :creator => @call_centre_agent1, :result_values => result_values_array(@result_dyn_value), :created_at => Time.now.beginning_of_year+Time.now.beginning_of_year.utc_offset) #1*17+2*18 = 53
       CallResult.make!(:contact => @contact2, :result => @result_dyn_value, :creator => @call_centre_agent1, :result_values => result_values_array(@result_dyn_value), :created_at => Time.now.end_of_year+Time.now.end_of_year.utc_offset) #1*17+2*18 = 53
-      AgentInformation.year(@call_centre_agent1).value_created.should == 106.0
+      AgentInformation.year(@call_centre_agent1, @campaign.currency).value_created.should == 106.0
 
       CallResult.make!(:contact => @contact3, :result => @result1, :creator => @call_centre_agent1) #100
-      AgentInformation.year(@call_centre_agent1).value_created.should == 206.0
+      AgentInformation.year(@call_centre_agent1, @campaign.currency).value_created.should == 206.0
     end
   end
 
@@ -167,7 +167,7 @@ describe AgentInformation do
       CallResult.make!(:contact => @contact4, :result => @result4, :creator => @call_centre_agent1) # 13
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-1.day)
-      AgentInformation.today(@call_centre_agent1).value_created.should == 143.0
+      AgentInformation.today(@call_centre_agent1, @campaign.currency).value_created.should == 143.0
     end
 
     it "should return correct value for week when there are upgraded to lead results" do
@@ -175,7 +175,7 @@ describe AgentInformation do
       CallResult.make!(:contact => @contact4, :result => @result4, :creator => @call_centre_agent1, :created_at => Time.now.end_of_week+Time.now.end_of_week.utc_offset) # 13
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-2.week)
-      AgentInformation.week(@call_centre_agent1).value_created.should == 143.0
+      AgentInformation.week(@call_centre_agent1, @campaign.currency).value_created.should == 143.0
     end
 
     it "should return correct value for quarter when there are upgraded to lead results" do
@@ -183,7 +183,7 @@ describe AgentInformation do
       CallResult.make!(:contact => @contact4, :result => @result4, :creator => @call_centre_agent1, :created_at => Time.now.end_of_quarter+Time.now.end_of_quarter.utc_offset) # 13
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-4.months)
-      AgentInformation.quarter(@call_centre_agent1).value_created.should == 143.0
+      AgentInformation.quarter(@call_centre_agent1, @campaign.currency).value_created.should == 143.0
     end
 
     it "should return correct value for year when there are upgraded to lead results" do
@@ -191,7 +191,7 @@ describe AgentInformation do
       CallResult.make!(:contact => @contact4, :result => @result4, :creator => @call_centre_agent1, :created_at => Time.now.end_of_year+Time.now.end_of_year.utc_offset) # 13
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-2.years)
-      AgentInformation.year(@call_centre_agent1).value_created.should == 143.0
+      AgentInformation.year(@call_centre_agent1, @campaign.currency).value_created.should == 143.0
     end
   end
 
@@ -205,7 +205,7 @@ describe AgentInformation do
       CallResult.make!(:contact => @contact4, :result => @result4, :creator => @call_centre_agent1) # 13
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-1.day)
-      AgentInformation.today(@call_centre_agent1).value_created.should == 253.0
+      AgentInformation.today(@call_centre_agent1, @campaign.currency).value_created.should == 253.0
     end
 
     it "should return correct value for week when there are both upgraded and not upgraded to lead results" do
@@ -217,7 +217,7 @@ describe AgentInformation do
       CallResult.make!(:contact => @contact4, :result => @result4, :creator => @call_centre_agent1, :created_at => Time.now.end_of_week+Time.now.end_of_week.utc_offset) # 13
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-2.week)
-      AgentInformation.week(@call_centre_agent1).value_created.should == 253.0
+      AgentInformation.week(@call_centre_agent1, @campaign.currency).value_created.should == 253.0
     end
 
     it "should return correct value for quarter when there are both upgraded and not upgraded to lead results" do
@@ -229,7 +229,7 @@ describe AgentInformation do
       CallResult.make!(:contact => @contact4, :result => @result4, :creator => @call_centre_agent1, :created_at => Time.now.end_of_quarter+Time.now.end_of_quarter.utc_offset) # 13
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-4.months)
-      AgentInformation.quarter(@call_centre_agent1).value_created.should == 253.0
+      AgentInformation.quarter(@call_centre_agent1, @campaign.currency).value_created.should == 253.0
     end
 
     it "should return correct value for year when there are both upgraded and not upgraded to lead results" do
@@ -241,7 +241,7 @@ describe AgentInformation do
       CallResult.make!(:contact => @contact4, :result => @result4, :creator => @call_centre_agent1, :created_at => Time.now.end_of_year+Time.now.end_of_year.utc_offset) # 13
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-2.years)
-      AgentInformation.year(@call_centre_agent1).value_created.should == 253.0
+      AgentInformation.year(@call_centre_agent1, @campaign.currency).value_created.should == 253.0
     end
   end
 
@@ -252,7 +252,7 @@ describe AgentInformation do
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign,
                            :start_time => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset,
                            :end_time => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset+1.hour)
-      ai = AgentInformation.today(@call_centre_agent1)
+      ai = AgentInformation.today(@call_centre_agent1, @campaign.currency)
       ai.time.should eql(1.0)
     end
 
@@ -265,9 +265,9 @@ describe AgentInformation do
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign,
                            :start_time => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset,
                            :end_time => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset+15.minutes)
-      ai = AgentInformation.today(@call_centre_agent1)
+      ai = AgentInformation.today(@call_centre_agent1, @campaign.currency)
       ai.time.should eql(0.25)
-      ai = AgentInformation.week(@call_centre_agent1)
+      ai = AgentInformation.week(@call_centre_agent1, @campaign.currency)
       ai.time.should eql(2.25)
     end
 
@@ -283,11 +283,11 @@ describe AgentInformation do
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign,
                            :start_time => Time.now-2.weeks,
                            :end_time => Time.now-2.weeks+30.minutes)
-      ai = AgentInformation.today(@call_centre_agent1)
+      ai = AgentInformation.today(@call_centre_agent1, @campaign.currency)
       ai.time.should eql(0.25)
-      ai = AgentInformation.week(@call_centre_agent1)
+      ai = AgentInformation.week(@call_centre_agent1, @campaign.currency)
       ai.time.should eql(2.25)
-      ai = AgentInformation.last_four_weeks(@call_centre_agent1)
+      ai = AgentInformation.last_four_weeks(@call_centre_agent1, @campaign.currency)
       ai.time.should eql(2.75)
     end
 
@@ -314,11 +314,11 @@ describe AgentInformation do
                            :start_time => Time.now-2.weeks,
                            :end_time => Time.now-2.weeks+30.minutes)
 
-      ai = AgentInformation.today(@call_centre_agent1)
+      ai = AgentInformation.today(@call_centre_agent1, @campaign.currency)
       ai.time.should eql(0.25)
-      ai = AgentInformation.week(@call_centre_agent1)
+      ai = AgentInformation.week(@call_centre_agent1, @campaign.currency)
       ai.time.should eql(2.25)
-      ai = AgentInformation.last_four_weeks(@call_centre_agent1)
+      ai = AgentInformation.last_four_weeks(@call_centre_agent1, @campaign.currency)
       ai.time.should eql(2.75)
     end
   end
