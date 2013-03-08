@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
       if Rails.env.staging?
         redirect_to "http://#{current_user.domain.name}/login_keys/?key=#{key}"
       else
-        redirect_to "http://www.#{current_user.domain.name_for_env}/login_keys/?key=#{key}"
+        redirect_to "http://#{current_user.domain.name_for_env}/login_keys/?key=#{key}"
       end
     end
   end
