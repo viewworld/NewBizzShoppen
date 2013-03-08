@@ -5,7 +5,8 @@ worker_processes 4
 
 working_directory "/srv/nbs/production/current"
 
-listen "/srv/nbs/production/shared/pids/production.socket", :backlog => 64
+#listen "/srv/nbs/production/shared/pids/production.socket", :backlog => 64
+listen 30000, :backlog => 64
 
 timeout 30
 
