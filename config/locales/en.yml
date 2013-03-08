@@ -2817,6 +2817,7 @@ en:
         header_graph: "Performance graph"
         agent_performance:
           time_range: "Select time range"
+          select_currency: "Select currency"
           table:
             campaign: "Campaign"
             payout: "PayOut"

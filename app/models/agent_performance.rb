@@ -41,6 +41,18 @@ class AgentPerformance
     flot_days
   end
 
+  def has_any_data?
+    time.nonzero? or payout.nonzero?
+  end
+
+  def show_results?(active_results)
+    if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(active_results)
+      has_any_data?
+    else
+      true
+    end
+  end
+
   private
 
   def jitter

@@ -16,7 +16,17 @@
                 <ol class="align_inputs">
                   <%= form.input :date_from, :as => :weekpicker, :input_html => {:id => 'search_date_from'}, :wrapper_html => {:class => "date"} %>
                   <%= form.input :date_to, :as => :weekpicker, :input_html => {:id => 'search_date_to'}, :wrapper_html => {:class => "date"} %>
-                  <%= form.input :currency_id, :collection => Currency.active.map{|c| [c.name, c.id]}.sort, :include_blank => false %>
+                </ol>
+              </fieldset>
+              <fieldset class="inputs labels_ta_r">
+
+                <ol class="align_inputs">
+                  <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.all"), "$('#search_date_from').val('#{Date.new(2010)}');$('#search_date_to').val('#{Date.today}');" %></span>
+                  <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.this_year"), "$('#search_date_from').val('#{Date.today.beginning_of_year}');$('#search_date_to').val('#{Date.today.end_of_year}');" %></span>
+                  <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.this_quarter"), "$('#search_date_from').val('#{Date.today.beginning_of_quarter}');$('#search_date_to').val('#{Date.today.end_of_quarter}');" %></span>
+                  <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.this_month"), "$('#search_date_from').val('#{Date.today.beginning_of_month}');$('#search_date_to').val('#{Date.today.end_of_month}');" %></span>
+                  <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.this_week"), "$('#search_date_from').val('#{Date.today.beginning_of_week}');$('#search_date_to').val('#{Date.today.end_of_week}');" %></span>
+                  <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.today"), "$('#search_date_from').val('#{Date.today}');$('#search_date_to').val('#{Date.today}');" %></span>
                 </ol>
               </fieldset>
 
@@ -24,16 +34,12 @@
             </div>
 
             <div class="column_right">
-              <h3><%= t("agent_home.show.view.agent_performance.time_range") %></h3>
+              <h3><%= t("agent_home.show.view.agent_performance.select_currency") %></h3>
 
               <fieldset class="inputs labels_ta_r">
                 <ol class="align_inputs">
-                    <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.all"), "$('#search_date_from').val('#{Date.new(2010)}');$('#search_date_to').val('#{Date.today}');" %></span>
-                    <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.this_year"), "$('#search_date_from').val('#{Date.today.beginning_of_year}');$('#search_date_to').val('#{Date.today.end_of_year}');" %></span>
-                    <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.this_quarter"), "$('#search_date_from').val('#{Date.today.beginning_of_quarter}');$('#search_date_to').val('#{Date.today.end_of_quarter}');" %></span>
-                    <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.this_month"), "$('#search_date_from').val('#{Date.today.beginning_of_month}');$('#search_date_to').val('#{Date.today.end_of_month}');" %></span>
-                    <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.this_week"), "$('#search_date_from').val('#{Date.today.beginning_of_week}');$('#search_date_to').val('#{Date.today.end_of_week}');" %></span>
-                    <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.today"), "$('#search_date_from').val('#{Date.today}');$('#search_date_to').val('#{Date.today}');" %></span>
+                  <%= form.input :currency_id, :collection => Currency.active.map{|c| [c.name, c.id]}.sort, :include_blank => false %>
+                  <%= form.input :active_results, :as => :boolean %>
                 </ol>
               </fieldset>
 
@@ -111,14 +117,17 @@
   <hl pdd="15"></hl>
 
     <% @search.all_agents.each do |agent| %>
-      <% if @performance_campaigns = Campaign.active_between(@search.date_from, @search.date_to).available_for_user(agent) and @performance_campaigns.count > 0 %>
-         <div id="agent_performance">
+      <% if @performance_campaigns = Campaign.active_between(@search.date_from, @search.date_to).available_for_user(agent) and
+        @agent_performance_all_campaigns = AgentPerformance.new(@search.date_from, @search.date_to, agent, @performance_campaigns, @search.currency_id) and
+        @performance_campaigns.count > 0 and @agent_performance_all_campaigns.show_results?(@search.active_results)  %>
+
+        <div class="agent_performance">
         <header>
           <param:content>
             <%= agent.screen_name %>
           </param:content>
         </header>
-        <div class="column_2to3 fltl" style="padding: 0 15px 0 0" id="agent_performance_table">
+        <div class="column_2to3 fltl" style="padding: 0 15px 0 0" class="agent_performance_table">
           <table class="generic" style="margin: 0px">
             <thead>
             <tr>
@@ -142,13 +151,12 @@
                   <td></td>
                 </tr>
             <% end %>
-            <% agent_performance = AgentPerformance.new(@search.date_from, @search.date_to, agent, @performance_campaigns, @search.currency_id) %>
             <tr style="font-weight: bold;">
               <td></td>
               <td></td>
-              <td><%= as_currency(agent_performance.payout, agent_performance.currency, 2) %></td>
-              <td><%= agent_performance.time.to_f.as_hours_and_minutes %></td>
-              <td><%= as_currency(agent_performance.rate, agent_performance.currency, 2) %></td>
+              <td><%= as_currency(@agent_performance_all_campaigns.payout, @agent_performance_all_campaigns.currency, 2) %></td>
+              <td><%= @agent_performance_all_campaigns.time.to_f.as_hours_and_minutes %></td>
+              <td><%= as_currency(@agent_performance_all_campaigns.rate, @agent_performance_all_campaigns.currency, 2) %></td>
               <td></td>
             </tr>
             </tbody>
@@ -160,7 +168,7 @@
           </table>
         </div>
 
-        <div class="column_1to3 fltl" id="agent_performance_graph">
+        <div class="column_1to3 fltl" class="agent_performance_graph">
           <frm title="#{t('agent_home.show.view.header_graph')}" c="no_marg">
             <param:content>
               <div style="padding:10px">
@@ -171,16 +179,14 @@
         </div>
         <clb/>
       </div>
-  <% end %>
 
-    <% if @performance_campaigns.count > 0 %>
     <script>
         $(function () {
-            <% agent_performance = AgentPerformance.new(@search.date_from, @search.date_to, agent, @performance_campaigns, @search.currency_id) %>
-            var performance_data = <%= agent_performance.flot_chart.to_json.html_safe %>;
+            <% @agent_performance_all_campaigns = AgentPerformance.new(@search.date_from, @search.date_to, agent, @performance_campaigns, @search.currency_id) %>
+            var performance_data = <%= @agent_performance_all_campaigns.flot_chart.to_json.html_safe %>;
 
             function euroFormatter(v, axis) {
-                return v.toFixed(axis.tickDecimals) +" <%= agent_performance.currency.symbol.html_safe %>";
+                return v.toFixed(axis.tickDecimals) +" <%= @agent_performance_all_campaigns.currency.symbol.html_safe %>";
             }
 
             function doPlot(position) {

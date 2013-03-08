@@ -1,16 +1,17 @@
 class AgentPerformance::Search
 
-  attr_accessor :date_from, :date_to, :agents, :call_centres, :currency_id
+  attr_accessor :date_from, :date_to, :agents, :call_centres, :currency_id, :active_results
 
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
   DEFAULT_OPTIONS = {
-      :date_from         => Date.today,
-      :date_to           => Date.today,
-      :agents            => [],
-      :call_centres      => [],
-      :currency_id       => nil
+      :date_from        => Date.today,
+      :date_to          => Date.today,
+      :agents           => [],
+      :call_centres     => [],
+      :currency_id      => nil,
+      :active_results   => true
   }
 
   def persisted?
