@@ -19,9 +19,15 @@
 
 <script type="text/javascript">
  <% if agent_work_screen %>
-    $("#commit_create_result").click(function(){$(this).parents("form").callRemote();});
+    $("#commit_create_result").click(function(){
+        $(this).unbind('click');
+        $(this).parents("form").callRemote();
+    });
  <% else %>
-    $("#commit_create_result").click(function(){$(this).parents("form").submit();});
+    $("#commit_create_result").click(function(){
+        $(this).unbind('click');
+        $(this).parents("form").submit();
+    });
  <% end %>
 
  function serialize_materials_array_onsubmit(){
