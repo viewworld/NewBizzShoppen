@@ -99,4 +99,5 @@ gem 'capistrano'
 gem 'capistrano-ext', '>= 1.2.1'
 gem 'rvm-capistrano'
 gem 'rake', '~> 0.8.7'
+gem 'daemons'
 

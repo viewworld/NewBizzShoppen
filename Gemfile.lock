@@ -354,6 +354,7 @@ DEPENDENCIES
   cucumber-rails (= 0.3.2)
   cucumber_fm-core (= 0.1)
   culerity
+  daemons
   database_cleaner
   delayed_job (>= 3.0.0)
   delayed_job_active_record

@@ -9,6 +9,9 @@ ssh_options[:forward_agent] = true
 set(:rvm_ruby_string) {"ree@nbs"}
 require 'rvm/capistrano'
 
+require "delayed/recipes"
+set :delayed_job_args, "-n 2"
+
 set :stages, %w(staging production testing)
 set :default_stage, "staging"
 
@@ -46,6 +49,10 @@ end
 
 after "deploy:finalize_update", "prepare_database"
 after "deploy:finalize_update", "deploy:cleanup"
+
+after "deploy:stop",    "delayed_job:stop"
+after "deploy:start",   "delayed_job:start"
+after "deploy:restart", "delayed_job:restart"
 
 task :prepare_database, :roles => :app do
   run "cp #{app_path}/etc/database.yml #{release_path}/config/database.yml"
