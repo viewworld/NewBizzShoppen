@@ -66,4 +66,73 @@ describe Campaign do
     }.should change(Notification, :count).by(1)
     end
   end
+
+  context "remove agent from campaign" do
+    before(:each) do
+      @call_centre = User::CallCentre.make!
+      @call_centre_agent1 = User::CallCentreAgent.make!(:parent_id => @call_centre.id)
+      @call_centre_agent2 = User::CallCentreAgent.make!(:parent_id => @call_centre.id)
+      [@call_centre, @call_centre_agent1, @call_centre_agent2].each(&:confirm!)
+
+      @campaign = Campaign.make!(:creator => @call_centre)
+      @campaign.users = [@call_centre, @call_centre_agent1, @call_centre_agent2]
+
+      @final_result = Result.make!(:final, :name => "Final Result")
+
+      @campaign.results = [@final_result]
+
+      [@final_result].each do |result|
+        result.campaigns_results.each { |cr| cr.update_attributes(:is_reported => true, :is_success => true) }
+      end
+
+      @contact1 = Contact.make!(:campaign => @campaign)
+      @contact2 = Contact.make!(:campaign => @campaign)
+      @contact3 = Contact.make!(:campaign => @campaign)
+      @contact4 = Contact.make!(:campaign => @campaign)
+
+      #CallResult.make!(:contact => @contact1, :result => @result1, :creator => @call_centre_agent1)
+      #CallResult.make!(:contact => @contact2, :result => @result2, :creator => @call_centre_agent1)
+      #CallResult.make!(:contact => @contact3, :result => @result1, :creator => @call_centre_agent2)
+      #CallResult.make!(:contact => @contact4, :result => @result2, :creator => @call_centre_agent2)
+
+      #[@call_centre_agent1, @call_centre_agent2].each do |user|
+      #  (@campaign.start_date..@campaign.end_date).each do |d|
+      #    UserSessionLog.create(:start_time => Time.parse("#{d.to_s} 9:00"), :end_time => Time.parse("#{d.to_s} 17:00"),
+      #                          :user_id => user.id, :campaign_id => @campaign.id, :log_type => 1, :skip_other_logs => true)
+      #  end
+      #end
+      @campaign.reload
+    end
+
+    it "should return contacts to the pool when agent is removed from campaign" do
+      @contact1.assign_agent @call_centre_agent1
+      @contact1.agent_id.should == @call_centre_agent1.id
+      @campaign.assign [@call_centre_agent2.id]
+
+      @contact1.reload
+      @contact1.agent_id.should be_nil
+    end
+
+    it "should reassign contacts with call back results to other agents" do
+      @contact1.assign_agent @call_centre_agent1
+      CallResult.make!(:call_back, :contact => @contact1, :creator => @call_centre_agent1)
+      @campaign.assign [@call_centre_agent2.id]
+
+      @contact1.reload
+      @contact1.agent_id.should == @call_centre_agent2.id
+    end
+
+    it "should remove notifications when contact is reassigned" do
+      @contact1.assign_agent @call_centre_agent1
+      CallResult.make!(:call_back, :contact => @contact1, :creator => @call_centre_agent1)
+      @call_centre_agent1.notifications.count.should == 1
+      @call_centre_agent2.notifications.count.should == 0
+
+      @campaign.assign [@call_centre_agent2.id]
+      @contact1.reload
+      @call_centre_agent1.notifications.count.should == 0
+      @call_centre_agent2.notifications.count.should == 1
+    end
+
+  end
 end

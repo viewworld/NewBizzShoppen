@@ -236,4 +236,26 @@ class Contact < AbstractLead
     new_contact
   end
 
+  def unassign
+    pending ? reassign : return_to_pool
+  end
+
+  def return_to_pool
+    update_attribute(:agent_id, nil)
+  end
+
+  def reassign
+    if available_agent = campaign.users.with_agents_without_call_centres.
+              joins("LEFT JOIN leads ON leads.agent_id = users.id").
+              select("users.*, COUNT(leads.*) as contacts").
+              group("users.id").
+              reorder("contacts ASC").first
+      assign_agent available_agent
+      notifications.update_all(
+          :notificable_type => available_agent.with_role.class.name,
+          :notificable_id   => available_agent.id
+      )
+    end
+  end
+
 end

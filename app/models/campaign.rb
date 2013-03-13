@@ -135,7 +135,7 @@ class Campaign < ActiveRecord::Base
       contacts
     else
       contacts.where("agent_id NOT IN (?)", user_ids)
-    end.each { |c| c.update_attribute(:agent_id, nil) }
+    end.each(&:unassign)
   end
 
   def assign(ids)

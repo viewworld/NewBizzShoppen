@@ -63,7 +63,7 @@ class Nbs < Thor
     [
         {:name => 'AUD', :symbol => 'A &#36;', :format => '%u%n', :active => false},
         {:name => 'CAD', :symbol => 'C &#36;', :format => '%u%n', :active => false},
-        {:name => 'EUR', :symbol => '&euro;', :format => '%u%n', :active => true},
+        {:name => 'EUR', :symbol => '&euro;', :format => '%u%n', :active => true, :exchange_rate => 1},
         {:name => 'GBP', :symbol => '&pound;', :format => '%u%n', :active => false},
         {:name => 'JPY', :symbol => '&yen;', :format => '%u%n', :active => false},
         {:name => 'USD', :symbol => '&#36;', :format => '%u%n', :active => false},

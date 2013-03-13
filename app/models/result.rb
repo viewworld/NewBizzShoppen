@@ -1,7 +1,5 @@
 class Result < ActiveRecord::Base
 
-  PENDING_RESULTS = [:call_back, :not_interested_now]
-
   has_many :call_results
   has_many :contacts, :through => :call_results
   has_many :campaigns_results, :foreign_key => "result_id"
