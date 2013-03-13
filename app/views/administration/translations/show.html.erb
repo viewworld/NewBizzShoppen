@@ -46,7 +46,7 @@
     <thead>
       <th><%= t("administration.translations.show.view.key") %></th>
         <% @languages.each_with_index do |lang,i| %>
-          <th><%= select_tag "temp_lang_#{i+1}", options_for_select(Locale.all.map{|l| [l.language,l.code]}.sort, lang.code), :onchange => "fill_languages_and_submit()" %></th>
+          <th><%= select_tag "temp_lang_#{i+1}", options_for_select(Locale.all.map{|l| [l.language.to_s, l.code]}.sort, lang.code), :onchange => "fill_languages_and_submit()" %></th>
         <% end %>
     </thead>
     <tbody>

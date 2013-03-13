@@ -15,8 +15,8 @@ class Suppliers::LeadRequestsController < Suppliers::AdvancedSupplierController
     params[:search]||={}
     params[:search][:with_owner] = current_user.id
     params[:search][:with_leads] = "1"
-    @countries = Country.with_lead_request_owner(current_user).map{|c| [c.name, c.id]}.sort
-    @categories = LeadCategory.with_lead_request_owner(current_user).map{|c| [c.name, c.id]}.sort
+    @countries = Country.with_lead_request_owner(current_user).map{|c| [c.name.to_s, c.id]}.sort
+    @categories = LeadCategory.with_lead_request_owner(current_user).map{|c| [c.name.to_s, c.id]}.sort
     @requestees = User.requestees_for_lead_request_owner(current_user).uniq.map{|r| [r.full_name, r.id]}.sort
     @search = LeadRequest.scoped_search(params[:search])
     @lead_requests = @search.all

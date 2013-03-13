@@ -89,7 +89,7 @@
                 </li>
                 <li class="select">
                   <%=  label_tag :currency_id, t("campaign_reports.index.currency") %>
-                  <%= select_tag :currency_id, options_for_select(Currency.active.map{|c| [c.name, c.id]}.sort, @search.currency_id) %>
+                  <%= select_tag :currency_id, options_for_select(Currency.active.map{|c| [c.name.to_s, c.id]}.sort, @search.currency_id) %>
                 </li>
                 <li class="commit pdd_10 no_pdd_l">
                   <ibt c="bt_green" icon="magnify">

@@ -21,7 +21,7 @@
     <ol class="align_inputs">
       <li class="select">
         <%= label_tag :optional_templates %>
-        <%= select_tag :optional_templates, options_for_select(available_templates_list(lead).map { |lt| [lt.name, lt.id] }.sort),
+        <%= select_tag :optional_templates, options_for_select(available_templates_list(lead).map { |lt| [lt.name.to_s, lt.id] }.sort),
                        {:id => "optional_templates_picker", :include_blank => true, :onchange => "add_template()"} %>
       </li>
     </ol>

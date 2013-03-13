@@ -62,7 +62,7 @@
                 <div class="grid_210 fltl">&nbsp;</div>
                 <div class="grid_240 fltl">
                   <h3><%= t("agent_timesheets.new.campaigns_selection.all_campaigns") %></h3>
-                  <%= select_tag "all_campaigns", options_for_select((current_user.admin? ? Campaign : Campaign.available_for_user(current_user)).reorder("name ASC").map { |c| [c.name, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                  <%= select_tag "all_campaigns", options_for_select((current_user.admin? ? Campaign : Campaign.available_for_user(current_user)).reorder("name ASC").map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
                 </div>
 
                 <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
@@ -73,7 +73,7 @@
 
                 <div class="grid_240 fltl">
                   <h3><%= t("agent_timesheets.new.campaigns_selection.selected_campaigns") %></h3>
-                  <%= select_tag "search[campaigns][]", options_for_select(@search.campaigns.map { |c| [c.name, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                  <%= select_tag "search[campaigns][]", options_for_select(@search.campaigns.map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
                 </div>
                 <clb/>
               </div>

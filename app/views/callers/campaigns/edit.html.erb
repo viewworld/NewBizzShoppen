@@ -11,7 +11,7 @@
           <%= bt_link_to nil, t("campaigns.edit.results"), callers_campaign_path(@campaign), :class => "fltr" %>
           <%= bt_link_to nil, t("campaigns.edit.agent_assignment_button"), callers_campaign_campaigns_users_path(@campaign), :class => "fltr" %>
           <%= bt_link_to nil,  t("campaigns.edit.edit_template"),"javascript:void(0)", :onclick => "edit_template(#{@campaign.id})", :class => "fltr" %>
-          <%= select_tag :email_template_id, options_for_select(@campaign.cloned_email_templates.map { |t| [t.name, t.id] }.sort), { :class => "fltr" } %>
+          <%= select_tag :email_template_id, options_for_select(@campaign.cloned_email_templates.map { |t| [t.name.to_s, t.id] }.sort), { :class => "fltr" } %>
         </param:header>
         <param:content>
           <%= render :partial => '/callers/campaigns/form', :locals => {:form => form, :campaign => @campaign} %>
@@ -103,14 +103,14 @@
           <% if (@newsletter_lists = current_user.admin? ? NewsletterList.all : NewsletterList.created_or_owned_by(current_user)) and @newsletter_lists.present? %>
           <%= form_tag batch_add_to_newsletter_list_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_add_to_newsletter_list_form" do %>
               <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_add_to_newsletter_list" %>
-              <%= select_tag "newsletter_list_id", options_for_select((@newsletter_lists).map { |nl| [nl.name, nl.id] }.sort) %>
+              <%= select_tag "newsletter_list_id", options_for_select((@newsletter_lists).map { |nl| [nl.name.to_s, nl.id] }.sort) %>
               <%= bt_link_to :plus, t("campaigns.edit.button_bulk_add_to_newsletter_list_link"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_add_to_newsletter_list');$('#batch_add_to_newsletter_list_form').submit();" %>
           <% end %>
           <% end %>
 
           <% if target_campaigns = (current_user.admin? ? Campaign.all.except(@campaign) : Campaign.available_for_user(current_user)).except(@campaign) %>
               <%= form_tag batch_move_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_move_form" do %>
-                  <%= select_tag "target_campaign_id", options_for_select(target_campaigns.map { |u| [u.name, u.id] }.sort) %>
+                  <%= select_tag "target_campaign_id", options_for_select(target_campaigns.map { |u| [u.name.to_s, u.id] }.sort) %>
                   <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_move_form" %>
                   <%= hidden_field_tag "action_type", nil, :id => "hf_batch_move_form_action_type" %>
                   <%= bt_link_to :arrow_right, t("campaigns.edit.button_move_selected_contacts"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_move_form');$('#hf_batch_move_form_action_type').val('move');$('#batch_move_form').submit();" %>

@@ -61,7 +61,7 @@ module LeadsHelper
   end
 
   def categories_for_select
-    Category.roots.map{|c| [c.name,c.id]}.sort
+    Category.roots.map{|c| [c.name.to_s, c.id]}.sort
   end
 
   def statuses_for_select

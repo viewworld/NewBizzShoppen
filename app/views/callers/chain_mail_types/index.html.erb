@@ -47,7 +47,7 @@
         <% if params[:campaign_id] %>
           <%= form_tag new_callers_campaign_chain_mail_type_path(params[:campaign_id]), :method => :get, :id => "form_new_chain_mail_type" do %>
               <span style="position:absolute;top: 1px; right: 310px;">
-                <%= select_tag :result_id, options_for_select(@campaign.results.map { |r| [r.name, r.id] }.sort) %>
+                <%= select_tag :result_id, options_for_select(@campaign.results.map { |r| [r.name.to_s, r.id] }.sort) %>
               </span>
                 <li>
                   <div class="hidden">

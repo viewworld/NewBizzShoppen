@@ -51,6 +51,6 @@ class Members::LeadTemplatesController < Members::MemberController
 
     @search = LeadTemplate.scoped_search(params[:search])
     @lead_templates = @search.paginate(:page => params[:page], :per_page => LeadTemplate.per_page)
-    @categories = LeadCategory.without_locked.with_agent_unique(current_user).map { |c| [c.name, c.id] }.sort
+    @categories = LeadCategory.without_locked.with_agent_unique(current_user).map { |c| [c.name.to_s, c.id] }.sort
   end
 end

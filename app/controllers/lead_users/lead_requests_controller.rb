@@ -14,8 +14,8 @@ class LeadUsers::LeadRequestsController < LeadUsers::LeadUserController
     params[:search][:with_requested_by] = current_user.id
     params[:search][:with_leads] = "1"
     @lead_requests = LeadRequest.with_requested_by(current_user.id)
-    @countries = Country.with_lead_request_requested_by(current_user).map{|c| [c.name, c.id]}.sort
-    @categories = LeadCategory.with_lead_request_requested_by(current_user).map{|c| [c.name, c.id]}.sort
+    @countries = Country.with_lead_request_requested_by(current_user).map{|c| [c.name.to_s, c.id]}.sort
+    @categories = LeadCategory.with_lead_request_requested_by(current_user).map{|c| [c.name.to_s, c.id]}.sort
     @search = LeadRequest.scoped_search(params[:search])
     @lead_requests = @search.order("created_at DESC").all
   end

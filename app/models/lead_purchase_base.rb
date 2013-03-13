@@ -66,6 +66,6 @@ class LeadPurchaseBase < ActiveRecord::Base
   public
 
   def self.statuses_for_select
-    STATUSES.to_enum(:each_with_index).map { |code, i| [I18n.t("lead_purchases.statuses.#{code}"), i] }.sort
+    STATUSES.to_enum(:each_with_index).map { |code, i| [I18n.t("lead_purchases.statuses.#{code}").to_s, i] }.sort
   end
 end

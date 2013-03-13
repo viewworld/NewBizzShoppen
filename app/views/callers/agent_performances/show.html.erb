@@ -38,7 +38,7 @@
 
               <fieldset class="inputs labels_ta_r">
                 <ol class="align_inputs">
-                  <%= form.input :currency_id, :collection => Currency.active.map{|c| [c.name, c.id]}.sort, :include_blank => false %>
+                  <%= form.input :currency_id, :collection => Currency.active.map{|c| [c.name.to_s, c.id]}.sort, :include_blank => false %>
                   <%= form.input :active_results, :as => :boolean %>
                 </ol>
               </fieldset>

@@ -31,7 +31,7 @@
         </li>
         <li class="select">
           <%= f.label :chain_mail_type_id %>
-          <%= f.select :chain_mail_type_id, options_for_select(campaign.chain_mail_types.with_active.with_result(f.object.result).map{|cmt| [cmt.name,cmt.id]}.sort, f.object.chain_mail_type_id), :include_blank => true %>
+          <%= f.select :chain_mail_type_id, options_for_select(campaign.chain_mail_types.with_active.with_result(f.object.result).map{|cmt| [cmt.name.to_s, cmt.id]}.sort, f.object.chain_mail_type_id), :include_blank => true %>
         </li>
       </ol>
     </fieldset>

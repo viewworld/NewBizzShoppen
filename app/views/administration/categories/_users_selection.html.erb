@@ -13,7 +13,7 @@
 
     <div class="grid_240 fltl">
       <h3><%= t("administration.categories.form.#{translation_prefix}_without_access") %></h3>
-      <%= select_tag "all_#{users_type}", options_for_select((users_type == "customers" ? (User.with_suppliers - @category.customers) : User.with_agents - @category.agents).map { |u| [unique_category_select_name(u), u.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+      <%= select_tag "all_#{users_type}", options_for_select((users_type == "customers" ? (User.with_suppliers - @category.customers) : User.with_agents - @category.agents).map { |u| [unique_category_select_name(u).to_s, u.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
     </div>
 
     <div class="grid_160 fltl" style="margin-right: 10px;,margin-top:30px;">

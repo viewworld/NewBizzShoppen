@@ -80,7 +80,7 @@
                   </li>
                   <li class="select">
                     <%= label_tag :currency_id, t("campaigns.show.search.currency_id") %>
-                    <%= select_tag :currency_id, options_for_select(Currency.active.map{|c| [c.name, c.id]}.sort, params[:currency_id]) %>
+                    <%= select_tag :currency_id, options_for_select(Currency.active.map{|c| [c.name.to_s, c.id]}.sort, params[:currency_id]) %>
                   </li>
                   <li>
                     <p class="pdd_10">
