@@ -141,7 +141,9 @@ class ApplicationController < ActionController::Base
     role = session[:logout_user_role].to_s
     session[:logout_user_role] = nil
 
-    if ["supplier", "lead_supplier", "category_supplier", "lead_user"].include?(role)
+    if role == "category_supplier" and @home_category
+      category_home_page_path(@home_category.cached_slug)
+    elsif ["supplier", "lead_supplier", "category_supplier", "lead_user"].include?(role)
       supplier_home_path
     elsif ["agent", "call_centre", "call_centre_agent"].include?(role)
       agent_home_path
