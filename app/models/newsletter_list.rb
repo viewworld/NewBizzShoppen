@@ -166,4 +166,8 @@ class NewsletterList < ActiveRecord::Base
       self.tag_group_items = nil
     end
   end
+
+  def to_s
+    "#{name} (#{id})"
+  end
 end
