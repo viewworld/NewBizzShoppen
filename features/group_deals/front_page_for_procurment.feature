@@ -323,7 +323,7 @@ Feature: Front page for procurment
   @m22 @_requested @_done @_tested @ao
   Scenario: I should see "Short featured description" for the secondary featured deals
     Given a deal named "PrimaryDeal" exists within category "Electronics deals"
-    And a deal named "PrimaryDeal" exists with attributes "featured_description:FeaturedDescriptionText,published:1,group_deal:0,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And a deal named "PrimaryDeal" exists with attributes "published:1,group_deal:0,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "PrimaryDeal" is a primary featured deal
     And deal named "PrimaryDeal" is "1" primary featured deal
     And deal named "PrimaryDeal" is "2" primary featured deal

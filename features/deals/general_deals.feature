@@ -242,20 +242,9 @@ Feature: General deals
     And I should see CSS path "span#cke_deal_fine_print_editor"
     And I should see CSS path "span#cke_deal_company_description_editor"
 
-  #8328
-  @m22 @_requested @selenium @_done @_tested @ao
+  #8328 #14071
+  @m22 @_requested @selenium @_done @_tested @ao @_deprecated
   Scenario: I can enter "Featured description" for each deal (rich text + images)
-    Given I am not sign in
-    And I make sure current locale is "da"
-    Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
-    And user "buyer@nbs.com" has deal maker role enabled
-    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
-    And I am on the homepage
-    And I sign in as buyer@nbs.com with password secret
-    And I follow translated "layout.main_menu.lead_supplier.my_deals"
-    And I click hidden link by url regex "/suppliers\/deals\/\d+\/edit/"
-    And I wait 1 second
-    Then I should see CSS path "span#cke_deal_featured_description_editor"
 
   #8328
   @m22 @_requested @selenium @_done @_tested @ao
