@@ -329,12 +329,22 @@ class CallResult < ActiveRecord::Base
     template.preview = true
 
     TemplateMailer.new(contact_email_address, :blank_template, Country.get_country_from_locale,
-                                       {:subject_content => template.subject, :body_content => template.render({:contact_company_name => contact.company_name, :contact_name => contact.contact_name, :agent_name => creator.full_name, :agent_phone_number => creator.phone}),
-                                        :bcc_recipients => template.bcc, :cc_recipients => template.cc,
-                                        :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id,
-                                        :related_id => self.id, :related_type => self.class.to_s,
-                                        :email_template_id => template.id},
-                                        assets_to_path_names(send_material_result_value.materials)).deliver!
+                                       {
+                                           :subject_content => template.subject,
+                                           :body_content => template.render({:contact_company_name => contact.company_name,
+                                                                             :contact_name => contact.contact_name,
+                                                                             :agent_name => creator.full_name,
+                                                                             :agent_phone_number => creator.phone}),
+                                           :bcc_recipients => template.bcc,
+                                           :cc_recipients => template.cc,
+                                           :sender_id => current_user ? current_user.id : nil,
+                                           :email_template_uniq_id => template.uniq_id,
+                                           :related_id => self.id,
+                                           :related_type => self.class.to_s,
+                                           :email_template_id => template.id,
+                                           :reply_to => template.custom_reply_to ? creator.email : nil
+                                       },
+                                       assets_to_path_names(send_material_result_value.materials)).deliver!
   end
 
   def deliver_email_for_upgraded_user(user, password)
@@ -349,12 +359,19 @@ class CallResult < ActiveRecord::Base
     end
 
     TemplateMailer.new(contact_email_address, :blank_template, Country.get_country_from_locale,
-                                       {:subject_content => template.subject, :body_content => body_content,
-                                        :bcc_recipients => template.bcc, :cc_recipients => template.cc,
-                                        :sender_id => current_user ? current_user.id : nil, :email_template_uniq_id => template.uniq_id,
-                                        :related_id => self.id, :related_type => self.class.to_s,
-                                        :email_template_id => template.id},
-                                        assets_to_path_names(send_material_result_value.materials)).deliver!
+                                       {
+                                           :subject_content => template.subject,
+                                           :body_content => body_content,
+                                           :bcc_recipients => template.bcc,
+                                           :cc_recipients => template.cc,
+                                           :sender_id => current_user ? current_user.id : nil,
+                                           :email_template_uniq_id => template.uniq_id,
+                                           :related_id => self.id,
+                                           :related_type => self.class.to_s,
+                                           :email_template_id => template.id,
+                                           :reply_to => template.custom_reply_to ? creator.email : nil
+                                       },
+                                       assets_to_path_names(send_material_result_value.materials)).deliver!
   end
   
   def set_last_call_result_in_contact

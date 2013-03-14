@@ -3,6 +3,7 @@
     <ol>
       <%= form.input :subject %>
       <%= form.input :from %>
+      <%= form.input :custom_reply_to, :as => :boolean, :label => t("email_templates.callers.custom_reply_to"), :input_html => { :style => "margin-left: 100px" } %>
       <%= form.input :bcc %>
       <%= form.input :cc %>
       <%= form.input :body,

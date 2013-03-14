@@ -542,6 +542,8 @@ en:
       call: Call
       actions: "Actions"
     email_templates:
+      callers:
+        custom_reply_to: "Use agent's email as reply email"
       edit:
         view:
           title: "Editing template: %{name}"
