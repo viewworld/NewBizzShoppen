@@ -5,7 +5,7 @@
       <%= link_to_edit_deal(deal) %>
     </h4>
 
-    <%= st(deal.header) %>
+    <%= st(deal.short_featured_description) %>
     <%= link_to t("supplier_home.show.view.read_more_link"), deal_url(:protocol => "http://", :host => Rails.env.production? ? "www.fairdeals.dk" :  Rails.env.staging? ? "beta.fairdeals.dk" : "fairdeals.dk:3000", :id => deal.slug), :class => "read_more", :target => "_blank" %>
   </div>
 </li>
