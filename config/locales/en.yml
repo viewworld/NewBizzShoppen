@@ -143,6 +143,7 @@ en:
         results: "Results"
         campaigns_tab: "Campaigns"
         agent_performance: "Agent perf."
+        background_tasks: "Background tasks"
       agent:
         leads: My leads
         deals: My deals
@@ -161,6 +162,7 @@ en:
         newsletter_lists: "Lists"
         campaigns_tab: "Campaigns"
         agent_performance: "Agent perf."
+        background_tasks: "Background tasks"
       call_centre_agent:
         leads: "My leads"
         lead_templates: "Lead templates"
@@ -4037,6 +4039,9 @@ en:
         merge_with_cleanup: "Delete merged tags"
 
   users:
+    delayed_jobs:
+      view_all: "View all"
+      clear_all: "Clear all"
     passwords:
       edit:
         view:

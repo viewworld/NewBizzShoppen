@@ -307,7 +307,11 @@ Nbs::Application.routes.draw do
   end
 
   namespace :users do
-    resources :delayed_jobs
+    resources :delayed_jobs do
+      collection do
+        get :delete_all
+      end
+    end
   end
 
   resources :chain_mails

@@ -6,6 +6,9 @@
 
     <param:actions>
       <ul class="header_actions">
+        <li>
+          <%= bt_link_to nil, t("users.delayed_jobs.view_all"), users_delayed_jobs_path %>
+        </li>
         <li class="last">
           <%= bt_link_to nil, t("agent_timesheets.new.new_timesheet"), new_callers_agent_timesheet_path %>
         </li>

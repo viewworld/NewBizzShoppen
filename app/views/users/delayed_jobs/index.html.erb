@@ -1,5 +1,17 @@
 <column-mc:>
-  <header back="true"><%= t("agent_timesheets.new.scheduled_actions") %></header>
+  <header back="true">
+    <param:content>
+      <%= t("agent_timesheets.new.scheduled_actions") %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to nil, t("users.delayed_jobs.clear_all"), delete_all_users_delayed_jobs_path %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
 
   <%= render :partial => 'shared/delayed_jobs/user', :locals => {:user => current_user, :delayed_jobs => @delayed_jobs} %>
 </column-mc:>
