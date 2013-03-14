@@ -2,31 +2,59 @@
         <tr class="no_shrink <%= cycle("odd", "even") %>">
           <td class="cl"></td>
           <td class="no_shrink_exclude"><%= campaign_report.campaign.name %></td>
-          <td><%= number_to_percentage(campaign_report.realised_success_percent, :precision => 0) %> (<%= number_to_percentage(campaign_report.target_success_percent, :precision => 0) %>)</td>
-          <td><%= number_with_precision(campaign_report.realised_finished_contacts_per_hour, :precision => 0) %> (<%= number_with_precision(campaign_report.target_finished_contacts_per_hour, :precision => 0) %>)</td>
-          <td><%= number_with_precision(campaign_report.realised_all_results_per_hour, :precision => 0) %> (<%= number_with_precision(campaign_report.target_all_results_per_hour, :precision => 0) %>)</td>
-          <td><%= number_with_precision(campaign_report.realised_temp_result_per_hour, :precision => 0) %> (<%= number_with_precision(campaign_report.target_temp_result_per_hour, :precision => 0) %>)</td>
-          <td><%= as_currency(campaign_report.realised_value_per_hour, campaign_report.currency, 0) %> (<%= as_currency(campaign_report.target_value_per_hour, campaign_report.currency, 0) %>)</td>
-          <td><%= as_currency(campaign_report.realised_cost_per_hour, campaign_report.currency, 0) %></td>
-          <td><%= campaign_report.contacts_used.to_s.split("-").join("-<br/>").html_safe %></td>
+          <td>
+            <%= number_to_percentage(campaign_report.realised_success_percent, :precision => 0) %> <%= "(#{number_to_percentage(campaign_report.target_success_percent, :precision => 0)})" if options[:show_targets] %>
+          </td>
+          <td>
+            <%= number_with_precision(campaign_report.realised_finished_contacts_per_hour, :precision => 0) %> <%= "(#{number_with_precision(campaign_report.target_finished_contacts_per_hour, :precision => 0)})" if options[:show_targets] %>
+          </td>
+          <td>
+            <%= number_with_precision(campaign_report.realised_all_results_per_hour, :precision => 0) %> <%= "(#{number_with_precision(campaign_report.target_all_results_per_hour, :precision => 0)})" if options[:show_targets] %>
+          </td>
+          <td>
+            <%= number_with_precision(campaign_report.realised_temp_result_per_hour, :precision => 0) %> <%= "(#{number_with_precision(campaign_report.target_temp_result_per_hour, :precision => 0)})" if options[:show_targets] %>
+          </td>
+          <td>
+            <%= as_currency(campaign_report.realised_value_per_hour, campaign_report.currency, 0) %> <%= "(#{as_currency(campaign_report.target_value_per_hour, campaign_report.currency, 0)})" if options[:show_targets] %>
+          </td>
+          <td>
+            <%= as_currency(campaign_report.realised_cost_per_hour, campaign_report.currency, 0) %>
+          </td>
+          <td>
+            <%= campaign_report.contacts_used.to_s.split("-").join("-<br/>").html_safe %>
+          </td>
           <% unless options[:dont_show_results] %>
             <% CampaignReport.final_results(result_ids, campaign_reports.map { |cr| cr.campaign }).each do |result| %>
-              <td><%= number_with_precision(campaign_report.realised_final_result_count(result), :precision => 0) %></td>
+              <td>
+                <%= number_with_precision(campaign_report.realised_final_result_count(result), :precision => 0) %>
+              </td>
             <% end %>
           <% end %>
-          <td><%= as_currency(campaign_report.value_created, campaign_report.currency, 0) %> (<%= as_currency(campaign_report.target_value_created, campaign_report.currency, 0) %>)</td>
+          <td>
+            <%= as_currency(campaign_report.value_created, campaign_report.currency, 0) %> <%= "(#{as_currency(campaign_report.target_value_created, campaign_report.currency, 0)})" if options[:show_targets] %>
+          </td>
           <td>
             <% if campaign_report.campaign.no_cost? %>
                 <%= "-" %>
             <% else %>
-                <%= as_currency(campaign_report.production_cost, campaign_report.currency, 0) %> (<%= as_currency(campaign_report.target_production_cost, campaign_report.currency, 0) %>)
+                <%= as_currency(campaign_report.production_cost, campaign_report.currency, 0) %> <%= "(#{as_currency(campaign_report.target_production_cost, campaign_report.currency, 0)})" if options[:show_targets] %>
             <% end %>
           </td>
-          <td><%= number_to_percentage(campaign_report.realised_db_value, :precision => 0) %> (<%= number_to_percentage(campaign_report.target_db_value, :precision => 0) %>)</td>
-          <td><%= campaign_report.hours_used.as_hours_and_minutes %></td>
-          <td><%= campaign_report.predicted_hours_to_completion.as_hours_and_minutes %></td>
-          <td><%= as_currency(campaign_report.predicted_cost_for_completion, campaign_report.currency, 0) %></td>
-          <td><%= as_currency(campaign_report.predicted_value_for_completion, campaign_report.currency, 0) %></td>
+          <td>
+            <%= number_to_percentage(campaign_report.realised_db_value, :precision => 0) %> <%= "(#{number_to_percentage(campaign_report.target_db_value, :precision => 0)})" if options[:show_targets] %>
+          </td>
+          <td>
+            <%= campaign_report.hours_used.as_hours_and_minutes %>
+          </td>
+          <td>
+            <%= campaign_report.predicted_hours_to_completion.as_hours_and_minutes %>
+          </td>
+          <td>
+            <%= as_currency(campaign_report.predicted_cost_for_completion, campaign_report.currency, 0) %>
+          </td>
+          <td>
+            <%= as_currency(campaign_report.predicted_value_for_completion, campaign_report.currency, 0) %>
+          </td>
           <td class="cr"></td>
         </tr>
     <% end %>

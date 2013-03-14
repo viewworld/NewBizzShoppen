@@ -4220,6 +4220,7 @@ en:
         status: "Status"
       report_per_users: "Report per users"
       with_results: "Active results"
+      show_targets: "Show targets"
       dont_show_results: "Don't show results"
       header: "Reports"
       your_queued_tasks: "Your queued tasks"

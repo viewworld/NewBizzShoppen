@@ -61,9 +61,9 @@
             </fieldset>
             <p class="pdd_10">
               <%= t("campaign_reports.index.ranges_label") %>:<br/>
-              <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#date_from').val('#{Date.today.beginning_of_month}');$('#date_to').val('#{Date.today.end_of_month}');$('#form_campaign_reports_search').submit()" %>
-              <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}');$('#form_campaign_reports_search').submit()" %>
-              <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}');$('#form_campaign_reports_search').submit()" %>
+              <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#date_from').val('#{Date.today.beginning_of_month}');$('#date_to').val('#{Date.today.end_of_month}');" %>
+              <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}');" %>
+              <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}');" %>
             </p>
           </div>
 
@@ -86,6 +86,10 @@
                 </li>
                 <li class="hidden">
                   <%= hidden_field_tag :views_count, @search.views_count+1 %>
+                </li>
+                <li class="boolean">
+                  <%= label_tag :show_targets, t("campaign_reports.index.show_targets") %>
+                  <%= check_box_tag :show_targets, "1", @search.show_targets %>
                 </li>
                 <li class="select">
                   <%=  label_tag :currency_id, t("campaign_reports.index.currency") %>
