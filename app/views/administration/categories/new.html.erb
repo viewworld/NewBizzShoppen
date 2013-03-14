@@ -1,4 +1,6 @@
 <column-mc:>
+  <%= javascript_include_tag :ckeditor %>
+
   <header back="true"><%= @category_type == "LeadCategory" ? t("administration.categories.new.title") : t("administration.categories.new.deal_title") %><%= image_tag_for_locale %></header>
   <%= semantic_form_for  @category, :as => :category, :url => administration_categories_path, :method => :put, :html => {:multipart => true} do |form| %>
       <frm>
