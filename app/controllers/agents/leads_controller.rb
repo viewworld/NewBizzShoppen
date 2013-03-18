@@ -20,7 +20,7 @@ class Agents::LeadsController < Agents::AgentController
     @search = Lead.scoped_search(params[:search])
     @search.purchase_decision_date_from = Date.today if params[:search][:purchase_decision_date_from].nil?
     @search.purchase_decision_date_to = Date.today if params[:search][:purchase_decision_date_to].nil?
-    @leads = @search.where(:creator_id => current_user.id).order("id DESC").paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
+    @leads = @search.where(:creator_id => current_user.id).order("id DESC").paginate(:show_all => params[:show_all], :page => params[:page], :per_page => Settings.default_leads_per_page)
     @show_import = true unless params[:show_import].blank?
   end
 

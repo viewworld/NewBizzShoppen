@@ -26,7 +26,7 @@ class Comments::ThreadsController < Comments::CommentsController
       @threads = @threads.roots
     end
     @threads = @threads.send(:descend_by_last_thread_created_at, true) unless params[:search].keys.detect { |key| params[:search][:key] == "true" and key.to_s.include?("scend_by") }
-    @threads = @threads.paginate(:page => params[:page], :per_page => Comment.per_page)
+    @threads = @threads.paginate(:show_all => params[:show_all], :page => params[:page], :per_page => Comment.per_page)
     @categories = LeadCategory.with_comment_threads
   end
 

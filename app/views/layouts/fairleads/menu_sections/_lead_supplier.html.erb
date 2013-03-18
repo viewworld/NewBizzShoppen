@@ -7,7 +7,7 @@
       <%= main_menu_link_to(t("layout.main_menu.lead_supplier.deals_to_certify"), suppliers_deal_certification_requests_path, :tab => "deal_certification_requests") unless current_user.deal_certification_requests.blank? %>
     <% end %>
     <% if current_user.newsletter_manager? %>
-        <%= main_menu_link_to t("layout.main_menu.lead_supplier.newsletter"), current_user.link_to_campaign_monitor_account, :tab => "owned_leads" %>
+        <%= main_menu_link_to t("layout.main_menu.lead_supplier.newsletter"), current_user.link_to_campaign_monitor_account, :tab => "newsletter" %>
     <% end %>
 <% end %>
 

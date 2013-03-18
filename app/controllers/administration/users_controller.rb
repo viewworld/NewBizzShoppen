@@ -68,7 +68,7 @@ class Administration::UsersController < Administration::AdministrationController
   def collection
     @total_users = User.count
     @search = User.scoped_search(params[:search])
-    @users = @search.paginate(:page => params[:page])
+    @users = @search.paginate(:show_all => params[:show_all], :page => params[:page])
   end
 
 end

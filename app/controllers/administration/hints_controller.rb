@@ -46,7 +46,7 @@ class Administration::HintsController < Administration::AdministrationController
     params[:search] ||= {}
     params[:search][:with_subclass] = "Article::Cms::Hint" unless params[:search][:with_subclass].present?
     @search = Article.scoped_search(params[:search])
-    @hints = @search.paginate(:page => params[:page])
+    @hints = @search.paginate(:show_all => params[:show_all], :page => params[:page])
   end
 
   def set_referer

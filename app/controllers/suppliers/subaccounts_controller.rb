@@ -14,7 +14,7 @@ class Suppliers::SubaccountsController < Suppliers::AdvancedSupplierController
     @users = if per_page == 0
                @search.all
              else
-               @search.paginate(:per_page => per_page, :page => params[:page])
+               @search.paginate(:show_all => params[:show_all], :per_page => per_page, :page => params[:page])
              end
   end
 

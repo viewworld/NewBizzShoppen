@@ -41,7 +41,7 @@ class Administration::NewsController < Administration::AdministrationController
     params[:search] ||= {}
     params[:search][:with_subclass] = "Article::News" unless params[:search][:with_subclass].present?
     @search = Article.scoped_search(params[:search])
-    @news = @search.paginate(:page => params[:page])
+    @news = @search.paginate(:show_all => params[:show_all], :page => params[:page])
   end
 
 end

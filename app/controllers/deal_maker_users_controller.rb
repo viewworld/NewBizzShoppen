@@ -6,7 +6,7 @@ class DealMakerUsersController < SecuredController
     params[:search] ||= {}
     params[:search][:created_by] = current_user.id
     @search = User.scoped_search(params[:search])
-    @users = @search.order("email").paginate(:page => params[:page])
+    @users = @search.order("email").paginate(:show_all => params[:show_all], :page => params[:page])
   end
 
   def new

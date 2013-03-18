@@ -50,7 +50,7 @@ class Agents::LeadTemplatesController < Agents::AgentController
     params[:search][:with_creator] = current_user.id
 
     @search = LeadTemplate.scoped_search(params[:search])
-    @lead_templates = @search.paginate(:page => params[:page], :per_page => LeadTemplate.per_page)
+    @lead_templates = @search.paginate(:show_all => params[:show_all], :page => params[:page], :per_page => LeadTemplate.per_page)
     @categories = LeadCategory.without_locked.with_agent_unique(current_user).map { |c| [c.name.to_s, c.id] }.sort
   end
 end

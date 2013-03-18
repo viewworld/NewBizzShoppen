@@ -47,7 +47,7 @@ class Administration::EmailBouncesController < Administration::AdministrationCon
   def collection
     @search = ArchivedEmail.scoped_search(params[:search])
     @search.bounced = true
-    @email_bounces = @search.order("bounced_at DESC").paginate(:page => params[:page], :per_page => 10)
+    @email_bounces = @search.order("bounced_at DESC").paginate(:show_all => params[:show_all], :page => params[:page], :per_page => 10)
   end
 
   def resource

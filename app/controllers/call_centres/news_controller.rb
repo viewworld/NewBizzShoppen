@@ -38,7 +38,7 @@ class CallCentres::NewsController < CallCentres::CallCentreController
 
   def collection
     @search = Article.scoped_search(params[:search])
-    @news = @search.build_relation.for_call_centre(current_user).paginate(:page => params[:page])
+    @news = @search.build_relation.for_call_centre(current_user).paginate(:show_all => params[:show_all], :page => params[:page])
   end
 
 end

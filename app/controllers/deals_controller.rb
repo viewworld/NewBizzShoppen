@@ -28,7 +28,7 @@ class DealsController < ApplicationController
     @search.without_inactive = true
     @search.not_blocked_by_sold_out_vouchers = true
 
-    @deals = @search.order("group_deal DESC, header").paginate(:page => params[:page], :per_page => Settings.default_leads_per_page, :show_all => params[:show_all] == "1")
+    @deals = @search.order("group_deal DESC, header").paginate(:show_all => params[:show_all], :page => params[:page], :per_page => Settings.default_leads_per_page)
 
     if user_signed_in? and current_user.has_role?(:admin)
       categories_scope = Category.scoped

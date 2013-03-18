@@ -16,12 +16,6 @@
         <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
     <% end %>
 
-    <% if will_paginate or params[:show_all] == "1" %>
-        <p class="pdd_5 ta_c">
-          <%= link_to_show_all_without_pagination "#deals_search_form" %>
-        </p>
-    <% end %>
-
     <script type="text/javascript">
         jQuery(document).ready(function() {
             $(".toggle_comments.show_comments").bind("click", function() {
@@ -200,7 +194,7 @@
       </tr>
   <% end %>
 
-  <% if will_paginate or show_checkboxes or params[:show_all] == "1" %>
+  <% if will_paginate or show_checkboxes %>
       <tr class="pagination">
         <td colspan="<%= cols + 2 %>" class="ta_c">
           <% if show_checkboxes %>
@@ -211,7 +205,6 @@
           <% end %>
 
           <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
-          <%= link_to_show_all_without_pagination "#deals_search_form" %>
         </td>
       </tr>
   <% end %>

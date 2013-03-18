@@ -107,7 +107,7 @@ class LeadsController < ApplicationController
     end
 
     @search = Lead.scoped_search(params[:search])
-    @leads = @search.includes(:currency).paginate(:page => params[:page], :per_page => Settings.default_leads_per_page, :show_all => params[:show_all] == "1")
+    @leads = @search.includes(:currency).paginate(:show_all => params[:show_all], :page => params[:page], :per_page => Settings.default_leads_per_page)
     if @search.with_category.present?
       @category = @categories_scope.find_by_id(@search.with_category)
       @nested_category = @category

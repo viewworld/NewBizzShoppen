@@ -39,7 +39,7 @@ class CallCentres::LeadsController < CallCentres::CallCentreController
     @search = Lead.scoped_search(params[:search])
     @search.without_inactive = true if params[:search][:without_inactive].nil?
     @search.without_outdated = true if params[:search][:without_outdated].nil?
-    @leads = @search.order("created_at DESC").paginate(:page => params[:page], :per_page => Lead.per_page)
+    @leads = @search.order("created_at DESC").paginate(:show_all => params[:show_all], :page => params[:page], :per_page => Lead.per_page)
     @call_centre_agents = User.with_lead_creators_for(current_user).map{ |u| [u.full_name, u.id] }.sort
   end
 end

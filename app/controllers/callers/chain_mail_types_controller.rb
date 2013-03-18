@@ -19,7 +19,7 @@ class Callers::ChainMailTypesController < Callers::CallerController
     params[:search][:without_drafts] = true
     params[:search][:with_campaign] = params[:campaign_id] if params[:campaign_id]
     @search = ChainMailType.scoped_search(params[:search])
-    @chain_mail_types = @search.paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
+    @chain_mail_types = @search.paginate(:show_all => params[:show_all], :page => params[:page], :per_page => Settings.default_leads_per_page)
   end
 
   public

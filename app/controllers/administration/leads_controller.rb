@@ -27,6 +27,6 @@ class Administration::LeadsController < Administration::AdministrationController
   def collection
     params[:search] = {"descend_by_created_at" => "true"} if params[:search].blank?
     @search = Lead.scoped_search(params[:search])
-    @leads = @search.paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
+    @leads = @search.paginate(:show_all => params[:show_all], :page => params[:page], :per_page => Settings.default_leads_per_page)
     end
 end

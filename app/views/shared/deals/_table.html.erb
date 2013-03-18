@@ -90,11 +90,10 @@
       <% end %>
   <% end %>
 
-  <% if will_paginate or params[:show_all] == "1" %>
+  <% if will_paginate %>
       <tr class="pagination">
         <td colspan="<%= cols + 3 %>" class="ta_c">
           <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
-          <%= link_to_show_all_without_pagination "#search_new" %>
         </td>
       </tr>
   <% end %>

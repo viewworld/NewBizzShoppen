@@ -81,7 +81,7 @@ class Members::TendersController < Members::MemberController
     @search = Lead.scoped_search(params[:search])
     @search.without_inactive = true if params[:search][:without_inactive].nil?
     @search.without_outdated = true if params[:search][:without_outdated].nil?
-    @leads = @search.order("created_at DESC").where(:creator_id => current_user.id).order("id DESC").paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
+    @leads = @search.order("created_at DESC").where(:creator_id => current_user.id).order("id DESC").paginate(:show_all => params[:show_all], :page => params[:page], :per_page => Settings.default_leads_per_page)
   end
 
   def categories_for_current_user

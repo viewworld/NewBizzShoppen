@@ -38,6 +38,6 @@ class Administration::TagsController < Administration::AdministrationController
 
   def collection
     @search = ActsAsTaggableOn::Tag.scoped_search(params[:search])
-    @tags = @search.paginate(:page => params[:page], :per_page => ActsAsTaggableOn::Tag.per_page)
+    @tags = @search.paginate(:show_all => params[:show_all], :page => params[:page], :per_page => ActsAsTaggableOn::Tag.per_page)
   end
 end

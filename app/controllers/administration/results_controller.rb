@@ -15,7 +15,7 @@ class Administration::ResultsController < Administration::AdministrationControll
   def collection
     @search = Result.scoped_search(params[:search])
     @search.with_archived ||= 0
-    @results = @search.order("name").paginate(:page => params[:page], :per_page => Result.per_page)
+    @results = @search.order("name").paginate(:show_all => params[:show_all], :page => params[:page], :per_page => Result.per_page)
   end
 
 end

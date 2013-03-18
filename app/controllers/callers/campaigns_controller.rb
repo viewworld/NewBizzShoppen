@@ -62,7 +62,7 @@ class Callers::CampaignsController < Callers::CallerController
   end
 
   def result_details
-    @call_results = CallResult.where(:id => params[:call_result_ids].split(",")).paginate(:page => params[:page], :per_page => 50)
+    @call_results = CallResult.where(:id => params[:call_result_ids].split(",")).paginate(:show_all => params[:show_all], :page => params[:page], :per_page => 50)
   end
 
   def result_details_to_csv
@@ -86,7 +86,7 @@ class Callers::CampaignsController < Callers::CallerController
     params[:search]||={}
     params[:search][:with_state] ||= "active"
     @search = Campaign.scoped_search(params[:search].merge(:available_for_user => current_user))
-    @campaigns = @search.paginate(:page => params[:page], :per_page => 20)
+    @campaigns = @search.paginate(:show_all => params[:show_all], :page => params[:page], :per_page => 20)
   end
 
 end

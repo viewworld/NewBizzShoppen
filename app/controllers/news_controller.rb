@@ -13,6 +13,6 @@ class NewsController < ApplicationController
 
   def collection
     @search_articles = Article.scoped_search(params[:search]).order("created_at DESC").published
-    @news = @search_articles.paginate(:page => params[:page], :per_page => Settings.default_news_per_page)
+    @news = @search_articles.paginate(:show_all => params[:show_all], :page => params[:page], :per_page => Settings.default_news_per_page)
   end
 end

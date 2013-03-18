@@ -11,7 +11,7 @@ class CallCentres::CallCentreAgentsController < CallCentres::CallCentreControlle
     @call_centre_agents = if per_page == 0
                @search.all
              else
-               @search.paginate(:per_page => per_page, :page => params[:page])
+               @search.paginate(:show_all => params[:show_all], :per_page => per_page, :page => params[:page])
              end
   end
 

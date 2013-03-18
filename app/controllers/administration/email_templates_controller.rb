@@ -17,7 +17,7 @@ class Administration::EmailTemplatesController < Administration::AdministrationC
   protected
 
   def collection
-    @email_templates ||= end_of_association_chain.global.paginate(:page => params[:page], :per_page => EmailTemplate.per_page)
+    @email_templates ||= end_of_association_chain.global.paginate(:show_all => params[:show_all], :page => params[:page], :per_page => EmailTemplate.per_page)
   end
 
   def resource

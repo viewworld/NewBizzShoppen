@@ -46,7 +46,7 @@ class CategorySuppliers::LeadsController < ApplicationController
       roots = @categories.select { |c| @search.with_selected_categories.map(&:to_i).include?(c.id) and c.parent_id.nil? }
       @displayed_category = roots.size == 1 ? (@search.with_selected_categories.map(&:to_i)-roots.first.self_and_descendants.map(&:id)).empty? ? roots.first : nil : nil
     end
-    @leads = @search.paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
+    @leads = @search.paginate(:show_all => params[:show_all], :page => params[:page], :per_page => Settings.default_leads_per_page)
   end
 
   def redirect_if_not_category_supplier

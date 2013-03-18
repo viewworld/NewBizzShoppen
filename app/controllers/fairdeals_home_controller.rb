@@ -25,7 +25,7 @@ class FairdealsHomeController < ApplicationController
     @last_page = (@deals.count.to_f / @per_page).ceil
 
     @deals = if request.xhr?
-      @deals.paginate(:page => params[:page], :per_page => @per_page)
+      @deals.paginate(:show_all => params[:show_all], :page => params[:page], :per_page => @per_page)
     else
       @deals.first(15)
     end
