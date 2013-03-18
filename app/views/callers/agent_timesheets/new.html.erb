@@ -62,7 +62,8 @@
                 <div class="grid_210 fltl">&nbsp;</div>
                 <div class="grid_240 fltl">
                   <h3><%= t("agent_timesheets.new.campaigns_selection.all_campaigns") %></h3>
-                  <%= select_tag "all_campaigns", options_for_select((current_user.admin? ? Campaign : Campaign.available_for_user(current_user)).reorder("name ASC").map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                  <%= select_tag "all_campaigns", options_for_select([]), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                  <%= check_box_tag "list_all_campaigns" %><%= label_tag "list_all_campaigns", "all campaigns" %>
                 </div>
 
                 <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
@@ -86,11 +87,13 @@
                 <div class="grid_210 fltl">&nbsp;</div>
                 <div class="grid_240 fltl">
                   <h3><%= t("agent_timesheets.new.agents_selection.all_agents") %></h3>
-                  <%= select_tag "all_agents", options_for_select((current_user.admin? ? User.with_agents.with_roles_except([:member]) : current_user.subaccounts).without_locked.map { |c| [c.screen_name, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                  <%= select_tag "all_agents", options_for_select([]), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                  <%= check_box_tag "list_all_agents" %><%= label_tag "list_all_agents", "all agents" %>
 
                   <% if current_user.admin? %>
                     <h3 style="padding-top:10px"><%= t("agent_timesheets.new.agents_selection.all_call_centres") %></h3>
-                    <%= select_tag "all_call_centres", options_for_select(User.with_call_centres.map { |c| [c.screen_name, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                    <%= select_tag "all_call_centres", options_for_select([]), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                    <%= check_box_tag "list_all_call_centres" %><%= label_tag "list_all_call_centres", "all call centres" %>
                   <% end %>
                 </div>
 
@@ -140,5 +143,53 @@
 
   <header><%= t("agent_timesheets.new.cached_timesheets") %></header>
   <%= render :partial => 'shared/cached_timesheets/list', :locals => {:cached_timesheets => @search.cached_timesheets.first(5)} %>
+
+  <script>
+    function populate(select, selected, collection, filter) {
+        $('#'+select+' option').remove();
+
+        $.each(collection, function(idx, option) {
+            if (($('#list_'+select+'').is(':checked') || (($.inArray(option[1], filter)) != -1)) && ($('#'+selected+' option[value="'+option[1]+'"]').length == 0) ) {
+                $('#'+select).
+                        append($("<option></option>").
+                        attr("value", option[1]).
+                        text(option[0]));
+            }
+        });
+    }
+
+    <% all_campaigns = (current_user.admin? ? Campaign : Campaign.available_for_user(current_user)).reorder("name ASC") %>
+    var allCampaigns = <%= all_campaigns.map { |c| [c.name.to_s, c.id] }.sort.to_json.html_safe %>;
+    var activeCampaignIds = <%= all_campaigns.with_state('active').map(&:id).to_json.html_safe %>;
+
+    <% all_agents = (current_user.admin? ? User.with_agents.with_roles_except([:member]) : current_user.subaccounts) %>
+    var allAgents = <%= all_agents.map { |c| [c.screen_name, c.id] }.sort.to_json.html_safe %>;
+    var unlockedAgentIds = <%= all_agents.without_locked.map(&:id).to_json.html_safe %>;
+
+    <% if current_user.admin? %>
+        <% all_call_centres = User.with_call_centres %>
+        var allCallCentres = <%= all_call_centres.map { |c| [c.screen_name, c.id] }.sort.to_json.html_safe %>;
+        var unlockedCallCentreIds = <%= all_call_centres.without_locked.map(&:id).to_json.html_safe %>;
+    <% end  %>
+
+    $(function(){
+        populate('all_campaigns', 'search_campaigns_', allCampaigns, activeCampaignIds);
+        $('#list_all_campaigns').change(function(){
+            populate('all_campaigns', 'search_campaigns_', allCampaigns, activeCampaignIds);
+        });
+
+        populate('all_agents', 'selected_agents', allAgents, unlockedAgentIds);
+        $('#list_all_agents').change(function(){
+            populate('all_agents', 'selected_agents', allAgents, unlockedAgentIds);
+        });
+
+        <% if current_user.admin? %>
+            populate('all_call_centres', 'selected_agents', allCallCentres, unlockedCallCentreIds);
+            $('#list_all_call_centres').change(function(){
+                populate('all_call_centres', 'selected_agents', allCallCentres, unlockedCallCentreIds);
+            });
+        <% end %>
+    });
+  </script>
 
 </column-mc:>
