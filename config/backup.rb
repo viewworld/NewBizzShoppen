@@ -33,7 +33,7 @@ Backup::Model.new(:fairleads_backup, 'Fairleads server backup') do
     mail.from                 = "selleo.test@gmail.com"
     mail.to                   = "aossowski@gmail.com"
     mail.address              = "smtp.gmail.com"
-    mail.port                 = 465
+    mail.port                 = 587
     mail.user_name            = "selleo.test@gmail.com"
     mail.password             = "secret4gmail"
     mail.authentication       = "plain"
