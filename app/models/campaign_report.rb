@@ -261,10 +261,10 @@ class CampaignReport
   end
 
   def self.store_pdf(report_cache)
-    pdf_path = Rails.root.join "public/html2pdf/campaign_reports_cache/#{report_cache}.pdf"
-    html_path = Rails.root.join "public/html2pdf/campaign_reports_cache/#{report_cache}.pdf.html"
+    pdf_path = Rails.root.join "public/system/html2pdf/campaign_reports_cache/#{report_cache}.pdf"
+    html_path = Rails.root.join "public/system/html2pdf/campaign_reports_cache/#{report_cache}.pdf.html"
     unless File.exists? pdf_path
-      `python public/html2pdf/pisa.py #{html_path} #{pdf_path}`
+      `python public/system/html2pdf/pisa.py #{html_path} #{pdf_path}`
     end
     pdf_path
   end

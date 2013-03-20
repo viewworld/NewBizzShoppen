@@ -259,18 +259,18 @@ class Invoice < ActiveRecord::Base
   end
 
   def temp_invoice_path
-    Rails.root.join("public/html2pdf/#{filename}.html")
+    Rails.root.join("public/system/html2pdf/#{filename}.html")
   end
 
   def store_pdf(current_user)
     File.open(temp_invoice_path, 'w') {|f| f.write(markup(current_user)) }
-    `python public/html2pdf/pisa.py #{temp_invoice_path} #{filepath}`
+    `python public/system/html2pdf/pisa.py #{temp_invoice_path} #{filepath}`
     File.delete(temp_invoice_path)
     filepath
   end
 
   def filepath(extension='pdf')
-    Rails.root.join "public/html2pdf/invoice_cache/#{filename}.#{extension}"
+    Rails.root.join "public/system/html2pdf/invoice_cache/#{filename}.#{extension}"
   end
 
   def filename
@@ -325,7 +325,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def send_by_email(user)
-    invoice_path = Pathname.new(File.join(::Rails.root.to_s,'public/html2pdf/invoice_cache', store_pdf(user).basename))
+    invoice_path = Pathname.new(File.join(::Rails.root.to_s,'public/system/html2pdf/invoice_cache', store_pdf(user).basename))
     TemplateMailer.new(user.email, paid? ? :invoice : :unpaid_invoice, Country.get_country_from_locale, {:invoice => self}, Array(invoice_path)).deliver!
   end
 

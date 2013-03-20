@@ -29,7 +29,7 @@ class Callers::CampaignReportsController < Callers::CallerController
 
   def show
     @search = CampaignReport::Search.new(params.merge(:current_user => current_user))
-    @html = File.open(Rails.root.join("public/html2pdf/campaign_reports_cache/#{params[:id]}.html"), 'r') {|f| f.read }
+    @html = File.open(Rails.root.join("public/system/html2pdf/campaign_reports_cache/#{params[:id]}.html"), 'r') {|f| f.read }
 
     respond_to do |format|
       format.html

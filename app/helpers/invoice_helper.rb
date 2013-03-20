@@ -20,7 +20,7 @@ module InvoiceHelper
   end
 
   def invoice_preview_path(filename)
-    "/html2pdf/invoice_cache/#{filename}"
+    "/system/html2pdf/invoice_cache/#{filename}"
   end
 
   def total_in_words(invoice)
