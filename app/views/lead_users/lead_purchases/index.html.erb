@@ -92,6 +92,9 @@
                       <%= link_to t("lead_user.lead_purchases.index.view.download_csv_link"), lead_users_lead_purchase_path(lead_purchase, :format => :csv) %>
                     </li>
                     <li>
+                      <%= link_to t("lead_user.lead_purchases.index.view.download_xls_link"), lead_users_lead_purchase_path(lead_purchase, :format => :xls) %>
+                    </li>
+                    <li>
                       <%= link_to t("lead_user.lead_purchases.index.view.print_link"), lead_users_lead_purchase_path(lead_purchase, :format => :print), :target => "_blank" %>
                     </li>
                     <% if lead_purchase_has_email_address?(lead_purchase) %>
@@ -106,8 +109,8 @@
               <% end %>
 
               <% blocks.bottom do |lead_purchase| %>
-                  <%= bt_link_to :download, t("lead_user.lead_purchases.index.view.bulk_download_csv_link_short"), "javascript:void(0)", :onclick => "copy_checkboxes_to_bulk_form();submitBulkForm('#{lead_users_bulk_lead_purchase_csv_path}#POST');" %>
-                  <%= bt_link_to :download, t("lead_user.lead_purchases.index.view.bulk_download_csv_link_all"), "javascript:void(0)", :onclick => "$('#bulk_form_inputs').html('');submitBulkForm('#{lead_users_bulk_lead_purchase_csv_path}#POST');" %>
+                  <%= bt_link_to :download, t("lead_user.lead_purchases.index.view.bulk_download_csv_link_short"), "javascript:void(0)", :onclick => "copy_checkboxes_to_bulk_form();exportLeadPurchases();" %>
+                  <%= bt_link_to :download, t("lead_user.lead_purchases.index.view.bulk_download_csv_link_all"), "javascript:void(0)", :onclick => "$('#bulk_form_inputs').html('');exportLeadPurchases();" %>
                   <%= bt_link_to :printer, t("lead_user.lead_purchases.index.view.bulk_print_link_short"), "javascript:void(0)", :onclick => "copy_checkboxes_to_bulk_form();submitBulkForm('#{lead_users_bulk_lead_purchase_print_path}#POST', '_blank');" %>
               <% end %>
           <% end %>
@@ -120,6 +123,23 @@
       function save_owner_note(lead_purchase_id) {
           $.post('/lead_users/lead_purchases/' + lead_purchase_id.toString(), {'_method':'put', 'lead_purchase[owner_note]':$('#owner_note_' + lead_purchase_id.toString()).val(), 'owner_note_changed':1, 'format':'js'});
           $('#owner_note_form_' + lead_purchase_id.toString()).parents(".row_tooltip").effect("highlight", {color: "#d8ff9a"}, 500);
+      }
+
+      function exportLeadPurchases(){
+          $('#select_export_format').dialog({
+              height: 125,
+              modal: true,
+              buttons: {
+                  "XLS": function(){
+                      $( this ).dialog( "close" );
+                      submitBulkForm('<%= lead_users_bulk_lead_purchase_export_path(:format => :xls) %>');
+                  },
+                  "CSV": function(){
+                      $( this ).dialog( "close" );
+                      submitBulkForm('<%= lead_users_bulk_lead_purchase_export_path(:format => :csv) %>');
+                  }
+              }
+          });
       }
   </script>
 </js:>

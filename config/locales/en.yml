@@ -59,6 +59,9 @@ en:
     cache_cleared: "Cache has been cleared"
     show_all: "Show all"
     show_paginated: "Show paginated"
+    export:
+      select_format: "Select file format"
+      select_format_long: "Select file format you want to download"
   datetime:
     distance_in_words:
       x_minutes: "%{count} minutes"
@@ -505,6 +508,7 @@ en:
       button_assign_selected_contacts: Assign selected contacts
       button_remove_assignment_for_selected: "Remove assignments for selected"
       button_bulk_download_csv_link: "Export CSV contacts"
+      button_bulk_download_link: "Export contacts"
       button_remove_selected: Remove selected
       agent_assignment_button: Agent assignment
       show_button: Show
@@ -2881,6 +2885,7 @@ en:
           bulk_download_csv_link: "Download CSV for selected leads"
           bulk_download_csv_link_short: "Download selected"
           download_csv_link: "CSV"
+          download_xls_link: "XLS"
           print_link: "Print"
           bulk_print_link: "Print all selected leads"
           bulk_print_link_short: "Print selected"
@@ -2934,6 +2939,7 @@ en:
         view:
           header: My leads
           download_csv_link: CSV
+          download_xls_link: XLS
           print_link: Print
           share_email_link: Share by email
           bulk_download_csv_link: Download CSV for selected leads

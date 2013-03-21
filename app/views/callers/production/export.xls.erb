@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:o="urn:schemas-microsoft-com:office:office"
+          xmlns:x="urn:schemas-microsoft-com:office:excel"
+          xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <% contact_company_information_fields = %w(company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country region company_vat_no company_ean_number creator_name) %>
+    <% contact_contact_information_fields = %w(contact_name direct_phone_number phone_number email_address  linkedin_url facebook_url note) %>
+    <% contact_information = contact_company_information_fields + contact_contact_information_fields %>
+    <% result_fields = %w(result note) %>
+    <% result_custom_fields = %w(custom_field_1 custom_field_2 custom_field_3 custom_field_4) %>
+    <Table>
+      <Row>
+        <% (contact_information + result_fields + result_custom_fields).map(&:humanize).each do |header| %>
+            <Cell><Data ss:Type="String"><%= header %></Data></Cell>
+        <% end %>
+      </Row>
+      <% CallResult.find_all_by_id(@call_result_ids).each do |c| %>
+        <Row>
+          <% ((contact_company_information_fields + contact_contact_information_fields).map { |attr| c.contact.send(attr).to_s.gsub(/[\n\r\t,]/, " ") } + result_fields.map { |attr| c.send(attr).to_s.gsub(/[\n\r\t,]/, " ") } + c.custom_fields_for_csv(result_custom_fields.size)).each do |cell| %>
+              <Cell><Data ss:Type="String"><%= cell %></Data></Cell>
+          <% end %>
+        </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

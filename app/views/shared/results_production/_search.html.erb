@@ -44,11 +44,11 @@
                 <ol class="no_pdd">
                   <li class="date">
                     <%= label_tag t("campaigns.show.search.date_from") %>
-                    <%= text_field_tag :date_from, date_from, :class => "datepicker", :onchange => "if($('#date_from').val() != '') {this.form.submit();}" %>
+                    <%= text_field_tag :date_from, date_from, :class => "datepicker", :onchange => "if($('#date_from').val() != '') {submit_search();}" %>
                   </li>
                   <li class="date">
                     <%= label_tag t("campaigns.show.search.date_to") %>
-                    <%= text_field_tag :date_to, date_to, :class => "datepicker", :onchange => "if($('#date_to').val() != '') {this.form.submit();}" %>
+                    <%= text_field_tag :date_to, date_to, :class => "datepicker", :onchange => "if($('#date_to').val() != '') {submit_search();}" %>
                   </li>
                   <li class="boolean">
                     <%= check_box_tag :final, "yes", final %>
@@ -72,11 +72,11 @@
               <p class="pdd_10 no_pdd_tb" style="margin-top:-8px;">
                 <%= t("campaigns.show.ranges_label") %>:<br/>
                 <% unless campaign.is_a?(Array) %>
-                    <%= link_to_function t("campaigns.show.ranges.whole_campaign"), "$('#date_from').val('#{campaign.is_a?(Array) ? date_from : campaign.start_date}');$('#date_to').val('#{campaign.is_a?(Array) ? date_to : campaign.end_date}');$('#search_new').submit()" %>
+                    <%= link_to_function t("campaigns.show.ranges.whole_campaign"), "$('#date_from').val('#{campaign.is_a?(Array) ? date_from : campaign.start_date}');$('#date_to').val('#{campaign.is_a?(Array) ? date_to : campaign.end_date}');submit_search()" %>
                 <% end %>
-                <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#date_from').val('#{Date.today.beginning_of_month}');$('#date_to').val('#{Date.today.end_of_month}');$('#search_new').submit()" %>
-                <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}');$('#search_new').submit()" %>
-                <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}');$('#search_new').submit()" %>
+                <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#date_from').val('#{Date.today.beginning_of_month}');$('#date_to').val('#{Date.today.end_of_month}');submit_search()" %>
+                <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}');submit_search()" %>
+                <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}');submit_search()" %>
               </p>
 
             </div>
@@ -88,15 +88,30 @@
 
     <js:>
         <script type="text/javascript">
+          var generic_url = '<% campaign.is_a?(Array) ? callers_production_path : callers_campaign_path(campaign) %>';
 
           function submit_search() {
-//            $('#search_new').attr('action', '<%= callers_production_path %>');
+            $('#search_new').attr('action', generic_url);
             $('#search_new').submit();
           }
 
           function submit_export() {
-              $('#search_new').attr('action', '<%= export_callers_production_path %>');
-              $('#search_new').submit();
+              $('#select_export_format').dialog({
+                  height: 125,
+                  modal: true,
+                  buttons: {
+                      "XLS": function(){
+                          $( this ).dialog( "close" );
+                          $('#search_new').attr('action', '<%= export_callers_production_path(:format => :xls) %>');
+                          $('#search_new').submit();
+                      },
+                      "CSV": function(){
+                          $( this ).dialog( "close" );
+                          $('#search_new').attr('action', '<%= export_callers_production_path(:format => :csv) %>');
+                          $('#search_new').submit();
+                      }
+                  }
+              });
           }
 
         </script>

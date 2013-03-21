@@ -89,8 +89,33 @@
               <%= bt_link_to :users, t("campaigns.edit.button_assign_selected_contacts"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_assign');$('#batch_assign_form').submit();" %>
               <%= bt_link_to :remove, t("campaigns.edit.button_remove_selected"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_remove');$('#batch_remove_form').submit();" %>
               <%= bt_link_to :remove, t("campaigns.edit.button_remove_assignment_for_selected"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_unassign');$('#batch_unassign_form').submit();" %>
-              <%= bt_link_to :download, t("campaigns.edit.button_bulk_download_csv_link"), bulk_contacts_export_csv_callers_campaign_contacts_path(@campaign), :method => :post, :class => "fltr" %>
+              <%= bt_link_to :download, t("campaigns.edit.button_bulk_download_link"), "", :id => "export_contacts" , :class => "fltr" %>
           <% end %>
+
+          <%= form_tag "'", :method => :post, :id => "export_contacts_form" do %>
+          <% end %>
+
+          <script>
+              $('#export_contacts').click(function(e){
+                  e.preventDefault();
+                  $('#select_export_format').dialog({
+                      height: 125,
+                      modal: true,
+                      buttons: {
+                          "XLS": function(){
+                              $( this ).dialog( "close" );
+                              $('#export_contacts_form').attr('action', '<%= bulk_contacts_export_callers_campaign_contacts_path(@campaign, :format => :xls) %>');
+                              $('#export_contacts_form').submit();
+                          },
+                          "CSV": function(){
+                              $( this ).dialog( "close" );
+                              $('#export_contacts_form').attr('action', '<%= bulk_contacts_export_callers_campaign_contacts_path(@campaign, :format => :csv) %>');
+                              $('#export_contacts_form').submit();
+                          }
+                      }
+                  });
+              });
+          </script>
 
           <%= form_tag batch_assign_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_unassign_form" do %>
               <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_unassign" %>

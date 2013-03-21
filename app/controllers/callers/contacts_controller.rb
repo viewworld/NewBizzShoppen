@@ -87,8 +87,11 @@ class Callers::ContactsController < Callers::CallerController
     redirect_to edit_callers_campaign_path(@campaign)
   end
 
-  def bulk_contacts_export_csv
-    send_data Contact.to_csv(*@campaign.contacts.map(&:id)), :filename => "contacts.csv"
+  def bulk_contacts_export
+    respond_to do |wants|
+      wants.csv { send_data Contact.to_csv(*@campaign.contacts.map(&:id)), :filename => "contacts.csv" }
+      wants.xls
+    end
   end
 
   def import_xls

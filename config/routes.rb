@@ -130,7 +130,7 @@ Nbs::Application.routes.draw do
     end
     resource :bulk_cart_items, :controller => "bulk_cart_items", :only => [:create]
   end
-  match 'suppliers/bulk_lead_purchase_csv' => 'suppliers/bulk_lead_purchase_csv#create', :as => "bulk_lead_purchase_csv"
+  match 'suppliers/bulk_lead_purchase_export' => 'suppliers/bulk_lead_purchase_export#create', :as => "bulk_lead_purchase_export"
   match 'suppliers/bulk_lead_purchase_print' => 'suppliers/bulk_lead_purchase_print#create', :as => "bulk_lead_purchase_print"
   match 'suppliers/bulk_lead_purchase_update' => 'suppliers/bulk_lead_purchase_update#create', :as => "bulk_lead_purchase_update"
   match 'suppliers/bulk_lead_share_by_email' => 'suppliers/bulk_lead_share_by_email#new', :as => "bulk_lead_share_by_email"
@@ -169,7 +169,7 @@ Nbs::Application.routes.draw do
     resources :lead_requests
     resource :bulk_lead_requests, :controller => "bulk_lead_requests", :only => [:create, :destroy]
     resource :bulk_lead_purchase_update, :controller => "bulk_lead_purchase_update", :only => [:create]
-    resource :bulk_lead_purchase_csv, :controller => "bulk_lead_purchase_csv", :only => [:create]
+    resource :bulk_lead_purchase_export, :controller => "bulk_lead_purchase_export", :only => [:create]
     resource :bulk_lead_purchase_print, :controller => "bulk_lead_purchase_print", :only => [:create]
   end
 
@@ -234,7 +234,7 @@ Nbs::Application.routes.draw do
           post 'batch_remove'
           post 'batch_assign'
           post 'batch_move'
-          post 'bulk_contacts_export_csv'
+          post 'bulk_contacts_export'
           post 'import_xls'
           post 'batch_add_to_newsletter_list'
         end

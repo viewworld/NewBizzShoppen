@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:o="urn:schemas-microsoft-com:office:office"
+          xmlns:x="urn:schemas-microsoft-com:office:excel"
+          xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <% lead_purchases = LeadPurchase.find(@lead_purchase_ids) %>
+    <% templates = lead_purchases.map { |lp| lp.lead.lead_templates }.flatten.uniq %>
+    <% template_fields = templates.map { |t| t.lead_template_fields }.flatten %>
+    <Table>
+      <Row>
+        <% (LeadPurchaseBase::CSV_ATTRS.map(&:humanize) + template_fields.map(&:name)).each do |header| %>
+            <Cell><Data ss:Type="String"><%= header %></Data></Cell>
+        <% end %>
+      </Row>
+      <% lead_purchases.each do |lp| %>
+          <Row>
+            <% (LeadPurchaseBase::CSV_ATTRS.map { |attr| lp.lead[attr].to_s.gsub("\n", " ").gsub("\r", " ") } + template_fields.map { |tf| tf.value_for_lead(lp.lead).to_s.gsub("\n", " ").gsub("\r", " ") }).each do |cell| %>
+                <Cell><Data ss:Type="String"><%= cell %></Data></Cell>
+            <% end %>
+          </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

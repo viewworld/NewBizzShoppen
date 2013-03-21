@@ -172,6 +172,9 @@
                     <%= link_to t("lead_supplier.lead_purchases.index.view.download_csv_link"), suppliers_lead_purchase_path(lead_purchase, :format => :csv) %>
                   </li>
                   <li>
+                    <%= link_to t("lead_supplier.lead_purchases.index.view.download_xls_link"), suppliers_lead_purchase_path(lead_purchase, :format => :xls) %>
+                  </li>
+                  <li>
                     <%= link_to t("lead_supplier.lead_purchases.index.view.print_link"), suppliers_lead_purchase_path(lead_purchase, :format => :print), :target => "_blank" %>
                   </li>
                   <li>
@@ -188,8 +191,8 @@
 
             <% blocks.bottom do %>
                <span class="bulk_links">
-                <%= bt_link_to :download, t("lead_supplier.lead_purchases.index.view.bulk_download_csv_short"), "javascript:void(0)", :onclick => "copy_checkboxes_to_bulk_form();submitBulkForm('#{bulk_lead_purchase_csv_path}');" %>
-                <%= bt_link_to :download, t("lead_supplier.lead_purchases.index.view.bulk_download_csv_all"), "javascript:void(0)", :onclick => "$('#bulk_form_inputs').html('');submitBulkForm('#{bulk_lead_purchase_csv_path}');" %>
+                <%= bt_link_to :download, t("lead_supplier.lead_purchases.index.view.bulk_download_csv_short"), "javascript:void(0)", :onclick => "copy_checkboxes_to_bulk_form();exportLeadPurchases();" %>
+                <%= bt_link_to :download, t("lead_supplier.lead_purchases.index.view.bulk_download_csv_all"), "javascript:void(0)", :onclick => "$('#bulk_form_inputs').html('');exportLeadPurchases();" %>
                 <%= bt_link_to :printer, t("lead_supplier.lead_purchases.index.view.bulk_print_link_short"), "javascript:void(0)", :onclick => "copy_checkboxes_to_bulk_form();submitBulkForm('#{bulk_lead_purchase_print_path}', '_blank');" %>
                 <%= bt_link_to :mail, t("lead_supplier.lead_purchases.index.view.bulk_share_by_email_link"), "javascript:void(0)", :onclick => "copy_checkboxes_to_bulk_form();submitBulkForm('#{bulk_lead_share_by_email_path}#GET');" %>
                </span>
@@ -210,6 +213,23 @@
         });
     <% end %>
     });
+
+    function exportLeadPurchases(){
+        $('#select_export_format').dialog({
+            height: 125,
+            modal: true,
+            buttons: {
+                "XLS": function(){
+                    $( this ).dialog( "close" );
+                    submitBulkForm('<%= bulk_lead_purchase_export_path(:format => :xls) %>');
+                },
+                "CSV": function(){
+                    $( this ).dialog( "close" );
+                    submitBulkForm('<%= bulk_lead_purchase_export_path(:format => :csv) %>');
+                }
+            }
+        });
+    }
 
     function update_lead_response_deadline(url, field_value)
     {

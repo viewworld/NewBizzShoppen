@@ -114,7 +114,7 @@
           <frm title="#{t('category_home.show.view.header_additional_information_label')}" c="no_marg">
             <param:content>
               <ul class="solid_list" style="padding:10px;width:340px;overflow:hidden;height:381px">
-                <%= @home_category.additional_information.html_safe %>
+                <%= @home_category.additional_information.to_s.html_safe %>
               </ul>
             </param:content>
           </frm>

@@ -59,7 +59,7 @@ class Administration::UsersController < Administration::AdministrationController
 
   def sign_in_as
     user = User.find(params[:id])
-    sign_in(user)
+    sign_in(user) unless user.locked_at.present?
     redirect_to root_path
   end
 
