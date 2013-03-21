@@ -60,7 +60,7 @@ class Callers::CallResultsController < Callers::CallerController
   end
 
   def index
-    @call_results = CallResult.joins(:contact).includes(:result).where(:leads => {:campaign_id => @campaign.id})
+    @call_results = CallResult.joins(:contact).includes(:result).where(:leads => {:campaign_id => @campaign.id}).paginate(:page => params[:page])
   end
 
   private
