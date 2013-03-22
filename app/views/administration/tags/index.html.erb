@@ -41,7 +41,12 @@
         <thead>
         <tr>
           <th class="hl"></th>
-          <th><%= t("administration.tags.index.view.table.name") %></th>
+          <th style="width:250px"><%= t("administration.tags.index.view.table.name") %></th>
+          <th style="width:100px"><%= t("administration.tags.index.view.table.total") %></th>
+          <th style="width:100px"><%= t("administration.tags.index.view.table.leads_deals_contacts") %></th>
+          <th style="width:100px"><%= t("administration.tags.index.view.table.users") %></th>
+          <th style="width:100px"><%= t("administration.tags.index.view.table.results") %></th>
+          <th style="width:100px"><%= t("administration.tags.index.view.table.tag_group") %></th>
           <th class="ta_r"><%= t("administration.tags.index.view.table.actions") %></th>
           <th class="hr"></th>
         </tr>
@@ -49,7 +54,7 @@
         <tfoot>
         <tr>
           <td class="fl"></td>
-          <td colspan="2"></td>
+          <td colspan="7"></td>
           <td class="fr"></td>
         </tr>
         </tfoot>
@@ -59,6 +64,11 @@
               <td class="cl"></td>
 
               <td><%= tag.name %></td>
+              <td><strong><%= tag.taggings.count %></strong></td>
+              <td><%= tag.taggings.where("taggable_type ~ 'AbstractLead'").count %></td>
+              <td><%= tag.taggings.where("taggable_type ~ 'User'").count %></td>
+              <td><%= tag.taggings.where("taggable_type ~ 'Result'").count %></td>
+              <td><%= tag.taggings.where("taggable_type ~ 'TagGroup'").count %></td>
               <td class="tda ta_r" id="country_actions_td_<%= tag.name.gsub(" ", "_") %>">
                 <ul-actions>
                   <li>
@@ -77,7 +87,7 @@
         <% end %>
         <% if will_paginate %>
                <tr class="pagination">
-                 <td colspan="4" class="ta_c">
+                 <td colspan="9" class="ta_c">
                    <%= will_paginate @tags, :previous_label => '&laquo;', :next_label => '&raquo;' %>
                  </td>
                </tr>
