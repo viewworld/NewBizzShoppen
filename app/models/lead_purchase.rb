@@ -22,6 +22,7 @@ class LeadPurchase < LeadPurchaseBase
   before_create :assign_to_purchaser
   after_save :deliver_bought_notification
   after_create :refresh_lead_category
+  after_create :set_buyer_tag
 
   liquid :id, :header, :description, :hidden_description, :company_name, :contact_name, :contact_title, :email_address, :direct_phone_number,
          :phone_number, :address, :rating_level_as_text, :rating_reason, :url
@@ -31,6 +32,13 @@ class LeadPurchase < LeadPurchaseBase
   def refresh_lead_category
     [:refresh_leads_count_cache!, :refresh_published_leads_count_cache!].each do |method|
       lead.category.send(method)
+    end
+  end
+
+  def set_buyer_tag
+    if lead
+      lead.tag_list << "user_#{purchased_by}"
+      lead.save!(false)
     end
   end
 

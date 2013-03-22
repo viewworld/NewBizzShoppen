@@ -4737,6 +4737,7 @@ en:
         view:
           header: "Newsletter lists"
           name_column: "Name"
+          list_name: "List name"
           owner_column: "Owner"
           actions_column: "Actions"
           edit: "Edit"
@@ -4752,6 +4753,7 @@ en:
           retrieve: "Retrieve from archive"
           synchronization_scheduled: "Synchronization process will perform in the background. You will be notified when it's done."
           unsubscribe: "Unsubscribe"
+          login_info: "Campaign Monitor login info"
       new:
         view:
           header: "New newsletter list"

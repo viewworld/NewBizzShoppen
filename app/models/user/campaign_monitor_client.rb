@@ -8,7 +8,7 @@ module User::CampaignMonitorClient
           if cm_set_access!
             setup_empty_list!
           end
-        elsif !newsletter_manager? and newsletter_manager_changed?
+        elsif !newsletter_manager?
           cm_delete!
         end
       end
@@ -97,7 +97,20 @@ module User::CampaignMonitorClient
     end
 
     def setup_empty_list!
-      NewsletterList.create(:name => "First #{company_name} list #{Date.today.to_s}", :owner => self)
+      NewsletterList.create(:name => "MyLeads", :owner => self)
+    end
+
+    def setup_my_leads_list!
+      if list = setup_empty_list!
+        tag_group = TagGroup.create
+        tag_group.tag_list << "user_#{id}"
+        tag_group.save
+        list.newsletter_sources.create(:source_type => NewsletterSource::TAG_SOURCE, :sourceable => tag_group)
+      end
+    end
+
+    def my_leads_list
+      NewsletterSource.where(:newsletter_list_id => newsletter_list_ids).detect{|nl| nl.source_type == NewsletterSource::TAG_SOURCE and nl.sourceable.tag_list.include?("user_#{id}")}
     end
   end
 end

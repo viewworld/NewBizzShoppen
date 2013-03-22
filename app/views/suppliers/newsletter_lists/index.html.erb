@@ -5,52 +5,81 @@
       </param:content>
    </header>
 
-  <% if @newsletter_lists.blank? %>
-      <%= blank_state_message %>
-  <% else %>
-  <table id="newsletter_lists_table" class="generic">
-    <thead>
-    <tr>
-      <th class="hl"></th>
-      <th><%= t("newsletters.newsletter_lists.index.view.name_column") %></th>
-      <th><%= t("newsletters.newsletter_lists.index.view.number_of_subscribers_column") %></th>
-      <th><%= t("newsletters.newsletter_lists.index.view.last_sync_date_column") %></th>
-      <th class="ta_r"><%= t("newsletters.newsletter_lists.index.view.actions_column") %></th>
-      <th class="hr"></th>
-    </tr>
-    </thead>
-    <tfoot>
-    <tr>
-      <td class="fl"></td>
-      <td colspan="5"></td>
-      <td class="fr"></td>
-    </tr>
-    </tfoot>
-    <tbody>
-    <% @newsletter_lists.each do |newsletter_list| %>
-        <tr class="<%= cycle("odd", "even") %>">
-          <td class="cl"></td>
-          <td><%= newsletter_list.name %></td>
-          <td><%= newsletter_list.newsletter_subscribers.count %></td>
-          <td><%= newsletter_list.last_synchronized_at %></td>
-          <td class="tda ta_r">
-            <ul-actions>
-                <li>
-                    <%= link_to t("newsletters.newsletter_lists.index.view.synchronize"),  suppliers_newsletter_list_newsletter_synchronizations_path(newsletter_list), :method => :post %>
-                </li>
-            </ul-actions>
-          </td>
-          <td class="cr"></td>
-        </tr>
-    <% end %>
-    <% if false #will_paginate %>
-        <tr class="pagination">
-          <td colspan="5" class="ta_c">
-            <%= will_paginate @newsletter_lists, :previous_label => '&laquo;', :next_label => '&raquo;' %>
-          </td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
-  <% end %>
+  <div id="leads_summary">
+    <div class="column_1to3 fltl" id="news">
+      <frm title="#{t('newsletters.newsletter_lists.index.view.login_info')}">
+        <param:content>
+          <div class="pdd_10">
+            <%= form_tag current_user.link_to_campaign_monitor_account, :target => "_blank" do %>
+                <fieldset class="inputs labels_100 inputs_200 no_pdd">
+                  <ol class="align_inputs no_pdd">
+                    <li class="string" style="margin:10px 0 45px 0">
+                        <%= label_tag :login %>
+                        <%= text_field_tag :login, current_user.cm_username, :tabindex => 1, :disabled => true %>
+                    </li>
+                    <li class="string" style="margin-bottom:45px">
+                      <%= label_tag :password %>
+                        <%= password_field_tag :password, current_user.cm_password, :tabindex => 2, :disabled => true,:class => "rltv" %>
+                    </li>
+                    <li class="commit">
+                      <ibt>
+                        <%= submit_tag t("category_home.show.view.sign_in"), :tabindex => 3 %>
+                      </ibt>
+                    </li>
+                  </ol>
+                </fieldset>
+            <% end %>
+          </div>
+        </param:content>
+      </frm>
+    </div>
+    <div class="column_2to3 fltl" style="padding: 0 0 0 15px" id="my_leads">
+      <div style="height:100%">
+        <% if @newsletter_lists.blank? %>
+          <%= blank_state_message %>
+        <% else %>
+          <table id="newsletter_lists_table" class="generic">
+            <thead>
+            <tr>
+              <th class="hl"></th>
+              <th><%= t("newsletters.newsletter_lists.index.view.list_name") %></th>
+              <th><%= t("newsletters.newsletter_lists.index.view.number_of_subscribers_column") %></th>
+              <th><%= t("newsletters.newsletter_lists.index.view.last_sync_date_column") %></th>
+              <th class="ta_r"><%= t("newsletters.newsletter_lists.index.view.actions_column") %></th>
+              <th class="hr"></th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+              <td class="fl"></td>
+              <td colspan="4"></td>
+              <td class="fr"></td>
+            </tr>
+            </tfoot>
+            <tbody>
+            <% @newsletter_lists.each do |newsletter_list| %>
+                <tr class="<%= cycle("odd", "even") %>">
+                  <td class="cl"></td>
+                  <td><%= newsletter_list.name %></td>
+                  <td><%= newsletter_list.newsletter_subscribers.count %></td>
+                  <td><%= newsletter_list.last_synchronized_at %></td>
+                  <td class="tda ta_r">
+                    <ul-actions>
+                      <li>
+                        <%= link_to t("newsletters.newsletter_lists.index.view.synchronize"),  suppliers_newsletter_list_newsletter_synchronizations_path(newsletter_list), :method => :post %>
+                      </li>
+                    </ul-actions>
+                  </td>
+                  <td class="cr"></td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+    </div>
+    <clb/>
+  </div>
+
+
 </column-mc:>
