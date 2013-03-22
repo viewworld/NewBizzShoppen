@@ -1,0 +1,56 @@
+<column-mc:>
+  <header>
+      <param:content>
+        <%= t("newsletters.newsletter_lists.index.view.header") %>
+      </param:content>
+   </header>
+
+  <% if @newsletter_lists.blank? %>
+      <%= blank_state_message %>
+  <% else %>
+  <table id="newsletter_lists_table" class="generic">
+    <thead>
+    <tr>
+      <th class="hl"></th>
+      <th><%= t("newsletters.newsletter_lists.index.view.name_column") %></th>
+      <th><%= t("newsletters.newsletter_lists.index.view.number_of_subscribers_column") %></th>
+      <th><%= t("newsletters.newsletter_lists.index.view.last_sync_date_column") %></th>
+      <th class="ta_r"><%= t("newsletters.newsletter_lists.index.view.actions_column") %></th>
+      <th class="hr"></th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="5"></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <% @newsletter_lists.each do |newsletter_list| %>
+        <tr class="<%= cycle("odd", "even") %>">
+          <td class="cl"></td>
+          <td><%= newsletter_list.name %></td>
+          <td><%= newsletter_list.newsletter_subscribers.count %></td>
+          <td><%= newsletter_list.last_synchronized_at %></td>
+          <td class="tda ta_r">
+            <ul-actions>
+                <li>
+                    <%= link_to t("newsletters.newsletter_lists.index.view.synchronize"),  suppliers_newsletter_list_newsletter_synchronizations_path(newsletter_list), :method => :post %>
+                </li>
+            </ul-actions>
+          </td>
+          <td class="cr"></td>
+        </tr>
+    <% end %>
+    <% if false #will_paginate %>
+        <tr class="pagination">
+          <td colspan="5" class="ta_c">
+            <%= will_paginate @newsletter_lists, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <% end %>
+</column-mc:>

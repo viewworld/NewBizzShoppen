@@ -7,7 +7,10 @@
       <%= main_menu_link_to(t("layout.main_menu.lead_supplier.deals_to_certify"), suppliers_deal_certification_requests_path, :tab => "deal_certification_requests") unless current_user.deal_certification_requests.blank? %>
     <% end %>
     <% if current_user.newsletter_manager? %>
-        <%= main_menu_link_to t("layout.main_menu.lead_supplier.newsletter"), current_user.link_to_campaign_monitor_account, :tab => "newsletter" %>
+        <%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.lead_supplier.newsletter"), :tab => "newsletter" do %>
+            <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.lead_supplier.sync_leads")), suppliers_newsletter_lists_path, :subtab => "newsletter_lists" %>
+            <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.lead_supplier.monitor")), current_user.link_to_campaign_monitor_account, :subtab => "monitor", :additional_class => 'last', :target => '_blank' %>
+        <% end %>
     <% end %>
 <% end %>
 

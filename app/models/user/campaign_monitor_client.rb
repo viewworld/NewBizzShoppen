@@ -8,6 +8,8 @@ module User::CampaignMonitorClient
           if cm_set_access!
             setup_empty_list!
           end
+        elsif !newsletter_manager? and newsletter_manager_changed?
+          cm_delete!
         end
       end
     end
@@ -36,7 +38,7 @@ module User::CampaignMonitorClient
                                               with_role.email,
                                               CampaignMonitorTimezone.find(time_zone),
                                               with_role.country.name)
-        with_role.update_attribute(:cm_client_id, client_id)
+        with_role.update_attribute(:cm_client_id, YAML.load(client_id))
         client_id
       rescue Exception => e
         self.campaign_monitor_responses.create(:response => e)

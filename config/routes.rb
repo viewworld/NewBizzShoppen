@@ -183,6 +183,9 @@ Nbs::Application.routes.draw do
     resources :not_invoiced_leads, :only => [:index]
     resources :invoices, :only => [:show, :index]
     resources :lead_templates
+    resources :newsletter_lists do
+      resources :newsletter_synchronizations
+    end
   end
 
   namespace :agents do
