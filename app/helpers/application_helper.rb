@@ -306,12 +306,10 @@ module ApplicationHelper
   def edit_subscribable_object_path(subscriber)
     if subscriber.subscriber_type == "User"
       current_user.admin? ? edit_administration_user_path(:id => subscriber.subscriber_id) : ""
-    elsif subscriber.subscriber_type == "AbstractLead"
-      if subscriber.subscriber.class.to_s == "Lead"
-        current_user.admin? ? edit_administration_lead_path(:id => subscriber.subscriber_id) : edit_call_centres_lead_path(:id => subscriber.subscriber_id)
-      elsif subscriber.subscriber.class.to_s == "Contact"
-        edit_callers_campaign_contact_path(:id => subscriber.subscriber_id, :campaign_id => subscriber.campaign_id)
-      end
+    elsif subscriber.subscriber_type == "Lead" or (subscriber.subscriber_type == "AbstractLead" and subscriber.subscriber.class.to_s == "Lead")
+      current_user.admin? ? edit_administration_lead_path(:id => subscriber.subscriber_id) : edit_call_centres_lead_path(:id => subscriber.subscriber_id)
+    elsif subscriber.subscriber_type == "Contact" or (subscriber.subscriber_type == "AbstractLead" and subscriber.subscriber.class.to_s == "Contact")
+      edit_callers_campaign_contact_path(:id => subscriber.subscriber_id, :campaign_id => subscriber.subscriber.campaign_id)
     else
       ""
     end
