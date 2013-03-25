@@ -16,4 +16,71 @@
         </param:actions>
       </frm>
   <% end %>
+
+  <header><%= t("administration.tags.edit.view.tagged_objects", :name => @tag.name) %></header>
+
+  <div class="fltr" style="margin: -20px 0 10px 0">
+      <ibt c="bt_green" icon="download">
+        <%= link_to_function t("administration.tags.edit.view.export"), 'submit_export()' %>
+      </ibt>
+  </div>
+
+  <table class="generic">
+    <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= t("administration.tags.edit.view.name") %></th>
+          <th><%= t("administration.tags.edit.view.type") %></th>
+          <th class="hr"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @tag.taggings.order("taggable_type").each do |tagging| %>
+            <tr>
+              <td></td>
+              <td><%=  tagging.taggable %></td>
+              <td><%=  tagging.taggable.class.name %></td>
+              <td></td>
+            </tr>
+        <% end %>
+    </tbody>
+    <tfoot>
+        <td class="fl"></td>
+        <td colspan="2"></td>
+        <td class="fr"></td>
+    </tfoot>
+  </table>
+
+  <div class="fltr" style="margin: 10px 0 0 0">
+    <ibt c="bt_green" icon="download">
+      <%= link_to_function t("administration.tags.edit.view.export"), 'submit_export()' %>
+    </ibt>
+  </div>
+
+  <div class="clb"></div>
+
+  <%= form_tag "'", :method => :get, :id => "export_tag_form" do %>
+  <% end %>
+
+  <script>
+      function submit_export() {
+          $('#select_export_format').dialog({
+              height: 125,
+              modal: true,
+              buttons: {
+                  "XLS": function(){
+                      $( this ).dialog( "close" );
+                      $('#export_tag_form').attr('action', '<%= administration_tag_path(@tag, :format => :xls) %>');
+                      $('#export_tag_form').submit();
+                  },
+                  "CSV": function(){
+                      $( this ).dialog( "close" );
+                      $('#export_tag_form').attr('action', '<%= administration_tag_path(@tag, :format => :csv) %>');
+                      $('#export_tag_form').submit();
+                  }
+              }
+          });
+      }
+  </script>
+
 </column-mc:>

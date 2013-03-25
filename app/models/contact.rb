@@ -258,4 +258,8 @@ class Contact < AbstractLead
     end
   end
 
+  def to_s
+    company_name
+  end
+
 end

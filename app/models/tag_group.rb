@@ -11,4 +11,8 @@ class TagGroup < ActiveRecord::Base
     User::CategorySupplier.tagged_with(tag_list, options.clone) +
     User::Member.tagged_with(tag_list, options.clone)
   end
+
+  def to_s
+    tags
+  end
 end

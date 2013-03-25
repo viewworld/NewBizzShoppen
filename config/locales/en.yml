@@ -1973,6 +1973,10 @@ en:
           header: "Edit tag %{name}"
           button_update: "Save"
           button_cancel: "Cancel"
+          tagged_objects: "List of tagged objects"
+          name: "Name"
+          type: "Type"
+          export: "Export"
       duplicate:
         flash:
           notice_successful: "Tag %{name} has been successfully duplicated to %{new_name}."

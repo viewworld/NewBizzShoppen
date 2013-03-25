@@ -1,0 +1,4 @@
+<% FasterCSV.generate(:force_quotes => true) do |csv| %>
+    <% csv << ["Name", "Type"] %>
+    <% @tag.taggings.order("taggable_type").each { |t| csv << [t.taggable.to_s.to_s.gsub(/[\n\r\t,]/, " "), t.taggable.class.name.to_s.gsub(/[\n\r\t,]/, " ")] } %>
+<% end.html_safe %>

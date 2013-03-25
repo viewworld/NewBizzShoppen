@@ -34,6 +34,14 @@ class Administration::TagsController < Administration::AdministrationController
     end
   end
 
+  def show
+    @tag = ActsAsTaggableOn::Tag.find(params[:id])
+    respond_to do |wants|
+      wants.csv { send_data render_to_string, :filename => "tagged_with_#{@tag.name}.csv" }
+      wants.xls { send_data render_to_string, :filename => "tagged_with_#{@tag.name}.xls" }
+    end
+  end
+
   protected
 
   def collection

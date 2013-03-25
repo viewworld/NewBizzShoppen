@@ -328,6 +328,10 @@ class Deal < AbstractLead
     end
   end
 
+  def to_s
+    header
+  end
+
   private
 
   def set_enabled_from

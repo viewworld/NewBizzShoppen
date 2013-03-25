@@ -222,6 +222,10 @@ class Lead < AbstractLead
 
   public
 
+  def to_s
+    header
+  end
+
   def hotness_level
     HOTNESS_LEVEL_RANGES.each_with_index { |range, i| return i if range.include?(hotness_ratio) }
   end
