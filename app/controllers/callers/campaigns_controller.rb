@@ -65,8 +65,12 @@ class Callers::CampaignsController < Callers::CallerController
     @call_results = CallResult.where(:id => params[:call_result_ids].split(",")).paginate(:show_all => params[:show_all], :page => params[:page], :per_page => 50)
   end
 
-  def result_details_to_csv
-    send_data CallResult.to_csv(params[:call_result_ids].split(",")), :filename => "call_result.csv"
+  def export_result_details
+    @call_result_ids = params[:call_result_ids].split(",")
+    respond_to do |wants|
+      wants.csv { send_data CallResult.to_csv(@call_result_ids), :filename => "#{@campaign.name}-call-results.csv".to_url }
+      wants.xls { send_data render_to_string :template => 'callers/production/export', :filename => "#{@campaign.name}-call-results.xls".to_url }
+    end
   end
 
   def contacts_for_search

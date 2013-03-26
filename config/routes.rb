@@ -221,7 +221,7 @@ Nbs::Application.routes.draw do
       resources :materials
       member do
         post 'result_details'
-        post 'result_details_to_csv'
+        post 'export_result_details'
         get 'contacts_for_search'
         post 'duplicate'
       end

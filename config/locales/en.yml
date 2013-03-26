@@ -680,6 +680,7 @@ en:
       remove_confirm: "Are you sure?"
       note: Note
       export_to_csv: Export to csv
+      export: Export
     new:
       title: New result
       form_title: Create new

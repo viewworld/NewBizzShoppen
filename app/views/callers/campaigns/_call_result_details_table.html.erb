@@ -54,11 +54,12 @@
     </td>
   </tr>
   <tr class="main_actions">
-    <td colspan="8" class="ta_r"><%= bt_link_to_function :download, t("call_results.table.export_to_csv"), "$('#result_details_to_csv_form').submit()", :class => "fltr" %></td>
+    <td colspan="8" class="ta_r"><%= bt_link_to_function :download, t("call_results.table.export"), "submit_export()", :class => "fltr" %></td>
   </tr>
   </tbody>
 </table>
-<%= form_tag result_details_to_csv_callers_campaign_path(campaign), :method => :post, :id => "result_details_to_csv_form" do %>
+
+<%= form_tag '', :method => :post, :id => "export_result_details_form" do %>
     <%= hidden_field_tag :call_result_ids, "#{params[:call_result_ids]}" %>
 <% end %>
 
@@ -68,6 +69,26 @@
     </div>
 
     <script type="text/javascript">
+        function submit_export() {
+          $('#export_tag_form').submit();
+          $('#select_export_format').dialog({
+              height: 125,
+              modal: true,
+              buttons: {
+                  "XLS": function(){
+                      $( this ).dialog( "close" );
+                      $('#export_result_details_form').attr('action', '<%= export_result_details_callers_campaign_path(campaign, :format => :xls) %>');
+                      $('#export_result_details_form').submit();
+                  },
+                  "CSV": function(){
+                      $( this ).dialog( "close" );
+                      $('#export_result_details_form').attr('action', '<%= export_result_details_callers_campaign_path(campaign, :format => :csv) %>');
+                      $('#export_result_details_form').submit();
+                  }
+              }
+          });
+        }
+
         jQuery("#call_result_<%= call_result.id %>").qtip(
         {
             position: {

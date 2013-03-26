@@ -132,9 +132,9 @@
     var tag_groups_tags_count = [];
 
     <% tag_groups.each do |tag_group| %>
-        <%= "tag_groups_tags_count['#{tag_group.id}'] = '#{tag_group.tags.count}'" %>
+        <%= "tag_groups_tags_count['#{tag_group.id}'] = '#{tag_group.tags.count}';".html_safe %>
         <% tag_group.tags.each do |tag| %>
-            <%= "tags_tag_groups['#{tag.id}'] = '#{tag_group.id}'" %>
+            <%= "tags_tag_groups['#{tag.id}'] = '#{tag_group.id}';".html_safe %>
         <% end %>
     <% end %>
 
