@@ -59,27 +59,28 @@
 
   <div class="clb"></div>
 
-  <%= form_tag "'", :method => :get, :id => "export_tag_form" do %>
+  <%= form_tag administration_tag_path(@tag, :format => :xls), :method => :get, :id => "export_tag_form" do %>
   <% end %>
 
   <script>
       function submit_export() {
-          $('#select_export_format').dialog({
-              height: 125,
-              modal: true,
-              buttons: {
-                  "XLS": function(){
-                      $( this ).dialog( "close" );
-                      $('#export_tag_form').attr('action', '<%= administration_tag_path(@tag, :format => :xls) %>');
-                      $('#export_tag_form').submit();
-                  },
-                  "CSV": function(){
-                      $( this ).dialog( "close" );
-                      $('#export_tag_form').attr('action', '<%= administration_tag_path(@tag, :format => :csv) %>');
-                      $('#export_tag_form').submit();
-                  }
-              }
-          });
+          $('#export_tag_form').submit();
+//          $('#select_export_format').dialog({
+//              height: 125,
+//              modal: true,
+//              buttons: {
+//                  "XLS": function(){
+//                      $( this ).dialog( "close" );
+//                      $('#export_tag_form').attr('action', '<%= administration_tag_path(@tag, :format => :xls) %>');
+//                      $('#export_tag_form').submit();
+//                  },
+//                  "CSV": function(){
+//                      $( this ).dialog( "close" );
+//                      $('#export_tag_form').attr('action', '<%= administration_tag_path(@tag, :format => :csv) %>');
+//                      $('#export_tag_form').submit();
+//                  }
+//              }
+//          });
       }
   </script>
 

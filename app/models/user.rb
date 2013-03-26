@@ -1031,4 +1031,13 @@ class User < ActiveRecord::Base
     redirect_to = "%2f" if redirect_to.nil?
     "https://#{Rails.env.production? ? 'fairleads' : 'selleo-mariachi'}.createsend.com/login.aspx?ReturnUrl=#{redirect_to}&username=#{newsletter_campaign.cm_username}&password=#{newsletter_campaign.cm_password}"
   end
+
+  %w{ address_line_1 address_line_2 address_line_3 zip_code region}.each do |address_field|
+    eval %{
+      def #{address_field}
+        address ? address.#{address_field} : nil
+      end
+    }
+  end
+
 end

@@ -3,6 +3,8 @@ class TagGroup < ActiveRecord::Base
 
   acts_as_newsletter_source
 
+  CSV_ATTRS = %w{ tags }
+
   def tagged_objects
     options = match_all? ?  {:match_all => true} : {:any => true}
     Contact.tagged_with(tag_list, options.clone) +

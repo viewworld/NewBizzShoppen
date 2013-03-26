@@ -4,18 +4,22 @@
           xmlns:x="urn:schemas-microsoft-com:office:excel"
           xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
           xmlns:html="http://www.w3.org/TR/REC-html40">
-  <Worksheet ss:Name="Sheet1">
-    <Table>
-      <Row>
-          <Cell><Data ss:Type="String">Name</Data></Cell>
-          <Cell><Data ss:Type="String">Type</Data></Cell>
-      </Row>
-      <% @tag.taggings.order("taggable_type").each do |tagging| %>
+  <% @tag.taggings.reject{|t| [TagGroup].include?(t.taggable.class) }.group_by{|t| t.taggable.class }.each do |klass, taggings| %>
+      <Worksheet ss:Name="<%= klass.name.split('::').last %>">
+        <Table>
           <Row>
-             <Cell><Data ss:Type="String"><%= tagging.taggable %></Data></Cell>
-             <Cell><Data ss:Type="String"><%= tagging.taggable.class.name %></Data></Cell>
+            <% klass::CSV_ATTRS.each do |attr| %>
+                <Cell><Data ss:Type="String"><%= attr.humanize %></Data></Cell>
+            <% end %>
           </Row>
-      <% end %>
-    </Table>
-  </Worksheet>
+          <% taggings.each do |tagging| %>
+              <Row>
+                <% klass::CSV_ATTRS.each do |attr| %>
+                    <Cell><Data ss:Type="String"><%= tagging.taggable.send(attr) %></Data></Cell>
+                <% end %>
+              </Row>
+          <% end %>
+        </Table>
+      </Worksheet>
+  <% end %>
 </Workbook>
