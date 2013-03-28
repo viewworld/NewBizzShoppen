@@ -5,21 +5,43 @@
           xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
           xmlns:html="http://www.w3.org/TR/REC-html40">
   <% @tag.taggings.reject{|t| [TagGroup].include?(t.taggable.class) }.group_by{|t| t.taggable.class }.each do |klass, taggings| %>
-      <Worksheet ss:Name="<%= klass.name.split('::').last %>">
-        <Table>
-          <Row>
-            <% klass::CSV_ATTRS.each do |attr| %>
-                <Cell><Data ss:Type="String"><%= attr.humanize %></Data></Cell>
-            <% end %>
-          </Row>
-          <% taggings.each do |tagging| %>
+      <% if klass == Result %>
+          <Worksheet ss:Name="<%= CallResult.class_name %>">
+            <Table>
               <Row>
-                <% klass::CSV_ATTRS.each do |attr| %>
-                    <Cell><Data ss:Type="String"><%= tagging.taggable.send(attr) %></Data></Cell>
+                <% (CallResult::CSV_ATTRS + Contact::CSV_ATTRS).each do |attr| %>
+                    <Cell><Data ss:Type="String"><%= attr.humanize %></Data></Cell>
                 <% end %>
               </Row>
-          <% end %>
-        </Table>
-      </Worksheet>
+              <% CallResult.where(:result_id => taggings.map(&:taggable_id)).each do |call_result| %>
+                  <Row>
+                    <% CallResult::CSV_ATTRS.each do |attr| %>
+                      <Cell><Data ss:Type="String"><%= call_result.send(attr) %></Data></Cell>
+                    <% end %>
+                    <% Contact::CSV_ATTRS.each do |attr| %>
+                      <Cell><Data ss:Type="String"><%= call_result.contact.send(attr) %></Data></Cell>
+                    <% end %>
+                  </Row>
+              <% end %>
+            </Table>
+          </Worksheet>
+      <% else %>
+          <Worksheet ss:Name="<%= klass.name.split('::').last %>">
+            <Table>
+              <Row>
+                <% klass::CSV_ATTRS.each do |attr| %>
+                    <Cell><Data ss:Type="String"><%= attr.humanize %></Data></Cell>
+                <% end %>
+              </Row>
+              <% taggings.each do |tagging| %>
+                  <Row>
+                    <% klass::CSV_ATTRS.each do |attr| %>
+                        <Cell><Data ss:Type="String"><%= tagging.taggable.send(attr) %></Data></Cell>
+                    <% end %>
+                  </Row>
+              <% end %>
+            </Table>
+          </Worksheet>
+      <% end %>
   <% end %>
 </Workbook>

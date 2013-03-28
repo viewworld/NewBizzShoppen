@@ -4,6 +4,8 @@ class CallResult < ActiveRecord::Base
                 :contact_company_name, :buying_category_ids, :result_id_changed, :user_not_charge_vat, :current_user, :contact_subscription_plan_id,
                 :contact_newsletter_on, :contact_requested_deal_ids, :upgraded_user, :chain_mail_type_id
 
+  CSV_ATTRS = %w{ result_name }
+
   belongs_to :contact
   belongs_to :result
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"

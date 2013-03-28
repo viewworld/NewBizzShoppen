@@ -36,14 +36,25 @@
     </thead>
     <tbody>
         <% @tag.taggings.order("taggable_type").each do |tagging| %>
-            <tr>
-              <td></td>
-              <td><%=  tagging.taggable %></td>
-              <td><%=  tagging.taggable.class.name %></td>
-              <td></td>
-            </tr>
+              <% if tagging.taggable_type == "Result" %>
+                <% CallResult.where(:result_id => tagging.taggable_id).each do |call_result| %>
+                  <tr>
+                    <td></td>
+                    <td><%= "#{call_result.contact.company_name}" %></td>
+                    <td><%= "#{call_result.class.name} - #{call_result.result_name}" %></td>
+                    <td></td>
+                  </tr>
+                <% end %>
+              <% else %>
+                <tr>
+                  <td></td>
+                  <td><%= tagging.taggable %></td>
+                  <td><%= tagging.taggable.class.name %></td>
+                  <td></td>
+                </tr>
+              <% end %>
         <% end %>
-    </tbody>
+        </tbody>
     <tfoot>
         <td class="fl"></td>
         <td colspan="2"></td>
@@ -65,22 +76,6 @@
   <script>
       function submit_export() {
           $('#export_tag_form').submit();
-//          $('#select_export_format').dialog({
-//              height: 125,
-//              modal: true,
-//              buttons: {
-//                  "XLS": function(){
-//                      $( this ).dialog( "close" );
-//                      $('#export_tag_form').attr('action', '<%= administration_tag_path(@tag, :format => :xls) %>');
-//                      $('#export_tag_form').submit();
-//                  },
-//                  "CSV": function(){
-//                      $( this ).dialog( "close" );
-//                      $('#export_tag_form').attr('action', '<%= administration_tag_path(@tag, :format => :csv) %>');
-//                      $('#export_tag_form').submit();
-//                  }
-//              }
-//          });
       }
   </script>
 
