@@ -146,6 +146,7 @@ en:
         results: "Results"
         campaigns_tab: "Campaigns"
         agent_performance: "Agent perf."
+        payout: "Payout"
         background_tasks: "Background tasks"
       agent:
         leads: My leads
@@ -1685,6 +1686,21 @@ en:
         note: "Invoice note"
         company_name: "Company"
 
+    payouts:
+      index:
+        view:
+          search_label: "Search"
+          created_at_from: "Date from"
+          created_at_to: "Date to"
+          search_button: "Search"
+          header: "Results"
+          table:
+            date: "Date"
+            agent: "Agent name"
+            campaign: "Campaign"
+            result: "Result"
+            value: "Value"
+            payout: "Payout"
 
     payment_transactions:
       index:

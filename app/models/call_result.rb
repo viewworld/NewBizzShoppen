@@ -17,6 +17,7 @@ class CallResult < ActiveRecord::Base
   accepts_nested_attributes_for :contact
 
   include EmailTemplateEditor
+  include ScopedSearch::Model
 
   validates_presence_of :result_id, :creator_id, :contact_id
   validates_presence_of :contact_email_address, :if => Proc.new{|cr| cr.result.send_material? or cr.result.upgrades_to_any_user?}
@@ -25,6 +26,7 @@ class CallResult < ActiveRecord::Base
   validates_presence_of :contact_company_name, :contact_phone_number, :if => Proc.new { |cr| cr.result.upgrades_to_member? }
   validate :validate_uniqueness_of_contact_email_address, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
   validate :validate_upgraded_user, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
+  validates_numericality_of :payout, :allow_blank => true
 
   after_create :process_side_effects, :update_contact_note, :set_last_call_result_in_contact, :update_contact_email, :update_contact_address, :unless => :save_without_callbacks
   after_update :process_side_effects, :update_contact_email, :update_contact_address, :unless => :save_without_callbacks
@@ -53,6 +55,10 @@ class CallResult < ActiveRecord::Base
   scope :with_reported, where("campaigns_results.is_reported is true")
   scope :with_dynamic_value, lambda { |is_dynamic| where("campaigns_results.is_dynamic_value = ?", is_dynamic) }
   scope :with_leads_from_deals_requested_during_upgrade_to_member, joins("INNER JOIN users as members ON members.contact_id = contacts.id  AND members.roles_mask & 128 > 0").joins("INNER JOIN leads as generated_leads ON members.id = generated_leads.requested_by AND generated_leads.requested_during_upgrade_to_member IS TRUE")
+  scope :created_at_from, lambda { |from| where("call_results.created_at >= ?", from.to_date) }
+  scope :created_at_to, lambda { |to| where("call_results.created_at <= ?", to.to_date) }
+  #scope :created_by_call_centres, lambda { |call_centres| where(:creator_id => User::CallCentre.find_all_by_id(call_centres).map(&:children).flatten.map(&:id)) }
+  #scope :created_by_agents, lambda { |agents| where(:creator_id => agents.map(&:to_i)) }
   default_scope :order => 'call_results.created_at DESC'
 
   def set_payout
