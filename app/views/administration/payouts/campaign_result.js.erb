@@ -1,0 +1,5 @@
+<% if @campaign_result.save %>
+    $('input[data-campaign-result-id="<%= @campaign_result.id %>"]').val('<%= @campaign_result.value %>').closest('td').effect('highlight');
+<% else %>
+    alert('<%= @campaign_result.errors.full_messages.join(', ') %>');
+<% end %>

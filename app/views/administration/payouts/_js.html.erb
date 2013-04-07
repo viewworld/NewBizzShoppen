@@ -1,0 +1,67 @@
+<js:>
+  <script type="text/javascript">
+
+      <%=
+     %{
+     var all_campaigns = [
+      #{@search.all_campaigns.map { |c| "['#{c.name}', #{c.id}]" }.join(',')}
+     ]
+     }.html_safe
+      %>
+
+      <% @search.all_campaigns.partition { |c| c.active? }.each_with_index do |campaigns_group, i| %>
+      <%=
+      %{
+      var #{i == 0 ? 'active' : 'inactive'}_campaigns = [
+       #{campaigns_group.map { |c| "['#{c.name}', #{c.id}]" }.join(',')}
+      ]
+      }.html_safe
+
+      %>
+      <% end %>
+
+      $(function() {
+          $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+      });
+
+      function load_campaigns(campaign_selection) {
+          c_array = eval(campaign_selection + "_campaigns");
+
+          $('#campaign_ids option').each(function()
+          {
+              $(this).remove();
+          });
+          $.each(c_array, function(index, value) {
+              $('#campaign_ids').
+                      append($("<option></option>").
+                      attr("value", value[1]).
+                      text(value[0]));
+          });
+          $("#campaign_ids option").each(function()
+          {
+              $(this).attr("selected", "selected");
+          });
+      }
+
+    $('input[id^="call_result_"]').blur(function(){
+        $.ajax({
+            url: '/administration/payouts/' + $(this).attr('data-call-result-id') + '/call_result.js',
+            type: 'PUT',
+            data: {
+                'payout': $(this).val()
+            }
+        })
+    });
+
+    $('input[id^="campaign_result_"]').blur(function(){
+        $.ajax({
+            url: '/administration/payouts/' + $(this).attr('data-campaign-result-id') + '/campaign_result.js',
+            type: 'PUT',
+            data: {
+                'value': $(this).val()
+            }
+        })
+    });
+
+  </script>
+</js:>

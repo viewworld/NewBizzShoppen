@@ -19,13 +19,18 @@ class Administration::PayoutsController < Administration::AdministrationControll
   end
 
   def collection
-    @search = CallResult.scoped_search(params[:search])
-    @call_results = @search.order("created_at DESC").paginate(:page => params[:page], :per_page => 50)
+    @search = Payout::Search.new(params.merge(:current_user => current_user))
+    @call_results = @search.call_results.order("created_at DESC").paginate(:page => params[:page], :per_page => 50)
   end
 
   def call_result
     @call_result = CallResult.find(params[:id])
     @call_result.payout = params[:payout]
+  end
+
+  def campaign_result
+    @campaign_result = ::CampaignsResult.find(params[:id])
+    @campaign_result.value = params[:value]
   end
 
 end

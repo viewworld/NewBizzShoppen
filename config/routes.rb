@@ -92,6 +92,7 @@ Nbs::Application.routes.draw do
     resources :payouts do
       member do
         put 'call_result'
+        put 'campaign_result'
       end
     end
   end

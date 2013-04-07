@@ -1,0 +1,85 @@
+<search-box:>
+  <div class="search_box">
+    <div class="search_left"></div>
+    <div class="search_right"></div>
+    <h2><%= t("campaign_reports.index.search_label") %></h2>
+
+    <div class="search_content">
+      <%= form_tag administration_payouts_path, :method => :get, :id => "form_campaign_reports_search" do %>
+          <div class="grid_310 fltl">
+            <fieldset class="inputs_vertical">
+              <ol class="no_pdd">
+                <li class="select">
+                  <%= label_tag t("campaigns.show.search.campaigns") %>
+                  <%= select_tag :campaign_ids, options_from_collection_for_select((@search.campaign_selection == "all" ? @search.all_campaigns : @search.all_campaigns.select { |c| @search.campaign_selection == "active" ? c.active? : !c.active? }).sort_by(&:name), "id", "name", @search.campaign_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
+                </li>
+                <li class="select">
+                  <%= label_tag t("campaigns.show.search.results") %>
+                  <%= select_tag :result_ids, options_from_collection_for_select(@search.all_results.sort_by(&:name), "id", "name", @search.result_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
+                </li>
+                <li class="radio no_pdd_t" style="padding-left: 10px">
+                  <%= radio_button_tag :campaign_selection, :all, @search.campaign_selection == "all", {:onclick => "load_campaigns('all');"} %>
+                  <%= label_tag t("campaign_reports.index.search.all") %>
+
+                  <%= radio_button_tag :campaign_selection, :active, @search.campaign_selection == "active", {:onclick => "load_campaigns('active');"} %>
+                  <%= label_tag t("campaign_reports.index.search.active") %>
+
+                  <%= radio_button_tag :campaign_selection, :inactive, @search.campaign_selection == "inactive", {:onclick => "load_campaigns('inactive');"} %>
+                  <%= label_tag t("campaign_reports.index.search.inactive") %>
+                </li>
+              </ol>
+            </fieldset>
+          </div>
+          <% if current_user.has_role?(:admin) %>
+              <div class="grid_310 fltl">
+                <fieldset id="agents_selection" class="inputs_vertical">
+                  <ol class="no_pdd">
+                    <li class="select">
+                      <%= label_tag t("campaigns.show.search.call_centres") %>
+                      <%= select_tag :call_centre_id, options_from_collection_for_select(@search.all_call_centres.sort_by(&:email), "id", "email", @search.call_centre_id), :include_blank => true, :multiple => false, :style => "width:140px;", :onchange => "load_agents_for_call_centre($('#call_centre_id').val())" %>
+                    </li>
+                    <li class="select">
+                      <%= label_tag t("campaigns.show.search.call_centre_agents") %>
+                      <%= select_tag :call_centre_agent_ids, options_from_collection_for_select(@search.all_call_centre_agents.sort_by(&:email), "id", "email", @search.call_centre_agent_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
+                    </li>
+                  </ol>
+                </fieldset>
+              </div>
+          <% end %>
+          <div class="grid_250 fltl">
+            <fieldset class="inputs_vertical">
+              <ol class="no_pdd">
+                <li class="date">
+                  <%= label_tag :date_to, t("campaigns.show.search.date_from") %>
+                  <%= text_field_tag :date_from, @search.date_from, :class => "datepicker" %>
+                </li>
+                <li class="date">
+                  <%= label_tag :date_to, t("campaigns.show.search.date_to") %>
+                  <%= text_field_tag :date_to, @search.date_to, :class => "datepicker" %>
+                </li>
+              </ol>
+            </fieldset>
+            <p class="pdd_10">
+              <%= t("campaign_reports.index.ranges_label") %>:<br/>
+              <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#date_from').val('#{Date.today.beginning_of_month}');$('#date_to').val('#{Date.today.end_of_month}');" %>
+              <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}');" %>
+              <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}');" %>
+            </p>
+          </div>
+
+          <div class="grid_250 fltl">
+            <fieldset class="">
+              <ol class="pdd_10">
+                <li class="commit pdd_10 no_pdd_l">
+                  <ibt c="bt_green" icon="magnify">
+                    <%= submit_tag t("campaign_reports.index.search_button") %>
+                  </ibt>
+                </li>
+              </ol>
+            </fieldset>
+          </div>
+          <clb/>
+      <% end %>
+    </div>
+  </div>
+</search-box:>

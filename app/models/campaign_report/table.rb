@@ -16,9 +16,9 @@ class CampaignReport::Table
       extend ApplicationHelper
     end
     html = av.render(:partial => 'callers/campaign_reports/report', :type => :erb, :locals => { :per_user => @per_user, :campaign_users => @campaign_users, :campaign_reports => @campaign_reports, :result_ids => @result_ids, :options => @options })
-    File.open(Rails.root.join("public/system/html2pdf/campaign_reports_cache/#{@report_cache}.html"), 'w') {|f| f.write(html) }
+    File.open(Rails.root.join("public/system/campaign_reports_cache/#{@report_cache}.html"), 'w') {|f| f.write(html) }
     markup = File.read(Rails.root.join("app/views/layouts/pdf_report.html")) % [@options[:date_from], @options[:date_to], html]
-    File.open(Rails.root.join("public/system/html2pdf/campaign_reports_cache/#{@report_cache}.pdf.html"), 'w') {|f| f.write(markup) }
+    File.open(Rails.root.join("public/system/campaign_reports_cache/#{@report_cache}.pdf.html"), 'w') {|f| f.write(markup) }
     notify!
     html
   end

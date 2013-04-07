@@ -1,78 +1,5 @@
 <search-box:>
-  <div class="search_box">
-    <div class="search_left"></div>
-    <div class="search_right"></div>
-    <h2><%= t("administration.payouts.index.view.search_label") %></h2>
-
-    <div class="search_content">
-      <%= form_for @search, :url => administration_payouts_path do |f| %>
-          <fieldset class="inputs_vertical">
-            <ol class="no_pdd">
-              <li>
-                <p style="padding: 10px 0 3px 5px; line-height: 14px">Time ranges</p>
-                  <ul>
-                    <li style="float:none;padding-left:5px">
-                      <%= link_to_function t("campaigns.show.ranges.this_year"), "$('#search_created_at_from').val('#{Date.today.beginning_of_year}');$('#search_created_at_to').val('#{Date.today.end_of_year}');" %>&nbsp;
-                    </li>
-                    <li style="float:none">
-                      <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#search_created_at_from').val('#{Date.today.beginning_of_month}');$('#search_created_at_to').val('#{Date.today.end_of_month}');" %>&nbsp;
-                    </li>
-                    <li style="float:none">
-                      <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#search_created_at_from').val('#{Date.today.beginning_of_week}');$('#search_created_at_to').val('#{Date.today.end_of_week}');" %>&nbsp;
-                    </li>
-                    <li style="float:none">
-                      <%= link_to_function t("campaigns.show.ranges.today"), "$('#search_created_at_from').val('#{Date.today}');$('#search_created_at_to').val('#{Date.today}');$('#performance_form').submit()" %>
-                    </li>
-                  </ul>
-              </li>
-              <li class="date" style="margin-left:15px">
-                <%= f.label :created_at_from, t("administration.payouts.index.view.created_at_from") %>
-                <%= f.text_field :created_at_from, :class => "formtastic-ui-datepicker" %>
-                <%= f.label :created_at_to, t("administration.payouts.index.view.created_at_to"), :style => "margin-top:25px" %>
-                <%= f.text_field :created_at_to, :class => "formtastic-ui-datepicker" %>
-              </li>
-              <li style="margin-left:15px">
-                <p style="padding: 10px 0 3px 1px; line-height: 14px">
-                  <%= check_box_tag "all_call_centres", "1", false, :onclick => "$('#call_centres input').attr('checked', $(this).attr('checked'))" %>
-                  Call centres
-                </p>
-                <div style="border: 1px solid #d0d0d0; max-height:150px; width:300px; overflow-y: scroll">
-                  <ul id="call_centres">
-                  <% User::CallCentre.without_locked.all.sort_by(&:screen_name).each do |call_centre| %>
-                    <li style="float:none;padding:0">
-                      <%= check_box_tag "with_call_centre[]", call_centre.id, Array(params[:with_call_centre]).include?(call_centre.id.to_s) %>
-                      <%= label_tag "with_call_centre[]", call_centre.screen_name %>
-                    </li>
-                  <% end %>
-                  </ul>
-                </div>
-              </li>
-              <li style="margin-left:15px">
-                <p style="padding: 10px 0 3px 1px; line-height: 14px">
-                  <%= check_box_tag "all_agents", "1", false, :onclick => "$('#agents input').attr('checked', $(this).attr('checked'))" %>
-                  Agents
-                </p>
-                <div style="border: 1px solid #d0d0d0; height:150px; width: 300px; overflow-y: scroll">
-                  <ul id="agents">
-                  <% User.with_any_role(:agent, :call_centre_agent).without_locked.all.sort_by(&:screen_name).each do |agent| %>
-                    <li style="float:none;padding:0">
-                      <%= check_box_tag "search[with_creator][]", agent.id, Array(params[:with_agent]).include?(agent.id.to_s) %>
-                      <%= label_tag "search[with_creator][]", agent.screen_name %>
-                    </li>
-                  <% end %>
-                  </ul>
-                </div>
-              </li>
-              <li class="commit" style="margin-left:15px">
-                <ibt c="bt_green" icon="magnify">
-                  <%= submit_tag t("administration.payouts.index.view.search_button") %>
-                </ibt>
-              </li>
-            </ol>
-          </fieldset>
-      <% end %>
-    </div>
-  </div>
+  <%= render :partial => 'search' %>
 </search-box:>
 
 <column-mc:>
@@ -106,12 +33,13 @@
             <tr class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
               <td><%= call_result.created_at.to_date %></td>
-              <td><%= call_result.creator.screen_name %></td>
+              <td><%= "#{call_result.creator.email}, #{call_result.creator.full_name}" %></td>
               <td><%= call_result.contact.campaign.name %></td>
               <td><%= call_result.result.name %></td>
               <td>
                 <% if call_result.contact and call_result.result and campaign_result = call_result.result.campaigns_results.where(:campaign_id => call_result.contact.campaign_id).first %>
-                    <%= "#{campaign_result.value} #{campaign_result.campaign.currency}" if campaign_result.value.to_f.nonzero? %>
+                    <%= text_field_tag "campaign_result[#{campaign_result.id}][value]", campaign_result.value, 'data-campaign-result-id' => campaign_result.id %>
+                    <%= campaign_result.campaign.currency %>
                 <% end %>
               </td>
               <td>
@@ -132,15 +60,6 @@
       </table>
   <% end %>
 
-  <script>
-    $('input[id^="call_result_"]').blur(function(){
-        $.ajax({
-            url: '/administration/payouts/' + $(this).attr('data-call-result-id') + '/call_result.js',
-            type: 'PUT',
-            data: {
-                'payout': $(this).val()
-            }
-        })
-    });
-  </script>
+  <%= render :partial => 'js' %>
+
 </column-mc:>

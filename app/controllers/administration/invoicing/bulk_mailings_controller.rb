@@ -10,7 +10,7 @@ class Administration::Invoicing::BulkMailingsController < Administration::Admini
     @email_template.update_attributes(params[:email_template])
     @invoices.each do |invoice|
       invoice_filename = invoice.store_pdf(current_user).basename
-      invoice_path = Pathname.new(File.join(::Rails.root.to_s,'public/system/html2pdf/invoice_cache', invoice_filename))
+      invoice_path = Pathname.new(File.join(::Rails.root.to_s,'public/system/invoice_cache', invoice_filename))
       TemplateMailer.new(invoice.user.email, @email_template, invoice.user.country,
                                        {:invoice => invoice, :sender_id => user_signed_in? ? current_user.id : nil}, Array(invoice_path)).deliver!
       invoice.update_attribute(:emailed_at, Time.now)
