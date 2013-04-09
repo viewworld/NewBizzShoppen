@@ -1694,6 +1694,8 @@ en:
           created_at_to: "Date to"
           search_button: "Search"
           header: "Results"
+          pdf_by_agent: "PDF report by agent"
+          pdf_by_campaign: "PDF report by campaign"
           table:
             date: "Date"
             agent: "Agent name"

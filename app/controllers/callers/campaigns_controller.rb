@@ -80,6 +80,11 @@ class Callers::CampaignsController < Callers::CallerController
     end
   end
 
+  def results
+    @campaigns = params[:campaign_ids] ? Campaign.find(params[:campaign_ids]) : Campaign.all
+    @results = Result.joins(:campaigns_results).where(:campaigns_results => { :campaign_id => @campaigns.map(&:id) }).all.uniq.sort_by(&:name)
+  end
+
   protected
 
   def set_crm_campaigns

@@ -11,7 +11,7 @@
               <ol class="no_pdd">
                 <li class="select">
                   <%= label_tag t("campaigns.show.search.campaigns") %>
-                  <%= select_tag :campaign_ids, options_from_collection_for_select((@search.campaign_selection == "all" ? @search.all_campaigns : @search.all_campaigns.select { |c| @search.campaign_selection == "active" ? c.active? : !c.active? }).sort_by(&:name), "id", "name", @search.campaign_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
+                  <%= select_tag :campaign_ids, options_from_collection_for_select((@search.campaign_selection == "all" ? @search.all_campaigns : @search.all_campaigns.select { |c| @search.campaign_selection == "active" ? c.active? : !c.active? }).sort_by(&:name), "id", "name", @search.campaign_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;", :onchange => "load_results_for_campaigns()" %>
                 </li>
                 <li class="select">
                   <%= label_tag t("campaigns.show.search.results") %>

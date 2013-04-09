@@ -43,6 +43,11 @@ class CallResult < ActiveRecord::Base
     end
   end
   before_create :set_payout
+  before_save do
+    if payout_changed? and !payout.nil? and payout_currency_id.nil?
+      self.payout_currency_id = contact.campaign.currency_id
+    end
+  end
 
   PENDING_RESULT_TYPES = [:call_back, :not_interested_now]
 

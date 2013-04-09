@@ -94,6 +94,10 @@ Nbs::Application.routes.draw do
         put 'call_result'
         put 'campaign_result'
       end
+      collection do
+        get 'agents'
+        get 'campaigns'
+      end
     end
   end
 
@@ -230,6 +234,9 @@ Nbs::Application.routes.draw do
         post 'export_result_details'
         get 'contacts_for_search'
         post 'duplicate'
+      end
+      collection do
+        post 'results'
       end
       resources :results, :except => :show do
         collection do

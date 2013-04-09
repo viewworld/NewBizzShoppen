@@ -3,7 +3,22 @@
 </search-box:>
 
 <column-mc:>
-  <header><%= t("administration.payouts.index.view.header") %></header>
+  <header>
+    <param:content>
+      <%= t("administration.payouts.index.view.header") %>
+    </param:content>
+
+    <% if @search.call_results.any? %>
+        <param:actions>
+          <ul class="header_actions">
+            <li class="last">
+              <%= bt_link_to nil, t("administration.payouts.index.view.pdf_by_agent"), agents_administration_payouts_path(:format => 'pdf') %>
+              <%= bt_link_to nil, t("administration.payouts.index.view.pdf_by_campaign"), campaigns_administration_payouts_path(:format => 'pdf') %>
+            </li>
+          </ul>
+        </param:actions>
+    <% end %>
+  </header>
 
   <% if @call_results.blank?  %>
       <%= blank_state_message %>
@@ -30,6 +45,7 @@
         </tfoot>
         <tbody id="invoices_list">
         <% @call_results.each do |call_result| %>
+          <% if call_result.contact and call_result.result and campaign_result = call_result.result.campaigns_results.where(:campaign_id => call_result.contact.campaign_id).first %>
             <tr class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
               <td><%= call_result.created_at.to_date %></td>
@@ -37,17 +53,16 @@
               <td><%= call_result.contact.campaign.name %></td>
               <td><%= call_result.result.name %></td>
               <td>
-                <% if call_result.contact and call_result.result and campaign_result = call_result.result.campaigns_results.where(:campaign_id => call_result.contact.campaign_id).first %>
-                    <%= text_field_tag "campaign_result[#{campaign_result.id}][value]", campaign_result.value, 'data-campaign-result-id' => campaign_result.id %>
-                    <%= campaign_result.campaign.currency %>
-                <% end %>
+                  <%= text_field_tag "campaign_result[#{campaign_result.id}][value]", campaign_result.value, 'data-campaign-result-id' => campaign_result.id, :style => "width:50px" %>
+                  <%= campaign_result.campaign.currency %>
               </td>
               <td>
-                <%= text_field_tag "call_result[#{call_result.id}][payout]", call_result.payout, 'data-call-result-id' => call_result.id %>
+                <%= text_field_tag "call_result[#{call_result.id}][payout]", call_result.payout, 'data-call-result-id' => call_result.id, :style => "width:50px" %>
                 <%= call_result.payout_currency %>
               </td>
               <td class="cr"></td>
             </tr>
+          <% end %>
         <% end %>
         <% if will_paginate @call_results %>
             <tr class="pagination">

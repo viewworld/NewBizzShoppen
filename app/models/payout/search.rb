@@ -60,9 +60,20 @@ class Payout::Search
 
     @campaigns = @campaigns.select { |c| @campaign_selection == "active" ? c.active? : !c.active? } unless @campaign_selection == "all"
 
-    @call_results = CallResult.joins(:contact).
+    @call_results = CallResult.joins(:contact).joins("INNER JOIN campaigns_results ON campaigns_results.result_id = call_results.result_id AND campaigns_results.campaign_id = leads.campaign_id").
         where(:creator_id => @selected_agents, :leads => { :campaign_id => @campaigns.map(&:id) }, :result_id => @result_ids ).
+        where("campaigns_results.value IS NOT NULL OR call_results.payout IS NOT NULL").
         created_at_from(@date_from).created_at_to(@date_to)
   end
+
+  def to_html
+    av = ActionView::Base.new
+    av.view_paths << File.join(::Rails.root.to_s, "app", "views")
+    av.instance_eval do
+      extend ApplicationHelper
+    end
+    av.render(:partial => 'callers/agent_timesheets/index', :type => :erb, :locals => { :timesheet => self })
+  end
+
 
 end

@@ -1,0 +1,10 @@
+$('#result_ids option').remove();
+
+<% @results.each do |result| %>
+        $("#result_ids").
+        append($("<option></option>").
+        attr("value", "<%= result.id %>").
+        text("<%= result.name %>"));
+<% end %>
+
+$("#result_ids option").attr('selected', 'selected');

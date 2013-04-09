@@ -195,11 +195,3 @@ function load_agents_for_call_centre(call_centre_id){
         data: "call_centre_id=" + call_centre_id
     });
 }
-
-function load_results_for_campaigns(campaign_ids){
-    $.ajax({
-        type: "POST",
-        url: "/callers/campaign_reports/load_agents",
-        data: "call_centre_id=" + call_centre_id
-    });
-}

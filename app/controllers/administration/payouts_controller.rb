@@ -33,4 +33,11 @@ class Administration::PayoutsController < Administration::AdministrationControll
     @campaign_result.value = params[:value]
   end
 
+  def agents
+    collection
+    respond_to do |format|
+      format.pdf { send_file @search.store_pdf(current_user), :type => 'application/pdf'}
+    end
+  end
+
 end

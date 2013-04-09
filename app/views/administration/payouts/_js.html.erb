@@ -63,5 +63,20 @@
         })
     });
 
+  function load_results_for_campaigns(){
+      var campaign_ids = new Array;
+      $('#campaign_ids option:selected').each(function(){
+          return campaign_ids.push(parseInt($(this).attr('value')))
+      });
+
+      $.ajax({
+          type: "POST",
+          url: "/callers/campaigns/results.js",
+          data: {
+              campaign_ids: campaign_ids
+          }
+      });
+  }
+
   </script>
 </js:>
