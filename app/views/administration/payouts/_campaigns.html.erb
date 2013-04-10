@@ -1,28 +1,33 @@
-<% search.call_results.group_by(&:creator).each do |agent, call_results| %>
+<% search.call_results.group_by{|cr| cr.contact.campaign}.each do |campaign, call_results| %>
     <% payouts = {} %>
+    <% values = {} %>
     <% call_results.each do |call_result| %>
+        <% campaign_result = call_result.result.campaigns_results.where(:campaign_id => campaign.id).first %>
         <% payouts[call_result.id] = (call_result.payout_currency ? call_result.payout_currency.to_currency(search.currency, call_result.payout.to_f) : 0.0) %>
+        <% values[call_result.result_id] = campaign.currency.to_currency(search.currency, campaign_result.value.to_f) %>
     <% end %>
 
     <div style="page-break-after: always;">
-    <h3><%= t("administration.payouts.index.view.agents_header", :from => search.date_from, :to => search.date_to) %></h3>
-    <h1><%= "#{agent.email}, #{agent.full_name}" %></h1>
-    <h2><%= t("administration.payouts.index.view.total") %>: <%=  as_currency payouts.values.sum, search.currency %></h2>
+      <h3><%= t("administration.payouts.index.view.campaigns_header", :from => search.date_from, :to => search.date_to) %></h3>
+      <h1><%= campaign.name %></h1>
+      <h2><%= t("administration.payouts.index.view.total") %>: <%=  as_currency payouts.values.sum, search.currency %></h2>
 
     <table class="generic" cellspacing="0" cellpadding="0">
       <thead>
       <tr>
         <th><%= t("administration.payouts.index.view.table.date") %></th>
-        <th><%= t("administration.payouts.index.view.table.campaign") %></th>
+        <th><%= t("administration.payouts.index.view.table.result") %></th>
         <th><%= t("administration.payouts.index.view.table.payout") %></th>
+        <th><%= t("administration.payouts.index.view.table.value") %></th>
       </tr>
       </thead>
       <tbody id="invoices_list">
       <% call_results.each do |call_result| %>
           <tr class="<%= cycle("odd", "even") %>">
             <td><%= call_result.created_at.to_date %></td>
-            <td><%= call_result.contact.campaign.name %></td>
+            <td><%= call_result.result.name %></td>
             <td><%= as_currency payouts[call_result.id], search.currency %></td>
+            <td><%= as_currency values[call_result.result_id], search.currency %></td>
           </tr>
       <% end %>
       </tbody>
@@ -30,6 +35,7 @@
       <tr>
         <td colspan="2"></td>
         <td><%= as_currency payouts.values.sum, search.currency %></td>
+        <td><%= as_currency call_results.sum{|cr| values[cr.result_id].to_f}, search.currency %></td>
       </tr>
       </tfoot>
     </table>

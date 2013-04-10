@@ -82,7 +82,7 @@ class Callers::CampaignsController < Callers::CallerController
 
   def results
     @campaigns = params[:campaign_ids] ? Campaign.find(params[:campaign_ids]) : Campaign.all
-    @results = Result.joins(:campaigns_results).where(:campaigns_results => { :campaign_id => @campaigns.map(&:id) }).all.uniq.sort_by(&:name)
+    @results = Result.for_campaigns(@campaigns.map(&:id)).with_reported.where(:final => true)
   end
 
   protected

@@ -1696,6 +1696,9 @@ en:
           header: "Results"
           pdf_by_agent: "PDF report by agent"
           pdf_by_campaign: "PDF report by campaign"
+          total: "Payout sum"
+          agents_header: "Agent payout from %{from} to %{to}"
+          campaigns_header: "Campaign payout from %{from} to %{to}"
           table:
             date: "Date"
             agent: "Agent name"

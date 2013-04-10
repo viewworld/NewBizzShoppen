@@ -20,3 +20,4 @@
 /public/system/invoice_cache/*
 /public/javascripts/translations.js
 /public/system/agent_timesheets_cache/*
+/public/system/payouts/*

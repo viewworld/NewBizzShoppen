@@ -51,6 +51,11 @@ class Currency < ActiveRecord::Base
     (amount.to_f * exchange_rate.to_f).round(2)
   end
 
+  def to_currency(currency, amount)
+    return amount if self.eql? currency
+    currency.from_euro to_euro(amount)
+  end
+
   def to_s
     name
   end

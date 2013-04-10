@@ -78,5 +78,26 @@
       });
   }
 
+  function agents_pdf() {
+      $('#currency_id').val( $('#report_currency_id').val() );
+      $('#form_campaign_reports_search').attr('action', '<%= agents_administration_payouts_path(:format => 'pdf') %>').submit();
+  }
+
+  function campaigns_pdf() {
+      $('#currency_id').val( $('#report_currency_id').val() );
+      $('#form_campaign_reports_search').attr('action', '<%= campaigns_administration_payouts_path(:format => 'pdf') %>').submit();
+  }
+
+  function set_search_url(){
+      $('#form_campaign_reports_search').attr('action', '<%= administration_payouts_path %>');
+  }
+
+  function order_payout(order_by, order) {
+      $('#order_by').val(order_by);
+      $('#order').val(order);
+      set_search_url();
+      $('#form_campaign_reports_search').submit();
+  }
+
   </script>
 </js:>

@@ -20,7 +20,7 @@ class Administration::PayoutsController < Administration::AdministrationControll
 
   def collection
     @search = Payout::Search.new(params.merge(:current_user => current_user))
-    @call_results = @search.call_results.order("created_at DESC").paginate(:page => params[:page], :per_page => 50)
+    @call_results = @search.call_results.paginate(:page => params[:page], :per_page => 50)
   end
 
   def call_result
@@ -36,7 +36,14 @@ class Administration::PayoutsController < Administration::AdministrationControll
   def agents
     collection
     respond_to do |format|
-      format.pdf { send_file @search.store_pdf(current_user), :type => 'application/pdf'}
+      format.pdf { send_file @search.to_file(:agents), :type => 'application/pdf'}
+    end
+  end
+
+  def campaigns
+    collection
+    respond_to do |format|
+      format.pdf { send_file @search.to_file(:campaigns), :type => 'application/pdf'}
     end
   end
 

@@ -1,0 +1,55 @@
+@page {
+    size: a4 portrait;
+    margin: 15mm;
+
+}
+
+table
+{    
+    border: none;
+}
+
+.hl, hr,
+.cl, .cr,
+.fl, .fr
+{
+    padding: 0 !important;
+    width: 1px;
+}
+
+table td,
+table th    
+{
+    padding: 3px;
+    font-size: 12px;
+    vertical-align: top;    
+    border: 1px solid #aaa;    
+    text-align: center;
+    -pdf-keep-in-frame-mode: shrink;
+}
+
+table thead th
+{
+    background: #ccc;
+    vertical-align: middle;
+}
+
+h1
+{
+    font-size: 24px;
+    padding-bottom: 14px;        
+}
+
+h2, h3 {
+    padding-bottom: 10px;
+}
+
+.no_shrink td
+{
+    -pdf-keep-in-frame-mode: overflow;
+}
+
+.no_shrink td.no_shrink_exclude
+{
+    -pdf-keep-in-frame-mode: shrink !important;
+}
