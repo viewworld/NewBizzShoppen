@@ -72,9 +72,11 @@ class Payout::Search
         joins("INNER JOIN users ON users.id = call_results.creator_id").
         joins("INNER JOIN campaigns ON campaigns.id = campaigns_results.campaign_id").
         joins("INNER JOIN results ON results.id = campaigns_results.result_id").
-        where(:creator_id => @selected_agents, :leads => { :campaign_id => @campaigns.map(&:id) }, :result_id => @result_ids ).
+        where(:leads => { :campaign_id => @campaigns.map(&:id) }, :result_id => @result_ids ).
         where("campaigns_results.value IS NOT NULL OR call_results.payout IS NOT NULL").
         created_at_from(@date_from).created_at_to(@date_to)
+
+    @call_results = @call_results.where(:creator_id => @selected_agents) unless @call_centre_agent_ids.empty?
 
     @call_results = case @order_by
         when 'date' then @call_results.reorder("created_at #{@order}")
