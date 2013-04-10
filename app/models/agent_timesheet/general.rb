@@ -65,7 +65,6 @@ class ::AgentTimesheet::General
     temp_path = Rails.root.join("#{TIMESHEETS_PATH}/#{@current_user.id}/#{@filename}.temp")
     pdf_path = Rails.root.join("#{TIMESHEETS_PATH}/#{@current_user.id}/#{@filename}.pdf")
     `python public/html2pdf/pisa.py #{temp_path} #{pdf_path}`
-    File.delete(temp_path)
   end
 
   def self.load(filename, current_user)
