@@ -20,7 +20,7 @@ class Administration::PayoutsController < Administration::AdministrationControll
 
   def collection
     @search = Payout::Search.new(params.merge(:current_user => current_user))
-    @call_results = @search.call_results.paginate(:page => params[:page], :per_page => 50)
+    @call_results = @search.call_results.paginate(:page => params[:page], :per_page => 50, :show_all => params[:show_all])
   end
 
   def call_result
