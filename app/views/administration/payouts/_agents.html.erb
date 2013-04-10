@@ -14,22 +14,22 @@
       <tr>
         <th><%= t("administration.payouts.index.view.table.date") %></th>
         <th><%= t("administration.payouts.index.view.table.campaign") %></th>
-        <th><%= t("administration.payouts.index.view.table.payout") %></th>
+        <th style="text-align: right;"><%= t("administration.payouts.index.view.table.payout") %></th>
       </tr>
       </thead>
       <tbody id="invoices_list">
       <% call_results.each do |call_result| %>
           <tr class="<%= cycle("odd", "even") %>">
-            <td><%= call_result.created_at.to_date %></td>
+            <td><%= l call_result.created_at, :format => :long %></td>
             <td><%= call_result.contact.campaign.name %></td>
-            <td><%= as_currency payouts[call_result.id], search.currency %></td>
+            <td style="text-align: right;"><%= as_currency payouts[call_result.id], search.currency %></td>
           </tr>
       <% end %>
       </tbody>
       <tfoot>
       <tr>
         <td colspan="2"></td>
-        <td><%= as_currency payouts.values.sum, search.currency %></td>
+        <td style="text-align: right;"><%= as_currency payouts.values.sum, search.currency %></td>
       </tr>
       </tfoot>
     </table>

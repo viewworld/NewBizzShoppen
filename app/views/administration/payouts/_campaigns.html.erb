@@ -17,25 +17,25 @@
       <tr>
         <th><%= t("administration.payouts.index.view.table.date") %></th>
         <th><%= t("administration.payouts.index.view.table.result") %></th>
-        <th><%= t("administration.payouts.index.view.table.payout") %></th>
-        <th><%= t("administration.payouts.index.view.table.value") %></th>
+        <th style="text-align: right;"><%= t("administration.payouts.index.view.table.payout") %></th>
+        <th style="text-align: right;"><%= t("administration.payouts.index.view.table.value") %></th>
       </tr>
       </thead>
       <tbody id="invoices_list">
       <% call_results.each do |call_result| %>
           <tr class="<%= cycle("odd", "even") %>">
-            <td><%= call_result.created_at.to_date %></td>
+            <td><%= l call_result.created_at, :format => :long %></td>
             <td><%= call_result.result.name %></td>
-            <td><%= as_currency payouts[call_result.id], search.currency %></td>
-            <td><%= as_currency values[call_result.result_id], search.currency %></td>
+            <td style="text-align: right;"><%= as_currency payouts[call_result.id], search.currency %></td>
+            <td style="text-align: right;"><%= as_currency values[call_result.result_id], search.currency %></td>
           </tr>
       <% end %>
       </tbody>
       <tfoot>
       <tr>
         <td colspan="2"></td>
-        <td><%= as_currency payouts.values.sum, search.currency %></td>
-        <td><%= as_currency call_results.sum{|cr| values[cr.result_id].to_f}, search.currency %></td>
+        <td style="text-align: right;"><%= as_currency payouts.values.sum, search.currency %></td>
+        <td style="text-align: right;"><%= as_currency call_results.sum{|cr| values[cr.result_id].to_f}, search.currency %></td>
       </tr>
       </tfoot>
     </table>
