@@ -31,7 +31,7 @@ class CategorySuppliers::LeadsController < ApplicationController
     params[:search][:ascend_by_header] = true
     params[:search][:without_inactive] = true
 
-    @categories = user_signed_in? ? current_user.parent_accessible_categories_without_auto_buy_with_descendants.with_leads.without_locked_and_not_published : LeadCategory.with_leads.without_locked_and_not_published.without_unique
+    @categories = user_signed_in? ? current_user.parent_accessible_categories_without_auto_buy_with_descendants.without_locked_and_not_published : LeadCategory.with_leads.without_locked_and_not_published.without_unique
 
     @countries = (current_user and current_user.has_accessible_categories?) ? Country.with_leads.within_accessible_categories(current_user) : Country.with_leads
     @creators = (current_user and current_user.has_accessible_categories?) ? User.with_leads.within_accessible_categories(current_user) : User.with_leads
