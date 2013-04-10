@@ -99,16 +99,15 @@
             <%= form.input :billing_rate %>
             <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => true %>
         <% end %>
+        <% if @user.persisted? and @user.newsletter_manager? %>
+            <b><%= t("administration.users.edit.view.campaign_monitor_credentials") %></b><br />
+            <%= form.input :cm_username, :as => :string, :label => t("administration.users.edit.view.cm_username") %>
+            <%= form.input :cm_password, :as => :string, :label => t("administration.users.edit.view.cm_password") %>
+        <% end %>
       </ol>
     </fieldset>
       <%= render :partial => "/shared/tags/assigned_tags", :locals => { :object => @user } %>
 
-    <% if @user.persisted? and @user.newsletter_manager? %>
-        <b><%= t("administration.users.edit.view.campaign_monitor_credentials") %></b><br />
-        <%= t("administration.users.edit.view.cm_username") %>: <%= @user.cm_username %>
-        <br />
-        <%= t("administration.users.edit.view.cm_password") %>: <%= @user.cm_password %>
-    <% end %>
   </div>
 </div>
 
