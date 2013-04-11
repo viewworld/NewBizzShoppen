@@ -16,7 +16,9 @@
           <td><%= l Time.zone.at(cached.to_i/100000), :format => :long  %></td>
           <td>
             <%= bt_link_to :invoice, "HTML", callers_agent_timesheet_path(cached.to_i, :format => :html), :target => '_new'  %>
-            <%= bt_link_to :download, "PDF", callers_agent_timesheet_path(cached.to_i, :format => :pdf)  %>
+            <% if File.exists?(Rails.root.join("#{AgentTimesheetCommon::TIMESHEETS_PATH}/#{@current_user.id}/#{cached.to_i}.pdf")) %>
+                <%= bt_link_to :download, "PDF", callers_agent_timesheet_path(cached.to_i, :format => :pdf)  %>
+            <% end %>
           </td>
           <td><%= bt_link_to :remove, t("agent_timesheets.new.delete"), callers_agent_timesheet_path(cached.to_i, :format => :html), :method => :delete  %></td>
           <td class="cr"></td>

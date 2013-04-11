@@ -1,0 +1,7 @@
+<column-mc:>
+
+    <header back="true"><%= t("campaign_reports.index.cached_reports") %></header>
+
+    <%= render :partial => 'shared/cached_campaign_reports/list', :locals => {:cached_campaign_reports => @cached_campaign_reports} %>
+
+</column-mc:>

@@ -4269,6 +4269,7 @@ en:
       download_pdf: "Download PDF"
       ranges_label: "Predefined time ranges"
       empty_report_msg: "Set the constraints and press Generate button to view report."
+      cached_reports: "Cached campaign reports"
       currency: "Currency"
       search:
         active: "Active"

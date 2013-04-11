@@ -95,4 +95,13 @@ class CampaignReport::Search
     @campaign_reports.delete_if{ |cr| !cr.has_results? } if @with_results
   end
 
+  def cached_campaign_reports
+    begin
+      Dir.new(Rails.root.join("#{Rails.root.join('public/system/campaign_reports_cache')}/#{@current_user.id}")).entries.sort.reverse.select{|f| f[/\d+\.html/]}
+    rescue
+      []
+    end
+  end
+
+
 end

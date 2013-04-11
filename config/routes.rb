@@ -291,7 +291,7 @@ Nbs::Application.routes.draw do
       resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
     end
 
-    resources :campaign_reports, :only => [:index, :create, :show, :new] do
+    resources :campaign_reports do
       collection do
         post 'load_agents'
       end
@@ -299,6 +299,7 @@ Nbs::Application.routes.draw do
 
     resources :agent_timesheets, :only => [:index,:show,:destroy,:create,:new]
     resources :cached_timesheets, :only => [:index]
+    resources :cached_campaign_reports, :only => [:index]
     resource :agent_information, :only => [:show]
     resource :agent_performance
   end

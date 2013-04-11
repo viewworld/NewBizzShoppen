@@ -13,7 +13,7 @@ class Callers::CampaignReportsController < Callers::CallerController
     @search = CampaignReport::Search.new(params.merge(:current_user => current_user))
 
     if @search.campaign_reports.any?
-      report_cache = "#{current_user.id}#{(Time.now.to_f*100000).to_i}"
+      report_cache = "#{(Time.now.to_f*100000).to_i}"
       if Rails.env.development?
         CampaignReport::Table.new(report_cache, @search.campaign_reports, @search.campaign_users, @search.per_user, @search.result_ids, {:date_from => @search.date_from, :date_to => @search.date_to, :dont_show_results => @search.dont_show_results, :show_targets => @search.show_targets, :currency_id => @search.currency_id, :current_user => current_user.id}).table
         redirect_to callers_campaign_report_path(report_cache, @search.search_options)
@@ -29,16 +29,22 @@ class Callers::CampaignReportsController < Callers::CallerController
 
   def show
     @search = CampaignReport::Search.new(params.merge(:current_user => current_user))
-    @html = File.open(Rails.root.join("public/system/campaign_reports_cache/#{params[:id]}.html"), 'r') {|f| f.read }
+    @html = File.open(Rails.root.join("public/system/campaign_reports_cache/#{current_user.id}/#{params[:id]}.html"), 'r') {|f| f.read }
 
     respond_to do |format|
       format.html
-      format.pdf { send_file CampaignReport.store_pdf(params[:id]), :type => 'application/pdf'}
+      format.pdf { send_file CampaignReport.store_pdf(params[:id], current_user), :type => 'application/pdf'}
     end
   end
 
   def new
     @search = CampaignReport::Search.new(params.merge(:current_user => current_user))
+  end
+
+  def destroy
+    CampaignReport.destroy(params[:id], current_user)
+    flash[:notice] = t("agent_timesheets.flashes.file_deleted")
+    redirect_to :back
   end
 
   def load_agents

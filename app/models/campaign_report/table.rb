@@ -16,16 +16,17 @@ class CampaignReport::Table
       extend ApplicationHelper
     end
     html = av.render(:partial => 'callers/campaign_reports/report', :type => :erb, :locals => { :per_user => @per_user, :campaign_users => @campaign_users, :campaign_reports => @campaign_reports, :result_ids => @result_ids, :options => @options })
-    File.open(Rails.root.join("public/system/campaign_reports_cache/#{@report_cache}.html"), 'w') {|f| f.write(html) }
+    FileUtils.mkdir_p("public/system/campaign_reports_cache/#{@current_user.id}")
+    File.open(Rails.root.join("public/system/campaign_reports_cache/#{@current_user.id}/#{@report_cache}.html"), 'w') {|f| f.write(html) }
     markup = File.read(Rails.root.join("app/views/layouts/pdf_report.html")) % [@options[:date_from], @options[:date_to], html]
-    File.open(Rails.root.join("public/system/campaign_reports_cache/#{@report_cache}.pdf.html"), 'w') {|f| f.write(markup) }
+    File.open(Rails.root.join("public/system/campaign_reports_cache/#{@current_user.id}/#{@report_cache}.pdf.html"), 'w') {|f| f.write(markup) }
     notify!
     html
   end
 
   def url
     if @current_user and @report_cache
-      "http://#{@current_user.domain_name}/callers/campaign_reports/#{@report_cache}.html"
+      "http://#{@current_user.domain_name}/callers/campaign_reports/#{@current_user.id}/#{@report_cache}.html"
     end
   end
 

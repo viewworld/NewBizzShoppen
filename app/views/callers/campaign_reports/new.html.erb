@@ -33,6 +33,10 @@
         <%= render(:text => "").html_safe %>
       </div>
   <% end %>
+
+  <header><%= t("campaign_reports.index.cached_reports") %></header>
+  <%= render :partial => 'shared/cached_campaign_reports/list', :locals => {:cached_campaign_reports => @search.cached_campaign_reports.first(5)} %>
+
 </column-mc:>
 
 <%= render :partial => 'js' %>

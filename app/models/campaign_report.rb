@@ -260,9 +260,9 @@ class CampaignReport
     end
   end
 
-  def self.store_pdf(report_cache)
-    pdf_path = Rails.root.join "public/system/campaign_reports_cache/#{report_cache}.pdf"
-    html_path = Rails.root.join "public/system/campaign_reports_cache/#{report_cache}.pdf.html"
+  def self.store_pdf(report_cache, current_user)
+    pdf_path = Rails.root.join "public/system/campaign_reports_cache/#{current_user.id}/#{report_cache}.pdf"
+    html_path = Rails.root.join "public/system/campaign_reports_cache/#{current_user.id}/#{report_cache}.pdf.html"
     unless File.exists? pdf_path
       `python public/html2pdf/pisa.py #{html_path} #{pdf_path}`
     end
@@ -435,4 +435,14 @@ class CampaignReport
       end
     )
   end
+
+  def self.destroy(filename, current_user)
+    begin
+      File.delete(Rails.root.join("public/system/campaign_reports_cache/#{current_user.id}/#{filename}.html"))
+      File.delete(Rails.root.join("public/system/campaign_reports_cache/#{current_user.id}/#{filename}.pdf"))
+    rescue
+      "Campaign Report not found!"
+    end
+  end
+
 end

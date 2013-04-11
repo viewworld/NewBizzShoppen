@@ -1,0 +1,38 @@
+<% if cached_campaign_reports.any? %>
+  <table class="generic" id="cached_campaign_reports">
+    <thead>
+      <tr>
+        <th class="hl"></th>
+        <th><%= t("agent_timesheets.new.created_at") %></th>
+        <th><%= t("agent_timesheets.new.link_to_report") %></th>
+        <th><%= t("agent_timesheets.new.actions") %></th>
+        <th class="hr"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% cached_campaign_reports.each do |cached| %>
+        <tr id="cached_campaign_report_<%= cached.to_i %>">
+          <td class="cl"></td>
+          <td><%= l Time.zone.at(cached.to_i/100000), :format => :long  %></td>
+          <td>
+            <%= bt_link_to :invoice, "HTML", callers_campaign_report_path(cached.to_i), :target => '_new'  %>
+            <%= bt_link_to :download, "PDF", callers_campaign_report_path(cached.to_i, :format => :pdf)  %>
+          </td>
+          <td><%= bt_link_to :remove, t("agent_timesheets.new.delete"), callers_campaign_report_path(cached.to_i), :method => :delete  %></td>
+          <td class="cr"></td>
+        </tr>
+      <% end %>
+      <tr class="pagination">
+        <td colspan="5" class="ta_c" style="padding-top:5px;">
+        <% if cached_campaign_reports.is_a?(WillPaginate::Collection) %>
+          <%= will_paginate cached_campaign_reports %>
+        <% else %>
+          <%= bt_link_to :arrow_down, t("common.view_all"), callers_cached_campaign_reports_path %>
+        <% end %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<% else %>
+    <%= blank_state_message %>
+<% end %>
