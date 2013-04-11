@@ -21,13 +21,13 @@
                   <%= select_tag :result_ids, options_from_collection_for_select(@search.all_results.sort_by(&:name), "id", "name", @search.result_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
                 </li>
                 <li class="radio no_pdd_t" style="padding-left: 10px">
-                  <%= radio_button_tag :campaign_selection, :all, @search.campaign_selection == "all", {:onclick => "load_campaigns('all');"} %>
+                  <%= radio_button_tag :campaign_selection, :all, @search.campaign_selection == "all", {:onclick => "load_campaigns('all');load_call_centres('all');"} %>
                   <%= label_tag t("campaign_reports.index.search.all") %>
 
-                  <%= radio_button_tag :campaign_selection, :active, @search.campaign_selection == "active", {:onclick => "load_campaigns('active');"} %>
+                  <%= radio_button_tag :campaign_selection, :active, @search.campaign_selection == "active", {:onclick => "load_campaigns('active');load_call_centres('active');"} %>
                   <%= label_tag t("campaign_reports.index.search.active") %>
 
-                  <%= radio_button_tag :campaign_selection, :inactive, @search.campaign_selection == "inactive", {:onclick => "load_campaigns('inactive');"} %>
+                  <%= radio_button_tag :campaign_selection, :inactive, @search.campaign_selection == "inactive", {:onclick => "load_campaigns('inactive');load_call_centres('inactive');"} %>
                   <%= label_tag t("campaign_reports.index.search.inactive") %>
                 </li>
               </ol>
@@ -39,7 +39,7 @@
                   <ol class="no_pdd">
                     <li class="select">
                       <%= label_tag t("campaigns.show.search.call_centres") %>
-                      <%= select_tag :call_centre_id, options_from_collection_for_select(@search.all_call_centres.sort_by(&:email), "id", "email", @search.call_centre_id), :include_blank => true, :multiple => false, :style => "width:140px;", :onchange => "load_agents_for_call_centre($('#call_centre_id').val())" %>
+                      <%= select_tag :call_centre_id, options_from_collection_for_select((@search.campaign_selection == "all" ? @search.all_call_centres : ( @search.all_call_centres.select{ |c| @search.campaign_selection == "active" ? c.active? : !c.active? } ) ).sort_by(&:email), "id", "email", @search.call_centre_id), :include_blank => true, :multiple => false, :style => "width:140px;", :onchange => "load_agents_for_call_centre($('#call_centre_id').val())" %>
                     </li>
                     <li class="select">
                       <%= label_tag t("campaigns.show.search.call_centre_agents") %>

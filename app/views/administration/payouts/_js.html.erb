@@ -1,6 +1,7 @@
 <js:>
   <script type="text/javascript">
 
+    //    CAMPAIGNS
       <%=
      %{
      var all_campaigns = [
@@ -14,6 +15,26 @@
       %{
       var #{i == 0 ? 'active' : 'inactive'}_campaigns = [
        #{campaigns_group.map { |c| "['#{c.name}', #{c.id}]" }.join(',')}
+      ]
+      }.html_safe
+
+      %>
+      <% end %>
+
+    //      CALL CENTRES
+     <%=
+     %{
+     var all_call_centres = [ ['',''],
+      #{@search.all_call_centres.map { |c| "['#{c.email}', #{c.id}]" }.join(',')}
+     ]
+     }.html_safe
+      %>
+
+      <% @search.all_call_centres.partition { |c| c.active? }.each_with_index do |call_centres_group, i| %>
+      <%=
+      %{
+      var #{i == 0 ? 'active' : 'inactive'}_call_centres = [ ['',''],
+       #{call_centres_group.map { |c| "['#{c.email}', #{c.id}]" }.join(',')}
       ]
       }.html_safe
 
@@ -40,6 +61,21 @@
           $("#campaign_ids option").each(function()
           {
               $(this).attr("selected", "selected");
+          });
+      }
+
+      function load_call_centres(call_centre_selection) {
+          c_array = eval(call_centre_selection + "_call_centres");
+
+          $('#call_centre_id option').each(function()
+          {
+              $(this).remove();
+          });
+          $.each(c_array, function(index, value) {
+              $('#call_centre_id').
+                      append($("<option></option>").
+                      attr("value", value[1]).
+                      text(value[0]));
           });
       }
 
