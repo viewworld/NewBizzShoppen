@@ -1,0 +1,26 @@
+table {
+    width: 430px;
+    font-size: 70%;
+}
+
+thead tr th {
+    border-bottom: solid 1px #c0c0c0;
+}
+
+table tr.summary td {
+    border-top: solid 1px #c0c0c0;
+}
+
+.fltl {
+    float: left;
+}
+
+.column_1to3 {
+    padding: 0 15px 0 0;
+    margin-top: -20px;
+    margin-left: 20px;
+}
+
+.column_1to3 .frm_head {
+    display:none;
+}

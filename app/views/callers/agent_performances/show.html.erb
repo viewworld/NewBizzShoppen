@@ -93,6 +93,9 @@
           </div>
         </param:content>
         <param:actions>
+          <ibt c="fltri">
+            <%= link_to_function "Print", "$('#report').printElement();" %>
+          </ibt>
           <ibt c="fltri show">
             <%= link_to_function "Show", "$('#search_box, .frm_foot_actions .bt').toggle('slow');" %>
           </ibt>
@@ -116,117 +119,11 @@
 
   <hl pdd="15"></hl>
 
-    <% @search.all_agents.each do |agent| %>
-      <% if @performance_campaigns = Campaign.active_between(@search.date_from, @search.date_to).available_for_user(agent) and
-        @agent_performance_all_campaigns = AgentPerformance.new(@search.date_from, @search.date_to, agent, @performance_campaigns, @search.currency_id) and
-        @performance_campaigns.count > 0 and @agent_performance_all_campaigns.show_results?(@search.active_results)  %>
-
-        <div class="agent_performance">
-        <header>
-          <param:content>
-            <%= agent.screen_name %>
-          </param:content>
-        </header>
-        <div class="column_2to3 fltl" style="padding: 0 15px 0 0" class="agent_performance_table">
-          <table class="generic" style="margin: 0px">
-            <thead>
-            <tr>
-              <th class="hl"></th>
-              <th><%= t("agent_home.show.view.agent_performance.table.campaign") %></th>
-              <th><%= t("agent_home.show.view.agent_performance.table.payout") %></th>
-              <th><%= t("agent_home.show.view.agent_performance.table.hours") %></th>
-              <th><%= t("agent_home.show.view.agent_performance.table.rate") %></th>
-              <th class="hr"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <% @performance_campaigns.to_a.each do |campaign| %>
-                <% agent_performance = AgentPerformance.new(@search.date_from, @search.date_to, agent, campaign, @search.currency_id) %>
-                <tr>
-                  <td></td>
-                  <td><%= link_to campaign, callers_campaign_call_results_path(campaign), :class => "default_action" %></td>
-                  <td><%= as_currency(agent_performance.payout, agent_performance.currency, 2) %></td>
-                  <td><%= agent_performance.time.to_f.as_hours_and_minutes %></td>
-                  <td><%= as_currency(agent_performance.rate, agent_performance.currency, 2) %></td>
-                  <td></td>
-                </tr>
-            <% end %>
-            <tr style="font-weight: bold;">
-              <td></td>
-              <td></td>
-              <td><%= as_currency(@agent_performance_all_campaigns.payout, @agent_performance_all_campaigns.currency, 2) %></td>
-              <td><%= @agent_performance_all_campaigns.time.to_f.as_hours_and_minutes %></td>
-              <td><%= as_currency(@agent_performance_all_campaigns.rate, @agent_performance_all_campaigns.currency, 2) %></td>
-              <td></td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <td class="fl"></td>
-            <td colspan="4"></td>
-            <td class="fr"></td>
-            </tfoot>
-          </table>
-        </div>
-
-        <div class="column_1to3 fltl" class="agent_performance_graph">
-          <frm title="#{t('agent_home.show.view.header_graph')}" c="no_marg">
-            <param:content>
-              <div style="padding:10px">
-                <div id="agent_performance_graph_container_<%= agent.id %>" style="height:300px; padding:10px"></div>
-              </div>
-            </param:content>
-          </frm>
-        </div>
-        <clb/>
-      </div>
-
-    <script>
-        $(function () {
-            <% @agent_performance_all_campaigns = AgentPerformance.new(@search.date_from, @search.date_to, agent, @performance_campaigns, @search.currency_id) %>
-            var performance_data = <%= @agent_performance_all_campaigns.flot_chart.to_json.html_safe %>;
-
-            function euroFormatter(v, axis) {
-                return v.toFixed(axis.tickDecimals) +" <%= @agent_performance_all_campaigns.currency.symbol.html_safe %>";
-            }
-
-            function doPlot(position) {
-                $.plot($("#agent_performance_graph_container_<%= agent.id %>"),
-                        [
-                            {
-                                data: performance_data.hours, label: "Hours",
-                                bars:
-                                {
-                                    show: true,
-                                    barWidth: 1000*60*60*6,
-                                },
-                            },
-                            {
-                                data: performance_data.payout, label: "PayOut", yaxis: 2,
-                                bars:
-                                {
-                                    show: true,
-                                    barWidth: 1000*60*60*6,
-                                },
-                            }
-                        ],
-                        {
-                            xaxes: [ { mode: 'time', minTickSize: [1, "day"] } ],
-                            yaxes: [ { min: 0 },
-                                {
-                                    // align if we are to the right
-                                    alignTicksWithAxis: position == "right" ? 1 : null,
-                                    position: position,
-                                    tickFormatter: euroFormatter
-                                } ],
-                            legend: { position: 'sw' }
-                        });
-            }
-
-            doPlot("right");
-        });
-
-    </script>
-    <% end %>
-  <% end %>
+  <div id="report">
+    <style type="text/css">
+        @import url("/stylesheets/payout.css") print;
+    </style>
+    <%= render :inline => @search.html %>
+  </div>
 
 </column-mc:>

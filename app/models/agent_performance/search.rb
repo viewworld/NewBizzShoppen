@@ -1,6 +1,6 @@
 class AgentPerformance::Search
 
-  attr_accessor :date_from, :date_to, :agents, :call_centres, :currency_id, :active_results
+  attr_accessor :date_from, :date_to, :agents, :call_centres, :currency_id, :active_results, :html
 
   include ActiveModel::Conversion
   extend ActiveModel::Naming
@@ -13,6 +13,8 @@ class AgentPerformance::Search
       :currency_id      => nil,
       :active_results   => true
   }
+
+  AGENT_PERFORMANCES_PATH = "public/system/agent_performances"
 
   def persisted?
     false
@@ -38,6 +40,26 @@ class AgentPerformance::Search
 
   def all_agent_ids
     all_agents.map(&:id)
+  end
+
+  def to_html
+    av = ActionView::Base.new
+    av.view_paths << File.join(::Rails.root.to_s, "app", "views")
+    av.instance_eval do
+      extend ApplicationHelper
+    end
+    av.render(:partial => "callers/agent_performances/agents", :type => :erb, :locals => { :search => self })
+  end
+
+  def to_file
+    @filename = "#{(Time.now.to_f*100000).to_i}"
+    FileUtils.mkdir_p(Rails.root.join("#{AGENT_PERFORMANCES_PATH}/#{@current_user.id}"))
+    @html = to_html
+    html_path = Rails.root.join("#{AGENT_PERFORMANCES_PATH}/#{@current_user.id}/#{@filename}.html")
+    File.open(html_path, 'w') {|f| f.write(@html) }
+    html_path
+    #File.open(Rails.root.join("#{AGENT_PERFORMANCES_PATH}/#{@current_user}/#{@filename}.temp"), 'w') {|f| f.write(markup(html)) }
+    #store_pdf
   end
 
 end
