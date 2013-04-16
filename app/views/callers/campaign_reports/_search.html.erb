@@ -6,16 +6,16 @@
 
     <div class="search_content">
       <%= form_tag callers_campaign_reports_path, :method => :post, :id => "form_campaign_reports_search" do %>
-          <div class="grid_310 fltl">
+          <div class="grid_470 fltl">
             <fieldset class="inputs_vertical">
               <ol class="no_pdd">
-                <li class="select">
+                <li class="select" style="max-width:260px">
                   <%= label_tag t("campaigns.show.search.campaigns") %>
-                  <%= select_tag :campaign_ids, options_from_collection_for_select((@search.campaign_selection == "all" ? @search.all_campaigns : @search.all_campaigns.select { |c| @search.campaign_selection == "active" ? c.active? : !c.active? }).sort_by(&:name), "id", "name", @search.campaign_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
+                  <%= select_tag :campaign_ids, options_from_collection_for_select((@search.campaign_selection == "all" ? @search.all_campaigns : @search.all_campaigns.select { |c| @search.campaign_selection == "active" ? c.active? : !c.active? }).sort_by(&:name), "id", "name", @search.campaign_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:250px;max-width:250px" %>
                 </li>
-                <li class="select">
+                <li class="select" style="max-width:200px">
                   <%= label_tag t("campaigns.show.search.results") %>
-                  <%= select_tag :result_ids, options_from_collection_for_select(@search.all_results.sort_by(&:name), "id", "name", @search.result_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
+                  <%= select_tag :result_ids, options_from_collection_for_select(@search.all_results.sort_by(&:name), "id", "name", @search.result_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:190px;max-width:190px;" %>
                 </li>
                 <li class="radio no_pdd_t" style="padding-left: 10px">
                   <%= radio_button_tag :campaign_selection, :all, @search.campaign_selection == "all", {:onclick => "load_campaigns('all');"} %>
