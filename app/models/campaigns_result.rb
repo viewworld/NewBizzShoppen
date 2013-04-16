@@ -23,7 +23,7 @@ class CampaignsResult < ActiveRecord::Base
   end
 
   def to_s
-    "#{campaign.name} - #{result.name}"
+    "#{campaign_name} - #{result_name}"
   end
 
   def campaign_name

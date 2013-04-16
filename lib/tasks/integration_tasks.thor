@@ -307,4 +307,16 @@ class IntegrationTasks < Thor
       user.generate_login_key!
     end
   end
+
+  desc "apr13", ""
+  def apr13
+    ActsAsTaggableOn::Tagging.where(:taggable_type => 'Result').map(&:taggable).each do |result|
+      result.campaigns_results.each do |cr|
+        cr.tag_list << result.tag_list
+        cr.save!
+      end
+      result.tag_list = []
+      result.save!
+    end
+  end
 end

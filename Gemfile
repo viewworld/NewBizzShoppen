@@ -48,7 +48,7 @@ gem 'paypal_nvp'
 gem 'activeadmin', :path => 'vendor/gems/active_admin'
 gem 'diff-lcs', :require => false
 gem 'cucumber_fm-core', '0.1', :require => 'cucumber_feature_manager'
-gem 'acts-as-taggable-on', '~> 2.2.2'
+gem 'acts-as-taggable-on', '~> 2.4.0'
 gem 'createsend'
 gem "selenium-webdriver", "~> 2.31.0"
 

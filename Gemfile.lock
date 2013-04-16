@@ -68,7 +68,7 @@ GEM
       activemodel (= 3.0.19)
       activesupport (= 3.0.19)
     activesupport (3.0.19)
-    acts-as-taggable-on (2.2.2)
+    acts-as-taggable-on (2.4.0)
       rails (~> 3.0)
     acts_as_commentable_with_threading (1.1.1)
       activerecord (~> 3.0)
@@ -335,7 +335,7 @@ PLATFORMS
 DEPENDENCIES
   aasm
   activeadmin!
-  acts-as-taggable-on (~> 2.2.2)
+  acts-as-taggable-on (~> 2.4.0)
   acts_as_commentable_with_threading
   ajaxful_rating!
   autotest
