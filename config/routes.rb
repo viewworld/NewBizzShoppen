@@ -24,6 +24,8 @@ Nbs::Application.routes.draw do
       resource :password, :controller => 'password', :only => [:new, :update, :destroy]
       member do
         get :sign_in_as
+        get :lock
+        get :unlock
       end
       resource :change_subscription_plan
     end

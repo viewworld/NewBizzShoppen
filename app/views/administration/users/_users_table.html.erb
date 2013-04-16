@@ -40,7 +40,7 @@
         <td class="ta_r"><%= user.leads_revenue_counter %></td>
         <td class="tda" style="text-align:center;">
           <% unless user.id == current_user.id %>
-              <%= link_to user.locked_at.blank? ? t("administration.users.index.view.lock") : t("administration.users.index.view.unlock"), administration_user_path(user, {"user_#{user.role.to_s}".to_sym  => {:locked =>  user.locked_at.blank? ? "lock" : "unlock"}}), {:method => :put} %>
+              <%= link_to user.locked_at.blank? ? t("administration.users.index.view.lock") : t("administration.users.index.view.unlock"), (user.locked_at.blank? ? lock_administration_user_path(user) : unlock_administration_user_path(user)) %>
           <% end %>
         </td>
         <td class="tda ta_r">

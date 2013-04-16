@@ -63,6 +63,22 @@ class Administration::UsersController < Administration::AdministrationController
     redirect_to root_path
   end
 
+  def lock
+    @user = User.find(params[:id]).with_role
+    @user.locked = 'lock'
+    @user.save(false)
+    flash[:notice] = I18n.t("administration.users.locked")
+    redirect_to :back
+  end
+
+  def unlock
+    @user = User.find(params[:id]).with_role
+    @user.locked = 'unlock'
+    @user.save(false)
+    flash[:notice] = I18n.t("administration.users.unlocked")
+    redirect_to :back
+  end
+
   protected
 
   def collection

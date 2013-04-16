@@ -1111,6 +1111,8 @@ en:
           user_deletion_failure: "User could not be deleted!"
       send_invitation: "Send invitation"
       stop_subscription: "Stop subscription"
+      locked: "User has been locked"
+      unlocked: "User has been unlocked"
     lead_templates:
       new:
         view:
