@@ -1,5 +1,6 @@
 class ::User::Admin < ::User
   ROLES = [:admin, :translator]
+  CSV_ATTRS = %w{email first_name last_name company_name address_line_1 address_line_2 address_line_3 zip_code country region  phone vat_number}
   validates_presence_of :company_name
 
   include Addresses

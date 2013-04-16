@@ -68,10 +68,14 @@ class CallResult < ActiveRecord::Base
   #scope :created_by_agents, lambda { |agents| where(:creator_id => agents.map(&:to_i)) }
   default_scope :order => 'call_results.created_at DESC'
 
+  def campaign_result
+    contact ? CampaignsResult.where(:campaign_id => contact.campaign_id, :result_id => result_id).first : nil
+  end
+
   def set_payout
-    if campaign = contact.campaign and campaign_result = CampaignsResult.where(:campaign_id => campaign.id, :result_id => result_id).first
+    if campaign_result
       self.payout = campaign_result.payout
-      self.payout_currency_id = campaign.currency_id
+      self.payout_currency_id = contact.campaign.currency_id
       self.euro_payout = payout_currency.to_euro(payout.to_f)
     end
   end
@@ -206,8 +210,8 @@ class CallResult < ActiveRecord::Base
   end
 
   def process_result_tags
-    unless result.tag_list.empty?
-      result.tag_list.each do |tag|
+    unless campaign_result.tag_list.empty?
+      campaign_result.tag_list.each do |tag|
         contact.tag_list << tag
       end
       contact.save

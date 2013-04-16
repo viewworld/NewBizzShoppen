@@ -63,12 +63,11 @@
             <tr id="country_<%= tag.id %>" class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
 
-              <% call_results_count = CallResult.where(:result_id => tag.taggings.where("taggable_type ~ 'Result'").map(&:taggable_id)).count %>
               <td><%= tag.name %></td>
-              <td><strong><%= tag.taggings.where("taggable_type !~ 'Result'").count + call_results_count %></strong></td>
+              <td><strong><%= tag.taggings.where("taggable_type != 'Result'").count %></strong></td>
               <td><%= tag.taggings.where("taggable_type ~ 'AbstractLead'").count %></td>
               <td><%= tag.taggings.where("taggable_type ~ 'User'").count %></td>
-              <td><%= call_results_count %></td>
+              <td><%= tag.taggings.where("taggable_type ~ 'CampaignsResult'").count %></td>
               <td><%= tag.taggings.where("taggable_type ~ 'TagGroup'").count %></td>
               <td class="tda ta_r" id="country_actions_td_<%= tag.name.gsub(" ", "_") %>">
                 <ul-actions>

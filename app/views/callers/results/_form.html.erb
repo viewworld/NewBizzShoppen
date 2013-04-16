@@ -49,9 +49,23 @@
 <% end %>
 
 <% if @campaign %>
-    <% if !@result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id }.nil? %>
-        <%= form.fields_for :campaigns_results, @result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id } do |builder| %>
+    <% if campaign_result = @result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id } %>
+        <%= form.fields_for :campaigns_results, campaign_result do |builder| %>
             <%= render :partial => "campaign_result", :locals => {:f => builder, :campaign => @campaign} %>
+            <div class="pdd_10 no_pdd_t">
+                <div class="tags_wrapper">
+                  <p><%= t("tags.common.assigned_tags_label") %>:</p>
+                  <ul id="tags_selection"></ul>
+                </div>
+                <%= builder.hidden_field :temp_tag_list, :id => "tag_list_hidden" %>
+                <script type="text/javascript">
+                    $(function() {
+                        $('#tags_selection').attr('name', $('#tag_list_hidden').attr('name') );
+                        $('#tag_list_hidden').attr('name', $('#tag_list_hidden').attr('name') + '[]');
+                        $('#tags_selection').tagit({tagSource: "/tags.js", triggerKeys: ['enter', 'comma', 'tab'], select: true, initialTags: [<%= builder.object.tag_list.map{ |w| %{"#{w}"} }.join(",").html_safe %>]});
+                    })
+                </script>
+            </div>
         <% end %>
     <% else %>
         <div class="pdd_10 no_pdd_t">
@@ -65,10 +79,6 @@
         </div>
     <% end %>
 <% end %>
-
-<div class="pdd_10 no_pdd_t">
-<%= render :partial => "/shared/tags/assigned_tags", :locals => { :object => @result } %>
-</div>
 
 <script>
     var nestedFormsCount = <%= @result.result_fields.size %>;
