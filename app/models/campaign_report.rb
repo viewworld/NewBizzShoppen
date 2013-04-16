@@ -130,18 +130,18 @@ class CampaignReport
   end
 
   def target_db_value
-    if tc = target_production_cost and tc == 0
+    if vc = target_value_created and vc == 0
       0
     else
-      ((target_value_created / tc)-1) * 100
+      ((vc - target_production_cost) * 100) / vc
     end
   end
 
   def realised_db_value
-    if tc = total_cost and tc == 0
+    if vc = value_created and vc == 0
       0.0
     else
-      ((value_created / tc) - 1) * 100
+      ((vc - total_cost) * 100) / vc
     end
   end
 
