@@ -119,9 +119,9 @@
                 <tr>
                   <td></td>
                   <td><%= link_to campaign, callers_campaign_call_results_path(campaign), :class => "default_action" %></td>
-                  <td><%= as_currency(agent_performance.payout, agent_performance.currency, 2) %></td>
+                  <td><%= as_currency(agent_performance.payout, agent_performance.currency, 0) %></td>
                   <td><%= agent_performance.time.to_f.as_hours_and_minutes %></td>
-                  <td><%= as_currency(agent_performance.rate, agent_performance.currency, 2) %></td>
+                  <td><%= as_currency(agent_performance.rate, agent_performance.currency, 0) %></td>
                   <td></td>
                 </tr>
               <% end %>
@@ -129,9 +129,9 @@
               <tr style="font-weight: bold;">
                 <td></td>
                 <td></td>
-                <td><%= as_currency(agent_performance.payout, agent_performance.currency, 2) %></td>
+                <td><%= as_currency(agent_performance.payout, agent_performance.currency, 0) %></td>
                 <td><%= agent_performance.time.to_f.as_hours_and_minutes %></td>
-                <td><%= as_currency(agent_performance.rate, agent_performance.currency, 2) %></td>
+                <td><%= as_currency(agent_performance.rate, agent_performance.currency, 0) %></td>
                 <td></td>
               </tr>
             </tbody>
