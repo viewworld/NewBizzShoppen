@@ -97,7 +97,7 @@ module User::CampaignMonitorClient
     end
 
     def setup_empty_list!
-      NewsletterList.create(:name => "MyLeads", :owner => self)
+      NewsletterList.find_or_create_by_name("MyLeads", :owner => self)
     end
 
     def setup_my_leads_list!

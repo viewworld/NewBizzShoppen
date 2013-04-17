@@ -5,7 +5,7 @@ module CommonNewsletter
       belongs_to :creator, :polymorphic => true
 
       validates_presence_of :name, :unless => Proc.new{|n| n.skip_validations}
-      validates_uniqueness_of :name, :unless => Proc.new{|n| n.skip_validations}
+      validates_uniqueness_of :name, :scope => :owner_id, :unless => Proc.new{|n| n.skip_validations}
       validate :owner_is_present_and_valid, :unless => Proc.new{|n| n.skip_validations}
 
       include ScopedSearch::Model
