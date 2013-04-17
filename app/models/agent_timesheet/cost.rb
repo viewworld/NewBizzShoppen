@@ -13,4 +13,5 @@ class AgentTimesheet::Cost < ActiveRecord::Base
     scope :for_campaigns, lambda{|campaign| where(:campaign_id => Array(campaign).map(&:to_i))}
     scope :for_agents, lambda{|users| where(:user_id => Array(users).map(&:to_i))}
     scope :for_agent, lambda{|user| where("user_id = ?", user.to_i)}
+    scope :created_between, lambda{|start_date, end_date| where("created_at BETWEEN ? and ?", start_date.to_datetime, end_date.to_datetime) }
 end

@@ -5,7 +5,7 @@ class AgentPerformance
   def initialize(date_from, date_to, user, campaign, currency_id)
     self.date_from = (date_from||Date.today.beginning_of_week).to_date
     self.date_to = (date_to||Date.today.end_of_week).to_date
-    self.user = user.with_role
+    self.user = user.to_a.map(&:with_role)
     self.campaigns = campaign.to_a.map(&:id)
     self.currency = Currency.find_by_id(currency_id) || Currency.euro
   end
@@ -60,11 +60,11 @@ class AgentPerformance
   end
 
   def user_session_logs
-    @user_session_logs ||= UserSessionLog.for_campaigns(campaigns).campaign_type.for_user(user).started_between(date_from, date_to+1.day)
+    @user_session_logs ||= UserSessionLog.for_campaigns(campaigns).campaign_type.for_users(user).started_between(date_from, date_to+1.day)
   end
 
   def payouts
-    @payouts ||= AgentTimesheetsPayout.for_campaigns(campaigns).for_user(user).created_between(date_from, date_to+1.day)
+    @payouts ||= AgentTimesheetsPayout.for_campaigns(campaigns).for_users(user).created_between(date_from, date_to+1.day)
   end
 
   public

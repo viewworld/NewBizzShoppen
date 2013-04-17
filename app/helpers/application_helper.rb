@@ -187,6 +187,8 @@ module ApplicationHelper
         agent_home_path
       elsif current_user.has_any_role?(:supplier, :lead_supplier, :lead_user, :agent, :member)
         (current_user.has_any_role?(:supplier, :lead_supplier, :lead_user)) ? supplier_home_path : self.send("#{current_user.role.to_s}_home_path")
+      elsif current_user.has_any_role?(:admin)
+        administration_root_path
       else
         root_path
       end
