@@ -2,7 +2,7 @@ $("#edit_newsletter_list_<%= @newsletter_list.id %> li[id*='newsletter_list_']")
 $("#edit_newsletter_list_<%= @newsletter_list.id %> li[id*='newsletter_list_'] p[class='inline-errors']").remove();
 
 <% if @newsletter_list.valid? %>
-window.location.href = '/newsletters/newsletter_lists';
+window.location.reload();
 <% else %>
     <% @newsletter_list.errors.each_pair do  |field, msg| %>
         $("#edit_newsletter_list_<%= @newsletter_list.id %> li[id='newsletter_list_<%= field %>_input']").addClass("error");

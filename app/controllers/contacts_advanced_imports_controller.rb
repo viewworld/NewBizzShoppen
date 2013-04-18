@@ -1,6 +1,8 @@
 class ContactsAdvancedImportsController < SecuredController
   include AdvancedImportActions
 
+  set_tab "import"
+
   def create
     @attachment_file = params["attachment"]
     if Sheet.validate_attachment(@attachment_file)
