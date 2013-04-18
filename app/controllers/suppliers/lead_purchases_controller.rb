@@ -17,6 +17,7 @@ class Suppliers::LeadPurchasesController < Suppliers::BasicSupplierController
     params[:search][:with_leads] = "1"
     params[:search][:with_owner] = current_user.id
     params[:search][:accessible] = true
+    params[:search][:without_state] ||= LeadPurchaseBase::ARCHIVED
     @countries = Country.with_lead_purchase_owner(current_user).map{|c| [c.name.to_s, c.id]}.sort
     @categories = LeadCategory.with_lead_purchase_owner(current_user).map{|c| [c.name.to_s, c.id]}.sort
     @assignees = User.assignees_for_lead_purchase_owner(current_user).map{|c| [c.screen_name.to_s, c.id]}.sort

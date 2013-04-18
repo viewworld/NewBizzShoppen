@@ -17,4 +17,11 @@ module LeadPurchasesHelper
         [I18n.t('common.no_label'),false]
     ]
   end
+
+  def show_archived_values
+    [
+        [I18n.t('common.yes_label'),nil],
+        [I18n.t('common.no_label'),LeadPurchaseBase::ARCHIVED]
+    ]
+  end
 end

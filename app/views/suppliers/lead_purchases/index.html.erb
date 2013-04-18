@@ -35,6 +35,10 @@
                 <%= f.label :with_paid, t("lead_supplier.lead_purchases.index.view.search.paid_label") %>
                 <%= f.select :with_paid, paid_values, {:include_blank => false} %>
               </li>
+              <li class="select">
+                <%= f.label :without_state, t("lead_supplier.lead_purchases.index.view.search.show_archived") %>
+                <%= f.select :without_state, show_archived_values, {:include_blank => false} %>
+              </li>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
                   <%= submit_tag t("lead_supplier.lead_purchases.index.view.search.search_button") %>

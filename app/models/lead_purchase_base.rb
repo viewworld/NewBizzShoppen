@@ -1,7 +1,7 @@
 class LeadPurchaseBase < ActiveRecord::Base
   set_table_name "lead_purchases"
 
-  STATUSES = %w(not_contacted contacted meeting signed).freeze
+  STATUSES = %w(not_contacted contacted meeting signed archived).freeze
 
   belongs_to :lead
   belongs_to :owner, :class_name => "User::Supplier", :foreign_key => "owner_id"
@@ -15,6 +15,7 @@ class LeadPurchaseBase < ActiveRecord::Base
 
   NOT_CONTACTED        = 0
   CONTACTED            = 1
+  ARCHIVED             = 4
 
   RATING_EXCELLENT =              0
   RATING_VERY_GOOD =              1
@@ -40,6 +41,7 @@ class LeadPurchaseBase < ActiveRecord::Base
   scope :with_zip_code, lambda { |zip_code| where("leads.zip_code = ?", zip_code) }
   scope :with_requested_by, lambda { |requested_by| where("lead_purchases.requested_by = ?", requested_by) }
   scope :with_paid, lambda {|paid| where(:paid => paid) }
+  scope :without_state, lambda { |state| where("lead_purchases.state <> ?", state) }
 
   scope :in_cart, where(:paid => false, :accessible_from => nil)
   scope :about_to_expire, lambda { where(["response_deadline = ? AND expiration_status = ? AND contacted = ?", Date.today+2.days, ACTIVE, NOT_CONTACTED]) }

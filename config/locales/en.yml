@@ -423,6 +423,7 @@ en:
       contacted: Contacted
       meeting: Meeting
       signed: Signed
+      archived: "Archived"
 
   campaigns:
     cost_types:
@@ -3018,6 +3019,7 @@ en:
             country_label: "Country"
             assignee_label: "Assignee"
             paid_label: "Paid"
+            show_archived: "Show archived"
             search_button: "Search"
             zip_code: "Zip code"
           bulk_download_csv_all: "Download all"
