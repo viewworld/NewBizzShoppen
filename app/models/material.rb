@@ -16,6 +16,7 @@ class Material < Asset
 
   def destroy_attached_files
     if result_values.any?
+      self.errors.add(:base, I18n.t("materials.views.index.assigned_to_results"))
       false
     else
       super
