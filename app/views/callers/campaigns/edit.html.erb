@@ -65,7 +65,7 @@
     <%= bt_link_to_function nil, "Select unassigned", "$('input.cb_contact_id:not([data-agent-id])').each(function(){this.checked=!this.checked});" %>
 
     <%= label_tag "select_by_result_id", "Select with result" %>
-    <%= select_tag "select_by_result_id", options_for_select([[]]+@contacts.select{|c| c.current_call_result }.map{|c| [c.current_call_result.result.name, c.current_call_result.result.id]}.uniq.sort), :onchange => "select_all_contacts_with_result_and_agent();" %>
+    <%= select_tag "select_by_result_id", options_for_select([[]]+@contacts.select{|c| c.current_call_result and c.current_call_result.result }.map{|c| [c.current_call_result.result.name, c.current_call_result.result.id]}.uniq.sort), :onchange => "select_all_contacts_with_result_and_agent();" %>
 
     <%= label_tag "select_by_agent_id", "Select assigned to agent" %>
     <%= select_tag "select_by_agent_id", options_for_select([[]]+@contacts.select{|c| c.agent }.map{|c| [c.agent.screen_name, c.agent.id]}.uniq.sort), :onchange => "select_all_contacts_with_result_and_agent();" %>

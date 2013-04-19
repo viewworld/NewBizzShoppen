@@ -231,7 +231,7 @@ class CallResult < ActiveRecord::Base
     if Date.parse(result_values.first.value) > contact.campaign.end_date
       process_for_final_result
     else
-      notify!
+      #notify!
       process_for_call_log_result
     end
   end
