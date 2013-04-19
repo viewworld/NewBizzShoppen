@@ -10,6 +10,13 @@ function mark_all_cbs_with_selector(t) {
         : $("input=[type=checkbox]:checked", tr).attr("checked", "");
 }
 
+function select_all_contacts_with_result_and_agent(data_attr_name, data_attr_val) {
+    $('#select_by_result_id').val();
+    $('input.cb_contact_id').each(function(){this.checked=false});
+    $('input.cb_contact_id[data-result-id="' + $('#select_by_result_id').val() + '"]').each(function(){this.checked=true});
+    $('input.cb_contact_id[data-agent-id="' + $('#select_by_agent_id').val() + '"]').each(function(){this.checked=true});
+}
+
 submitBulkForm = function(url, target) {
     $('#route_to').val(url);
     $('#bulk_actions_form').removeAttr("target");
