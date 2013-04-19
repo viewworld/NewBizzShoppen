@@ -214,7 +214,7 @@
 
     <% end %>
 
-    <% if current_user %>
+    <% if current_user and current_user.has_one_of_roles?(:admin, :call_centre) %>
         start_notifications();
     <% end %>
 
