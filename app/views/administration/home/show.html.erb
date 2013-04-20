@@ -59,9 +59,9 @@
         <tr>
           <th class="hl"></th>
           <th><%= t("admin_home.show.view.table.campaign") %></th>
-          <th><%= t("admin_home.show.view.table.value") %></th>
-          <th><%= t("admin_home.show.view.table.hours") %></th>
-          <th><%= t("admin_home.show.view.table.rate") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.value") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.hours") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.rate") %></th>
           <th class="hr"></th>
         </tr>
         </thead>
@@ -71,9 +71,9 @@
             <tr>
               <td></td>
               <td><%= link_to campaign, callers_campaign_call_results_path(campaign), :class => "default_action" %></td>
-              <td><%= as_currency(performance.value, performance.currency, 0) %></td>
-              <td><%= performance.time.to_f.as_hours_and_minutes %></td>
-              <td><%= as_currency(performance.value_rate, performance.currency, 0) %></td>
+              <td class="tar"><%= as_currency(performance.value, performance.currency, 0) %></td>
+              <td class="tar"><%= performance.time.to_f.as_hours_and_minutes %></td>
+              <td class="tar"><%= as_currency(performance.value_rate, performance.currency, 0) %></td>
               <td></td>
             </tr>
             <% end %>
@@ -82,9 +82,9 @@
         <tr style="font-weight: bold;">
           <td></td>
           <td></td>
-          <td><%= as_currency(performance.value, performance.currency, 0) %></td>
-          <td><%= performance.time.to_f.as_hours_and_minutes %></td>
-          <td><%= as_currency(performance.value_rate, performance.currency, 0) %></td>
+          <td class="tar"><%= as_currency(performance.value, performance.currency, 0) %></td>
+          <td class="tar"><%= performance.time.to_f.as_hours_and_minutes %></td>
+          <td class="tar"><%= as_currency(performance.value_rate, performance.currency, 0) %></td>
           <td></td>
         </tr>
         </tbody>
@@ -100,9 +100,9 @@
         <tr>
           <th class="hl"></th>
           <th><%= t("admin_home.show.view.table.agent") %></th>
-          <th><%= t("admin_home.show.view.table.payout") %></th>
-          <th><%= t("admin_home.show.view.table.hours") %></th>
-          <th><%= t("admin_home.show.view.table.rate") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.payout") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.hours") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.rate") %></th>
           <th class="hr"></th>
         </tr>
         </thead>
@@ -112,9 +112,9 @@
                 <tr>
                   <td></td>
                   <td><%= agent %></td>
-                  <td><%= as_currency(performance.payout, performance.currency, 0) %></td>
-                  <td><%= performance.time.to_f.as_hours_and_minutes %></td>
-                  <td><%= as_currency(performance.rate, performance.currency, 0) %></td>
+                  <td class="tar"><%= as_currency(performance.payout, performance.currency, 0) %></td>
+                  <td class="tar"><%= performance.time.to_f.as_hours_and_minutes %></td>
+                  <td class="tar"><%= as_currency(performance.rate, performance.currency, 0) %></td>
                   <td></td>
                 </tr>
             <% end %>
@@ -123,9 +123,9 @@
         <tr style="font-weight: bold;">
           <td></td>
           <td></td>
-          <td><%= as_currency(performance.payout, performance.currency, 0) %></td>
-          <td><%= performance.time.to_f.as_hours_and_minutes %></td>
-          <td><%= as_currency(performance.rate, performance.currency, 0) %></td>
+          <td class="tar"><%= as_currency(performance.payout, performance.currency, 0) %></td>
+          <td class="tar"><%= performance.time.to_f.as_hours_and_minutes %></td>
+          <td class="tar"><%= as_currency(performance.rate, performance.currency, 0) %></td>
           <td></td>
         </tr>
         </tbody>
