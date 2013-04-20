@@ -2923,6 +2923,13 @@ en:
           rate: "Rate"
           agent: "Agent"
           payout: "PayOut"
+          cost: "Cost"
+          total: "Total"
+          today: "Today"
+          week: "Week"
+          month: "Month"
+          quarter: "Quarter"
+          year: "Year"
 
   lead_user:
     lead_purchases:

@@ -4,6 +4,14 @@ class Performance < AgentPerformance
     @value ||= currency.from_euro(values.sum(:value))
   end
 
+  def cost
+    @cost ||= currency.from_euro(costs.sum(:cost))
+  end
+
+  def total
+    @total = value - cost
+  end
+
   def value_rate
     time > 0 ? value / time : 0
   end

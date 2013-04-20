@@ -59,6 +59,8 @@ class Payout::Search
 
     @all_results = Result.for_campaigns(@campaign_ids).with_reported.where(:final => true)
 
+    @result_ids ||= @all_results.map(&:id)
+
     @all_campaigns = @campaigns.order("name")
 
     unless @campaign_ids.size == @campaigns.size
