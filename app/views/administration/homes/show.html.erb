@@ -153,6 +153,18 @@
     <clb/>
   </div>
 
+  <% if current_user.id == 2 %>
+      <%= javascript_include_tag 'swfobject' %>
+      <%= javascript_include_tag 'flashphoner/StaticData' %>
+      <%= javascript_include_tag 'flashphoner/trackbar' %>
+      <%= javascript_include_tag 'flashphoner/Phone' %>
+      <%= javascript_include_tag 'flashphoner/flashLoader' %>
+      <%= stylesheet_link_tag 'flashphoner/trackbar' %>
+      <%= stylesheet_link_tag 'flashphoner/style_html' %>
+
+      <%= render :partial => 'phone' %>
+  <% end %>
+
 </column-mc:>
 
 <js:>
