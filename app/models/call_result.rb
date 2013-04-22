@@ -62,8 +62,8 @@ class CallResult < ActiveRecord::Base
   scope :with_reported, where("campaigns_results.is_reported is true")
   scope :with_dynamic_value, lambda { |is_dynamic| where("campaigns_results.is_dynamic_value = ?", is_dynamic) }
   scope :with_leads_from_deals_requested_during_upgrade_to_member, joins("INNER JOIN users as members ON members.contact_id = contacts.id  AND members.roles_mask & 128 > 0").joins("INNER JOIN leads as generated_leads ON members.id = generated_leads.requested_by AND generated_leads.requested_during_upgrade_to_member IS TRUE")
-  scope :created_at_from, lambda { |from| where("call_results.created_at >= ?", from.to_date) }
-  scope :created_at_to, lambda { |to| where("call_results.created_at <= ?", to.to_date) }
+  scope :created_at_from, lambda { |from| where("call_results.created_at::DATE >= ?", from.to_date) }
+  scope :created_at_to, lambda { |to| where("call_results.created_at::DATE <= ?", to.to_date) }
   #scope :created_by_call_centres, lambda { |call_centres| where(:creator_id => User::CallCentre.find_all_by_id(call_centres).map(&:children).flatten.map(&:id)) }
   #scope :created_by_agents, lambda { |agents| where(:creator_id => agents.map(&:to_i)) }
   default_scope :order => 'call_results.created_at DESC'
