@@ -182,7 +182,7 @@
       });
 
       window.onbeforeunload = function (e) {
-          if (flashphoner.getCurrentCall() != null) {
+          if (currentCall != null) {
               var message = "Current call will be terminated",
                       e = e || window.event;
               // For IE and Firefox

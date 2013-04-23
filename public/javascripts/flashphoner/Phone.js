@@ -893,7 +893,7 @@ function close(element) {
 }
 
 function changePhoneNumber(number){
-    if (flashphoner.getCurrentCall() == null) {
+    if (currentCall == null) {
         $("#calleeText").val(number);
         $("#calleeText").trigger('keyup');
     }
