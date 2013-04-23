@@ -338,6 +338,10 @@ Nbs::Application.routes.draw do
     end
   end
 
+  namespace :flashphoner do
+    resource :login
+  end
+
   resources :chain_mails
 
   match 'supplier_home' => 'supplier_home#show', :as => "supplier_home"

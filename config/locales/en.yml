@@ -1098,6 +1098,7 @@ en:
           remove_scheduled: "Remove scheduled subscriptions"
           no_other_subscription_plans_for_user: "There are no other subscription plan available for this user"
           campaign_monitor_credentials: "Campaign Monitor credentials"
+          sip_credentials: "SIP phone credentials"
           cm_username: "Username"
           cm_password: "Password"
       create:

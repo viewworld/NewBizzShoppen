@@ -9,7 +9,7 @@
           <h3><%= t("shared.leads.form.company_information") %></h3>
         </li>
         <%= form.input :company_name, :hint => hint_for(@lead, :company_name) %> <%= link_to(image_tag("icons/google_icon.png"), "http://www.google.com/search?q=#{@lead.company_name.gsub(' ', "+")}", :target => "blank", :id => "google_search_for_company_name") if current_user.has_role?(:call_centre_agent) and !@lead.new_record? %>
-        <%= form.input :company_phone_number, :hint => hint_for(@lead, :company_phone_number) %>
+        <%= form.input :company_phone_number, :hint => hint_for(@lead, :company_phone_number) %> <%= link_to_function image_tag('icons/call.png'), "changePhoneNumber($('#contact_company_phone_number').val());" if defined? call_links and call_links %>
         <%= form.input :company_website, :hint => hint_for(@lead, :company_website) %>
         <%= form.input :address_line_1, :hint => hint_for(@lead, :address_line_1) %>
         <%= form.input :address_line_2, :hint => hint_for(@lead, :address_line_2) %>
@@ -36,8 +36,8 @@
         </li>
         <%= form.input :contact_name, :hint => hint_for(@lead, :contact_name) %>
         <%= form.input :contact_title, :hint => hint_for(@lead, :contact_title) %>
-        <%= form.input :direct_phone_number, :hint => hint_for(@lead, :direct_phone_number) %>
-        <%= form.input :phone_number, :hint => hint_for(@lead, :phone_number) %>
+        <%= form.input :direct_phone_number, :hint => hint_for(@lead, :direct_phone_number) %> <%= link_to_function image_tag('icons/call.png'), "changePhoneNumber($('#contact_direct_phone_number').val());" if defined? call_links and call_links %>
+        <%= form.input :phone_number, :hint => hint_for(@lead, :phone_number) %> <%= link_to_function image_tag('icons/call.png'), "changePhoneNumber($('#contact_phone_number').val());" if defined? call_links and call_links %>
         <%= form.input :email_address, :hint => hint_for(@lead, :email_address) %>
         <%= form.input :linkedin_url, :hint => hint_for(@lead, :linkedin_url) %>
         <%= form.input :facebook_url, :hint => hint_for(@lead, :facebook_url) %>

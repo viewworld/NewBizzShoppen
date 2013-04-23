@@ -316,6 +316,11 @@ class User < ActiveRecord::Base
 
   public
 
+  def flashphoner_token
+    update_attribute(:phone_token, generate_token(30))
+    phone_token
+  end
+
   def domain
     Domain.where(:site => with_role.site, :locale => I18n.locale).first || Domain.where(:site => with_role.site).with_default.first
   end

@@ -891,13 +891,24 @@ function close(element) {
     element.css('visibility', 'hidden');
 }
 
+function changePhoneNumber(number){
+    if (flashphoner.getCurrentCall() == null) {
+        $("#calleeText").val(number);
+        $("#calleeText").trigger('keyup');
+    }
+}
+
 
 /* --------------------- On document load we do... ------------------ */
 $(function() {
 
     // open login view
     $("#loginMainButton").click(function() {
-      openLoginView();
+        if (flashvars.token != null) {
+            loginByToken(flashvars.token);
+        } else {
+            closeConnectingView();
+        }
     });
     
     // logout

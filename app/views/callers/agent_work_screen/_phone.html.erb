@@ -22,7 +22,7 @@
 
     <div><div class="iconButton" id="micButton"></div></div>
     <div><div class="iconButton" id="soundButton"></div></div>
-    <div><div class="iconButton" id="cameraButton"></div></div>
+    <!--<div><div class="iconButton" id="cameraButton"></div></div>-->
 
 
     <div id="loginMainButton" class="button">Log in</div>
@@ -41,7 +41,7 @@
 
 
   <div class="buttonLine">
-    <div class="button chat" id="chatButton">Chat</div>
+    <!--<div class="button chat" id="chatButton">Chat</div>-->
     <div class="button call" id="callButton">Call</div>
   </div>
 
@@ -78,19 +78,19 @@
   <div class="bar">&nbsp;&nbsp;Login</div>
 
   <div class="login_label">Login</div>
-  <div class="login_input"><input type="text" id="username" value="48004"/></div>
+  <div class="login_input"><input type="text" id="username" value=""/></div>
 
   <div class="login_label">Auth. name</div>
-  <div class="login_input"><input type="text" id="authname" value="48004"/></div>
+  <div class="login_input"><input type="text" id="authname" value=""/></div>
 
   <div class="login_label">Password</div>
-  <div class="login_input"><input id="password" type="password" value="yb6e08kh"/></div>
+  <div class="login_input"><input id="password" type="password" value=""/></div>
 
   <div class="login_label">Domain</div>
-  <div class="login_input"><input type="text" id="domain" value="sip.ifon.pl" /></div>
+  <div class="login_input"><input type="text" id="domain" value="" /></div>
 
   <div class="login_label">Outbound proxy</div>
-  <div class="login_input"><input type="text" id="outbound_proxy" value="sip.ifon.pl"/></div>
+  <div class="login_input"><input type="text" id="outbound_proxy" value=""/></div>
 
   <div class="login_label">Port</div>
   <div class="login_input"><input type="text" id="port" /></div>
@@ -172,3 +172,15 @@
 <div id="console">
 </div>
 <!-- ******* -->
+
+<% if current_user.phone_enabled? %>
+    <script>
+      flashvars.token = '<%= current_user.flashphoner_token %>';
+
+      $(function(){
+          $('#phoneDiv').draggable();
+          changePhoneNumber($('#contact_phone_number').val());
+      });
+
+    </script>
+<% end %>

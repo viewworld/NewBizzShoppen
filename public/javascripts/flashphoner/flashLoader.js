@@ -26,7 +26,7 @@ params.allowscriptaccess = "always";
 params.wmode = "transparent";
 var attributes = {};
 var flashvars = {};
-flashvars.config = "flashphoner.xml";
+flashvars.config = "/flashphoner.xml";
 /*$(function() {
   flashvars.token = $("#auto_login_token").val();
 });*/
@@ -36,5 +36,5 @@ function playerIsRight(){
 }
 
 if (playerIsRight()) {
-	swfobject.embedSWF("flashphoner_js_api.swf", "jsSWFDiv", "100%", "100%", "11.2.202", "expressInstall.swf", flashvars, params, attributes, positionStatus);
+	swfobject.embedSWF("/flashphoner_js_api.swf", "jsSWFDiv", "100%", "100%", "11.2.202", "expressInstall.swf", flashvars, params, attributes, positionStatus);
 }

@@ -9,7 +9,7 @@
               </div>
             </param:header>
           <param:content>
-            <%= render :partial => '/shared/leads/form', :locals => {:form => form, :campaign => campaign, :contact => contact} %>
+            <%= render :partial => '/shared/leads/form', :locals => {:form => form, :campaign => campaign, :contact => contact, :call_links => current_user.phone_enabled?} %>
           </param:content>
           <param:actions>
             <%= bt_link_to :save, t("contacts.edit.save_button"), "javascript:void(0)", :id => "commit_update_contact", :class => "fltr" %>
