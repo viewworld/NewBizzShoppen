@@ -257,6 +257,7 @@ function addLogMessage(message) {
 
 function notifyFlashReady() {
 	$('#versionOfProduct').html(getVersion());
+    changePhoneNumber($('#contact_phone_number').val());
     if (flashvars.token != null) {
         loginByToken(flashvars.token);
     } else {

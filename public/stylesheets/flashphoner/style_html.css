@@ -183,6 +183,7 @@ input::-webkit-input-placeholder {
 .transferButton {
 	background: url(../assets/transfer.png);
 	right: 7px;
+    display: none;
 }
 .holdButton {
 	background: url(../assets/hold.png);
@@ -249,6 +250,7 @@ input::-webkit-input-placeholder {
 	text-align: center;
 	color: #aaa;
 	display: none;
+    position: fixed;
 }
 #answerButton, #hangupButton {
 	width: 80px;
@@ -457,6 +459,7 @@ div with zero size.
 	color: #eee;
 	font: 22px Arial;
 	visibility: hidden;
+    position: fixed;
 }
 .caller {
 	float: left;
@@ -598,7 +601,7 @@ div with zero size.
 }
 
 .chat, .call, .hangup {
-  width: 150px;
+  width: 152px;
   color: #000;
   	
 }

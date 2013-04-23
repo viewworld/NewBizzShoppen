@@ -179,8 +179,21 @@
 
       $(function(){
           $('#phoneDiv').draggable();
-          changePhoneNumber($('#contact_phone_number').val());
       });
+
+      window.onbeforeunload = function (e) {
+          if (flashphoner.getCurrentCall() != null) {
+              var message = "Current call will be terminated",
+                      e = e || window.event;
+              // For IE and Firefox
+              if (e) {
+                  e.returnValue = message;
+              }
+
+              // For Safari
+              return message;
+          }
+      };
 
     </script>
 <% end %>
