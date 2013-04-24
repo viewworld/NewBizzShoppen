@@ -5,4 +5,9 @@ class Callers::CallLogsController < Callers::CallerController
     render :nothing => true
   end
 
+  def index
+    @campaign = Campaign.find(params[:campaign_id])
+    @call_logs = @campaign.call_logs
+  end
+
 end

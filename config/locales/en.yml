@@ -522,6 +522,7 @@ en:
       remove_confirm: Are you sure?
       title_contacts: "Contacts"
       results: "Results"
+      calls: "Calls"
       description_and_briefing: "Description & briefing"
       send_material_email_template: "Edit 'Send material' email template"
       upgrade_to_category_supplier_email_template: "Edit 'Upgrade to category supplier' email"

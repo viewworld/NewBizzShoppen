@@ -16,6 +16,7 @@ class Campaign < ActiveRecord::Base
   has_one :upgrade_contact_to_member_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_member'", :dependent => :destroy
   has_many :user_session_logs, :dependent => :destroy
   has_many :chain_mail_types, :dependent => :nullify
+  has_many :call_logs
 
   validates_uniqueness_of :name
   validates_presence_of :name, :max_contact_number, :category_id, :country_id, :start_date, :end_date, :cost_type

@@ -3,7 +3,7 @@
       <% if current_user.has_any_role?(:admin, :call_centre) %>
         <%= t("campaigns.show.total_agents") %>: <strong><%= campaign_users.size %></strong>&nbsp;
       <% end %>
-      <%= t("campaigns.show.total_calls") %>: <strong>??</strong>
+      <%= t("campaigns.show.total_calls") %>: <strong><%= campaign.is_a?(Array) ? CallLog.for_campaigns(campaign).answered.count : campaign.call_logs.answered.count %></strong>
     </p>
   </div>
 
