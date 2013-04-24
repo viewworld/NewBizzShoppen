@@ -316,6 +316,10 @@ class User < ActiveRecord::Base
 
   public
 
+  def phone_enabled?
+    sip_username.present? and sip_password.present? and sip_domain.present?
+  end
+
   def flashphoner_token
     update_attribute(:phone_token, generate_token(30))
     phone_token
