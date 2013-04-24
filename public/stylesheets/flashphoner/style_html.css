@@ -451,15 +451,15 @@ div with zero size.
 .callDiv {
 	width: 152px;
 	height: 118px;
-	top: 48px;
-	left: 31px;
+	top: 28px;
+	left: 11px;
 	float: left;
 	background: #333;
 	/*border: 1px solid #B7BABC;*/
 	color: #eee;
 	font: 22px Arial;
 	visibility: hidden;
-    position: fixed;
+    position: absolute;
 }
 .caller {
 	float: left;
