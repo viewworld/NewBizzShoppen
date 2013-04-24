@@ -75,7 +75,7 @@
   <div id="callDiv" class="callDiv">
     <div id="caller" class="caller"></div>
     <div id="callState"></div>
-    <div id="transferButton" class="transferButton"></div>
+    <div id="muteButton" class="muteButton">mute mic</div>
     <div id="holdButton" class="holdButton"></div>
   </div>
   <!-- ********* -->
@@ -195,6 +195,46 @@
               return message;
           }
       };
+
+      $('#muteButton').click(function(){
+        if (flashphoner.getMicVolume() > 0) {
+            lastMicVolume = flashphoner.getMicVolume();
+            $("#micSlider").slider('value', 0);
+            flashphoner.setMicVolume(0);
+            $(this).text('unmute mic');
+        } else {
+            $("#micSlider").slider('value', lastMicVolume);
+            flashphoner.setMicVolume(lastMicVolume);
+            $(this).text('mute mic');
+        }
+      });
+
+      function createCallLog(call) {
+          $.post('/callers/call_logs', {
+              call_log: {
+                  call_id: call.id,
+                  state: call.state,
+                  holded: call.iHolded,
+                  callee: call.callee,
+                  caller: call.caller,
+                  visible_name_callee: call.visibleNameCallee,
+                  visible_name_caller: call.visibleNameCaller,
+                  player_video_height: call.playerVideoHeight,
+                  player_video_width: call.playerVideoWidth,
+                  streamer_video_height: call.streamerVideoHeight,
+                  streamer_video_width: call.streamerVideoWidth,
+                  time_of_call: call.timeOfCall,
+                  another_side_user: call.anotherSideUser,
+                  incoming: call.incoming,
+                  is_video_call: call.isVideoCall,
+                  sip_state: call.sip_state,
+                  caller_type: '<%= current_user.class.name %>',
+                  caller_id: <%= current_user.id %>,
+                  campaign_id: <%= @campaign.id %>,
+                  contact_id: <%= @contact.id %>
+              }
+          });
+      }
 
     </script>
 <% end %>

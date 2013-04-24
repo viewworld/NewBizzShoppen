@@ -309,6 +309,7 @@ Nbs::Application.routes.draw do
     resources :cached_campaign_reports, :only => [:index]
     resource :agent_information, :only => [:show]
     resource :agent_performance
+    resources :call_logs
   end
 
   namespace :comments do

@@ -32,6 +32,8 @@ var intervalId = -1;
 var isMutedMicButton = false;
 var isMutedSpeakerButton = false;
 var proportion = 0;
+var lastMicVolume = 0;
+var lastSpeakerVolume = 0;
 
 var testInviteParameter = new Object;
 testInviteParameter['param1'] = "value1";
@@ -315,6 +317,7 @@ function notifyBalance(balance) {
 
 function notify(call) {
     trace("notify", call); //: callId " + call.id + " --- " + call.anotherSideUser);
+    createCallLog(call);
     if (currentCall.id == call.id) { //if we have some call now and notify is about exactly our call
         currentCall = call;
         if (call.state == STATE_FINISH) {
@@ -489,6 +492,7 @@ function notifyMessage(messageObject) {
 
 function notifyAddCall(call) {
     trace("notifyAddCall", call); // call.id, call.anotherSideUser
+    createCallLog(call);
 
     if (currentCall != null && call.incoming == true) {
         hangup(call.id);
@@ -541,6 +545,7 @@ function removeCallView(call) {
 
 function notifyRemoveCall(call) {
     trace("notifyRemoveCall", call); // call.id
+//    createCallLog(call);
     if (currentCall != null && currentCall.id == call.id) {
         currentCall = null;
         removeCallView(call)
