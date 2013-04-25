@@ -1,0 +1,50 @@
+<column-mc:>
+  <header back="true">
+    <param:content>
+      Calls for campaign "<%= @campaign %>"
+    </param:content>
+  </header>
+
+  <% if @call_logs.empty? %>
+      <%= blank_state_message %>
+  <% else %>
+      <table class="generic call_results">
+        <thead>
+        <tr>
+          <th class="hl"></th>
+          <th>Agent</th>
+          <th>Contact</th>
+          <th>Duration</th>
+          <th>Created at</th>
+          <th></th>
+          <th class="hr"></th>
+        </tr>
+        </thead>
+        <tbody>
+          <% @call_logs.each do |call_log| %>
+            <tr>
+              <td></td>
+              <td><%= call_log.caller %></td>
+              <td><%= call_log.contact %></td>
+              <td><%= call_log.time_of_call %></td>
+              <td><%= format_date call_log.created_at, true %></td>
+              <td><%= link_to_call call_log.call_id %></td>
+              <td></td>
+            </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+            <td class="fl"></td>
+            <td colspan="5"></td>
+            <td class="fr"></td>
+        </tfoot>
+        <% if will_paginate @call_results %>
+            <tr class="pagination">
+              <td colspan="7" class="ta_c">
+                <%= will_paginate @call_logs, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+              </td>
+            </tr>
+        <% end %>
+      </table>
+  <% end %>
+</column-mc:>
