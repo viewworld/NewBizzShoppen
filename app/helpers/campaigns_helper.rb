@@ -33,8 +33,9 @@ module CampaignsHelper
   end
 
   def link_to_call(call_id)
-    if filename = Dir.entries(File.join(Rails.root,'public/system/calls')).detect{|f| f.match(/#{call_id}\.aac/)}
-      bt_link_to :download, "AAC", "/system/calls/#{filename}"
+    @calls ||= Dir.entries(File.join(Rails.root,'public/system/calls'))
+    if filename = @calls.detect{|f| f.match(/#{call_id}\.(aac|wav)$/)}
+      bt_link_to :download, filename[/(aac|wav)$/,1], "/system/calls/#{filename}"
     end
   end
 
