@@ -9,7 +9,7 @@ class Callers::CallLogsController < Callers::CallerController
 
   def index
     @campaign = Campaign.find(params[:campaign_id])
-    @call_logs = @campaign.call_logs.finished.paginate(:page => params[:page], :per_page => 50, :show_all => params[:show_all])
+    @call_logs = @campaign.call_logs.finished.paginate(:page => params[:page], :per_page => 15, :show_all => params[:show_all])
   end
 
 end
