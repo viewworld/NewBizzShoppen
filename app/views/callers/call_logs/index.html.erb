@@ -16,7 +16,8 @@
           <th>Contact</th>
           <th>Duration</th>
           <th>Created at</th>
-          <th></th>
+          <th>Listen</th>
+          <th>Download</th>
           <th class="hr"></th>
         </tr>
         </thead>
@@ -28,6 +29,7 @@
               <td><%= call_log.contact %></td>
               <td><%= call_log.time_of_call %></td>
               <td><%= format_date call_log.created_at, true %></td>
+              <td><audio src="<%= call_url call_log.call_id %>" controls="controls"></td>
               <td><%= link_to_call call_log.call_id %></td>
               <td></td>
             </tr>
@@ -35,12 +37,12 @@
         </tbody>
         <tfoot>
             <td class="fl"></td>
-            <td colspan="5"></td>
+            <td colspan="6"></td>
             <td class="fr"></td>
         </tfoot>
         <% if will_paginate @call_results %>
             <tr class="pagination">
-              <td colspan="7" class="ta_c">
+              <td colspan="8" class="ta_c">
                 <%= will_paginate @call_logs, :previous_label => '&laquo;', :next_label => '&raquo;' %>
               </td>
             </tr>
