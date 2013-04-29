@@ -1,5 +1,5 @@
 <% @agent = (defined? @agent and @agent) ? @agent : current_user %>
-<div class="frm_tiny pdd_10">
+<div class="frm_tiny">
 
   <p>
     <span style="float:left">
@@ -15,6 +15,23 @@
         <%= t("agent_work_screen.index.agent_information.today") %> (<%= AgentInformation.today(@agent, @currency).time.to_f.as_hours_and_minutes %>),
         <%= t("agent_work_screen.index.agent_information.this_week") %> (<%= AgentInformation.week(@agent, @currency).time.to_f.as_hours_and_minutes %>),
         <%= t("agent_work_screen.index.agent_information.last_four_weeks") %> (<%= AgentInformation.last_four_weeks(@agent, @currency).time.to_f.as_hours_and_minutes %>)
+    </span>
+  </p>
+
+  <p>
+    <span style="float:left">
+        <strong><%= t("agent_work_screen.index.agent_information.number_of_calls") %>: </strong>
+        <%= t("agent_work_screen.index.agent_information.today") %>: <%= AgentInformation.today(@agent).number_of_calls %> (<%= TopAgent.number_of_calls_for(:today) %>),
+        <%= t("agent_work_screen.index.agent_information.this_week") %>: <%= AgentInformation.week(@agent).number_of_calls %> (<%= TopAgent.number_of_calls_for(:week) %>),
+        <%= t("agent_work_screen.index.agent_information.this_quarter") %>: <%= AgentInformation.quarter(@agent).number_of_calls %> (<%= TopAgent.number_of_calls_for(:quarter) %>),
+        <%= t("agent_work_screen.index.agent_information.this_year") %>: <%= AgentInformation.year(@agent).number_of_calls %> (<%= TopAgent.number_of_calls_for(:year) %>)
+    </span>
+
+    <span style="float:right">
+        <strong><%= t("agent_work_screen.index.agent_information.time_on_phone") %>: </strong>
+        <%= t("agent_work_screen.index.agent_information.today") %> <%= AgentInformation.today(@agent).time_on_phone.to_f.as_hours_and_minutes %> (<%= TopAgent.time_on_phone_for(:today).as_hours_and_minutes %>),
+        <%= t("agent_work_screen.index.agent_information.this_week") %> <%= AgentInformation.week(@agent).time_on_phone.to_f.as_hours_and_minutes %> (<%= TopAgent.time_on_phone_for(:week).as_hours_and_minutes %>),
+        <%= t("agent_work_screen.index.agent_information.last_four_weeks") %> <%= AgentInformation.last_four_weeks(@agent).time_on_phone.to_f.as_hours_and_minutes %> (<%= TopAgent.time_on_phone_for(:four_weeks).as_hours_and_minutes %>)
     </span>
   </p>
 

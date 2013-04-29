@@ -599,6 +599,8 @@ en:
         this_week: "This week"
         time: "Time"
         last_four_weeks: "Last 4 weeks"
+        number_of_calls: "Number of calls"
+        time_on_phone: "Time on phone"
       logged_as_other_user: "Logged as user: %{user}"
   contacts:
     filter:

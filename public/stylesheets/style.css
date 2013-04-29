@@ -2142,10 +2142,13 @@ li.disabled
 }
 
 div#agent_information {
-    height: 40px;
+    height: 46px;
     font-size: 90%;
 }
 
+div#agent_information div.frm_tiny {
+    padding: 4px 8px 4px 8px;
+}
 .generic thead th.tar, td.tar {
     text-align: right;
 }

@@ -283,7 +283,9 @@ module ApplicationHelper
   end
 
   def format_for_timesheet(timesheet, val, type)
-    if type.to_sym == :hours
+    val = val / 3600.0 if type == :time_on_phone
+
+    if [:hours, :time_on_phone].include?(type.to_sym)
       hours = val.to_i.abs
       minutes = ((val-val.to_i)*60).round.abs
       minutes = "0#{minutes}" if minutes < 10

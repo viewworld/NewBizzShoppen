@@ -2,28 +2,30 @@ module AgentTimesheetCommon
 
   attr_accessor :start_date, :end_date, :campaigns, :agents, :call_centres, :overview, :team_result_sheet,
                 :agent_timesheet, :display_hours, :display_results, :display_value, :display_cost, :only_show_results,
-                :currency_id
+                :currency_id, :display_time_on_phone, :display_calls
 
   TIMESHEETS_PATH = "public/system/agent_timesheets_cache"
 
   DEFAULT_OPTIONS = {
-      :show_weekends     => true,
-      :only_show_results => true,
-      :start_date        => (Date.today-1.year).beginning_of_week,
-      :end_date          => Date.today.end_of_week,
-      :campaigns         => [],
-      :agents            => [],
-      :call_centres      => [],
-      :display_hours     => true,
-      :display_results   => true,
-      :display_value     => true,
-      :display_cost      => true,
-      :overview          => true,
-      :team_result_sheet => true,
-      :agent_timesheet   => true,
-      :current_user      => nil,
-      :filename          => nil,
-      :currency_id       => nil
+      :show_weekends          => true,
+      :only_show_results      => true,
+      :start_date             => (Date.today-1.year).beginning_of_week,
+      :end_date               => Date.today.end_of_week,
+      :campaigns              => [],
+      :agents                 => [],
+      :call_centres           => [],
+      :display_hours          => true,
+      :display_results        => true,
+      :display_value          => true,
+      :display_cost           => true,
+      :display_time_on_phone  => true,
+      :display_calls          => true,
+      :overview               => true,
+      :team_result_sheet      => true,
+      :agent_timesheet        => true,
+      :current_user           => nil,
+      :filename               => nil,
+      :currency_id            => nil
   }
 
   def initialize(options = {})
@@ -80,6 +82,14 @@ module AgentTimesheetCommon
 
   def results
     @results ||= scoped(:results)
+  end
+
+  def calls
+    @calls ||= scoped(:calls)
+  end
+
+  def time_on_phone
+    @time_on_phone ||= scoped(:time_on_phone)
   end
 
   def value

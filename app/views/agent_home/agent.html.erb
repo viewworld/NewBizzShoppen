@@ -295,7 +295,7 @@
           var performance_data = <%= agent_performance.flot_chart.to_json.html_safe %>;
 
           function euroFormatter(v, axis) {
-              return v.toFixed(axis.tickDecimals) +" <%= agent_performance.currency.symbol.html_safe %>";
+              return v.toFixed(axis.tickDecimals) +" <%= agent_performance.currency.name %>";
           }
 
           function doPlot(position) {
