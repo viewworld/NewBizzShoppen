@@ -281,7 +281,35 @@ class CampaignReport
     "Campaign Report"
   end
 
+  def number_of_calls
+    call_logs_scope.ringing.count
+  end
+
+  def number_of_no_answer
+    call_logs_scope.ringing.count - call_logs_scope.talk.count
+  end
+
+  def time_between_calls
+    call_logs_scope.ringing.join_on_next_with_state('RINGING').next_created_within(60).select("EXTRACT(EPOCH FROM AVG(next_cl.created_at - call_logs.created_at)) as time_between_calls").first.time_between_calls
+  end
+
+  def time_on_phone
+    call_logs_scope.ringing.join_on_next_with_state('FINISH').select("EXTRACT(EPOCH FROM SUM(next_cl.created_at - call_logs.created_at)) as time_on_phone").first.time_on_phone
+  end
+
+  def calls_per_success
+    number_of_calls / final_results.with_success.count
+  end
+
+  def calls_per_final_result
+    number_of_calls / final_results.count
+  end
+
   private
+
+  def call_logs_scope
+    CallLog.for_campaigns(campaign).created_between(date_from, date_to).for_users(Array(user).map(&:id))
+  end
 
   def all_call_results
     crs = CallResult.joins(:result).for_campaign(campaign).where("call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported

@@ -23,6 +23,14 @@
           <td>
             <%= campaign_report.contacts_used.to_s.split("-").join("-<br/>").html_safe %>
           </td>
+          <% unless options[:dont_show_calls] %>
+              <td><%= campaign_report.number_of_calls %></td>
+              <td><%= campaign_report.number_of_no_answer %></td>
+              <td><%= seconds_to_minutes_and_seconds campaign_report.time_between_calls %></td>
+              <td><%= seconds_to_minutes_and_seconds campaign_report.time_on_phone %></td>
+              <td><%= campaign_report.calls_per_success %></td>
+              <td><%= campaign_report.calls_per_final_result %></td>
+          <% end %>
           <% unless options[:dont_show_results] %>
             <% CampaignReport.final_results(result_ids, campaign_reports.map { |cr| cr.campaign }).each do |result| %>
               <td>

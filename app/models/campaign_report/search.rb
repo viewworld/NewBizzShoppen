@@ -3,7 +3,8 @@ class CampaignReport::Search
   attr_accessor :date_from, :date_to, :per_user, :with_results, :dont_show_results, :views_count, :campaign_selection,
                 :result_ids, :call_centre_id, :call_centre_agent_ids, :currency_id, :user, :call_centre,
                 :all_call_centres, :all_call_centre_agents, :selected_agents, :current_user, :campaign_reports,
-                :all_campaigns, :campaign_ids, :all_results, :campaign_users, :search_options, :show_targets
+                :all_campaigns, :campaign_ids, :all_results, :campaign_users, :search_options, :show_targets,
+                :dont_show_calls
 
   include ActiveModel::Conversion
   extend ActiveModel::Naming
@@ -20,7 +21,8 @@ class CampaignReport::Search
       :call_centre_agent_ids  => [],
       :currency_id            => nil,
       :views_count            => 0,
-      :show_targets           => false
+      :show_targets           => false,
+      :dont_show_calls        => false
   }
 
   def persisted?

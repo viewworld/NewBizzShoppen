@@ -77,6 +77,10 @@
                     </li>
                 <% end %>
                 <li class="boolean">
+                  <%= label_tag :dont_show_calls, t("campaign_reports.index.dont_show_calls") %>
+                  <%= check_box_tag :dont_show_calls, "1", @search.dont_show_calls %>
+                </li>
+                <li class="boolean">
                   <%= label_tag :with_results, t("campaign_reports.index.with_results") %>
                   <%= check_box_tag :with_results, "1", @search.with_results %>
                 </li>

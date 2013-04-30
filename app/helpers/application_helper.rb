@@ -297,6 +297,13 @@ module ApplicationHelper
     end
   end
 
+  def seconds_to_minutes_and_seconds(seconds)
+    seconds = seconds.to_i
+    minutes = seconds / 60
+    seconds = seconds - (minutes * 60)
+    "#{minutes < 10 ? '0'+minutes.to_s : minutes}:#{seconds < 10 ? '0'+seconds.to_s : seconds}"
+  end
+
   def humanize_object_class_name(object)
     if object.is_a?(ActsAsTaggableOn::Tag)
       "Tag"
