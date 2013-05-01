@@ -174,7 +174,7 @@ class Contact < AbstractLead
   end
 
   def can_be_managed_by?(user)
-    (campaign.users.map(&:id) + [campaign.creator.id]).include?(user.id) or user.has_role?(:admin)
+    (campaign.users.map(&:id) + [campaign.creator_id]).include?(user.id) or user.has_role?(:admin)
   end
 
   def contacts_list_conditions_for(direction)

@@ -13,6 +13,19 @@ class AgentHomeController < ApplicationController
     render :agent
   end
 
+  def call_centre_agent
+    agent
+  end
+
+  def call_centre
+    params[:date_from] ||= Date.today
+    params[:date_to] ||= Date.today
+    params[:currency_id] ||= Currency.dkk
+    @performance_campaigns = Campaign.active_between(params[:date_from], params[:date_to]).available_for_user(current_user)
+    @agents = User.with_call_centre_agents(current_user).select("DISTINCT(users.*)").joins(:user_session_logs).where(:user_session_logs => { :campaign_id => @performance_campaigns, :end_date => params[:date_from]..params[:date_to] })
+    render :call_centre
+  end
+
   def guest
     @best_sellers = Lead.scoped
     @best_sellers = @best_sellers.without_inactive.published_only.without_bought_and_requested_by(current_user).bestsellers
@@ -42,7 +55,7 @@ class AgentHomeController < ApplicationController
     end
 
     if user_signed_in? and current_user.has_any_role?(:agent, :call_centre_agent, :call_centre)
-      agent
+      send(current_user.role)
     else
       guest
     end
