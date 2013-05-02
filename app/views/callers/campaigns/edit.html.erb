@@ -63,7 +63,7 @@
   </header>
 
   <div class="fltl">
-    <%= bt_link_to_function nil, "Select unassigned", "$('input.cb_contact_id:not([data-agent-id])').each(function(){this.checked=!this.checked});" %>
+    <%= bt_link_to_function nil, "Select unassigned", "$('input.cb_contact_id:not([data-agent-id]):not([data-completed])').each(function(){this.checked=!this.checked});" %>
 
     <%= label_tag "select_by_result_id", "Select with result" %>
     <%= select_tag "select_by_result_id", options_for_select([[]]+@contacts.select{|c| c.current_call_result and c.current_call_result.result }.map{|c| [c.current_call_result.result.name, c.current_call_result.result.id]}.uniq.sort), :onchange => "select_all_contacts_with_result_and_agent();" %>

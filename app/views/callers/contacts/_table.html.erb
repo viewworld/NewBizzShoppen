@@ -39,7 +39,7 @@
       <tr id="contact_row_id_<%= contact.id %>" class="<%= cycle("odd", "even") %><%= contact.completed? ? " completed" : "" %><%= @contact == contact ? " highlight_row" : "" %>">
         <td class="cl"></td>
         <% if show_checkboxes %>
-            <td class="no_pdd_lr"><%= check_box_tag "cb_contact_#{contact.id}", contact.id, false, :class => "cb_contact_id", "data-agent-id" => contact.agent_id, "data-result-id" => (contact.current_call_result ? contact.current_call_result.result_id : nil) %></td>
+            <td class="no_pdd_lr"><%= check_box_tag "cb_contact_#{contact.id}", contact.id, false, :class => "cb_contact_id", "data-agent-id" => contact.agent_id, "data-result-id" => (contact.current_call_result ? contact.current_call_result.result_id : nil), "data-completed" => (contact.completed? ? "completed" : nil) %></td>
         <% end %>
         <td><%= contact.company_name %></td>
         <td class="ta_r"><%= contact.company_phone_number %></td>
