@@ -9,4 +9,8 @@ class Callers::AgentPerformancesController < Callers::CallerController
     @search.to_file
   end
 
+  def summary
+    render :partial => 'summary', :layout => false
+  end
+
 end

@@ -20,11 +20,6 @@ Nbs::Application.routes.draw do
 
   namespace :administration do
     root :to => "homes#show"
-    resource :home do
-      member do
-        get :summary
-      end
-    end
     resources :users do
       resource :password, :controller => 'password', :only => [:new, :update, :destroy]
       member do
@@ -309,7 +304,11 @@ Nbs::Application.routes.draw do
     resources :cached_timesheets, :only => [:index]
     resources :cached_campaign_reports, :only => [:index]
     resource :agent_information, :only => [:show]
-    resource :agent_performance
+    resource :agent_performance do
+      member do
+        get :summary
+      end
+    end
     resources :call_logs
   end
 
