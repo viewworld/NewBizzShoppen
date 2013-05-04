@@ -298,11 +298,19 @@ class CampaignReport
   end
 
   def calls_per_success
-    number_of_calls / final_results.with_success.count
+    if final_with_success_count = final_results.with_success.count and final_with_success_count.zero?
+      "-"
+    else
+      number_of_calls / final_with_success_count
+    end
   end
 
   def calls_per_final_result
-    number_of_calls / final_results.count
+    if final_count = final_results.count and final_count.zero?
+      "-"
+    else
+      number_of_calls / final_count
+    end
   end
 
   private
