@@ -606,6 +606,8 @@ en:
     filter:
       title: Search
       keyword_label: Keyword
+      result_label: "Result"
+      agent_label: "Agent"
       search_button: Search
     new:
       title_new_contact: New contact

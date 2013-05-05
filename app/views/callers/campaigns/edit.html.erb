@@ -65,11 +65,11 @@
   <div class="fltl">
     <%= bt_link_to_function nil, "Select unassigned", "$('input.cb_contact_id:not([data-agent-id]):not([data-completed])').each(function(){this.checked=!this.checked});" %>
 
-    <%= label_tag "select_by_result_id", "Select with result" %>
-    <%= select_tag "select_by_result_id", options_for_select([[]]+@contacts.select{|c| c.current_call_result and c.current_call_result.result }.map{|c| [c.current_call_result.result.name, c.current_call_result.result.id]}.uniq.sort), :onchange => "select_all_contacts_with_result_and_agent();" %>
+    <%#= label_tag "select_by_result_id", "Select with result" %>
+    <%#= select_tag "select_by_result_id", options_for_select([[]]+@contacts.select{|c| c.current_call_result and c.current_call_result.result }.map{|c| [c.current_call_result.result.name, c.current_call_result.result.id]}.uniq.sort), :onchange => "select_all_contacts_with_result_and_agent();" %>
 
-    <%= label_tag "select_by_agent_id", "Select assigned to agent" %>
-    <%= select_tag "select_by_agent_id", options_for_select([[]]+@contacts.select{|c| c.agent }.map{|c| [c.agent.screen_name, c.agent.id]}.uniq.sort), :onchange => "select_all_contacts_with_result_and_agent();" %>
+    <%#= label_tag "select_by_agent_id", "Select assigned to agent" %>
+    <%#= select_tag "select_by_agent_id", options_for_select([[]]+@contacts.select{|c| c.agent }.map{|c| [c.agent.screen_name, c.agent.id]}.uniq.sort), :onchange => "select_all_contacts_with_result_and_agent();" %>
   </div>
 
   <div class="fltr">
@@ -77,6 +77,15 @@
           <p>
             <%= label_tag t("contacts.filter.keyword_label") %>
             <%= f.text_field :with_keyword %>
+
+            <%= label_tag t("contacts.filter.result_label") %>
+            <%= f.select :with_current_result_id, [[]]+@campaign.campaigns_results.map{|cr| [cr.result.name, cr.result_id]}.uniq.sort %>
+
+            <%= label_tag t("contacts.filter.agent_label") %>
+            <%= f.select :with_agent_id, [[]]+@campaign.users.map{|u| [u.screen_name, u.id]}.uniq.sort %>
+
+            <%= hidden_field_tag "show_all", "1" %>
+
             <%= bt_link_to nil, t("contacts.filter.search_button"), "javascript:void(0)", :onclick => "$(this).parents('form').submit()" %>
           </p>
       <% end %>

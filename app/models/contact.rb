@@ -27,7 +27,9 @@ class Contact < AbstractLead
   scope :all_available_to_assign, where(:agent_id => nil).with_completed_status(false).with_pending_status(false)
   scope :available_to_assign, lambda { |user| all_available_to_assign.joins("left join contact_past_user_assignments on leads.id=contact_past_user_assignments.contact_id AND contact_past_user_assignments.user_id = #{user.id}").where("contact_past_user_assignments.user_id is NULL") }
   scope :with_results, joins(:call_results)
+  scope :with_current_result_id, lambda { |result_id| joins("inner join call_results on call_results.id = (select id from call_results where contact_id = leads.id order by created_at desc limit 1)").where("call_results.result_id = ?", result_id) }
   scope :with_agents, lambda { |agent_ids| where("call_results.creator_id IN (:agent_ids)", {:agent_ids => agent_ids}) unless agent_ids.to_a.select { |id| !id.blank? }.empty? }
+  scope :with_agent_id, lambda { |agent_id| where(:agent_id => agent_id) }
   scope :from_last_import, where(:last_import => true)
   scoped_order :company_name
 
