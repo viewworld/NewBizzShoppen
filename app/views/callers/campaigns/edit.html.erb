@@ -79,10 +79,10 @@
             <%= f.text_field :with_keyword %>
 
             <%= label_tag t("contacts.filter.result_label") %>
-            <%= f.select :with_current_result_id, [[]]+@campaign.campaigns_results.map{|cr| [cr.result.name, cr.result_id]}.uniq.sort %>
+            <%= f.select :with_current_result_id, [[]]+CallResult.joins(:result).for_campaign(@campaign).map{|cr| [cr.result.name, cr.result_id]}.uniq.sort %>
 
             <%= label_tag t("contacts.filter.agent_label") %>
-            <%= f.select :with_agent_id, [[]]+@campaign.users.map{|u| [u.screen_name, u.id]}.uniq.sort %>
+            <%= f.select :with_agent_id, [[]]+CallResult.joins(:result).for_campaign(@campaign).map{|cr| [cr.creator.screen_name, cr.creator_id]}.uniq.sort %>
 
             <%= hidden_field_tag "show_all", "1" %>
 
