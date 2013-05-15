@@ -12,9 +12,9 @@
 
     <span style="float:right">
         <strong><%= t("agent_work_screen.index.agent_information.time") %>: </strong>
-        <%= t("agent_work_screen.index.agent_information.today") %> (<%= AgentInformation.today(@agent, @currency).time.to_f.as_hours_and_minutes %>),
-        <%= t("agent_work_screen.index.agent_information.this_week") %> (<%= AgentInformation.week(@agent, @currency).time.to_f.as_hours_and_minutes %>),
-        <%= t("agent_work_screen.index.agent_information.last_four_weeks") %> (<%= AgentInformation.last_four_weeks(@agent, @currency).time.to_f.as_hours_and_minutes %>)
+        <%= t("agent_work_screen.index.agent_information.today") %> <%= AgentInformation.today(@agent, @currency).time.to_f.as_hours_and_minutes %> (<%= TopAgent.today(Currency.dkk).time.to_f.as_hours_and_minutes %>),
+        <%= t("agent_work_screen.index.agent_information.this_week") %> <%= AgentInformation.week(@agent, @currency).time.to_f.as_hours_and_minutes %> (<%= TopAgent.week(Currency.dkk).time.to_f.as_hours_and_minutes %>),
+        <%= t("agent_work_screen.index.agent_information.last_four_weeks") %> <%= AgentInformation.last_four_weeks(@agent, @currency).time.to_f.as_hours_and_minutes %> (<%= TopAgent.four_weeks(Currency.dkk).time.to_f.as_hours_and_minutes %>)
     </span>
   </p>
 

@@ -27,19 +27,11 @@ class TopAgent
   end
 
   def self.number_of_calls_for(symbol)
-    if ta = TopAgent.send(symbol, Currency.dkk) and ta.valid?
-      ta.number_of_calls
-    else
-      0.0
-    end
+    TopAgent.send(symbol, Currency.dkk).number_of_calls
   end
 
   def self.time_on_phone_for(symbol)
-    if ta = TopAgent.send(symbol, Currency.dkk) and ta.valid?
-      ta.time_on_phone
-    else
-      0.0
-    end
+    TopAgent.send(symbol, Currency.dkk).time_on_phone
   end
 
   def self.week(currency)
@@ -84,6 +76,14 @@ class TopAgent
   def time_on_phone
     if top = AgentTimesheet::TimeOnPhone.with_date_between(date_from, date_to).select("sum(time_on_phone)").group("user_id").order("sum DESC").first
       top.sum.to_f / 3600.0
+    else
+      0.0
+    end
+  end
+
+  def time
+    if top = AgentTimesheet::Hours.with_date_between(date_from, date_to).select("sum(hours)").group("user_id").order("sum DESC").first
+      top.sum.to_f
     else
       0.0
     end
