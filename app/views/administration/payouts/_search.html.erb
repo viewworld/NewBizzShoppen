@@ -68,6 +68,10 @@
               <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}');" %>
               <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}');" %>
             </p>
+            <p style="padding: 0 10px 0 10px">
+              <%= label_tag :show_all_results, t("campaigns.show.search.all_results") %>
+              <%= check_box_tag :show_all_results, "1", @search.show_all_results == "1" %>
+            </p>
           </div>
 
           <div class="grid_250 fltl">

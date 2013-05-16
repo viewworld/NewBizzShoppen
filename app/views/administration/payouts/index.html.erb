@@ -34,13 +34,14 @@
           <th><%= link_to_function t("administration.payouts.index.view.table.result"), @search.reorder_link('result') %></th>
           <th><%= t("administration.payouts.index.view.table.value") %></th>
           <th><%= t("administration.payouts.index.view.table.payout") %></th>
+          <th><%= t("administration.payouts.index.view.table.voice") %></th>
           <th class="hr"></th>
         </tr>
         </thead>
         <tfoot>
         <tr>
           <td class="fl"></td>
-          <td colspan="6"></td>
+          <td colspan="7"></td>
           <td class="fr"></td>
         </tr>
         </tfoot>
@@ -49,10 +50,10 @@
             <% campaign_result = call_result.result.campaigns_results.where(:campaign_id => call_result.contact.campaign_id).first %>
             <tr class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
-              <td><%= call_result.created_at.to_date %></td>
+              <td><%= call_result.contact_id %>   /   <%= call_result.id %>   /   <%= call_result.created_at.to_date %></td>
               <td><%= "#{call_result.creator.email}, #{call_result.creator.full_name}" %></td>
               <td><%= call_result.contact.campaign.name %></td>
-              <td><%= call_result.result.name %></td>
+              <td><%= call_result.result.name %></td >
               <td>
                   <%= text_field_tag "campaign_result[#{campaign_result.id}][value]", campaign_result.value, 'data-campaign-result-id' => campaign_result.id, :style => "width:50px" %>
                   <%= campaign_result.campaign.currency %>
@@ -61,12 +62,17 @@
                 <%= text_field_tag "call_result[#{call_result.id}][payout]", call_result.payout, 'data-call-result-id' => call_result.id, :style => "width:50px" %>
                 <%= call_result.payout_currency %>
               </td>
+              <td>
+                <% if call_result.call_log and this_call_url = call_url(call_result.call_log.call_id) %>
+                    <audio preload="none" src="<%= this_call_url %>" controls="controls"></td>
+                <% end %>
+              </td>
               <td class="cr"></td>
             </tr>
         <% end %>
         <% if will_paginate @call_results %>
             <tr class="pagination">
-              <td colspan="9" class="ta_c">
+              <td colspan="10" class="ta_c">
                 <%= will_paginate @call_results, :previous_label => '&laquo;', :next_label => '&raquo;' %>
               </td>
             </tr>

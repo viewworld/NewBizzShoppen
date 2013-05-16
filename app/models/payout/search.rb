@@ -3,7 +3,7 @@ class Payout::Search
   attr_accessor :date_from, :date_to, :campaign_selection, :result_ids, :call_centre_id, :call_centre_agent_ids,  :user,
                 :call_centre, :all_call_centres, :all_call_centre_agents, :selected_agents, :current_user, :campaign_reports,
                 :all_campaigns, :campaign_ids, :all_results, :campaign_users, :search_options, :call_results, :filename, :currency,
-                :order_by, :order
+                :order_by, :order, :show_all_results
 
   include ActiveModel::Conversion
   extend ActiveModel::Naming
@@ -16,7 +16,8 @@ class Payout::Search
       :call_centre_id         => nil,
       :call_centre_agent_ids  => [],
       :order_by               => 'date',
-      :order                  => 'ASC'
+      :order                  => 'ASC',
+      :show_all_results       => '0'
   }
 
   PAYOUTS_PATH = "public/system/payouts"
@@ -75,8 +76,9 @@ class Payout::Search
         joins("INNER JOIN campaigns ON campaigns.id = campaigns_results.campaign_id").
         joins("INNER JOIN results ON results.id = campaigns_results.result_id").
         where(:leads => { :campaign_id => @campaigns.map(&:id) }, :result_id => @result_ids ).
-        where("campaigns_results.value IS NOT NULL OR call_results.payout IS NOT NULL").
         created_at_from(@date_from).created_at_to(@date_to)
+
+    @call_results = @call_results.where("campaigns_results.value IS NOT NULL OR call_results.payout IS NOT NULL") unless @show_all_results == "1"
 
     @call_results = @call_results.where(:creator_id => @selected_agents) unless @call_centre_agent_ids.empty?
 
