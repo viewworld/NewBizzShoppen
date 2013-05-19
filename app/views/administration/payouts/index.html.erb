@@ -50,16 +50,16 @@
             <% campaign_result = call_result.result.campaigns_results.where(:campaign_id => call_result.contact.campaign_id).first %>
             <tr class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
-              <td><%= call_result.contact_id %>   /   <%= call_result.id %>   /   <%= call_result.created_at.to_date %></td>
+              <td><%= l call_result.created_at, :format => :long %></td>
               <td><%= "#{call_result.creator.email}, #{call_result.creator.full_name}" %></td>
               <td><%= call_result.contact.campaign.name %></td>
               <td><%= call_result.result.name %></td >
               <td>
-                  <%= text_field_tag "campaign_result[#{campaign_result.id}][value]", campaign_result.value, 'data-campaign-result-id' => campaign_result.id, :style => "width:50px" %>
+                  <%= text_field_tag "campaign_result[#{campaign_result.id}][value]", campaign_result.value, 'data-campaign-result-id' => campaign_result.id, :style => "width:45px" %>
                   <%= campaign_result.campaign.currency %>
               </td>
               <td>
-                <%= text_field_tag "call_result[#{call_result.id}][payout]", call_result.payout, 'data-call-result-id' => call_result.id, :style => "width:50px" %>
+                <%= text_field_tag "call_result[#{call_result.id}][payout]", call_result.payout, 'data-call-result-id' => call_result.id, :style => "width:45px" %>
                 <%= call_result.payout_currency %>
               </td>
               <td>
