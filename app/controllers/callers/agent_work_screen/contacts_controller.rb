@@ -27,11 +27,15 @@ class Callers::AgentWorkScreen::ContactsController < Callers::AgentWorkScreenCon
   end
 
   def show
-    @fast = params[:fast] == "true"
-    set_locals
-    unless @fast
-      add_completed_to_locals
-      add_pending_to_locals
+    if request.xhr?
+      @fast = params[:fast] == "true"
+      set_locals
+      unless @fast
+        add_completed_to_locals
+        add_pending_to_locals
+      end
+    else
+      redirect_to callers_campaign_agent_work_screen_index_path(params[:campaign_id], :selected_contact_id => params[:id])
     end
   end
 

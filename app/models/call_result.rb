@@ -10,7 +10,6 @@ class CallResult < ActiveRecord::Base
   belongs_to :result
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
   belongs_to :payout_currency, :class_name => "Currency"
-  has_one :call_log, :dependent => :destroy
   has_many :result_values, :dependent => :destroy
   has_one :send_material_result_value, :class_name => "ResultValue", :conditions => "result_values.field_type = '#{ResultField::MATERIAL}'"
   has_one :archived_email, :as => :related, :dependent => :destroy
@@ -132,6 +131,14 @@ class CallResult < ActiveRecord::Base
 
   def result_name
     result ? result.name : "-result deleted-"
+  end
+
+  def call_log
+    CallLog.talk.order("call_logs.created_at desc").
+        where(:caller_id => creator_id).
+#        where(:contact_id => contact_id).
+        where("call_logs.created_at < :call_result AND @EXTRACT(EPOCH FROM call_logs.created_at - :call_result) < 1800", :call_result => created_at).
+        first
   end
 
   class << self

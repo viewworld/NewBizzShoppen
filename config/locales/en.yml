@@ -494,6 +494,7 @@ en:
         campaigns: "Campaigns"
         call_centres: "Call centres"
         call_centre_agents: "Call centre agents"
+        all_results: "Show all results"
       search_button: Search
       export_button: Export
       table:
@@ -1715,6 +1716,7 @@ en:
             result: "Result"
             value: "Value"
             payout: "Payout"
+            voice: "Voice result"
 
     payment_transactions:
       index:
