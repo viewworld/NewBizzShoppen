@@ -491,6 +491,18 @@ Nbs::Application.routes.draw do
     match '/(:id)' => "agent_home#show"
   end
 
+  namespace :surveys_management do
+    resources :surveys do
+      resources :survey_questions do
+        collection do
+          post :sort
+        end
+      end
+    end
+  end
+
+  resources :surveys
+
   match ':slug' => 'category_home#show', :as => :category_home_page
   match ':slug/account/new' => 'category_supplier_accounts#new', :as => :new_category_home_page_account
   match ':slug/account' => 'category_supplier_accounts#create', :as => :category_home_page_account

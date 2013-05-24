@@ -1,0 +1,6 @@
+<% if @survey_question.update_attributes(params[:survey_question]) %>
+    $.colorbox.close();
+    $("#survey_questions_container").html("<%= escape_javascript(render(:partial => "surveys_management/surveys/survey_questions", :locals => { :survey => @survey })) %>");
+<% else %>
+    $("#question_form").html("<%= escape_javascript(render(:partial => "edit")) %>");
+<% end %>

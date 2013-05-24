@@ -1,0 +1,64 @@
+<column-mc:>
+  <header>
+    <param:content>
+      <%= t("surveys_management.surveys.index.view.header") %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last"><%= bt_link_to :plus, t("surveys_management.surveys.index.view.new_survey"), new_surveys_management_survey_path %></li>
+      </ul>
+
+    </param:actions>
+  </header>
+
+  <% if @surveys.blank? %>
+      <%= blank_state_message %>
+  <% else %>
+      <table id="newsletter_lists_table" class="generic">
+        <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= t("surveys_management.surveys.index.view.owner_column") %></th>
+          <th><%= t("surveys_management.surveys.index.view.title_column") %></th>
+          <th class="ta_r"><%= t("surveys_management.surveys.index.view.actions_column") %></th>
+          <th class="hr"></th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="3"></td>
+          <td class="fr"></td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <% @surveys.each do |survey| %>
+            <tr class="<%= cycle("odd", "even") %>">
+              <td class="cl"></td>
+              <td><%= survey.creator rescue '-' %></td>
+              <td><%= survey.title %></td>
+              <td class="tda ta_r">
+                <ul-actions>
+                  <li>
+                    <%= link_to t("surveys_management.surveys.index.view.edit"),  edit_surveys_management_survey_path(survey), :class => "default_action" %>
+                  </li>
+                  <li>
+                    <%= link_to t("surveys_management.surveys.index.view.destroy"),  surveys_management_survey_path(survey), {:method => :delete, :confirm => t("common.confirmation")} %>
+                  </li>
+                </ul-actions>
+              </td>
+              <td class="cr"></td>
+            </tr>
+        <% end %>
+        <% if will_paginate %>
+            <tr class="pagination">
+              <td colspan="7" class="ta_c">
+                <%= will_paginate @surveys, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+  <% end %>
+</column-mc:>

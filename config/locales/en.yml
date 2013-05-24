@@ -148,6 +148,7 @@ en:
         agent_performance: "Agent perf."
         payout: "Payout"
         background_tasks: "Background tasks"
+        surveys: "Surveys"
       agent:
         leads: My leads
         deals: My deals
@@ -4908,3 +4909,30 @@ en:
     create:
       flash:
         tags_successfully_assigned: "%{tags_count} tags successfully assigned to %{taggables_count} objects."
+  surveys_management:
+    shared:
+      cancel: "Cancel"
+      question: "Question"
+      question_types:
+        type1: "Text"
+        type2: "Text multiline"
+        type3: "Number"
+        type4: "Date"
+        type5: "Single select"
+        type6: "Multiple select"
+    surveys:
+      index:
+        view:
+          header: "Surveys"
+          new_survey: "New survey"
+          owner_column: "Owner"
+          title_column: "Title"
+          actions_column: "Actions"
+          edit: "Edit"
+          destroy: "Destroy"
+      edit:
+        view:
+          edit_question: "Edit"
+          destroy_question: "Remove"
+          header: "Edit survey"
+          button_update: "Save"

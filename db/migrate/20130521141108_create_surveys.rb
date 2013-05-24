@@ -3,6 +3,8 @@ class CreateSurveys < ActiveRecord::Migration
     create_table :surveys do |t|
       t.string :title
       t.string :uuid
+      t.integer :creator_id
+      t.string :creator_type
       t.timestamps
     end
   end

@@ -78,6 +78,7 @@ class User < ActiveRecord::Base
   has_many :chain_mails, :primary_key => :email, :foreign_key => :email
   has_many :campaign_monitor_responses, :as => :resource
   has_many :newsletter_lists, :foreign_key => :owner_id
+  has_many :surveys, :as => :creator
 
   alias_method :parent, :user
 
