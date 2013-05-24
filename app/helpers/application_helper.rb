@@ -77,6 +77,14 @@ module ApplicationHelper
     "add_subscription_plan_line(this, \"#{escape_javascript(fields)}\")"
   end
 
+  def fields_for_survey_options_fields(f)
+    region = SurveyOption.new
+    fields = f.fields_for :survey_options, region do |builder|
+      render("survey_option_fields", :f => builder)
+    end
+    "add_survey_option_field(this, \"#{escape_javascript(fields)}\")"
+  end
+
   def fields_for_associated(klass, form, partial)
     _instance = klass.new
     _fields = form.fields_for klass.to_s.tableize, _instance do |builder|

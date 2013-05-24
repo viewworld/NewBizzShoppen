@@ -9,4 +9,46 @@
       <%= form.input :tmp_position, :as => :hidden %>
     </ol>
   </fieldset>
+
+  <% if @survey_question.is_any_select_type? %>
+      <% counter = -1 %>
+      <%= form.fields_for :survey_options, @survey_question.survey_options do |builder| %>
+          <%= render :partial => "survey_option_fields", :locals => { :f => builder, :counter => (counter += 1) } %>
+      <% end %>
+  <% end %>
 </div>
+
+<% if @survey_question.is_any_select_type? %>
+    <div class="nested_survey_options_container"></div>
+
+    <hl/>
+    <div class="pdd_20" style="padding-top:10px">
+      <%= bt_link_to :plus, t("shared.lead_templates.form.new_lead_template_field"), "javascript:void(0)", :onclick => "#{fields_for_survey_options_fields(form)}" %>
+    </div>
+
+    <script>
+        var nestedFormsCount = <%= @survey_question.survey_options.size %>;
+
+        function add_survey_option_field(link, content) {
+            var new_id = new Date().getTime();
+            content = content.replace(/survey_question_survey_options_attributes_\d+/g, "survey_question_survey_options_attributes_" + nestedFormsCount.toString());
+            content = content.replace(/survey_question\[survey_options_attributes\]\[\d+\]/g, "survey_question[survey_options_attributes][" + new_id.toString() + "]");
+            $('.nested_survey_options_container:last').append(content);
+            nestedFormsCount = nestedFormsCount + 1;
+        }
+
+        function remove_survey_option_field(id, record_id) {
+            nestedFormsCount = nestedFormsCount - 1;
+
+            if (record_id == null)
+            {
+                $('#survey_option_form_' + id).remove();
+            }
+            else
+            {
+                $('#survey_option_form_' + id).hide();
+                $('#destroy_hidden_field_' + record_id.toString()).val('true')
+            }
+        }
+    </script>
+<% end %>

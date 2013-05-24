@@ -5,6 +5,8 @@ class SurveyQuestion < ActiveRecord::Base
 
   belongs_to :survey
 
+  accepts_nested_attributes_for :survey_options
+
   acts_as_list :scope => [:survey_id, :parent_id]
 
   validates_presence_of :title
@@ -28,6 +30,13 @@ class SurveyQuestion < ActiveRecord::Base
       SINGLE_SELECT_TYPE,
       MULTI_SELECT_TYPE
   ].freeze
+
+
+  def is_any_select_type?
+    [SINGLE_SELECT_TYPE, MULTI_SELECT_TYPE].include?(question_type)
+  end
+
+  private
 
   def move_to_tmp_position
     send(:insert_at_position, tmp_position.to_i) if tmp_position.to_i > 0
