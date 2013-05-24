@@ -4,13 +4,20 @@
       <%= form.input :title %>
       <%= form.input :hint %>
       <%= form.input :is_required %>
-      <%= form.input :is_branched %>
+      <% if @survey_question.is_select_type? %>
+          <%= form.input :is_branched %>
+      <% end %>
+
+      <% if @survey_question.is_select_type? or @survey_question.is_text_type? %>
+          <%= form.input :is_multi, :label => (@survey_question.is_select_type? ? t("surveys_management.shared.is_multiselect") : t("surveys_management.shared.is_multiline")) %>
+      <% end %>
+
       <%= form.input :question_type, :as => :hidden %>
       <%= form.input :tmp_position, :as => :hidden %>
     </ol>
   </fieldset>
 
-  <% if @survey_question.is_any_select_type? %>
+  <% if @survey_question.is_select_type? %>
       <% counter = -1 %>
       <%= form.fields_for :survey_options, @survey_question.survey_options do |builder| %>
           <%= render :partial => "survey_option_fields", :locals => { :f => builder, :counter => (counter += 1) } %>
@@ -18,7 +25,7 @@
   <% end %>
 </div>
 
-<% if @survey_question.is_any_select_type? %>
+<% if @survey_question.is_select_type? %>
     <div class="nested_survey_options_container"></div>
 
     <hl/>

@@ -4915,11 +4915,11 @@ en:
       question: "Question"
       question_types:
         type1: "Text"
-        type2: "Text multiline"
-        type3: "Number"
-        type4: "Date"
-        type5: "Single select"
-        type6: "Multiple select"
+        type2: "Number"
+        type3: "Date"
+        type4: "Select"
+      is_multiline: "Is multiline"
+      is_multiselect: "Is multiselect"
     surveys:
       index:
         view:
