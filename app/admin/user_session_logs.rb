@@ -3,8 +3,8 @@ ActiveAdmin.register UserSessionLog, :as => "User Session Logs" do
   index do
     column :id
     column :start_time
-    column :hours_count
     column :end_time
+    column :hours_count
     column :end_date
     column :log_type
     column :created_at
