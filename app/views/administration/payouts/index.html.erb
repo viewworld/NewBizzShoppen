@@ -64,7 +64,7 @@
               </td>
               <td>
                 <% if call_result.call_log and this_call_url = call_url(call_result.call_log.call_id) %>
-                    <audio preload="none" src="<%= this_call_url %>" controls="controls"></td>
+                    <audio preload="none" src="<%= this_call_url %>" controls="controls">
                 <% end %>
               </td>
               <td class="cr"></td>
