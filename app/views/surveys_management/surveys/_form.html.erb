@@ -1,6 +1,8 @@
+<ol>
 <% SurveyQuestion::QUESTION_TYPES.each do |qtype| %>
-    <div class="draggable_question_type survey_question" data-qtype="<%= qtype %>" style="border: 2px green solid;" data-id="null"><%= t("surveys_management.shared.question_types.type#{qtype}") %></div>
+    <li class="draggable_question_type survey_question" data-qtype="<%= qtype %>" style="border: 2px green solid;" data-id="null"><div><%= t("surveys_management.shared.question_types.type#{qtype}") %></div></li>
 <% end %>
+</ol>
 
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r">
@@ -11,9 +13,9 @@
     </fieldset>
   </div>
 
-<div style="border: 2px green dashed" id="survey_questions_container">
-  <%= render :partial => "survey_questions", :locals => { :survey => @survey } %>
-</div>
+<ol style="border: 2px green dashed" class="survey_questions_container sortable">
+  <%= render :partial => "survey_questions", :locals => { :survey_questions => @survey.survey_questions.without_nested } %>
+</ol>
 
 
 <script>
@@ -23,44 +25,126 @@
         }
     }
 
-    function editQuestion(id){
-        $.colorbox({href: "/surveys_management/surveys/<%= @survey.id %>/survey_questions/" + id + "/edit",
+    function editQuestion(id, parent_id){
+        $.colorbox({href: "/surveys_management/surveys/<%= @survey.id %>/survey_questions/" + id + "/edit?parent_id=" + (!!parent_id ? parent_id : ''),
             width: 600, height: 500
         });
     }
-    $(function() {
-        $("#survey_questions_container").sortable({
-            update: function( event, ui ) {
+
+    function updateQuestionsOrder(){
+        $.post("/surveys_management/surveys/<%= @survey.id %>/survey_questions/sort", { ids: serialize() });
+    }
+
+    $(function(){
+        $("ol.survey_questions_container").nestedSortable({
+            placeholder: 'placeholder',
+            forcePlaceholderSize:true,
+            handle: 'div',
+            helper: 'clone',
+            items: 'li',
+            opacity: .6,
+            revert: 250,
+            tabSize: 25,
+            tolerance: 'pointer',
+            toleranceElement: '> div',
+            update: function(event, ui) {
                 if(ui.item.hasClass("draggable_question")){
-                    $.post("/surveys_management/surveys/<%= @survey.id %>/survey_questions/sort", { ids: $.map($('.draggable_question'), function(el) { return $(el).attr("data-id") } ) })
+                    currentId = ui.item.attr("data-id");
+                    prevParent = findQuestionParent(currentId, hQuestions);
+                    currentParent = findQuestionParent(currentId, hSerialize());
+                    if(prevParent != currentParent){
+                        if(currentParent != null){
+                            editQuestion(currentId, currentParent)
+                        } else {
+                            $.ajax({url: "/surveys_management/surveys/<%= @survey.id %>/survey_questions/" + currentId + "/remove_parent", type: "PUT"});
+                            updateQuestionsOrder();
+                        }
+                    } else {
+                        updateQuestionsOrder();
+                    }
+
+                    hQuestions = hSerialize();
                 }
+            },
+            maxLevels: 2
+        }).disableSelection();
 
-            }
-        });
-
-        $("#survey_questions_container").disableSelection();
-
-        $(".draggable_question_type").draggable({
+        $("li.draggable_question_type").draggable({
             revert: "invalid",
-            connectToSortable:"#survey_questions_container",
-            helper:"clone"
-        });
-
-
-        $("#survey_questions_container").droppable({
-            accept: ".draggable_question_type",
-            drop: function(event, ui) {
+            connectToSortable:"ol.survey_questions_container",
+            helper:"clone",
+            stop: function(event, ui){
                 setTimeout(function(){
-                    orderArray = $.map($('div#survey_questions_container .survey_question'), function(el) { return $(el).attr("data-id") });
+                    orderArray = serialize();
                     position = orderArray.indexOf("null") + 1;
-                    $.colorbox({href: "/surveys_management/surveys/<%= @survey.id %>/survey_questions/new?position=" + position + "&question_type=" + $(ui.helper).attr("data-qtype"),
-                        width: 600, height: 500,
-                        onClosed: function(){
-                            $('#survey_questions_container').find("div[data-id=null]").remove();
-                        }});
-
-                }, 100);
+                    if(position > 0){
+                        currentParent = findQuestionParent("null", hSerialize());
+                        $.colorbox({href: "/surveys_management/surveys/<%= @survey.id %>/survey_questions/new?position=" + position + "&question_type=" + $(ui.helper).attr("data-qtype") + "&parent_id=" + (!!currentParent ? currentParent : ''),
+                            width: 600, height: 500,
+                            onClosed: function(){
+                                $('ol.survey_questions_container').find("li[data-id=null]").remove();
+                            }});
+                    }
+                }, 600);
             }
         });
+    });
+
+    function recurNodes(node)
+    {
+        node = $(node);
+        var val = [node.attr('data-id')];
+        var childNodes = node.children('ol').children('li');
+        if(childNodes && childNodes.length > 0)
+        {
+            for(var i=0; i<childNodes.length; i++) val.push(recurNodes(childNodes[i]));
+        }
+        return val.length == 1 ? val[0] : val;
+    }
+
+    function serialize()
+    {
+        var nodes = $("ol.survey_questions_container").children('li');
+        var result = [];
+        for(var i=0; i<nodes.length; i++) result.push(recurNodes(nodes[i]));
+        return $.map(result, function(n){ return n });
+    }
+
+    function hRecurNodes(node, parent, result)
+    {
+        node = $(node);
+        result.push([node.attr('data-id'), parent]);
+        var childNodes = node.children('ol').children('li');
+        if(childNodes && childNodes.length > 0)
+        {
+            for(var i=0; i<childNodes.length; i++) hRecurNodes(childNodes[i], node.attr('data-id'), result);
+        }
+    }
+
+    function hSerialize()
+    {
+        var nodes = $("ol.sortable").children('li');
+        var result = [];
+        for(var i=0; i<nodes.length; i++) hRecurNodes(nodes[i], null, result);
+        return result
+    }
+
+    function findQuestionParent(id, _questions){
+        pair = null;
+        _questions.every(function(_pair){
+            if(_pair[0].toString() == id.toString()){
+                pair = _pair.slice()
+            }
+
+            return pair == null;
+        });
+
+        return pair == null ? null : pair[1];
+    }
+
+    var hQuestions = [];
+
+    $(function(){
+        hQuestions = hSerialize();
     });
 </script>

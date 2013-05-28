@@ -1,6 +1,6 @@
 <% if @survey_question.save %>
     $.colorbox.close();
-    $("#survey_questions_container").html("<%= escape_javascript(render(:partial => "surveys_management/surveys/survey_questions", :locals => { :survey => @survey })) %>");
+    $("ol.survey_questions_container").html("<%= escape_javascript(render(:partial => "surveys_management/surveys/survey_questions", :locals => { :survey_questions => @survey.survey_questions.without_nested })) %>");
 <% else %>
     $("#question_form").html("<%= escape_javascript(render(:partial => "new")) %>");
 <% end %>

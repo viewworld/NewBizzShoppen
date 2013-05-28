@@ -1,5 +1,5 @@
 <% if @survey_question.destroy %>
-    $('#survey_questions_container').find("div[data-id=<%= @survey_question.id %>]").remove();
+    $('ol.survey_questions_container').find("li[data-id=<%= @survey_question.id %>]").remove();
 <% else %>
-    alert("Question could not be removed!")
+    alert("Question could not be removed!");
 <% end %>

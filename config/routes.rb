@@ -497,6 +497,9 @@ Nbs::Application.routes.draw do
         collection do
           post :sort
         end
+        member do
+          put :remove_parent
+        end
       end
     end
   end
