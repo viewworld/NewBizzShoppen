@@ -148,6 +148,7 @@ en:
         agent_performance: "Agent perf."
         payout: "Payout"
         background_tasks: "Background tasks"
+        login_time_requests: "Login time"
       agent:
         leads: My leads
         deals: My deals
@@ -2859,6 +2860,7 @@ en:
 
         new_lead: "New lead"
         new_deal: "New deal"
+        request_login_time: "Request login time"
         header_campaigns: "Agent performance"
         campaigns:
           pending_contacts: "Pending contacts"
@@ -4383,6 +4385,21 @@ en:
         selected_agents: "Selected agents"
         selected_call_centres: "Selected call centres"
         all_call_centres: "All available call centres"
+  login_time_requests:
+    new:
+      header: "Login time requests"
+      request_new: "Request new login time"
+      send_request: "Send request"
+      edit: "Edit"
+      approve: "Approve"
+      reject: "Reject"
+      table:
+        user: "User"
+        campaign: "Campaign"
+        start_time: "Time from"
+        end_time: "Time to"
+        hours: "Hours count"
+        aasm_state: "State"
   agent_performance:
     show:
       view:

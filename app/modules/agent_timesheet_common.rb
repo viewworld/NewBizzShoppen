@@ -9,7 +9,7 @@ module AgentTimesheetCommon
   DEFAULT_OPTIONS = {
       :show_weekends          => true,
       :only_show_results      => true,
-      :start_date             => (Date.today-1.year).beginning_of_week,
+      :start_date             => Date.today.beginning_of_week,
       :end_date               => Date.today.end_of_week,
       :campaigns              => [],
       :agents                 => [],

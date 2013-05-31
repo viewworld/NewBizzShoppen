@@ -15,7 +15,8 @@
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.agent_timesheets")), new_callers_agent_timesheet_path, :subtab =>"agent_timesheets" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.subscription_plans")), administration_subscription_plans_path, :subtab => "subscription_plans" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.agent_performance")), callers_agent_performance_path, :subtab => "agent_performance" %>
-    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.payout")), administration_payouts_path, :subtab => "payout", :additional_class => "last" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.payout")), administration_payouts_path, :subtab => "payout" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.login_time_requests")), new_callers_login_time_request_path, :subtab => "login_time_requests", :additional_class => "last" %>
 <% end %>
 
 <%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.admin.content"), :tab => "content" do  %>

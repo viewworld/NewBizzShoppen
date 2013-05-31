@@ -310,6 +310,12 @@ Nbs::Application.routes.draw do
       end
     end
     resources :call_logs
+    resources :login_time_requests do
+      member do
+        put :approve
+        put :reject
+      end
+    end
   end
 
   namespace :comments do

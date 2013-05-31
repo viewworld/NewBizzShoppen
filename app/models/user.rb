@@ -85,6 +85,7 @@ class User < ActiveRecord::Base
   has_many :chain_mails, :primary_key => :email, :foreign_key => :email
   has_many :campaign_monitor_responses, :as => :resource
   has_many :newsletter_lists, :foreign_key => :owner_id
+  has_many :login_time_requests
 
   alias_method :parent, :user
 
@@ -322,6 +323,14 @@ class User < ActiveRecord::Base
   end
 
   public
+
+  def available_login_time_requests
+    if admin?
+      LoginTimeRequest.order("created_at DESC").all
+    else
+      login_time_requests.order("created_at DESC")
+    end
+  end
 
   def phone_enabled?
     sip_username.present? and sip_password.present? and sip_domain.present?

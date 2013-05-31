@@ -11,8 +11,8 @@
     <param:actions>
       <%= form_tag self.send((user_signed_in? and !current_user.call_centre? and current_user.agent?) ? "new_#{current_user.role.to_s.pluralize}_lead_path" : "root_path"), :method => :get, :id => "form_new_lead" do %>
       <% if user_signed_in? and !current_user.call_centre? and current_user.agent? %>
-      <span style="position:absolute;top: 5px; right: 300px;">
-        <%= select_tag :category_id %>
+      <span style="position:absolute;top: 5px; right: 450px;">
+        <%= select_tag :category_id, [], :style => "width:200px" %>
       </span>
       <% end %>
       <ul class="header_actions">
@@ -30,6 +30,9 @@
                 <%= bt_link_to :plus, t("agent_home.show.view.new_deal"), self.send("new_#{current_user.role.to_s.pluralize}_deal_path") %>
             </li>
             <% end %>
+            <li>
+              <%= bt_link_to :plus, t("agent_home.show.view.request_login_time"), new_callers_login_time_request_path %>
+            </li>
             <li class="last">
 
               <%= bt_link_to :key, t("supplier_home.show.view.sign_out"), '/logout' %>
