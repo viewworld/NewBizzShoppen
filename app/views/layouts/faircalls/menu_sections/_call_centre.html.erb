@@ -11,6 +11,7 @@
 <%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.call_centre.campaigns_tab"), :tab => "campaigns" do  %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.call_centre.campaigns")), callers_campaigns_path, :subtab => "campaigns" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.call_centre.newsletter_lists")), newsletters_newsletter_lists_path, :subtab => "newsletter_lists" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.login_time_requests")), new_callers_login_time_request_path, :subtab => "login_time_requests", :additional_class => "last" %>
 <% end %>
 
 <%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.call_centre.reports"), :tab =>"financial" do %>

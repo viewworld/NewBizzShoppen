@@ -43,4 +43,8 @@ class LoginTimeRequest < ActiveRecord::Base
     (end_time - start_time) / 3600
   end
 
+  def can_be_managed_by?(current_user)
+    current_user.admin? or (current_user.call_centre? and current_user.self_and_descendants.include?(current_user))
+  end
+
 end

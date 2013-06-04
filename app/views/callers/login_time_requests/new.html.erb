@@ -5,34 +5,7 @@
     </param:content>
   </header>
 
-  <%= semantic_form_for [:callers, resource] do |f| %>
-      <frm title="#{t('login_time_requests.new.request_new')}">
-        <param:content>
-          <div class="pdd_10">
-
-              <fieldset class="inputs labels_ta_r">
-                <ol class="align_inputs">
-                  <%= f.input :start_time, :as => :string, :input_html => { :class => "datetimepicker" } %>
-                  <%= f.input :end_time, :as => :string, :input_html => { :class => "datetimepicker" } %>
-                  <%= f.input :campaign_id, :collection => Campaign.available_for_user(current_user).order("name ASC"), :include_blank => false %>
-                  <% if current_user.admin? %>
-                      <%= f.input :user_id, :as => :select, :collection => User.with_agents.without_locked.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false %>
-                  <% else %>
-                      <%= f.input :user_id, :as => :hidden, :input_html => { :value => current_user.id } %>
-                  <% end %>
-                  <%= f.input :creator_id, :as => :hidden, :input_html => { :value => current_user.id } %>
-                </ol>
-              </fieldset>
-
-          </div>
-        </param:content>
-        <param:actions>
-          <ibt c="fltri">
-            <%= f.submit t("login_time_requests.new.send_request") %>
-          </ibt>
-        </param:actions>
-      </frm>
-  <% end %>
+  <%= render :partial => 'form', :locals => { :resource => resource } %>
 
   <table class="generic">
     <thead>
@@ -55,20 +28,20 @@
           <td class="fr"></td>
         </tr>
     </tfoot>
-    <% current_user.available_login_time_requests.each do |ltr| %>
+    <% @requests.each do |ltr| %>
         <tr>
           <td class="cl"></td>
           <td><%= ltr.user.screen_name %></td>
           <td><%= ltr.campaign.name %></td>
           <td><%= l ltr.start_time %></td>
           <td><%= l ltr.end_time %></td>
-          <td><%= ltr.hours_count %></td>
+          <td><%= number_with_precision(ltr.hours_count, :precision => 2) %></td>
           <td><%= ltr.aasm_state %></td>
           <td class="tda ta_r">
-            <% if current_user.admin? and ltr.new? %>
+            <% if ltr.can_be_managed_by?(current_user) and ltr.new? %>
                 <ul-actions>
                   <li>
-                    <%#= link_to t("login_time_requests.new.edit"), edit_callers_login_time_request_path(ltr), :class => "default_action" %>
+                    <%= link_to t("login_time_requests.new.edit"), edit_callers_login_time_request_path(ltr), :class => "default_action" %>
                   </li>
                   <li>
                     <%= link_to t("login_time_requests.new.approve"), approve_callers_login_time_request_path(ltr), :method => :put %>
@@ -82,11 +55,18 @@
           <td class="cr"></td>
         </tr>
     <% end %>
+    <tr>
+      <td class="cl"></td>
+      <td colspan="7">
+        <%= will_paginate @requests %>
+      </td>
+      <td class="cr"></td>
+    </tr>
   </table>
 
   <script>
       $(function() {
-          $(".datetimepicker").datetimepicker({ dateFormat: 'yy-mm-dd' });
+          $(".datetimepicker").datetimepicker({ dateFormat: 'dd-mm-yy' });
       });
   </script>
 

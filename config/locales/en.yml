@@ -4389,7 +4389,9 @@ en:
     new:
       header: "Login time requests"
       request_new: "Request new login time"
-      send_request: "Send request"
+      request_edit: "Edit request"
+      save_request: "Save"
+      save_and_approve: "Save and approve"
       edit: "Edit"
       approve: "Approve"
       reject: "Reject"
