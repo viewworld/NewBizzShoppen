@@ -1,4 +1,7 @@
 class CampaignsResult < ActiveRecord::Base
+
+  serialize :settings, Hash
+
   attr_accessor :temp_tag_list
 
   belongs_to :campaign
@@ -10,6 +13,15 @@ class CampaignsResult < ActiveRecord::Base
   acts_as_taggable
 
   CSV_ATTRS = %w{ campaign_name result_name }
+
+  after_initialize do
+    self.settings ||= {}
+    if result
+      result.settings.each do |key, options|
+        self.settings[key] = options["value"] unless settings[key]
+      end
+    end
+  end
 
   def set_euro_value
     if value.to_i > 0 and value_changed?

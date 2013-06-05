@@ -78,6 +78,24 @@
     text-indent: 5px;
 }
 
+.inputs ol li.string label.wide,
+.inputs ol li.select label.wide,
+.inputs ol li.text label.wide,
+.inputs ol li.password label.wide,
+.inputs ol li.file label.wide,
+.inputs ol li.numeric label.wide,
+.inputs ol li.date label.wide,
+.inputs ol li.ckeditor label.wide
+{
+	display: block;
+	float: left;
+	line-height: 16px;
+	width: 250px;
+    padding: 8px 8px 0 0;
+    font-size: 12px;
+    text-indent: 5px;
+}
+
 .inputs ol li label abbr
 {
     color: red;

@@ -1,5 +1,5 @@
 <column-mc:>
-  <header><%= t("administration.results.edit.view.title") %>: <%= @result.name %></header>
+  <header back="true"><%= t("administration.results.edit.view.title") %>: <%= @result.name %></header>
   <%= semantic_form_for @result, :url => administration_result_path, :method => :post do |form| %>
       <frm title="Update existing">
         <param:content>

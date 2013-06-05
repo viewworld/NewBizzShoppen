@@ -35,9 +35,29 @@
 
 <% end %>
 
+<div style="padding: 10px 20px 0px 20px;">
+    <h2>Settings</h2>
+</div>
+
+<% if !@campaign and result.settings.any? %>
+    <div class="pdd_10 no_pdd_t">
+      <fieldset class="inputs">
+        <ol>
+          <% result.settings.sort_by{|setting| setting.to_s}.each do |key, options| %>
+            <li class="text">
+              <%= label_tag "result[settings][#{key}]", key.to_s.humanize, :class => "wide" %>
+              field type: <%= select_tag "result[settings][#{key}][type]", options_for_select(['boolean'], options["type"]) %>
+              default value: <%= text_field_tag "result[settings][#{key}][value]", options["value"] %>
+            </li>
+          <% end %>
+        </ol>
+      </fieldset>
+    </div>
+<% end %>
+
 <% if result.created_by_or_admin?(current_user) %>
 <div class="pdd_10 no_pdd_t">
-  <fieldset class="inputs_vertical">
+  <fieldset class="inputs">
     <ol>
         <% if current_user.admin? %>
             <%= form.input :is_archived %>
@@ -52,6 +72,21 @@
     <% if campaign_result = @result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id } %>
         <%= form.fields_for :campaigns_results, campaign_result do |builder| %>
             <%= render :partial => "campaign_result", :locals => {:f => builder, :campaign => @campaign} %>
+            <% if result.settings.any? %>
+                <div class="pdd_10 no_pdd_t">
+                  <fieldset class="inputs">
+                    <ol>
+                      <% result.settings.sort_by{|setting| setting.to_s}.each do |key, options| %>
+                          <li class="boolean">
+                            <%= hidden_field_tag "#{builder.object_name}[settings][#{key}]", "0" %>
+                            <%= check_box_tag "#{builder.object_name}[settings][#{key}]", "1", campaign_result.settings[key]=="1" %>
+                            <%= label_tag "#{builder.object_name}result[settings][#{key}]", key.to_s.humanize %>
+                          </li>
+                      <% end %>
+                    </ol>
+                  </fieldset>
+                </div>
+            <% end %>
             <div class="pdd_10 no_pdd_t">
                 <div class="tags_wrapper">
                   <p><%= t("tags.common.assigned_tags_label") %>:</p>
