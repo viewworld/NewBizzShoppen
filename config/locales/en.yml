@@ -4941,3 +4941,7 @@ en:
       view:
         button_update: "Submit"
         thank_you_msg: "Thank You for the answers!"
+    flash:
+      notice:
+        not_found: "Survey could not be found. Please check the link!"
+        already_answered: "You have already submitted your answer to this survey!"

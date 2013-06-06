@@ -20,11 +20,8 @@ class SurveyRecipientsController < ApplicationController
   def fetch_survey
     @survey_recipient = SurveyRecipient.where(:uuid => params[:id]).first
     @survey = @survey_recipient ? @survey_recipient.survey : nil
-    if @survey.nil?
-      flash[:notice] = "Survey could not be found. Please check the link!"
-      redirect_to root_path
-    elsif @survey_recipient.answered_survey?
-      flash[:notice] = "You have already submitted your answer to this survey!"
+    if @survey.nil? or @survey_recipient.answered_survey?
+      flash[:notice] = @survey.nil? ? I18n.t("surveys.flash.notice.not_found") : I18n.t("surveys.flash.notice.already_answered")
       redirect_to root_path
     end
   end
