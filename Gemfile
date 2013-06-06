@@ -51,17 +51,9 @@ gem 'cucumber_fm-core', '0.1', :require => 'cucumber_feature_manager'
 gem 'acts-as-taggable-on', '~> 2.2.2'
 gem 'createsend'
 gem "selenium-webdriver", "~> 2.31.0"
-
-group :production do
-  gem 'hoptoad_notifier'
-end
-
-group :testing do
-  gem 'hoptoad_notifier'
-end
+gem 'airbrake', '3.1.1'
 
 group :staging do
-  gem 'hoptoad_notifier'
   gem 'system-metrics'
 end
 

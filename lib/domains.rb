@@ -5,10 +5,10 @@ module Rack
     end
 
     def call(env)
-      if env["HTTP_HOST"][/fairdeals\.\w{2,4}/].present?
+      if env["HTTP_HOST"].to_s[/fairdeals\.\w{2,4}/].present?
         env['rack.session'][:site] = "fairdeals"
         env['rack.session'][:layout] = "layouts/fairdeals/application"
-      elsif env["HTTP_HOST"][/faircalls\.\w{2,4}/].present?
+      elsif env["HTTP_HOST"].to_s[/faircalls\.\w{2,4}/].present?
         env['rack.session'][:site] = "faircalls"
         env['rack.session'][:layout] = "layouts/faircalls/application"
       else
