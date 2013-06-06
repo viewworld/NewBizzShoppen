@@ -4936,6 +4936,15 @@ en:
           destroy_question: "Remove"
           header: "Edit survey"
           button_update: "Save"
+          newsletter_lists_selection: "Newsletter list selection"
+          campaigns_selection: "Campaigns selection"
+      form:
+        move_right: "Add >"
+        move_left: "< Remove"
+        all_lists: "All lists"
+        selected_lists: "Selected lists"
+        all_campaigns: "All campaigns"
+        selected_campaigns: "Selected campaigns"
   surveys:
     show:
       view:

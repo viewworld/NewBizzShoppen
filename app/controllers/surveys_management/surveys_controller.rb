@@ -11,6 +11,7 @@ class SurveysManagement::SurveysController < SurveysManagement::SurveysManagemen
 
   def edit
     @survey = Survey.find(params[:id])
+    @campaigns = Campaign.available_for_user(current_user)
   end
 
   def update
