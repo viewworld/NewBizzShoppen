@@ -13,6 +13,8 @@ class Survey < ActiveRecord::Base
 
   before_create :set_uuid
 
+  private
+
   def set_uuid
     self.uuid = SecureRandom.hex(18)
   end

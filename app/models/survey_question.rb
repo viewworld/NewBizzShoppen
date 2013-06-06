@@ -19,6 +19,8 @@ class SurveyQuestion < ActiveRecord::Base
 
   scope :without_nested, where("parent_id is NULL")
 
+  include CommonSurvey
+
   TEXT_TYPE = 1.freeze
   NUMBER_TYPE = 2.freeze
   DATE_TYPE = 3.freeze
@@ -30,14 +32,6 @@ class SurveyQuestion < ActiveRecord::Base
     DATE_TYPE,
     SELECT_TYPE
   ].freeze
-
-  def is_text_type?
-    question_type == TEXT_TYPE
-  end
-
-  def is_select_type?
-    question_type == SELECT_TYPE
-  end
 
   def parent
     SurveyQuestion.find_by_id(parent_id)

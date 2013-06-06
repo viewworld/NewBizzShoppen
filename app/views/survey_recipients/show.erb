@@ -1,0 +1,16 @@
+<column-mc:>
+  <header><%= @survey.title %></header>
+
+  <%= semantic_form_for @survey_recipient, :url => survey_recipient_path(:id => @survey_recipient.uuid) do |form| %>
+      <frm>
+        <param:content>
+          <%= render :partial => 'form', :locals => {:form => form} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("surveys.show.view.button_update") %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+</column-mc:>

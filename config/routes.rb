@@ -504,12 +504,13 @@ Nbs::Application.routes.draw do
     end
   end
 
-  resources :surveys
+  resources :survey_recipients, :only => [:show, :update]
 
   match ':slug' => 'category_home#show', :as => :category_home_page
   match ':slug/account/new' => 'category_supplier_accounts#new', :as => :new_category_home_page_account
   match ':slug/account' => 'category_supplier_accounts#create', :as => :category_home_page_account
   match ':slug/leads' => 'category_suppliers/leads#index', :as => :category_home_page_leads
+  match 'survey/:id' => 'survey_recipients#show'
 
   root :to => "supplier_home#show"
 

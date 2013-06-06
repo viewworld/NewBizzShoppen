@@ -4936,3 +4936,8 @@ en:
           destroy_question: "Remove"
           header: "Edit survey"
           button_update: "Save"
+  surveys:
+    show:
+      view:
+        button_update: "Submit"
+        thank_you_msg: "Thank You for the answers!"
