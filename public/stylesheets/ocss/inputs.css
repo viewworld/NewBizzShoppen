@@ -1176,3 +1176,21 @@ input.date.hasDatepicker
     margin-bottom: 10px;
     clear: both;
 }
+
+ol.agent_timesheet li.select label {
+    text-align: left;
+    width: 100px;
+}
+
+ol.agent_timesheet li.weekpicker label {
+    text-align: left;
+    width: 100px;
+}
+
+ol.agent_timesheet li.date input {
+    width: 120px;
+}
+ol.agent_timesheet li.select select {
+    width: 160px;
+}
+

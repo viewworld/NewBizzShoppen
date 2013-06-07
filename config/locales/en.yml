@@ -1204,6 +1204,7 @@ en:
             contact_us_skype: "Contact us Skype username"
             default_group_deal_min_leads_created: "Group deal min leads created"
             number_of_secondary_featured_deals: "Number of secondary featured deals"
+            cm_confirmation_email: "Campaign Monitor confirmation email"
       edit:
         view:
           title: "Settings"
@@ -4362,6 +4363,7 @@ en:
         total_db: "Total DB %"
     new:
       header: "Agent timesheets"
+      set_constraints: "Set constraints for your timesheet"
       time_period: "Select time period"
       select_camapigns: "Select campaigns"
       select_team: "Select team"

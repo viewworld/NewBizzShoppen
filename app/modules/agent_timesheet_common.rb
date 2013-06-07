@@ -2,7 +2,7 @@ module AgentTimesheetCommon
 
   attr_accessor :start_date, :end_date, :campaigns, :agents, :call_centres, :overview, :team_result_sheet,
                 :agent_timesheet, :display_hours, :display_results, :display_value, :display_cost, :only_show_results,
-                :currency_id, :display_time_on_phone, :display_calls
+                :currency_id, :display_time_on_phone, :display_calls, :display_payout
 
   TIMESHEETS_PATH = "public/system/agent_timesheets_cache"
 
@@ -20,6 +20,7 @@ module AgentTimesheetCommon
       :display_cost           => true,
       :display_time_on_phone  => true,
       :display_calls          => true,
+      :display_payout         => false,
       :overview               => true,
       :team_result_sheet      => true,
       :agent_timesheet        => true,
@@ -30,7 +31,7 @@ module AgentTimesheetCommon
 
   def initialize(options = {})
     DEFAULT_OPTIONS.merge(options.symbolize_keys).each do |k,v|
-      if [:show_weekends,:only_show_results,:display_hours,:display_results,:display_value,:display_cost,:overview,:team_result_sheet,:agent_timesheet].include?(k)
+      if [:show_weekends,:only_show_results,:display_hours,:display_results,:display_value,:display_cost,:overview,:team_result_sheet,:agent_timesheet,:display_calls, :display_payout].include?(k)
         instance_variable_set("@#{k}".to_sym, ActiveRecord::ConnectionAdapters::Column.value_to_boolean(v))
       elsif k == :agents
         instance_variable_set("@#{k}".to_sym, User.find_all_by_id(v))
@@ -102,6 +103,10 @@ module AgentTimesheetCommon
 
   def stats
     @stats ||= scoped(:stats)
+  end
+
+  def payout
+    @payout ||= scoped(:payout)
   end
 
   def cweeks
