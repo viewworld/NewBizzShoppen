@@ -536,6 +536,7 @@ en:
       button_move_selected_contacts: "Move selected"
       button_copy_selected_contacts: "Copy selected"
       button_bulk_add_to_newsletter_list_link: "Add selected to newsletter list"
+      button_send_survey_to_selected: "Send survey to selected"
     index:
       title: Campaigns
       edit: Edit
@@ -676,6 +677,9 @@ en:
     batch_add_to_newsletter_list:
       flash:
         added_successfully: "%{contacts_count} contacts have been added to list %{newsletter_list}"
+    batch_send_survey:
+      flash:
+        sent_successfully: "survey %{survey_name} has been queued for sending to %{contacts_count} contacts"
   call_results:
     table:
       date: Date

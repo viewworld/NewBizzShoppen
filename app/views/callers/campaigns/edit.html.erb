@@ -166,6 +166,15 @@
                   <%= bt_link_to :arrow_right, t("campaigns.edit.button_copy_selected_contacts"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_move_form');$('#hf_batch_move_form_action_type').val('copy');$('#batch_move_form').submit();" %>
               <% end %>
           <% end %>
+
+          <% if @campaign.surveys.any? %>
+              <%= form_tag batch_send_survey_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_send_survey_form" do %>
+                  <%= select_tag "survey_id", options_for_select(@campaign.surveys.map { |u| [u.name.to_s, u.id] }.sort) %>
+                  <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_send_survey_form" %>
+                  <%= bt_link_to :mail, t("campaigns.edit.button_send_survey_to_selected"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_send_survey_form');;$('#batch_send_survey_form').submit();" %>
+              <% end %>
+          <% end %>
+
           <%= bulk_form do %>
             <%= hidden_field_tag :route_to %>
             <%= render :partial => "/shared/tags/assign_tags", :locals => { :ids_container => "cb_contact_", :taggable_class_name => "Contact" } %>

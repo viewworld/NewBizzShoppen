@@ -6,6 +6,7 @@ class Campaign < ActiveRecord::Base
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
   belongs_to :currency
   has_and_belongs_to_many :users
+  has_and_belongs_to_many :surveys
   has_many :campaigns_results, :foreign_key => "campaign_id", :dependent => :destroy
   has_many :results, :through => :campaigns_results
   has_many :contacts, :dependent => :destroy

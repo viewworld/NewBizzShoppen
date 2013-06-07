@@ -255,6 +255,7 @@ Nbs::Application.routes.draw do
           post 'bulk_contacts_export'
           post 'import_xls'
           post 'batch_add_to_newsletter_list'
+          post 'batch_send_survey'
         end
       end
       resources :advanced_import, :only => [:create, :destroy] do

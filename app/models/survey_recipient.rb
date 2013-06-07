@@ -77,7 +77,11 @@ class SurveyRecipient < ActiveRecord::Base
   end
 
   def notify_recipient_by_email
-    template = from_newsletter ? :survey_newsletter : :survey_campaign
+    if recipient.is_a?(Contact) and !from_newsletter
+      template = recipient.campaign.survey_campaign_email_template
+    else
+      template = from_newsletter ? :survey_newsletter : :survey_campaign
+    end
     TemplateMailer.new(email, template, Country.get_country_from_locale, {:survey_name => survey_name, :survey_link => survey_link}).deliver!
   end
 end

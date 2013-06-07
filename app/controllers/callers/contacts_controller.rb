@@ -117,6 +117,19 @@ class Callers::ContactsController < Callers::CallerController
     redirect_to edit_callers_campaign_path(@campaign)
   end
 
+  def batch_send_survey
+    if params[:contact_ids].blank?
+      flash[:notice] = t('contacts.batch_remove.flash.no_contacts_selected')
+    else
+      @contact_ids = params[:contact_ids].gsub(/^,/, "").split(",")
+      @survey = @campaign.surveys.find(params[:survey_id])
+      @survey.delay(:queue => "surveys_sending_to_campaign").send_to_campaign!(@contact_ids)
+
+      flash[:notice] = t('contacts.batch_send_survey.flash.sent_successfully', :survey_name => @survey.name, :contacts_count => @contact_ids.size)
+    end
+    redirect_to edit_callers_campaign_path(@campaign)
+  end
+
   protected
 
   private

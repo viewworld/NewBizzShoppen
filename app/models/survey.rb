@@ -23,6 +23,10 @@ class Survey < ActiveRecord::Base
      newsletter_lists.each { |nl| send_by_email(nl) }
   end
 
+  def send_to_campaign!(contact_ids)
+    Contact.where(:id => contact_ids).each { |contact| send_by_email(contact) }
+  end
+
   def send_by_email(recipient)
     if recipient.is_a?(NewsletterList)
       recipient.newsletter_subscribers.each do |subscriber|
