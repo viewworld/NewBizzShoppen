@@ -15,6 +15,8 @@ class Survey < ActiveRecord::Base
 
   before_create :set_uuid
 
+  scope :created_by, lambda { |creator| where("creator_id = ?", creator.id) }
+
   def newsletter_owner
     User.where(:email => newsletter_owner_email).first
   end

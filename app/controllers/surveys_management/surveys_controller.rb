@@ -1,5 +1,6 @@
 class SurveysManagement::SurveysController < SurveysManagement::SurveysManagementController
   inherit_resources
+  before_filter :fetch_object, :only => [:edit, :update, :destroy, :send_to_newsletters]
 
   set_tab "campaigns"
   set_subtab "surveys"
@@ -10,7 +11,6 @@ class SurveysManagement::SurveysController < SurveysManagement::SurveysManagemen
   end
 
   def edit
-    @survey = Survey.find(params[:id])
     @campaigns = Campaign.available_for_user(current_user)
   end
 
@@ -28,7 +28,6 @@ class SurveysManagement::SurveysController < SurveysManagement::SurveysManagemen
   end
 
   def send_to_newsletters
-    @survey = Survey.find(params[:id])
     @survey.delay(:queue => "surveys_sending_to_newsletter_lists").send_to_newsletter_lists!
 
     flash[:notice] = I18n.t("surveys_management.surveys.send_to_newsletters.flash.notice.survey_queued_for_sending_to_newsletters")
@@ -39,6 +38,12 @@ class SurveysManagement::SurveysController < SurveysManagement::SurveysManagemen
 
   def collection
     @search = Survey.scoped_search(params[:search])
+    @search.created_by = current_user unless current_user.admin?
     @surveys = @search.paginate(:show_all => params[:show_all], :page => params[:page], :per_page => Survey.per_page)
+  end
+
+  def fetch_object
+    @survey = Survey.find(params[:id])
+    raise CanCan::AccessDenied unless @survey.creator == current_user
   end
 end

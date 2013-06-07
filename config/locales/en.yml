@@ -169,6 +169,7 @@ en:
         campaigns_tab: "Campaigns"
         agent_performance: "Agent perf."
         background_tasks: "Background tasks"
+        surveys: "Surveys"
       call_centre_agent:
         leads: "My leads"
         lead_templates: "Lead templates"
