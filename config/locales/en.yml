@@ -4946,6 +4946,10 @@ en:
         selected_lists: "Selected lists"
         all_campaigns: "All campaigns"
         selected_campaigns: "Selected campaigns"
+      send_to_newsletters:
+        flash:
+          notice:
+            survey_queued_for_sending_to_newsletters: "Survey has been queued for sending to newsletter lists"
   surveys:
     show:
       view:
