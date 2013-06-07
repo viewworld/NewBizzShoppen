@@ -17,6 +17,10 @@ class SurveyRecipient < ActiveRecord::Base
 
   liquid :survey_link, :survey_name
 
+  STATE_SENT = 0.freeze
+  STATE_VISITED = 1.freeze
+  STATE_COMPLETED = 2.freeze
+
   def survey_link
     "#{Rails.env.development? ? "http://localhost:3000" : "http://#{'beta.' if Rails.env.staging?}fairleads.com"}/survey/#{uuid}"
   end
@@ -39,16 +43,24 @@ class SurveyRecipient < ActiveRecord::Base
     ordered_answers
   end
 
-  def answered_survey?
-    completed_at.present?
+  def sent?
+    state == STATE_SENT
+  end
+
+  def visited?
+    state == STATE_VISITED
+  end
+
+  def completed?
+    state == STATE_COMPLETED
   end
 
   def visited!
-    update_attribute(:visited_at, Time.now) unless visited_at
+    update_attribute(:state, STATE_VISITED) if sent?
   end
 
   def completed!
-    update_attribute(:completed_at, Time.now) unless completed_at
+    update_attribute(:state, STATE_COMPLETED) unless completed?
   end
 
   def email

@@ -3,8 +3,7 @@ class CreateSurveyRecipients < ActiveRecord::Migration
     create_table :survey_recipients do |t|
       t.integer :survey_id
       t.string :uuid
-      t.datetime :visited_at, :default => nil
-      t.datetime :completed_at, :default => nil
+      t.integer :state, :default => 0
       t.timestamps
     end
   end

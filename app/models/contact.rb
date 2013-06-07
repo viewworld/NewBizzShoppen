@@ -30,6 +30,8 @@ class Contact < AbstractLead
   scope :with_current_result_id, lambda { |result_id| joins("inner join call_results on call_results.id = (select id from call_results where contact_id = leads.id order by created_at desc limit 1)").where("call_results.result_id = ?", result_id) }
   scope :with_agents, lambda { |agent_ids| where("call_results.creator_id IN (:agent_ids)", {:agent_ids => agent_ids}) unless agent_ids.to_a.select { |id| !id.blank? }.empty? }
   scope :with_agent_id, lambda { |agent_id| where(:agent_id => agent_id) }
+  scope :with_survey, lambda { |survey_id| joins(:survey_recipients).where("survey_recipients.survey_id = ?", survey_id) }
+  scope :with_survey_state, lambda { |state| joins(:survey_recipients).where( state.to_i < 0 ? ["survey_recipients.state = ? OR survey_recipients.state = ?", 1, 2] : ["survey_recipients.state = ?", state]) }
   scope :from_last_import, where(:last_import => true)
   scoped_order :company_name
 
