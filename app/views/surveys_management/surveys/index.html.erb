@@ -20,7 +20,7 @@
         <tr>
           <th class="hl"></th>
           <th><%= t("surveys_management.surveys.index.view.owner_column") %></th>
-          <th><%= t("surveys_management.surveys.index.view.title_column") %></th>
+          <th><%= t("surveys_management.surveys.index.view.name_column") %></th>
           <th class="ta_r"><%= t("surveys_management.surveys.index.view.actions_column") %></th>
           <th class="hr"></th>
         </tr>
@@ -37,11 +37,14 @@
             <tr class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
               <td><%= survey.creator rescue '-' %></td>
-              <td><%= survey.title %></td>
+              <td><%= survey.name %></td>
               <td class="tda ta_r">
                 <ul-actions>
                   <li>
                     <%= link_to t("surveys_management.surveys.index.view.edit"),  edit_surveys_management_survey_path(survey), :class => "default_action" %>
+                  </li>
+                  <li>
+                    <%= link_to t("surveys_management.surveys.index.view.send_to_newsletters"),  send_to_newsletters_surveys_management_survey_path(survey), :method => :post %>
                   </li>
                   <li>
                     <%= link_to t("surveys_management.surveys.index.view.destroy"),  surveys_management_survey_path(survey), {:method => :delete, :confirm => t("common.confirmation")} %>

@@ -15,6 +15,7 @@ class AbstractLead < ActiveRecord::Base
   has_many :lead_translations, :foreign_key => :lead_id, :dependent => :destroy
   has_many :lead_purchases, :foreign_key => :lead_id
   has_many :lead_template_values, :foreign_key => :lead_id
+  has_many :survey_recipients, :as => :recipient, :dependent => :destroy
 
   liquid_methods :show_lead_details_url, :category_name, :header, :description, :hidden_description, :company_name, :contact_name, :phone_number, :email_address,
                  :address, :www_address, :direct_phone_number, :fine_print, :company_description, :company_website, :contact_title

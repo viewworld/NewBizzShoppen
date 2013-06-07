@@ -319,4 +319,10 @@ class IntegrationTasks < Thor
       result.save!
     end
   end
+
+  desc "surveys_setup", ""
+  def surveys_setup
+    #cloning templates for Campaigns
+    Campaign.all.each(&:save)
+  end
 end

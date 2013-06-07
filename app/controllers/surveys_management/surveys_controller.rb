@@ -27,6 +27,14 @@ class SurveysManagement::SurveysController < SurveysManagement::SurveysManagemen
     end
   end
 
+  def send_to_newsletters
+    @survey = Survey.find(params[:id])
+    @survey.delay(:queue => "surveys_sending_to_newsletter_lists").send_to_newsletter_lists!
+
+    flash[:notice] = "Sending queued"
+    redirect_to surveys_management_surveys_path
+  end
+
   protected
 
   def collection

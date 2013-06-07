@@ -4926,10 +4926,11 @@ en:
           header: "Surveys"
           new_survey: "New survey"
           owner_column: "Owner"
-          title_column: "Title"
+          name_column: "Name"
           actions_column: "Actions"
           edit: "Edit"
           destroy: "Destroy"
+          send_to_newsletters: "Send to newsletters"
       edit:
         view:
           edit_question: "Edit"

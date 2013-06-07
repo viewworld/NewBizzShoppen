@@ -415,7 +415,23 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                  :body => "<p>Sorry Your voucher has been cancelled since the payment did not go through. Please try again or contact Fairdeals if the problem persists.</p>"},
          :da => {:subject => "[DK] Payment failed for voucher from deal {{deal.header}}",
                  :body => "<p>Sorry Your voucher has been cancelled since the payment did not go through. Please try again or contact Fairdeals if the problem persists.</p>"}
-        }    
+        },
+
+        {:name => "Survey newsletter",
+         :uniq_id => "survey_newsletter",
+         :en => {:subject => "New survey",
+                 :body => "<p>Could you please take a moment to fill out the {{survey_name}} survey by following this <a href=\"{{survey_link}}\">link</a>.</p>"},
+         :da => {:subject => "[DK] New survey",
+                 :body => "<p>Could you please take a moment to fill out the {{survey_name}} survey by following this <a href=\"{{survey_link}}\">link</a>.</p>"}
+        },
+
+        {:name => "Survey campaign",
+         :uniq_id => "survey_campaign",
+         :en => {:subject => "New survey",
+                 :body => "<p>Could you please take a moment to fill out the {{survey_name}} survey by following this <a href=\"{{survey_link}}\">link</a>.</p>"},
+         :da => {:subject => "[DK] New survey",
+                 :body => "<p>Could you please take a moment to fill out the {{survey_name}} survey by following this <a href=\"{{survey_link}}\">link</a>.</p>"}
+        },
     ]
 
 

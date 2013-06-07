@@ -501,6 +501,9 @@ Nbs::Application.routes.draw do
           put :remove_parent
         end
       end
+      member do
+        post :send_to_newsletters
+      end
     end
   end
 

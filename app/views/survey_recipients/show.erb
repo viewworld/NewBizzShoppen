@@ -1,5 +1,5 @@
 <column-mc:>
-  <header><%= @survey.title %></header>
+  <header><%= @survey.name %></header>
 
   <%= semantic_form_for @survey_recipient, :url => survey_recipient_path(:id => @survey_recipient.uuid) do |form| %>
       <frm>

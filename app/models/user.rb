@@ -79,6 +79,7 @@ class User < ActiveRecord::Base
   has_many :campaign_monitor_responses, :as => :resource
   has_many :newsletter_lists, :foreign_key => :owner_id
   has_many :surveys, :as => :creator
+  has_many :survey_recipients, :as => :recipient, :dependent => :destroy
 
   alias_method :parent, :user
 

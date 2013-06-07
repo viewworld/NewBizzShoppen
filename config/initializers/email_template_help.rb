@@ -50,6 +50,8 @@ module EmailTemplateHelp
       "deal_request_details" => {:classes => ["Deal"], :custom => []},
       "deal_request_for_deal_admin" => {:classes => [], :custom => ["name", "phone_number", "email_from", "deal_description"] },
       "voucher_payment_failed_notification" => {:classes => ["Deal"], :custom => []},
+      "survey_newsletter" => {:classes => [], :custom => ["survey_name", "survey_link"]},
+      "survey_campaign" => {:classes => [], :custom => ["survey_name", "survey_link"]},
 
 
       #custom fake templates for chain mail result-based dynamic variables

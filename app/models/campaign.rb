@@ -14,6 +14,7 @@ class Campaign < ActiveRecord::Base
   has_one :upgrade_contact_to_category_buyer_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_category_buyer'", :dependent => :destroy
   has_one :upgrade_contact_to_buyer_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_buyer'", :dependent => :destroy
   has_one :upgrade_contact_to_member_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_member'", :dependent => :destroy
+  has_one :survey_campaign_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'survey_campaign'", :dependent => :destroy
   has_many :user_session_logs, :dependent => :destroy
   has_many :chain_mail_types, :dependent => :nullify
   has_many :call_logs
@@ -56,7 +57,8 @@ class Campaign < ActiveRecord::Base
   COST_TYPES = [PAYOUT, FIXED_COST, AGENT_BILLING_RATE_COST, FIXED_HOURLY_RATE_COST, NO_COST]
   CLONED_TEMPLATES = {
       :send_material_email_template => 'result_send_material', :upgrade_contact_to_category_buyer_email_template => 'upgrade_contact_to_category_buyer',
-      :upgrade_contact_to_buyer_email_template => 'upgrade_contact_to_buyer', :upgrade_contact_to_member_email_template => 'upgrade_contact_to_member'
+      :upgrade_contact_to_buyer_email_template => 'upgrade_contact_to_buyer', :upgrade_contact_to_member_email_template => 'upgrade_contact_to_member',
+      :survey_campaign_email_template => 'survey_campaign'
   }
 
   CRM_OPTION_OFF = 0.freeze
