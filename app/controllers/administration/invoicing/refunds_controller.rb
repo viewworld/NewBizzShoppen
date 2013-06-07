@@ -1,4 +1,4 @@
-class Administration::Invoicing::RefundsController < Administration::AdministrationController
+class Administration::Invoicing::RefundsController < Administration::SuperadminController
   inherit_resources
 
   set_tab "financial"

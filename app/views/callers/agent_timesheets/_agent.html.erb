@@ -1,0 +1,56 @@
+<div class="pdd_20">
+  <div class="grid_360 fltl">
+    <h2><%= t("agent_timesheets.new.time_period") %></h2>
+
+    <fieldset class="inputs labels_ta_r">
+      <ol class="align_inputs agent_timesheet" style="margin-top:5px">
+        <%= f.input :start_date, :as => :weekpicker, :input_html => {:id => 'search_start_date'}, :wrapper_html => {:class => "date"} %>
+        <%= f.input :end_date, :as => :weekpicker, :input_html => {:id => 'search_end_date'}, :wrapper_html => {:class => "date"} %>
+        <% unless current_user.agent? %>
+            <%= f.input :show_weekends, :as => :boolean %>
+            <%= f.input :only_show_results, :as => :boolean %>
+        <% end %>
+        <%= f.input :currency_id, :collection => Currency.active, :include_blank => false %>
+      </ol>
+    </fieldset>
+
+    <clb/>
+  </div>
+
+    <div class="grid_700 fltl">
+    <h2><%= t("agent_timesheets.new.select_camapigns") %></h2>
+
+    <div id="campaigns_selection_div">
+      <div class="pdd_v_10">
+        <div class="grid_240 fltl">
+          <p><%= t("agent_timesheets.new.campaigns_selection.all_campaigns") %></p>
+          <%= select_tag "all_campaigns", options_for_select([]), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          <%= check_box_tag "list_all_campaigns" %><%= label_tag "list_all_campaigns", "all campaigns" %>
+        </div>
+
+        <div class="grid_30 fltl" style="margin-right: 10px;margin-top:10px;"></div>
+
+        <div class="grid_240 fltl">
+          <p><%= t("agent_timesheets.new.campaigns_selection.selected_campaigns") %></p>
+          <%= select_tag "search[campaigns][]", options_for_select(@search.campaigns.map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+        </div>
+        <clb/>
+      </div>
+    </div>
+  </div>
+
+  <%= f.input :overview, :as => :hidden, :input_html => { :value => false } %>
+  <%= f.input :team_result_sheet, :as => :hidden, :input_html => { :value => false } %>
+  <%= f.input :agent_timesheet, :as => :hidden, :input_html => { :value => true } %>
+  <%= f.input :display_cost, :as => :hidden, :input_html => { :value => false } %>
+  <%= f.input :display_value, :as => :hidden, :input_html => { :value => false } %>
+  <%= f.input :display_calls, :as => :hidden, :input_html => { :value => false } %>
+  <%= f.input :display_results, :as => :hidden, :input_html => { :value => true } %>
+  <%= f.input :display_hours, :as => :hidden, :input_html => { :value => true } %>
+  <%= f.input :display_payout, :as => :hidden, :input_html => { :value => true } %>
+
+  <clb/>
+
+  <%= hidden_field_tag "search[agents][]", [current_user.id] %>
+
+</div>

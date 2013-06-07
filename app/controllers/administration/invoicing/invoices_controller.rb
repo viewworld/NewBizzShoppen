@@ -1,4 +1,4 @@
-class Administration::Invoicing::InvoicesController < Administration::AdministrationController
+class Administration::Invoicing::InvoicesController < Administration::SuperadminController
   inherit_resources
 #  defaults :redirects => {:create => :edit, :update => :show}
 #  set_search_persistence :name => "invoices_filter"

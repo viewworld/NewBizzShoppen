@@ -6,10 +6,17 @@ class User < ActiveRecord::Base
   ajaxful_rater
   include EmailTemplateEditor
 
-  ROLES_PRIORITY = [:admin, :call_centre, :agent, :call_centre_agent, :member, :category_supplier, :supplier, :lead_supplier, :lead_user, :translator, :deal_maker]
+  ROLES_PRIORITY = [:admin, :call_centre, :agent, :call_centre_agent, :member, :category_supplier, :supplier, :lead_supplier, :lead_user, :translator, :deal_maker, :superadmin]
   DEAL_VALUE_RANGE = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]
-  BASIC_USER_ROLES_WITH_LABELS = [['Administrator', 'admin'], ['Agent', 'agent'], ['Supplier', 'supplier'], ['Call centre', 'call_centre'], ['Member', 'member'], ['Category supplier', 'category_supplier']]
-  ADDITIONAL_USER_ROLES_WITH_LABELS = [['Lead user', "lead_user"], ['Lead supplier', "lead_supplier"], ["Call centre agent", "call_centre_agent"]]
+  BASIC_USER_ROLES_WITH_LABELS = [
+      ['Administrator', 'admin'],
+      ['Agent', 'agent'],
+      ['Supplier', 'supplier'],
+      ['Call centre', 'call_centre'],
+      ['Member', 'member'],
+      ['Category supplier', 'category_supplier']
+  ]
+  ADDITIONAL_USER_ROLES_WITH_LABELS = [['Lead user', "lead_user"], ['Lead supplier', "lead_supplier"], ["Call centre agent", "call_centre_agent"], ["Superadmin", "superadmin"]]
 
   NOT_CERTIFIED = 0
   BRONZE_CERTIFICATION = 1
@@ -41,7 +48,7 @@ class User < ActiveRecord::Base
 
   # declare the valid roles -- do not change the order if you add more
   # roles later, always append them at the end!
-  roles :admin, :agent, :call_centre, :call_centre_agent, :supplier, :lead_supplier, :lead_user, :member, :category_supplier, :translator, :deal_maker
+  roles :admin, :agent, :call_centre, :call_centre_agent, :supplier, :lead_supplier, :lead_user, :member, :category_supplier, :translator, :deal_maker, :superadmin
 
   validates_presence_of :email
   validates_presence_of :first_name, :last_name, :if => :validate_first_and_last_name?
@@ -78,6 +85,7 @@ class User < ActiveRecord::Base
   has_many :chain_mails, :primary_key => :email, :foreign_key => :email
   has_many :campaign_monitor_responses, :as => :resource
   has_many :newsletter_lists, :foreign_key => :owner_id
+  has_many :login_time_requests
   has_many :surveys, :as => :creator
   has_many :survey_recipients, :as => :recipient, :dependent => :destroy
 
@@ -317,6 +325,16 @@ class User < ActiveRecord::Base
   end
 
   public
+
+  def available_login_time_requests
+    if admin?
+      LoginTimeRequest.order("created_at DESC")
+    elsif call_centre?
+      LoginTimeRequest.where(:user_id => self_and_descendants.map(&:id)).order("created_at DESC")
+    else
+      login_time_requests.order("created_at DESC")
+    end
+  end
 
   def phone_enabled?
     sip_username.present? and sip_password.present? and sip_domain.present?

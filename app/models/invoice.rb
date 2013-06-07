@@ -33,7 +33,7 @@ class Invoice < ActiveRecord::Base
 
   has_one :supplier_address, :class_name => '::Address::InvoiceSupplier', :as => :addressable
   has_one :seller_address, :class_name => '::Address::InvoiceSeller', :as => :addressable
-  has_one :credit_note
+  has_one :credit_note, :dependent => :destroy
 
   scope :ascend_by_invoice_number, order("YEAR(invoices.creation_date) ASC, invoices.number ASC, company_id ASC")
   scope :descend_by_invoice_number, order("YEAR(invoices.creation_date) DESC, invoices.number DESC, company_id ASC")

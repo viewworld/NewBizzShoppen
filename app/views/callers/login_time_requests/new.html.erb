@@ -1,0 +1,73 @@
+<column-mc:>
+  <header>
+    <param:content>
+      <%= t("login_time_requests.new.header") %>
+    </param:content>
+  </header>
+
+  <%= render :partial => 'form', :locals => { :resource => resource } %>
+
+  <table class="generic">
+    <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= t("login_time_requests.new.table.user") %></th>
+          <th><%= t("login_time_requests.new.table.campaign") %></th>
+          <th><%= t("login_time_requests.new.table.start_time") %></th>
+          <th><%= t("login_time_requests.new.table.end_time") %></th>
+          <th><%= t("login_time_requests.new.table.hours") %></th>
+          <th><%= t("login_time_requests.new.table.aasm_state") %></th>
+          <th></th>
+          <th class="hr"></th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="7"></td>
+          <td class="fr"></td>
+        </tr>
+    </tfoot>
+    <% @requests.each do |ltr| %>
+        <tr>
+          <td class="cl"></td>
+          <td><%= ltr.user.screen_name %></td>
+          <td><%= ltr.campaign.name %></td>
+          <td><%= l ltr.start_time %></td>
+          <td><%= l ltr.end_time %></td>
+          <td><%= number_with_precision(ltr.hours_count, :precision => 2) %></td>
+          <td><%= ltr.aasm_state %></td>
+          <td class="tda ta_r">
+            <% if ltr.can_be_managed_by?(current_user) and ltr.new? %>
+                <ul-actions>
+                  <li>
+                    <%= link_to t("login_time_requests.new.edit"), edit_callers_login_time_request_path(ltr), :class => "default_action" %>
+                  </li>
+                  <li>
+                    <%= link_to t("login_time_requests.new.approve"), approve_callers_login_time_request_path(ltr), :method => :put %>
+                  </li>
+                  <li>
+                    <%= link_to t("login_time_requests.new.reject"), reject_callers_login_time_request_path(ltr), :method => :put %>
+                  </li>
+                </ul-actions>
+            <% end %>
+          </td>
+          <td class="cr"></td>
+        </tr>
+    <% end %>
+    <tr>
+      <td class="cl"></td>
+      <td colspan="7">
+        <%= will_paginate @requests %>
+      </td>
+      <td class="cr"></td>
+    </tr>
+  </table>
+
+  <script>
+      $(function() {
+          $(".datetimepicker").datetimepicker({ dateFormat: 'dd-mm-yy' });
+      });
+  </script>
+
+</column-mc:>

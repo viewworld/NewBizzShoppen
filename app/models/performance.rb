@@ -34,7 +34,7 @@ class Performance < AgentPerformance
   end
 
   def payouts
-    @payouts ||= AgentTimesheetsPayout.for_campaigns(campaigns).created_between(date_from, date_to+1.day)
+    @payouts ||= ::AgentTimesheet::Payout.for_campaigns(campaigns).created_between(date_from, date_to+1.day)
   end
 
   def values

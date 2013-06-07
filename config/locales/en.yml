@@ -148,6 +148,7 @@ en:
         agent_performance: "Agent perf."
         payout: "Payout"
         background_tasks: "Background tasks"
+        login_time_requests: "Login time"
         surveys: "Surveys"
       agent:
         leads: My leads
@@ -1211,6 +1212,7 @@ en:
             contact_us_skype: "Contact us Skype username"
             default_group_deal_min_leads_created: "Group deal min leads created"
             number_of_secondary_featured_deals: "Number of secondary featured deals"
+            cm_confirmation_email: "Campaign Monitor confirmation email"
       edit:
         view:
           title: "Settings"
@@ -2867,6 +2869,7 @@ en:
 
         new_lead: "New lead"
         new_deal: "New deal"
+        request_login_time: "Request login time"
         header_campaigns: "Agent performance"
         campaigns:
           pending_contacts: "Pending contacts"
@@ -4373,6 +4376,7 @@ en:
         total_db: "Total DB %"
     new:
       header: "Agent timesheets"
+      set_constraints: "Set constraints for your timesheet"
       time_period: "Select time period"
       select_camapigns: "Select campaigns"
       select_team: "Select team"
@@ -4396,6 +4400,23 @@ en:
         selected_agents: "Selected agents"
         selected_call_centres: "Selected call centres"
         all_call_centres: "All available call centres"
+  login_time_requests:
+    new:
+      header: "Login time requests"
+      request_new: "Request new login time"
+      request_edit: "Edit request"
+      save_request: "Save"
+      save_and_approve: "Save and approve"
+      edit: "Edit"
+      approve: "Approve"
+      reject: "Reject"
+      table:
+        user: "User"
+        campaign: "Campaign"
+        start_time: "Time from"
+        end_time: "Time to"
+        hours: "Hours count"
+        aasm_state: "State"
   agent_performance:
     show:
       view:

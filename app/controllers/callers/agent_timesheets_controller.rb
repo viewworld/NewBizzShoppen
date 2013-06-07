@@ -3,7 +3,7 @@ class Callers::AgentTimesheetsController < Callers::CallerController
   set_tab "financial"
   set_subtab "agent_timesheets"
 
-  before_filter lambda {authorize_role(:call_centre, :admin)}
+  before_filter lambda {authorize_role(:call_centre, :admin, :agent, :call_centre_agent)}
 
   def show
     respond_to do |wants|
@@ -22,7 +22,7 @@ class Callers::AgentTimesheetsController < Callers::CallerController
   end
 
   def create
-    if Rails.env.development?
+    if Rails.env.development? or current_user.agent?
       redirect_to callers_agent_timesheet_path(::AgentTimesheet::General.new(params[:search].merge(:current_user => current_user)).to_file)
     else
       ::AgentTimesheet::General.new(params[:search].merge(:current_user => current_user)).delay(:queue => current_user_queue).to_file

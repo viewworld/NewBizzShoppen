@@ -15,7 +15,7 @@ class AgentPerformance
   end
 
   def payout
-    @payout ||= currency.from_euro(payouts.sum(:euro_payout))
+    @payout ||= currency.from_euro(payouts.sum(:payout))
   end
 
   def rate
@@ -33,7 +33,7 @@ class AgentPerformance
   def flot_days
     {
         :hours => user_session_logs.select("end_date, sum(hours_count) as hours").group("end_date").reorder("end_date").map{|usl| [usl.end_date.to_time.to_i*1000, usl.hours]},
-        :payout => payouts.select("created_at, sum(euro_payout) as payout").group("created_at").reorder("created_at").map{|usl| [(usl.created_at.to_time.to_i+jitter)*1000, currency.from_euro(usl.payout)]},
+        :payout => payouts.select("created_at, sum(payout) as payout").group("created_at").reorder("created_at").map{|usl| [(usl.created_at.to_time.to_i+jitter)*1000, currency.from_euro(usl.payout)]},
     }
   end
 
@@ -64,7 +64,7 @@ class AgentPerformance
   end
 
   def payouts
-    @payouts ||= AgentTimesheetsPayout.for_campaigns(campaigns).for_users(user).created_between(date_from, date_to+1.day)
+    @payouts ||= AgentTimesheet::Payout.for_campaigns(campaigns).for_users(user).created_between(date_from, date_to+1.day)
   end
 
   public

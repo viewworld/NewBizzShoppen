@@ -3,11 +3,13 @@
 <%= main_menu_link_to t("layout.main_menu.admin.deals"), administration_deals_path, :tab => "deals" %>
 
 <%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.admin.financial"), :tab => "financial" do  %>
-    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.upcoming_invoices")), administration_invoicing_upcoming_invoices_path, :subtab => "upcoming_invoices" %>
-    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.creditors")), administration_invoicing_creditors_path, :subtab => "creditors" %>
-    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.refunds")), administration_invoicing_refunds_path, :subtab => "refunds" %>
-    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.invoices")), administration_invoicing_invoices_path, :subtab => "invoices" %>
-    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.payment_transactions")), administration_invoicing_payment_transactions_path, :subtab => "payment_transactions" %>
+    <% if current_user.has_role? :superadmin %>
+        <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.upcoming_invoices")), administration_invoicing_upcoming_invoices_path, :subtab => "upcoming_invoices" %>
+        <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.creditors")), administration_invoicing_creditors_path, :subtab => "creditors" %>
+        <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.refunds")), administration_invoicing_refunds_path, :subtab => "refunds" %>
+        <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.invoices")), administration_invoicing_invoices_path, :subtab => "invoices" %>
+        <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.payment_transactions")), administration_invoicing_payment_transactions_path, :subtab => "payment_transactions" %>
+    <% end %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.sellers")), administration_sellers_path, :subtab => "sellers" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.reports")), new_callers_campaign_report_path, :subtab => "campaigns_reports" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.agent_timesheets")), new_callers_agent_timesheet_path, :subtab =>"agent_timesheets" %>
@@ -46,7 +48,8 @@
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.campaigns")), callers_campaigns_path, :subtab => "campaigns" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.newsletter_lists")), newsletters_newsletter_lists_path, :subtab => "newsletter_lists" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.newsletter_campaigns")), newsletters_newsletter_campaigns_path, :subtab => "newsletter_campaigns" %>
-    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.surveys")), surveys_management_surveys_path, :subtab => "surveys", :additional_class => "last" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.surveys")), surveys_management_surveys_path, :subtab => "surveys" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.login_time_requests")), new_callers_login_time_request_path, :subtab => "login_time_requests", :additional_class => "last" %>
 <% end %>
 
 <%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.shared.import"), :tab => "import" do  %>

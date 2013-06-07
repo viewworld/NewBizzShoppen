@@ -298,7 +298,7 @@ module ApplicationHelper
       minutes = ((val-val.to_i)*60).round.abs
       minutes = "0#{minutes}" if minutes < 10
       "#{'-' if val < 0}#{hours}:#{minutes}"
-    elsif [:value, :cost].include?(type.to_sym)
+    elsif [:value, :cost, :payout].include?(type.to_sym)
       timesheet.currency.from_euro(val).to_i
     else
       val.to_i

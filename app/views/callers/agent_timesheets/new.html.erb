@@ -5,118 +5,127 @@
     </param:content>
   </header>
 
+  <% all_campaigns = (current_user.admin? ? Campaign : Campaign.available_for_user(current_user)).reorder("name ASC") %>
+
   <%= semantic_form_for @search, :url => callers_agent_timesheets_path, :as => :search, :html => {:method => :post} do |f| %>
-      <frm>
+      <frm title="#{t('agent_timesheets.new.set_constraints')}">
         <param:content>
-          <div class="pdd_10">
-            <div class="column_left">
-              <h3><%= t("agent_timesheets.new.time_period") %></h3>
-
-              <fieldset class="inputs labels_ta_r">
-                <ol class="align_inputs">
-                  <%= f.input :start_date, :as => :weekpicker, :input_html => {:id => 'search_start_date'}, :wrapper_html => {:class => "date"} %>
-                  <%= f.input :end_date, :as => :weekpicker, :input_html => {:id => 'search_end_date'}, :wrapper_html => {:class => "date"} %>
-                  <%= f.input :show_weekends, :as => :boolean %>
-                  <%= f.input :only_show_results, :as => :boolean %>
-                  <%= f.input :currency_id, :collection => Currency.active, :include_blank => false %>
-                </ol>
-              </fieldset>
-
-
-              <fieldset class="inputs labels_ta_r">
-                <ol>
-                  <%#= f.input :agents, :as => :select, :include_blank => false, :collection => (current_user.admin? ? User.with_agents.all : current_user.subaccounts), :multiple => true, :input_html => {:size => 6, :style => "height:140px; width:200px;"} %>
-                </ol>
-              </fieldset>
-              <clb/>
-            </div>
-            <div class="column_right">
-
-              <fieldset class="inputs labels_ta_r">
-                <legend class="absolute"><%= t("agent_timesheets.new.display") %></legend>
-                <ol class="align_inputs">
-                  <%= f.input :display_hours, :as => :boolean %>
-                  <%= f.input :display_results, :as => :boolean %>
-                  <%= f.input :display_value, :as => :boolean %>
-                  <%= f.input :display_cost, :as => :boolean %>
-                </ol>
-              </fieldset>
-              <clb/>
-
-              <fieldset class="inputs labels_ta_r">
-                <legend class="absolute"><%= t("agent_timesheets.new.report_type") %></legend>
-                <ol class="align_inputs">
-                  <%= f.input :overview, :as => :boolean %>
-                  <%= f.input :team_result_sheet, :as => :boolean %>
-                  <%= f.input :agent_timesheet, :as => :boolean %>
-                </ol>
-              </fieldset>
-              <clb/>
-            </div>
-            <clb/>
-
-            <h3><%= t("agent_timesheets.new.select_camapigns") %></h3>
-
-            <div id="campaigns_selection_div">
+          <% if current_user.agent? %>
+            <%= render :partial => 'agent', :locals => { :f => f, :all_campaigns => all_campaigns } %>
+          <% else %>
               <div class="pdd_10">
-                <div class="grid_210 fltl">&nbsp;</div>
-                <div class="grid_240 fltl">
-                  <h3><%= t("agent_timesheets.new.campaigns_selection.all_campaigns") %></h3>
-                  <%= select_tag "all_campaigns", options_for_select([]), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
-                  <%= check_box_tag "list_all_campaigns" %><%= label_tag "list_all_campaigns", "all campaigns" %>
+                <div class="column_left">
+                  <h3><%= t("agent_timesheets.new.time_period") %></h3>
+
+                  <fieldset class="inputs labels_ta_r">
+                    <ol class="align_inputs">
+                      <%= f.input :start_date, :as => :weekpicker, :input_html => {:id => 'search_start_date'}, :wrapper_html => {:class => "date"} %>
+                      <%= f.input :end_date, :as => :weekpicker, :input_html => {:id => 'search_end_date'}, :wrapper_html => {:class => "date"} %>
+                      <%= f.input :show_weekends, :as => :boolean %>
+                      <%= f.input :only_show_results, :as => :boolean %>
+                      <%= f.input :currency_id, :collection => Currency.active, :include_blank => false %>
+                    </ol>
+                  </fieldset>
+
+
+                  <fieldset class="inputs labels_ta_r">
+                    <ol>
+                      <%#= f.input :agents, :as => :select, :include_blank => false, :collection => (current_user.admin? ? User.with_agents.all : current_user.subaccounts), :multiple => true, :input_html => {:size => 6, :style => "height:140px; width:200px;"} %>
+                    </ol>
+                  </fieldset>
+                  <clb/>
                 </div>
+                <div class="column_right">
 
-                <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
-                  <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("agent_timesheets.new.move_right"), "javascript:move_selected('all_campaigns','search_campaigns_')", :id => "move_right" %></p>
+                  <fieldset class="inputs labels_ta_r">
+                    <legend class="absolute"><%= t("agent_timesheets.new.display") %></legend>
+                    <ol class="align_inputs">
+                      <%= f.input :display_hours, :as => :boolean %>
+                      <%= f.input :display_results, :as => :boolean %>
+                      <%= f.input :display_value, :as => :boolean %>
+                      <%= f.input :display_cost, :as => :boolean %>
+                    </ol>
+                  </fieldset>
+                  <clb/>
 
-                  <p class="ta_c"><%= bt_link_to nil, t("agent_timesheets.new.move_left"), "javascript:move_selected('search_campaigns_','all_campaigns')", :id => "move_left" %></p>
-                </div>
 
-                <div class="grid_240 fltl">
-                  <h3><%= t("agent_timesheets.new.campaigns_selection.selected_campaigns") %></h3>
-                  <%= select_tag "search[campaigns][]", options_for_select(@search.campaigns.map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
-                </div>
-                <clb/>
-              </div>
-            </div>
-
-            <h3><%= t("agent_timesheets.new.select_team") %></h3>
-
-            <div id="agents_selection_div">
-              <div class="pdd_10">
-                <div class="grid_210 fltl">&nbsp;</div>
-                <div class="grid_240 fltl">
-                  <h3><%= t("agent_timesheets.new.agents_selection.all_agents") %></h3>
-                  <%= select_tag "all_agents", options_for_select([]), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
-                  <%= check_box_tag "list_all_agents" %><%= label_tag "list_all_agents", "all agents" %>
-
-                  <% if current_user.admin? %>
-                    <h3 style="padding-top:10px"><%= t("agent_timesheets.new.agents_selection.all_call_centres") %></h3>
-                    <%= select_tag "all_call_centres", options_for_select([]), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
-                    <%= check_box_tag "list_all_call_centres" %><%= label_tag "list_all_call_centres", "all call centres" %>
-                  <% end %>
-                </div>
-
-                <div class="grid_160 fltl<%= " admin_agents_selection" if current_user.admin? %>" style="margin-right: 10px;margin-top:10px;">
-                  <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("agent_timesheets.new.move_right"), "javascript:copy_selected_unique('all_agents','search_agents_');copy_selected_unique('all_call_centres','search_call_centres_');move_selected('all_agents','selected_agents');move_selected('all_call_centres','selected_agents')", :id => "move_right" %></p>
-
-                  <p class="ta_c"><%= bt_link_to nil, t("agent_timesheets.new.move_left"), "javascript:remove_selected_unique('selected_agents','search_agents_');remove_selected_unique('selected_agents','search_call_centres_');move_selected_unique('selected_agents','all_agents');move_selected_unique('selected_agents','all_call_centres')", :id => "move_left" %></p>
-                </div>
-
-                <div class="grid_240 fltl<%= " admin_agents_selection" if current_user.admin? %>">
-                  <h3><%= t("agent_timesheets.new.agents_selection.selected_agents") %></h3>
-                  <%= select_tag "selected_agents", options_for_select(@search.agents.map { |c| [c.screen_name, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
-                </div>
+                  <fieldset class="inputs labels_ta_r">
+                    <legend class="absolute"><%= t("agent_timesheets.new.report_type") %></legend>
+                    <ol class="align_inputs">
+                      <%= f.input :overview, :as => :boolean %>
+                      <%= f.input :team_result_sheet, :as => :boolean %>
+                      <%= f.input :agent_timesheet, :as => :boolean %>
+                    </ol>
+                  </fieldset>
 
                 <clb/>
-              </div>
-            </div>
+                </div>
+                <clb/>
 
-            <div style="display:none;">
-              <%= select_tag "search[agents][]", [], {:multiple => true} %>
-              <%= select_tag "search[call_centres][]", [], {:multiple => true} %>
-            </div>
-          </div>
+                <h3><%= t("agent_timesheets.new.select_camapigns") %></h3>
+
+                <div id="campaigns_selection_div">
+                  <div class="pdd_10">
+                    <div class="grid_210 fltl">&nbsp;</div>
+                    <div class="grid_240 fltl">
+                      <h3><%= t("agent_timesheets.new.campaigns_selection.all_campaigns") %></h3>
+                      <%= select_tag "all_campaigns", options_for_select([]), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                      <%= check_box_tag "list_all_campaigns" %><%= label_tag "list_all_campaigns", "all campaigns" %>
+                    </div>
+
+                    <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
+                      <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("agent_timesheets.new.move_right"), "javascript:move_selected('all_campaigns','search_campaigns_')", :id => "move_right" %></p>
+
+                      <p class="ta_c"><%= bt_link_to nil, t("agent_timesheets.new.move_left"), "javascript:move_selected('search_campaigns_','all_campaigns')", :id => "move_left" %></p>
+                    </div>
+
+                    <div class="grid_240 fltl">
+                      <h3><%= t("agent_timesheets.new.campaigns_selection.selected_campaigns") %></h3>
+                      <%= select_tag "search[campaigns][]", options_for_select(@search.campaigns.map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                    </div>
+                    <clb/>
+                  </div>
+                </div>
+
+                <h3><%= t("agent_timesheets.new.select_team") %></h3>
+
+                <div id="agents_selection_div">
+                  <div class="pdd_10">
+                    <div class="grid_210 fltl">&nbsp;</div>
+                    <div class="grid_240 fltl">
+                      <h3><%= t("agent_timesheets.new.agents_selection.all_agents") %></h3>
+                      <%= select_tag "all_agents", options_for_select([]), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                      <%= check_box_tag "list_all_agents" %><%= label_tag "list_all_agents", "all agents" %>
+
+                      <% if current_user.admin? %>
+                          <h3 style="padding-top:10px"><%= t("agent_timesheets.new.agents_selection.all_call_centres") %></h3>
+                          <%= select_tag "all_call_centres", options_for_select([]), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                          <%= check_box_tag "list_all_call_centres" %><%= label_tag "list_all_call_centres", "all call centres" %>
+                      <% end %>
+                    </div>
+
+                    <div class="grid_160 fltl<%= " admin_agents_selection" if current_user.admin? %>" style="margin-right: 10px;margin-top:10px;">
+                      <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("agent_timesheets.new.move_right"), "javascript:copy_selected_unique('all_agents','search_agents_');copy_selected_unique('all_call_centres','search_call_centres_');move_selected('all_agents','selected_agents');move_selected('all_call_centres','selected_agents')", :id => "move_right" %></p>
+
+                      <p class="ta_c"><%= bt_link_to nil, t("agent_timesheets.new.move_left"), "javascript:remove_selected_unique('selected_agents','search_agents_');remove_selected_unique('selected_agents','search_call_centres_');move_selected_unique('selected_agents','all_agents');move_selected_unique('selected_agents','all_call_centres')", :id => "move_left" %></p>
+                    </div>
+
+                    <div class="grid_240 fltl<%= " admin_agents_selection" if current_user.admin? %>">
+                      <h3><%= t("agent_timesheets.new.agents_selection.selected_agents") %></h3>
+                      <%= select_tag "selected_agents", options_for_select(@search.agents.map { |c| [c.screen_name, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                    </div>
+
+                    <clb/>
+                  </div>
+                </div>
+
+                <div style="display:none;">
+                  <%= select_tag "search[agents][]", [], {:multiple => true} %>
+                  <%= select_tag "search[call_centres][]", [], {:multiple => true} %>
+                </div>
+
+              </div>
+          <% end %>
         </param:content>
         <param:actions>
           <ibt c="fltri">
@@ -126,20 +135,22 @@
       </frm>
   <% end %>
 
-  <header>
-    <param:content>
-    <%= t("agent_timesheets.new.scheduled_actions") %>
-    </param:content>
+  <% unless current_user.agent? %>
+      <header>
+        <param:content>
+        <%= t("agent_timesheets.new.scheduled_actions") %>
+        </param:content>
 
-    <param:actions>
-      <ul class="header_actions">
-        <li class="last">
-          <%= bt_link_to nil, t("users.delayed_jobs.view_all"), users_delayed_jobs_path %>
-        </li>
-      </ul>
-    </param:actions>
-  </header>
-  <%= render :partial => 'shared/delayed_jobs/user', :locals => {:user => current_user, :delayed_jobs => current_user.delayed_jobs.limit(5)} %>
+        <param:actions>
+          <ul class="header_actions">
+            <li class="last">
+              <%= bt_link_to nil, t("users.delayed_jobs.view_all"), users_delayed_jobs_path %>
+            </li>
+          </ul>
+        </param:actions>
+      </header>
+      <%= render :partial => 'shared/delayed_jobs/user', :locals => {:user => current_user, :delayed_jobs => current_user.delayed_jobs.limit(5)} %>
+  <% end %>
 
   <header><%= t("agent_timesheets.new.cached_timesheets") %></header>
   <%= render :partial => 'shared/cached_timesheets/list', :locals => {:cached_timesheets => @search.cached_timesheets.first(5)} %>
@@ -158,7 +169,6 @@
         });
     }
 
-    <% all_campaigns = (current_user.admin? ? Campaign : Campaign.available_for_user(current_user)).reorder("name ASC") %>
     var allCampaigns = <%= all_campaigns.map { |c| [c.name.to_s, c.id] }.sort.to_json.html_safe %>;
     var activeCampaignIds = <%= all_campaigns.with_state('active').map(&:id).to_json.html_safe %>;
 
@@ -189,6 +199,14 @@
                 populate('all_call_centres', 'selected_agents', allCallCentres, unlockedCallCentreIds);
             });
         <% end %>
+
+        $('#all_campaigns').click(function(){
+            move_selected('all_campaigns','search_campaigns_');
+        });
+
+        $('#search_campaigns_').click(function(){
+            move_selected('search_campaigns_','all_campaigns');
+        });
     });
   </script>
 

@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
 
       other_user_id = params[:other_user_id] || session[:other_user_id]
       logged_as_other_user = ( (current_user and (current_user.admin? or current_user.call_centre?)) and (other_user_id and (other_user_id.to_i != current_user.id)) )
-      if self.class.name.match(/::AgentWorkScreen/) and params[:campaign_id] and !logged_as_other_user
+      if (self.class.name.match(/::AgentWorkScreen/) or ["Callers::CampaignsDescriptionController"].include?(self.class.to_s)) and params[:campaign_id] and !logged_as_other_user
         if active_usl = UserSessionLog.active_for_user_and_campaign(current_user, params[:campaign_id])
           session[:current_usl_campaigns] = active_usl.id
           UserSessionLog.update_end_time(session[:current_usl_campaigns], Settings.logout_time.to_i)

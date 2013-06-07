@@ -36,7 +36,7 @@
                   <ol class="no_pdd">
                     <li class="select">
                       <%= label_tag t("campaigns.show.search.call_centres") %>
-                      <%= select_tag :call_centre_id, options_from_collection_for_select(@search.all_call_centres.sort_by(&:email), "id", "email", @search.call_centre_id), :include_blank => true, :multiple => false, :style => "width:140px;", :onchange => "load_agents_for_call_centre($('#call_centre_id').val())" %>
+                      <%= select_tag :call_centre_id, options_from_collection_for_select(@search.all_call_centres.without_locked.sort_by(&:screen_name), "id", "screen_name", @search.call_centre_id), :include_blank => true, :multiple => false, :style => "width:140px;", :onchange => "load_agents_for_call_centre($('#call_centre_id').val())" %>
                     </li>
                     <li class="select">
                       <%= label_tag t("campaigns.show.search.call_centre_agents") %>

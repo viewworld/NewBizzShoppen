@@ -3,7 +3,7 @@ class Callers::CampaignReportsController < Callers::CallerController
   set_tab "financial"
   set_subtab "campaigns_reports"
 
-  before_filter lambda {authorize_role(:call_centre, :admin, :call_centre_agent, :agent)}
+  before_filter lambda {authorize_role(:call_centre, :admin)}
 
   def index
     @search = CampaignReport::Search.new(params.merge(:current_user => current_user))

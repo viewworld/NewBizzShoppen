@@ -1,0 +1,16 @@
+<column-mc:>
+  <header back="true">
+    <param:content>
+      <%= t("login_time_requests.new.header") %>
+    </param:content>
+  </header>
+
+  <%= render :partial => 'form', :locals => { :resource => resource } %>
+
+  <script>
+      $(function() {
+          $(".datetimepicker").datetimepicker({ dateFormat: 'dd-mm-yy' });
+      });
+  </script>
+
+</column-mc:>

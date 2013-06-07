@@ -165,7 +165,7 @@ class Lead < AbstractLead
 
   def notify_suppliers_about_changes
     if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(notify_suppliers_after_update) and lead_purchases.present?
-      lead_purchases.map(&:owner).uniq.each { |supplier| deliver_notify_suppliers_about_changes(supplier.email) }
+      lead_purchases.map(&:owner).uniq.compact.each { |supplier| deliver_notify_suppliers_about_changes(supplier.email) }
     end
   end
 

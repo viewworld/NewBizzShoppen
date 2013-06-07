@@ -1,5 +1,7 @@
 class Result < ActiveRecord::Base
 
+  serialize :settings
+
   has_many :call_results
   has_many :contacts, :through => :call_results
   has_many :campaigns_results, :foreign_key => "result_id"
@@ -29,6 +31,10 @@ class Result < ActiveRecord::Base
   include ScopedSearch::Model
 
   acts_as_taggable
+
+  after_initialize do
+    self.settings ||= {}
+  end
 
   def to_s
     name

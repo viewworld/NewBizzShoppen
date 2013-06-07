@@ -1,13 +1,19 @@
   <div id="tabs">
     <!-- cut -->
 	<ul>
-      <li><a href="#overview"><%= t("agent_timesheets.index.overview.header") %></a></li>
-	  <li><a href="#team_result_sheet"><%= t("agent_timesheets.index.team_result_sheet.header") %></a></li>
-	  <li><a href="#agent_time_sheet"><%= t("agent_timesheets.index.agent_time_sheet.header_wo_name") %></a></li>
+      <% if timesheet.overview %>
+          <li><a href="#overview"><%= t("agent_timesheets.index.overview.header") %></a></li>
+      <% end %>
+      <% if timesheet.team_result_sheet %>
+    	  <li><a href="#team_result_sheet"><%= t("agent_timesheets.index.team_result_sheet.header") %></a></li>
+      <% end %>
+      <% if timesheet.agent_timesheet %>
+    	  <li><a href="#agent_time_sheet"><%= t("agent_timesheets.index.agent_time_sheet.header_wo_name") %></a></li>
+      <% end %>
 	</ul>
     <!-- cut -->
 
-    <div id="overview" style="page-break-after:always;">
+    <div id="overview" style="<%= timesheet.overview ? "page-break-after:always;" : "display:none;" %>">
       <% if timesheet.overview %>
           <h3 style="display:none"><%= t("agent_timesheets.index.overview.header") %></h3>
         <% timesheet.variables.each do |v| %>
@@ -16,7 +22,7 @@
       <% end %>
     </div>
 
-    <div id="team_result_sheet" style="overflow-x: auto;page-break-after:always;">
+    <div id="team_result_sheet" style="overflow-x: auto;<%= timesheet.team_result_sheet ? "page-break-after:always;" : "display:none;" %>">
       <% if timesheet.team_result_sheet %>
           <h3 style="display:none"><%= t("agent_timesheets.index.team_result_sheet.header") %></h3>
         <% timesheet.cweeks.each do |cweek| %>
@@ -28,15 +34,18 @@
 
     <div id="agent_time_sheet">
       <!-- cut -->
-      <%= t("agent_timesheets.index.agent_time_sheet.select_agent") %>: <%= select_tag "agent_timesheet_agent_id", options_for_select(timesheet.agents.map{|a| [a.screen_name, a.id]}.sort), :onchange => "show_timesheet($(this).attr('value'))" %>
-      <%= t("agent_timesheets.index.agent_time_sheet.show_all") %> <%= check_box_tag "show_all_agents", "1", false, :onchange => "show_all_timesheets($(this).is(':checked'))" %>
+      <% if timesheet.agents.size > 1 %>
+        <%= t("agent_timesheets.index.agent_time_sheet.select_agent") %>: <%= select_tag "agent_timesheet_agent_id", options_for_select(timesheet.agents.map{|a| [a.screen_name, a.id]}.sort), :onchange => "show_timesheet($(this).attr('value'))" %>
+        <%= t("agent_timesheets.index.agent_time_sheet.show_all") %> <%= check_box_tag "show_all_agents", "1", false, :onchange => "show_all_timesheets($(this).is(':checked'))" %>
+      <% elsif timesheet.agents.size == 1 %>
+        <%= hidden_field_tag "agent_timesheet_agent_id", timesheet.agents.first.id  %>
+      <% end %>
       <!-- cut -->
       <% if timesheet.agent_timesheet %>
-          <h3 style="display:none"><%= t("agent_timesheets.index.agent_time_sheet.header_wo_name") %></h3>
-          <% @log_out_times ||= {} %>
+        <% @log_out_times ||= {} %>
         <% timesheet.agents.each do |agent| %>
           <% @log_out_times[agent.id] ||= {}  %>
-          <div id="agent_time_sheet_<%= agent.id %>" style="display:none;page-break-after:always;">
+          <div id="agent_time_sheet_<%= agent.id %>" style="display:none;<%= "page-break-after:always;" unless timesheet.agents.last.eql?(agent) %>">
             <!-- cut --><hr/><!-- cut -->
             <div class="fltl print_company_info">
               <p><%= agent.screen_name %> (<%= agent.email %>)</p>
@@ -71,7 +80,7 @@
   </div>
 
   <% if timesheet.currency != Currency.euro %>
-    <h3 class="pdd_10"><%= t("agent_timesheets.index.currency", :currency => timesheet.currency, :exchange_rate => timesheet.currency.exchange_rate) %></h3>
+    <h3 style="padding-top: 10px;"><%= t("agent_timesheets.index.currency", :currency => timesheet.currency, :exchange_rate => timesheet.currency.exchange_rate) %></h3>
   <% end %>
 
   <script type="text/javascript">

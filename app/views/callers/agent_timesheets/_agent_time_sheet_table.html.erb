@@ -9,8 +9,8 @@
   </tr>
   </thead>
   <tbody>
-  <% [:log_in, :log_out, :log_out_time, :hours, :results, :value, :time_on_phone, :calls, :cost].each do |key| %>
-      <% unless [:hours, :results, :value, :cost].include?(key) and !agent_time_sheet.send("display_#{key}".to_sym) %>
+  <% [:log_in, :log_out, :log_out_time, :hours, :results, :value, :time_on_phone, :calls, :cost, :payout].each do |key| %>
+      <% unless [:hours, :results, :value, :cost, :calls, :payout].include?(key) and !agent_time_sheet.send("display_#{key}".to_sym) %>
           <tr class="<%= key.to_s %>">
             <td class="cell_week"><%= t("agent_timesheets.index.agent_time_sheet.#{key}") %></td>
             <% agent_time_sheet.days_of_week.each do |dow| %>
