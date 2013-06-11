@@ -363,13 +363,13 @@ function notifyCallbackHold(call, isHold) {
     if (currentCall != null && currentCall.id == call.id) {
         currentCall = call;
         if (call.iHolded) {
-            getElement('holdButton').style.background = "url(assets/unhold.png)";
+            getElement('holdButton').style.background = "url(/assets/unhold.png)";
             $('#holdButton').unbind('click');
             $('#holdButton').click(function() {
          	setStatusHold(call.id, false);
             });
         } else {
-            getElement('holdButton').style.background = "url(assets/hold.png)";
+            getElement('holdButton').style.background = "url(/assets/hold.png)";
             $('#holdButton').unbind('click');
             $('#holdButton').click(function() {
          	setStatusHold(call.id, true);
@@ -539,7 +539,7 @@ function removeCallView(call) {
     closeCallView();
     $('#caller').html('');
     $('#callState').html('');
-    $('#holdButton').css('background', 'url(assets/hold.png)');
+    $('#holdButton').css('background', 'url(/assets/hold.png)');
 }
 
 
