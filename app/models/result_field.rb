@@ -6,7 +6,8 @@ class ResultField < ActiveRecord::Base
   NOTE = 3.freeze
   DATETIME = 4.freeze
   MATERIAL = 5.freeze
-  FIELD_TYPES = [STRING, INTEGER, DATE, NOTE, DATETIME, MATERIAL]
+  SURVEY = 6.freeze
+  FIELD_TYPES = [STRING, INTEGER, DATE, NOTE, DATETIME, MATERIAL, SURVEY]
 
   belongs_to :result
   has_many :result_value
@@ -15,6 +16,7 @@ class ResultField < ActiveRecord::Base
   accepts_nested_attributes_for :campaigns_result_fields, :allow_destroy => true
 
   validates_presence_of :name, :field_type
+  validates_presence_of :survey_id, :if => Proc.new { |rf| rf.field_type.to_i == SURVEY }
 
   def value_for_call_result(call_result)
     rv = result_value_for_call_result(call_result)

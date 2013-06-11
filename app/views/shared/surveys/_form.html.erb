@@ -1,4 +1,4 @@
-<%= form.fields_for :survey_answers, @survey_recipient.survey_answers do |f| %>
+<%= form.fields_for :survey_answers, @survey_recipient.survey_answers.ordered_by_questions do |f| %>
     <% question = f.object.survey_question %>
     <div class="question<%= " question_branch_#{question.parent_id} option_#{question.branch_option_id}".html_safe if question.parent_id.present? %>"<%= 'style="display: none;"'.html_safe  if question.parent_id.present? %>>
     <div class="pdd_10 no_pdd_t rltv">

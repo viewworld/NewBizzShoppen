@@ -3293,6 +3293,7 @@ en:
         type3: Note
         type4: Date & Time
         type5: Material
+        type6: Survey
       date_format: "format: yyyy-mm-dd"
       datetime_format: "format: yyyy-mm-dd hh:mm"
       is_reported_cannot_be_disabled: "cannot be disabled because call results are generated for that result"
@@ -3385,6 +3386,7 @@ en:
         status4: "Sent to Campaign Monitor as draft"
     result:
       is_global_cannot_be_disabled: "Result is assigned to more than one campaings"
+      survey_result_fields_quantity: "There can be only one survey field added for a result."
     survey_recipient:
       states:
         state0: "Sent"

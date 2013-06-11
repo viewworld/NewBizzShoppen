@@ -22,3 +22,13 @@ $('select[id*=field_type]').each(function(){
     }
 });
 }
+
+function showHideSurveys(){
+    if($(event.currentTarget).closest("select[id^=result_result_fields_attributes_][id$=_field_type]").val() == "6"){
+        $(event.currentTarget).closest("ol").find("li.survey_id").show()
+    } else {
+        $(event.currentTarget).closest("ol").find("li.survey_id").hide();
+        $(event.currentTarget).closest("ol").find("li.survey_id").find("select").val('')
+
+    }
+}

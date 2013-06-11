@@ -317,6 +317,7 @@ Nbs::Application.routes.draw do
         put :reject
       end
     end
+    resources :survey_recipients
   end
 
   namespace :comments do

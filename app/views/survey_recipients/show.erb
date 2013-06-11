@@ -4,7 +4,7 @@
   <%= semantic_form_for @survey_recipient, :url => survey_recipient_path(:id => @survey_recipient.uuid) do |form| %>
       <frm>
         <param:content>
-          <%= render :partial => 'form', :locals => {:form => form} %>
+          <%= render :partial => 'shared/surveys/form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">

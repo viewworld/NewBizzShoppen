@@ -8,6 +8,8 @@ class SurveyAnswer < ActiveRecord::Base
   validates_presence_of :survey_option_ids, :if => Proc.new { |sa| sa.is_select_type? and sa.is_required? }
   validates_numericality_of :value, :if => Proc.new { |sa| sa.is_number_type? and (sa.is_filled? or sa.is_required?) }
 
+  scope :ordered_by_questions, joins(:survey_question).order("survey_questions.position")
+
   attr_accessor :chosen_branched_question
 
   include CommonSurvey

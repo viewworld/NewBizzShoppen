@@ -26,7 +26,7 @@ class SurveyRecipient < ActiveRecord::Base
   end
 
   def build_answer(question)
-    self.survey_answers.build(:survey_question => question, :survey_recipient => self, :question_type => question.question_type)
+    survey_answers.detect { |sa| sa.survey_question_id == question.id } || self.survey_answers.build(:survey_question => question, :survey_recipient => self, :question_type => question.question_type)
   end
 
   def build_survey_answers_ordered

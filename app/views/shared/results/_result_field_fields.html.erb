@@ -11,8 +11,13 @@
         </li>
         <li class="select">
           <%= f.label :field_type %>
-          <%= f.select :field_type, options_for_select(ResultField::FIELD_TYPES.map { |ft| [t("models.result_field.field_type.type#{ft}"), ft] }.sort, f.object.field_type), {}, {:onchange => "enable_dynamic_value()"} %>
+          <%= f.select :field_type, options_for_select((ResultField::FIELD_TYPES.except(@campaign.surveys.any? ? nil : 6)).map { |ft| [t("models.result_field.field_type.type#{ft}"), ft] }.sort, f.object.field_type), {}, {:onchange => "enable_dynamic_value(); showHideSurveys()"} %>
           <%= custom_error_for_field(f, :field_type) %>
+        </li>
+        <li class="select survey_id"<%= ' style="display: none"'.html_safe if f.object.field_type.to_i != ResultField::SURVEY or f.object.field_type.nil? %>>
+          <%= f.label :survey_id %>
+          <%= f.select :survey_id, options_for_select([[]] + @campaign.surveys.map { |c| [c.name, c.id] }.sort, f.object.survey_id), {} %>
+          <%= custom_error_for_field(f, :survey_id) %>
         </li>
         <li class="boolean">
           <%= f.check_box :is_mandatory %>

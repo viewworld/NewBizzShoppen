@@ -18,7 +18,9 @@ class Result < ActiveRecord::Base
   scope :generic_results, where(:generic => true)
   scope :custom_results, where(:generic => false)
   scope :not_in_result, where("name = 'Not in'")
-  scope :not_archived_or_assigned_to_campaign, lambda { |campaign| joins("LEFT JOIN campaigns_results ON campaigns_results.result_id = results.id").where("campaigns_results.campaign_id = ? or (results.is_global is true and results.is_archived is false)", campaign.id).select("distinct(results.id), results.*") }
+  scope :not_archived_or_assigned_to_campaign, lambda { |campaign| joins("LEFT JOIN campaigns_results ON campaigns_results.result_id = results.id").
+        joins("LEFT JOIN result_fields ON result_fields.result_id = results.id AND result_fields.field_type = '6'").
+        where("(result_fields.survey_id in (?) or result_fields.id is NULL) and (campaigns_results.campaign_id = ? or (results.is_global is true and results.is_archived is false))", campaign.survey_ids, campaign.id).select("distinct(results.id), results.*") }
   scope :with_keyword, lambda { |q| where("lower(name) like ?", "%#{q.to_s.downcase}%") }
   scope :with_archived, lambda{ |q| where("is_archived = ?", q.to_i == 1) }
   scope :for_campaigns, lambda { |campaign_ids| joins(:campaigns_results).where("campaigns_results.campaign_id IN (?)", campaign_ids).select("distinct(results.id), results.*")  }
@@ -27,6 +29,7 @@ class Result < ActiveRecord::Base
   validates :name, :presence => true
 
   validate :check_is_global
+  validate :check_survey_fields_quantity
 
   include ScopedSearch::Model
 
@@ -120,6 +123,12 @@ class Result < ActiveRecord::Base
   def check_is_global
     if is_global_changed? and !is_global? and !can_be_local?
       self.errors.add(:is_global, I18n.t("models.result.is_global_cannot_be_disabled"))
+    end
+  end
+
+  def check_survey_fields_quantity
+    if (survey_fields = result_fields.select { |rf| rf.field_type.to_i == ResultField::SURVEY }) and survey_fields.size > 1
+      self.errors.add(:name, I18n.t("models.result.survey_result_fields_quantity"))
     end
   end
 

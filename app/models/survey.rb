@@ -44,6 +44,14 @@ class Survey < ActiveRecord::Base
                              :from_newsletter => from_newsletter, :skip_notify_recipient => !notify_recipient)
   end
 
+  def create_or_fetch_survey_recipient(recipient, notify_recipient=true)
+    if (survey_recipient = create_survey_recipient(recipient, false, notify_recipient)) and survey_recipient.persisted?
+      recipient
+    else
+      survey_recipients.where(:recipient_id => recipient.id, :recipient_type => recipient.is_a?(AbstractLead) ? "AbstractLead" : recipient.class.to_s).first
+    end
+  end
+
   private
 
   def set_uuid

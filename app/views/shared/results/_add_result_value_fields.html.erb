@@ -25,6 +25,8 @@ end
           f.text_field :value, :class => "datetimepicker", :title => t('models.result_field.datetime_format')
       when ResultField::MATERIAL then
           f.hidden_field :value, :id => "material_#{f.object.result_field.id}"
+      when ResultField::SURVEY then
+        link_to_function("Fill out survey", "fillOutSurvey(#{contact.id}, #{f.object.result_field.survey_id})")
       else
           f.text_field :value
   end
@@ -73,5 +75,9 @@ end
         $(".datetimepicker").datetimepicker({ dateFormat: 'yy-mm-dd' });
         $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
     });
+
+    function fillOutSurvey(contact_id, survey_id){
+        $.get("/callers/survey_recipients/new?contact_id=" + contact_id + "&survey_id=" + survey_id);
+    }
 </script>
 
