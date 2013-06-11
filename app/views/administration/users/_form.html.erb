@@ -105,11 +105,13 @@
             <%= form.input :cm_password, :as => :string, :label => t("administration.users.edit.view.cm_password") %>
         <% end %>
         <% if @user.persisted? and @user.agent? %>
+            <b><%= t("administration.users.edit.view.softphone_server") %></b><br />
+            <%= form.input :softphone_server %>
             <b><%= t("administration.users.edit.view.sip_credentials") %></b><br />
             <%#= form.input :phone_enabled %>
             <%= form.input :sip_username %>
-            <%= form.input :sip_domain %>
-            <%= form.input :sip_password %>
+            <%#= form.input :sip_domain %>
+            <%= form.input :sip_password, :as => :string %>
         <% end %>
       </ol>
     </fieldset>

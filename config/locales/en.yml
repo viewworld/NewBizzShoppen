@@ -149,6 +149,7 @@ en:
         payout: "Payout"
         background_tasks: "Background tasks"
         login_time_requests: "Login time"
+        softphone_servers: "Softphones"
       agent:
         leads: My leads
         deals: My deals
@@ -333,6 +334,7 @@ en:
     button_cancel: "Cancel"
     button_add: "Add"
     button_delete: "Delete"
+    button_create: "Create"
     pagination:
       next: "Next &rsaquo;"
       last: "Last &raquo;"
@@ -1106,6 +1108,7 @@ en:
           no_other_subscription_plans_for_user: "There are no other subscription plan available for this user"
           campaign_monitor_credentials: "Campaign Monitor credentials"
           sip_credentials: "SIP phone credentials"
+          softphone_server: "Softphone server"
           cm_username: "Username"
           cm_password: "Password"
       create:
@@ -1420,6 +1423,25 @@ en:
       show:
         view:
           header: "Show"
+    softphone_servers:
+      index:
+        view:
+          title: "Softphone servers"
+          new: "New server"
+          blank_state: "No servers defined"
+          actions: "Actions"
+          edit: "Edit"
+          table:
+            id: "ID"
+            name: "Name"
+            ip: "IP address"
+            port: "Port"
+      edit:
+        view:
+            header: "Editing server: %{name}"
+      new:
+        view:
+            header: "New server"
     currencies:
       index:
         view:

@@ -47,6 +47,7 @@ Nbs::Application.routes.draw do
     resources :news
     resources :hints
     resources :currencies
+    resources :softphone_servers
     namespace :invoicing do
       resources :invoices do
         resources :invoice_lines
@@ -487,6 +488,8 @@ Nbs::Application.routes.draw do
   end
 
   resource :unconfirmed_paypal_subscriptions, :only => [:show]
+
+  match 'flashphoner.xml' => 'flashphoner/configs#show', :format => :xml
 
   constraints(Fairdeals) do
     match '/all_deals' => "fairdeals_home#index"

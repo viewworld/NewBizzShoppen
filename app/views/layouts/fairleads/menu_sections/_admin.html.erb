@@ -35,7 +35,8 @@
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.featured_deals")), administration_featured_deals_path, :subtab => "featured_deals" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.results")), administration_results_path, :subtab => "results" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.tags")), administration_tags_path, :subtab => "tags" %>
-    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.background_tasks")), users_delayed_jobs_path, :additional_class => "last", :tab =>"delayed_jobs" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.background_tasks")), users_delayed_jobs_path, :subtab =>"delayed_jobs" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.softphone_servers")), administration_softphone_servers_path, :additional_class => "last", :subtab =>"softphone_servers" %>
 <% end %>
 
 <%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.admin.alerts"), :tab => "alerts" do  %>

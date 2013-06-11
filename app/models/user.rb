@@ -86,6 +86,7 @@ class User < ActiveRecord::Base
   has_many :campaign_monitor_responses, :as => :resource
   has_many :newsletter_lists, :foreign_key => :owner_id
   has_many :login_time_requests
+  belongs_to :softphone_server
 
   alias_method :parent, :user
 
@@ -335,7 +336,7 @@ class User < ActiveRecord::Base
   end
 
   def phone_enabled?
-    sip_username.present? and sip_password.present? and sip_domain.present?
+    sip_username.present? and sip_password.present? and softphone_server.present?
   end
 
   def flashphoner_token
