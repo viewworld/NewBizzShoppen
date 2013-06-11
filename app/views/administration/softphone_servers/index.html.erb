@@ -27,8 +27,10 @@
         <tr>
           <th class="hl"></th>
           <th><%= t("administration.softphone_servers.index.view.table.name") %></th>
-          <th><%= t("administration.softphone_servers.index.view.table.ip") %></th>
-          <th><%= t("administration.softphone_servers.index.view.table.port") %></th>
+          <th><%= t("administration.softphone_servers.index.view.table.server_host") %></th>
+          <th><%= t("administration.softphone_servers.index.view.table.server_port") %></th>
+          <th><%= t("administration.softphone_servers.index.view.table.sip_domain") %></th>
+          <th><%= t("administration.softphone_servers.index.view.table.sip_port") %></th>
           <th class="ta_r"><%= t("administration.softphone_servers.index.view.actions") %></th>
           <th class="hr"></th>
         </tr>
@@ -36,7 +38,7 @@
         <tfoot>
         <tr>
           <td class="fl"></td>
-          <td colspan="5"></td>
+          <td colspan="7"></td>
           <td class="fr"></td>
         </tr>
         </tfoot>
@@ -45,8 +47,10 @@
             <tr id="softphone_server_<%= softphone_server.id %>" class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
               <td><%= softphone_server.name %></td>
-              <td><%= softphone_server.ip %></td>
-              <td><%= softphone_server.port %></td>
+              <td><%= softphone_server.server_host %></td>
+              <td><%= softphone_server.server_port %></td>
+              <td><%= softphone_server.sip_domain %></td>
+              <td><%= softphone_server.sip_port %></td>
               <td class="tda ta_r">
                 <ul-actions>
                   <li>

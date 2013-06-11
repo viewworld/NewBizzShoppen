@@ -1434,8 +1434,10 @@ en:
           table:
             id: "ID"
             name: "Name"
-            ip: "IP address"
-            port: "Port"
+            server_host: "Softphone server host/ip"
+            server_port: "Softphone server port"
+            sip_domain: "SIP domain"
+            sip_port: "SIP port"
       edit:
         view:
             header: "Editing server: %{name}"
