@@ -3,6 +3,7 @@ class Survey < ActiveRecord::Base
 
   has_many :survey_questions, :order => "position", :dependent => :destroy
   has_many :survey_recipients, :dependent => :destroy
+  has_many :survey_answers, :through => :survey_recipients
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
   has_and_belongs_to_many :newsletter_lists
   has_and_belongs_to_many :campaigns
@@ -14,6 +15,7 @@ class Survey < ActiveRecord::Base
   attr_accessor :skip_validations
 
   before_create :set_uuid
+  before_destroy :can_be_destroyed
 
   scope :created_by, lambda { |creator| where("creator_id = ?", creator.id) }
 
@@ -56,5 +58,9 @@ class Survey < ActiveRecord::Base
 
   def set_uuid
     self.uuid = SecureRandom.hex(18)
+  end
+
+  def can_be_destroyed
+    newsletter_lists.empty? and campaigns.empty? and survey_answers.empty?
   end
 end

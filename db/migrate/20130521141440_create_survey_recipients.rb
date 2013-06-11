@@ -4,6 +4,7 @@ class CreateSurveyRecipients < ActiveRecord::Migration
       t.integer :survey_id
       t.string :uuid
       t.integer :state, :default => 0
+      t.datetime :email_sent_at, :default => nil
       t.timestamps
     end
   end

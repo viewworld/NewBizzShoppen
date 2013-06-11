@@ -26,7 +26,7 @@ end
       when ResultField::MATERIAL then
           f.hidden_field :value, :id => "material_#{f.object.result_field.id}"
       when ResultField::SURVEY then
-        link_to_function("Fill out survey", "fillOutSurvey(#{contact.id}, #{f.object.result_field.survey_id})")
+        link_to_function(t("surveys.shared.fill_out_survey"), "fillOutSurvey(#{contact.id}, #{f.object.result_field.survey_id})")
       else
           f.text_field :value
   end

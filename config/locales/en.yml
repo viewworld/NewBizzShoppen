@@ -616,7 +616,7 @@ en:
       search_button: Search
       survey_label: "Survey"
       survey_state_label: "Survey state"
-      survey_state_sent_or_visited_label: "Visited or completed"
+      survey_state_visited_or_completed_label: "Visited or completed"
     new:
       title_new_contact: New contact
       title_import_from_excel: Create new from spreadsheet
@@ -4995,3 +4995,5 @@ en:
       notice:
         not_found: "Survey could not be found. Please check the link!"
         already_answered: "You have already submitted your answer to this survey!"
+    shared:
+      fill_out_survey: "Fill out survey"
