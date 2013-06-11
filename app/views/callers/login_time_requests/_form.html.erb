@@ -9,9 +9,9 @@
               <%= f.input :end_time, :as => :string, :input_html => { :class => "datetimepicker" , :value => l(resource.end_time) } %>
               <%= f.input :campaign_id, :collection => Campaign.available_for_user(current_user).order("name ASC"), :include_blank => false %>
               <% if current_user.admin? %>
-                  <%= f.input :user_id, :as => :select, :collection => User.with_agents.without_locked.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false %>
+                  <%= f.input :user_id, :as => :select, :collection => User.with_any_role(:agent, :call_centre_agent).without_locked.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false %>
               <% elsif current_user.call_centre? %>
-                  <%= f.input :user_id, :as => :select, :collection => current_user.children.with_agents.without_locked.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false %>
+                  <%= f.input :user_id, :as => :select, :collection => current_user.children.with_any_role(:agent, :call_centre_agent).without_locked.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false %>
               <% else %>
                   <%= f.input :user_id, :as => :hidden, :input_html => { :value => current_user.id } %>
               <% end %>
