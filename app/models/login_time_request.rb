@@ -1,5 +1,7 @@
 class LoginTimeRequest < ActiveRecord::Base
 
+  attr_accessor :show_inactive_campaigns
+
   validates_presence_of :campaign_id, :user_id, :creator_id, :start_time, :end_time
   validate do
     if start_time >= end_time then
