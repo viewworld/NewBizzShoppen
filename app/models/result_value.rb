@@ -27,6 +27,14 @@ class ResultValue < ActiveRecord::Base
     self.value = _material_id
   end
 
+  def survey_recipient
+    Contact.find(value).survey_recipients.detect { |sr| sr.survey_id == result_field.survey_id }
+  end
+
+  def survey_answers
+    survey_recipient ? survey_recipient.survey_answers : []
+  end
+
   private
   def value_format
     return true if !result_field.is_mandatory and value.blank?
@@ -37,6 +45,8 @@ class ResultValue < ActiveRecord::Base
         errors.add(:value, :incorrect_datetime_format) unless /^(19|20)\d\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01]) ([0-1][0-9]|2[0-3]):([0-5][0-9])$/.match value.strip
       when ResultField::INTEGER then
         errors.add(:value, :incorrect_number_format) unless /^[-+]?[\d]+$/.match value.strip
+      when ResultField::SURVEY then
+        errors.add(:value, :survey_not_filled_out_or_sent) if survey_recipient.nil? or (!survey_recipient.sent? and !survey_recipient.completed?)
     end
   end
 

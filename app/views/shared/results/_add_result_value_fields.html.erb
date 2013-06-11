@@ -26,7 +26,10 @@ end
       when ResultField::MATERIAL then
           f.hidden_field :value, :id => "material_#{f.object.result_field.id}"
       when ResultField::SURVEY then
-        link_to_function(t("surveys.shared.fill_out_survey"), "fillOutSurvey(#{contact.id}, #{f.object.result_field.survey_id})")
+        survey_recipient = contact.survey_recipients.detect { |sr| sr.survey_id == f.object.result_field.survey_id }
+        f.hidden_field(:value, :value => contact.id) +
+        button_to_function((survey_recipient.present? and survey_recipient.sent?) ? t("surveys.shared.survey_already_sent") : t("surveys.shared.send_survey"), "sendSurvey(#{contact.id}, #{f.object.result_field.survey_id})", :disabled => (survey_recipient.present? and survey_recipient.sent?), :id => "send_survey") +
+        button_to_function((survey_recipient.present? and survey_recipient.completed?) ? t("surveys.shared.edit_survey_answers") : t("surveys.shared.fill_out_survey"), "fillOutSurvey(#{contact.id}, #{f.object.result_field.survey_id})")
       else
           f.text_field :value
   end
@@ -78,6 +81,11 @@ end
 
     function fillOutSurvey(contact_id, survey_id){
         $.get("/callers/survey_recipients/new?contact_id=" + contact_id + "&survey_id=" + survey_id);
+    }
+
+    function sendSurvey(contact_id, survey_id){
+        $.get("/callers/survey_recipients/new?contact_id=" + contact_id + "&survey_id=" + survey_id + "&email_notification=1");
+        $('#send_survey').attr('disabled', 'disabled');
     }
 </script>
 

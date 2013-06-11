@@ -7,6 +7,10 @@ class Callers::SurveyRecipientsController < Callers::CallerController
     @survey = Survey.find(params[:survey_id])
     if (current_user.admin? or @contact.campaign.user_ids.include?(current_user.id)) and @contact.campaign.survey_ids.include?(@survey.id)
       @survey_recipient = @survey.create_or_fetch_survey_recipient(@contact, false)
+
+      if params[:email_notification].to_i == 1 and !@survey_recipient.sent?
+        @survey_recipient.notify_recipient_by_email
+      end
     else
       @survey_recipient = nil
     end

@@ -3534,6 +3534,7 @@ en:
               incorrect_date_format: "incorrect date format"
               incorrect_datetime_format: "incorrect date & time format"
               incorrect_number_format: "incorrect number format"
+              survey_not_filled_out_or_sent: "survey is not sent or filled out"
         asset:
           validation_asset_images_type: "uploaded file is not an image"
           validation_asset_document_type: "uploaded file is not a document"
@@ -4997,3 +4998,7 @@ en:
         already_answered: "You have already submitted your answer to this survey!"
     shared:
       fill_out_survey: "Fill out survey"
+      send_survey: "Send survey"
+      successfully_sent: "Survey has been successfully sent!"
+      survey_already_sent: "Survey has already been sent"
+      edit_survey_answers: "Edit survey's response"

@@ -48,9 +48,9 @@ class Survey < ActiveRecord::Base
 
   def create_or_fetch_survey_recipient(recipient, notify_recipient=true)
     if (survey_recipient = create_survey_recipient(recipient, false, notify_recipient)) and survey_recipient.persisted?
-      recipient
+      survey_recipient
     else
-      survey_recipients.where(:recipient_id => recipient.id, :recipient_type => recipient.is_a?(AbstractLead) ? "AbstractLead" : recipient.class.to_s).first
+      survey_recipients.for_recipient(recipient).first
     end
   end
 

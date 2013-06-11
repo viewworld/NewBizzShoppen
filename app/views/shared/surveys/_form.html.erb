@@ -6,7 +6,7 @@
         <ol class="align_inputs">
           <% if question.is_select_type? %>
               <li class="string">
-                <%= f.label question.title %>
+                <label><%= question.title %><%= '<abbr title="required">*</abbr>'.html_safe if question.is_required? %></label>
               </li>
               <% if question.is_multi? %>
                   <% question.survey_options.each do |option| %>
@@ -26,7 +26,7 @@
               </li>
           <% else %>
               <li class="string">
-                <%= f.label question.title %>
+                <label><%= question.title %><%= '<abbr title="required">*</abbr>'.html_safe if question.is_required? %></label>
                 <% if (question.is_text_type? and !question.is_multi?) or question.is_number_type? %>
                     <%= f.text_field :value %>
                 <% elsif question.is_text_type? and question.is_multi? %>

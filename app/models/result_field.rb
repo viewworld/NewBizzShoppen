@@ -12,6 +12,7 @@ class ResultField < ActiveRecord::Base
   belongs_to :result
   has_many :result_value
   has_many :campaigns_result_fields, :foreign_key => "result_field_id", :dependent => :destroy
+  belongs_to :survey
 
   accepts_nested_attributes_for :campaigns_result_fields, :allow_destroy => true
 

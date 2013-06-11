@@ -27,6 +27,7 @@ module CampaignsHelper
     return "-" if result.nil?
     case result.field_type.to_i
       when ResultField::MATERIAL then result.materials.map{|material| link_to(material.asset_file_name, material.url) }.join(", ").html_safe
+      when ResultField::SURVEY then result.survey_answers.map(&:to_s).join("; ")
       else result.value
     end
   end

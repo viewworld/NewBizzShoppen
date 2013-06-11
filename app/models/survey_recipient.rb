@@ -17,6 +17,8 @@ class SurveyRecipient < ActiveRecord::Base
 
   liquid :survey_link, :survey_name
 
+  scope :for_recipient, lambda { |recipient| where(:recipient_id => recipient.id, :recipient_type => recipient.is_a?(AbstractLead) ? "AbstractLead" : recipient.class.to_s) }
+
   STATE_NOT_VISITED = 0.freeze
   STATE_VISITED = 1.freeze
   STATE_COMPLETED = 2.freeze
@@ -80,18 +82,6 @@ class SurveyRecipient < ActiveRecord::Base
     survey.name
   end
 
-  private
-
-  def mark_empty_survey_answers_for_removal
-    survey_answers.each do |survey_answer|
-      survey_answer.mark_for_destruction if (survey_answer.survey_question.parent_id.present? and !survey_answer.chosen_branched_question?) or (!survey_answer.is_required? and !survey_answer.is_filled?)
-    end
-  end
-
-  def set_uuid
-    self.uuid = SecureRandom.hex(18)
-  end
-
   def notify_recipient_by_email
     return true if email.blank?
 
@@ -103,5 +93,17 @@ class SurveyRecipient < ActiveRecord::Base
 
     TemplateMailer.new(email, template, Country.get_country_from_locale, {:survey_name => survey_name, :survey_link => survey_link}).deliver!
     update_attribute(:email_sent_at, Time.now)
+  end
+
+  private
+
+  def mark_empty_survey_answers_for_removal
+    survey_answers.each do |survey_answer|
+      survey_answer.mark_for_destruction if (survey_answer.survey_question.parent_id.present? and !survey_answer.chosen_branched_question?) or (!survey_answer.is_required? and !survey_answer.is_filled?)
+    end
+  end
+
+  def set_uuid
+    self.uuid = SecureRandom.hex(18)
   end
 end

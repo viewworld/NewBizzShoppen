@@ -1,7 +1,11 @@
 <% if @survey_recipient %>
-    $.colorbox({href: "/callers/survey_recipients/<%= @survey_recipient.uuid %>/edit",
-        width: 600, height: 500
-    });
+    <% if params[:email_notification].to_i == 1 %>
+        display_notice("<%= escape_javascript(t("surveys.shared.successfully_sent")) %>", true);
+    <% else %>
+        $.colorbox({href: "/callers/survey_recipients/<%= @survey_recipient.uuid %>/edit",
+            width: 600, height: 500
+        });
+    <% end %>
 <% else %>
     alert('Access denied');
 <% end %>

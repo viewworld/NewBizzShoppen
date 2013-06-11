@@ -32,10 +32,14 @@ class SurveyAnswer < ActiveRecord::Base
 
   def value_or_option_ids
     if is_select_type?
-      survey_option_ids
+      survey_options.map(&:title).join
     else
       value
     end
+  end
+
+  def to_s
+    "#{survey_question.title}: #{value_or_option_ids}"
   end
 
   def chosen_branched_question?
