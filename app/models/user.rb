@@ -327,11 +327,11 @@ class User < ActiveRecord::Base
 
   def available_login_time_requests
     if admin?
-      LoginTimeRequest.order("created_at DESC")
+      LoginTimeRequest
     elsif call_centre?
-      LoginTimeRequest.where(:user_id => self_and_descendants.map(&:id)).order("created_at DESC")
+      LoginTimeRequest.where(:user_id => self_and_descendants.map(&:id))
     else
-      login_time_requests.order("created_at DESC")
+      login_time_requests
     end
   end
 

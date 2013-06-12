@@ -1,6 +1,6 @@
 class Administration::SubscriptionPlansController < Administration::AdministrationController
   inherit_resources
-  set_tab "financial"
+  set_tab "reports"
   set_subtab "subscription_plans"
 
   cache_sweeper :subscription_plan_sweeper

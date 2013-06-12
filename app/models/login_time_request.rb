@@ -15,7 +15,14 @@ class LoginTimeRequest < ActiveRecord::Base
   belongs_to :approver, :class_name => 'User'
   belongs_to :user_session_log
 
+  include ScopedSearch::Model
   include AASM
+
+  scope :with_campaign, lambda{ |campaign| where(:campaign_id => campaign.to_i) }
+  scope :with_user, lambda{ |user| where(:user_id => user.to_i) }
+  scope :with_time_from, lambda{ |time| where("start_time >= ?", Time.zone.parse(time)) }
+  scope :with_time_to, lambda{ |time| where("end_time <= ?", Time.zone.parse(time)) }
+  scope :with_state, lambda{ |state| where(:aasm_state => state) }
 
   aasm_initial_state :new
 

@@ -4421,6 +4421,13 @@ en:
       edit: "Edit"
       approve: "Approve"
       reject: "Reject"
+      new_login_time_request: "New login time request"
+      search:
+        campaign: "Campaign"
+        user: "Agent"
+        time_from: "Time from"
+        time_to: "Time to"
+        state: "State"
       table:
         user: "User"
         campaign: "Campaign"

@@ -2,7 +2,7 @@ class Administration::Invoicing::InvoicesController < Administration::Superadmin
   inherit_resources
 #  defaults :redirects => {:create => :edit, :update => :show}
 #  set_search_persistence :name => "invoices_filter"
-  set_tab "financial"
+  set_tab "reports"
   set_subtab "invoices"
 
   def create

@@ -1,0 +1,127 @@
+<search-box:>
+  <div class="search_box">
+    <div class="search_left"></div>
+    <div class="search_right"></div>
+    <h2><%= t("common.search") %></h2>
+
+    <div class="search_content">
+      <%= form_for @search, :url => callers_login_time_requests_path do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="select">
+                <%= f.label :with_campaign, t("login_time_requests.new.search.campaign") %>
+                <%= f.select :with_campaign, @all_requests.select("DISTINCT(campaign_id)").map(&:campaign).map{ |c| [c.name, c.id] }, :include_blank => true %>
+              </li>
+              <li class="select">
+                <%= f.label :with_user, t("login_time_requests.new.search.user") %>
+                <%= f.select :with_user, @all_requests.select("DISTINCT(user_id)").map(&:user).map{|u| [u.screen_name, u.id] }, :include_blank => true %>
+              </li>
+              <li class="string">
+                <%= f.label :with_time_from, t("login_time_requests.new.search.time_from") %>
+                <%= f.text_field :with_time_from, :class => "datetimepicker" %>
+              </li>
+              <li class="string">
+                <%= f.label :with_time_to, t("login_time_requests.new.search.time_to") %>
+                <%= f.text_field :with_time_to, :class => "datetimepicker" %>
+              </li>
+              <li class="select">
+                <%= f.label :with_state, t("login_time_requests.new.search.state") %>
+                <%= f.select :with_state, LoginTimeRequest.aasm_states.map{ |state| state.name.to_s }, :include_blank => true %>
+              </li>
+
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("administration.articles.index.view.search_button") %>
+                </ibt>
+                <p>
+                  <%= bt_clear_filter %>
+                </p>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+  <header>
+
+    <param:content>
+      <%= t("login_time_requests.new.header") %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to :plus, t("login_time_requests.new.new_login_time_request"), "javascript:void(0)", :onclick => "window.location = '#{new_callers_login_time_request_path}';" %>
+        </li>
+      </ul>
+    </param:actions>
+
+  </header>
+
+  <table class="generic">
+    <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= t("login_time_requests.new.table.user") %></th>
+          <th><%= t("login_time_requests.new.table.campaign") %></th>
+          <th><%= t("login_time_requests.new.table.start_time") %></th>
+          <th><%= t("login_time_requests.new.table.end_time") %></th>
+          <th><%= t("login_time_requests.new.table.hours") %></th>
+          <th><%= t("login_time_requests.new.table.aasm_state") %></th>
+          <th></th>
+          <th class="hr"></th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="7"></td>
+          <td class="fr"></td>
+        </tr>
+    </tfoot>
+    <% @requests.each do |ltr| %>
+        <tr>
+          <td class="cl"></td>
+          <td><%= ltr.user.screen_name %></td>
+          <td><%= ltr.campaign.name %></td>
+          <td><%= l ltr.start_time %></td>
+          <td><%= l ltr.end_time %></td>
+          <td><%= number_with_precision(ltr.hours_count, :precision => 2) %></td>
+          <td><%= ltr.aasm_state %></td>
+          <td class="tda ta_r">
+            <% if ltr.can_be_managed_by?(current_user) and ltr.new? %>
+                <ul-actions>
+                  <li>
+                    <%= link_to t("login_time_requests.new.edit"), edit_callers_login_time_request_path(ltr), :class => "default_action" %>
+                  </li>
+                  <li>
+                    <%= link_to t("login_time_requests.new.approve"), approve_callers_login_time_request_path(ltr), :method => :put %>
+                  </li>
+                  <li>
+                    <%= link_to t("login_time_requests.new.reject"), reject_callers_login_time_request_path(ltr), :method => :put %>
+                  </li>
+                </ul-actions>
+            <% end %>
+          </td>
+          <td class="cr"></td>
+        </tr>
+    <% end %>
+    <tr>
+      <td class="cl"></td>
+      <td colspan="7">
+        <%= will_paginate @requests %>
+      </td>
+      <td class="cr"></td>
+    </tr>
+  </table>
+
+  <script>
+      $(function() {
+          $(".datetimepicker").datetimepicker({ dateFormat: 'dd-mm-yy' });
+      });
+  </script>
+
+</column-mc:>

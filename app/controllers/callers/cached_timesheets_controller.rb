@@ -1,5 +1,5 @@
 class Callers::CachedTimesheetsController < Callers::CallerController
-  set_tab "financial"
+  set_tab "reports"
   set_subtab "agent_timesheets"
 
   before_filter lambda {authorize_role(:call_centre, :admin)}

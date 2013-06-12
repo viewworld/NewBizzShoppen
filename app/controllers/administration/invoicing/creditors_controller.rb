@@ -1,7 +1,7 @@
 class Administration::Invoicing::CreditorsController < Administration::SuperadminController
   inherit_resources
 
-  set_tab "financial"
+  set_tab "reports"
   set_subtab "creditors"
 
   protected

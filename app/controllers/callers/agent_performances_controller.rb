@@ -1,6 +1,6 @@
 class Callers::AgentPerformancesController < Callers::CallerController
 
-  set_tab "financial"
+  set_tab "reports"
   set_subtab "agent_performance"
 
   def show
