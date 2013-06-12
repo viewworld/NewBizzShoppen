@@ -4,4 +4,6 @@ class SurveyOption < ActiveRecord::Base
   belongs_to :survey_question
 
   validates_presence_of :title
+
+  translates :title
 end

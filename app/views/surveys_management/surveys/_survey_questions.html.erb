@@ -2,7 +2,7 @@
     <li class="draggable_question survey_question<%= ' ui-nestedSortable-no-nesting' unless survey_question.question_type == 4 and survey_question.is_branched? %>" style="border: 2px green solid" data-id="<%= survey_question.id %>" data-qtype="<%= survey_question.question_type %>">
       <div>
         <div class="labels">
-          <%= survey_question.id %> | <%= t("surveys_management.shared.question_types.type#{survey_question.question_type}") %> | <%= survey_question.title %>
+          <%= t("surveys_management.shared.question_types.type#{survey_question.question_type}") %> | <%= survey_question.title %>
           <%= link_to_function t("surveys_management.surveys.edit.view.edit_question"), "editQuestion(#{survey_question.id})" %>
           <%= link_to_function t("surveys_management.surveys.edit.view.destroy_question"), "removeQuestion(#{survey_question.id})" %>
           <% if survey_question.parent.present? %>

@@ -2,7 +2,7 @@ class SurveyQuestion < ActiveRecord::Base
 
   has_many :survey_options, :dependent => :destroy
   has_many :survey_answers, :dependent => :destroy
-  has_many :branched_questions, :class_name => "SurveyQuestion", :foreign_key => "parent_id"
+  has_many :branched_questions, :class_name => "SurveyQuestion", :foreign_key => "parent_id", :order => "position"
   belongs_to :branched_option, :class_name => "SurveyOption", :foreign_key => "branch_option_id"
   belongs_to :survey
 
@@ -20,6 +20,8 @@ class SurveyQuestion < ActiveRecord::Base
   scope :without_nested, where("parent_id is NULL")
 
   include CommonSurvey
+
+  translates :title
 
   TEXT_TYPE = 1.freeze
   NUMBER_TYPE = 2.freeze
