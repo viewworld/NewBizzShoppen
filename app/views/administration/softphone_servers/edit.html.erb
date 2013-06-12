@@ -1,0 +1,19 @@
+<column-mc:>
+  <header back="true"><%= t("administration.softphone_servers.edit.view.header", :name => @softphone_server.name) %></header>
+
+  <%= semantic_form_for @softphone_server, :url => administration_softphone_server_path do |form| %>
+      <frm title="#{@softphone_server.name}">
+        <param:content>
+          <%= render :partial => 'form', :locals => {:form => form} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("views.button_create") %>
+          </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function t("administration.currencies.edit.view.button_cancel"), href(administration_softphone_servers_path) %>
+          </ibt>          
+        </param:actions>
+      </frm>
+  <% end %>
+</column-mc:>

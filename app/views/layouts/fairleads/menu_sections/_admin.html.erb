@@ -2,7 +2,7 @@
 <%= main_menu_link_to t("layout.main_menu.admin.leads"), administration_leads_path, :tab => "leads" %>
 <%= main_menu_link_to t("layout.main_menu.admin.deals"), administration_deals_path, :tab => "deals" %>
 
-<%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.admin.financial"), :tab => "financial" do  %>
+<%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.admin.reports"), :tab => "financial" do  %>
     <% if current_user.has_role? :superadmin %>
         <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.upcoming_invoices")), administration_invoicing_upcoming_invoices_path, :subtab => "upcoming_invoices" %>
         <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.creditors")), administration_invoicing_creditors_path, :subtab => "creditors" %>
@@ -15,7 +15,8 @@
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.agent_timesheets")), new_callers_agent_timesheet_path, :subtab =>"agent_timesheets" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.subscription_plans")), administration_subscription_plans_path, :subtab => "subscription_plans" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.agent_performance")), callers_agent_performance_path, :subtab => "agent_performance" %>
-    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.payout")), administration_payouts_path, :subtab => "payout", :additional_class => "last" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.payout")), administration_payouts_path, :subtab => "payout" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.login_time_requests")), new_callers_login_time_request_path, :subtab => "login_time_requests", :additional_class => "last" %>
 <% end %>
 
 <%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.admin.content"), :tab => "content" do  %>
@@ -35,7 +36,8 @@
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.featured_deals")), administration_featured_deals_path, :subtab => "featured_deals" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.results")), administration_results_path, :subtab => "results" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.tags")), administration_tags_path, :subtab => "tags" %>
-    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.background_tasks")), users_delayed_jobs_path, :additional_class => "last", :tab =>"delayed_jobs" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.background_tasks")), users_delayed_jobs_path, :subtab =>"delayed_jobs" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.softphone_servers")), administration_softphone_servers_path, :additional_class => "last", :subtab =>"softphone_servers" %>
 <% end %>
 
 <%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.admin.alerts"), :tab => "alerts" do  %>
@@ -48,8 +50,7 @@
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.campaigns")), callers_campaigns_path, :subtab => "campaigns" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.newsletter_lists")), newsletters_newsletter_lists_path, :subtab => "newsletter_lists" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.newsletter_campaigns")), newsletters_newsletter_campaigns_path, :subtab => "newsletter_campaigns" %>
-    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.surveys")), surveys_management_surveys_path, :subtab => "surveys" %>
-    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.login_time_requests")), new_callers_login_time_request_path, :subtab => "login_time_requests", :additional_class => "last" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.surveys")), surveys_management_surveys_path, :subtab => "surveys", :additional_class => "last" %>
 <% end %>
 
 <%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.shared.import"), :tab => "import" do  %>

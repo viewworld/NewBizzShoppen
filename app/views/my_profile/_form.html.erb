@@ -12,7 +12,6 @@
         <% if current_user.agent? %>
             <li style="margin:0 0 5px 170px"><b><%= t("administration.users.edit.view.sip_credentials") %></b></li>
             <%= form.input :sip_username %>
-            <%= form.input :sip_domain %>
             <%= form.input :sip_password %>
         <% end %>
       </ol>

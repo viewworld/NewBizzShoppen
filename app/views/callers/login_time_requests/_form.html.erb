@@ -7,11 +7,12 @@
             <ol class="align_inputs">
               <%= f.input :start_time, :as => :string, :input_html => { :class => "datetimepicker", :value => l(resource.start_time) } %>
               <%= f.input :end_time, :as => :string, :input_html => { :class => "datetimepicker" , :value => l(resource.end_time) } %>
-              <%= f.input :campaign_id, :collection => Campaign.available_for_user(current_user).order("name ASC"), :include_blank => false %>
+              <%= f.input :campaign_id, :collection => [], :include_blank => false %>
+              <%= f.input :show_inactive_campaigns, :as => :boolean %>
               <% if current_user.admin? %>
-                  <%= f.input :user_id, :as => :select, :collection => User.with_agents.without_locked.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false %>
+                  <%= f.input :user_id, :as => :select, :collection => User.with_any_role(:agent, :call_centre_agent).without_locked.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false %>
               <% elsif current_user.call_centre? %>
-                  <%= f.input :user_id, :as => :select, :collection => current_user.children.with_agents.without_locked.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false %>
+                  <%= f.input :user_id, :as => :select, :collection => current_user.children.with_any_role(:agent, :call_centre_agent).without_locked.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false %>
               <% else %>
                   <%= f.input :user_id, :as => :hidden, :input_html => { :value => current_user.id } %>
               <% end %>
@@ -28,3 +29,30 @@
       </param:actions>
     </frm>
 <% end %>
+
+<script>
+    var allCampaigns = <%= Campaign.available_for_user(current_user).order("name ASC").map { |c| [c.name.to_s, c.id] }.sort.to_json.html_safe %>;
+    var activeCampaignIds = <%= Campaign.available_for_user(current_user).order("name ASC").with_state('active').map(&:id).to_json.html_safe %>;
+
+    function fillCampaigns(){
+        $('#login_time_request_campaign_id option').remove();
+
+        $.each(allCampaigns, function(idx, option) {
+            if (( (($.inArray(option[1], activeCampaignIds)) != -1) || ($('#login_time_request_show_inactive_campaigns').is(':checked') ) )) {
+                $('#login_time_request_campaign_id').
+                        append($("<option></option>").
+                        attr("value", option[1]).
+                        text(option[0]));
+            }
+        });
+    }
+
+    $(function(){
+        fillCampaigns();
+    });
+
+    $('#login_time_request_show_inactive_campaigns').change(function(){
+        fillCampaigns();
+    });
+
+</script>
