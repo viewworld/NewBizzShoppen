@@ -11,6 +11,9 @@ module Rack
       elsif env["HTTP_HOST"].to_s[/faircalls\.\w{2,4}/].present?
         env['rack.session'][:site] = "faircalls"
         env['rack.session'][:layout] = "layouts/faircalls/application"
+      elsif env["HTTP_HOST"].to_s[/erhvervsanalyse\.\w{2,4}/].present?
+        env['rack.session'][:site] = "erhvervsanalyse"
+        env['rack.session'][:layout] = "layouts/erhvervsanalyse/application"
       else
         env['rack.session'][:site] = "fairleads"
         env['rack.session'][:layout] = "layouts/fairleads/application"

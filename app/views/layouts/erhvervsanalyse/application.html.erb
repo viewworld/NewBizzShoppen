@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Erhvervsanalyse</title>
+  <link rel="shortcut icon" href="/images/favicon.ico"/>
+
+      <%= include_stylesheets :common %>
+      <%= include_stylesheets :fairdeals_thin %>
+      <%= include_javascripts :common %>
+      <%= csrf_meta_tag %>
+
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="apple-touch-icon" href="/images/iOS/touch-icon-iphone.png"/>
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/iOS/touch-icon-ipad.png"/>
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/iOS/touch-icon-iphone4.png"/>
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <head:/>
+
+</head>
+<body>
+
+<div id="global_loader"></div>
+
+<div id="head">
+  <div id="head_bg"></div>
+</div>
+
+<div id="container" class="c">
+  <div id="top">
+
+    <div id="user_panel">
+      <%= render '/layouts/locale_selection' %>
+    </div>
+
+    <%= link_to image_tag("erhvervsanalyse/logo.png"), root_path, :class => "logo" %>
+  </div>
+
+
+  <div id="user_menu">
+    <%= render main_menu %>
+  </div>
+
+  <div id="content">
+    <div class="pdd_10">
+        <% unless notice.blank? %>
+            <div class="flash flash_notice">
+              <%= notice %>
+            </div>
+        <% end %>
+
+        <% unless alert.blank? %>
+            <div class="flash flash_alert">
+              <%= alert %>
+            </div>
+        <% end %>
+
+        <column-mc:/>
+    </div>
+  </div>
+
+  <div id="footer">
+    <%= render "/layouts/erhvervsanalyse/footer" %>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+    I18n.defaultLocale = "<%= I18n.default_locale %>";
+    I18n.locale = "<%= I18n.locale %>";
+
+    $(document).ready(function() {
+        $('input.formtastic-ui-datepicker').datepicker({ dateFormat: '<%= I18n.t("date.formats.datepicker") %>' });
+    });
+</script>
+
+<% if Rails.env.production? %>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-24542608-2']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+<% end %>
+
+<% unless Rails.env.test? %>
+    <script type="text/javascript">
+        var uvOptions = {};
+        (function() {
+            var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+            uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/krKFNShLvm5TK6qG0OClA.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+        })();
+    </script>
+<% end %>
+
+<js:/>
+</body>
+</html>

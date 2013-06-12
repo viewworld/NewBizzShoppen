@@ -499,6 +499,10 @@ Nbs::Application.routes.draw do
     match '/(:id)' => "agent_home#show"
   end
 
+  constraints(Erhvervsanalyse) do
+    match '/(:id)' => "erhvervsanalyse_home#show"
+  end
+
   namespace :surveys_management do
     resources :surveys do
       resources :survey_questions do

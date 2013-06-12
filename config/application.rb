@@ -54,6 +54,7 @@ module Nbs
     require "domains"
     require "fairdeals"
     require "faircalls"
+    require "erhvervsanalyse"
     config.middleware.use "Rack::Domains"
 
     require "bulk_process"

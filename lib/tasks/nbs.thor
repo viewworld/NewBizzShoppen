@@ -646,7 +646,8 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         'Privacy',
         'Terms & Conditions',
         'Fairdeals Terms & Conditions',
-        'Faircalls Terms & Conditions'
+        'Faircalls Terms & Conditions',
+        'Erhvervsanalyse Terms & Conditions'
     ].each do |title|
       unless Article::Cms::MainPageArticle.includes(:translations).where(:article_translations => {:title => title}).first
         article = Article::Cms::MainPageArticle.make!(:title => title, :content => title, :key => title.parameterize('_'))
