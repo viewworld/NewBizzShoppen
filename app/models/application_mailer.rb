@@ -21,13 +21,18 @@ class ApplicationMailer < ActionMailer::Base
     related_id = options.delete(:related_id)
     related_type = options.delete(:related_type)
 
+    from = options.delete(:from) || ApplicationMailer.default[:from]
+    return_path = options.delete(:return_path) || ApplicationMailer.default[:return_path]
+
     if Rails.env.development?
       attachment_paths.each do |ap|
         attachments[Pathname.new(ap).basename.to_s] = File.read(ap.to_s)
       end
     end
 
-    mail(:to => to.blank? ? "fake@fake.com" : to,
+    mail(:from => from,
+         :return_path => return_path,
+         :to => to.blank? ? "fake@fake.com" : to,
          :subject => subject,
          :cc => cc_recipients,
          :bcc => bcc_recipients,
