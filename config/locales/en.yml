@@ -4431,6 +4431,7 @@ en:
       save_request: "Save"
       save_and_approve: "Save and approve"
       edit: "Edit"
+      delete: "Delete"
       approve: "Approve"
       reject: "Reject"
       new_login_time_request: "New login time request"

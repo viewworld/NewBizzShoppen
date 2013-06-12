@@ -92,16 +92,21 @@
           <td><%= number_with_precision(ltr.hours_count, :precision => 2) %></td>
           <td><%= ltr.aasm_state %></td>
           <td class="tda ta_r">
-            <% if ltr.can_be_managed_by?(current_user) and ltr.new? %>
+            <% if ltr.can_be_managed_by?(current_user) %>
                 <ul-actions>
+                  <% if ltr.new? %>
+                      <li>
+                        <%= link_to t("login_time_requests.new.edit"), edit_callers_login_time_request_path(ltr), :class => "default_action" %>
+                      </li>
+                      <li>
+                        <%= link_to t("login_time_requests.new.approve"), approve_callers_login_time_request_path(ltr), :method => :put %>
+                      </li>
+                      <li>
+                        <%= link_to t("login_time_requests.new.reject"), reject_callers_login_time_request_path(ltr), :method => :put %>
+                      </li>
+                  <% end %>
                   <li>
-                    <%= link_to t("login_time_requests.new.edit"), edit_callers_login_time_request_path(ltr), :class => "default_action" %>
-                  </li>
-                  <li>
-                    <%= link_to t("login_time_requests.new.approve"), approve_callers_login_time_request_path(ltr), :method => :put %>
-                  </li>
-                  <li>
-                    <%= link_to t("login_time_requests.new.reject"), reject_callers_login_time_request_path(ltr), :method => :put %>
+                    <%= link_to t("login_time_requests.new.delete"), callers_login_time_request_path(ltr), :method => :delete, :confirm => t("common.confirmation") %>
                   </li>
                 </ul-actions>
             <% end %>

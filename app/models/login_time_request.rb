@@ -13,7 +13,7 @@ class LoginTimeRequest < ActiveRecord::Base
   belongs_to :user
   belongs_to :creator, :class_name => 'User'
   belongs_to :approver, :class_name => 'User'
-  belongs_to :user_session_log
+  belongs_to :user_session_log, :dependent => :destroy
 
   include ScopedSearch::Model
   include AASM
