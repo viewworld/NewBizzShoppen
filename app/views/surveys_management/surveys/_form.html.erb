@@ -94,7 +94,7 @@
 
     function editQuestion(id, parent_id){
         $.colorbox({href: "/surveys_management/surveys/<%= @survey.id %>/survey_questions/" + id + "/edit?parent_id=" + (!!parent_id ? parent_id : ''),
-            width: 600, height: 500
+            width: 700, maxHeight: 700, overlayClose: false
         });
     }
 

@@ -2,14 +2,13 @@
   <fieldset class="inputs labels_ta_r">
     <ol class="align_inputs">
       <%= form.input :title %>
-      <%= form.input :hint %>
       <%= form.input :is_required %>
       <% if @survey_question.is_select_type? %>
-          <%= form.input :is_branched %>
+          <%= form.input :is_branched, :onclick => (@survey_question.is_select_type? ? "enableMultiselect()" : nil), :disabled => @survey_question.branched_questions.any? %>
       <% end %>
 
       <% if @survey_question.is_select_type? or @survey_question.is_text_type? %>
-          <%= form.input :is_multi, :label => (@survey_question.is_select_type? ? t("surveys_management.shared.is_multiselect") : t("surveys_management.shared.is_multiline")) %>
+          <%= form.input :is_multi, :label => (@survey_question.is_select_type? ? t("surveys_management.shared.is_multiselect") : t("surveys_management.shared.is_multiline")), :disabled => (@survey_question.is_select_type? and @survey_question.is_branched?) %>
       <% end %>
 
       <%= form.input :question_type, :as => :hidden %>
@@ -61,5 +60,13 @@
                 $('#destroy_hidden_field_' + record_id.toString()).val('true')
             }
         }
+
+       function enableMultiselect(){
+           if($('#survey_question_is_branched').attr('checked')){
+               $('#survey_question_is_multi').attr('checked', '').attr('disabled', 'disabled');
+           } else {
+               $('#survey_question_is_multi').attr('disabled', '');
+           }
+       }
     </script>
 <% end %>

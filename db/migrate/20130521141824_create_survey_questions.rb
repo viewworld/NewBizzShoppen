@@ -3,7 +3,6 @@ class CreateSurveyQuestions < ActiveRecord::Migration
     create_table :survey_questions do |t|
       t.integer :survey_id
       t.string :title
-      t.string :hint
       t.integer :question_type
       t.integer :position
       t.boolean :is_required, :default => false

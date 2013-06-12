@@ -3,7 +3,7 @@
         display_notice("<%= escape_javascript(t("surveys.shared.successfully_sent")) %>", true);
     <% else %>
         $.colorbox({href: "/callers/survey_recipients/<%= @survey_recipient.uuid %>/edit",
-            width: 700, height: 800, overlayClose: false
+            width: 700, maxHeight: 800, overlayClose: false
         });
     <% end %>
 <% else %>
