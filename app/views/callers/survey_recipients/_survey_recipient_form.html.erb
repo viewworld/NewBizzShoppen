@@ -1,11 +1,14 @@
 <%= semantic_form_for survey_recipient, :url => callers_survey_recipient_path(:id => survey_recipient.uuid), :remote => true do |form| %>
-    <frm>
+    <frm title="#{survey_recipient.survey.name}">
       <param:content>
         <%= render :partial => 'shared/surveys/form', :locals => {:form => form} %>
       </param:content>
       <param:actions>
         <ibt c="fltri" icon="save">
           <%= form.submit t("surveys.show.view.button_update") %>
+        </ibt>
+        <ibt c="bt_grey fltri">
+          <%= button_to_function t("common.cancel_link"), "$.colorbox.close();" %>
         </ibt>
       </param:actions>
     </frm>
