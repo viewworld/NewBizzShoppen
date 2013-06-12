@@ -1,0 +1,91 @@
+<search-box:>
+  <div class="search_box">
+    <div class="search_left"></div>
+    <div class="search_right"></div>
+    <h2><%= t("common.search") %></h2>
+
+    <div class="search_content">
+      <%= form_for @search, :url => callers_softphone_listing_path do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.label :with_keyword, t("softphone_listing.index.keyword") %>
+                <%= f.text_field :with_keyword, :class => "datetimepicker" %>
+              </li>
+              <li class="select">
+                <%= f.label :with_softphone_server_id, t("softphone_listing.index.softphone_server") %>
+                <%= f.select :with_softphone_server_id, SoftphoneServer.all.map{|s| [s.name, s.id]}, :include_blank => true %>
+              </li>
+
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("administration.articles.index.view.search_button") %>
+                </ibt>
+                <p>
+                  <%= bt_clear_filter %>
+                </p>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+  <header>
+    <param:content>
+      <%= t("softphone_listing.index.header") %>
+    </param:content>
+  </header>
+
+  <table class="generic">
+    <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= t("softphone_listing.index.table.agent_name") %></th>
+          <th><%= t("softphone_listing.index.table.email") %></th>
+          <th><%= t("softphone_listing.index.table.phone_numer") %></th>
+          <th><%= t("softphone_listing.index.table.password") %></th>
+          <th><%= t("softphone_listing.index.table.server") %></th>
+          <th></th>
+          <th class="hr"></th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="6"></td>
+          <td class="fr"></td>
+        </tr>
+    </tfoot>
+    <% @agents.each do |agent| %>
+        <tr>
+          <td class="cl"></td>
+          <td><%= agent.screen_name %></td>
+          <td><%= agent.email %></td>
+          <td><%= agent.sip_username %></td>
+          <td><%= agent.sip_password %></td>
+          <td><%= agent.softphone_server %></td>
+          <td class="tda ta_r">
+            <% if current_user.admin? %>
+                <ul-actions>
+                  <li>
+                    <%= link_to t("common.edit_link"), edit_administration_user_path(agent), :class => "default_action" %>
+                  </li>
+                </ul-actions>
+            <% end %>
+          </td>
+          <td class="cr"></td>
+        </tr>
+    <% end %>
+    <tr>
+      <td class="cl"></td>
+      <td colspan="6">
+        <%= will_paginate @agents %>
+      </td>
+      <td class="cr"></td>
+    </tr>
+  </table>
+
+</column-mc:>

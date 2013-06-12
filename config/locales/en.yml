@@ -150,6 +150,7 @@ en:
         background_tasks: "Background tasks"
         login_time_requests: "Login time"
         softphone_servers: "Softphones"
+        softphone_listing: "Soft. listing"
       agent:
         leads: My leads
         deals: My deals
@@ -4411,6 +4412,17 @@ en:
         selected_agents: "Selected agents"
         selected_call_centres: "Selected call centres"
         all_call_centres: "All available call centres"
+  softphone_listing:
+    index:
+      header: "Softphone listing"
+      keyword: "Search by email/name"
+      softphone_server: "Softphone server"
+      table:
+        agent_name: "Agent name"
+        email: "Email"
+        phone_numer: "Phone number"
+        password: "Password"
+        server: "Server"
   login_time_requests:
     new:
       header: "Login time requests"
