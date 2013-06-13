@@ -148,7 +148,7 @@
                     if(position > 0){
                         currentParent = findQuestionParent("null", hSerialize());
                         $.colorbox({href: "/surveys_management/surveys/<%= @survey.id %>/survey_questions/new?position=" + position + "&question_type=" + $(ui.helper).attr("data-qtype") + "&parent_id=" + (!!currentParent ? currentParent : ''),
-                            width: 600, height: 500,
+                            width: 700, maxHeight: 700, overlayClose: false,
                             onClosed: function(){
                                 $('ol.survey_questions_container').find("li[data-id=null]").remove();
                             }});

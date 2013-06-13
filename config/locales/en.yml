@@ -5026,3 +5026,4 @@ en:
       successfully_sent: "Survey has been successfully sent!"
       survey_already_sent: "Survey has already been sent"
       edit_survey_answers: "Edit survey's response"
+      email_blank: "No email to send the survey."

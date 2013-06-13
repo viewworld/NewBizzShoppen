@@ -28,7 +28,7 @@ end
       when ResultField::SURVEY then
         survey_recipient = contact.survey_recipients.detect { |sr| sr.survey_id == f.object.result_field.survey_id }
         f.hidden_field(:value, :value => contact.id) +
-        button_to_function((survey_recipient.present? and survey_recipient.sent?) ? t("surveys.shared.survey_already_sent") : t("surveys.shared.send_survey"), "sendSurvey(#{contact.id}, #{f.object.result_field.survey_id})", :disabled => (survey_recipient.present? and survey_recipient.sent?), :id => "send_survey") +
+        ((survey_recipient.present? and survey_recipient.completed?) ? "" : button_to_function(contact.email_address.present? ? ((survey_recipient.present? and survey_recipient.sent?) ? t("surveys.shared.survey_already_sent") : t("surveys.shared.send_survey")) : t("surveys.shared.email_blank"), "sendSurvey(#{contact.id}, #{f.object.result_field.survey_id})", :disabled => ((survey_recipient.present? and survey_recipient.sent?) or contact.email_address.blank? ), :id => "send_survey")) +
         button_to_function((survey_recipient.present? and survey_recipient.completed?) ? t("surveys.shared.edit_survey_answers") : t("surveys.shared.fill_out_survey"), "fillOutSurvey(#{contact.id}, #{f.object.result_field.survey_id})")
       else
           f.text_field :value
