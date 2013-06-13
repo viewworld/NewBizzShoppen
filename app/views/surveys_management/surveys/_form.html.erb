@@ -123,6 +123,7 @@
                         if(currentParent != null){
                             editQuestion(currentId, currentParent)
                         } else {
+                            ui.item.find('span.branched-option').remove();
                             $.ajax({url: "/surveys_management/surveys/<%= @survey.id %>/survey_questions/" + currentId + "/remove_parent", type: "PUT"});
                             updateQuestionsOrder();
                         }
