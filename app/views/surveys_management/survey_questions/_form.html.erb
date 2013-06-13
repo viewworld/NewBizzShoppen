@@ -43,6 +43,7 @@
             var new_id = new Date().getTime();
             content = content.replace(/survey_question_survey_options_attributes_\d+/g, "survey_question_survey_options_attributes_" + nestedFormsCount.toString());
             content = content.replace(/survey_question\[survey_options_attributes\]\[\d+\]/g, "survey_question[survey_options_attributes][" + new_id.toString() + "]");
+            content = content.replace(/tags_selection_00/g, "tags_selection_" + new_id.toString());
             $('.nested_survey_options_container:last').append(content);
             nestedFormsCount = nestedFormsCount + 1;
         }

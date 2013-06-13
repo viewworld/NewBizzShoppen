@@ -1,3 +1,4 @@
+<hl/>
 <% div_survey_option_html_id = f.object.new_record? ? "survey_question_survey_options_attributes_#{defined?(counter) ? counter.to_i : 0}" : f.object.id %>
 <div id="survey_option_form_<%= div_survey_option_html_id %>">
   <div class="pdd_10 no_pdd_t">
@@ -20,5 +21,22 @@
         <% end %>
       </ol>
     </fieldset>
+    <fieldset class="inputs_horizontal">
+      <ol>
+        <li>
+          <div class="tags_wrapper">
+            <label><%= t("tags.common.assigned_tags_label") %>:</label>
+            <ul id="tags_selection_<%= defined?(counter) ? counter.to_i : "00" %>" name="<%= "#{f.object_name}[tag_list]" %>"></ul>
+          </div>
+
+          <%= hidden_field_tag "#{f.object_name}[tag_list][]", "" %>
+        </li>
+      </ol>
+    </fieldset>
   </div>
 </div>
+<script type="text/javascript">
+    $(function() {
+        $('#tags_selection_<%= defined?(counter) ? counter.to_i : "00" %>').tagit({tagSource: "/tags.js", triggerKeys: ['enter', 'comma', 'tab'], select: true, initialTags: [<%= f.object.tag_list.map{ |w| %{"#{w}"} }.join(",").html_safe %>]});
+    })
+</script>

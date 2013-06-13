@@ -6,4 +6,6 @@ class SurveyOption < ActiveRecord::Base
   validates_presence_of :title
 
   translates :title
+
+  acts_as_taggable
 end
