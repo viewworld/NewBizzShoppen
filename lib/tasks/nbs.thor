@@ -722,41 +722,42 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       user.save
     end
 
-    puts "Creating testing campaign & contacts..."
+    unless Rails.env.production?
+      puts "Creating testing campaign & contacts..."
 
-    category = Category.where(:name => "Business").first
-    country = Country.where(:name => "Denmark").first
-    call_centre = User.where(:email => "translator_call_centre@nbs.com").first
-    campaign = Campaign.find_or_create_by_name({:name => "Testing One",
-                                                :category => category,
-                                                :country => country,
-                                                :max_contact_number => 3,
-                                                :creator => call_centre,
-                                                :start_date => Date.today,
-                                                :end_date => Date.today + 14.days, :currency => Currency.euro, :cost_type => Campaign::NO_COST})
-    #inactive campaign
-    Campaign.find_or_create_by_name({:name => "Testing Two",
-                                     :category => Category.where(:name => "Electronics").first,
-                                     :country => Country.where(:name => "United Kingdom").first,
-                                     :max_contact_number => 3,
-                                     :creator => call_centre,
-                                     :start_date => Date.today - 15.days,
-                                     :end_date => Date.today - 1.days, :currency => Currency.euro, :cost_type => Campaign::NO_COST})
-    campaign.results = Result.generic_results
-    campaign.users = call_centre.subaccounts
+      category = Category.where(:name => "Business").first
+      country = Country.where(:name => "Denmark").first
+      call_centre = User.where(:email => "translator_call_centre@nbs.com").first
+      campaign = Campaign.find_or_create_by_name({:name => "Testing One",
+                                                  :category => category,
+                                                  :country => country,
+                                                  :max_contact_number => 3,
+                                                  :creator => call_centre,
+                                                  :start_date => Date.today,
+                                                  :end_date => Date.today + 14.days, :currency => Currency.euro, :cost_type => Campaign::NO_COST})
+      #inactive campaign
+      Campaign.find_or_create_by_name({:name => "Testing Two",
+                                       :category => Category.where(:name => "Electronics").first,
+                                       :country => Country.where(:name => "United Kingdom").first,
+                                       :max_contact_number => 3,
+                                       :creator => call_centre,
+                                       :start_date => Date.today - 15.days,
+                                       :end_date => Date.today - 1.days, :currency => Currency.euro, :cost_type => Campaign::NO_COST})
+      campaign.results = Result.generic_results
+      campaign.users = call_centre.subaccounts
 
-    [{:company_name => "Bon Jovi inc.", :company_phone_number => "888 112 113", :email_address => "bj@bj.com", :company_vat_no => "0000099999"},
-     {:company_name => "Mleko company", :company_phone_number => "510 333 333", :email_address => ""},
-     {:company_name => "Stefanek corp", :company_phone_number => "888 422 633", :email_address => ""},
-     {:company_name => "PHU Sciemkata", :company_phone_number => "602 222 333", :email_address => ""}].each do |attrs|
-      Contact.find_or_create_by_company_name attrs.merge(:country => country, :campaign => campaign, :creator => call_centre, :category => category, :contact_name => "", :phone_number => "", :creator_name => call_centre.full_name)
+      [{:company_name => "Bon Jovi inc.", :company_phone_number => "888 112 113", :email_address => "bj@bj.com", :company_vat_no => "0000099999"},
+       {:company_name => "Mleko company", :company_phone_number => "510 333 333", :email_address => ""},
+       {:company_name => "Stefanek corp", :company_phone_number => "888 422 633", :email_address => ""},
+       {:company_name => "PHU Sciemkata", :company_phone_number => "602 222 333", :email_address => ""}].each do |attrs|
+        Contact.find_or_create_by_company_name attrs.merge(:country => country, :campaign => campaign, :creator => call_centre, :category => category, :contact_name => "", :phone_number => "", :creator_name => call_centre.full_name)
+      end
+
+      Contact.where("last_call_result_at IS NULL").each do |contact|
+        last_call_result = contact.call_results.order("created_at DESC").first
+        contact.update_attribute(:last_call_result_at, last_call_result.created_at) if last_call_result
+      end
     end
-
-    Contact.where("last_call_result_at IS NULL").each do |contact|
-      last_call_result = contact.call_results.order("created_at DESC").first
-      contact.update_attribute(:last_call_result_at, last_call_result.created_at) if last_call_result
-    end
-
     puts "Importing languages..."
 
     languages = {

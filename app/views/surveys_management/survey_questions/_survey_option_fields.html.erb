@@ -24,7 +24,7 @@
     <fieldset class="inputs_horizontal">
       <ol>
         <li>
-          <div class="tags_wrapper">
+          <div class="tags_wrapper" style="width: 400px">
             <label><%= t("tags.common.assigned_tags_label") %>:</label>
             <ul id="tags_selection_<%= defined?(counter) ? counter.to_i : "00" %>" name="<%= "#{f.object_name}[tag_list]" %>"></ul>
           </div>
