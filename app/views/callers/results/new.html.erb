@@ -1,4 +1,5 @@
 <column-mc:>
+  <%= javascript_include_tag "result_dynamic_value" %>
   <header><%= t("results.new.title") %></header>
   <%= semantic_form_for @result, :url => url_for(:controller => "callers/results", :action => :create, :campaign_id => @campaign, :id => @result), :method => :post do |form| %>
       <frm title="Create new">

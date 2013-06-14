@@ -5031,6 +5031,10 @@ en:
         flash:
           notice:
             survey_queued_for_sending_to_newsletters: "Survey has been queued for sending to newsletter lists"
+      new:
+        view:
+          button_create: "Create"
+          button_update: "Save"
   surveys:
     show:
       view:
