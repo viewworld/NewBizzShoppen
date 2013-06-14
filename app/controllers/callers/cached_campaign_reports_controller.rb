@@ -1,5 +1,5 @@
 class Callers::CachedCampaignReportsController < Callers::CallerController
-  set_tab "financial"
+  set_tab "reports"
   set_subtab "campaigns_reports"
 
   before_filter lambda {authorize_role(:call_centre, :admin)}

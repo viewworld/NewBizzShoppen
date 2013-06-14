@@ -10,6 +10,8 @@
         <%= form.input :email, :hint => hint_for("my_profile", :email) %>
         <%= form.input :company_ean_number, :hint => hint_for("my_profile", :company_ean_number) %>
         <% if current_user.agent? %>
+            <li style="margin:0 0 5px 170px"><b><%= t("administration.users.edit.view.softphone_server") %></b></li>
+            <%= form.input :softphone_server %>
             <li style="margin:0 0 5px 170px"><b><%= t("administration.users.edit.view.sip_credentials") %></b></li>
             <%= form.input :sip_username %>
             <%= form.input :sip_password %>

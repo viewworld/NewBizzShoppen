@@ -105,6 +105,7 @@ class User < ActiveRecord::Base
   scope :with_subaccounts, lambda { |parent_id| where("parent_id = ?", parent_id) }
   scope :without_locked, where("locked_at IS NULL")
   scope :without_ids, lambda { |ids| ids.to_a.empty? ? where({}) : where("id NOT IN (?)", ids.to_a) }
+  scope :with_softphone_server_id, lambda { |ssid| where(:softphone_server_id => ssid) }
 
   scope :requestees_for_lead_request_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("lead_purchases.requested_by IS NOT NULL and lead_purchases.owner_id = ? and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.requested_by=users.id") }
   scope :assignees_for_lead_purchase_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("lead_purchases.requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.assignee_id=users.id") }
@@ -329,11 +330,11 @@ class User < ActiveRecord::Base
 
   def available_login_time_requests
     if admin?
-      LoginTimeRequest.order("created_at DESC")
+      LoginTimeRequest
     elsif call_centre?
-      LoginTimeRequest.where(:user_id => self_and_descendants.map(&:id)).order("created_at DESC")
+      LoginTimeRequest.where(:user_id => self_and_descendants.map(&:id))
     else
-      login_time_requests.order("created_at DESC")
+      login_time_requests
     end
   end
 

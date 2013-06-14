@@ -312,6 +312,7 @@ Nbs::Application.routes.draw do
       end
     end
     resources :call_logs
+    resource :softphone_listing
     resources :login_time_requests do
       member do
         put :approve
