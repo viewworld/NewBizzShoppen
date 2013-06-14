@@ -14,7 +14,6 @@ class Survey < ActiveRecord::Base
 
   attr_accessor :skip_validations
 
-  before_create :set_uuid
   before_destroy :can_be_destroyed
 
   scope :created_by, lambda { |creator| where("creator_id = ?", creator.id) }
@@ -55,10 +54,6 @@ class Survey < ActiveRecord::Base
   end
 
   private
-
-  def set_uuid
-    self.uuid = SecureRandom.hex(18)
-  end
 
   def can_be_destroyed
     newsletter_lists.empty? and campaigns.empty? and survey_answers.empty?

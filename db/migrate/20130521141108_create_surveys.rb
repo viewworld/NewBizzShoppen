@@ -2,7 +2,6 @@ class CreateSurveys < ActiveRecord::Migration
   def self.up
     create_table :surveys do |t|
       t.string :name
-      t.string :uuid
       t.integer :creator_id
       t.string :creator_type
       t.string :newsletter_owner_email
