@@ -5020,6 +5020,7 @@ en:
           button_update: "Save"
           newsletter_lists_selection: "Newsletter list selection"
           campaigns_selection: "Campaigns selection"
+          branch_option: "Option"
       form:
         move_right: "Add >"
         move_left: "< Remove"

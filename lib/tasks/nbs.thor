@@ -420,17 +420,17 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         {:name => "Survey newsletter",
          :uniq_id => "survey_newsletter",
          :en => {:subject => "New survey",
-                 :body => "<p>Could you please take a moment to fill out the {{survey_name}} survey by following this <a href=\"{{survey_link}}\">link</a>.</p>"},
+                 :body => "<p>Could you please fill out {{survey_name}} survey by clicking this <a href=\"{{survey_link}}\">link</a>.</p>"},
          :da => {:subject => "[DK] New survey",
-                 :body => "<p>Could you please take a moment to fill out the {{survey_name}} survey by following this <a href=\"{{survey_link}}\">link</a>.</p>"}
+                 :body => "<p>Could you please fill out {{survey_name}} survey by clicking this <a href=\"{{survey_link}}\">link</a>.</p>"}
         },
 
         {:name => "Survey campaign",
          :uniq_id => "survey_campaign",
          :en => {:subject => "New survey",
-                 :body => "<p>Could you please take a moment to fill out the {{survey_name}} survey by following this <a href=\"{{survey_link}}\">link</a>.</p>"},
+                 :body => "<p>Could you please fill out {{survey_name}} survey by clicking this <a href=\"{{survey_link}}\">link</a>.</p>"},
          :da => {:subject => "[DK] New survey",
-                 :body => "<p>Could you please take a moment to fill out the {{survey_name}} survey by following this <a href=\"{{survey_link}}\">link</a>.</p>"}
+                 :body => "<p>Could you please fill out {{survey_name}} survey by clicking this <a href=\"{{survey_link}}\">link</a>.</p>"}
         },
     ]
 
