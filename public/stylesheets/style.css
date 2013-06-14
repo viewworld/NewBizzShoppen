@@ -2152,3 +2152,72 @@ div#agent_information div.frm_tiny {
 .generic thead th.tar, td.tar {
     text-align: right;
 }
+
+/* --- surveys_management_edit ---
+--------------------------------------------------------------------------------------------------------------------- */
+
+.frm_content:after {
+    clear: both;
+    content: '';
+    display: block;
+}
+
+ol.draggable_questions_container {
+    display: block;
+    float: right;
+    margin-right: 10px;
+    padding-left: 0;
+}
+
+ol.draggable_questions_container .bt {
+    cursor:move;
+    float: none;
+    margin-bottom: 5px;
+}
+
+ol.draggable_questions_container .bt p {
+    color: #888888;
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 7px 10px;
+    text-transform: uppercase;
+    width: 200px;
+}
+
+ol.survey_questions_container.sortable {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    border: 5px dashed #ddd;
+    display: block;
+    float: left;
+    margin: 0 0 20px 10px;
+    min-height: 50px;
+    padding: 5px;
+    width: 848px;
+}
+
+ol.survey_questions_container.sortable ol{
+    margin: 0 0 0 25px;
+}
+
+ol.survey_questions_container.sortable li > div {
+    background: #ddd;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    cursor: move;
+    float: none;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+ol.survey_questions_container.sortable li div.labels a {
+    float: right;
+    margin-left: 5px;
+}
+
+ol.survey_questions_container.sortable li div.labels .branched-option {
+    float: right;
+}

@@ -74,13 +74,16 @@
   </div>
 </div>
 
-<ol>
-<% SurveyQuestion::QUESTION_TYPES.each do |qtype| %>
-    <li class="draggable_question_type survey_question" data-qtype="<%= qtype %>" style="border: 2px green solid;" data-id="null"><div><%= t("surveys_management.shared.question_types.type#{qtype}") %></div></li>
-<% end %>
+
+<ol class="draggable_questions_container">
+    <% SurveyQuestion::QUESTION_TYPES.each do |qtype| %>
+        <li class="draggable_question_type survey_question" data-qtype="<%= qtype %>" data-id="null"><div class="bt bt_grey"><span><p><%= t("surveys_management.shared.question_types.type#{qtype}") %></p></span></div></li>
+    <% end %>
 </ol>
 
-<ol style="border: 2px green dashed" class="survey_questions_container sortable">
+
+
+<ol class="survey_questions_container sortable">
   <%= render :partial => "survey_questions", :locals => { :survey_questions => @survey.survey_questions.without_nested } %>
 </ol>
 

@@ -1,5 +1,5 @@
 <% survey_questions.each do |survey_question| %>
-    <li class="draggable_question survey_question<%= ' ui-nestedSortable-no-nesting' unless survey_question.question_type == 4 and survey_question.is_branched? %>" style="border: 2px green solid" data-id="<%= survey_question.id %>" data-qtype="<%= survey_question.question_type %>">
+    <li class="draggable_question survey_question<%= ' ui-nestedSortable-no-nesting' unless survey_question.question_type == 4 and survey_question.is_branched? %>" data-id="<%= survey_question.id %>" data-qtype="<%= survey_question.question_type %>">
       <div>
         <div class="labels">
           <%= t("surveys_management.shared.question_types.type#{survey_question.question_type}") %> | <%= survey_question.title %>

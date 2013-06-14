@@ -1,13 +1,5 @@
 <column-mc:>
   <%= javascript_include_tag "jquery.ui.nestedSortable" %>
-  <style type="text/css">
-
-      .placeholder{background-color:#cfcfcf;}
-      ol{margin:0;padding:0;padding-left:30px;}
-      ol.sortable,ol.sortable ol{margin:0 0 0 25px;padding:0;list-style-type:none;}
-      .sortable li{margin:7px 0 0 0;padding:0px;max-width:500px;}
-      .sortable li div{padding:5px;margin:0;cursor:move;border:1px solid #999;background:#c2c2c2;color:#333;}
-  </style>
   <header back="true"><%= t("surveys_management.surveys.edit.view.header") %><%= image_tag_for_locale %></header>
 
   <%= semantic_form_for @survey, :url => surveys_management_survey_path(@survey) do |form| %>
