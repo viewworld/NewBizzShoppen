@@ -67,6 +67,16 @@ class SurveyRecipient < ActiveRecord::Base
 
   def completed!
     update_attribute(:state, STATE_COMPLETED) unless completed?
+    assign_option_tags!
+  end
+
+  def assign_option_tags!
+    tags = survey_answers.select { |sa| sa.question_type == SurveyQuestion::SELECT_TYPE }.map do |survey_answer|
+      survey_answer.survey_options.map(&:tag_list).flatten
+    end.flatten.uniq
+
+    tags.each { | tag| recipient.tag_list << tag }
+    recipient.save
   end
 
   def email
