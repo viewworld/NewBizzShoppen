@@ -2177,7 +2177,7 @@ ol.draggable_questions_container .bt {
 }
 
 ol.draggable_questions_container .bt p {
-    color: #888888;
+    color: inherit;
     display: block;
     font-size: 11px;
     font-weight: bold;
@@ -2220,7 +2220,7 @@ ol.survey_questions_container.sortable li .bt.bt_grey {
 }
 
 ol.survey_questions_container.sortable li .bt.bt_grey > span {
-    color: #888888;
+    color: inherit;
     font-size: 11px;
     font-weight: bold;
     text-transform: uppercase;
