@@ -44,6 +44,6 @@ class SurveysManagement::SurveysController < SurveysManagement::SurveysManagemen
 
   def fetch_object
     @survey = Survey.find(params[:id])
-    raise CanCan::AccessDenied unless @survey.creator == current_user
+    raise CanCan::AccessDenied unless @survey.creator == current_user or current_user.admin?
   end
 end
