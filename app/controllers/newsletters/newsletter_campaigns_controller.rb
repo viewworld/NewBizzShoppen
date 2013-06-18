@@ -41,7 +41,7 @@ class Newsletters::NewsletterCampaignsController < Newsletters::NewslettersContr
 
   def lists_for_owner
     @user = User.where(:email => params[:owner_email]).first
-    @newsletter_lists = @user ? @user.newsletter_lists : []
+    @newsletter_lists = @user ? @user.newsletter_lists.order("name") : []
 
     respond_to do |format|
       format.js

@@ -168,6 +168,6 @@ class NewsletterList < ActiveRecord::Base
   end
 
   def to_s
-    "#{name} (#{id})"
+    "#{name} (#{newsletter_subscribers.count})"
   end
 end

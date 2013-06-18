@@ -5,7 +5,7 @@
     $("#all_lists").
             append($("<option></option>").
             attr("value", "<%= newsletter_list.id %>").
-            text("<%= newsletter_list.name %>"));
+            text("<%= newsletter_list.to_s %>"));
     <% end %>
 <% else %>
 alert("<%= t("newsletters.newsletter_campaigns.lists_for_owner.view.user_not_found") %>");

@@ -4154,6 +4154,8 @@ en:
         name: "Name"
         merge_with_tags: "Merge with other tags"
         merge_with_cleanup: "Delete merged tags"
+      survey:
+        newsletter_owner_email: "List owner email"
 
   users:
     delayed_jobs:
@@ -5018,7 +5020,7 @@ en:
           destroy_question: "Remove"
           header: "Edit survey"
           button_update: "Save"
-          newsletter_lists_selection: "Newsletter list selection"
+          newsletter_lists_selection: "List selection"
           campaigns_selection: "Campaigns selection"
           branch_option: "Option"
       form:
