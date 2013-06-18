@@ -21,6 +21,8 @@
           <th class="hl"></th>
           <th><%= t("surveys_management.surveys.index.view.owner_column") %></th>
           <th><%= t("surveys_management.surveys.index.view.name_column") %></th>
+          <th><%= t("surveys_management.surveys.index.view.total_column") %></th>
+          <th><%= t("surveys_management.surveys.index.view.answers_column") %></th>
           <th class="ta_r"><%= t("surveys_management.surveys.index.view.actions_column") %></th>
           <th class="hr"></th>
         </tr>
@@ -28,7 +30,7 @@
         <tfoot>
         <tr>
           <td class="fl"></td>
-          <td colspan="3"></td>
+          <td colspan="5"></td>
           <td class="fr"></td>
         </tr>
         </tfoot>
@@ -38,6 +40,8 @@
               <td class="cl"></td>
               <td><%= survey.creator rescue '-' %></td>
               <td><%= survey.name %></td>
+              <td><%= survey.total_subscribers %></td>
+              <td><%= survey.total_answers %></td>
               <td class="tda ta_r">
                 <ul-actions>
                   <li>

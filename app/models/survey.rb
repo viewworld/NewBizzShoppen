@@ -53,6 +53,14 @@ class Survey < ActiveRecord::Base
     end
   end
 
+  def total_subscribers
+    newsletter_lists.map { |nl| nl.newsletter_subscribers.count }.sum
+  end
+
+  def total_answers
+    survey_recipients.where(:state => SurveyRecipient::STATE_COMPLETED).count
+  end
+
   private
 
   def can_be_destroyed

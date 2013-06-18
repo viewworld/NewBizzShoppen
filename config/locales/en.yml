@@ -5014,6 +5014,8 @@ en:
           edit: "Edit"
           destroy: "Destroy"
           send_to_newsletters: "Send to newsletters"
+          total_column: "Total #"
+          answers_column: "Answers #"
       edit:
         view:
           edit_question: "Edit"
