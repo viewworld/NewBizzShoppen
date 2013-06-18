@@ -1,0 +1,16 @@
+<column-mc:>
+<header back="true"><%= @survey.name %> (<%= t("surveys_management.surveys.show.view.preview") %>)</header>
+
+<%= semantic_form_for @survey_recipient, :url => survey_recipient_path do |form| %>
+    <frm>
+      <param:content>
+        <%= render :partial => 'shared/surveys/form', :locals => {:form => form} %>
+      </param:content>
+      <param:actions>
+        <ibt c="fltri" icon="save">
+          <%= form.submit t("surveys.show.view.button_update"), :onclick => "return false;" %>
+        </ibt>
+      </param:actions>
+    </frm>
+<% end %>
+</column-mc:>

@@ -4,6 +4,9 @@
 
   <%= semantic_form_for @survey, :url => surveys_management_survey_path(@survey) do |form| %>
       <frm>
+        <param:header>
+          <%= bt_link_to nil, t("surveys_management.surveys.edit.preview_button"), surveys_management_survey_path(@survey), :class => "fltr" %>
+        </param:header>
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>

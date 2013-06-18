@@ -1,6 +1,6 @@
 class SurveysManagement::SurveysController < SurveysManagement::SurveysManagementController
   inherit_resources
-  before_filter :fetch_object, :only => [:edit, :update, :destroy, :send_to_newsletters]
+  before_filter :fetch_object, :only => [:edit, :update, :show, :destroy, :send_to_newsletters]
 
   set_tab "campaigns"
   set_subtab "surveys"
@@ -32,6 +32,11 @@ class SurveysManagement::SurveysController < SurveysManagement::SurveysManagemen
 
     flash[:notice] = I18n.t("surveys_management.surveys.send_to_newsletters.flash.notice.survey_queued_for_sending_to_newsletters")
     redirect_to surveys_management_surveys_path
+  end
+
+  def show
+    @survey_recipient = @survey.survey_recipients.new
+    @survey_recipient.build_survey_answers_ordered
   end
 
   protected

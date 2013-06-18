@@ -5025,6 +5025,7 @@ en:
           newsletter_lists_selection: "List selection"
           campaigns_selection: "Campaigns selection"
           branch_option: "Option"
+        preview_button: "Preview"
       form:
         move_right: "Add >"
         move_left: "< Remove"
@@ -5040,6 +5041,9 @@ en:
         view:
           button_create: "Create"
           button_update: "Save"
+      show:
+        view:
+          preview: "Preview"
   surveys:
     show:
       view:
