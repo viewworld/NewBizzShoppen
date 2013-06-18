@@ -66,7 +66,7 @@ class Newsletters::NewsletterListsController < Newsletters::NewslettersControlle
     @search = NewsletterList.scoped_search(params[:search])
     @search.with_archived ||= 0
     @search.created_or_owned_by = current_user unless current_user.admin?
-    @newsletter_lists = @search.paginate(:show_all => params[:show_all], :page => params[:page], :per_page => NewsletterList.per_page)
+    @newsletter_lists = @search.order("created_at DESC").paginate(:show_all => params[:show_all], :page => params[:page], :per_page => NewsletterList.per_page)
   end
 
   def fetch_object
