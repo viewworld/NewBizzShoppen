@@ -13,7 +13,7 @@
         <% if @user.has_any_role?(:supplier, :member) or ["supplier", "member"].include?((params[:role])) %>
             <%= form.input :title %>
         <% end %>
-        <% if defined? form.object.address and form.object.parent.blank? %>
+        <% if defined? form.object.address and (form.object.parent.blank? or (@user.has_role?(:call_centre_agent) or ["call_centre_agent"].include?((params[:role])))) %>
             <%= form.fields_for :address do |address_form| %>
                 <%= address_form.input :address_line_1 %>
                 <%= address_form.input :address_line_2 %>
