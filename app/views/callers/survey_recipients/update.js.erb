@@ -1,6 +1,6 @@
 <% if @survey_recipient.update_attributes(params[:survey_recipient]) %>
     <% @survey_recipient.completed! %>
-    $.colorbox.close();
+    window.close();
 <% else %>
     $("#survey_recipient_form").html("<%= escape_javascript(render(:partial => "survey_recipient_form", :locals => { :survey_recipient => @survey_recipient })) %>");
 <% end %>

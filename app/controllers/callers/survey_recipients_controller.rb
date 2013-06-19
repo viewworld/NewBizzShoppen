@@ -20,7 +20,7 @@ class Callers::SurveyRecipientsController < Callers::CallerController
     @survey_recipient = SurveyRecipient.where(:uuid => params[:id]).first
     @survey_recipient.visited!
     @survey_recipient.build_survey_answers_ordered
-    render :partial => 'edit', :layout => false
+    render :action => 'edit', :layout => "survey_popup"
   end
 
   def update
