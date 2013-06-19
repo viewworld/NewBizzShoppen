@@ -39,6 +39,10 @@
    cols += 1 if not block_tools.nil?
 -%>
 
+<div id="modal_for_share_deal_by_email" style="display:none;">
+  <%= render :partial => "share_deal_by_email/new", :locals => {:deal => deal} %>
+</div>
+
 <table class="generic leads_table">
   <thead>
   <tr>
@@ -136,14 +140,11 @@
           <ul>
             <li><iframe src="https://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(deal)) %>&amp;send=false&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe></li>
             <li>
-              <%= link_to_function image_tag('fairdeals/bt/social_email.png', :height => "20", :alt => t("deals.show.view.share_by_email")), "$('#modal_for_share_deal_by_email_#{deal.id}').dialog('open');" %>
+              <%= link_to_function image_tag('fairdeals/bt/social_email.png', :height => "20", :alt => t("deals.show.view.share_by_email")), "$('#modal_for_share_deal_by_email').html('').load('#{new_share_deal_by_email_path(:deal_id => deal.id)}').dialog('open');" %>
             </li>
             <li><%= link_to_function image_tag("fairdeals/bt/social_linkedin.png", :height => "20"), "window.open('https://www.linkedin.com/cws/share?url=#{escape_uri(deal_url(:id => deal.slug))}&text=#{escape_javascript(deal.social_media_description)}&isFramed=true','tweet', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %></li>
             <li><%= link_to_function image_tag("fairdeals/bt/social_twitter.png", :height => "20"), "window.open('https://twitter.com/share?url=#{escape_uri(deal_url(:id => deal.slug))}&text=#{escape_javascript(deal.social_media_description)}','tweet', 'width=400,height=320,location=0,toolbar=0,menubar=0')"  %></li>
           </ul>
-            <div id="modal_for_share_deal_by_email_<%= deal.id %>" style="display:none;">
-            <%= render :partial => "share_deal_by_email/new", :locals => {:deal => deal, :email_form_id => deal.id} %>
-            </div>
         </td>
 
         <td>
@@ -225,14 +226,14 @@
 
 <% collection.each do |deal| %>
 <script type="text/javascript">
-  $('#modal_for_share_deal_by_email_<%= deal.id %>').dialog({
+  $('#modal_for_share_deal_by_email').dialog({
       autoOpen: false,
       width: 400,
       title: '<%= t("deals.show.view.share_by_email_modal_title") %>',
       modal: true,
       buttons:
       { "<%= t("deals.show.view.send_share_by_email_button") %>": function() {
-          if (validate_template_editor_fields("#modal_for_share_deal_by_email_<%= deal.id %>") == 0) {
+          if (validate_template_editor_fields("#modal_for_share_deal_by_email") == 0) {
               $('#form_share_deal_by_email_<%= deal.id %>').submit();
               $(this).dialog("close");
           }

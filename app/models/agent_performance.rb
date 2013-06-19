@@ -22,6 +22,10 @@ class AgentPerformance
     time > 0 ? payout / time : 0
   end
 
+  def result_count
+    results.sum(:results)
+  end
+
   def flot_chart
     if (date_to+1-date_from).to_i > 31
       flot_months
@@ -65,6 +69,10 @@ class AgentPerformance
 
   def payouts
     @payouts ||= AgentTimesheet::Payout.for_campaigns(campaigns).for_users(user).created_between(date_from, date_to+1.day)
+  end
+
+  def results
+    @results ||= AgentTimesheet::Results.for_campaigns(campaigns).for_users(user).created_between(date_from, date_to+1.day)
   end
 
   public
