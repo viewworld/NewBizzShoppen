@@ -5025,6 +5025,8 @@ en:
           newsletter_lists_selection: "List selection"
           campaigns_selection: "Campaigns selection"
           branch_option: "Option"
+          welcome_page: "Welcome page"
+          thank_you_page: "Thank you page"
         preview_button: "Preview"
       form:
         move_right: "Add >"

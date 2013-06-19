@@ -1,5 +1,8 @@
 <column-mc:>
   <header><%= @survey.name %></header>
-
-  <%= blank_state_message t("surveys.show.view.thank_you_msg") %>
+  <% if @survey.thank_you_page.blank? %>
+    <%= blank_state_message t("surveys.show.view.thank_you_msg") %>
+  <% else %>
+    <%= @survey.thank_you_page.html_safe %>
+  <% end %>
 </column-mc:>

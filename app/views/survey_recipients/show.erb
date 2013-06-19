@@ -1,6 +1,9 @@
 <column-mc:>
   <header><%= @survey.name %></header>
 
+  <% unless @survey.welcome_page.blank? %>
+    <%= @survey.welcome_page.html_safe %>
+  <% end %>
   <%= semantic_form_for @survey_recipient, :url => survey_recipient_path(:id => @survey_recipient.uuid) do |form| %>
       <frm>
         <param:content>
