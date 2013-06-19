@@ -2,9 +2,10 @@
     <% if params[:email_notification].to_i == 1 %>
         display_notice("<%= escape_javascript(t("surveys.shared.successfully_sent")) %>", true);
     <% else %>
-        $.colorbox({href: "/callers/survey_recipients/<%= @survey_recipient.uuid %>/edit",
-            width: 700, maxHeight: 800, overlayClose: false
-        });
+        var win = window.open("/callers/survey_recipients/<%= @survey_recipient.uuid %>/edit", null,
+                    "height=800,width=700,status=no,toolbar=no,menubar=no,location=no");
+
+        !win ? alert("Window has been blocked by browser, please allow windows for this domain.") : null;
     <% end %>
 <% else %>
     alert('Access denied');

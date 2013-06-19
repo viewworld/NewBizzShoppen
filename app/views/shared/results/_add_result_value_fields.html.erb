@@ -28,7 +28,7 @@ end
       when ResultField::SURVEY then
         survey_recipient = contact.survey_recipients.detect { |sr| sr.survey_id == f.object.result_field.survey_id }
         f.hidden_field(:value, :value => contact.id) +
-        ((survey_recipient.present? and survey_recipient.completed?) ? "" : button_to_function(contact.email_address.present? ? ((survey_recipient.present? and survey_recipient.sent?) ? t("surveys.shared.survey_already_sent") : t("surveys.shared.send_survey")) : t("surveys.shared.email_blank"), "sendSurvey(#{contact.id}, #{f.object.result_field.survey_id})", :disabled => ((survey_recipient.present? and survey_recipient.sent?) or contact.email_address.blank? ), :id => "send_survey")) +
+        ((survey_recipient.present? and survey_recipient.completed?) ? "" : button_to_function((survey_recipient.present? and survey_recipient.sent?) ? t("surveys.shared.survey_already_sent") : t("surveys.shared.send_survey"), "sendSurvey(#{contact.id}, #{f.object.result_field.survey_id})", :disabled => (survey_recipient.present? and survey_recipient.sent?), :id => "send_survey")) +
         button_to_function((survey_recipient.present? and survey_recipient.completed?) ? t("surveys.shared.edit_survey_answers") : t("surveys.shared.fill_out_survey"), "fillOutSurvey(#{contact.id}, #{f.object.result_field.survey_id})")
       else
           f.text_field :value
@@ -63,6 +63,14 @@ end
       </script>
   <% end %>
 </li>
+
+<% if f.object.result_field.field_type.to_i == ResultField::SURVEY %>
+    <li class="text"<%= ' style="display:none;"'.html_safe if contact.email_address.present? %>>
+      <%= f.label :contact_email_address %>
+      <%= f.text_field :contact_email_address, :id => "survey_contact_email_address", :value => contact.email_address %>
+    </li>
+<% end %>
+
 <li class="hidden">
   <%= f.hidden_field :result_field_id, :value => f.object.result_field.id %>
 </li>
@@ -84,8 +92,12 @@ end
     }
 
     function sendSurvey(contact_id, survey_id){
-        $.get("/callers/survey_recipients/new?contact_id=" + contact_id + "&survey_id=" + survey_id + "&email_notification=1");
-        $('#send_survey').attr('disabled', 'disabled');
+        if($("#survey_contact_email_address").val() == ""){
+            alert("<%= t("surveys.shared.email_blank") %>")
+        } else {
+            $.get("/callers/survey_recipients/new?contact_id=" + contact_id + "&survey_id=" + survey_id + "&email_notification=1&email_address=" + $("#survey_contact_email_address").val());
+            $('#send_survey').attr('disabled', 'disabled');
+        }
     }
 </script>
 
