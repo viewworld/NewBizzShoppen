@@ -7,6 +7,7 @@ class ResultValue < ActiveRecord::Base
   validate :value_format
 
   before_create :duplicate_field_type, :unless => :save_without_callbacks
+  attr_accessor :contact_email_address
 
   scope :for_result_field, lambda {|result_field| where(:result_field_id => result_field)}
   scope :dates, where(:field_type => ResultField::DATETIME.to_s)

@@ -4,6 +4,9 @@ class Callers::SurveyRecipientsController < Callers::CallerController
 
   def new
     @contact = Contact.find(params[:contact_id])
+    if @contact.email_address.blank?
+      @contact.update_attribute(:email_address, params[:email_address])
+    end
     @survey = Survey.find(params[:survey_id])
     if (current_user.admin? or @contact.campaign.user_ids.include?(current_user.id)) and @contact.campaign.survey_ids.include?(@survey.id)
       @survey_recipient = @survey.create_or_fetch_survey_recipient(@contact, false)
