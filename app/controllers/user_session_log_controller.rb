@@ -1,5 +1,5 @@
 class UserSessionLogController < ApplicationController
   def create
-    @user_session_log = UserSessionLog.find_by_id(session[:current_usl_global])
+    @user_session_log = UserSessionLog.active_regular_for_user.first
   end
 end

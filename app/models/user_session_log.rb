@@ -6,10 +6,13 @@ class UserSessionLog < ActiveRecord::Base
   attr_accessor :skip_other_logs
 
   before_save :cache_hours_count
-  after_save :close_logs_for_other_campaigns, :unless => :skip_other_logs
+  after_save :close_logs_for_other_campaigns_and_regular, :unless => :skip_other_logs
 
   TYPE_REGULAR = 0
   TYPE_CAMPAIGN = 1
+
+  EXCLUDED_CONTROLLERS = ["UserSessionLogController", "NotificationsController", "Callers::AgentInformationsController"]
+  CAMPAIGN_CONTROLLERS = ["Callers::CampaignsDescriptionController"]
 
   scope :regular_type, where(:log_type => TYPE_REGULAR).order("id ASC")
   scope :campaign_type, where(:log_type => TYPE_CAMPAIGN).order("id ASC")
@@ -21,12 +24,20 @@ class UserSessionLog < ActiveRecord::Base
   scope :active, lambda{ where("end_time > ?", Time.now) }
   scope :without_campaign, lambda{|c| where("campaign_id <> ?", c.to_i)}
   scope :oldest, order("start_time ASC")
+  scope :active_for_user_and_campaign, lambda{ |user,campaign| campaign_type.for_user(user).for_campaign(campaign).active }
+  scope :active_for_user_except_campaign, lambda{ |user,campaign| campaign_type.for_user(user).without_campaign(campaign).active }
+  scope :active_regular_for_user, lambda{ |user| regular_type.for_user(user).active }
 
   private
 
-  def close_logs_for_other_campaigns
+  def close_logs_for_other_campaigns_and_regular
     if log_type == TYPE_CAMPAIGN
       self.class.active_for_user_except_campaign(user,campaign).each do |usl|
+        usl.skip_other_logs = true
+        usl.update_end_time
+      end
+    elsif log_type == TYPE_REGULAR
+      self.class.active_regular_for_user(user).where("id <> ?", id).each do |usl|
         usl.skip_other_logs = true
         usl.update_end_time
       end
@@ -43,7 +54,9 @@ class UserSessionLog < ActiveRecord::Base
   end
 
   def self.update_end_time(id, time = nil)
-    UserSessionLog.find(id).update_attribute(:end_time, time ? (Time.now + time.minutes) : Time.now) if UserSessionLog.find_by_id(id)
+    if usl = UserSessionLog.find_by_id(id)
+      usl.update_end_time(time)
+    end
   end
 
   def update_end_time(time = nil)
@@ -58,12 +71,34 @@ class UserSessionLog < ActiveRecord::Base
     self.hours_count = (((end_time - start_time) / 60) / 60.0).to_f.round(2)
   end
 
-  def self.active_for_user_and_campaign(user,campaign)
-    campaign_type.for_user(user).for_campaign(campaign).active.first
+  def self.update_regular_time(user)
+    if usl = active_regular_for_user(user).first
+      usl.update_end_time(Settings.logout_time.to_i)
+    else
+      user.user_session_logs.create(
+          :start_time => Time.now,
+          :end_time => (Time.now + Settings.logout_time.to_i.minutes),
+          :log_type => UserSessionLog::TYPE_REGULAR
+      )
+    end
   end
 
-  def self.active_for_user_except_campaign(user,campaign)
-    campaign_type.for_user(user).without_campaign(campaign).active
+  def self.update_campaign_time(user, campaign_id)
+    if usl = active_for_user_and_campaign(user, campaign_id).first
+      usl.update_end_time(Settings.logout_time.to_i)
+    else
+      user.user_session_logs.create(
+          :start_time => Time.now,
+          :end_time => (Time.now + Settings.logout_time.to_i.minutes),
+          :log_type => UserSessionLog::TYPE_CAMPAIGN,
+          :euro_billing_rate => user.euro_billing_rate,
+          :campaign_id => campaign_id
+      )
+    end
+  end
+
+  def self.close_all_logs_for_user(user)
+    for_user(user).active.each(&:update_end_time)
   end
 
   def regular?
