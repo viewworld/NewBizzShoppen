@@ -7,6 +7,7 @@ class Survey < ActiveRecord::Base
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
   has_and_belongs_to_many :newsletter_lists
   has_and_belongs_to_many :campaigns
+  has_and_belongs_to_many :categories
 
   accepts_nested_attributes_for :survey_questions, :allow_destroy => true
 

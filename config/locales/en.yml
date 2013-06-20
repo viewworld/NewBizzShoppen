@@ -5035,6 +5035,8 @@ en:
         selected_lists: "Selected lists"
         all_campaigns: "All campaigns"
         selected_campaigns: "Selected campaigns"
+        all_categories: "All lead categories"
+        selected_categories: "Selected lead categories"
       send_to_newsletters:
         flash:
           notice:
