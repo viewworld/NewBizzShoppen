@@ -424,6 +424,7 @@ en:
       show_comments: "Show comments"
       hide_comments: "Hide comments"
       create_comment: "Create comments"
+      surveys_label: "Surveys"
     statuses:
       not_contacted: Not contacted
       contacted: Contacted

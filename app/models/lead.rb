@@ -366,4 +366,15 @@ class Lead < AbstractLead
     campaign.name if campaign
   end
 
+  def survey_recipients_for_category
+    # this will change because there will be contact < leads relation INSTEAD OF contact < lead
+    upgraded_contact = Contact.where("lead_id = ?", id).first
+    recipient_ids = survey_recipient_ids + (upgraded_contact ? upgraded_contact.survey_recipient_ids : [])
+    SurveyRecipient.where("survey_recipients.id in (?)", recipient_ids).joins(:survey => :categories).where("category_id = ?", category_id)
+  end
+
+  def has_any_survey_recipients?
+    survey_recipients_for_category.any?
+  end
+
 end

@@ -11,6 +11,16 @@
     <p><%= lead_purchase.hidden_description %></p>
 
     <div class="element_templates"><%= render :partial => "/shared/lead_templates/listing", :locals => { :lead => lead_purchase.lead } %></div>
+
+    <% if lead_purchase.lead.has_any_survey_recipients? %>
+        <h3><%= t("lead_purchases.listing.surveys_label") %>:</h3>
+        <% lead_purchase.lead.survey_recipients_for_category.each do |survey_recipient| %>
+            <p><b><%= survey_recipient.survey.name %></b></p>
+            <% survey_recipient.survey_answers.each do |survey_answer| %>
+                <p><%= survey_answer.to_s %></p>
+            <% end %>
+        <% end %>
+    <% end %>
   </div>
 </div>
 
