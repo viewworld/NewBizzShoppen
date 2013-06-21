@@ -47,33 +47,47 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def update_log_entries
-    if user_signed_in? and !["UserSessionLogController", "NotificationsController", "Callers::AgentInformationsController"].include?(self.class.to_s)
-      UserSessionLog.update_end_time(session[:current_usl_global], Settings.logout_time.to_i) if session[:current_usl_global].present?
+  def logged_as_other_user?
+    other_user_id = params[:other_user_id] || session[:other_user_id]
+    (current_user and (current_user.admin? or current_user.call_centre?)) and (other_user_id and (other_user_id.to_i != current_user.id))
+  end
 
-      other_user_id = params[:other_user_id] || session[:other_user_id]
-      logged_as_other_user = ( (current_user and (current_user.admin? or current_user.call_centre?)) and (other_user_id and (other_user_id.to_i != current_user.id)) )
-      if (self.class.name.match(/::AgentWorkScreen/) or ["Callers::CampaignsDescriptionController"].include?(self.class.to_s)) and params[:campaign_id] and !logged_as_other_user
-        if active_usl = UserSessionLog.active_for_user_and_campaign(current_user, params[:campaign_id])
-          session[:current_usl_campaigns] = active_usl.id
-          UserSessionLog.update_end_time(session[:current_usl_campaigns], Settings.logout_time.to_i)
-        else
-          campaign = Campaign.find(params[:campaign_id])
-          usl_campaign = UserSessionLog.create(:user_id => current_user.id, :start_time => Time.now,
-                                               :end_time => (Time.now + Settings.logout_time.to_i.minutes),
-                                               :log_type => UserSessionLog::TYPE_CAMPAIGN,
-                                               :euro_billing_rate => campaign.cost_type == Campaign::AGENT_BILLING_RATE_COST ? current_user.euro_billing_rate :
-                                                   campaign.cost_type == Campaign::FIXED_HOURLY_RATE_COST ? campaign.euro_fixed_cost_value : nil,
-                                               :campaign_id => params[:campaign_id])
-          session[:current_usl_campaigns] = usl_campaign.id
-        end
+  def update_log_entries
+    if user_signed_in? and !UserSessionLog::EXCLUDED_CONTROLLERS.include?(self.class.to_s)
+      UserSessionLog.update_regular_time(current_user)
+      if (self.class.name.match(/::AgentWorkScreen/) or UserSessionLog::CAMPAIGN_CONTROLLERS.include?(self.class.to_s)) and params[:campaign_id] and !logged_as_other_user?
+        UserSessionLog.update_campaign_time(current_user, params[:campaign_id])
       else
-        unless session[:current_usl_campaigns].blank?
-          UserSessionLog.close_all_campaign_logs_for_user(current_user)
-          session[:current_usl_campaigns] = nil
-        end
+        UserSessionLog.close_all_campaign_logs_for_user(current_user)
       end
     end
+
+    #if user_signed_in? and !["UserSessionLogController", "NotificationsController", "Callers::AgentInformationsController"].include?(self.class.to_s)
+    #  UserSessionLog.update_end_time(session[:current_usl_global], Settings.logout_time.to_i) if session[:current_usl_global].present?
+    #
+    #  other_user_id = params[:other_user_id] || session[:other_user_id]
+    #  logged_as_other_user = ( (current_user and (current_user.admin? or current_user.call_centre?)) and (other_user_id and (other_user_id.to_i != current_user.id)) )
+    #  if (self.class.name.match(/::AgentWorkScreen/) or ["Callers::CampaignsDescriptionController"].include?(self.class.to_s)) and params[:campaign_id] and !logged_as_other_user
+    #    if active_usl = UserSessionLog.active_for_user_and_campaign(current_user, params[:campaign_id])
+    #      session[:current_usl_campaigns] = active_usl.id
+    #      UserSessionLog.update_end_time(session[:current_usl_campaigns], Settings.logout_time.to_i)
+    #    else
+    #      campaign = Campaign.find(params[:campaign_id])
+    #      usl_campaign = UserSessionLog.create(:user_id => current_user.id, :start_time => Time.now,
+    #                                           :end_time => (Time.now + Settings.logout_time.to_i.minutes),
+    #                                           :log_type => UserSessionLog::TYPE_CAMPAIGN,
+    #                                           :euro_billing_rate => campaign.cost_type == Campaign::AGENT_BILLING_RATE_COST ? current_user.euro_billing_rate :
+    #                                               campaign.cost_type == Campaign::FIXED_HOURLY_RATE_COST ? campaign.euro_fixed_cost_value : nil,
+    #                                           :campaign_id => params[:campaign_id])
+    #      session[:current_usl_campaigns] = usl_campaign.id
+    #    end
+    #  else
+    #    unless session[:current_usl_campaigns].blank?
+    #      UserSessionLog.close_all_campaign_logs_for_user(current_user)
+    #      session[:current_usl_campaigns] = nil
+    #    end
+    #  end
+    #end
 
   end
 
@@ -84,8 +98,6 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     if resource.is_a?(User)
-      usl = UserSessionLog.create(:user_id => resource.id, :start_time => Time.now, :end_time => (Time.now + Settings.logout_time.to_i.minutes), :log_type => UserSessionLog::TYPE_REGULAR, :euro_billing_rate => current_user.euro_billing_rate)
-      session[:current_usl_global] = usl.id
       if session[:user_requested_url].present?
         if session[:lead_id].to_i > 0 and resource.has_any_role?(:supplier, :lead_supplier)
           lead = Lead.find_by_id(session[:lead_id])
@@ -224,12 +236,7 @@ class ApplicationController < ActionController::Base
     session = auth.request.env['rack.session']
     session[:last_url_before_logout] = auth.request.headers["Referer"]
     session[:show_cart_hint] = nil
-    [:current_usl_global, :current_usl_campaigns].each do |key|
-      unless session[key].blank?
-        UserSessionLog.update_end_time(session[key])
-        session[key] = nil
-      end
-    end
+    UserSessionLog.close_all_logs_for_user(user)
     session[:logout_user_role] = user.role if user
   end
 
