@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
       UserSessionLog.update_regular_time(current_user)
       if (self.class.name.match(/::AgentWorkScreen/) or UserSessionLog::CAMPAIGN_CONTROLLERS.include?(self.class.to_s)) and params[:campaign_id] and !logged_as_other_user?
         UserSessionLog.update_campaign_time(current_user, params[:campaign_id])
-      else
+      elsif !UserSessionLog::IGNORED_CONTROLLERS.include?(self.class.to_s)
         UserSessionLog.close_all_campaign_logs_for_user(current_user)
       end
     end

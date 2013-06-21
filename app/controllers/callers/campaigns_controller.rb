@@ -5,7 +5,7 @@ class Callers::CampaignsController < Callers::CallerController
   include ::CampaignActions
 
   before_filter :set_campaign, :except => [:index, :new, :create]
-  before_filter lambda { authorize_role(:call_centre, :admin) }, :except => [:index, :contacts_for_search, :result_details]
+  before_filter lambda { authorize_role(:call_centre, :admin) }, :except => [:index, :result_details]
   before_filter lambda { authorize_manage_rights(@campaign) }, :only => [:edit, :update, :destroy, :show]
   before_filter lambda { authorize_role(:agent, :call_centre_agent, :call_centre, :admin) }, :only => [:result_details]
   before_filter :set_crm_campaigns, :only => [:update, :create]
@@ -70,13 +70,6 @@ class Callers::CampaignsController < Callers::CallerController
     respond_to do |wants|
       wants.csv { send_data CallResult.to_csv(@call_result_ids), :filename => "#{@campaign.name}-call-results.csv".to_url }
       wants.xls { send_data render_to_string :template => 'callers/production/export', :filename => "#{@campaign.name}-call-results.xls".to_url }
-    end
-  end
-
-  def contacts_for_search
-    @contacts = @campaign.contacts.where("lower(company_name) LIKE ?", "%#{params[:term].downcase}%").limit(10).order(:company_name)
-    respond_to do |format|
-      format.js
     end
   end
 
