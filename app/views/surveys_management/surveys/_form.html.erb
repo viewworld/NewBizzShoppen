@@ -7,103 +7,104 @@
   </fieldset>
 </div>
 
-<div class="pdd_10 no_pdd_t">
-  <fieldset class="inputs labels_ta_r">
-    <ol class="align_inputs">
-      <li class="header">
-        <h3><%= t("surveys_management.surveys.edit.view.newsletter_lists_selection") %></h3>
-      </li>
-      <%= form.input :newsletter_owner_email %><%= bt_link_to :magnify, t("newsletters.newsletter_campaigns.form.fetch_lists"), "#", :onclick => "fetch_lists()" %>
+<% if current_user.admin? or @survey.creator == current_user %>
+    <div class="pdd_10 no_pdd_t">
+      <fieldset class="inputs labels_ta_r">
+        <ol class="align_inputs">
+          <li class="header">
+            <h3><%= t("surveys_management.surveys.edit.view.newsletter_lists_selection") %></h3>
+          </li>
+          <%= form.input :newsletter_owner_email %><%= bt_link_to :magnify, t("newsletters.newsletter_campaigns.form.fetch_lists"), "#", :onclick => "fetch_lists()" %>
 
-    </ol>
-  </fieldset>
+        </ol>
+      </fieldset>
 
-  <hl/>
-  <div id="surveys_newsletter_lists">
-    <div class="pdd_10">
-      <div class="grid_210 fltl">&nbsp;</div>
-      <div class="grid_240 fltl">
-        <h3><%= t("surveys_management.surveys.form.all_lists") %></h3>
-        <%= select_tag "all_lists", options_for_select(((@survey.newsletter_owner ? @survey.newsletter_owner.newsletter_lists : [])-@survey.newsletter_lists).map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+      <hl/>
+      <div id="surveys_newsletter_lists">
+        <div class="pdd_10">
+          <div class="grid_210 fltl">&nbsp;</div>
+          <div class="grid_240 fltl">
+            <h3><%= t("surveys_management.surveys.form.all_lists") %></h3>
+            <%= select_tag "all_lists", options_for_select(((@survey.newsletter_owner ? @survey.newsletter_owner.newsletter_lists : [])-@survey.newsletter_lists).map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          </div>
+
+          <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
+            <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("surveys_management.surveys.form.move_right"), "javascript:move_selected('all_lists','survey_newsletter_list_ids_')", :id => "move_right" %></p>
+
+            <p class="ta_c pdd_5"><%= bt_link_to nil, t("surveys_management.surveys.form.move_left"), "javascript:move_selected('survey_newsletter_list_ids_','all_lists')", :id => "move_left" %></p>
+          </div>
+
+          <div class="grid_240 fltl">
+            <h3><%= t("surveys_management.surveys.form.selected_lists") %></h3>
+            <%= select_tag "survey[newsletter_list_ids][]", options_for_select(@survey.newsletter_lists.map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          </div>
+          <clb/>
+        </div>
       </div>
-
-      <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
-        <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("surveys_management.surveys.form.move_right"), "javascript:move_selected('all_lists','survey_newsletter_list_ids_')", :id => "move_right" %></p>
-
-        <p class="ta_c pdd_5"><%= bt_link_to nil, t("surveys_management.surveys.form.move_left"), "javascript:move_selected('survey_newsletter_list_ids_','all_lists')", :id => "move_left" %></p>
-      </div>
-
-      <div class="grid_240 fltl">
-        <h3><%= t("surveys_management.surveys.form.selected_lists") %></h3>
-        <%= select_tag "survey[newsletter_list_ids][]", options_for_select(@survey.newsletter_lists.map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
-      </div>
-      <clb/>
     </div>
-  </div>
-</div>
+<% end %>
 
-<div class="pdd_10 no_pdd_t">
-  <fieldset class="inputs labels_ta_r">
-    <ol class="align_inputs">
-      <li class="header">
-        <h3><%= t("surveys_management.surveys.edit.view.campaigns_selection") %></h3>
-      </li>
-    </ol>
-  </fieldset>
+<% if current_user.has_any_role?(:admin, :call_centre) %>
+    <div class="pdd_10 no_pdd_t">
+      <fieldset class="inputs labels_ta_r">
+        <ol class="align_inputs">
+          <li class="header">
+            <h3><%= t("surveys_management.surveys.edit.view.campaigns_selection") %></h3>
+          </li>
+        </ol>
+      </fieldset>
 
-  <div id="survey_campaigns">
-    <div class="pdd_10">
-      <div class="grid_210 fltl">&nbsp;</div>
-      <div class="grid_240 fltl">
-        <h3><%= t("surveys_management.surveys.form.all_campaigns") %></h3>
-        <%= select_tag "all_campaigns", options_for_select((@campaigns-@survey.campaigns).map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+      <div id="survey_campaigns">
+        <div class="pdd_10">
+          <div class="grid_210 fltl">&nbsp;</div>
+          <div class="grid_240 fltl">
+            <h3><%= t("surveys_management.surveys.form.all_campaigns") %></h3>
+            <%= select_tag "all_campaigns", options_for_select((@campaigns-@survey.campaigns).map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          </div>
+
+          <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
+            <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("surveys_management.surveys.form.move_right"), "javascript:move_selected('all_campaigns','survey_campaign_ids_')", :id => "move_right" %></p>
+
+            <p class="ta_c pdd_5"><%= bt_link_to nil, t("surveys_management.surveys.form.move_left"), "javascript:move_selected('survey_campaign_ids_','all_campaigns')", :id => "move_left" %></p>
+          </div>
+
+          <div class="grid_240 fltl">
+            <h3><%= t("surveys_management.surveys.form.selected_campaigns") %></h3>
+            <%= select_tag "survey[campaign_ids][]", options_for_select(@survey.campaigns.map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          </div>
+          <clb/>
+        </div>
       </div>
 
-      <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
-        <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("surveys_management.surveys.form.move_right"), "javascript:move_selected('all_campaigns','survey_campaign_ids_')", :id => "move_right" %></p>
+      <div id="survey_categories">
+        <div class="pdd_10">
+          <div class="grid_210 fltl">&nbsp;</div>
+          <div class="grid_240 fltl">
+            <h3><%= t("surveys_management.surveys.form.all_categories") %></h3>
+            <%= select_tag "all_categories", options_for_select((LeadCategory.without_locked_and_not_published-@survey.categories).map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          </div>
 
-        <p class="ta_c pdd_5"><%= bt_link_to nil, t("surveys_management.surveys.form.move_left"), "javascript:move_selected('survey_campaign_ids_','all_campaigns')", :id => "move_left" %></p>
-      </div>
+          <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
+            <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("surveys_management.surveys.form.move_right"), "javascript:move_selected('all_categories','survey_category_ids_')", :id => "move_right" %></p>
 
-      <div class="grid_240 fltl">
-        <h3><%= t("surveys_management.surveys.form.selected_campaigns") %></h3>
-        <%= select_tag "survey[campaign_ids][]", options_for_select(@survey.campaigns.map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+            <p class="ta_c pdd_5"><%= bt_link_to nil, t("surveys_management.surveys.form.move_left"), "javascript:move_selected('survey_category_ids_','all_categories')", :id => "move_left" %></p>
+          </div>
+
+          <div class="grid_240 fltl">
+            <h3><%= t("surveys_management.surveys.form.selected_categories") %></h3>
+            <%= select_tag "survey[category_ids][]", options_for_select(@survey.categories.map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          </div>
+          <clb/>
+        </div>
       </div>
-      <clb/>
     </div>
-  </div>
-
-  <div id="survey_categories">
-    <div class="pdd_10">
-      <div class="grid_210 fltl">&nbsp;</div>
-      <div class="grid_240 fltl">
-        <h3><%= t("surveys_management.surveys.form.all_categories") %></h3>
-        <%= select_tag "all_categories", options_for_select((LeadCategory.without_locked_and_not_published-@survey.categories).map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
-      </div>
-
-      <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
-        <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("surveys_management.surveys.form.move_right"), "javascript:move_selected('all_categories','survey_category_ids_')", :id => "move_right" %></p>
-
-        <p class="ta_c pdd_5"><%= bt_link_to nil, t("surveys_management.surveys.form.move_left"), "javascript:move_selected('survey_category_ids_','all_categories')", :id => "move_left" %></p>
-      </div>
-
-      <div class="grid_240 fltl">
-        <h3><%= t("surveys_management.surveys.form.selected_categories") %></h3>
-        <%= select_tag "survey[category_ids][]", options_for_select(@survey.categories.map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
-      </div>
-      <clb/>
-    </div>
-  </div>
-</div>
-
+<% end %>
 
 <ol class="draggable_questions_container">
     <% SurveyQuestion::QUESTION_TYPES.each do |qtype| %>
         <li class="draggable_question_type survey_question" data-qtype="<%= qtype %>" data-id="null"><div class="bt bt_grey bt_icon"><span><p><%= image_tag("/images/bt_icons/#{qtype}.png") %><%= t("surveys_management.shared.question_types.type#{qtype}") %></p></span></div></li>
     <% end %>
 </ol>
-
-
 
 <ol class="survey_questions_container sortable">
   <%= render :partial => "survey_questions", :locals => { :survey_questions => @survey.survey_questions.without_nested } %>

@@ -17,7 +17,7 @@ class Survey < ActiveRecord::Base
 
   before_destroy :can_be_destroyed
 
-  scope :created_by, lambda { |creator| where("creator_id = ?", creator.id) }
+  scope :created_by, lambda { |creator| creator.has_any_role?(:category_supplier, :supplier) ? where("categories_surveys.category_id IN (?) OR creator_id = ?", creator.unique_category_ids, creator.id).joins(:categories) : where("creator_id = ?", creator.id) }
 
   def newsletter_owner
     User.where(:email => newsletter_owner_email).first
@@ -60,6 +60,10 @@ class Survey < ActiveRecord::Base
 
   def total_answers
     survey_recipients.where(:state => SurveyRecipient::STATE_COMPLETED).count
+  end
+
+  def can_be_managed_by?(user)
+    user.admin? or (creator == user) or (user.has_any_role?(:category_supplier, :supplier) and (category_ids & user.unique_category_ids).present?)
   end
 
   private

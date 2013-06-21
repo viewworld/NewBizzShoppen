@@ -192,6 +192,7 @@ en:
         newsletter: "Newsletter"
         monitor: "Monitor"
         sync_leads: "Sync leads"
+        surveys: "Surveys"
       lead_user:
         lead_purchases: My leads
         lead_requests: My requested leads

@@ -16,18 +16,20 @@
         </li>
       </ol>
     </fieldset>
-    <fieldset class="inputs tags labels_ta_r">
-      <ol>
-        <li class="string">
-          <div class="tags_wrapper">
-            <label><%= t("tags.common.assigned_tags_label") %>:</label>
-            <ul id="tags_selection_<%= defined?(counter) ? counter.to_i : "00" %>" name="<%= "#{f.object_name}[tag_list]" %>"></ul>
-          </div>
+    <% unless current_user.has_any_role?(:supplier, :category_supplier) %>
+        <fieldset class="inputs tags labels_ta_r">
+          <ol>
+            <li class="string">
+              <div class="tags_wrapper">
+                <label><%= t("tags.common.assigned_tags_label") %>:</label>
+                <ul id="tags_selection_<%= defined?(counter) ? counter.to_i : "00" %>" name="<%= "#{f.object_name}[tag_list]" %>"></ul>
+              </div>
 
-          <%= hidden_field_tag "#{f.object_name}[tag_list][]", "" %>
-        </li>
-      </ol>
-    </fieldset>
+              <%= hidden_field_tag "#{f.object_name}[tag_list][]", "" %>
+            </li>
+          </ol>
+        </fieldset>
+    <% end %>
     <fieldset class="remove">
       <% if f.object.new_record? or f.object.survey_answers.empty? %>
         <%= bt_link_to :remove, t("shared.lead_templates.form.remove_lead_template_field"), "javascript:void(0)", :onclick => "remove_survey_option_field('#{div_survey_option_html_id}', #{f.object.new_record? ? 'null' : f.object.id})" %>
