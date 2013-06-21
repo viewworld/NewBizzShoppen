@@ -2965,6 +2965,7 @@ en:
           campaign: "Campaign"
           value: "Value"
           results: "#"
+          calls: "C"
           hours: "Hours"
           rate: "Rate"
           agent: "Agent"
