@@ -20,7 +20,7 @@ class UserSessionLog < ActiveRecord::Base
   scope :for_users, lambda{|u| where(:user_id => u.to_a)}
   scope :for_campaign, lambda{|c| where(:campaign_id => c.to_i)}
   scope :for_campaigns, lambda{|c| where(:campaign_id => c.to_a)}
-  scope :started_between, lambda{|start_date, end_date| where("start_time BETWEEN ? and ?", start_date.to_datetime, end_date.to_datetime) }
+  scope :started_between, lambda{|start_date, end_date| where("start_time::DATE BETWEEN ? and ?", start_date.to_date, end_date.to_date) }
   scope :active, lambda{ where("end_time > ?", Time.now) }
   scope :without_campaign, lambda{|c| where("campaign_id <> ?", c.to_i)}
   scope :oldest, order("start_time ASC")

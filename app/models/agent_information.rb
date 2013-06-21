@@ -21,7 +21,7 @@ class AgentInformation
   end
 
   def time
-    UserSessionLog.campaign_type.for_user(user).started_between(date_from, date_to+1.day).sum(:hours_count)
+    UserSessionLog.campaign_type.for_user(user).started_between(date_from, date_to).sum(:hours_count)
   end
 
   def number_of_calls

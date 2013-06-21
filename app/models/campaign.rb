@@ -131,7 +131,7 @@ class Campaign < ActiveRecord::Base
   end
 
   def cloned_email_templates
-    CLONED_TEMPLATES.keys.map { |template_method| send(template_method) }
+    CLONED_TEMPLATES.keys.map { |template_method| send(template_method) }.compact
   end
 
   def return_contact_to_the_pool

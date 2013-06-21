@@ -34,23 +34,23 @@ class Performance < AgentPerformance
   private
 
   def user_session_logs
-    @user_session_logs ||= UserSessionLog.for_campaigns(campaigns).campaign_type.started_between(date_from, date_to+1.day)
+    @user_session_logs ||= UserSessionLog.for_campaigns(campaigns).campaign_type.started_between(date_from, date_to)
   end
 
   def payouts
-    @payouts ||= ::AgentTimesheet::Payout.for_campaigns(campaigns).created_between(date_from, date_to+1.day)
+    @payouts ||= ::AgentTimesheet::Payout.for_campaigns(campaigns).created_between(date_from, date_to)
   end
 
   def values
-    @values ||= ::AgentTimesheet::Value.for_campaigns(campaigns).created_between(date_from, date_to+1.day)
+    @values ||= ::AgentTimesheet::Value.for_campaigns(campaigns).created_between(date_from, date_to)
   end
 
   def costs
-    @costs ||= ::AgentTimesheet::Cost.for_campaigns(campaigns).created_between(date_from, date_to+1.day)
+    @costs ||= ::AgentTimesheet::Cost.for_campaigns(campaigns).created_between(date_from, date_to)
   end
 
   def results
-    @results ||= ::AgentTimesheet::Results.for_campaigns(campaigns).created_between(date_from, date_to+1.day)
+    @results ||= ::AgentTimesheet::Results.for_campaigns(campaigns).created_between(date_from, date_to)
   end
 
 end
