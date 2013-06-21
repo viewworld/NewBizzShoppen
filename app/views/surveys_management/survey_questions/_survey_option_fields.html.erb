@@ -10,15 +10,10 @@
           <%= custom_error_for_field(f, :title) %>
         </li>
         <li class="hidden">
-          <% unless f.object.new_record? %>             §
+          <% unless f.object.new_record? %>
               <%= f.hidden_field :_destroy, :id => "destroy_hidden_field_#{f.object.id}" %>
           <% end %>
         </li>
-        <% if f.object.new_record? or f.object.survey_answers.empty? %>
-        <li class="commit">
-          <%= bt_link_to :remove, t("shared.lead_templates.form.remove_lead_template_field"), "javascript:void(0)", :onclick => "remove_survey_option_field('#{div_survey_option_html_id}', #{f.object.new_record? ? 'null' : f.object.id})" %>
-        </li>
-        <% end %>
       </ol>
     </fieldset>
     <fieldset class="inputs tags labels_ta_r">
@@ -32,6 +27,11 @@
           <%= hidden_field_tag "#{f.object_name}[tag_list][]", "" %>
         </li>
       </ol>
+    </fieldset>
+    <fieldset class="remove">
+      <% if f.object.new_record? or f.object.survey_answers.empty? %>
+        <%= bt_link_to :remove, t("shared.lead_templates.form.remove_lead_template_field"), "javascript:void(0)", :onclick => "remove_survey_option_field('#{div_survey_option_html_id}', #{f.object.new_record? ? 'null' : f.object.id})" %>
+      <% end %>
     </fieldset>
   </div>
 </div>
