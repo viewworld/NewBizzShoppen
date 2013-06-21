@@ -1,5 +1,4 @@
-<% form_id = defined?(email_form_id) ? "form_share_deal_by_email_#{email_form_id}" : "form_share_deal_by_email" %>
-<%= form_tag share_deal_by_email_path, :method => :post, :id => form_id do %>
+<%= form_tag share_deal_by_email_path, :method => :post, :id => "form_share_deal_by_email", :remote => true do %>
   <fieldset class="inputs labels_ta_r labels_70">
     <ol>
       <li id="template_editor_email_from_input" class="string">
@@ -14,7 +13,11 @@
         <%= label_tag t("share_deal_by_email.new.view.email_to") %>
         <%= text_field_tag :email_to %>
       </li>
-      <%= hidden_field_tag :deal_id, deal.id %>
+      <li class="string captcha">
+        <p style="padding: 5px 0 10px 0"><%=  t("share_deal_by_email.new.view.captcha") %></p>
+        <%= recaptcha_tags(:ajax => true) %>
+      </li>
+      <%= hidden_field_tag :deal_id, @deal.id %>
     </ol>
   </fieldset>
 <% end %>

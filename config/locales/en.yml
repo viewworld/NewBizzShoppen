@@ -2965,6 +2965,7 @@ en:
         table:
           campaign: "Campaign"
           value: "Value"
+          results: "#"
           hours: "Hours"
           rate: "Rate"
           agent: "Agent"
@@ -4745,9 +4746,13 @@ en:
         email_to: "Email to"
         name: "Name"
         message: "Message"
+        captcha: "Prove you're human"
+        share_deal: "Share %{deal_name}"
     create:
       flash:
         email_sent: "Deal has been successfully sent to the selected recipient"
+        invalid_captcha: "Captcha code is invalid"
+        error: "The form is invalid"
   deal_maker_users:
     index:
       view:

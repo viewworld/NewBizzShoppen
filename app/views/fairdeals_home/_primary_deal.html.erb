@@ -1,5 +1,5 @@
 <% unless primary_deal.blank? %>
-  <% email_form_id = dom_id(primary_deal) %>
+  <% email_form_id = "#{dom_id(primary_deal)}_#{rand(9999)}" %>
   <% cache("#{I18n.locale}_primary_deal_#{primary_deal.id}_part1") do %>
       <div class="frm_plain primary_deal">
         <div class="frm_head">
@@ -106,11 +106,6 @@
 
     <% end %>
     <!-- not cached content -->
-          <div>
-            <div id="modal_for_share_deal_by_email_<%= email_form_id %>" style="display:none;">
-              <%= render :partial => "share_deal_by_email/new", :locals => {:deal => primary_deal, :email_form_id => email_form_id } %>
-            </div>
-          </div>
           <!-- end / main deal -->
 
           <% if defined? comments_enbaled and comments_enbaled %>
@@ -134,7 +129,7 @@
           </div>
 
           <div class="deal_sm">
-            <%= link_to_function image_tag("fairdeals/bt/social_email.png"), "$('#modal_for_share_deal_by_email_#{email_form_id}').dialog('open');" %>
+            <%= link_to_function image_tag("fairdeals/bt/social_email.png"), "$('#modal_for_share_deal_by_email').html('').load('#{new_share_deal_by_email_path(:deal_id => primary_deal.id)}').dialog('open');" %>
             <!-- end / not cached content -->
             <% cache("#{I18n.locale}_primary_deal_#{primary_deal.id}_part2") do %>
                 <%= link_to_function image_tag("fairdeals/bt/social_linkedin.png"), "window.open('https://www.linkedin.com/cws/share?url=#{escape_uri(deal_url(:id => primary_deal.slug))}&isFramed=true','', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>
@@ -166,16 +161,16 @@
     });
     <% end %>
 
-    $('#modal_for_share_deal_by_email_<%= email_form_id %>').dialog({
+    $('#modal_for_share_deal_by_email').dialog({
         autoOpen: false,
-        width: 400,
+        width: 350,
         title: '<%= t("deals.show.view.share_by_email_modal_title") %>',
         modal: true,
+        position: ['center', 100],
         buttons:
         { "<%= t("deals.show.view.send_share_by_email_button") %>": function() {
-            if (validate_template_editor_fields("#modal_for_share_deal_by_email_<%= email_form_id %>") == 0) {
-                $('#form_share_deal_by_email_<%= email_form_id %>').submit();
-                $(this).dialog("close");
+            if (validate_template_editor_fields("#modal_for_share_deal_by_email") == 0) {
+                $('#form_share_deal_by_email').submit();
             }
         },
             "<%= t("deals.show.view.cancel") %>": function() {

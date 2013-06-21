@@ -194,7 +194,7 @@
     <div class="column_left">
       <ul class="social_share">
         <li>
-          <%= link_to_function image_tag('fairdeals/bt/social_email.png', :height => "20", :alt => t("deals.show.view.share_by_email")), "$('#modal_for_share_deal_by_email').dialog('open');" %>
+          <%= link_to_function image_tag('fairdeals/bt/social_email.png', :height => "20", :alt => t("deals.show.view.share_by_email")), "$('#modal_for_share_deal_by_email').html('').load('#{new_share_deal_by_email_path(:deal_id => @deal.id)}').dialog('open');" %>
         </li>
         <% if Rails.env != "test" %>
             <% if false %>
@@ -226,9 +226,7 @@
 
   </div>
 
-  <div id="modal_for_share_deal_by_email" style="display:none;">
-    <%= render :partial => "share_deal_by_email/new", :locals => {:deal => @deal} %>
-  </div>
+  <div id="modal_for_share_deal_by_email" style="display:none;"></div>
 
 
       <% cache("#{I18n.locale}_deals_show_#{@deal.id}_sign_up") do %>
@@ -271,11 +269,11 @@
           width: 400,
           title: '<%= t("deals.show.view.share_by_email_modal_title") %>',
           modal: true,
+          position: ['center', 100],
           buttons:
           { "<%= t("deals.show.view.send_share_by_email_button") %>": function() {
               if (validate_template_editor_fields("#modal_for_share_deal_by_email") == 0) {
                   $('#form_share_deal_by_email').submit();
-                  $(this).dialog("close");
               }
           },
               "<%= t("deals.show.view.cancel") %>": function() {

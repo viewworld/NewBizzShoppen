@@ -2317,7 +2317,16 @@ ol.survey_questions_container.sortable li .bt.bt_grey .branched-option {
 
 #cboxContent .tags_wrapper .tagit {
     float: left;
-    width: 328px;
+    margin-right: 0;
+    width: 492px;
+}
+
+#cboxContent #question_form input[type="text"] {
+    width: 486px;
+}
+
+#cboxContent .remove {
+    margin-left: 160px;
 }
 
 #cboxContent .new_field {
