@@ -17,7 +17,7 @@ class UserSessionLog < ActiveRecord::Base
   end
 
   EXCLUDED_CONTROLLERS = ["UserSessionLogController", "NotificationsController", "Callers::AgentInformationsController"]
-  CAMPAIGN_CONTROLLERS = ["Callers::CampaignsDescriptionController", "Callers::CampaignsController"]
+  CAMPAIGN_CONTROLLERS = ["Callers::CampaignsDescriptionController", "Callers::CampaignsController", "Callers::MaterialsController"]
   IGNORED_CONTROLLERS = ["TagsController", "Callers::ProductionController", "Callers::CallLogsController", "Flashphoner::ConfigsController"]
 
   scope :regular_type, where(:log_type => TYPE_REGULAR).order("id ASC")
