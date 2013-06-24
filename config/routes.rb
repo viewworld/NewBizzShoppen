@@ -321,6 +321,7 @@ Nbs::Application.routes.draw do
         put :reject
       end
     end
+    resources :user_session_logs
     resources :survey_recipients
   end
 

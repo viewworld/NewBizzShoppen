@@ -148,7 +148,8 @@ en:
         agent_performance: "Agent perf."
         payout: "Payout"
         background_tasks: "Background tasks"
-        login_time_requests: "Login time"
+        login_time_requests: "Time request"
+        login_time: "Login time"
         surveys: "Surveys"
         softphone_servers: "Softphones"
         softphone_listing: "Soft. listing"
@@ -4452,6 +4453,10 @@ en:
         phone_numer: "Phone number"
         password: "Password"
         server: "Server"
+  user_session_logs:
+    index:
+      header: "Login time"
+      total_hours: "Total hours"
   login_time_requests:
     new:
       header: "Login time requests"

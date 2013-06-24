@@ -33,6 +33,10 @@ class UserSessionLog < ActiveRecord::Base
   scope :active_for_user_and_campaign, lambda{ |user,campaign| campaign_type.for_user(user).for_campaign(campaign).active }
   scope :active_for_user_except_campaign, lambda{ |user,campaign| campaign_type.for_user(user).without_campaign(campaign).active }
   scope :active_regular_for_user, lambda{ |user| regular_type.for_user(user).active }
+  scope :with_time_from, lambda{ |time| where("start_time >= ?", Time.zone.parse(time)) }
+  scope :with_time_to, lambda{ |time| where("end_time <= ?", Time.zone.parse(time)) }
+
+  include ScopedSearch::Model
 
   private
 
