@@ -10,9 +10,15 @@ class UserSessionLog < ActiveRecord::Base
 
   TYPE_REGULAR = 0
   TYPE_CAMPAIGN = 1
+  DEBUG = true
+
+  before_save do
+    self.debug = $request.url if DEBUG and $request
+  end
 
   EXCLUDED_CONTROLLERS = ["UserSessionLogController", "NotificationsController", "Callers::AgentInformationsController"]
-  CAMPAIGN_CONTROLLERS = ["Callers::CampaignsDescriptionController"]
+  CAMPAIGN_CONTROLLERS = ["Callers::CampaignsDescriptionController", "Callers::CampaignsController", "Callers::MaterialsController"]
+  IGNORED_CONTROLLERS = ["TagsController", "Callers::ProductionController", "Callers::CallLogsController", "Flashphoner::ConfigsController"]
 
   scope :regular_type, where(:log_type => TYPE_REGULAR).order("id ASC")
   scope :campaign_type, where(:log_type => TYPE_CAMPAIGN).order("id ASC")

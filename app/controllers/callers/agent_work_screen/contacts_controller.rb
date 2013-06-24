@@ -39,6 +39,13 @@ class Callers::AgentWorkScreen::ContactsController < Callers::AgentWorkScreenCon
     end
   end
 
+  def contacts_for_search
+    @contacts = @campaign.contacts.where("lower(company_name) LIKE ?", "%#{params[:term].downcase}%").limit(10).order(:company_name)
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
   def set_contact
     @lead = @contact = @campaign.contacts.find_by_id(params[:id]) || @contacts.first

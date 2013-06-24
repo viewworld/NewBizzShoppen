@@ -26,6 +26,10 @@ class AgentPerformance
     results.sum(:results)
   end
 
+  def call_count
+    calls.sum(:calls)
+  end
+
   def flot_chart
     if (date_to+1-date_from).to_i > 31
       flot_months
@@ -73,6 +77,10 @@ class AgentPerformance
 
   def results
     @results ||= AgentTimesheet::Results.for_campaigns(campaigns).for_users(user).created_between(date_from, date_to)
+  end
+
+  def calls
+    @calls ||= AgentTimesheet::Calls.for_campaigns(campaigns).for_users(user).created_between(date_from, date_to)
   end
 
   public
