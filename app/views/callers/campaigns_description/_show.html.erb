@@ -1,5 +1,43 @@
 <span id="briefing_area_content">
+<br />
 <h2><%= t("campaigns_description.show.header") %></h2>
 <br />
-<%= campaign.briefing.to_s.html_safe %>
+<%= campaign.briefing.to_s.html_safe.blank? ? t("campaigns_description.show.no_briefing") : campaign.briefing.to_s.html_safe %>
+
+<br /><br />
+<h2><%= t("campaigns_description.show.last_results") %></h2>
+<table class="generic call_results">
+  <thead>
+  <tr>
+    <th class="hl"></th>
+    <th><%= t("campaigns_description.show.table.agent") %></th>
+    <th><%= t("campaigns_description.show.table.contact") %></th>
+    <th><%= t("campaigns_description.show.table.result") %></th>
+    <th><%= t("campaigns_description.show.table.created_at") %></th>
+    <th><%= t("campaigns_description.show.table.listen") %></th>
+    <th class="hr"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% CallResult.joins(:result).for_campaign(@campaign).with_success.with_reported.with_call_id.limit(20).each do |call_result| %>
+      <tr>
+        <td></td>
+        <td><%= call_result.creator %></td>
+        <td><%= call_result.contact %></td>
+        <td><%= call_result.result %></td>
+        <td><%= format_date call_result.created_at, true %></td>
+        <td>
+          <% if this_call_url = call_url(call_result.call_id) %>
+              <audio preload="none" src="<%= this_call_url %>" controls="controls"></td>
+          <% end %>
+          <td></td>
+          </tr>
+  <% end %>
+  </tbody>
+  <tfoot>
+  <td class="fl"></td>
+  <td colspan="5"></td>
+  <td class="fr"></td>
+  </tfoot>
+</table>
 </span>

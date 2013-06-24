@@ -4295,6 +4295,14 @@ en:
       button_cancel: "Cancel"
     show:
       header: "Briefing area"
+      no_briefing: "No briefing data for this campaign"
+      last_results: "Last 20 results"
+      table:
+        agent: "Agent"
+        contact: "Contact"
+        result: "Result"
+        created_at: "Created at"
+        listen: "Listen"
   production:
     show:
       view:
