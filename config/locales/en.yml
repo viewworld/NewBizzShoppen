@@ -5060,6 +5060,7 @@ en:
           email: "E-mail"
           show: "Show"
           all_responses: "All responses"
+          export: "Export to XLS"
       show:
         view:
           header: "Survey response from %{email} for %{survey_name}"

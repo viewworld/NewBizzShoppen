@@ -517,7 +517,11 @@ Nbs::Application.routes.draw do
           put :remove_parent
         end
       end
-      resources :survey_recipients
+      resources :survey_recipients do
+        collection do
+          post :export
+        end
+      end
       member do
         post :send_to_newsletters
       end
