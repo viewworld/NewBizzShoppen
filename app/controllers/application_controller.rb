@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_filter do
+    $request = request
+  end
+
   before_filter :redirect_to_correct_site
   before_filter :authorize_with_http_basic_for_staging, :check_category_supplier, :update_log_entries, :set_user_time_zone
   before_filter :prepare_search, :if => proc{session[:site]=="fairdeals"}

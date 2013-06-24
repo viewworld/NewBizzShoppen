@@ -10,6 +10,11 @@ class UserSessionLog < ActiveRecord::Base
 
   TYPE_REGULAR = 0
   TYPE_CAMPAIGN = 1
+  DEBUG = true
+
+  before_save do
+    self.debug = $request.url if DEBUG and $request
+  end
 
   EXCLUDED_CONTROLLERS = ["UserSessionLogController", "NotificationsController", "Callers::AgentInformationsController"]
   CAMPAIGN_CONTROLLERS = ["Callers::CampaignsDescriptionController", "Callers::CampaignsController"]
