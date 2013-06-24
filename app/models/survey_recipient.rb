@@ -1,4 +1,5 @@
 class SurveyRecipient < ActiveRecord::Base
+  include ScopedSearch::Model
 
   has_many :survey_answers, :dependent => :destroy
   belongs_to :survey
@@ -18,6 +19,8 @@ class SurveyRecipient < ActiveRecord::Base
   liquid :survey_link, :survey_name
 
   scope :for_recipient, lambda { |recipient| where(:recipient_id => recipient.id, :recipient_type => recipient.is_a?(AbstractLead) ? "AbstractLead" : recipient.class.to_s) }
+  scope :for_survey, lambda { |survey| where(:survey_id => survey.id) }
+  scope :with_state, lambda { |state| where(:state => state) }
 
   STATE_NOT_VISITED = 0.freeze
   STATE_VISITED = 1.freeze
@@ -105,6 +108,18 @@ class SurveyRecipient < ActiveRecord::Base
                                                                           :from => "Erhvervsanalyse.dk <admin@erhvervsanalyse.dk>",
                                                                           :return_path => "admin@erhvervsanalyse.dk"}).deliver!
     update_attribute(:email_sent_at, Time.now)
+  end
+
+  def next
+    survey.survey_recipients.order("id").where("state = ?", STATE_COMPLETED).where("id > ?", id).first
+  end
+
+  def previous
+    survey.survey_recipients.order("id DESC").where("state = ?", STATE_COMPLETED).where("id < ?", id).first
+  end
+
+  def answer_for_question(question)
+    survey_answers.detect{ |sa| sa.survey_question_id == question.id }
   end
 
   private

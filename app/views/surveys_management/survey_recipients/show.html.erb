@@ -1,0 +1,64 @@
+<column-mc:>
+  <header>
+    <param:content>
+    <%= t("surveys_management.survey_recipients.show.view.header", :survey_name => @survey.name, :email => @survey_recipient.email) %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last"><%= bt_link_to nil, t("surveys_management.survey_recipients.index.view.all_responses"), surveys_management_survey_survey_recipients_path(@survey) %></li>
+      </ul>
+
+    </param:actions>
+  </header>
+
+  <table id="survey_recipients_table" class="generic">
+    <thead>
+    <tr>
+      <th class="hl"></th>
+      <th width="500px">&nbsp;</th>
+      <th>&nbsp;</th>
+      <th class="hr"></th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="2"></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <tr class="<%= cycle("odd", "even") %>">
+      <td class="cl"></td>
+      <td>Email:</td>
+      <td><%= @survey_recipient.email %></td>
+      <td class="cr"></td>
+    </tr>
+    <tr class="<%= cycle("odd", "even") %>">
+      <td class="cl"></td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td class="cr"></td>
+    </tr>
+    <% @survey.survey_questions.each do |survey_question| %>
+        <tr class="<%= cycle("odd", "even") %>">
+          <td class="cl"></td>
+          <td><%= survey_question.title %></td>
+          <td><%= (answer = @survey_recipient.answer_for_question(survey_question)) ? answer.value_or_options : "-" %></td>
+          <td class="cr"></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <div style="text-align: center; padding-top: 20px">
+  <% if (@prev = @survey_recipient.previous) %>
+    <%= bt_link_to nil, t("surveys_management.survey_recipients.show.view.previous"), surveys_management_survey_survey_recipient_path(@survey, @prev) %>
+  <% end %>
+
+  <% if (@next = @survey_recipient.next) %>
+    <%= bt_link_to nil, t("surveys_management.survey_recipients.show.view.next"), surveys_management_survey_survey_recipient_path(@survey, @next) %>
+  <% end %>
+  </div>
+</column-mc:>

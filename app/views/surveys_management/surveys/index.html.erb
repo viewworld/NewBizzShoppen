@@ -50,6 +50,11 @@
                   <li>
                     <%= link_to t("surveys_management.surveys.index.view.send_to_newsletters"),  send_to_newsletters_surveys_management_survey_path(survey), :method => :post %>
                   </li>
+                  <% if survey.total_answers > 0 %>
+                  <li>
+                    <%= link_to t("surveys_management.surveys.index.view.view_responses"), surveys_management_survey_survey_recipients_path(survey) %>
+                  </li>
+                  <% end %>
                   <li>
                     <%= link_to t("surveys_management.surveys.index.view.destroy"),  surveys_management_survey_path(survey), {:method => :delete, :confirm => t("common.confirmation")} %>
                   </li>
