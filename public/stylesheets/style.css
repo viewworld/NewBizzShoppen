@@ -2156,7 +2156,7 @@ div#agent_information div.frm_tiny {
 /* --- surveys_management_edit ---
 --------------------------------------------------------------------------------------------------------------------- */
 
-.frm_content:after {
+.frm_content:after, .clearfix:after {
     clear: both;
     content: '';
     display: block;
@@ -2318,11 +2318,11 @@ ol.survey_questions_container.sortable li .bt.bt_grey .branched-option {
 #cboxContent .tags_wrapper .tagit {
     float: left;
     margin-right: 0;
-    width: 492px;
+    width: 477px;
 }
 
 #cboxContent #question_form input[type="text"] {
-    width: 486px;
+    width: 471px;
 }
 
 #cboxContent .remove {
