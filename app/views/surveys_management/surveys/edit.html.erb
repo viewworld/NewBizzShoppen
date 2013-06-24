@@ -7,6 +7,7 @@
       <frm>
         <param:header>
           <%= bt_link_to nil, t("surveys_management.surveys.edit.preview_button"), surveys_management_survey_path(@survey), :class => "fltr" %>
+          <%= bt_link_to nil, t("surveys_management.surveys.edit.responses_button"), surveys_management_survey_survey_recipients_path(@survey), :class => "fltr" %>
         </param:header>
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>

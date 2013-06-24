@@ -5030,6 +5030,7 @@ en:
           send_to_newsletters: "Send to newsletters"
           total_column: "Total #"
           answers_column: "Answers #"
+          view_responses: "View responses"
       edit:
         view:
           edit_question: "Edit"
@@ -5042,6 +5043,7 @@ en:
           welcome_page: "Welcome page"
           thank_you_page: "Thank you page"
         preview_button: "Preview"
+        responses_button: "View responses"
       form:
         move_right: "Add >"
         move_left: "< Remove"
@@ -5060,6 +5062,19 @@ en:
       show:
         view:
           preview: "Preview"
+    survey_recipients:
+      index:
+        view:
+          header: "Survey responses for %{survey_name}"
+          email: "E-mail"
+          show: "Show"
+          all_responses: "All responses"
+          export: "Export to XLS"
+      show:
+        view:
+          header: "Survey response from %{email} for %{survey_name}"
+          next: "Next >>"
+          previous: "<< Previous"
   surveys:
     show:
       view:

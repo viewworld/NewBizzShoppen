@@ -1,0 +1,59 @@
+<column-mc:>
+  <header back="true">
+    <param:content>
+      <%= t("surveys_management.survey_recipients.index.view.header", :survey_name => @survey.name) %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last"><%= bt_link_to :download, t("surveys_management.survey_recipients.index.view.export"), export_surveys_management_survey_survey_recipients_path(@survey, :format => "xls"), :method => :post %></li>
+      </ul>
+
+    </param:actions>
+  </header>
+
+  <% if @survey_recipients.blank? %>
+      <%= blank_state_message %>
+  <% else %>
+      <table id="survey_recipients_table" class="generic">
+        <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= t("surveys_management.survey_recipients.index.view.email") %></th>
+          <th class="ta_r"><%= t("surveys_management.surveys.index.view.actions_column") %></th>
+          <th class="hr"></th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="2"></td>
+          <td class="fr"></td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <% @survey_recipients.each do |survey_recipient| %>
+            <tr class="<%= cycle("odd", "even") %>">
+              <td class="cl"></td>
+              <td><%= survey_recipient.email %></td>
+              <td class="tda ta_r">
+                <ul-actions>
+                  <li>
+                    <%= link_to t("surveys_management.survey_recipients.index.view.show"),  surveys_management_survey_survey_recipient_path(@survey, survey_recipient), :class => "default_action" %>
+                  </li>
+                </ul-actions>
+              </td>
+              <td class="cr"></td>
+            </tr>
+        <% end %>
+        <% if will_paginate %>
+            <tr class="pagination">
+              <td colspan="7" class="ta_c">
+                <%= will_paginate @surveys, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+  <% end %>
+</column-mc:>
