@@ -413,7 +413,7 @@ class CampaignReport
   # EUR
   def total_value_upgraded
     upgraded = CallResult.final_for_campaign(campaign).where("results.upgrades_to_lead is true and call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported.
-        joins(:contact => :lead)
+        joins(:contact => :leads)
     if selected_users?
       upgraded = upgraded.where("call_results.creator_id in (?)", user.map(&:id))
     elsif user

@@ -9,7 +9,7 @@ class Contact < AbstractLead
   belongs_to :campaign
   has_many :call_results, :dependent => :destroy
   has_many :result_values, :through => :call_results
-  belongs_to :lead
+  has_many :leads
   has_many :contact_past_user_assignments, :foreign_key => "contact_id", :dependent => :destroy
   has_many :past_user_assignments, :through => :contact_past_user_assignments, :source => :user
   has_many :notifications, :as => :notifier
@@ -130,9 +130,10 @@ class Contact < AbstractLead
     new_lead = Lead.find(lead.id)
     new_lead.creator = utl_cr.creator.admin? ? User.find(new_lead.agent_id).with_role : utl_cr.creator
     new_lead.save
+    new_lead.update_attribute(:contact_id, self.id)
     new_lead.update_attribute(:published, false)
     new_lead.update_attribute(:published, true)
-    self.update_attribute(:lead_id, lead.id)
+
     if tag_list.any?
       lead = Lead.find(lead.id)
       tag_list.each do |tag|

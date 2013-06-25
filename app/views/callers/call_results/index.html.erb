@@ -25,10 +25,10 @@
             <tr>
               <td></td>
               <td><%= call_result.contact ? call_result.contact.contact_name : "[Contact deleted]" %></td>
-              <td><%= (call_result.contact and call_result.contact.lead) ? link_to(call_result.result.name, edit_agents_lead_path(call_result.contact.lead), :class => "default_action")  : call_result.result.name %> </td>
+              <td><%= (call_result.contact and call_result.contact.leads.first) ? link_to(call_result.result.name, edit_agents_lead_path(call_result.contact.leads.first), :class => "default_action")  : call_result.result.name %> </td>
               <td><%= as_currency(call_result.euro_payout, Currency.euro, 0) %></td>
               <td><%= format_date call_result.created_at, true %></td>
-              <td><%= image_tag('icons/red_flag.png') if call_result.contact and call_result.contact.lead and call_result.contact.lead.has_unsatisfactory_rating %></td>
+              <td><%= image_tag('icons/red_flag.png') if call_result.contact and call_result.contact.leads.first and call_result.contact.leads.first.has_unsatisfactory_rating %></td>
               <td></td>
             </tr>
           <% end %>
