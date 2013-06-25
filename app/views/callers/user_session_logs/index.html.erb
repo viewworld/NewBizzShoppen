@@ -1,0 +1,100 @@
+<search-box:>
+  <div class="search_box">
+    <div class="search_left"></div>
+    <div class="search_right"></div>
+    <h2><%= t("common.search") %></h2>
+
+    <div class="search_content">
+      <%= form_for @search, :url => callers_user_session_logs_path do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="select">
+                <%= f.label :for_user, t("login_time_requests.new.search.user") %>
+                <%= f.select :for_user, User.where("id IN (#{@search.select("DISTINCT(user_id)").map(&:user_id).join(',')})").map{|u| [u.screen_name, u.id] }.sort, :include_blank => true %>
+              </li>
+              <li class="select">
+                <%= f.label :for_campaign, t("login_time_requests.new.search.campaign") %>
+                <%= f.select :for_campaign, Campaign.where("id IN (#{@search.where("campaign_id IS NOT NULL").select("DISTINCT(campaign_id)").map(&:campaign_id).join(',')})").map{ |c| [c.name, c.id] }.sort, :include_blank => true %>
+              </li>
+              <li class="string">
+                <%= f.label :with_time_from, t("login_time_requests.new.search.time_from") %>
+                <%= f.text_field :with_time_from, :class => "datetimepicker" %>
+              </li>
+              <li class="string">
+                <%= f.label :with_time_to, t("login_time_requests.new.search.time_to") %>
+                <%= f.text_field :with_time_to, :class => "datetimepicker" %>
+              </li>
+
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("administration.articles.index.view.search_button") %>
+                </ibt>
+                <p>
+                  <%= bt_clear_filter %>
+                </p>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+  <header>
+    <param:content>
+      <%= t("user_session_logs.index.header") %>
+    </param:content>
+  </header>
+
+  <p class="fltr" style="margin-top:-20px"><%= t("user_session_logs.index.total_hours") %>: <%= @user_session_logs.sum(:hours_count) %></p>
+
+  <table class="generic">
+    <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= t("login_time_requests.new.table.user") %></th>
+          <th><%= t("login_time_requests.new.table.campaign") %></th>
+          <th><%= t("login_time_requests.new.table.start_time") %></th>
+          <th><%= t("login_time_requests.new.table.end_time") %></th>
+          <th><%= t("login_time_requests.new.table.hours") %></th>
+          <th></th>
+          <th class="hr"></th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="6"></td>
+          <td class="fr"></td>
+        </tr>
+    </tfoot>
+    <% @user_session_logs_paginated.each do |usl| %>
+        <tr>
+          <td class="cl"></td>
+          <td><%= usl.user.screen_name %></td>
+          <td><%= usl.campaign %></td>
+          <td><%= l usl.start_time %></td>
+          <td><%= l usl.end_time %></td>
+          <td><%= number_with_precision(usl.hours_count, :precision => 2) %></td>
+          <td class="tda ta_r">
+          </td>
+          <td class="cr"></td>
+        </tr>
+    <% end %>
+    <tr>
+      <td class="cl"></td>
+      <td colspan="6">
+        <%= will_paginate @user_session_logs_paginated %>
+      </td>
+      <td class="cr"></td>
+    </tr>
+  </table>
+
+  <script>
+      $(function() {
+          $(".datetimepicker").datetimepicker({ dateFormat: 'dd-mm-yy' });
+      });
+  </script>
+
+</column-mc:>

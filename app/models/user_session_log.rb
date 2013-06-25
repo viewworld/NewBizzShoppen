@@ -10,9 +10,15 @@ class UserSessionLog < ActiveRecord::Base
 
   TYPE_REGULAR = 0
   TYPE_CAMPAIGN = 1
+  DEBUG = true
+
+  before_save do
+    self.debug = $request.url if DEBUG and $request
+  end
 
   EXCLUDED_CONTROLLERS = ["UserSessionLogController", "NotificationsController", "Callers::AgentInformationsController"]
-  CAMPAIGN_CONTROLLERS = ["Callers::CampaignsDescriptionController"]
+  CAMPAIGN_CONTROLLERS = ["Callers::CampaignsDescriptionController", "Callers::CampaignsController", "Callers::MaterialsController"]
+  IGNORED_CONTROLLERS = ["TagsController", "Callers::ProductionController", "Callers::CallLogsController", "Flashphoner::ConfigsController"]
 
   scope :regular_type, where(:log_type => TYPE_REGULAR).order("id ASC")
   scope :campaign_type, where(:log_type => TYPE_CAMPAIGN).order("id ASC")
@@ -20,13 +26,17 @@ class UserSessionLog < ActiveRecord::Base
   scope :for_users, lambda{|u| where(:user_id => u.to_a)}
   scope :for_campaign, lambda{|c| where(:campaign_id => c.to_i)}
   scope :for_campaigns, lambda{|c| where(:campaign_id => c.to_a)}
-  scope :started_between, lambda{|start_date, end_date| where("start_time BETWEEN ? and ?", start_date.to_datetime, end_date.to_datetime) }
+  scope :started_between, lambda{|start_date, end_date| where("start_time::DATE BETWEEN ? and ?", start_date.to_date, end_date.to_date) }
   scope :active, lambda{ where("end_time > ?", Time.now) }
   scope :without_campaign, lambda{|c| where("campaign_id <> ?", c.to_i)}
   scope :oldest, order("start_time ASC")
   scope :active_for_user_and_campaign, lambda{ |user,campaign| campaign_type.for_user(user).for_campaign(campaign).active }
   scope :active_for_user_except_campaign, lambda{ |user,campaign| campaign_type.for_user(user).without_campaign(campaign).active }
   scope :active_regular_for_user, lambda{ |user| regular_type.for_user(user).active }
+  scope :with_time_from, lambda{ |time| where("start_time >= ?", Time.zone.parse(time)) }
+  scope :with_time_to, lambda{ |time| where("end_time <= ?", Time.zone.parse(time)) }
+
+  include ScopedSearch::Model
 
   private
 

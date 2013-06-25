@@ -65,6 +65,7 @@ class CallResult < ActiveRecord::Base
   scope :created_at_to, lambda { |to| where("call_results.created_at::DATE <= ?", to.to_date) }
   #scope :created_by_call_centres, lambda { |call_centres| where(:creator_id => User::CallCentre.find_all_by_id(call_centres).map(&:children).flatten.map(&:id)) }
   #scope :created_by_agents, lambda { |agents| where(:creator_id => agents.map(&:to_i)) }
+  scope :with_call_id, select("call_results.*, (select call_id from call_logs where state = 'TALK' and caller_id = call_results.creator_id and call_logs.created_at < call_results.created_at AND @EXTRACT(EPOCH FROM call_logs.created_at - call_results.created_at) < 1800 ORDER BY created_at DESC LIMIT 1) call_id")
   default_scope :order => 'call_results.created_at DESC'
 
   def campaign_result
@@ -136,7 +137,6 @@ class CallResult < ActiveRecord::Base
   def call_log
     CallLog.talk.order("call_logs.created_at desc").
         where(:caller_id => creator_id).
-#        where(:contact_id => contact_id).
         where("call_logs.created_at < :call_result AND @EXTRACT(EPOCH FROM call_logs.created_at - :call_result) < 1800", :call_result => created_at).
         first
   end

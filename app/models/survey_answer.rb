@@ -24,13 +24,13 @@ class SurveyAnswer < ActiveRecord::Base
 
   def is_filled?
     if survey_question.parent_id.present?
-      value_or_option_ids.present? and chosen_branched_question?
+      value_or_options.present? and chosen_branched_question?
     else
-      value_or_option_ids.present?
+      value_or_options.present?
     end
   end
 
-  def value_or_option_ids
+  def value_or_options
     if is_select_type?
       survey_options.map(&:title).join
     else
@@ -39,7 +39,7 @@ class SurveyAnswer < ActiveRecord::Base
   end
 
   def to_s
-    "#{survey_question.title}: #{value_or_option_ids}"
+    "#{survey_question.title}: #{value_or_options}"
   end
 
   def chosen_branched_question?

@@ -148,7 +148,8 @@ en:
         agent_performance: "Agent perf."
         payout: "Payout"
         background_tasks: "Background tasks"
-        login_time_requests: "Login time"
+        login_time_requests: "Time request"
+        login_time: "Login time"
         surveys: "Surveys"
         softphone_servers: "Softphones"
         softphone_listing: "Soft. listing"
@@ -2967,6 +2968,7 @@ en:
           campaign: "Campaign"
           value: "Value"
           results: "#"
+          calls: "C"
           hours: "Hours"
           rate: "Rate"
           agent: "Agent"
@@ -4296,6 +4298,14 @@ en:
       button_cancel: "Cancel"
     show:
       header: "Briefing area"
+      no_briefing: "No briefing data for this campaign"
+      last_results: "Last 20 results"
+      table:
+        agent: "Agent"
+        contact: "Contact"
+        result: "Result"
+        created_at: "Created at"
+        listen: "Listen"
   production:
     show:
       view:
@@ -4445,6 +4455,10 @@ en:
         phone_numer: "Phone number"
         password: "Password"
         server: "Server"
+  user_session_logs:
+    index:
+      header: "Login time"
+      total_hours: "Total hours"
   login_time_requests:
     new:
       header: "Login time requests"
@@ -5023,6 +5037,7 @@ en:
           send_to_newsletters: "Send to newsletters"
           total_column: "Total #"
           answers_column: "Answers #"
+          view_responses: "View responses"
       edit:
         view:
           edit_question: "Edit"
@@ -5035,6 +5050,7 @@ en:
           welcome_page: "Welcome page"
           thank_you_page: "Thank you page"
         preview_button: "Preview"
+        responses_button: "View responses"
       form:
         move_right: "Add >"
         move_left: "< Remove"
@@ -5055,6 +5071,19 @@ en:
       show:
         view:
           preview: "Preview"
+    survey_recipients:
+      index:
+        view:
+          header: "Survey responses for %{survey_name}"
+          email: "E-mail"
+          show: "Show"
+          all_responses: "All responses"
+          export: "Export to XLS"
+      show:
+        view:
+          header: "Survey response from %{email} for %{survey_name}"
+          next: "Next >>"
+          previous: "<< Previous"
   surveys:
     show:
       view:

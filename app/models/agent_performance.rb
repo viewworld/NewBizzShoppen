@@ -26,6 +26,10 @@ class AgentPerformance
     results.sum(:results)
   end
 
+  def call_count
+    calls.sum(:calls)
+  end
+
   def flot_chart
     if (date_to+1-date_from).to_i > 31
       flot_months
@@ -64,15 +68,19 @@ class AgentPerformance
   end
 
   def user_session_logs
-    @user_session_logs ||= UserSessionLog.for_campaigns(campaigns).campaign_type.for_users(user).started_between(date_from, date_to+1.day)
+    @user_session_logs ||= UserSessionLog.for_campaigns(campaigns).campaign_type.for_users(user).started_between(date_from, date_to)
   end
 
   def payouts
-    @payouts ||= AgentTimesheet::Payout.for_campaigns(campaigns).for_users(user).created_between(date_from, date_to+1.day)
+    @payouts ||= AgentTimesheet::Payout.for_campaigns(campaigns).for_users(user).created_between(date_from, date_to)
   end
 
   def results
-    @results ||= AgentTimesheet::Results.for_campaigns(campaigns).for_users(user).created_between(date_from, date_to+1.day)
+    @results ||= AgentTimesheet::Results.for_campaigns(campaigns).for_users(user).created_between(date_from, date_to)
+  end
+
+  def calls
+    @calls ||= AgentTimesheet::Calls.for_campaigns(campaigns).for_users(user).created_between(date_from, date_to)
   end
 
   public

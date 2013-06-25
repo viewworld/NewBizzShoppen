@@ -45,10 +45,10 @@
           <td class="fr"></td>
         </tr>
         </tfoot>
-        <tbody id="invoices_list">
+        <tbody id="payouts_list">
         <% @call_results.each do |call_result| %>
             <% campaign_result = call_result.result.campaigns_results.where(:campaign_id => call_result.contact.campaign_id).first %>
-            <tr class="<%= cycle("odd", "even") %>">
+            <tr class="<%= cycle("odd", "even") %>" data-id="<%= call_result.id %>">
               <td class="cl"></td>
               <td><%= l call_result.created_at, :format => :long %></td>
               <td><%= "#{call_result.creator.email}, #{call_result.creator.full_name}" %></td>
@@ -63,7 +63,7 @@
                 <%= call_result.payout_currency %>
               </td>
               <td>
-                <% if call_result.call_log and this_call_url = call_url(call_result.call_log.call_id) %>
+                <% if this_call_url = call_url(call_result.call_id) %>
                     <audio preload="none" src="<%= this_call_url %>" controls="controls">
                 <% end %>
               </td>

@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_filter do
+    $request = request
+  end
+
   before_filter :redirect_to_correct_site
   before_filter :authorize_with_http_basic_for_staging, :check_category_supplier, :update_log_entries, :set_user_time_zone
   before_filter :prepare_search, :if => proc{session[:site]=="fairdeals"}
@@ -57,7 +61,7 @@ class ApplicationController < ActionController::Base
       UserSessionLog.update_regular_time(current_user)
       if (self.class.name.match(/::AgentWorkScreen/) or UserSessionLog::CAMPAIGN_CONTROLLERS.include?(self.class.to_s)) and params[:campaign_id] and !logged_as_other_user?
         UserSessionLog.update_campaign_time(current_user, params[:campaign_id])
-      else
+      elsif !UserSessionLog::IGNORED_CONTROLLERS.include?(self.class.to_s)
         UserSessionLog.close_all_campaign_logs_for_user(current_user)
       end
     end

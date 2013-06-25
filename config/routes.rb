@@ -235,7 +235,6 @@ Nbs::Application.routes.draw do
       member do
         post 'result_details'
         post 'export_result_details'
-        get 'contacts_for_search'
         post 'duplicate'
       end
       collection do
@@ -268,6 +267,9 @@ Nbs::Application.routes.draw do
       resources :agent_work_screen, :only => :index
       namespace :agent_work_screen do
         resources :contacts, :only => [:create, :show, :destroy, :update] do
+          collection do
+            get 'contacts_for_search'
+          end
           resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
         end
         resource :call_sheet, :only => [:show]
@@ -319,6 +321,7 @@ Nbs::Application.routes.draw do
         put :reject
       end
     end
+    resources :user_session_logs
     resources :survey_recipients
   end
 
@@ -515,6 +518,11 @@ Nbs::Application.routes.draw do
         end
         member do
           put :remove_parent
+        end
+      end
+      resources :survey_recipients do
+        collection do
+          post :export
         end
       end
       member do
