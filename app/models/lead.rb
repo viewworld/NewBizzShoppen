@@ -116,7 +116,7 @@ class Lead < AbstractLead
   end
 
   def process_for_lead_information?
-    !(requestee and requestee.has_role?(:member))
+    !(requestee and requestee.has_role?(:member)) and upgraded_from_survey_id.blank?
   end
 
   #prevent dialling codes from saving when no proper phone number follows them

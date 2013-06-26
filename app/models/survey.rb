@@ -5,6 +5,7 @@ class Survey < ActiveRecord::Base
   has_many :survey_recipients, :dependent => :destroy
   has_many :survey_answers, :through => :survey_recipients
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
+  belongs_to :lead_creator, :foreign_key => "lead_creator_id", :class_name => "User"
   has_and_belongs_to_many :newsletter_lists
   has_and_belongs_to_many :campaigns
   has_and_belongs_to_many :categories
@@ -12,6 +13,7 @@ class Survey < ActiveRecord::Base
   accepts_nested_attributes_for :survey_questions, :allow_destroy => true
 
   validates_presence_of :name, :unless => Proc.new{|n| n.skip_validations}
+  validate :categories_and_lead_creator_present, :if => Proc.new{|n| n.upgrade_contacts_to_leads}
 
   attr_accessor :skip_validations
 
@@ -70,5 +72,10 @@ class Survey < ActiveRecord::Base
 
   def can_be_destroyed
     newsletter_lists.empty? and campaigns.empty? and survey_answers.empty?
+  end
+
+  def categories_and_lead_creator_present
+    errors.add(:upgrade_contacts_to_leads, I18n.t("models.survey.upgrade_contacts_to_leads.categories_empty")) if categories.empty?
+    errors.add(:lead_creator_id, I18n.t("models.survey.lead_creator.blank")) unless lead_creator
   end
 end

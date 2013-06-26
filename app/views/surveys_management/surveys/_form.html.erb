@@ -76,6 +76,14 @@
         </div>
       </div>
 
+      <fieldset class="inputs labels_ta_r">
+        <ol class="align_inputs">
+          <li class="header">
+            <h3><%= t("surveys_management.surveys.edit.view.categories_selection") %></h3>
+          </li>
+        </ol>
+      </fieldset>
+
       <div id="survey_categories">
         <div class="pdd_10">
           <div class="grid_210 fltl">&nbsp;</div>
@@ -97,8 +105,25 @@
           <clb/>
         </div>
       </div>
+
+      <fieldset class="inputs labels_ta_r">
+        <ol class="align_inputs">
+          <%= form.input :upgrade_contacts_to_leads %>
+          <%= form.input :lead_creator_id, :collection => (current_user.admin? ? User.with_any_role([:agent, :call_centre_agent]) : current_user.subaccounts).map { |u| [u.email, u.id] } %>
+        </ol>
+      </fieldset>
     </div>
 <% end %>
+
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r">
+    <ol class="align_inputs">
+      <li class="header">
+        <h3><%= t("surveys_management.surveys.edit.view.questions") %></h3>
+      </li>
+    </ol>
+  </fieldset>
+</div>
 
 <ol class="draggable_questions_container">
     <% SurveyQuestion::QUESTION_TYPES.each do |qtype| %>

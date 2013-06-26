@@ -15,6 +15,8 @@ class SurveysManagement::SurveysController < SurveysManagement::SurveysManagemen
   end
 
   def update
+    @campaigns = Campaign.available_for_user(current_user)
+
     update! do |success, failure|
       success.html { redirect_to surveys_management_surveys_path }
       failure.html { render 'edit' }

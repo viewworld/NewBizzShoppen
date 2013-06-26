@@ -10,6 +10,8 @@ class CampaignsResult < ActiveRecord::Base
 
   before_save :set_euro_value
 
+  scope :for_campaign, lambda { |campaign| where(:campaign_id => campaign.id) }
+
   acts_as_taggable
 
   CSV_ATTRS = %w{ campaign_name result_name }

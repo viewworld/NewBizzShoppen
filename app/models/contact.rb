@@ -121,8 +121,20 @@ class Contact < AbstractLead
     agent ? agent.full_name : "-"
   end
 
-  def upgrade_to_lead
+  def upgrade_to_lead(survey=nil)
     self.reload
+    if survey
+      self.upgraded_from_survey_id = survey.id
+      survey.categories.each do |_category|
+        self.category = _category
+        upgrade_to_lead!
+      end
+    else
+      upgrade_to_lead!
+    end
+  end
+
+  def upgrade_to_lead!
     lead = self.deep_clone!({:with_callbacks => true, :include => [:lead_purchases, :lead_translations, {:lead_template_values => :lead_template_value_translations}]})
     lead.update_attribute :type, "Lead"
 

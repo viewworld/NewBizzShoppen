@@ -2,7 +2,7 @@ class CallResult < ActiveRecord::Base
   attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_2,
                 :contact_address_line_3, :contact_zip_code, :contact_country_id, :contact_phone_number,
                 :contact_company_name, :buying_category_ids, :result_id_changed, :user_not_charge_vat, :current_user, :contact_subscription_plan_id,
-                :contact_newsletter_on, :contact_requested_deal_ids, :upgraded_user, :chain_mail_type_id
+                :contact_newsletter_on, :contact_requested_deal_ids, :upgraded_user, :chain_mail_type_id, :survey
 
   CSV_ATTRS = %w{ result_name }
 
@@ -264,7 +264,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def process_for_upgraded_to_lead
-    contact.upgrade_to_lead
+    contact.upgrade_to_lead(survey)
     process_for_final_result
   end
 

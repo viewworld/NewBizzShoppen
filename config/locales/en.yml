@@ -3422,6 +3422,11 @@ en:
         state0: "Sent"
         state1: "Visited"
         state2: "Completed"
+    survey:
+      upgrade_contacts_to_leads:
+        categories_empty: "At least one category has to be assigned."
+      lead_creator:
+        blank: "No user chosen."
   activerecord:
     models:
       article:
@@ -4161,7 +4166,8 @@ en:
         merge_with_cleanup: "Delete merged tags"
       survey:
         newsletter_owner_email: "List owner email"
-
+        upgrade_contacts_to_leads: "Upgrade contacts to leads upon survey completion"
+        lead_creator_id: "Lead creator"
   users:
     delayed_jobs:
       view_all: "View all"
@@ -5049,6 +5055,8 @@ en:
           branch_option: "Option"
           welcome_page: "Welcome page"
           thank_you_page: "Thank you page"
+          categories_selection: "Categories selection"
+          questions: "Questions"
         preview_button: "Preview"
         responses_button: "View responses"
       form:
