@@ -40,6 +40,8 @@ describe TopAgent do
     @contact2 = Contact.make!(:campaign => @campaign)
     @contact3 = Contact.make!(:campaign => @campaign, :price => 130)
     @contact4 = Contact.make!(:campaign => @campaign, :price => 13)
+    @contact5 = Contact.make!(:campaign => @campaign, :price => 100)
+    @contact6 = Contact.make!(:campaign => @campaign, :price => 70)
   end
 
   context "Initialization" do
@@ -111,8 +113,8 @@ describe TopAgent do
     it "should return correct value for today when there are upgraded to lead results" do
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1) # 130
       CallResult.make!(:contact => @contact4, :result => @result4, :creator => @call_centre_agent1) # 13
-      CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
-      CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-1.day)
+      CallResult.make!(:contact => @contact5, :result => @result3, :creator => @call_centre_agent2)
+      CallResult.make!(:contact => @contact6, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-1.day)
       ta = TopAgent.today(@currency)
       ta.value_created.should == 143.0 and ta.user.screen_name.should == "Tom, CCA1"
     end
@@ -120,8 +122,8 @@ describe TopAgent do
     it "should return correct value for week when there are upgraded to lead results" do
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset) # 130
       CallResult.make!(:contact => @contact4, :result => @result4, :creator => @call_centre_agent1, :created_at => Time.now.end_of_week+Time.now.end_of_week.utc_offset) # 13
-      CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
-      CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-2.week)
+      CallResult.make!(:contact => @contact5, :result => @result3, :creator => @call_centre_agent2)
+      CallResult.make!(:contact => @contact6, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-2.week)
       ta = TopAgent.week(@currency)
       ta.value_created.should == 143.0 and ta.user.screen_name.should == "Tom, CCA1"
     end
@@ -129,8 +131,8 @@ describe TopAgent do
     it "should return correct value for quarter when there are upgraded to lead results" do
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_quarter+Time.now.beginning_of_quarter.utc_offset) # 130
       CallResult.make!(:contact => @contact4, :result => @result4, :creator => @call_centre_agent1, :created_at => Time.now.end_of_quarter+Time.now.end_of_quarter.utc_offset) # 13
-      CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
-      CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-4.months)
+      CallResult.make!(:contact => @contact5, :result => @result3, :creator => @call_centre_agent2)
+      CallResult.make!(:contact => @contact6, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-4.months)
       ta = TopAgent.quarter(@currency)
       ta.value_created.should == 143.0 and ta.user.screen_name.should == "Tom, CCA1"
     end
@@ -138,8 +140,8 @@ describe TopAgent do
     it "should return correct value for year when there are upgraded to lead results" do
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_year+Time.now.beginning_of_year.utc_offset) # 130
       CallResult.make!(:contact => @contact4, :result => @result4, :creator => @call_centre_agent1, :created_at => Time.now.end_of_year+Time.now.end_of_year.utc_offset) # 13
-      CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
-      CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-2.years)
+      CallResult.make!(:contact => @contact5, :result => @result3, :creator => @call_centre_agent2)
+      CallResult.make!(:contact => @contact6, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-2.years)
       ta = TopAgent.year(@currency)
       ta.value_created.should == 143.0 and ta.user.screen_name.should == "Tom, CCA1"
     end
@@ -153,8 +155,8 @@ describe TopAgent do
       CallResult.make!(:contact => @contact2, :result => @result2, :creator => @call_centre_agent1, :created_at => Time.now-1.day)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1) # 130
       CallResult.make!(:contact => @contact4, :result => @result4, :creator => @call_centre_agent1) # 13
-      CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
-      CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-1.day)
+      CallResult.make!(:contact => @contact5, :result => @result3, :creator => @call_centre_agent2)
+      CallResult.make!(:contact => @contact6, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-1.day)
       ta = TopAgent.today(@currency)
       ta.value_created.should == 253.0 and ta.user.screen_name.should == "Tom, CCA1"
     end
@@ -166,8 +168,8 @@ describe TopAgent do
       CallResult.make!(:contact => @contact2, :result => @result2, :creator => @call_centre_agent1, :created_at => Time.now-2.weeks)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset) # 130
       CallResult.make!(:contact => @contact4, :result => @result4, :creator => @call_centre_agent1, :created_at => Time.now.end_of_week+Time.now.end_of_week.utc_offset) # 13
-      CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
-      CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-2.week)
+      CallResult.make!(:contact => @contact5, :result => @result3, :creator => @call_centre_agent2)
+      CallResult.make!(:contact => @contact6, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-2.week)
       ta = TopAgent.week(@currency)
       ta.value_created.should == 253.0 and ta.user.screen_name.should == "Tom, CCA1"
     end
@@ -179,8 +181,8 @@ describe TopAgent do
       CallResult.make!(:contact => @contact2, :result => @result2, :creator => @call_centre_agent1, :created_at => Time.now-4.months)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_quarter+Time.now.beginning_of_quarter.utc_offset) # 130
       CallResult.make!(:contact => @contact4, :result => @result4, :creator => @call_centre_agent1, :created_at => Time.now.end_of_quarter+Time.now.end_of_quarter.utc_offset) # 13
-      CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
-      CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-4.months)
+      CallResult.make!(:contact => @contact5, :result => @result3, :creator => @call_centre_agent2)
+      CallResult.make!(:contact => @contact6, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-4.months)
       ta = TopAgent.quarter(@currency)
       ta.value_created.should == 253.0 and ta.user.screen_name.should == "Tom, CCA1"
     end
@@ -192,8 +194,8 @@ describe TopAgent do
       CallResult.make!(:contact => @contact2, :result => @result2, :creator => @call_centre_agent1, :created_at => Time.now-2.years)
       CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_year+Time.now.beginning_of_year.utc_offset) # 130
       CallResult.make!(:contact => @contact4, :result => @result4, :creator => @call_centre_agent1, :created_at => Time.now.end_of_year+Time.now.end_of_year.utc_offset) # 13
-      CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent2)
-      CallResult.make!(:contact => @contact3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-2.years)
+      CallResult.make!(:contact => @contact5, :result => @result3, :creator => @call_centre_agent2)
+      CallResult.make!(:contact => @contact6, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now-2.years)
       ta = TopAgent.year(@currency)
       ta.value_created.should == 253.0 and ta.user.screen_name.should == "Tom, CCA1"
     end

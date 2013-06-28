@@ -390,6 +390,32 @@ Contact.blueprint do
   company_phone_number {  Faker.numerify("#######") }
 end
 
+Contact.blueprint(:empty) do
+  header { "" }
+  description { "" }
+  hidden_description { "" }
+  purchase_value { 0 }
+  price { 0.0 }
+  contact_name { "" }
+  phone_number { "" }
+  email_address { "" }
+  address_line_1 { "" }
+  address_line_3 { "" }
+  zip_code { "" }
+  sale_limit { nil }
+  purchase_decision_date { (Date.today+5) }
+  published { true }
+  currency { Currency.make!}
+  company_name { Faker::Internet.domain_word.capitalize }
+  company_phone_number {  Faker.numerify("#######") }
+  creator_id { User::Agent.make!.id }
+  creator_type { "User::Agent" }
+  creator_name { Faker::Name.name }
+  category_id { LeadCategory.make!.id }
+  country_id { 1 }
+  campaign { Campaign.make! }
+end
+
 Result.blueprint do
   name { Faker::Lorem.words(3).to_s.capitalize }
   final { false }
@@ -572,4 +598,15 @@ end
 
 ActsAsTaggableOn::Tag.blueprint do
   name { Faker::Lorem.words(1).to_s + "#{Time.now.to_f.to_s.gsub('.','')}" }
+end
+
+Survey.blueprint do
+  name { Faker::Lorem.words(2).to_s.capitalize }
+  creator { User::Admin.make! }
+end
+
+SurveyQuestion.blueprint do
+  title { Faker::Lorem.words(2).to_s.capitalize }
+  question_type { 0 }
+  is_required { false }
 end

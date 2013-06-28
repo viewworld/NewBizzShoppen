@@ -69,9 +69,11 @@ class SurveyRecipient < ActiveRecord::Base
   end
 
   def completed!
-    update_attribute(:state, STATE_COMPLETED) unless completed?
-    assign_option_tags!
-    upgrade_contact_to_leads!
+    unless completed?
+      update_attribute(:state, STATE_COMPLETED)
+      assign_option_tags!
+      upgrade_contact_to_leads!
+    end
   end
 
   def assign_option_tags!
@@ -86,7 +88,7 @@ class SurveyRecipient < ActiveRecord::Base
   def upgrade_contact_to_leads!
     upgrade_to_lead_result = Result.where(:name => "Upgraded to lead", :generic => true).first
 
-    if recipient.is_a?(Contact) and survey.upgrade_contacts_to_leads? and recipient.call_results.detect { |cr| cr.result_id == upgrade_to_lead_result.id }.nil?
+    if recipient.is_a?(Contact) and !recipient.completed? and survey.upgrade_contacts_to_leads? and recipient.call_results.detect { |cr| cr.result_id == upgrade_to_lead_result.id }.nil?
       campaign_result = upgrade_to_lead_result.campaigns_results.for_campaign(recipient.campaign).first
       recipient.attributes = { :currency_id => recipient.campaign.currency_id, :price => (campaign_result.settings["use_value_as_lead_price"] == "1" ? campaign_result.value.to_f : 0.0),
                                :purchase_decision_date => (Date.today+1.year).to_s, :sale_limit => 1, :header => survey.name, :published => true }

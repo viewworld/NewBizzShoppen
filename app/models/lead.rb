@@ -19,6 +19,7 @@ class Lead < AbstractLead
   belongs_to :region
   belongs_to :deal, :class_name => "Deal", :foreign_key => "deal_id"
   belongs_to :campaign
+  belongs_to :contact
   has_many :lead_certification_requests, :dependent => :destroy
   has_many :lead_translations, :dependent => :destroy
   has_many :lead_purchases
@@ -367,9 +368,7 @@ class Lead < AbstractLead
   end
 
   def survey_recipients_for_category
-    # this will change because there will be contact < leads relation INSTEAD OF contact < lead
-    upgraded_contact = Contact.where("lead_id = ?", id).first
-    recipient_ids = survey_recipient_ids + (upgraded_contact ? upgraded_contact.survey_recipient_ids : [])
+    recipient_ids = survey_recipient_ids + (contact ? contact.survey_recipient_ids : [])
     SurveyRecipient.where("survey_recipients.id in (?)", recipient_ids).joins(:survey => :categories).where("category_id = ?", category_id)
   end
 

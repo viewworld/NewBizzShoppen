@@ -294,8 +294,8 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact1_1, :result => @result_final_reported, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
-      LeadPurchase.make!(:lead => @contact1_3.lead)
-      LeadPurchase.make!(:lead => @contact1_4.lead)
+      LeadPurchase.make!(:lead => @contact1_3.leads.first)
+      LeadPurchase.make!(:lead => @contact1_4.leads.first)
       cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.leads_sold_total_value.should == 143.0
     end
@@ -308,8 +308,8 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact1_1, :result => @result_final_reported, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
-      LeadPurchase.make!(:lead => @contact1_3.lead)
-      LeadPurchase.make!(:lead => @contact1_4.lead)
+      LeadPurchase.make!(:lead => @contact1_3.leads.first)
+      LeadPurchase.make!(:lead => @contact1_4.leads.first)
       cr = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :currency_id => @campaign1.currency_id)
       cr.leads_sold_count.should == 2
     end
@@ -379,8 +379,8 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact1_1, :result => @result_final_reported, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
-      LeadPurchase.make!(:lead => @contact1_3.lead)
-      LeadPurchase.make!(:lead => @contact1_4.lead)
+      LeadPurchase.make!(:lead => @contact1_3.leads.first)
+      LeadPurchase.make!(:lead => @contact1_4.leads.first)
       @campaign1.update_attribute(:cost_type, Campaign::AGENT_BILLING_RATE_COST)
       (1..4).each do |i|
         UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
@@ -587,8 +587,8 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact1_1, :result => @result_final_reported, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
-      LeadPurchase.make!(:lead => @contact1_3.lead)
-      LeadPurchase.make!(:lead => @contact1_4.lead)
+      LeadPurchase.make!(:lead => @contact1_3.leads.first)
+      LeadPurchase.make!(:lead => @contact1_4.leads.first)
       cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
       cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
       cr1.leads_sold_total_value.should == 130.0 and cr2.leads_sold_total_value.should == 13.0
@@ -602,8 +602,8 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact1_1, :result => @result_final_reported, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
-      LeadPurchase.make!(:lead => @contact1_3.lead)
-      LeadPurchase.make!(:lead => @contact1_4.lead)
+      LeadPurchase.make!(:lead => @contact1_3.leads.first)
+      LeadPurchase.make!(:lead => @contact1_4.leads.first)
       cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent1, :currency_id => @campaign1.currency_id)
       cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, :user => @call_centre_agent2, :currency_id => @campaign1.currency_id)
       cr1.leads_sold_count.should == 1 and cr2.leads_sold_count == 1
@@ -655,8 +655,8 @@ describe CampaignReport do
       CallResult.make!(:contact => @contact1_1, :result => @result_final_reported, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
       CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
-      LeadPurchase.make!(:lead => @contact1_3.lead)
-      LeadPurchase.make!(:lead => @contact1_4.lead, :quantity => 5)
+      LeadPurchase.make!(:lead => @contact1_3.leads.first)
+      LeadPurchase.make!(:lead => @contact1_4.leads.first, :quantity => 5)
       (1..4).each do |i|
         UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
       end
