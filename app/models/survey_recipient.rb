@@ -72,7 +72,9 @@ class SurveyRecipient < ActiveRecord::Base
     unless completed?
       update_attribute(:state, STATE_COMPLETED)
       assign_option_tags!
-      upgrade_contact_to_leads!
+      if can_recipient_be_upgraded_to_leads?
+        self.delay(:queue => "auto_upgrade_contacts_from_survey").upgrade_contact_to_leads!
+      end
     end
   end
 
@@ -83,6 +85,11 @@ class SurveyRecipient < ActiveRecord::Base
 
     tags.each { | tag| recipient.tag_list << tag }
     recipient.save
+  end
+
+  def can_recipient_be_upgraded_to_leads?
+    result = Result.where(:name => "Upgraded to lead", :generic => true).first
+    recipient.is_a?(Contact) and !recipient.completed? and survey.upgrade_contacts_to_leads? and recipient.campaign.results.where(:id => result.id).first.present?
   end
 
   def upgrade_contact_to_leads!
