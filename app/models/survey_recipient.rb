@@ -65,13 +65,19 @@ class SurveyRecipient < ActiveRecord::Base
   end
 
   def visited!
-    update_attribute(:state, STATE_VISITED) if not_visited?
+    if not_visited?
+      update_attribute(:state, STATE_VISITED)
+      if survey.link_clicked_chain_mail_type.present?
+        ChainMail.create(:chain_mailable => self, :chain_mail_type => survey.link_clicked_chain_mail_type, :email => email)
+      end
+    end
   end
 
   def completed!
     unless completed?
       update_attribute(:state, STATE_COMPLETED)
       assign_option_tags!
+      send_chain_mails_for_selected_options!
       if can_recipient_be_upgraded_to_leads?
         self.delay(:queue => "auto_upgrade_contacts_from_survey").upgrade_contact_to_leads!
       end
@@ -85,6 +91,12 @@ class SurveyRecipient < ActiveRecord::Base
 
     tags.each { | tag| recipient.tag_list << tag }
     recipient.save
+  end
+
+  def send_chain_mails_for_selected_options!
+    ChainMailType.joins(:survey_options => :survey_answers).select("distinct(chain_mail_types.*)").where("survey_answers.id IN (?)", survey_answer_ids).each do |chain_mail_type|
+      ChainMail.create(:chain_mailable => self, :chain_mail_type => chain_mail_type, :email => email)
+    end
   end
 
   def can_recipient_be_upgraded_to_leads?
@@ -146,6 +158,23 @@ class SurveyRecipient < ActiveRecord::Base
 
   def answer_for_question(question)
     survey_answers.detect{ |sa| sa.survey_question_id == question.id }
+  end
+
+  def link_not_clicked_chain_mail_delay_expired?
+    if survey.link_not_clicked_chain_mail_type and link_not_clicked_chain_mail_sent_at.nil?
+      (created_at.to_date + survey.link_not_clicked_chain_mail_delay.to_i.days) <= Date.today
+    else
+      false
+    end
+  end
+
+  def self.send_not_clicked_link_chain_mails
+    SurveyRecipient.with_state(STATE_NOT_VISITED).joins(:survey).where("surveys.link_not_clicked_chain_mail_type_id IS NOT NULL and link_not_clicked_chain_mail_sent_at IS NULL").readonly(false).each do |survey_recipient|
+      if survey_recipient.link_not_clicked_chain_mail_delay_expired?
+        ChainMail.create(:chain_mailable => survey_recipient, :chain_mail_type => survey_recipient.survey.link_not_clicked_chain_mail_type, :email => survey_recipient.email)
+        survey_recipient.update_attribute(:link_not_clicked_chain_mail_sent_at, Time.now)
+      end
+    end
   end
 
   private

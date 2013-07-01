@@ -610,3 +610,7 @@ SurveyQuestion.blueprint do
   question_type { 0 }
   is_required { false }
 end
+
+SurveyOption.blueprint do
+  title { Faker::Lorem.words(2).to_s.capitalize }
+end

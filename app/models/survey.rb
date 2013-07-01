@@ -6,13 +6,16 @@ class Survey < ActiveRecord::Base
   has_many :survey_answers, :through => :survey_recipients
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
   belongs_to :lead_creator, :foreign_key => "lead_creator_id", :class_name => "User"
+  belongs_to :link_clicked_chain_mail_type, :class_name => "ChainMailType"
+  belongs_to :link_not_clicked_chain_mail_type, :class_name => "ChainMailType"
   has_and_belongs_to_many :newsletter_lists
   has_and_belongs_to_many :campaigns
   has_and_belongs_to_many :categories
 
   accepts_nested_attributes_for :survey_questions, :allow_destroy => true
 
-  validates_presence_of :name, :unless => Proc.new{|n| n.skip_validations}
+  validates_presence_of :name, :unless => Proc.new{|s| s.skip_validations}
+  validates_numericality_of :link_not_clicked_chain_mail_delay, :if => Proc.new { |s| s.link_not_clicked_chain_mail_type.present? }
   validate :categories_and_lead_creator_present, :if => Proc.new{|n| n.upgrade_contacts_to_leads}
 
   attr_accessor :skip_validations

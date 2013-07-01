@@ -63,4 +63,87 @@ describe Survey do
       end
     end
   end
+
+  context "chain mails for surveys" do
+    def set_date(d)
+      Date.stubs(:today).returns(d)
+    end
+
+    before(:each) do
+      @chain_mail_link_clicked = ChainMailType.make!
+      @chain_mail_link_not_clicked = ChainMailType.make!
+      @chain_mail_option_1 = ChainMailType.make!
+      @chain_mail_option_2 = ChainMailType.make!
+      @survey.update_attributes(:link_clicked_chain_mail_type => @chain_mail_link_clicked, :link_not_clicked_chain_mail_type => @chain_mail_link_not_clicked, :link_not_clicked_chain_mail_delay => 5)
+      @select_question = @survey.survey_questions.make!(:question_type => SurveyQuestion::SELECT_TYPE)
+      @option_1 = @select_question.survey_options.make!(:chain_mail_type => @chain_mail_option_1, :tag_list => ["tag_1", "tag_2"])
+      @option_2 = @select_question.survey_options.make!(:chain_mail_type => @chain_mail_option_2, :tag_list => ["tag_3", "tag_4"])
+      @survey.reload
+
+      @survey_recipient = @survey.create_survey_recipient(User::Supplier.make!)
+    end
+
+    it "should send chain mail when link is visited" do
+      ChainMail.count.should == 0
+      @survey_recipient.visited!
+      ChainMail.count.should == 1
+      ChainMail.last.chain_mail_type.should == @chain_mail_link_clicked
+    end
+
+    it "should send chain mail when link is not visited after set amount of days (delay)" do
+      ChainMail.count.should == 0
+      @survey_recipient2 = @survey.create_survey_recipient(User::Supplier.make!, false, false)
+      @survey_recipient2.visited!
+
+      #this is the visited link chain mail
+      ChainMail.count.should == 1
+      ChainMail.last.chain_mail_type.should == @chain_mail_link_clicked
+
+      set_date(Date.today + 4.days)
+
+      SurveyRecipient.send_not_clicked_link_chain_mails
+
+      #no new chain mails
+      ChainMail.count.should == 1
+
+      set_date(Date.today + 5.days)
+
+      SurveyRecipient.send_not_clicked_link_chain_mails
+
+      #not clicked chain mail sent
+      ChainMail.count.should == 2
+
+      ChainMail.last.chain_mail_type.should == @chain_mail_link_not_clicked
+
+      @survey_recipient.reload
+      @survey_recipient.link_not_clicked_chain_mail_sent_at.should_not be_nil
+
+      SurveyRecipient.send_not_clicked_link_chain_mails
+
+      #should not send again
+      ChainMail.count.should == 2
+    end
+
+    it "should send chain mail from the chosen survey options and tag the recipient object accordingly upon completion" do
+      ChainMail.count.should == 0
+
+      @survey_recipient.visited!
+
+      ChainMail.count.should == 1
+
+      @survey_recipient.survey_answers.create(:survey_question_id => @select_question.id, :question_type => 4, :survey_option_ids => [@option_2.id])
+      @survey_recipient.reload
+
+      @survey_recipient.completed!
+
+      ChainMail.count.should == 2
+
+      ChainMail.last.chain_mail_type.should == @chain_mail_option_2
+
+      @survey_recipient.reload
+
+      #recipient should also be tagged by the chosen survey options
+      @survey_recipient.recipient.tag_list.sort.should == ["tag_3", "tag_4"]
+    end
+  end
 end

@@ -217,7 +217,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def process_result_tags
-    unless campaign_result.tag_list.empty?
+    if campaign_result and campaign_result.tag_list.present?
       campaign_result.tag_list.each do |tag|
         contact.tag_list << tag
       end

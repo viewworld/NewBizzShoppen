@@ -4168,6 +4168,9 @@ en:
         newsletter_owner_email: "List owner email"
         upgrade_contacts_to_leads: "Upgrade contacts to leads upon survey completion"
         lead_creator_id: "Lead creator"
+        link_clicked_chain_mail_type_id: "Link clicked chain mail"
+        link_not_clicked_chain_mail_type_id: "Link not clicked chain mail"
+        link_not_clicked_chain_mail_delay: "Link not clicked chain mail delay"
   users:
     delayed_jobs:
       view_all: "View all"
@@ -5057,6 +5060,7 @@ en:
           thank_you_page: "Thank you page"
           categories_selection: "Categories selection"
           questions: "Questions"
+          number_of_days: "# of days"
         preview_button: "Preview"
         responses_button: "View responses"
       form:
@@ -5108,3 +5112,4 @@ en:
       survey_already_sent: "Survey has already been sent"
       edit_survey_answers: "Edit survey's response"
       email_blank: "No email to send the survey."
+      chain_mail: "Chain mail"
