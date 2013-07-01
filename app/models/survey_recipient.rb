@@ -168,7 +168,7 @@ class SurveyRecipient < ActiveRecord::Base
     end
   end
 
-  def self.send_not_clicked_link_chain_mails
+  def self.send_link_not_clicked_chain_mails!
     SurveyRecipient.with_state(STATE_NOT_VISITED).joins(:survey).where("surveys.link_not_clicked_chain_mail_type_id IS NOT NULL and link_not_clicked_chain_mail_sent_at IS NULL").readonly(false).each do |survey_recipient|
       if survey_recipient.link_not_clicked_chain_mail_delay_expired?
         ChainMail.create(:chain_mailable => survey_recipient, :chain_mail_type => survey_recipient.survey.link_not_clicked_chain_mail_type, :email => survey_recipient.email)

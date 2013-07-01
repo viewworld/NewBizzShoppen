@@ -101,14 +101,14 @@ describe Survey do
 
       set_date(Date.today + 4.days)
 
-      SurveyRecipient.send_not_clicked_link_chain_mails
+      SurveyRecipient.send_link_not_clicked_chain_mails!
 
       #no new chain mails
       ChainMail.count.should == 1
 
       set_date(Date.today + 5.days)
 
-      SurveyRecipient.send_not_clicked_link_chain_mails
+      SurveyRecipient.send_link_not_clicked_chain_mails!
 
       #not clicked chain mail sent
       ChainMail.count.should == 2
@@ -118,7 +118,7 @@ describe Survey do
       @survey_recipient.reload
       @survey_recipient.link_not_clicked_chain_mail_sent_at.should_not be_nil
 
-      SurveyRecipient.send_not_clicked_link_chain_mails
+      SurveyRecipient.send_link_not_clicked_chain_mails!
 
       #should not send again
       ChainMail.count.should == 2

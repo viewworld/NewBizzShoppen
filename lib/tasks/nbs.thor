@@ -888,4 +888,10 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
   def synchronize_newsletter_lists
     NewsletterSynch.process!
   end
+
+  desc "surveys_send_link_not_clicked_chain_mails", ""
+
+  def surveys_send_link_not_clicked_chain_mails
+    SurveyRecipient.send_link_not_clicked_chain_mails!
+  end
 end
