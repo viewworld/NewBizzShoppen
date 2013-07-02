@@ -310,14 +310,15 @@ class Campaign < ActiveRecord::Base
 
   def duplicate!(with_call_results=true, user_to_notify=nil)
     clone_config = [:campaigns_results,
-                     {:send_material_email_template => :translations},
-                     {:upgrade_contact_to_buyer_email_template => :translations},
-                     {:upgrade_contact_to_category_buyer_email_template => :translations},
-                     {:upgrade_contact_to_member_email_template => :translations}]
+                    {:send_material_email_template => :translations},
+                    {:upgrade_contact_to_buyer_email_template => :translations},
+                    {:upgrade_contact_to_category_buyer_email_template => :translations},
+                    {:upgrade_contact_to_member_email_template => :translations},
+                    :call_logs]
 
     if with_call_results
       clone_config << :user_session_logs
-      clone_config << {:contacts => [{:call_results => [:call_log, :result_values, :archived_email]}, :contact_past_user_assignments, {:lead_template_values => :lead_template_value_translations}, :translations]}
+      clone_config << {:contacts => [{:call_results => [:result_values, :archived_email]}, :contact_past_user_assignments, {:lead_template_values => :lead_template_value_translations}, :translations]}
     else
       clone_config << {:contacts => [{:lead_template_values => :lead_template_value_translations}, :translations]}
     end
