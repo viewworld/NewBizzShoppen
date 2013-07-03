@@ -4486,6 +4486,7 @@ en:
         time_from: "Time from"
         time_to: "Time to"
         state: "State"
+        log_type: "Log type"
       table:
         user: "User"
         campaign: "Campaign"
@@ -4493,6 +4494,7 @@ en:
         end_time: "Time to"
         hours: "Hours count"
         aasm_state: "State"
+        log_type: "Log type"
   agent_performance:
     show:
       view:

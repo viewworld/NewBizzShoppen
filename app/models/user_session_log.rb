@@ -22,6 +22,7 @@ class UserSessionLog < ActiveRecord::Base
 
   scope :regular_type, where(:log_type => TYPE_REGULAR).order("id ASC")
   scope :campaign_type, where(:log_type => TYPE_CAMPAIGN).order("id ASC")
+  scope :with_log_type, lambda{ |log_type| where(:log_type => log_type.to_i) }
   scope :for_user, lambda{|u| where(:user_id => u.to_i)}
   scope :for_users, lambda{|u| where(:user_id => u.to_a)}
   scope :for_campaign, lambda{|c| where(:campaign_id => c.to_i)}

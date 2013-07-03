@@ -10,11 +10,14 @@
             <ol class="no_pdd">
               <li class="select">
                 <%= f.label :for_user, t("login_time_requests.new.search.user") %>
-                <%= f.select :for_user, User.where("id IN (#{@search.select("DISTINCT(user_id)").map(&:user_id).join(',')})").map{|u| [u.screen_name, u.id] }.sort, :include_blank => true %>
+                <% agents_for_search = @search.select("DISTINCT(user_id)").map(&:user_id) %>
+                <%= f.select :for_user,(agents_for_search.any? ? User.where("id IN (#{agents_for_search.join(',')})").map{|u| [u.screen_name, u.id] }.sort : []), :include_blank => true %>
               </li>
               <li class="select">
                 <%= f.label :for_campaign, t("login_time_requests.new.search.campaign") %>
-                <%= f.select :for_campaign, Campaign.where("id IN (#{@search.where("campaign_id IS NOT NULL").select("DISTINCT(campaign_id)").map(&:campaign_id).join(',')})").map{ |c| [c.name, c.id] }.sort, :include_blank => true %>
+                <% campaigns_for_search = @search.where("campaign_id IS NOT NULL").select("DISTINCT(campaign_id)").map(&:campaign_id) %>
+                <%#=  throw @search.all %>
+                <%= f.select :for_campaign, (campaigns_for_search.any? ? Campaign.where("id IN (#{campaigns_for_search.join(',')})").map{ |c| [c.name, c.id] }.sort : []), :include_blank => true %>
               </li>
               <li class="string">
                 <%= f.label :with_time_from, t("login_time_requests.new.search.time_from") %>
@@ -23,6 +26,10 @@
               <li class="string">
                 <%= f.label :with_time_to, t("login_time_requests.new.search.time_to") %>
                 <%= f.text_field :with_time_to, :class => "datetimepicker" %>
+              </li>
+              <li class="select">
+                <%= f.label :with_log_type, t("login_time_requests.new.search.log_type") %>
+                <%= f.select :with_log_type, [[""], ["Regular", 0], ["Campaign", 1]], :include_blank => false %>
               </li>
 
               <li class="commit">
@@ -47,7 +54,7 @@
     </param:content>
   </header>
 
-  <p class="fltr" style="margin-top:-20px"><%= t("user_session_logs.index.total_hours") %>: <%= @user_session_logs.sum(:hours_count) %></p>
+  <p class="fltr" style="margin-top:-20px"><%= t("user_session_logs.index.total_hours") %>: <%= number_with_precision(@user_session_logs.sum(:hours_count).to_f, :precision => 0) %></p>
 
   <table class="generic">
     <thead>
@@ -58,6 +65,7 @@
           <th><%= t("login_time_requests.new.table.start_time") %></th>
           <th><%= t("login_time_requests.new.table.end_time") %></th>
           <th><%= t("login_time_requests.new.table.hours") %></th>
+          <th><%= t("login_time_requests.new.table.log_type") %></th>
           <th></th>
           <th class="hr"></th>
         </tr>
@@ -65,7 +73,7 @@
     <tfoot>
         <tr>
           <td class="fl"></td>
-          <td colspan="6"></td>
+          <td colspan="7"></td>
           <td class="fr"></td>
         </tr>
     </tfoot>
@@ -77,6 +85,7 @@
           <td><%= l usl.start_time %></td>
           <td><%= l usl.end_time %></td>
           <td><%= number_with_precision(usl.hours_count, :precision => 2) %></td>
+          <td><%= usl.regular? ? 'Regular' : 'Campaign' %></td>
           <td class="tda ta_r">
           </td>
           <td class="cr"></td>
@@ -84,7 +93,7 @@
     <% end %>
     <tr>
       <td class="cl"></td>
-      <td colspan="6">
+      <td colspan="7">
         <%= will_paginate @user_session_logs_paginated %>
       </td>
       <td class="cr"></td>
