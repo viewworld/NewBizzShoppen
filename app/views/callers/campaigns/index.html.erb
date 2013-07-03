@@ -75,32 +75,140 @@
                   <%= link_to t("campaigns.index.result"), callers_campaign_path(campaign) %>
                 </li>
                 <li>
-                  <%= link_to t("campaigns.index.destroy"), callers_campaign_path(campaign), :confirm => t("campaigns.index.destroy_confirmation"), :method => :delete %>
+                  <%= link_to_function t("campaigns.index.destroy"), "destroyModalBox('#{campaign.id}')"%>
                 </li>
             <% end %>
             <% if current_user.admin? %>
                 <li>
-                  <%= link_to_function t("campaigns.index.duplicate"), "select_duplication_type('#{campaign.id}')"%>
+                  <%= link_to_function t("campaigns.index.duplicate"), "duplicateModalBox('#{campaign.id}')"%>
+                </li>
+                <li>
+                  <%= link_to_function t("campaigns.index.clear"), "clearModalBox('#{campaign.id}')"%>
                 </li>
             <% end %>
           </ul-actions>
       <% end %>
   <% end %>
 
+  <div style="display:none;">
+    <div id="duplicate_campaign_modal_box">
+      <frm title="#{t('campaigns.index.duplication_confirmation')}">
+        <param:content>
+          <div class="pdd_10 no_pdd_t">
+            <fieldset class="inputs labels_ta_r labels_200">
+              <%= check_box_tag :with_contacts, "1", true, :id => "duplicate_with_contacts", :onclick => "checkDuplicationWithContactsSelection()" %> <%= t("campaigns.index.copy_contacts") %>
+              <br>
+              <%= check_box_tag :with_call_results, "1", true, :id => "duplicate_with_call_results" %> <%= t("campaigns.index.copy_call_results") %>
+              <br>
+              <%= check_box_tag :with_agent_time, "1", true, :id => "duplicate_with_agent_time" %> <%= t("campaigns.index.copy_agent_time") %>
+              <br>
+            </fieldset>
+          </div>
+        </param:content>
+        <param:actions>
+          <%= bt_link_to nil, t("campaigns.index.duplicate"), "javascript:;", :class => "bt_duplicate" %>
+          <%= bt_link_to nil, t("common.cancel_link"), "javascript:$.colorbox.close()", :class => "bt_grey fltr" %>
+        </param:actions>
+      </frm>
+    </div>
+
+    <div id="clear_campaign_modal_box">
+      <frm title="#{t('campaigns.index.clear_confirmation')}">
+        <param:content>
+          <div class="pdd_10 no_pdd_t">
+            <fieldset class="inputs labels_ta_r labels_200">
+              <%= check_box_tag :with_contacts, "1", true, :id => "clear_with_contacts", :onclick => "checkClearWithContactsSelection()" %> <%= t("campaigns.index.clear_contacts") %>
+              <br>
+              <%= check_box_tag :with_call_results, "1", true, :id => "clear_with_call_results" %> <%= t("campaigns.index.clear_call_results") %>
+              <br>
+              <%= check_box_tag :with_agent_time, "1", true, :id => "clear_with_agent_time" %> <%= t("campaigns.index.clear_agent_time") %>
+              <br>
+            </fieldset>
+          </div>
+        </param:content>
+        <param:actions>
+          <%= bt_link_to nil, t("campaigns.index.clear"), "javascript:;", :class => "bt_clear" %>
+          <%= bt_link_to nil, t("common.cancel_link"), "javascript:$.colorbox.close()", :class => "bt_grey fltr" %>
+        </param:actions>
+      </frm>
+    </div>
+
+    <div id="destroy_campaign_modal_box">
+      <frm title="#{t('campaigns.index.destroy_confirmation')}">
+        <param:content>
+          <div class="pdd_10 no_pdd_t">
+            <fieldset class="inputs labels_ta_r labels_200">
+              <%= check_box_tag :with_agent_time, "1", true, :id => "destroy_with_agent_time" %> <%= t("campaigns.index.destroy_agent_time") %>
+              <br>
+            </fieldset>
+          </div>
+        </param:content>
+        <param:actions>
+          <%= bt_link_to nil, t("campaigns.index.destroy"), "javascript:;", :class => "bt_destroy" %>
+          <%= bt_link_to nil, t("common.cancel_link"), "javascript:$.colorbox.close()", :class => "bt_grey fltr" %>
+        </param:actions>
+      </frm>
+    </div>
+  </div>
+
 </column-mc:>
 
 <js:>
   <script type="text/javascript">
-    function select_duplication_type(campaign_id){
-        if(confirm("<%= t("campaigns.index.duplication_confirmation") %>")){
-            if(confirm("<%= t("campaigns.index.duplication_with_call_results_and_time") %>")){
-                $.post('/callers/campaigns/' + campaign_id + '/duplicate.js?with_call_results=1', {'_method':'post'});
-            }
-            else
-            {
-                $.post('/callers/campaigns/' + campaign_id + '/duplicate.js?with_call_results=0', {'_method':'post'});
-            }
+    function duplicateModalBox(campaign_id){
+        $('a.bt_duplicate').unbind('click').click(function(){
+            $.post('/callers/campaigns/' + campaign_id + '/duplicate.js', {'_method':'post', with_contacts: $('#duplicate_with_contacts').attr("checked"),
+                with_call_results: $('#duplicate_with_call_results').attr("checked"), with_agent_time: $('#duplicate_with_agent_time').attr("checked")});
+            $.colorbox.close();
+        });
+
+        $.colorbox({href:"#duplicate_campaign_modal_box",
+            width: 500, maxHeight: 700, overlayClose: true, inline: true
+        });
+    }
+
+    function clearModalBox(campaign_id){
+        $('a.bt_clear').unbind('click').click(function(){
+            $.post('/callers/campaigns/' + campaign_id + '/clear.js', {'_method':'post', with_contacts: $('#clear_with_contacts').attr("checked"),
+                with_call_results: $('#clear_with_call_results').attr("checked"), with_agent_time: $('#clear_with_agent_time').attr("checked")});
+            $.colorbox.close();
+        });
+
+        $.colorbox({href:"#clear_campaign_modal_box",
+            width: 500, maxHeight: 700, overlayClose: true, inline: true
+        });
+    }
+
+    function destroyModalBox(campaign_id){
+        $('a.bt_destroy').unbind('click').click(function(){
+            $.colorbox.close();
+            $.post('/callers/campaigns/' + campaign_id + '.js', {'_method':'delete', with_agent_time: $('#destroy_with_agent_time').attr("checked")});
+        });
+
+        $.colorbox({href:"#destroy_campaign_modal_box",
+            width: 500, maxHeight: 700, overlayClose: true, inline: true
+        });
+    }
+
+    function checkDuplicationWithContactsSelection(){
+        if($('#duplicate_with_contacts').attr('checked')){
+            $('#duplicate_with_call_results').attr("disabled", "")
+        } else {
+            $('#duplicate_with_call_results').attr("checked", "").attr("disabled", "disabled")
         }
     }
+
+    function checkClearWithContactsSelection(){
+        if($('#clear_with_contacts').attr('checked')){
+            $('#clear_with_call_results').attr("checked", "checked").attr("disabled", "disabled")
+        } else {
+            $('#clear_with_call_results').attr("checked", "").attr("disabled", "")
+        }
+    }
+
+    $(function(){
+        checkDuplicationWithContactsSelection();
+        checkClearWithContactsSelection();
+    });
   </script>
 </js:>
