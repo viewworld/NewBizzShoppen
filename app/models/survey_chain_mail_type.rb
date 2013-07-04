@@ -1,0 +1,3 @@
+class SurveyChainMailType < ChainMailType
+
+end

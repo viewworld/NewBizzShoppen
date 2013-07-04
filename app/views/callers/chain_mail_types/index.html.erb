@@ -45,9 +45,10 @@
     <param:actions>
       <ul class="header_actions">
         <% if params[:campaign_id] %>
-          <%= form_tag new_callers_campaign_chain_mail_type_path(params[:campaign_id]), :method => :get, :id => "form_new_chain_mail_type" do %>
+            <%= form_tag new_callers_campaign_chain_mail_type_path(params[:campaign_id]), :method => :get, :id => "form_new_chain_mail_type" do %>
               <span style="position:absolute;top: 1px; right: 310px;">
                 <%= select_tag :result_id, options_for_select(@campaign.results.map { |r| [r.name.to_s, r.id] }.sort) %>
+                <%= hidden_field_tag :type, "campaign" %>
               </span>
                 <li>
                   <div class="hidden">
@@ -56,8 +57,18 @@
                   <%= bt_link_to :plus, t("chain_mail_types.index.new"), "javascript:void", :onclick => "$('#form_new_chain_mail_type').submit()" %>
                 </li>
                 <li class="last"><%= bt_link_to :undo, t("chain_mail_types.index.back_to_campaign"), edit_callers_campaign_path(params[:campaign_id]) %></li>
-          <% end %>
-      <% end %>
+            <% end %>
+        <% else %>
+            <%= form_tag new_callers_chain_mail_type_path, :method => :get, :id => "form_new_chain_mail_type" do %>
+                <%= hidden_field_tag :type, "survey" %>
+                <li class="last">
+                  <div class="hidden">
+                    <%= submit_tag "New" %>
+                  </div>
+                  <%= bt_link_to :plus, t("chain_mail_types.index.new"), "javascript:void", :onclick => "$('#form_new_chain_mail_type').submit()" %>
+                </li>
+            <% end %>
+        <% end %>
       </ul>
     </param:actions>
   </header>
@@ -65,7 +76,8 @@
   <% if @chain_mail_types.empty? %>
       <%= blank_state_message %>
   <% else %>
-      <%= generic_table @chain_mail_types, :table_class => "chain_mail_types", :default_action => :edit, :cols => (@campaign ? 3 : 4), :link_scope => (@campaign ? [:callers, @campaign] : [:callers]), :link_to_show => false, :link_to_delete => false do |blocks| %>
+      <%= generic_table @chain_mail_types, :table_class => "chain_mail_types", :default_action => :edit, :cols => (@campaign ? 3 : 4), :link_scope => (@campaign ? [:callers, @campaign] : [:callers]),
+                        :link_to_show => false, :link_to_delete => false, :link_to_edit => @campaign ? [:edit_callers_campaign_chain_mail_type_path, @campaign] : [:edit_callers_chain_mail_type_path] do |blocks| %>
 
           <% blocks.headers do %>
             <th><%= t("chain_mail_types.table.name") %></th>

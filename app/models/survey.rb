@@ -20,6 +20,7 @@ class Survey < ActiveRecord::Base
 
   attr_accessor :skip_validations
 
+  before_create :set_uuid
   before_destroy :can_be_destroyed
 
   scope :created_by, lambda { |creator| creator.has_any_role?(:category_supplier, :supplier) ? where("categories_surveys.category_id IN (?) OR creator_id = ?", creator.unique_category_ids, creator.id).joins(:categories) : where("creator_id = ?", creator.id) }
@@ -71,6 +72,10 @@ class Survey < ActiveRecord::Base
     user.admin? or (creator == user) or (user.has_any_role?(:category_supplier, :supplier) and (category_ids & user.unique_category_ids).present?)
   end
 
+  def fake_permalink
+    "http://erhvervsanalyse.dk/s/#{uuid}"
+  end
+
   private
 
   def can_be_destroyed
@@ -80,5 +85,9 @@ class Survey < ActiveRecord::Base
   def categories_and_lead_creator_present
     errors.add(:upgrade_contacts_to_leads, I18n.t("models.survey.upgrade_contacts_to_leads.categories_empty")) if categories.empty?
     errors.add(:lead_creator_id, I18n.t("models.survey.lead_creator.blank")) unless lead_creator
+  end
+
+  def set_uuid
+    self.uuid = SecureRandom.hex(6)
   end
 end

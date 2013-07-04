@@ -10,7 +10,7 @@ class ChainMailType < ActiveRecord::Base
   belongs_to :campaign
   belongs_to :result
 
-  validates_presence_of :name, :first_execution_delay, :cycle_time, :execution_time, :campaign, :unless => Proc.new{|cmt| cmt.skip_validations}
+  validates_presence_of :name, :first_execution_delay, :cycle_time, :execution_time, :unless => Proc.new{|cmt| cmt.skip_validations}
   validates_length_of :chain_mail_items, :execution_conditions, :minimum => 1, :unless => Proc.new{|cmt| cmt.skip_validations or cmt.add_new_item.present? }
   validates_associated :chain_mail_items, :unless => Proc.new{|cmt| cmt.skip_validations}
   validate :has_at_least_one_item, :unless => Proc.new{|cmt| cmt.skip_validations or cmt.add_new_item.present? }

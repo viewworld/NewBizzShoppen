@@ -45,7 +45,8 @@ class ChainMail < ActiveRecord::Base
   end
 
   def prepare_body(body)
-    StringUtils.replace_urls_for_chain_mail_verification(self, EmailTemplate.new(:body => body, :preview => true).render(variables_for_body))
+    body = StringUtils.replace_urls_for_chain_mail_verification(self, EmailTemplate.new(:body => body, :preview => true).render(variables_for_body))
+    StringUtils.replace_survey_fake_permalink_urls_with_recipients(body, chain_mailable.is_a?(SurveyRecipient) ? chain_mailable.recipient : chain_mailable)
   end
 
   def register_click!

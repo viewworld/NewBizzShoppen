@@ -22,4 +22,12 @@ class StringUtils
     end
   end
 
+  def self.replace_survey_fake_permalink_urls_with_recipients(body, recipient)
+    body.gsub(/(https?:\/\/[\w.\-\/\?\=\&\:]*)/) do |uri|
+      if uri.include?("http://erhvervsanalyse.dk/s/") and (survey = Survey.where(:uuid => uri.split("/").last).first) and (sr = survey.create_or_fetch_survey_recipient(recipient, false))
+        sr.survey_link
+      end
+    end
+  end
+
 end

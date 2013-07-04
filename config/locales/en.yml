@@ -5061,6 +5061,8 @@ en:
           categories_selection: "Categories selection"
           questions: "Questions"
           number_of_days: "# of days"
+          survey_link: "Permalink"
+          survey_link_hint: "This link is for chain mails only and it will be replaced by actual recipient unique link once chain mail is sent."
         preview_button: "Preview"
         responses_button: "View responses"
       form:
