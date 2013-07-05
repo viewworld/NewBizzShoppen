@@ -39,6 +39,7 @@ Nbs::Application.routes.draw do
         post 'test_send_email'
       end
     end
+    resources :email_template_signatures
     resources :leads
     resources :deals do
       resources :assets, :controller => "deal_assets", :only => [:create, :destroy]

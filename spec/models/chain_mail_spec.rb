@@ -506,4 +506,28 @@ describe ChainMail do
       @chain_mail2.delayed_jobs.count.should == 2
     end
   end
+
+  context "general" do
+    before(:each) do
+      Delayed::Worker.delay_jobs = true
+      @time = Time.now
+    end
+
+    it "should add custom email template signature to chain mail body if present" do
+      @email_template_signature = EmailTemplateSignature.create(:name => "Custom signature", :body => "Magnificent signature for any mail")
+      @chain_mail_type = CampaignChainMailType.make!(:email_template_signature => @email_template_signature)
+      @chain_mail_type.chain_mail_items.first.update_attributes(:subject => "Awesome chain mail", :body => "Awesome body of that chain mail")
+      @chain_mail_type.reload
+
+      @chain_mail = ChainMail.make!(:chain_mail_type => @chain_mail_type)
+
+      set_time(Time.now+1.day)
+      Delayed::Worker.new.work_off
+
+      email = ActionMailer::Base.deliveries.detect { |e| e.subject == "Awesome chain mail" }
+
+      email.body.should include("Awesome body of that chain mail")
+      email.body.should include("Magnificent signature for any mail")
+    end
+  end
 end

@@ -1,0 +1,20 @@
+<column-mc:>
+  <%= javascript_include_tag :ckeditor %>
+  <header back="true"><%= t("administration.email_template_signatures.edit.view.header") %></header>
+
+  <%= semantic_form_for @email_template_signature, :url => administration_email_template_signature_path(@email_template_signature), :method => :put do |form| %>
+      <frm title="">
+        <param:content>
+          <%= render :partial => 'form', :locals => {:form => form} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("administration.email_template_signatures.edit.view.button_update") %>
+          </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function t("common.cancel_link"), "history.go(-1)" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+</column-mc:>

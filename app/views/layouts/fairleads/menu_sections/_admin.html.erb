@@ -32,6 +32,7 @@
 <%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.admin.settings"), :tab => "settings" do  %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.global")), edit_administration_setting_path, :subtab => "global" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.email_templates")), administration_email_templates_path, :subtab => "email_templates" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.email_template_signatures")), administration_email_template_signatures_path, :subtab => "email_template_signatures" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.currencies")), administration_currencies_path, :subtab => "currencies" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.countries")), administration_countries_path, :subtab => "countries" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.languages")), administration_languages_path, :subtab => "languages" %>

@@ -9,6 +9,7 @@ class ChainMailType < ActiveRecord::Base
   has_many :survey_options
   belongs_to :campaign
   belongs_to :result
+  belongs_to :email_template_signature
 
   validates_presence_of :name, :first_execution_delay, :cycle_time, :execution_time, :unless => Proc.new{|cmt| cmt.skip_validations}
   validates_length_of :chain_mail_items, :execution_conditions, :minimum => 1, :unless => Proc.new{|cmt| cmt.skip_validations or cmt.add_new_item.present? }

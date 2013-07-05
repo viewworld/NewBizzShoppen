@@ -25,6 +25,8 @@
         </div>
       </li>
       <%= form.errors_on :execution_conditions %>
+
+      <%= form.input :email_template_signature, :collection => EmailTemplateSignature.custom.map { |ets| [ets.name, ets.id] } %>
     </ol>
   </fieldset>
 

@@ -1,0 +1,55 @@
+<column-mc:>
+  <header>
+    <param:content>
+      <%= t("administration.email_template_signatures.index.view.title") %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to :plus, t("administration.email_template_signatures.index.view.new_signature"), new_administration_email_template_signature_path %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
+
+  <table id="users_table" class="generic">
+    <thead>
+    <tr>
+      <th class="hl"></th>
+      <th><%= t("administration.email_template_signatures.index.view.name_column") %></th>
+      <th class="ta_r"><%= t("administration.email_template_signatures.index.view.actions_column") %></th>
+      <th class="hr"></th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="2"></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <% @email_template_signatures.each do |email_template| %>
+        <tr class="<%= cycle("odd", "even") %>">
+          <td class="cl"></td>
+          <td><%= email_template.name %></td>
+          <td class="tda ta_r">
+            <ul-actions>
+                <li><%= link_to t("administration.email_template_signatures.index.view.edit"), edit_administration_email_template_signature_path(email_template), :class => "default_action" %></li>
+                <li><%= link_to t("administration.email_template_signatures.index.view.destroy"), administration_email_template_signature_path(email_template), :confirm => t("common.confirmation"), :method => :delete %></li>
+            </ul-actions>
+          </td>
+          <td class="cr"></td>
+        </tr>
+    <% end %>
+    <% if will_paginate %>
+        <tr class="pagination">
+          <td colspan="5" class="ta_c">
+            <%= will_paginate @email_template_signatures, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</column-mc:>
