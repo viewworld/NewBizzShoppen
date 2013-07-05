@@ -558,20 +558,29 @@ ChainMailItem.blueprint do
   body { Faker::Lorem.words(5).to_s.capitalize }
 end
 
-ChainMailType.blueprint do
+CampaignChainMailType.blueprint do
   name { Faker::Lorem.words(2).to_s.capitalize }
   first_execution_delay { 1 }
   cycle_time { 1 }
-  execution_time { "10:00" }
+  execution_time { "06:00" }
   execution_conditions { {"conditions" => [ChainMailType::LINK_CLICKED], "type" => ChainMailType::STOP_IF, "operator" => nil } }
   campaign_id { Campaign.make!.id }
   result_id { Result.make!.id }
   chain_mail_items { Array(ChainMailItem.make!) }
 end
 
+SurveyChainMailType.blueprint do
+  name { Faker::Lorem.words(2).to_s.capitalize }
+  first_execution_delay { 1 }
+  cycle_time { 1 }
+  execution_time { "06:00" }
+  execution_conditions { {"conditions" => [ChainMailType::SURVEY_NOT_OPENED], "type" => ChainMailType::STOP_IF, "operator" => nil } }
+  chain_mail_items { Array(ChainMailItem.make!) }
+end
+
 ChainMail.blueprint do
   chain_mailable { CallResult.make! }
-  chain_mail_type { ChainMailType.make!}
+  chain_mail_type { CampaignChainMailType.make!}
   email { Faker::Internet.email }
 end
 

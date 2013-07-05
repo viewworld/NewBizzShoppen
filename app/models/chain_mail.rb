@@ -65,10 +65,25 @@ class ChainMail < ActiveRecord::Base
     last_mail_sent_at.present? and last_link_clicked_at.present? and last_link_clicked_at > last_mail_sent_at
   end
 
+  def survey_not_opened_since_last_mail?
+    last_mail_sent_at.present? and chain_mailable.is_a?(SurveyRecipient) and chain_mailable.not_visited?
+  end
+
+  def survey_incomplete_since_last_mail?
+    last_mail_sent_at.present? and chain_mailable.is_a?(SurveyRecipient) and chain_mailable.visited? and !chain_mailable.completed?
+  end
+
+  def survey_complete_since_last_mail?
+    last_mail_sent_at.present? and chain_mailable.is_a?(SurveyRecipient) and chain_mailable.completed?
+  end
+
   def condition_met?(condition)
     case condition
       when ChainMailType::LOGGED_IN then logged_in_since_last_mail?
       when ChainMailType::LINK_CLICKED then clicked_link_since_last_mail?
+      when ChainMailType::SURVEY_NOT_OPENED then survey_not_opened_since_last_mail?
+      when ChainMailType::SURVEY_INCOMPLETE then survey_incomplete_since_last_mail?
+      when ChainMailType::SURVEY_COMPLETE then survey_complete_since_last_mail?
     end
   end
 

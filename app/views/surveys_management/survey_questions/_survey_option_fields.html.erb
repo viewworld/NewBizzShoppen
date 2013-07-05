@@ -29,7 +29,7 @@
             </li>
             <li class="select">
               <label><%= t("surveys.shared.chain_mail") %></label>
-              <%= f.select :chain_mail_type_id, ChainMailType.with_active.map { |cm| [cm.name, cm.id]  }, :include_blank => true %>
+              <%= f.select :chain_mail_type_id, SurveyChainMailType.with_active.map { |cm| [cm.name, cm.id]  }, :include_blank => true %>
             </li>
           </ol>
         </fieldset>

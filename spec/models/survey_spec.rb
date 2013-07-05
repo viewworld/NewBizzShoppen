@@ -70,10 +70,10 @@ describe Survey do
     end
 
     before(:each) do
-      @chain_mail_link_clicked = ChainMailType.make!
-      @chain_mail_link_not_clicked = ChainMailType.make!
-      @chain_mail_option_1 = ChainMailType.make!
-      @chain_mail_option_2 = ChainMailType.make!
+      @chain_mail_link_clicked = SurveyChainMailType.make!
+      @chain_mail_link_not_clicked = SurveyChainMailType.make!
+      @chain_mail_option_1 = SurveyChainMailType.make!
+      @chain_mail_option_2 = SurveyChainMailType.make!
       @survey.update_attributes(:link_clicked_chain_mail_type => @chain_mail_link_clicked, :link_not_clicked_chain_mail_type => @chain_mail_link_not_clicked, :link_not_clicked_chain_mail_delay => 5)
       @select_question = @survey.survey_questions.make!(:question_type => SurveyQuestion::SELECT_TYPE)
       @option_1 = @select_question.survey_options.make!(:chain_mail_type => @chain_mail_option_1, :tag_list => ["tag_1", "tag_2"])

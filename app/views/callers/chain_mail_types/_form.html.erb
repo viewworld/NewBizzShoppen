@@ -18,10 +18,10 @@
       <li class="string">
         <%= form.label :execution_conditions %>
         <div class="txt">
-          <%= select_tag "chain_mail_type[execution_conditions][type]", options_for_select(ChainMailType::EXECUTION_TYPES.sort, @chain_mail_type.execution_conditions["type"]) %>
-          <%= select_tag "chain_mail_type[execution_conditions][conditions][]", options_for_select(ChainMailType::EXECUTION_CONDITIONS.sort, @chain_mail_type.execution_conditions["conditions"][0]) %>
-          <%= select_tag "chain_mail_type[execution_conditions][operator]", options_for_select(ChainMailType::EXECUTION_CONDITION_OPERATORS.sort, @chain_mail_type.execution_conditions["operator"]), :include_blank => true %>
-          <%= select_tag "chain_mail_type[execution_conditions][conditions][]", options_for_select(ChainMailType::EXECUTION_CONDITIONS.sort, @chain_mail_type.execution_conditions["conditions"][1]), :include_blank => true %>
+          <%= select_tag "chain_mail_type[execution_conditions][type]", options_for_select(@chain_mail_type.class::EXECUTION_TYPES.sort, @chain_mail_type.execution_conditions["type"]) %>
+          <%= select_tag "chain_mail_type[execution_conditions][conditions][]", options_for_select(@chain_mail_type.class::EXECUTION_CONDITIONS.sort, @chain_mail_type.execution_conditions["conditions"][0]) %>
+          <%= select_tag "chain_mail_type[execution_conditions][operator]", options_for_select(@chain_mail_type.class::EXECUTION_CONDITION_OPERATORS.sort, @chain_mail_type.execution_conditions["operator"]), :include_blank => true %>
+          <%= select_tag "chain_mail_type[execution_conditions][conditions][]", options_for_select(@chain_mail_type.class::EXECUTION_CONDITIONS.sort, @chain_mail_type.execution_conditions["conditions"][1]), :include_blank => true %>
         </div>
       </li>
       <%= form.errors_on :execution_conditions %>

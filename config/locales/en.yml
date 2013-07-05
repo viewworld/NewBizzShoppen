@@ -366,6 +366,7 @@ en:
       campaign_header: "Chain mail types in campaign %{name}"
       new: "New chain mail type"
       back_to_campaign: "Back to campaign"
+      new_survey_chain_mail: "New survey chain mail type"
     new:
       header: "New chain mail type"
       title: "New"

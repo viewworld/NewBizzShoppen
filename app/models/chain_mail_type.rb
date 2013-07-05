@@ -39,10 +39,11 @@ class ChainMailType < ActiveRecord::Base
 
   LOGGED_IN = 1
   LINK_CLICKED = 2
-  EXECUTION_CONDITIONS = [
-      ['logged in', LOGGED_IN],
-      ['clicked link', LINK_CLICKED]
-  ]
+
+  SURVEY_NOT_OPENED = 3
+  SURVEY_INCOMPLETE = 4
+  SURVEY_COMPLETE = 5
+
 
   OR = 1
   AND = 2
