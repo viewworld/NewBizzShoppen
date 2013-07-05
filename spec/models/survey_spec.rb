@@ -145,5 +145,19 @@ describe Survey do
       #recipient should also be tagged by the chosen survey options
       @survey_recipient.recipient.tag_list.sort.should == ["tag_3", "tag_4"]
     end
+
+    it "should be possible to insert survey permalink to chain mail body and it will be replaced by unique recipient link" do
+      @chain_mail_type = SurveyChainMailType.make!
+      @chain_mail = ChainMail.make!(:chain_mail_type => @chain_mail_type, :chain_mailable => @survey_recipient, :email => @survey_recipient.email)
+
+      @chain_mail_type.chain_mail_items.first.update_attribute(:body, %{ Lorem ipsum, <a href="http://fairleads.com/a"> or <a href="#{@survey.fake_permalink}">Visit here</a> dolor sit amet })
+
+      #the normal links should be redirected as before
+      @chain_mail.prepare_body(@chain_mail_type.chain_mail_items.first.body).should include("?redirect=http%3A%2F%2Ffairleads.com")
+
+      #erhvervsanalyse.dk should be replaced by proper unique link to survey for given recipient
+      @chain_mail.prepare_body(@chain_mail_type.chain_mail_items.first.body).should_not include(@survey.fake_permalink)
+      @chain_mail.prepare_body(@chain_mail_type.chain_mail_items.first.body).should include(@survey_recipient.survey_link)
+    end
   end
 end

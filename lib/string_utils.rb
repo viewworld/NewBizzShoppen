@@ -14,7 +14,7 @@ class StringUtils
 
   def self.replace_urls_for_chain_mail_verification(chain_mail, body)
     body.gsub(/(https?:\/\/[\w.\-\/\?\=\&\:]*)/) do |uri|
-      unless uri.to_s.include?("/chain_mails/#{chain_mail.id}")
+      if !uri.to_s.include?("/chain_mails/#{chain_mail.id}") and !uri.to_s.include?("erhvervsanalyse.dk/s/")
         URI::HTTP.new('http', nil, Domain.default, nil, nil, "/chain_mails/#{chain_mail.id}", nil, "redirect=#{CGI::escape(uri)}", nil).to_s
       else
         uri
@@ -26,6 +26,8 @@ class StringUtils
     body.gsub(/(https?:\/\/[\w.\-\/\?\=\&\:]*)/) do |uri|
       if uri.include?("http://erhvervsanalyse.dk/s/") and (survey = Survey.where(:uuid => uri.split("/").last).first) and (sr = survey.create_or_fetch_survey_recipient(recipient, false))
         sr.survey_link
+      else
+        uri
       end
     end
   end
