@@ -48,7 +48,7 @@
                     <%= link_to t("surveys_management.surveys.index.view.edit"),  edit_surveys_management_survey_path(survey), :class => "default_action" %>
                   </li>
                   <li>
-                    <%= link_to t("surveys_management.surveys.index.view.send_to_newsletters"),  send_to_newsletters_surveys_management_survey_path(survey), :method => :post %>
+                    <%= link_to t("surveys_management.surveys.index.view.send_to_newsletters"),  send_to_newsletters_surveys_management_survey_path(survey), :confirm => t("surveys_management.surveys.index.view.send_to_newsletters_confirmation", :survey_name => survey.name, :subscribers_count => survey.total_subscribers), :method => :post %>
                   </li>
                   <% if survey.total_answers > 0 %>
                   <li>

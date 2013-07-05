@@ -8,6 +8,10 @@
         <param:header>
           <%= bt_link_to nil, t("surveys_management.surveys.edit.preview_button"), surveys_management_survey_path(@survey), :class => "fltr" %>
           <%= bt_link_to nil, t("surveys_management.surveys.edit.responses_button"), surveys_management_survey_survey_recipients_path(@survey), :class => "fltr" %>
+          <% if @survey.newsletter_lists.any? %>
+              <%= bt_link_to nil, t("surveys_management.surveys.index.view.send_to_newsletters"), send_to_newsletters_surveys_management_survey_path(@survey), :class => "fltr", :method => :post,
+                             :confirm => t("surveys_management.surveys.index.view.send_to_newsletters_confirmation", :survey_name => @survey.name, :subscribers_count => @survey.total_subscribers) %>
+          <% end %>
         </param:header>
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>

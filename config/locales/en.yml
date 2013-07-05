@@ -5048,6 +5048,7 @@ en:
           total_column: "Total #"
           answers_column: "Answers #"
           view_responses: "View responses"
+          send_to_newsletters_confirmation: "Are you sure to send %{survey_name} survey to %{subscribers_count} newsletter subscribers?"
       edit:
         view:
           edit_question: "Edit"
