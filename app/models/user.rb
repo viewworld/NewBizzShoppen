@@ -617,6 +617,14 @@ class User < ActiveRecord::Base
     login_key
   end
 
+  def autologin_link
+    autologin_link_temp = ""
+    if domain
+      autologin_link_temp << "http://www.#{domain.name}"
+    end
+    autologin_link_temp + "/login_keys?key=#{generate_login_key!}"
+  end
+
   def clear_login_key!
     self.update_attribute(:login_key, nil)
   end
