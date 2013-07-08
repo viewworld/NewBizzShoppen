@@ -1,0 +1,2 @@
+page << "$('.ajax_flash_msg').html('#{I18n.t("flash.campaigns.clear.notice")}')"
+page << "$('.ajax_flash_msg').show()"

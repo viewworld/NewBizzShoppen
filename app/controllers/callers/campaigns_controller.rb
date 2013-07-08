@@ -39,18 +39,35 @@ class Callers::CampaignsController < Callers::CallerController
   end
 
   def destroy
-    @campaign = Campaign.find(params[:id])
     if @campaign.set_as_deleted!
       flash[:notice] = I18n.t("flash.campaigns.destroy.notice")
-      @campaign.delay(:priority => -1).delayed_destroy
+      @campaign.delay(:priority => -1, :queue => 'campaign_destroy').delayed_destroy(params[:with_agent_time] == "true")
     end
-    redirect_to :back
+
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js {  }
+    end
   end
 
   def duplicate
-    @campaign = Campaign.find(params[:id])
     if current_user.admin?
-      @campaign.duplicate!(params[:with_call_results].to_i == 1, current_user)
+      @campaign.duplicate!(:with_contacts => params[:with_contacts] == "true", :with_call_results => params[:with_call_results] == "true",
+                           :with_agent_time => params[:with_agent_time] == "true", :user_to_notify => current_user)
+    else
+      raise CanCan::AccessDenied
+    end
+
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js {  }
+    end
+  end
+
+  def clear
+    if current_user.admin?
+      @campaign.clear!(:with_contacts => params[:with_contacts] == "true", :with_call_results => params[:with_call_results] == "true",
+                       :with_agent_time => params[:with_agent_time] == "true", :user_to_notify => current_user)
     else
       raise CanCan::AccessDenied
     end

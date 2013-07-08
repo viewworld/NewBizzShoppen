@@ -237,6 +237,7 @@ Nbs::Application.routes.draw do
         post 'result_details'
         post 'export_result_details'
         post 'duplicate'
+        post 'clear'
       end
       collection do
         post 'results'

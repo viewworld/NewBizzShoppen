@@ -308,19 +308,26 @@ class Campaign < ActiveRecord::Base
     start_date <= Date.today and end_date >= Date.today
   end
 
-  def duplicate!(with_call_results=true, user_to_notify=nil)
+  def duplicate!(options={})
+    options = { :with_contacts => true, :with_call_results => true, :with_agent_time => true, :user_to_notify => nil }.merge(options)
+
     clone_config = [:campaigns_results,
                     {:send_material_email_template => :translations},
                     {:upgrade_contact_to_buyer_email_template => :translations},
                     {:upgrade_contact_to_category_buyer_email_template => :translations},
-                    {:upgrade_contact_to_member_email_template => :translations},
-                    :call_logs]
+                    {:upgrade_contact_to_member_email_template => :translations}]
 
-    if with_call_results
+    if options[:with_agent_time]
       clone_config << :user_session_logs
-      clone_config << {:contacts => [{:call_results => [:result_values, :archived_email]}, :contact_past_user_assignments, {:lead_template_values => :lead_template_value_translations}, :translations]}
-    else
-      clone_config << {:contacts => [{:lead_template_values => :lead_template_value_translations}, :translations]}
+    end
+
+    if options[:with_contacts]
+      if options[:with_call_results]
+        clone_config << :call_logs
+        clone_config << {:contacts => [{:call_results => [:result_values, :archived_email]}, :contact_past_user_assignments, {:lead_template_values => :lead_template_value_translations}, :translations]}
+      else
+        clone_config << {:contacts => [{:lead_template_values => :lead_template_value_translations}, :translations]}
+      end
     end
 
     campaign = self.deep_clone!(:with_callbacks => false, :include => clone_config)
@@ -344,20 +351,43 @@ class Campaign < ActiveRecord::Base
       end
     end
 
-    unless with_call_results
+    if options[:with_contacts] and !options[:with_call_results]
       campaign.contacts.each { |contact| contact.update_attributes(:completed => false, :agent_id => nil) }
     end
 
-    if user_to_notify
-      user_to_notify.notify!(
+    if options[:user_to_notify]
+      options[:user_to_notify].notify!(
           :title => I18n.t("notifications.campaign.duplicated.title", :campaign_name => name),
-          :text => I18n.t("notifications.campaign.duplicated.text", :url => "http://#{user_to_notify.domain_name}/callers/campaigns/#{campaign.id}/edit"),
+          :text => I18n.t("notifications.campaign.duplicated.text", :url => "http://#{options[:user_to_notify].domain_name}/callers/campaigns/#{campaign.id}/edit"),
           :notifier => self)
     end
 
     campaign
   end
   handle_asynchronously :duplicate!, :queue => 'duplications'
+
+  def clear!(options={})
+    options = { :with_contacts => true, :with_call_results => true, :with_agent_time => true, :user_to_notify => nil }.merge(options)
+
+    if options[:with_contacts]
+      contacts.destroy_all
+    elsif options[:with_call_results]
+      CallResult.joins(:contact).where("campaign_id = ?", id).readonly(false).destroy_all
+      Contact.update_all({:completed => false, :agent_id => nil}, {:campaign_id => id})
+    end
+
+    if options[:with_agent_time]
+      user_session_logs.delete_all
+    end
+
+    if options[:user_to_notify]
+      options[:user_to_notify].notify!(
+          :title => I18n.t("notifications.campaign.cleared.title", :campaign_name => name),
+          :text => I18n.t("notifications.campaign.cleared.text", :url => "http://#{options[:user_to_notify].domain_name}/callers/campaigns/#{id}/edit"),
+          :notifier => self)
+    end
+  end
+  handle_asynchronously :clear!, :queue => 'campaign_clearings'
 
   def pending_contacts_for(user)
     contacts.where(:agent_id => user.id).with_pending_status(true)
@@ -367,8 +397,11 @@ class Campaign < ActiveRecord::Base
     CallResult.where("leads.campaign_id = ? and call_results.creator_id = ? and call_results.result_id = ?", id, user.id, Result.where(:generic => true, :name => "Call back").first.id).joins(:contact)
   end
 
-  def delayed_destroy
+  def delayed_destroy(with_agent_time=true)
     ActiveRecord::Base.transaction do
+      unless with_agent_time
+        UserSessionLog.update_all({:campaign_id => nil, :deleted_at => Time.now}, {:campaign_id => self.id})
+      end
       ActiveRecord::Migration.execute "UPDATE leads SET position = NULL WHERE position IS NOT NULL AND type = 'Contact' AND campaign_id = #{self.id}"
       self.destroy
     end

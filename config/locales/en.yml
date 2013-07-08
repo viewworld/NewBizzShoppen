@@ -558,6 +558,15 @@ en:
       duplicate: "Duplicate"
       duplication_confirmation: "Are you sure you want to duplicate the campaign?"
       duplication_with_call_results_and_time: "Would you like to duplicate call results and time spent for that campaign as well?"
+      copy_contacts: "Copy contacts"
+      copy_call_results: "Copy call results"
+      copy_agent_time: "Copy agent time"
+      clear_confirmation: "Are you sure you want to clear the campaign?"
+      clear_contacts: "Clear contacts"
+      clear_call_results: "Clear call results"
+      clear_agent_time: "Clear agent time"
+      clear: "Clear"
+      destroy_agent_time: "Delete agent time"
     call_result_details_table:
       date: Date
       contact: Contact
@@ -3727,6 +3736,8 @@ en:
         notice: "Campaign duplication task has been successfully added to queue. It will be finished in few seconds."
       destroy:
         notice: "Campaign has been deleted."
+      clear:
+        notice: "Campaign clearing  task has been successfully added to queue. It will be finished in few seconds."
     subscription_plans:
       destroy:
         notice: "Subscription plan has been destroyed successfully."
@@ -4930,6 +4941,9 @@ en:
     campaign:
       duplicated:
         title: "Campaign %{campaign_name} has been successfully duplicated"
+        text: "<a href=\"%{url}\">Go to the campaign</a> or <a href=\"%{url}\" target=\"_blank\">open it in a new tab</a>"
+      cleared:
+        title: "Campaign %{campaign_name} has been successfully cleared"
         text: "<a href=\"%{url}\">Go to the campaign</a> or <a href=\"%{url}\" target=\"_blank\">open it in a new tab</a>"
     newsletter_synchronization:
       synchronized:

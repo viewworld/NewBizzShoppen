@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Campaign do
   fixtures :all
 
-  context "duplication" do
+  context "duplication / clear / delete" do
     before(:each) do
       @call_centre = User::CallCentre.make!
       @call_centre_agent1 = User::CallCentreAgent.make!(:parent_id => @call_centre.id)
@@ -40,30 +40,109 @@ describe Campaign do
       @campaign.reload
     end
 
-    it "should be duplicated with call results and time by default" do
-      @campaign.duplicate!
+    context "duplication" do
+      it "should be duplicated with contacts, call results and time by default" do
+        @campaign.duplicate!
 
-      @campaign_copy = Campaign.where("name like ?", "%Copy of #{@campaign.name}%").first
-      @campaign_copy.contacts.map { |c| c.call_results }.flatten.size.should == 4
-      @campaign_copy.user_session_logs.should_not be_empty
-      @campaign_copy.contacts.map { |c| c.completed? }.uniq.should == [true]
+        @campaign_copy = Campaign.where("name like ?", "%Copy of #{@campaign.name}%").first
+        @campaign_copy.contacts.map { |c| c.call_results }.flatten.size.should == 4
+        @campaign_copy.user_session_logs.should_not be_empty
+        @campaign_copy.contacts.map { |c| c.completed? }.uniq.should == [true]
+        CallResult.joins(:contact).where("campaign_id = ?", @campaign_copy.id).count.should_not be_zero
+      end
+
+      it "should be duplicated without contacts, call results and time if parameter false passed" do
+        @campaign.duplicate!(:with_contacts => false, :with_call_results => false, :with_agent_time => false)
+
+        @campaign_copy = Campaign.where("name like ?", "%Copy of #{@campaign.name}%").first
+        @campaign_copy.contacts.should be_empty
+        @campaign_copy.user_session_logs.should be_empty
+      end
+
+      it "should be duplicated with contacts but without call results and time if parameter false passed" do
+        @campaign.duplicate!(:with_contacts => true, :with_call_results => false, :with_agent_time => false)
+
+        @campaign_copy = Campaign.where("name like ?", "%Copy of #{@campaign.name}%").first
+        @campaign_copy.contacts.map { |c| c.call_results }.flatten.size.should == 0
+        @campaign_copy.user_session_logs.should be_empty
+        @campaign_copy.contacts.map { |c| c.completed? }.uniq.should == [false]
+        CallResult.joins(:contact).where("campaign_id = ?", @campaign_copy.id).count.should be_zero
+      end
+
+      it "should notify the user when duplication task finishes" do
+        @admin = User::Admin.make!
+
+        lambda {
+        @campaign.duplicate!(:user_to_notify => @admin)
+      }.should change(Notification, :count).by(1)
+      end
     end
 
-    it "should be duplicated without call results and time if parameter false passed" do
-      @campaign.duplicate!(false)
+    context "clear" do
+      it "should be possible to clear contacts, call results and agent time" do
+        @campaign.clear!
 
-      @campaign_copy = Campaign.where("name like ?", "%Copy of #{@campaign.name}%").first
-      @campaign_copy.contacts.map { |c| c.call_results }.flatten.size.should == 0
-      @campaign_copy.user_session_logs.should be_empty
-      @campaign_copy.contacts.map { |c| c.completed? }.uniq.should == [false]
+        @campaign.reload
+
+        @campaign.contacts.count.should == 0
+
+        CallResult.joins(:contact).where("campaign_id = ?", @campaign.id).count.should == 0
+
+        @campaign.user_session_logs.count.should == 0
+      end
+
+      it "should be possible to clear only call results and agent time without contacts" do
+        @campaign.clear!(:with_contacts => false, :with_call_results => true)
+
+        @campaign.reload
+
+        @campaign.contacts.count.should == 4
+
+        @campaign.contacts.map { |c| c.completed? }.uniq.should == [false]
+
+        CallResult.joins(:contact).where("campaign_id = ?", @campaign.id).count.should == 0
+
+        @campaign.user_session_logs.count.should == 0
+      end
+
+      it "should be possible to clear contacts without agent time" do
+        @campaign.clear!(:with_contacts => true, :with_agent_time => false)
+
+        @campaign.reload
+
+        @campaign.contacts.count.should == 0
+
+        CallResult.joins(:contact).where("campaign_id = ?", @campaign.id).count.should == 0
+
+        @campaign.user_session_logs.count.should > 0
+      end
+
+      it "should notify the user when clear task finishes" do
+        @admin = User::Admin.make!
+
+        lambda {
+          @campaign.clear!(:user_to_notify => @admin)
+        }.should change(Notification, :count).by(1)
+      end
     end
 
-    it "should notify the user when task finishes" do
-      @admin = User::Admin.make!
+    context "delete" do
+      it "should delete campaign completely" do
+        UserSessionLog.count.should > 0
 
-      lambda {
-      @campaign.duplicate!(true, @admin)
-    }.should change(Notification, :count).by(1)
+        @campaign.delayed_destroy
+
+        UserSessionLog.count.should == 0
+      end
+
+      it "should delete campaign without agent time" do
+        user_session_logs_count = UserSessionLog.where("campaign_id = ?", @campaign.id).count
+        user_session_logs_count.should > 0
+
+        @campaign.delayed_destroy(false)
+
+        UserSessionLog.where("campaign_id IS NULL and deleted_at IS NOT NULL").count.should == user_session_logs_count
+      end
     end
   end
 
