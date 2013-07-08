@@ -2,9 +2,14 @@
   <fieldset class="inputs labels_ta_r">
     <ol class="align_inputs">
       <%= form.input :name %>
-      <%= form.input :link_clicked_chain_mail_type_id, :collection => ChainMailType.with_active.all.map { |cm| [cm.name, cm.id] } %>
-      <%= form.input :link_not_clicked_chain_mail_type_id, :collection => ChainMailType.with_active.all.map { |cm| [cm.name, cm.id] } %>
+      <%= form.input :link_clicked_chain_mail_type_id, :collection => SurveyChainMailType.with_active.all.map { |cm| [cm.name, cm.id] } %>
+      <%= form.input :link_not_clicked_chain_mail_type_id, :collection => SurveyChainMailType.with_active.all.map { |cm| [cm.name, cm.id] } %>
       <%= form.input :link_not_clicked_chain_mail_delay, :hint => t("surveys_management.surveys.edit.view.number_of_days") %>
+      <li class="string optional">
+        <label for="survey_link"><%= t("surveys_management.surveys.edit.view.survey_link") %></label>
+        <%= text_field_tag :survey_link, @survey.fake_permalink, :readonly => true, :onclick => "this.select()" %>
+        <p class="inline-hints"><%= t("surveys_management.surveys.edit.view.survey_link_hint") %></p>
+      </li>
     </ol>
   </fieldset>
 </div>

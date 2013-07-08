@@ -39,6 +39,7 @@ Nbs::Application.routes.draw do
         post 'test_send_email'
       end
     end
+    resources :email_template_signatures
     resources :leads
     resources :deals do
       resources :assets, :controller => "deal_assets", :only => [:create, :destroy]
@@ -323,6 +324,7 @@ Nbs::Application.routes.draw do
     end
     resources :user_session_logs
     resources :survey_recipients
+    resources :chain_mail_types, :controller => "chain_mail_types"
   end
 
   namespace :comments do
@@ -508,6 +510,8 @@ Nbs::Application.routes.draw do
 
   constraints(Erhvervsanalyse) do
     match '/(:id)' => "erhvervsanalyse_home#show"
+    match 'survey/:id' => 'survey_recipients#show'
+    match 's/:id' => "erhvervsanalyse_home#show"
   end
 
   namespace :surveys_management do
@@ -537,7 +541,6 @@ Nbs::Application.routes.draw do
   match ':slug/account/new' => 'category_supplier_accounts#new', :as => :new_category_home_page_account
   match ':slug/account' => 'category_supplier_accounts#create', :as => :category_home_page_account
   match ':slug/leads' => 'category_suppliers/leads#index', :as => :category_home_page_leads
-  match 'survey/:id' => 'survey_recipients#show'
 
   root :to => "supplier_home#show"
 

@@ -153,6 +153,7 @@ en:
         surveys: "Surveys"
         softphone_servers: "Softphones"
         softphone_listing: "Soft. listing"
+        email_template_signatures: "Signatures"
       agent:
         leads: My leads
         deals: My deals
@@ -366,6 +367,7 @@ en:
       campaign_header: "Chain mail types in campaign %{name}"
       new: "New chain mail type"
       back_to_campaign: "Back to campaign"
+      new_survey_chain_mail: "New survey chain mail type"
     new:
       header: "New chain mail type"
       title: "New"
@@ -2069,6 +2071,23 @@ en:
       edit:
         view:
           title: "Edit result"
+          button_update: "Save"
+    email_template_signatures:
+      index:
+        view:
+          title: "Custom email signatures"
+          name_column: "Name"
+          actions_column: "Actions"
+          edit: "Edit"
+          new_signature: "New custom signature"
+          destroy: "Destroy"
+      new:
+        view:
+          button_create: "Create"
+          header: "New custom email signature"
+      edit:
+        view:
+          header: "Edit custom email signature"
           button_update: "Save"
   agent:
     leads:
@@ -5049,6 +5068,7 @@ en:
           total_column: "Total #"
           answers_column: "Answers #"
           view_responses: "View responses"
+          send_to_newsletters_confirmation: "Are you sure to send %{survey_name} survey to %{subscribers_count} newsletter subscribers?"
       edit:
         view:
           edit_question: "Edit"
@@ -5063,6 +5083,8 @@ en:
           categories_selection: "Categories selection"
           questions: "Questions"
           number_of_days: "# of days"
+          survey_link: "Permalink"
+          survey_link_hint: "This link is for chain mails only and it will be replaced by actual recipient unique link once chain mail is sent."
         preview_button: "Preview"
         responses_button: "View responses"
       form:

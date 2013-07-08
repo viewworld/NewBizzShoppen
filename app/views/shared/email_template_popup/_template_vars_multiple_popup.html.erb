@@ -2,10 +2,10 @@
   <%
      variables = unless defined? object
      [
-       "nothind"
+       "nothing"
      ]
      else
-       object.available_variables
+       object ? object.available_variables : ["nothing"]
      end
 
      variables.each do |label|

@@ -5,6 +5,7 @@ class Callers::ChainMailTypesController < Callers::CallerController
   set_subtab "chain_mail_type"
 
   before_filter :fetch_campaign
+  before_filter :set_klass, :only => [:new, :create]
 
   protected
 
@@ -20,6 +21,10 @@ class Callers::ChainMailTypesController < Callers::CallerController
     params[:search][:with_campaign] = params[:campaign_id] if params[:campaign_id]
     @search = ChainMailType.scoped_search(params[:search])
     @chain_mail_types = @search.paginate(:show_all => params[:show_all], :page => params[:page], :per_page => Settings.default_leads_per_page)
+  end
+
+  def set_klass
+    @klass = "#{params[:type].capitalize}ChainMailType".constantize
   end
 
   public
@@ -45,7 +50,7 @@ class Callers::ChainMailTypesController < Callers::CallerController
   end
 
   def new
-    @chain_mail_type = ChainMailType.create(:skip_validations => true, :active => false, :campaign_id => params[:campaign_id], :result_id => params[:result_id])
+    @chain_mail_type = @klass.create(:skip_validations => true, :active => false, :campaign_id => params[:campaign_id], :result_id => params[:result_id])
     if @chain_mail_type.campaign_id
       redirect_to edit_callers_campaign_chain_mail_type_path(@chain_mail_type.campaign_id,@chain_mail_type)
     else

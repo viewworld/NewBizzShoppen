@@ -33,7 +33,7 @@ class SurveysManagement::SurveysController < SurveysManagement::SurveysManagemen
     @survey.delay(:queue => "surveys_sending_to_newsletter_lists").send_to_newsletter_lists!
 
     flash[:notice] = I18n.t("surveys_management.surveys.send_to_newsletters.flash.notice.survey_queued_for_sending_to_newsletters")
-    redirect_to surveys_management_surveys_path
+    redirect_to :back
   end
 
   def show

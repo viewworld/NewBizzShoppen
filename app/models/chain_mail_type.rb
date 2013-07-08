@@ -9,8 +9,9 @@ class ChainMailType < ActiveRecord::Base
   has_many :survey_options
   belongs_to :campaign
   belongs_to :result
+  belongs_to :email_template_signature
 
-  validates_presence_of :name, :first_execution_delay, :cycle_time, :execution_time, :campaign, :unless => Proc.new{|cmt| cmt.skip_validations}
+  validates_presence_of :name, :first_execution_delay, :cycle_time, :execution_time, :unless => Proc.new{|cmt| cmt.skip_validations}
   validates_length_of :chain_mail_items, :execution_conditions, :minimum => 1, :unless => Proc.new{|cmt| cmt.skip_validations or cmt.add_new_item.present? }
   validates_associated :chain_mail_items, :unless => Proc.new{|cmt| cmt.skip_validations}
   validate :has_at_least_one_item, :unless => Proc.new{|cmt| cmt.skip_validations or cmt.add_new_item.present? }
@@ -39,10 +40,11 @@ class ChainMailType < ActiveRecord::Base
 
   LOGGED_IN = 1
   LINK_CLICKED = 2
-  EXECUTION_CONDITIONS = [
-      ['logged in', LOGGED_IN],
-      ['clicked link', LINK_CLICKED]
-  ]
+
+  SURVEY_NOT_OPENED = 3
+  SURVEY_INCOMPLETE = 4
+  SURVEY_COMPLETE = 5
+
 
   OR = 1
   AND = 2
