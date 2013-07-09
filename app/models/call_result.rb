@@ -11,6 +11,7 @@ class CallResult < ActiveRecord::Base
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
   belongs_to :payout_currency, :class_name => "Currency"
   has_many :result_values, :dependent => :destroy
+  has_many :call_result_fields, :autosave => true
   has_one :send_material_result_value, :class_name => "ResultValue", :conditions => "result_values.field_type = '#{ResultField::MATERIAL}'"
   has_one :archived_email, :as => :related, :dependent => :destroy
   has_one :chain_mail, :as => :chain_mailable
@@ -42,6 +43,7 @@ class CallResult < ActiveRecord::Base
     end
   end
   before_create :set_payout
+  before_create :set_value
   before_save do
     if payout_changed? and !payout.nil? and payout_currency_id.nil?
       self.payout_currency_id = contact.campaign.currency_id
@@ -77,6 +79,19 @@ class CallResult < ActiveRecord::Base
       self.payout = campaign_result.payout
       self.payout_currency_id = contact.campaign.currency_id
       self.euro_payout = payout_currency.to_euro(payout.to_f)
+    end
+  end
+
+  def set_value
+    if campaign_result
+      if campaign_result.is_dynamic_value
+        CampaignsResultField.where(:is_dynamic_value => true, :result_field_id => result.result_field_ids, :campaign_id => contact.campaign_id).each do |crf|
+          call_result_fields.build(:dynamic_euro_value => crf.dynamic_euro_value, :campaigns_result_field_id => crf.id)
+        end
+      else
+        self.value = campaign_result.value
+        self.euro_value = payout_currency.to_euro(value.to_f)
+      end
     end
   end
 

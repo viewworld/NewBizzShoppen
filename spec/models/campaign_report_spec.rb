@@ -785,4 +785,30 @@ describe CampaignReport do
     end
   end
 
+  context "general" do
+    it "should store the static values in call result" do
+      @call_result = CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1) #200
+
+      @call_result.value.should == 100.0
+      @call_result.euro_value.should == @campaign1.currency.to_euro(@call_result.value)
+    end
+
+    it "should store the dynamic values for call result" do
+      @campaign1.results << @result_dyn_value
+      @campaign1.save
+      @result_dyn_value.reload
+      @result_dyn_value.campaigns_results.detect{ |cr| cr.campaign == @campaign1 }.update_attributes(:value => 100, :expected_completed_per_hour => 5, :is_dynamic_value => true, :is_reported => true)
+      @result_dyn_value.result_fields.each_with_index do |result_field, i|
+        result_field.campaigns_result_fields.create(:campaign => @campaign1, :is_dynamic_value => result_field.name != "test field 3" ? true : false, :dynamic_euro_value => 17+i)
+      end
+
+      @result_dyn_value.reload
+
+      @call_result = CallResult.make!(:contact => @contact1_1, :result => @result_dyn_value, :creator => @call_centre_agent1)
+
+      @call_result.call_result_fields.count.should == 2
+
+      @call_result.call_result_fields.map(&:dynamic_euro_value).sort.should == [17, 18]
+    end
+  end
 end
