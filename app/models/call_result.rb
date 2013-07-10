@@ -17,6 +17,7 @@ class CallResult < ActiveRecord::Base
   has_one :chain_mail, :as => :chain_mailable
   accepts_nested_attributes_for :result_values, :allow_destroy => true
   accepts_nested_attributes_for :contact
+  accepts_nested_attributes_for :call_result_fields
 
   include EmailTemplateEditor
   include ScopedSearch::Model
@@ -29,6 +30,7 @@ class CallResult < ActiveRecord::Base
   validate :validate_uniqueness_of_contact_email_address, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
   validate :validate_upgraded_user, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
   validates_numericality_of :payout, :allow_blank => true
+  validates_numericality_of :value, :allow_blank => true
 
   after_create :process_side_effects, :update_contact_note, :set_last_call_result_in_contact, :update_contact_email, :update_contact_address, :unless => :save_without_callbacks
   after_update :process_side_effects, :update_contact_email, :update_contact_address, :unless => :save_without_callbacks
@@ -47,6 +49,16 @@ class CallResult < ActiveRecord::Base
   before_save do
     if payout_changed? and !payout.nil? and payout_currency_id.nil?
       self.payout_currency_id = contact.campaign.currency_id
+    end
+  end
+
+  before_update do
+    if payout_changed? and !payout.nil?
+      self.euro_payout = payout_currency.to_euro(payout.to_f)
+    end
+
+    if value_changed? and !value.nil?
+      self.euro_value = payout_currency.to_euro(value.to_f)
     end
   end
 

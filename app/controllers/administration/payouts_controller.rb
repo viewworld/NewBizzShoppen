@@ -25,12 +25,23 @@ class Administration::PayoutsController < Administration::AdministrationControll
 
   def call_result
     @call_result = CallResult.find(params[:id])
-    @call_result.payout = params[:payout]
+    @call_result.payout = params[:payout] if params[:payout]
+    @call_result.value = params[:value] if params[:value]
   end
 
   def campaign_result
     @campaign_result = ::CampaignsResult.find(params[:id])
     @campaign_result.value = params[:value]
+  end
+
+  def edit_dynamic_values
+    @call_result = CallResult.find(params[:id])
+    render :partial => 'edit_dynamic_values', :layout => false
+  end
+
+  def update_dynamic_values
+    @call_result = CallResult.find(params[:id])
+    @call_result.update_attributes(params[:call_result])
   end
 
   def agents

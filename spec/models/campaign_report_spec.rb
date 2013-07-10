@@ -810,5 +810,18 @@ describe CampaignReport do
 
       @call_result.call_result_fields.map(&:dynamic_euro_value).sort.should == [17, 18]
     end
+
+    it "should update euro value for changed value and payout" do
+      @call_result = CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :payout => 400)
+
+      @call_result.value.should == 100.0
+
+      @call_result.update_attributes(:value => 300, :payout => 200)
+
+      @call_result.reload
+
+      @call_result.euro_value.should == @campaign1.currency.to_euro(@call_result.value)
+      @call_result.euro_payout.should == @campaign1.currency.to_euro(@call_result.euro_payout)
+    end
   end
 end

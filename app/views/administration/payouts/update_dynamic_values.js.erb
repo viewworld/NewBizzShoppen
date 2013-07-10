@@ -1,0 +1,6 @@
+<% if @call_result.save %>
+    $.colorbox.close();
+    $("#link_edit_values_<%= @call_result.id %>").closest("td").effect('highlight');
+<% else %>
+    $("#call_result_form").html("<%= escape_javascript(render(:partial => "edit_dynamic_values")) %>");
+<% end %>

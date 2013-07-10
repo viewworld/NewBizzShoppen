@@ -1767,7 +1767,11 @@ en:
             value: "Value"
             payout: "Payout"
             voice: "Voice result"
-
+          edit_values: "Edit values"
+      edit_dynamic_values:
+        view:
+          header: "Edit dynamic values for result fields"
+          button_update: "Save"
     payment_transactions:
       index:
         view:

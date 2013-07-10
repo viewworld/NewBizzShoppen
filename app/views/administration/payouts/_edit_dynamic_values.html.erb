@@ -1,0 +1,28 @@
+<div id="call_result_form">
+<%= semantic_form_for @call_result, :url => update_dynamic_values_administration_payout_path(@call_result), :remote => true do |form| %>
+    <frm title="#{t('administration.payouts.edit_dynamic_values.view.header')}">
+      <param:content>
+        <%= form.fields_for :call_result_fields, @call_result.call_result_fields do |builder| %>
+            <fieldset class="inputs labels_ta_r">
+              <ol>
+                <li class="string <%= 'error' if builder.object.errors[:dynamic_euro_value].present?%>">
+                  <label><%= builder.object.campaigns_result_field.result_field.name %></label>
+                  <%= builder.text_field :dynamic_euro_value %>
+                  <p class="inline-hints">EUR</p>
+                  <%= custom_error_for_field(builder, :dynamic_euro_value) %>
+                </li>
+              </ol>
+            </fieldset>
+        <% end %>
+      </param:content>
+      <param:actions>
+        <ibt c="fltri" icon="save">
+          <%= form.submit t("administration.payouts.edit_dynamic_values.view.button_update") %>
+        </ibt>
+        <ibt c="bt_grey fltri">
+          <%= button_to_function t("common.cancel_link"), "$.colorbox.close();" %>
+        </ibt>
+      </param:actions>
+    </frm>
+<% end %>
+</div>
