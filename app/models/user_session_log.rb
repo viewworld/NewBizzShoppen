@@ -89,7 +89,8 @@ class UserSessionLog < ActiveRecord::Base
       user.user_session_logs.create(
           :start_time => Time.now,
           :end_time => (Time.now + Settings.logout_time.to_i.minutes),
-          :log_type => UserSessionLog::TYPE_REGULAR
+          :log_type => UserSessionLog::TYPE_REGULAR,
+          :time_zone => (user.time_zone.present? ? user.time_zone : "UTC")
       )
     end
   end
@@ -103,7 +104,8 @@ class UserSessionLog < ActiveRecord::Base
           :end_time => (Time.now + Settings.logout_time.to_i.minutes),
           :log_type => UserSessionLog::TYPE_CAMPAIGN,
           :euro_billing_rate => user.euro_billing_rate,
-          :campaign_id => campaign_id
+          :campaign_id => campaign_id,
+          :time_zone => (user.time_zone.present? ? user.time_zone : "UTC")
       )
     end
   end
