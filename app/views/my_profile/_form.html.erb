@@ -40,9 +40,9 @@
              <% end %>
         <% end %>
         <%= form.input :newsletter_on, :hint => hint_for("my_profile", :newsletter_on), :as => :boolean %>
-        <% unless I18n.locale == :da %>
+        <%# unless I18n.locale == :da %>
             <%= form.input :time_zone, :wrapper_html => {:class => "select"}, :input_html => {:style => "width: 240px"} %>
-        <% end %>
+        <%# end %>
         <% if current_user.supplier? %>
             <%= form.input :lead_notification_type, :as => :radio, :collection => User::LEAD_NOTIFICATION_TYPES.map { |lnt| [t("users.lead_notification_types.notification_type#{lnt}"), lnt] }, :wrapper_html => {:class => "collection"} %>
             <%= form.input :disable_bought_notification, :label => t('my_profile.edit.view.disable_bought_notification_label') %>

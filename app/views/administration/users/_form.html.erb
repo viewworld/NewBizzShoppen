@@ -23,9 +23,7 @@
                 <%= address_form.input :region_id, :as => :select, :collection => regions_collection_for(form.object.address.country) %>
             <% end %>
         <% end %>
-        <% if ['agent', 'call_centre', 'call_centre_agent'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre, :call_centre_agent) %>
-            <%= form.input :time_zone, :wrapper_html => { :class => "select"}, :input_html => {:style => "width: 240px"} %>
-        <% end %>
+        <%= form.input :time_zone, :wrapper_html => { :class => "select"}, :input_html => {:style => "width: 240px"} %>
         <% if ['call_centre_agent'].include?(params[:role]) or @user.has_any_role?(:call_centre_agent) %>
             <%= form.input :parent_id, :collection => User.with_call_centres.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false, :label => t("administration.users.edit.view.parent_id") %>
         <% end %>

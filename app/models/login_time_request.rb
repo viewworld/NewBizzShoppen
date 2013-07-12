@@ -44,7 +44,8 @@ class LoginTimeRequest < ActiveRecord::Base
         :start_time => start_time,
         :end_time => end_time,
         :campaign_id => campaign_id,
-        :log_type => 1)
+        :log_type => 1,
+        :time_zone => (user.time_zone.present? ? user.time_zone : "UTC"))
     self.user_session_log_id = usl.id
   end
 
