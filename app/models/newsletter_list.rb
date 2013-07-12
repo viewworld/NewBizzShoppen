@@ -14,10 +14,13 @@ class NewsletterList < ActiveRecord::Base
   end
 
   after_save :check_if_owner_is_changed
+  after_update :delete_if_archived
 
   attr_accessor :sourceable_items, :tag_group_items
 
   accepts_nested_attributes_for :newsletter_sources, :allow_destroy => true
+
+  scope :not_archived, where(:is_archived => false)
 
   include CommonNewsletter
 
@@ -58,7 +61,9 @@ class NewsletterList < ActiveRecord::Base
   end
 
   def cm_synchronize!
-    cm_exists? ? cm_update! : cm_create!
+    unless is_archived?
+      cm_exists? ? cm_update! : cm_create!
+    end
   end
 
   def cm_exists?
@@ -77,6 +82,12 @@ class NewsletterList < ActiveRecord::Base
       end
       cm_synchronize!
       newsletter_synches.create(:use_delayed_job => true)
+    end
+  end
+
+  def delete_if_archived
+    if is_archived_changed? and is_archived?
+      cm_delete! if cm_exists?
     end
   end
 
