@@ -57,7 +57,7 @@
 <div class="frm_dark pdd_10">
   <h2><%= t("fairdeals_home.show.view.request_a_deal") %></h2>
   <% @email_deal_request_preview = DealRequestTemplatePreview.new(:blank_template, {}, current_user) %>
-  <%= form_for :email_deal_request_preview, :url => deal_requests_path, :html => {:id => "request_deal_form"} do |f| %>
+  <%= form_for :email_deal_request_preview, :url => deal_requests_path, :html => {:id => "request_deal_form"}, :remote => true do |f| %>
 
 
       <fieldset class="inputs labels_70 inputs_160 no_pdd">
@@ -77,6 +77,10 @@
           <li id="email_deal_request_preview_deal_description_input" class="text">
             <%#= f.label t("fairdeals_home.show.view.deal_request.description") %>
             <%= f.text_area :deal_description, :style => "width:240px;height: 80px;" %>
+          </li>
+          <li class="string captcha">
+            <p style="padding: 5px 0 10px 0"><%=  t("share_deal_by_email.new.view.captcha") %></p>
+            <%= recaptcha_tags(:ajax => true) %>
           </li>
           <li class="commit">
             <ibt c="fltri">
@@ -118,3 +122,8 @@
           }
       }
 </script>
+<style type="text/css">
+   #dynamic_recaptcha #recaptcha_table, #recaptcha_image, #recaptcha_image img, div#recaptcha_area {
+       width: 255px !important;
+   }
+</style>
