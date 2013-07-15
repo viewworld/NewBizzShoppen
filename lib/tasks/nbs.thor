@@ -895,6 +895,8 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     SurveyRecipient.send_link_not_clicked_chain_mails!
   end
 
+  desc "merge_regular_user_session_logs", ""
+
   def merge_regular_user_session_logs
     UserSessionLog.regular_type.each(&:merge_regular!)
   end
