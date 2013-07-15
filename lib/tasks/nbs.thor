@@ -895,6 +895,10 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     SurveyRecipient.send_link_not_clicked_chain_mails!
   end
 
+  def merge_regular_user_session_logs
+    UserSessionLog.regular_type.each(&:merge_regular!)
+  end
+
   desc "import_contacts_from_newsletter_lists", ""
 
   def import_contacts_from_newsletter_lists
