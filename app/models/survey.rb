@@ -29,8 +29,16 @@ class Survey < ActiveRecord::Base
     User.where(:email => newsletter_owner_email).first
   end
 
+  def set_sending_details!(sending_started_at)
+    self.last_sent_at = Time.now
+    self.last_sent_recipients_count = SurveyRecipient.where(:survey_id => id).where("email_sent_at > ?", sending_started_at).count
+    self.save
+  end
+
   def send_to_newsletter_lists!
-     newsletter_lists.each { |nl| send_by_email(nl) }
+    sending_started_at = Time.now
+    newsletter_lists.each { |nl| send_by_email(nl) }
+    set_sending_details!(sending_started_at)
   end
 
   def send_to_campaign!(contact_ids)

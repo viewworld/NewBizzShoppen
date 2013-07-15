@@ -10,6 +10,33 @@ describe Survey do
     @survey.survey_questions.make!
   end
 
+  context "general sending" do
+    before(:each) do
+      @campaign = Campaign.make!
+      Contact.make!(:campaign => @campaign, :email_address => "jim@example.com")
+      Contact.make!(:campaign => @campaign, :email_address => "alyona@example.com")
+      @list = NewsletterList.make!
+      @list.newsletter_sources.create(:source_type => NewsletterSource::CAMPAIGN_SOURCE, :sourceable => @campaign)
+      @list.save
+      @list.reload
+      @survey.newsletter_lists << @list
+      @survey.save
+      @survey.reload
+    end
+
+    it "should send to newsletter list" do
+      @survey.last_sent_at.should be_nil
+      @survey.send_to_newsletter_lists!
+
+      ActionMailer::Base.deliveries.detect { |email| email.to.include?("jim@example.com") }.should_not be_nil
+      ActionMailer::Base.deliveries.detect { |email| email.to.include?("alyona@example.com") }.should_not be_nil
+
+      @survey.reload
+      @survey.last_sent_at.should_not be_nil
+      @survey.last_sent_recipients_count.should == 2
+    end
+  end
+
   context "upgrade contact to multiple leads upon survey completion" do
     before(:each) do
       @campaign = Campaign.make!
