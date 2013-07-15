@@ -5087,6 +5087,8 @@ en:
           answers_column: "Answers #"
           view_responses: "View responses"
           send_to_newsletters_confirmation: "Are you sure to send %{survey_name} survey to %{subscribers_count} newsletter subscribers?"
+          last_sent_at_column: "Last sent at"
+          last_sent_recipients_count_column: "Last sent to # subscribers"
       edit:
         view:
           edit_question: "Edit"
@@ -5103,6 +5105,8 @@ en:
           number_of_days: "# of days"
           survey_link: "Permalink"
           survey_link_hint: "This link is for chain mails only and it will be replaced by actual recipient unique link once chain mail is sent."
+          last_sent_at: "Last sent at"
+          last_sent_recipients_count: "Last sent to # subscribers"
         preview_button: "Preview"
         responses_button: "View responses"
       form:
