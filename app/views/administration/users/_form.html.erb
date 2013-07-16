@@ -90,7 +90,7 @@
         <% end %>
         <% if ['category_supplier'].include?(params[:role]) or @user.has_any_role?(:category_supplier) %>
             <%= form.input :show_deals, :as => :boolean %>
-            <%= form.input :show_my_deals, :as => :boolean %>
+            <%= form.input :dont_show_my_deals, :as => :boolean %>
             <%= form.input :auto_buy_enabled, :as => :boolean %>
         <% end %>
         <% if ['agent', 'call_centre_agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:call_centre_agent, :call_centre, :agent) %>

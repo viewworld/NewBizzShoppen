@@ -4099,7 +4099,7 @@ en:
         title: "Title"
         time_zone: "Time zone"
         show_deals: "Show deals"
-        show_my_deals: "Show my deals"
+        dont_show_my_deals: "Don't show My deals"
         big_buyer: "Got credit"
         auto_buy_enabled: "Auto buy enabled"
         newsletter_manager: "Newsletter manager"

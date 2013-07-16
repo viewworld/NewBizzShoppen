@@ -267,12 +267,12 @@ Feature: Category buyer rules
   Scenario: I can see My deals tab only when I have deal maker role or I was marked by admin as Show my deals
     Given I am not sign in
     And I have user with email category_supplier@nbs.com and role category_supplier
-    And user "category_supplier@nbs.com" with role "category_supplier" has attributes "show_my_deals:true"
+    And user "category_supplier@nbs.com" with role "category_supplier" has attributes "dont_show_my_deals:false"
     And I sign in as category_supplier@nbs.com with password secret
     Then I should not see CSS path "a[tab='browse_deals']"
     And I should see CSS path "a[tab='deals']"
 
-    And user "category_supplier@nbs.com" with role "category_supplier" has attributes "show_my_deals:false"
+    And user "category_supplier@nbs.com" with role "category_supplier" has attributes "dont_show_my_deals:true"
     Then I go to the homepage
     And I should not see CSS path "a[tab='deals']"
 

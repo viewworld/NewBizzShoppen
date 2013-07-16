@@ -157,7 +157,7 @@ class Deal < AbstractLead
       contact_name_arr = contact_name_arr.size == 1 ? contact_name_arr : [contact_name_arr.first, contact_name_arr[1..-1].join(' ')]
       user = User::CategorySupplier.new({:email => email_address, :company_name => company_name.strip, :phone => phone_number,
                                  :agreement_read => true, :first_name => contact_name_arr.first, :last_name => contact_name_arr.last,
-                                 :assign_free_subscription_plan => true, :show_my_deals => true}.merge(params))
+                                 :assign_free_subscription_plan => true, :dont_show_my_deals => false}.merge(params))
       user.skip_email_verification = "1"
       user.address = Address.new(:address_line_1 => address_line_1, :address_line_2 => address_line_2, :address_line_3 => address_line_3,
                                  :zip_code => zip_code, :country_id => country_id, :region_id => region_id)
