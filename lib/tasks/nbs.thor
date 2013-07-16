@@ -894,4 +894,12 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
   def surveys_send_link_not_clicked_chain_mails
     SurveyRecipient.send_link_not_clicked_chain_mails!
   end
+
+  desc "import_contacts_from_newsletter_lists", ""
+
+  def import_contacts_from_newsletter_lists
+    Campaign.joins(:newsletter_lists).each do |campaign|
+      campaign.import_contacts_from_lists!
+    end
+  end
 end

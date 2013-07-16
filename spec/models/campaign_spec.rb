@@ -214,4 +214,55 @@ describe Campaign do
     end
 
   end
+
+  context "newsletter lists as contacts sources" do
+    before(:each) do
+      @campaign = Campaign.make!
+
+      @list = NewsletterList.make!
+      @list.newsletter_sources.create(:source_type => NewsletterSource::TAG_SOURCE, :sourceable => TagGroup.create(:match_all => false, :tag_list => ["xyz_abc"]))
+      @list.save
+      @list2 = NewsletterList.make!
+      @list2.newsletter_sources.create(:source_type => NewsletterSource::TAG_SOURCE, :sourceable => TagGroup.create(:match_all => false, :tag_list => ["qwerty"]))
+      @list2.save
+      @list.reload
+      @list2.reload
+      @campaign.newsletter_lists << [@list, @list2]
+      @campaign.save
+    end
+
+    it "new subscribers should be imported as contacts" do
+      @campaign.contacts.count.should == 0
+
+      @campaign.import_contacts_from_lists!
+
+      @campaign.contacts.count.should == 0
+
+      User::Member.make!(:email => "johnny@cash.net", :tag_list => ["xyz_abc", "qwerty"], :first_name => "Johnny", :last_name => "Cash", :company_name => "ZComp Ltd")
+      User::Supplier.make!(:email => "alyona@test.net", :tag_list => ["xyz_abc"], :first_name => "Alyona", :last_name => "Minkovsky", :company_name => "ZComp Ltd")
+
+      @campaign.import_contacts_from_lists!
+
+      @campaign.contacts.count.should == 2
+
+      User::Supplier.make!(:email => "jim@example.net", :tag_list => ["xyz_abc"])
+
+      @campaign.import_contacts_from_lists!
+
+      @campaign.contacts.count.should == 3
+
+      Contact.make!(:campaign => @campaign, :email_address => "tim@tim.pl", :company_name => "Tim Ltd")
+
+      @campaign.reload
+
+      #when contact of given email already exists then the subscriber should not be imported
+      User::Supplier.make!(:email => "tim@tim.pl", :tag_list => ["xyz_abc"], :company_name => "Some other corp")
+
+      @campaign.import_contacts_from_lists!
+
+      @campaign.contacts.count.should == 4
+
+      @campaign.contacts.detect { |c| c.company_name == "Tim Ltd" and c.email_address == "tim@tim.pl" }.should_not be_nil
+    end
+  end
 end

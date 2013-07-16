@@ -26,6 +26,42 @@
       </ol>
     </fieldset>
   </div>
+
+  <% if @campaign.newsletter_lists.any? %>
+      <div class="pdd_10 no_pdd_t">
+        <fieldset class="inputs labels_ta_r">
+          <ol class="align_inputs">
+            <li class="header">
+              <h3><%= t("campaigns.edit.lists_selection") %></h3>
+            </li>
+            <%= text_field_tag :newsletter_owner_email %><%= bt_link_to :magnify, t("newsletters.newsletter_campaigns.form.fetch_lists"), "#", :onclick => "fetch_lists()" %>
+          </ol>
+        </fieldset>
+
+
+        <div id="surveys_newsletter_lists">
+          <div class="pdd_10">
+            <div class="grid_210 fltl">&nbsp;</div>
+            <div class="grid_240 fltl">
+              <h3><%= t("surveys_management.surveys.form.all_lists") %></h3>
+              <%= select_tag "all_lists", options_for_select([]), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+            </div>
+
+            <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
+              <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("surveys_management.surveys.form.move_right"), "javascript:move_selected('all_lists','camapign_newsletter_list_ids_')", :id => "move_right" %></p>
+
+              <p class="ta_c pdd_5"><%= bt_link_to nil, t("surveys_management.surveys.form.move_left"), "javascript:move_selected('campaign_newsletter_list_ids_','all_lists')", :id => "move_left" %></p>
+            </div>
+
+            <div class="grid_240 fltl">
+              <h3><%= t("surveys_management.surveys.form.selected_lists") %></h3>
+              <%= select_tag "campaign[newsletter_list_ids][]", options_for_select(campaign.newsletter_lists.map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+            </div>
+            <clb/>
+          </div>
+        </div>
+      </div>
+  <% end %>
 </div>
 
 <div class="column_right">
@@ -53,6 +89,7 @@
   </div>
 </div>
 
+
 <clb/>
 
 <js:>
@@ -60,5 +97,9 @@
       $(function() {
           $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
       });
+      function fetch_lists() {
+          $.get("<%= lists_for_owner_newsletters_newsletter_campaigns_path(:format => :js) -%>",
+                  "owner_email=" + $('#newsletter_owner_email').val());
+      }
   </script>
 </js:>

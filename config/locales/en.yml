@@ -547,6 +547,7 @@ en:
       button_copy_selected_contacts: "Copy selected"
       button_bulk_add_to_newsletter_list_link: "Add selected to newsletter list"
       button_send_survey_to_selected: "Send survey to selected"
+      lists_selection: "List selection for contacts sources"
     index:
       title: Campaigns
       edit: Edit

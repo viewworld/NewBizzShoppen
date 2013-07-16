@@ -19,7 +19,7 @@
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
-            <%= form.submit t("campaigns.edit.button_update"), :name => "commit_create" %>
+            <%= form.submit t("campaigns.edit.button_update"), :name => "commit_create", :onclick => "select_options_to_submit('campaign_newsletter_list_ids_');" %>
           </ibt>
           <%= bt_link_to nil, t("campaigns.edit.button_cancel"), callers_campaigns_path, :class => "bt_grey fltr" %>
         </param:actions>

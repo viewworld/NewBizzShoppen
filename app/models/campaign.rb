@@ -7,6 +7,7 @@ class Campaign < ActiveRecord::Base
   belongs_to :currency
   has_and_belongs_to_many :users
   has_and_belongs_to_many :surveys
+  has_and_belongs_to_many :newsletter_lists
   has_many :campaigns_results, :foreign_key => "campaign_id", :dependent => :destroy
   has_many :results, :through => :campaigns_results
   has_many :contacts, :dependent => :destroy
@@ -424,5 +425,13 @@ class Campaign < ActiveRecord::Base
       contacts_scope = contacts_scope.where("leads.agent_id IN (?)", user.call_centre? ? [user.id] + user.subaccount_ids : user.id)
     end
     contacts_scope.select("DISTINCT(leads.id)").count
+  end
+
+  def import_contacts_from_lists!
+    NewsletterSubscriber.where("newsletter_list_id in (?)", newsletter_list_ids).where("email_address NOT IN (?)", contacts.empty? ? Array("empty") : contacts.select("email_address").map(&:email_address)).select("DISTINCT ON (email_address) *").each do |subscriber|
+      contacts.create(:email_address => subscriber.email_address, :creator => creator, :creator_name => creator.full_name, :company_name => subscriber.company_name, :country_id => country_id,
+                      :category_id => category_id, :contact_name => subscriber.name, :company_phone_number => "(missing phone)")
+    end
+    true
   end
 end
