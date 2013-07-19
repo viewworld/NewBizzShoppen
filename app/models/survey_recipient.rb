@@ -16,7 +16,7 @@ class SurveyRecipient < ActiveRecord::Base
 
   attr_accessor :from_newsletter, :skip_notify_recipient
 
-  liquid :survey_link, :survey_name
+  liquid :survey_link, :survey_name, :first_name, :last_name, :company_name
 
   scope :for_recipient, lambda { |recipient| where(:recipient_id => recipient.id, :recipient_type => recipient.is_a?(AbstractLead) ? "AbstractLead" : recipient.class.to_s) }
   scope :for_survey, lambda { |survey| where(:survey_id => survey.id) }
@@ -129,6 +129,27 @@ class SurveyRecipient < ActiveRecord::Base
     end
   end
 
+  def company_name
+    recipient.company_name
+  end
+
+  def first_name
+    recipient_name(:first_name)
+  end
+
+  def last_name
+    recipient_name(:last_name)
+  end
+
+  def recipient_name(name_type)
+    names = case
+      when recipient.is_a?(AbstractLead) then recipient.contact_name.to_s.split(" ")
+      when recipient.is_a?(User) then [recipient.first_name, recipient.last_name]
+    end
+
+    names[name_type == :first_name ? 0 : 1]
+  end
+
   def survey_name
     survey.name
   end
@@ -139,10 +160,11 @@ class SurveyRecipient < ActiveRecord::Base
     if recipient.is_a?(Contact) and !from_newsletter
       template = recipient.campaign.survey_campaign_email_template
     else
-      template = from_newsletter ? :survey_newsletter : :survey_campaign
+      template = from_newsletter ? survey.survey_newsletter_email_template : :survey_campaign
     end
 
-    TemplateMailer.new(email, template, Country.get_country_from_locale, {:survey_name => survey_name, :survey_link => survey_link,
+    TemplateMailer.new(email, template, Country.get_country_from_locale, {:survey_name => survey_name, :survey_link => survey_link, :company_name => company_name,
+                                                                          :first_name => first_name, :last_name => last_name,
                                                                           :from => "admin@erhvervsanalyse.dk",
                                                                           :return_path => "admin@erhvervsanalyse.dk"}).deliver!
     update_attribute(:email_sent_at, Time.now)
