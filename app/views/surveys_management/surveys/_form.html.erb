@@ -183,7 +183,7 @@
 
     function editQuestion(id, parent_id){
         $.colorbox({href: "/surveys_management/surveys/<%= @survey.id %>/survey_questions/" + id + "/edit?parent_id=" + (!!parent_id ? parent_id : ''),
-            width: 700, maxHeight: 700, overlayClose: false
+            width: 700, maxHeight: 850, overlayClose: false
         });
     }
 
@@ -237,7 +237,7 @@
                     if(position > 0){
                         currentParent = findQuestionParent("null", hSerialize());
                         $.colorbox({href: "/surveys_management/surveys/<%= @survey.id %>/survey_questions/new?position=" + position + "&question_type=" + $(ui.helper).attr("data-qtype") + "&parent_id=" + (!!currentParent ? currentParent : ''),
-                            width: 700, maxHeight: 700, overlayClose: false,
+                            width: 700, height: $(ui.helper).attr("data-qtype") == 4 ? 850: 240, overlayClose: false,
                             onClosed: function(){
                                 $('ol.survey_questions_container').find("li[data-id=null]").remove();
                             }});
