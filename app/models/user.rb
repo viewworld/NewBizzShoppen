@@ -406,11 +406,11 @@ class User < ActiveRecord::Base
   end
 
   def confirmation_instructions_url
-    "http://#{domain_name}/users/confirmation?confirmation_token=#{confirmation_token}"
+    "www.#{domain_name}/users/confirmation?confirmation_token=#{confirmation_token}"
   end
 
   def reset_password_instructions_url
-    "http://www.#{domain_name}/users/password/edit?reset_password_token=#{reset_password_token}"
+    "www.#{domain_name}/users/password/edit?reset_password_token=#{reset_password_token}"
   end
 
   def roles_as_text
