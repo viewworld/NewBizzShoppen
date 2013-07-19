@@ -42,13 +42,8 @@
             <li>
               <%= bt_link_to nil, t("campaigns.edit.production"), callers_production_path(:campaign_ids => [@campaign.id]) %>
             </li>
-
-
             <% if users_for_agent_work_screen = (current_user.admin? ? @campaign.users : [current_user]+@campaign.users.where(:id => current_user.subaccount_ids)) and !users_for_agent_work_screen.empty? %>
-            <li>
-              <%= bt_link_to nil, t("campaigns.edit.agent_work_screen_as"), "javascript:void();", :onclick => "go_to_agent_work_screen_as_user(#{@campaign.id})" %>
-            </li>
-            <li><%= select_tag :user_id, options_from_collection_for_select(users_for_agent_work_screen.sort_by(&:screen_name), 'id', 'screen_name') %></li>
+            <li><%= select_tag :user_id, options_for_select([[t("campaigns.edit.agent_work_screen_as"), ""]] + users_for_agent_work_screen.sort_by(&:screen_name).map { |u| [u.screen_name, u.id] }, {:disabled => "", :selected => ""}), :onchange => "go_to_agent_work_screen_as_user(#{@campaign.id})" %></li>
             <% end %>
             <li>
               <%= bt_link_to :users, t("campaigns.edit.button_import_contacts"), new_callers_campaign_contact_path(@campaign, :type => "import") %>
@@ -78,8 +73,7 @@
   <div class="fltr">
       <%= form_for @search, :url => edit_callers_campaign_path(@campaign) do |f| %>
           <p>
-            <%= label_tag t("contacts.filter.keyword_label") %>
-            <%= f.text_field :with_keyword %>
+            <%= f.text_field :with_keyword, {:placeholder => t("contacts.filter.keyword_label") } %>
 
             <%= label_tag t("contacts.filter.result_label") %>
             <%= f.select :with_current_result_id, [[]]+CallResult.joins(:result).for_campaign(@campaign).map{|cr| [cr.result.name, cr.result_id]}.uniq.sort %>
