@@ -23,6 +23,7 @@ class TemplateMailer
     ).deliver
     I18n.locale = orig_locale
   end
-  handle_asynchronously :deliver!, :queue => Proc.new{|i| i.queue }, :run_at => Proc.new{|i| i.run_at }
-
+  unless Rails.env.development?
+    handle_asynchronously :deliver!, :queue => Proc.new{|i| i.queue }, :run_at => Proc.new{|i| i.run_at }
+  end
 end
