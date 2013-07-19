@@ -26,7 +26,7 @@
           <% recipient = survey_recipient.recipient %>
           <Row>
             <%if survey_recipient.recipient.is_a?(User) %>
-                <% user_information_fields.map { |attr| attr.blank? ? "" : recipient.send(attr).to_s.gsub(/[\n\r\t,]/, " ") }.each do |cell| %>
+                <% user_information_fields.map { |attr| attr.blank? ? "" : recipient.with_role.send(attr).to_s.gsub(/[\n\r\t,]/, " ") }.each do |cell| %>
                     <Cell><Data ss:Type="String"><%= cell %></Data></Cell>
                 <% end %>
             <% else %>
