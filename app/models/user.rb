@@ -410,7 +410,7 @@ class User < ActiveRecord::Base
   end
 
   def reset_password_instructions_url
-    "http://#{domain_name}/users/password/edit?reset_password_token=#{reset_password_token}"
+    "http://www.#{domain_name}/users/password/edit?reset_password_token=#{reset_password_token}"
   end
 
   def roles_as_text
