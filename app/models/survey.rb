@@ -7,7 +7,6 @@ class Survey < ActiveRecord::Base
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
   belongs_to :lead_creator, :foreign_key => "lead_creator_id", :class_name => "User"
   belongs_to :link_clicked_chain_mail_type, :class_name => "ChainMailType"
-  belongs_to :link_not_clicked_chain_mail_type, :class_name => "ChainMailType"
   has_and_belongs_to_many :newsletter_lists
   has_and_belongs_to_many :campaigns
   has_and_belongs_to_many :categories
@@ -16,8 +15,8 @@ class Survey < ActiveRecord::Base
   accepts_nested_attributes_for :survey_questions, :allow_destroy => true
 
   validates_presence_of :name, :unless => Proc.new{|s| s.skip_validations}
-  validates_numericality_of :link_not_clicked_chain_mail_delay, :if => Proc.new { |s| s.link_not_clicked_chain_mail_type.present? }
   validate :categories_and_lead_creator_present, :if => Proc.new{|n| n.upgrade_contacts_to_leads}
+  validate :chain_mail_present_when_use_as_intro_enabled
 
   attr_accessor :skip_validations
 
@@ -95,6 +94,10 @@ class Survey < ActiveRecord::Base
   def categories_and_lead_creator_present
     errors.add(:upgrade_contacts_to_leads, I18n.t("models.survey.upgrade_contacts_to_leads.categories_empty")) if categories.empty?
     errors.add(:lead_creator_id, I18n.t("models.survey.lead_creator.blank")) unless lead_creator
+  end
+
+  def chain_mail_present_when_use_as_intro_enabled
+    errors.add(:link_clicked_chain_mail_type_id, I18n.t("models.survey.link_clicked_chain_mail_type.no_chain_mail_selected")) if use_chain_mail_as_intro_mail? and !link_clicked_chain_mail_type
   end
 
   def set_uuid

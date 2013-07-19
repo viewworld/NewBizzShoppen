@@ -3466,6 +3466,8 @@ en:
         categories_empty: "At least one category has to be assigned."
       lead_creator:
         blank: "No user chosen."
+      link_clicked_chain_mail_type:
+        no_chain_mail_selected: "No chain mail selected"
   activerecord:
     models:
       article:
@@ -4210,8 +4212,7 @@ en:
         upgrade_contacts_to_leads: "Upgrade contacts to leads upon survey completion"
         lead_creator_id: "Lead creator"
         link_clicked_chain_mail_type_id: "Link clicked chain mail"
-        link_not_clicked_chain_mail_type_id: "Link not clicked chain mail"
-        link_not_clicked_chain_mail_delay: "Link not clicked chain mail delay"
+        use_chain_mail_as_intro_mail: "Use chain mail as intro mail"
   users:
     delayed_jobs:
       view_all: "View all"

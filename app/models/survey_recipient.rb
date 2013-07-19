@@ -67,7 +67,7 @@ class SurveyRecipient < ActiveRecord::Base
   def visited!
     if not_visited?
       update_attribute(:state, STATE_VISITED)
-      if survey.link_clicked_chain_mail_type.present?
+      if survey.link_clicked_chain_mail_type.present? and !survey.use_chain_mail_as_intro_mail?
         ChainMail.create(:chain_mailable => self, :chain_mail_type => survey.link_clicked_chain_mail_type, :email => email)
       end
     end
@@ -163,10 +163,14 @@ class SurveyRecipient < ActiveRecord::Base
       template = from_newsletter ? survey.survey_newsletter_email_template : :survey_campaign
     end
 
-    TemplateMailer.new(email, template, Country.get_country_from_locale, {:survey_name => survey_name, :survey_link => survey_link, :company_name => company_name,
-                                                                          :first_name => first_name, :last_name => last_name,
-                                                                          :from => "admin@erhvervsanalyse.dk",
-                                                                          :return_path => "admin@erhvervsanalyse.dk"}).deliver!
+    if survey.use_chain_mail_as_intro_mail?
+      ChainMail.create(:chain_mailable => self, :chain_mail_type => survey.link_clicked_chain_mail_type, :email => email)
+    else
+      TemplateMailer.new(email, template, Country.get_country_from_locale, {:survey_name => survey_name, :survey_link => survey_link, :company_name => company_name,
+                                                                            :first_name => first_name, :last_name => last_name,
+                                                                            :from => "admin@erhvervsanalyse.dk",
+                                                                            :return_path => "admin@erhvervsanalyse.dk"}).deliver!
+    end
     update_attribute(:email_sent_at, Time.now)
   end
 
@@ -180,23 +184,6 @@ class SurveyRecipient < ActiveRecord::Base
 
   def answer_for_question(question)
     survey_answers.detect{ |sa| sa.survey_question_id == question.id }
-  end
-
-  def link_not_clicked_chain_mail_delay_expired?
-    if survey.link_not_clicked_chain_mail_type and link_not_clicked_chain_mail_sent_at.nil?
-      (created_at.to_date + survey.link_not_clicked_chain_mail_delay.to_i.days) <= Date.today
-    else
-      false
-    end
-  end
-
-  def self.send_link_not_clicked_chain_mails!
-    SurveyRecipient.with_state(STATE_NOT_VISITED).joins(:survey).where("surveys.link_not_clicked_chain_mail_type_id IS NOT NULL and link_not_clicked_chain_mail_sent_at IS NULL").readonly(false).each do |survey_recipient|
-      if survey_recipient.link_not_clicked_chain_mail_delay_expired?
-        ChainMail.create(:chain_mailable => survey_recipient, :chain_mail_type => survey_recipient.survey.link_not_clicked_chain_mail_type, :email => survey_recipient.email)
-        survey_recipient.update_attribute(:link_not_clicked_chain_mail_sent_at, Time.now)
-      end
-    end
   end
 
   private

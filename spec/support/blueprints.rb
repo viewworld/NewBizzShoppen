@@ -612,6 +612,7 @@ end
 Survey.blueprint do
   name { Faker::Lorem.words(2).to_s.capitalize }
   creator { User::Admin.make! }
+  use_chain_mail_as_intro_mail { false }
 end
 
 SurveyQuestion.blueprint do
