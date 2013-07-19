@@ -2333,3 +2333,18 @@ ol.survey_questions_container.sortable li .bt.bt_grey .branched-option {
     margin-left: 150px;
     padding: 10px 20px 20px;
 }
+
+
+
+
+/* --- campaings ----
+------------------------------------------------------------------------------------ */
+
+#surveys_newsletter_lists select {
+    height: 200px;
+    width: 200px;
+}
+
+#surveys_newsletter_lists .grid_120 {
+    margin-top: 30px;
+}
