@@ -608,3 +608,47 @@ div.pagination .disabled
 .campaigns_results td input {
     width: 70px;
 }
+
+
+
+
+/* --- edit selected ---
+------------------------------------------------------------------------------------------ */
+
+
+.edit_selected {
+    position: relative;
+}
+
+.edit_selected .edit_selected_title {
+    width: 1100px;
+}
+
+.edit_selected .btn_remove_selected {
+    background-color: transparent;
+    position: absolute;
+    right: 10px;
+    top: 6px;
+}
+
+.edit_selected label {
+    float: left;
+    line-height: 30px;
+    margin-right: 10px;
+    text-align: right;
+    width: 200px;
+}
+
+.edit_selected select {
+    margin-bottom: 10px;
+    width: 500px;
+}
+
+.edit_selected .tags_wrapper {
+    padding-top: 0;
+}
+
+.edit_selected .main_actions .tags_wrapper .tagit {
+    margin-right: 0px;
+    width: 492px;
+}
