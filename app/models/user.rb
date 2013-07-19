@@ -158,7 +158,7 @@ class User < ActiveRecord::Base
   check_associations_before_destroy :leads, :lead_purchases, :lead_templates, :assigned_lead_purchases, :lead_requests, :leads_in_cart, :deals, :requested_deals, :campaigns, :contacts, :call_results, :subaccounts, :invoices
 
   liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_supplier_category_home_url,
-         :screen_name, :first_name, :last_name, :home_page_url
+         :screen_name, :first_name, :last_name, :home_page_url, :autologin_link
   require 'digest/sha1'
 
   acts_as_taggable
