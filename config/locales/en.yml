@@ -513,6 +513,12 @@ en:
         all_results: ALL RESULTS
         sum: SUM
     edit:
+      edit_selected_contacts: Edit selected contacts
+      label_assignments: Assignments
+      label_newsletter_lists: Newsletter lists
+      label_campaings: Campaings
+      label_surveys: Surveys
+      label_tags: Tags
       title: Edit campaign
       owner: Owner
       campaign_targets: Campaign targets
@@ -520,12 +526,12 @@ en:
       button_cancel: Back to campain listing
       button_create_contact: Create contact
       button_manage_result_types: Manage result types
-      button_import_contacts: Import CSV contacts
-      button_assign_selected_contacts: Assign selected contacts
-      button_remove_assignment_for_selected: "Remove assignments for selected"
+      button_import_contacts: Import contacts
+      button_assign_selected_contacts: Assign
+      button_remove_assignment_for_selected: "Unassign"
       button_bulk_download_csv_link: "Export CSV contacts"
       button_bulk_download_link: "Export contacts"
-      button_remove_selected: Remove selected
+      button_remove_selected: Remove selected contacts
       agent_assignment_button: Agent assignment
       show_button: Show
       edit_button: Edit
@@ -543,10 +549,10 @@ en:
       edit_template: "Edit template"
       production: "Production"
       agent_work_screen_as: "Go to agent work screen as"
-      button_move_selected_contacts: "Move selected"
-      button_copy_selected_contacts: "Copy selected"
-      button_bulk_add_to_newsletter_list_link: "Add selected to newsletter list"
-      button_send_survey_to_selected: "Send survey to selected"
+      button_move_selected_contacts: "Move"
+      button_copy_selected_contacts: "Copy"
+      button_bulk_add_to_newsletter_list_link: "Add to list"
+      button_send_survey_to_selected: "Send survey"
     index:
       title: Campaigns
       edit: Edit

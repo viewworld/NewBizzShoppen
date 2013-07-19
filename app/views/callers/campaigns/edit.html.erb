@@ -53,6 +53,9 @@
             <li>
               <%= bt_link_to :users, t("campaigns.edit.button_import_contacts"), new_callers_campaign_contact_path(@campaign, :type => "import") %>
             </li>
+            <li>
+              <%= bt_link_to :download, t("campaigns.edit.button_bulk_download_link"), "", :id => "export_contacts" %>
+            </li>
             <li class="last">
               <%= bt_link_to :pencil, t("campaigns.edit.button_manage_result_types"), callers_campaign_results_path(@campaign) %>
             </li>
@@ -111,83 +114,106 @@
             </li>
           </ul-actions>
       <% end %>
+  <% end %>
 
-      <% blocks.bottom do %>
 
-          <%= form_tag batch_assign_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_assign_form" do %>
-              <%= select_tag "agent_id", options_for_select(@campaign.users.map { |u| [u.screen_name, u.id] }.sort) %>
-              <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_assign" %>
-              <%= bt_link_to :users, t("campaigns.edit.button_assign_selected_contacts"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_assign');$('#batch_assign_form').submit();" %>
-              <%= bt_link_to :remove, t("campaigns.edit.button_remove_selected"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_remove');$('#batch_remove_form').submit();" %>
-              <%= bt_link_to :remove, t("campaigns.edit.button_remove_assignment_for_selected"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_unassign');$('#batch_unassign_form').submit();" %>
-              <%= bt_link_to :download, t("campaigns.edit.button_bulk_download_link"), "", :id => "export_contacts" , :class => "fltr" %>
-          <% end %>
+  <table class="generic edit_selected">
+    <thead>
+    <tr>
+      <th class="hl"></th>
+      <th class="edit_selected_title"><%= t("campaigns.edit.edit_selected_contacts") %></th>
+      <th class="hr"></th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <tr class="main_actions">
+      <td colspan="3">
 
-          <%= form_tag "'", :method => :post, :id => "export_contacts_form" do %>
-          <% end %>
+  <%= form_tag batch_assign_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_assign_form" do %>
+      <label><%= t("campaigns.edit.label_assignments") %></label><%= select_tag "agent_id", options_for_select(@campaign.users.map { |u| [u.screen_name, u.id] }.sort) %>
+      <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_assign" %>
+      <%= bt_link_to :users, t("campaigns.edit.button_assign_selected_contacts"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_assign');$('#batch_assign_form').submit();" %>
+      <%= bt_link_to :remove, t("campaigns.edit.button_remove_assignment_for_selected"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_unassign');$('#batch_unassign_form').submit();" %>
+      <%= bt_link_to :remove, t("campaigns.edit.button_remove_selected"), "javascript:void(0)", :class => "btn_remove_selected", :onclick => "set_contacts_id_hf('hf_batch_remove');$('#batch_remove_form').submit();" %>
+  <% end %>
 
-          <script>
-              $('#export_contacts').click(function(e){
-                  e.preventDefault();
-                  $('#select_export_format').dialog({
-                      height: 125,
-                      modal: true,
-                      buttons: {
-                          "XLS": function(){
-                              $( this ).dialog( "close" );
-                              $('#export_contacts_form').attr('action', '<%= bulk_contacts_export_callers_campaign_contacts_path(@campaign, :format => :xls) %>');
-                              $('#export_contacts_form').submit();
-                          },
-                          "CSV": function(){
-                              $( this ).dialog( "close" );
-                              $('#export_contacts_form').attr('action', '<%= bulk_contacts_export_callers_campaign_contacts_path(@campaign, :format => :csv) %>');
-                              $('#export_contacts_form').submit();
-                          }
-                      }
-                  });
-              });
-          </script>
+  <%= form_tag "'", :method => :post, :id => "export_contacts_form" do %>
+  <% end %>
 
-          <%= form_tag batch_assign_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_unassign_form" do %>
-              <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_unassign" %>
-          <% end %>
+  <script>
+      $('#export_contacts').click(function(e){
+          e.preventDefault();
+          $('#select_export_format').dialog({
+              height: 125,
+              modal: true,
+              buttons: {
+                  "XLS": function(){
+                      $( this ).dialog( "close" );
+                      $('#export_contacts_form').attr('action', '<%= bulk_contacts_export_callers_campaign_contacts_path(@campaign, :format => :xls) %>');
+                      $('#export_contacts_form').submit();
+                  },
+                  "CSV": function(){
+                      $( this ).dialog( "close" );
+                      $('#export_contacts_form').attr('action', '<%= bulk_contacts_export_callers_campaign_contacts_path(@campaign, :format => :csv) %>');
+                      $('#export_contacts_form').submit();
+                  }
+              }
+          });
+      });
+  </script>
 
-          <%= form_tag batch_remove_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_remove_form" do %>
-              <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_remove" %>
-          <% end %>
+  <%= form_tag batch_assign_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_unassign_form" do %>
+      <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_unassign" %>
+  <% end %>
 
-          <% if (@newsletter_lists = current_user.admin? ? NewsletterList.all : NewsletterList.created_or_owned_by(current_user)) and @newsletter_lists.present? %>
-          <%= form_tag batch_add_to_newsletter_list_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_add_to_newsletter_list_form" do %>
-              <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_add_to_newsletter_list" %>
-              <%= select_tag "newsletter_list_id", options_for_select((@newsletter_lists).map { |nl| [nl.name.to_s, nl.id] }.sort) %>
-              <%= bt_link_to :plus, t("campaigns.edit.button_bulk_add_to_newsletter_list_link"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_add_to_newsletter_list');$('#batch_add_to_newsletter_list_form').submit();" %>
-          <% end %>
-          <% end %>
+  <%= form_tag batch_remove_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_remove_form" do %>
+      <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_remove" %>
+  <% end %>
 
-          <% if target_campaigns = (current_user.admin? ? Campaign.all.except(@campaign) : Campaign.available_for_user(current_user)).except(@campaign) %>
-              <%= form_tag batch_move_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_move_form" do %>
-                  <%= select_tag "target_campaign_id", options_for_select(target_campaigns.map { |u| [u.name.to_s, u.id] }.sort) %>
-                  <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_move_form" %>
-                  <%= hidden_field_tag "action_type", nil, :id => "hf_batch_move_form_action_type" %>
-                  <%= bt_link_to :arrow_right, t("campaigns.edit.button_move_selected_contacts"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_move_form');$('#hf_batch_move_form_action_type').val('move');$('#batch_move_form').submit();" %>
-                  <%= bt_link_to :arrow_right, t("campaigns.edit.button_copy_selected_contacts"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_move_form');$('#hf_batch_move_form_action_type').val('copy');$('#batch_move_form').submit();" %>
-              <% end %>
-          <% end %>
-
-          <% if @campaign.surveys.any? %>
-              <%= form_tag batch_send_survey_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_send_survey_form" do %>
-                  <%= select_tag "survey_id", options_for_select(@campaign.surveys.map { |u| [u.name.to_s, u.id] }.sort) %>
-                  <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_send_survey_form" %>
-                  <%= bt_link_to :mail, t("campaigns.edit.button_send_survey_to_selected"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_send_survey_form');;$('#batch_send_survey_form').submit();" %>
-              <% end %>
-          <% end %>
-
-          <%= bulk_form do %>
-            <%= hidden_field_tag :route_to %>
-            <%= render :partial => "/shared/tags/assign_tags", :locals => { :ids_container => "cb_contact_", :taggable_class_name => "Contact" } %>
-          <% end %>
+  <% if (@newsletter_lists = current_user.admin? ? NewsletterList.all : NewsletterList.created_or_owned_by(current_user)) and @newsletter_lists.present? %>
+      <%= form_tag batch_add_to_newsletter_list_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_add_to_newsletter_list_form" do %>
+          <label><%= t("campaigns.edit.label_newsletter_lists") %></label><%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_add_to_newsletter_list" %>
+          <%= select_tag "newsletter_list_id", options_for_select((@newsletter_lists).map { |nl| [nl.name.to_s, nl.id] }.sort) %>
+          <%= bt_link_to :plus, t("campaigns.edit.button_bulk_add_to_newsletter_list_link"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_add_to_newsletter_list');$('#batch_add_to_newsletter_list_form').submit();" %>
       <% end %>
   <% end %>
+
+  <% if target_campaigns = (current_user.admin? ? Campaign.all.except(@campaign) : Campaign.available_for_user(current_user)).except(@campaign) %>
+      <%= form_tag batch_move_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_move_form" do %>
+          <label><%= t("campaigns.edit.label_campaings") %></label><%= select_tag "target_campaign_id", options_for_select(target_campaigns.map { |u| [u.name.to_s, u.id] }.sort) %>
+          <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_move_form" %>
+          <%= hidden_field_tag "action_type", nil, :id => "hf_batch_move_form_action_type" %>
+          <%= bt_link_to :arrow_right, t("campaigns.edit.button_move_selected_contacts"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_move_form');$('#hf_batch_move_form_action_type').val('move');$('#batch_move_form').submit();" %>
+          <%= bt_link_to :arrow_right, t("campaigns.edit.button_copy_selected_contacts"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_move_form');$('#hf_batch_move_form_action_type').val('copy');$('#batch_move_form').submit();" %>
+      <% end %>
+  <% end %>
+
+  <% if @campaign.surveys.any? %>
+      <%= form_tag batch_send_survey_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_send_survey_form" do %>
+          <label><%= t("campaigns.edit.label_campaings") %></label><%= select_tag "survey_id", options_for_select(@campaign.surveys.map { |u| [u.name.to_s, u.id] }.sort) %>
+          <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_send_survey_form" %>
+          <%= bt_link_to :mail, t("campaigns.edit.button_send_survey_to_selected"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_send_survey_form');;$('#batch_send_survey_form').submit();" %>
+      <% end %>
+  <% end %>
+
+  <%= bulk_form do %>
+      <%= hidden_field_tag :route_to %>
+      <label><%= t("campaigns.edit.label_tags") %></label><%= render :partial => "/shared/tags/assign_tags", :locals => { :ids_container => "cb_contact_", :taggable_class_name => "Contact" } %>
+  <% end %>
+
+
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
 </column-mc:>
 
 <js:>
