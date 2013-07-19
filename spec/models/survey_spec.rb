@@ -98,93 +98,86 @@ describe Survey do
 
     before(:each) do
       @chain_mail_link_clicked = SurveyChainMailType.make!
-      @chain_mail_link_not_clicked = SurveyChainMailType.make!
+      @chain_mail_link_clicked.chain_mail_items.first.update_attribute(:body, "Special chain mail")
       @chain_mail_option_1 = SurveyChainMailType.make!
       @chain_mail_option_2 = SurveyChainMailType.make!
-      @survey.update_attributes(:link_clicked_chain_mail_type => @chain_mail_link_clicked, :link_not_clicked_chain_mail_type => @chain_mail_link_not_clicked, :link_not_clicked_chain_mail_delay => 5)
+      @survey.update_attributes(:link_clicked_chain_mail_type => @chain_mail_link_clicked)
       @select_question = @survey.survey_questions.make!(:question_type => SurveyQuestion::SELECT_TYPE)
       @option_1 = @select_question.survey_options.make!(:chain_mail_type => @chain_mail_option_1, :tag_list => ["tag_1", "tag_2"])
       @option_2 = @select_question.survey_options.make!(:chain_mail_type => @chain_mail_option_2, :tag_list => ["tag_3", "tag_4"])
+      @survey.survey_newsletter_email_template.translations.each { |t| t.update_attribute(:body, "Standard intro email")}
       @survey.reload
-
-      @survey_recipient = @survey.create_survey_recipient(User::Supplier.make!)
     end
 
-    it "should send chain mail when link is visited" do
-      ChainMail.count.should == 0
-      @survey_recipient.visited!
-      ChainMail.count.should == 1
-      ChainMail.last.chain_mail_type.should == @chain_mail_link_clicked
+    context "use standard mail as intro" do
+      before(:each) do
+        @survey_recipient = @survey.create_survey_recipient(User::Supplier.make!, true)
+      end
+
+      it "should send standard email" do
+        ActionMailer::Base.deliveries.detect { |e| e.to.include?(@survey_recipient.email) and e.body.include?("Standard intro email") }.should_not be_nil
+      end
+
+      it "should send chain mail when link is visited" do
+        ChainMail.count.should == 0
+        @survey_recipient.visited!
+        ChainMail.count.should == 1
+        ChainMail.last.chain_mail_type.should == @chain_mail_link_clicked
+      end
+
+      it "should send chain mail from the chosen survey options and tag the recipient object accordingly upon completion" do
+        ChainMail.count.should == 0
+
+        @survey_recipient.visited!
+
+        ChainMail.count.should == 1
+
+        @survey_recipient.survey_answers.create(:survey_question_id => @select_question.id, :question_type => 4, :survey_option_ids => [@option_2.id])
+        @survey_recipient.reload
+
+        @survey_recipient.completed!
+
+        ChainMail.count.should == 2
+
+        ChainMail.last.chain_mail_type.should == @chain_mail_option_2
+
+        @survey_recipient.reload
+
+        #recipient should also be tagged by the chosen survey options
+        @survey_recipient.recipient.tag_list.sort.should == ["tag_3", "tag_4"]
+      end
+
+      it "should be possible to insert survey permalink to chain mail body and it will be replaced by unique recipient link" do
+        @chain_mail_type = SurveyChainMailType.make!
+        @chain_mail = ChainMail.make!(:chain_mail_type => @chain_mail_type, :chain_mailable => @survey_recipient, :email => @survey_recipient.email)
+
+        @chain_mail_type.chain_mail_items.first.update_attribute(:body, %{ Lorem ipsum, <a href="http://fairleads.com/a"> or <a href="#{@survey.fake_permalink}">Visit here</a> dolor sit amet })
+
+        #the normal links should be redirected as before
+        @chain_mail.prepare_body(@chain_mail_type.chain_mail_items.first.body).should include("?redirect=http%3A%2F%2Ffairleads.com")
+
+        #erhvervsanalyse.dk should be replaced by proper unique link to survey for given recipient
+        @chain_mail.prepare_body(@chain_mail_type.chain_mail_items.first.body).should_not include(@survey.fake_permalink)
+        @chain_mail.prepare_body(@chain_mail_type.chain_mail_items.first.body).should include(@survey_recipient.survey_link)
+      end
     end
 
-    it "should send chain mail when link is not visited after set amount of days (delay)" do
-      ChainMail.count.should == 0
-      @survey_recipient2 = @survey.create_survey_recipient(User::Supplier.make!, false, false)
-      @survey_recipient2.visited!
+    context "use chain mail as intro" do
+      before(:each) do
+        @survey.update_attribute(:use_chain_mail_as_intro_mail, true)
+        @survey_recipient = @survey.create_survey_recipient(User::Supplier.make!, true)
+      end
 
-      #this is the visited link chain mail
-      ChainMail.count.should == 1
-      ChainMail.last.chain_mail_type.should == @chain_mail_link_clicked
+      it "should send chain mail when recipient is created instead of standard template" do
+        ActionMailer::Base.deliveries.detect { |e| e.to.include?(@survey_recipient.email) and e.body.include?("Standard intro email") }.should be_nil
+        ActionMailer::Base.deliveries.detect { |e| e.to.include?(@survey_recipient.email) and e.body.include?("Special chain mail") }.should_not be_nil
+      end
 
-      set_date(Date.today + 4.days)
-
-      SurveyRecipient.send_link_not_clicked_chain_mails!
-
-      #no new chain mails
-      ChainMail.count.should == 1
-
-      set_date(Date.today + 5.days)
-
-      SurveyRecipient.send_link_not_clicked_chain_mails!
-
-      #not clicked chain mail sent
-      ChainMail.count.should == 2
-
-      ChainMail.last.chain_mail_type.should == @chain_mail_link_not_clicked
-
-      @survey_recipient.reload
-      @survey_recipient.link_not_clicked_chain_mail_sent_at.should_not be_nil
-
-      SurveyRecipient.send_link_not_clicked_chain_mails!
-
-      #should not send again
-      ChainMail.count.should == 2
-    end
-
-    it "should send chain mail from the chosen survey options and tag the recipient object accordingly upon completion" do
-      ChainMail.count.should == 0
-
-      @survey_recipient.visited!
-
-      ChainMail.count.should == 1
-
-      @survey_recipient.survey_answers.create(:survey_question_id => @select_question.id, :question_type => 4, :survey_option_ids => [@option_2.id])
-      @survey_recipient.reload
-
-      @survey_recipient.completed!
-
-      ChainMail.count.should == 2
-
-      ChainMail.last.chain_mail_type.should == @chain_mail_option_2
-
-      @survey_recipient.reload
-
-      #recipient should also be tagged by the chosen survey options
-      @survey_recipient.recipient.tag_list.sort.should == ["tag_3", "tag_4"]
-    end
-
-    it "should be possible to insert survey permalink to chain mail body and it will be replaced by unique recipient link" do
-      @chain_mail_type = SurveyChainMailType.make!
-      @chain_mail = ChainMail.make!(:chain_mail_type => @chain_mail_type, :chain_mailable => @survey_recipient, :email => @survey_recipient.email)
-
-      @chain_mail_type.chain_mail_items.first.update_attribute(:body, %{ Lorem ipsum, <a href="http://fairleads.com/a"> or <a href="#{@survey.fake_permalink}">Visit here</a> dolor sit amet })
-
-      #the normal links should be redirected as before
-      @chain_mail.prepare_body(@chain_mail_type.chain_mail_items.first.body).should include("?redirect=http%3A%2F%2Ffairleads.com")
-
-      #erhvervsanalyse.dk should be replaced by proper unique link to survey for given recipient
-      @chain_mail.prepare_body(@chain_mail_type.chain_mail_items.first.body).should_not include(@survey.fake_permalink)
-      @chain_mail.prepare_body(@chain_mail_type.chain_mail_items.first.body).should include(@survey_recipient.survey_link)
+      it "should NOT send chain mail when link is visited" do
+        ActionMailer::Base.deliveries.clear
+        @survey_recipient.visited!
+        ActionMailer::Base.deliveries.should be_empty
+      end
     end
   end
 end
