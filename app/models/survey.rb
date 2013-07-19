@@ -11,6 +11,7 @@ class Survey < ActiveRecord::Base
   has_and_belongs_to_many :newsletter_lists
   has_and_belongs_to_many :campaigns
   has_and_belongs_to_many :categories
+  has_one :survey_newsletter_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'survey_newsletter'", :dependent => :destroy
 
   accepts_nested_attributes_for :survey_questions, :allow_destroy => true
 
@@ -22,6 +23,7 @@ class Survey < ActiveRecord::Base
 
   before_create :set_uuid
   before_destroy :can_be_destroyed
+  after_save :check_email_template
 
   scope :created_by, lambda { |creator| creator.has_any_role?(:category_supplier, :supplier) ? where("categories_surveys.category_id IN (?) OR creator_id = ?", creator.unique_category_ids, creator.id).joins(:categories) : where("creator_id = ?", creator.id) }
 
@@ -97,5 +99,16 @@ class Survey < ActiveRecord::Base
 
   def set_uuid
     self.uuid = SecureRandom.hex(6)
+  end
+
+  def check_email_template
+    unless survey_newsletter_email_template
+      global_template = EmailTemplate.global.where(:uniq_id => "survey_newsletter").first
+      self.survey_newsletter_email_template = global_template.clone
+      global_template.translations.each do |translation|
+        self.survey_newsletter_email_template.translations << translation.clone
+      end
+      self.save
+    end
   end
 end

@@ -12,6 +12,9 @@
               <%= bt_link_to nil, t("surveys_management.surveys.index.view.send_to_newsletters"), send_to_newsletters_surveys_management_survey_path(@survey), :class => "fltr", :method => :post,
                              :confirm => t("surveys_management.surveys.index.view.send_to_newsletters_confirmation", :survey_name => @survey.name, :subscribers_count => @survey.total_subscribers) %>
           <% end %>
+          <% if current_user.admin? %>
+              <%= bt_link_to nil, t("surveys_management.surveys.edit.intro_email_button"), edit_administration_email_template_path(@survey.survey_newsletter_email_template), :class => "fltr" %>
+          <% end %>
         </param:header>
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>

@@ -378,6 +378,7 @@ en:
       chain_mail_at_position: "Chain mail at position %{position}"
       attachments: "Attachments"
 
+      number_of_days_for_surveys: "it must be 0 if used as intro mail to surveys"
     update:
       flash:
         result_changed: "Result has been changed. Please check if variables are correct in chain mail templates."
@@ -5116,6 +5117,7 @@ en:
           last_sent_recipients_count: "Last sent to # subscribers"
         preview_button: "Preview"
         responses_button: "View responses"
+        intro_email_button: "Intro mail"
       form:
         move_right: "Add >"
         move_left: "< Remove"
