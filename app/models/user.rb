@@ -620,7 +620,7 @@ class User < ActiveRecord::Base
   def autologin_link
     autologin_link_temp = ""
     if domain
-      autologin_link_temp << "http://www.#{domain.name}"
+      autologin_link_temp << "www.#{domain.name}"
     end
     autologin_link_temp + "/login_keys?key=#{generate_login_key!}"
   end
@@ -702,7 +702,7 @@ class User < ActiveRecord::Base
 
   def category_supplier_category_home_url
     if has_role?(:category_supplier)
-      "http://www.#{domain_name}/#{with_role.parent_buying_categories.first.cached_slug}"
+      "www.#{domain_name}/#{with_role.parent_buying_categories.first.cached_slug}"
     end
   end
 
@@ -710,11 +710,11 @@ class User < ActiveRecord::Base
     if has_role?(:category_supplier)
       category_supplier_category_home_url
     elsif has_role?(:supplier)
-      "http://www.#{domain_name}/supplier_home"
+      "www.#{domain_name}/supplier_home"
     elsif has_role?(:member)
-      "http://www.#{domain_name}/"
+      "www.#{domain_name}/"
     else
-      "http://www.#{domain_name}/"
+      "www.#{domain_name}/"
     end
   end
 
