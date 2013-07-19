@@ -189,6 +189,8 @@ GEM
     launchy (0.4.0)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
+    letter_opener (0.0.2)
+      launchy
     liquid (2.2.2)
     machinist (2.0.0.beta2)
     mail (2.2.19)
@@ -375,6 +377,7 @@ DEPENDENCIES
   jammit-s3!
   json_pure (>= 1.4.6)
   launchy (= 0.4.0)
+  letter_opener
   liquid
   machinist (>= 2.0.0.beta1)
   memcache-client

@@ -61,6 +61,7 @@ end
 group :development do
   gem "nifty-generators"
   gem "bullet"
+  gem "letter_opener"
 end
 
 group :test do
