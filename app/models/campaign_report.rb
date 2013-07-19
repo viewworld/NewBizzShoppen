@@ -440,7 +440,7 @@ class CampaignReport
 
     generated_leads = total_value_generated_leads_during_upgrade
 
-    currency.from_euro(not_upgraded.sum("campaigns_results.euro_value").to_f + not_upgraded_dynamic.sum("value * euro_value").to_f + upgraded.sum("leads_leads.euro_price").to_f + generated_leads.sum("generated_leads.euro_price").to_f)
+    currency.from_euro(not_upgraded.sum("call_results.euro_value").to_f + not_upgraded_dynamic.sum("value * euro_value").to_f + upgraded.sum("leads_leads.euro_price").to_f + generated_leads.sum("generated_leads.euro_price").to_f)
   end
 
   def leads_sold

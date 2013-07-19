@@ -80,7 +80,7 @@
           });
       }
 
-    $('input[id^="call_result_"]').blur(function(){
+    $('input[id^="call_result_"][id$="_payout"]').blur(function(){
         $.ajax({
             url: '/administration/payouts/' + $(this).attr('data-call-result-id') + '/call_result.js',
             type: 'PUT',
@@ -90,9 +90,9 @@
         })
     });
 
-    $('input[id^="campaign_result_"]').blur(function(){
+    $('input[id^="call_result_"][id$="_value"]').blur(function(){
         $.ajax({
-            url: '/administration/payouts/' + $(this).attr('data-campaign-result-id') + '/campaign_result.js',
+            url: '/administration/payouts/' + $(this).attr('data-call-result-id') + '/call_result.js',
             type: 'PUT',
             data: {
                 'value': $(this).val()
@@ -134,6 +134,13 @@
       $('#order').val(order);
       set_search_url();
       $('#form_campaign_reports_search').submit();
+  }
+
+
+  function editDynamicValues(id){
+    $.colorbox({href: "/administration/payouts/" + id + "/edit_dynamic_values",
+        width: 700, maxHeight: 700, overlayClose: false
+    });
   }
 
   </script>

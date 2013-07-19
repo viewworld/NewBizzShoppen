@@ -1,0 +1,6 @@
+<% if !@captcha %>
+alert('<%= I18n.t("share_deal_by_email.create.flash.invalid_captcha") %>');
+<% else %>
+<% flash[:notice] = I18n.t("deal_requests.create.flash.email_sent") %>
+window.location = window.location;
+<% end %>

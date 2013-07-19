@@ -55,8 +55,12 @@
               <td><%= call_result.contact.campaign.name %></td>
               <td><%= call_result.result.name %></td >
               <td>
-                  <%= text_field_tag "campaign_result[#{campaign_result.id}][value]", campaign_result.value, 'data-campaign-result-id' => campaign_result.id, :style => "width:45px" %>
-                  <%= campaign_result.campaign.currency %>
+                  <% if campaign_result.is_dynamic_value %>
+                    <%= link_to t("administration.payouts.index.view.edit_values"), "javascript:;", :onclick => "editDynamicValues(#{call_result.id})", :id => "link_edit_values_#{call_result.id}" %>
+                  <% else %>
+                    <%= text_field_tag "call_result[#{call_result.id}][value]", call_result.value, 'data-call-result-id' => call_result.id, :style => "width:45px" %>
+                    <%= call_result.payout_currency %>
+                  <% end %>
               </td>
               <td>
                 <%= text_field_tag "call_result[#{call_result.id}][payout]", call_result.payout, 'data-call-result-id' => call_result.id, :style => "width:45px" %>

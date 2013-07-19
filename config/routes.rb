@@ -97,6 +97,8 @@ Nbs::Application.routes.draw do
       member do
         put 'call_result'
         put 'campaign_result'
+        get 'edit_dynamic_values'
+        put 'update_dynamic_values'
       end
       collection do
         get 'agents'

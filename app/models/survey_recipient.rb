@@ -143,7 +143,7 @@ class SurveyRecipient < ActiveRecord::Base
     end
 
     TemplateMailer.new(email, template, Country.get_country_from_locale, {:survey_name => survey_name, :survey_link => survey_link,
-                                                                          :from => "Erhvervsanalyse.dk <admin@erhvervsanalyse.dk>",
+                                                                          :from => "admin@erhvervsanalyse.dk",
                                                                           :return_path => "admin@erhvervsanalyse.dk"}).deliver!
     update_attribute(:email_sent_at, Time.now)
   end

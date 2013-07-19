@@ -122,4 +122,23 @@ class UserSessionLog < ActiveRecord::Base
     log_type == TYPE_CAMPAIGN
   end
 
+  def merge_regular!
+    begin
+      reload
+      usls = UserSessionLog.regular_type.where(:user_id => user_id).where("id <> ?", id).where("EXTRACT(EPOCH FROM(start_time - ?)) BETWEEN 0 AND 180", end_time).reorder("end_time DESC")
+      if usls.any?
+        update_attribute(:end_time, usls.first.end_time)
+        usls.delete_all
+      end
+
+      usls = UserSessionLog.regular_type.where(:user_id => user_id).where("id <> ?", id).where("EXTRACT(EPOCH FROM(? - end_time)) BETWEEN  0 AND 180", start_time).reorder("start_time ASC")
+      if usls.any?
+        update_attribute(:start_time, usls.first.start_time)
+        usls.delete_all
+      end
+    rescue
+      false
+    end
+  end
+
 end
