@@ -369,7 +369,8 @@ class Lead < AbstractLead
 
   def survey_recipients_for_category
     recipient_ids = survey_recipient_ids + (contact ? contact.survey_recipient_ids : [])
-    SurveyRecipient.where("survey_recipients.id in (?)", recipient_ids).joins(:survey => :categories).where("category_id = ?", category_id)
+    SurveyRecipient.where("survey_recipients.id in (?)", recipient_ids).joins(:survey => :categories).joins(:survey_answers => :survey_options).
+        where("categories.id = :category_id OR survey_options.category_id = :category_id", {:category_id => category_id}).select("DISTINCT ON (survey_recipients.id) survey_recipients.*")
   end
 
   def has_any_survey_recipients?

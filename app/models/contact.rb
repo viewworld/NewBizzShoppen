@@ -121,11 +121,11 @@ class Contact < AbstractLead
     agent ? agent.full_name : "-"
   end
 
-  def upgrade_to_lead(survey=nil)
+  def upgrade_to_lead(survey_recipient=nil)
     self.reload
-    if survey
-      self.upgraded_from_survey_id = survey.id
-      survey.categories.each do |_category|
+    if survey_recipient
+      self.upgraded_from_survey_id = survey_recipient.survey_id
+      survey_recipient.categories.each do |_category|
         self.category = _category
         upgrade_to_lead!
       end
