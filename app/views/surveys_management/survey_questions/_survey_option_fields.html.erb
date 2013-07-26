@@ -31,6 +31,10 @@
               <label><%= t("surveys.shared.chain_mail") %></label>
               <%= f.select :chain_mail_type_id, SurveyChainMailType.with_active.map { |cm| [cm.name, cm.id]  }, :include_blank => true %>
             </li>
+            <li class="select">
+              <label><%= t("surveys.shared.lead_category") %></label>
+              <%= f.select :category_id, LeadCategory.without_locked_and_not_published.map { |c| [c.to_s, c.id] }.sort, :include_blank => true %>
+            </li>
           </ol>
         </fieldset>
     <% end %>

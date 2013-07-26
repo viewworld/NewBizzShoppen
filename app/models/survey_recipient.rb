@@ -104,6 +104,16 @@ class SurveyRecipient < ActiveRecord::Base
     recipient.is_a?(Contact) and !recipient.completed? and survey.upgrade_contacts_to_leads? and recipient.campaign.results.where(:id => result.id).first.present?
   end
 
+  def categories_from_selected_options
+    survey_answers.select { |sa| sa.question_type == SurveyQuestion::SELECT_TYPE }.map do |survey_answer|
+      survey_answer.survey_options.map(&:category).flatten
+    end.flatten.uniq
+  end
+
+  def categories
+    (survey.categories + categories_from_selected_options).uniq
+  end
+
   def upgrade_contact_to_leads!
     upgrade_to_lead_result = Result.where(:name => "Upgraded to lead", :generic => true).first
 
@@ -113,7 +123,7 @@ class SurveyRecipient < ActiveRecord::Base
                                :purchase_decision_date => (Date.today+1.year).to_s, :sale_limit => 1, :header => survey.name, :published => true }
       recipient.save
 
-      call_result = CallResult.new(:result_id => upgrade_to_lead_result.id, :survey => survey)
+      call_result = CallResult.new(:result_id => upgrade_to_lead_result.id, :survey_recipient => self)
       call_result.creator = survey.lead_creator.with_role
       call_result.contact = recipient
       call_result.save

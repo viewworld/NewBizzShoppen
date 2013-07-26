@@ -5,7 +5,7 @@ describe Survey do
 
   before(:each) do
     @survey = Survey.make!
-    @survey.survey_questions.make!
+    @survey.survey_questions.make!(:question_type => SurveyQuestion::SELECT_TYPE)
     @survey.survey_questions.make!
     @survey.survey_questions.make!
   end
@@ -39,6 +39,12 @@ describe Survey do
 
   context "upgrade contact to multiple leads upon survey completion" do
     before(:each) do
+      @option_category1 = LeadCategory.make!
+      @option_category2 = LeadCategory.make!
+      @option1 = SurveyOption.make!(:survey_question => @survey.survey_questions.first, :category => @option_category1)
+      @option2 = SurveyOption.make!(:survey_question => @survey.survey_questions.first, :category => @option_category2)
+      @survey.reload
+
       @campaign = Campaign.make!
       @result = Result.where(:name => "Upgraded to lead", :generic => true).first
       @campaign.results = [@result]
@@ -61,12 +67,17 @@ describe Survey do
     end
 
     it "should upgrade contact to many leads for each category" do
+      @survey_recipient.survey_answers.create(:survey_question => @survey.survey_questions.first, :survey_options => [@option2], :question_type => SurveyQuestion::SELECT_TYPE)
+      @survey_recipient.reload
+
       @survey_recipient.completed!
+
+      @survey_recipient.categories_from_selected_options.map(&:id).should == [@option_category2.id]
 
       @contact.reload
       @contact.call_results.count.should == 1
       @contact.call_results.detect { |cr| cr.result_id == @result.id }.should be_present
-      @contact.leads.map(&:category_id).sort.should == [@category1, @category2, @category3].map(&:id).sort
+      @contact.leads.map(&:category_id).sort.should == [@category1, @category2, @category3, @option_category2].map(&:id).sort
 
       @contact.leads.each do |lead|
         lead.header.should == @survey.name
@@ -82,10 +93,11 @@ describe Survey do
       @survey_recipient.completed!
       @contact.reload
       @contact.call_results.count.should == 1
-      @contact.leads.count.should == 3
+      @contact.leads.count.should == 4
 
       #leads return correct survey recipient for suppliers to view
       @contact.leads.each do |lead|
+        lead.survey_recipients_for_category.all.count.should == 1
         lead.survey_recipients_for_category.first.should == @survey_recipient
       end
     end
