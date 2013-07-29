@@ -2,7 +2,9 @@
   <fieldset class="inputs labels_ta_r">
     <ol class="align_inputs">
       <%= form.input :title %>
-      <%= form.input :is_required %>
+      <% unless @survey_question.is_heading_type? %>
+        <%= form.input :is_required %>
+      <% end %>
       <% if @survey_question.is_select_type? and !@survey_question.parent.present? %>
           <%= form.input :is_branched, :onclick => (@survey_question.is_select_type? ? "enableMultiselect()" : nil), :disabled => @survey_question.branched_questions.any? %>
       <% end %>

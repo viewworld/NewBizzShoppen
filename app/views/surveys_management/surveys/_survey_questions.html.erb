@@ -2,7 +2,7 @@
     <li class="draggable_question survey_question<%= ' ui-nestedSortable-no-nesting' unless survey_question.question_type == 4 and survey_question.is_branched? %>" data-id="<%= survey_question.id %>" data-qtype="<%= survey_question.question_type %>">
       <div class="labels bt bt_grey bt_icon">
         <span>
-          <p><%= image_tag("/images/bt_icons/#{survey_question.question_type}.png") %><%= truncate(survey_question.title, :length => 120) %></p>
+          <p><%= image_tag("/images/bt_icons/#{survey_question.question_type}.png") %><%= truncate(survey_question.title.presence || t("surveys_management.shared.question_types.type#{survey_question.question_type}"), :length => 120) %></p>
           <div class="bt_group">
             <%= link_to_function image_tag("/images/icons/remove.png"), "removeQuestion(#{survey_question.id})", :title => t("surveys_management.surveys.edit.view.destroy_question") %>
             <%= link_to_function image_tag("/images/icons/edit.png"), "editQuestion(#{survey_question.id})", :title => t("surveys_management.surveys.edit.view.edit_question") %>

@@ -1,55 +1,69 @@
 <%= form.fields_for :survey_answers, @survey_recipient.survey_answers.sort { |sa1, sa2| sa1.survey_question.position <=> sa2.survey_question.position } do |f| %>
     <% question = f.object.survey_question %>
-    <div class="question<%= " question_branch_#{question.parent_id} option_#{question.branch_option_id}".html_safe if question.parent_id.present? %>"<%= 'style="display: none;"'.html_safe  if question.parent_id.present? %>>
-    <div class="pdd_10 no_pdd_t rltv">
-      <fieldset class="inputs labels_ta_r labels_200">
-        <ol class="align_inputs">
-          <% if question.is_select_type? %>
-              <li class="string">
-                <label><%= question.title %><%= '<abbr title="required">*</abbr>'.html_safe if question.is_required? %></label>
-              </li>
-              <% if question.is_multi? %>
-                  <% question.survey_options.each do |option| %>
-                      <li class="boolean">
-                      <%= check_box_tag "#{f.object_name}[survey_option_ids][]", option.id, f.object.survey_option_ids.include?(option.id) %> <%= option.title %><br>
-                      </li>
+    <% if question.is_heading_type? %>
+        <div class="pdd_10 no_pdd_t rltv">
+          <fieldset class="inputs labels_ta_r labels_200">
+            <ol class="align_inputs">
+                <li class="header">
+                  <h3><%= question.title %></h3>
+                </li>
+            </ol>
+          </fieldset>
+        </div>
+    <% elsif question.is_break_page_type? %>
+        <div class="clb"></div>
+        <div class="hl"></div>
+    <% else %>
+        <div class="question<%= " question_branch_#{question.parent_id} option_#{question.branch_option_id}".html_safe if question.parent_id.present? %>"<%= 'style="display: none;"'.html_safe  if question.parent_id.present? %>>
+        <div class="pdd_10 no_pdd_t rltv">
+          <fieldset class="inputs labels_ta_r labels_200">
+            <ol class="align_inputs">
+              <% if question.is_select_type? %>
+                  <li class="string">
+                    <label><%= question.title %><%= '<abbr title="required">*</abbr>'.html_safe if question.is_required? %></label>
+                  </li>
+                  <% if question.is_multi? %>
+                      <% question.survey_options.each do |option| %>
+                          <li class="boolean">
+                          <%= check_box_tag "#{f.object_name}[survey_option_ids][]", option.id, f.object.survey_option_ids.include?(option.id) %> <%= option.title %><br>
+                          </li>
+                      <% end %>
+                  <% else %>
+                      <% question.survey_options.each do |option| %>
+                          <li class="boolean">
+                          <%= radio_button_tag "#{f.object_name}[survey_option_ids][]", option.id, f.object.survey_option_ids.include?(option.id), { :onclick => question.is_branched? ? "showQuestionsBranch(#{question.id}, #{option.id})" : false } %> <%= option.title %><br>
+                          </li>
+                      <% end %>
                   <% end %>
+                  <li class="string">
+                  <%= custom_error_for_field(f, :survey_option_ids) %>
+                  </li>
               <% else %>
-                  <% question.survey_options.each do |option| %>
-                      <li class="boolean">
-                      <%= radio_button_tag "#{f.object_name}[survey_option_ids][]", option.id, f.object.survey_option_ids.include?(option.id), { :onclick => question.is_branched? ? "showQuestionsBranch(#{question.id}, #{option.id})" : false } %> <%= option.title %><br>
-                      </li>
-                  <% end %>
+                  <li class="string">
+                    <label><%= question.title %><%= '<abbr title="required">*</abbr>'.html_safe if question.is_required? %></label>
+                    <% if (question.is_text_type? and !question.is_multi?) or question.is_number_type? %>
+                        <%= f.text_field :value %>
+                    <% elsif question.is_text_type? and question.is_multi? %>
+                        <%= f.text_area :value %>
+                    <% elsif question.is_date_type? %>
+                        <%= f.text_field :value, :class => "date datepicker", :style => "width:70px;" %>
+                    <% end %>
+                    <%= custom_error_for_field(f, :value) %>
+                  </li>
               <% end %>
-              <li class="string">
-              <%= custom_error_for_field(f, :survey_option_ids) %>
-              </li>
-          <% else %>
-              <li class="string">
-                <label><%= question.title %><%= '<abbr title="required">*</abbr>'.html_safe if question.is_required? %></label>
-                <% if (question.is_text_type? and !question.is_multi?) or question.is_number_type? %>
-                    <%= f.text_field :value %>
-                <% elsif question.is_text_type? and question.is_multi? %>
-                    <%= f.text_area :value %>
-                <% elsif question.is_date_type? %>
-                    <%= f.text_field :value, :class => "date datepicker", :style => "width:70px;" %>
+
+              <li class="hidden">
+                <%= f.hidden_field :survey_question_id %>
+                <%= f.hidden_field :question_type %>
+                <% if question.parent_id.present? %>
+                    <%= f.hidden_field :chosen_branched_question, :value => "false", :class => "chosen_branched_question_hf" %>
                 <% end %>
-                <%= custom_error_for_field(f, :value) %>
               </li>
-          <% end %>
-
-          <li class="hidden">
-            <%= f.hidden_field :survey_question_id %>
-            <%= f.hidden_field :question_type %>
-            <% if question.parent_id.present? %>
-                <%= f.hidden_field :chosen_branched_question, :value => "false", :class => "chosen_branched_question_hf" %>
-            <% end %>
-          </li>
-        </ol>
-      </fieldset>
-    </div>
-    </div>
-
+            </ol>
+          </fieldset>
+        </div>
+        </div>
+    <% end %>
 <% end %>
 
 <script type="text/javascript">

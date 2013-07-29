@@ -33,7 +33,6 @@
             <h3><%= t("surveys_management.surveys.edit.view.newsletter_lists_selection") %></h3>
           </li>
           <%= form.input :newsletter_owner_email %><%= bt_link_to :magnify, t("newsletters.newsletter_campaigns.form.fetch_lists"), "#", :onclick => "fetch_lists()" %>
-
         </ol>
       </fieldset>
 
@@ -236,11 +235,16 @@
                     position = orderArray.indexOf("null") + 1;
                     if(position > 0){
                         currentParent = findQuestionParent("null", hSerialize());
-                        $.colorbox({href: "/surveys_management/surveys/<%= @survey.id %>/survey_questions/new?position=" + position + "&question_type=" + $(ui.helper).attr("data-qtype") + "&parent_id=" + (!!currentParent ? currentParent : ''),
-                            width: 700, height: $(ui.helper).attr("data-qtype") == 4 ? 850: 240, overlayClose: false,
-                            onClosed: function(){
-                                $('ol.survey_questions_container').find("li[data-id=null]").remove();
-                            }});
+                        if($(ui.helper).attr("data-qtype") == 6){
+                            $.post("/surveys_management/surveys/<%= @survey.id %>/survey_questions", {survey_question: {tmp_position: position, question_type: "6"}})
+                        } else {
+                            $.colorbox({href: "/surveys_management/surveys/<%= @survey.id %>/survey_questions/new?position=" + position + "&question_type=" + $(ui.helper).attr("data-qtype") + "&parent_id=" + (!!currentParent ? currentParent : ''),
+                                width: 700, height: $(ui.helper).attr("data-qtype") == 4 ? 850: 240, overlayClose: false,
+                                onClosed: function(){
+                                    $('ol.survey_questions_container').find("li[data-id=null]").remove();
+                                }
+                            });
+                        }
                     }
                 }, 600);
             }

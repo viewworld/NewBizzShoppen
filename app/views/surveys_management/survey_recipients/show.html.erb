@@ -45,7 +45,7 @@
         <tr class="<%= cycle("odd", "even") %>">
           <td class="cl"></td>
           <td><%= survey_question.title %></td>
-          <td><%= (answer = @survey_recipient.answer_for_question(survey_question)) ? answer.value_or_options : "-" %></td>
+          <td><%= (answer = @survey_recipient.answer_for_question(survey_question)) ? answer.value_or_options : (survey_question.is_heading_type? or survey_question.is_break_page_type?) ? "&nbsp;".html_safe : "-" %></td>
           <td class="cr"></td>
         </tr>
     <% end %>

@@ -21,5 +21,13 @@ module CommonSurvey
     def is_select_type?
       question_type == SurveyQuestion::SELECT_TYPE
     end
+
+    def is_heading_type?
+      question_type == SurveyQuestion::HEADING_TYPE
+    end
+
+    def is_break_page_type?
+      question_type == SurveyQuestion::BREAK_PAGE_TYPE
+    end
   end
 end
