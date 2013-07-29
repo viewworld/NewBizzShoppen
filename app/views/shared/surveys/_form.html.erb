@@ -11,8 +11,7 @@
           </fieldset>
         </div>
     <% elsif question.is_break_page_type? %>
-        <div class="clb"></div>
-        <div class="hl"></div>
+        <div class="clb hl pdd_20"></div>
     <% else %>
         <div class="question<%= " question_branch_#{question.parent_id} option_#{question.branch_option_id}".html_safe if question.parent_id.present? %>"<%= 'style="display: none;"'.html_safe  if question.parent_id.present? %>>
         <div class="pdd_10 no_pdd_t rltv">
