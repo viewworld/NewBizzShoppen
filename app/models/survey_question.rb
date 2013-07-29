@@ -10,30 +10,37 @@ class SurveyQuestion < ActiveRecord::Base
 
   acts_as_list :scope => :survey_id
 
-  validates_presence_of :title
+  validates_presence_of :title, :unless => Proc.new { |sq| sq.is_break_page_type? }
   validates_presence_of :branch_option_id, :if => Proc.new { |sq| sq.parent_id.present? }
 
   attr_accessor :tmp_position
 
   after_create :move_to_tmp_position
 
+  TEXT_TYPE = 1.freeze
+  NUMBER_TYPE = 2.freeze
+  DATE_TYPE = 3.freeze
+  SELECT_TYPE = 4.freeze
+  HEADING_TYPE = 5.freeze
+  BREAK_PAGE_TYPE = 6.freeze
+
+  QUESTION_TYPES = [
+      TEXT_TYPE,
+      NUMBER_TYPE,
+      DATE_TYPE,
+      SELECT_TYPE,
+      HEADING_TYPE,
+      BREAK_PAGE_TYPE
+  ].freeze
+
   scope :without_nested, where("parent_id is NULL")
+  scope :with_input_types, where("question_type NOT IN (?)", [HEADING_TYPE, BREAK_PAGE_TYPE])
 
   include CommonSurvey
 
   translates :title
 
-  TEXT_TYPE = 1.freeze
-  NUMBER_TYPE = 2.freeze
-  DATE_TYPE = 3.freeze
-  SELECT_TYPE = 4.freeze
 
-  QUESTION_TYPES = [
-    TEXT_TYPE,
-    NUMBER_TYPE,
-    DATE_TYPE,
-    SELECT_TYPE
-  ].freeze
 
   def parent
     SurveyQuestion.find_by_id(parent_id)

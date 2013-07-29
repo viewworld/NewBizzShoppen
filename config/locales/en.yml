@@ -5078,6 +5078,8 @@ en:
         type2: "Number"
         type3: "Date"
         type4: "Select"
+        type5: "Section heading"
+        type6: "Break page"
       is_multiline: "Is multiline"
       is_multiselect: "Is multiselect"
     surveys:

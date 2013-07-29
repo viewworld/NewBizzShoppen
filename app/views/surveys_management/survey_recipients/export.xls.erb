@@ -18,7 +18,7 @@
 
         <Cell><Data ss:Type="String">Tags</Data></Cell>
 
-        <% questions.each do |question| %>
+        <% questions.with_input_types.each do |question| %>
             <Cell><Data ss:Type="String"><%= question.title %></Data></Cell>
         <% end %>
       </Row>
@@ -37,7 +37,7 @@
 
             <Cell><Data ss:Type="String"><%= recipient.respond_to?(:tag_list) ? recipient.tag_list.join(",") : "" %></Data></Cell>
 
-            <% questions.each do |question| %>
+            <% questions.with_input_types.each do |question| %>
                 <Cell><Data ss:Type="String"><%= (sa = survey_recipient.answer_for_question(question)) ? sa.value_or_options.to_s.gsub(/[\n\r\t,]/, " ") : "N/A" %></Data></Cell>
             <% end %>
           </Row>
