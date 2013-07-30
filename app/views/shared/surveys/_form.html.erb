@@ -1,6 +1,6 @@
 <%= form.fields_for :survey_answers, @survey_recipient.survey_answers.sort { |sa1, sa2| sa1.survey_question.position <=> sa2.survey_question.position } do |f| %>
     <% question = f.object.survey_question %>
-    <% if question.is_heading_type? %>
+    <% if question.is_of_type?(:heading) %>
         <div class="pdd_10 no_pdd_t rltv">
           <fieldset class="inputs labels_ta_r labels_200">
             <ol class="align_inputs">
@@ -10,14 +10,14 @@
             </ol>
           </fieldset>
         </div>
-    <% elsif question.is_break_page_type? %>
+    <% elsif question.is_of_type?(:break_page) %>
         <div class="clb hl pdd_20"></div>
     <% else %>
         <div class="question<%= " question_branch_#{question.parent_id} option_#{question.branch_option_id}".html_safe if question.parent_id.present? %>"<%= 'style="display: none;"'.html_safe  if question.parent_id.present? %>>
         <div class="pdd_10 no_pdd_t rltv">
           <fieldset class="inputs labels_ta_r labels_200">
             <ol class="align_inputs">
-              <% if question.is_select_type? %>
+              <% if question.is_of_type?(:select) %>
                   <li class="string">
                     <label><%= question.title %><%= '<abbr title="required">*</abbr>'.html_safe if question.is_required? %></label>
                   </li>
@@ -40,11 +40,11 @@
               <% else %>
                   <li class="string">
                     <label><%= question.title %><%= '<abbr title="required">*</abbr>'.html_safe if question.is_required? %></label>
-                    <% if (question.is_text_type? and !question.is_multi?) or question.is_number_type? %>
+                    <% if (question.is_of_type?(:text) and !question.is_multi?) or question.is_of_type?(:number) %>
                         <%= f.text_field :value %>
-                    <% elsif question.is_text_type? and question.is_multi? %>
+                    <% elsif question.is_of_type?(:text) and question.is_multi? %>
                         <%= f.text_area :value %>
-                    <% elsif question.is_date_type? %>
+                    <% elsif question.is_of_type?(:date) %>
                         <%= f.text_field :value, :class => "date datepicker", :style => "width:70px;" %>
                     <% end %>
                     <%= custom_error_for_field(f, :value) %>

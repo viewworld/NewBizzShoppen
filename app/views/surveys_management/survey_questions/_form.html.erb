@@ -2,15 +2,15 @@
   <fieldset class="inputs labels_ta_r">
     <ol class="align_inputs">
       <%= form.input :title %>
-      <% unless @survey_question.is_heading_type? %>
+      <% unless @survey_question.is_of_type?(:heading) %>
         <%= form.input :is_required %>
       <% end %>
-      <% if @survey_question.is_select_type? and !@survey_question.parent.present? %>
-          <%= form.input :is_branched, :onclick => (@survey_question.is_select_type? ? "enableMultiselect()" : nil), :disabled => @survey_question.branched_questions.any? %>
+      <% if @survey_question.is_of_type?(:select) and !@survey_question.parent.present? %>
+          <%= form.input :is_branched, :onclick => (@survey_question.is_of_type?(:select) ? "enableMultiselect()" : nil), :disabled => @survey_question.branched_questions.any? %>
       <% end %>
 
-      <% if @survey_question.is_select_type? or @survey_question.is_text_type? %>
-          <%= form.input :is_multi, :label => (@survey_question.is_select_type? ? t("surveys_management.shared.is_multiselect") : t("surveys_management.shared.is_multiline")), :disabled => (@survey_question.is_select_type? and @survey_question.is_branched?) %>
+      <% if @survey_question.is_of_type?(:select) or @survey_question.is_of_type?(:text) %>
+          <%= form.input :is_multi, :label => (@survey_question.is_of_type?(:select) ? t("surveys_management.shared.is_multiselect") : t("surveys_management.shared.is_multiline")), :disabled => (@survey_question.is_of_type?(:select) and @survey_question.is_branched?) %>
       <% end %>
 
       <%= form.input :question_type, :as => :hidden %>
@@ -22,7 +22,7 @@
     </ol>
   </fieldset>
 
-  <% if @survey_question.is_select_type? %>
+  <% if @survey_question.is_of_type?(:select) %>
       <% counter = -1 %>
       <%= form.fields_for :survey_options, @survey_question.survey_options do |builder| %>
           <%= render :partial => "survey_option_fields", :locals => { :f => builder, :counter => (counter += 1) } %>
@@ -30,7 +30,7 @@
   <% end %>
 </div>
 
-<% if @survey_question.is_select_type? %>
+<% if @survey_question.is_of_type?(:select) %>
     <div class="nested_survey_options_container pdd_10 no_pdd_t"></div>
 
     <hl/>
