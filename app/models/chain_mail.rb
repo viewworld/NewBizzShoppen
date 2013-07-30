@@ -22,7 +22,7 @@ class ChainMail < ActiveRecord::Base
     chain_mail_items.each do |cmi|
       ChainMailer.new(email, self, Country.get_country_from_locale,
                                     {:subject_content => cmi.subject,
-                                     :body_content => prepare_body(cmi.body) + email_template_signature_body,
+                                     :body_content => prepare_body(cmi.body),
                                      :queue => queue,
                                      :run_at => cmi.run_at,
                                      :position => cmi.position},
@@ -47,10 +47,6 @@ class ChainMail < ActiveRecord::Base
   def prepare_body(body)
     body = StringUtils.replace_urls_for_chain_mail_verification(self, EmailTemplate.new(:body => body, :preview => true).render(variables_for_body))
     StringUtils.replace_survey_fake_permalink_urls_with_recipients(body, chain_mailable.is_a?(SurveyRecipient) ? chain_mailable.recipient : chain_mailable)
-  end
-
-  def email_template_signature_body
-    chain_mail_type.email_template_signature ? chain_mail_type.email_template_signature.body : ""
   end
 
   def register_click!

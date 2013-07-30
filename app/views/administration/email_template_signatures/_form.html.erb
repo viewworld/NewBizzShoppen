@@ -2,6 +2,7 @@
   <fieldset class="inputs labels_ta_r labels_100">
     <ol>
       <%= form.input :name %>
+      <%= form.input :email_from, :as => :select, :collection => EmailTemplateSignature::FROM_EMAILS.map { |e| [e, e] } %>
       <%= form.input :body,
                      :label => false,
                      :as => :ckeditor,

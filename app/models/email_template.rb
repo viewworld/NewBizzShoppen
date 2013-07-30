@@ -23,16 +23,12 @@ class EmailTemplate < ActiveRecord::Base
     body.gsub(/\n/,"").gsub(/\r/,"").gsub(/[']/, '\\\\\'')
   end
 
+  def chosen_signature
+    custom_email_template_signature || email_template_signature || country.try(:email_template_signature)
+  end
+
   def signature
-    if custom_email_template_signature
-      custom_email_template_signature.body
-    elsif email_template_signature
-      email_template_signature.body
-    elsif country and country.email_template_signature
-      country.email_template_signature.body
-    else
-      ""
-    end
+    chosen_signature.try(:body) || ""
   end
 
   def blank_template?

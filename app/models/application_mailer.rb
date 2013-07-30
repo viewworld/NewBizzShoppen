@@ -7,8 +7,8 @@ class ApplicationMailer < ActionMailer::Base
     email_template.preview = true if options[:preview] == true
     email_template.country = country
 
-    if email_template_id = options.delete(:email_template_id) and email_template.blank_template? and et = EmailTemplate.find_by_id(email_template_id)
-      email_template.custom_email_template_signature = et.email_template_signature
+    if options[:signature] or (email_template_id = options.delete(:email_template_id) and email_template.blank_template? and et = EmailTemplate.find_by_id(email_template_id))
+      email_template.custom_email_template_signature = options[:signature] || et.email_template_signature
     end
 
     subject = email_template.render_subject(options.stringify_keys)
@@ -21,8 +21,8 @@ class ApplicationMailer < ActionMailer::Base
     related_id = options.delete(:related_id)
     related_type = options.delete(:related_type)
 
-    from = options.delete(:from) || ApplicationMailer.default[:from]
-    return_path = options.delete(:return_path) || ApplicationMailer.default[:return_path]
+    from = options.delete(:from) || email_template.chosen_signature.try(:email_from) || ApplicationMailer.default[:from]
+    return_path = options.delete(:return_path) || email_template.chosen_signature.try(:email_from) || ApplicationMailer.default[:return_path]
 
     if Rails.env.development?
       attachment_paths.each do |ap|

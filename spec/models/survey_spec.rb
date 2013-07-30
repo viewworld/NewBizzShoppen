@@ -109,7 +109,8 @@ describe Survey do
     end
 
     before(:each) do
-      @chain_mail_link_clicked = SurveyChainMailType.make!
+      @signature = EmailTemplateSignature.create(:body => "Some awesome signature!", :email_from => "admin@erhvervsanalyse.dk", :name => "Custom signature 1")
+      @chain_mail_link_clicked = SurveyChainMailType.make!(:email_template_signature => @signature)
       @chain_mail_link_clicked.chain_mail_items.first.update_attribute(:body, "Special chain mail")
       @chain_mail_option_1 = SurveyChainMailType.make!
       @chain_mail_option_2 = SurveyChainMailType.make!
@@ -127,7 +128,7 @@ describe Survey do
       end
 
       it "should send standard email" do
-        ActionMailer::Base.deliveries.detect { |e| e.to.include?(@survey_recipient.email) and e.body.include?("Standard intro email") }.should_not be_nil
+        ActionMailer::Base.deliveries.detect { |e| e.from.include?("admin@erhvervsanalyse.dk") and e.to.include?(@survey_recipient.email) and e.body.include?("Standard intro email") }.should_not be_nil
       end
 
       it "should send chain mail when link is visited" do
@@ -182,7 +183,7 @@ describe Survey do
 
       it "should send chain mail when recipient is created instead of standard template" do
         ActionMailer::Base.deliveries.detect { |e| e.to.include?(@survey_recipient.email) and e.body.include?("Standard intro email") }.should be_nil
-        ActionMailer::Base.deliveries.detect { |e| e.to.include?(@survey_recipient.email) and e.body.include?("Special chain mail") }.should_not be_nil
+        ActionMailer::Base.deliveries.detect { |e| e.from.include?("admin@erhvervsanalyse.dk") and e.to.include?(@survey_recipient.email) and e.body.include?("Special chain mail") }.should_not be_nil
       end
 
       it "should NOT send chain mail when link is visited" do

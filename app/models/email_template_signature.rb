@@ -11,6 +11,8 @@ class EmailTemplateSignature < ActiveRecord::Base
 
   before_destroy :can_be_destroyed
 
+  FROM_EMAILS = %w{admin@fairleads.com admin@fairdeals.dk admin@erhvervsanalyse.dk}
+
   private
 
   def can_be_destroyed
