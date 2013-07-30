@@ -234,14 +234,11 @@ describe Campaign do
     it "new subscribers should be imported as contacts" do
       @campaign.contacts.count.should == 0
 
-      @campaign.import_contacts_from_lists!
-
-      @campaign.contacts.count.should == 0
-
       User::Member.make!(:email => "johnny@cash.net", :tag_list => ["xyz_abc", "qwerty"], :first_name => "Johnny", :last_name => "Cash", :company_name => "ZComp Ltd")
       User::Supplier.make!(:email => "alyona@test.net", :tag_list => ["xyz_abc"], :first_name => "Alyona", :last_name => "Minkovsky", :company_name => "ZComp Ltd")
 
-      @campaign.import_contacts_from_lists!
+      #first import is done when import is enabled
+      @campaign.update_attribute(:import_contacts_from_lists, true)
 
       @campaign.contacts.count.should == 2
 

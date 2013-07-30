@@ -49,7 +49,7 @@ class Campaign < ActiveRecord::Base
   scope :available_for_user, lambda { |user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin }
 
   before_save :set_euro_fixed_cost_value, :set_euro_production_value_per_hour
-  after_save :check_email_templates, :correct_session_logs_if_cost_type_changed
+  after_save :check_email_templates, :correct_session_logs_if_cost_type_changed, :import_contacts_from_lists
 
   FIXED_COST = 0.freeze
   AGENT_BILLING_RATE_COST = 1.freeze
@@ -425,6 +425,12 @@ class Campaign < ActiveRecord::Base
       contacts_scope = contacts_scope.where("leads.agent_id IN (?)", user.call_centre? ? [user.id] + user.subaccount_ids : user.id)
     end
     contacts_scope.select("DISTINCT(leads.id)").count
+  end
+
+  def import_contacts_from_lists
+    if import_contacts_from_lists_changed? and import_contacts_from_lists?
+      self.delay(:queue => "import_contacts_from_lists").import_contacts_from_lists!
+    end
   end
 
   def import_contacts_from_lists!
