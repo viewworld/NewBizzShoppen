@@ -7,6 +7,7 @@ class ChainMailer
     @to = to
     @country = country
     @options = options
+    @options[:signature] = chain_mail.chain_mail_type.email_template_signature
     @attachment_paths = attachment_paths
     @chain_mail = chain_mail
   end
