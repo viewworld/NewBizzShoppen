@@ -4,9 +4,9 @@ class SurveyAnswer < ActiveRecord::Base
   belongs_to :survey_question
   belongs_to :survey_recipient
 
-  validates_presence_of :value, :if => Proc.new { |sa| !sa.is_select_type? and sa.is_required? }
-  validates_presence_of :survey_option_ids, :if => Proc.new { |sa| sa.is_select_type? and sa.is_required? }
-  validates_numericality_of :value, :if => Proc.new { |sa| sa.is_number_type? and (sa.is_filled? or sa.is_required?) }
+  validates_presence_of :value, :if => Proc.new { |sa| !sa.is_of_type?(:select) and sa.is_required? }
+  validates_presence_of :survey_option_ids, :if => Proc.new { |sa| sa.is_of_type?(:select) and sa.is_required? }
+  validates_numericality_of :value, :if => Proc.new { |sa| sa.is_of_type?(:number) and (sa.is_filled? or sa.is_required?) }
 
   scope :ordered_by_questions, joins(:survey_question).order("survey_questions.position")
 
@@ -31,8 +31,8 @@ class SurveyAnswer < ActiveRecord::Base
   end
 
   def value_or_options
-    if is_select_type?
-      survey_options.map(&:title).join
+    if is_of_type?(:select)
+      survey_options.map(&:title).join(", ")
     else
       value
     end

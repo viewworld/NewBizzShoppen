@@ -10,7 +10,7 @@ class SurveyQuestion < ActiveRecord::Base
 
   acts_as_list :scope => :survey_id
 
-  validates_presence_of :title, :unless => Proc.new { |sq| sq.is_break_page_type? }
+  validates_presence_of :title, :unless => Proc.new { |sq| sq.is_of_type?(:break_page) }
   validates_presence_of :branch_option_id, :if => Proc.new { |sq| sq.parent_id.present? }
 
   attr_accessor :tmp_position
@@ -33,14 +33,12 @@ class SurveyQuestion < ActiveRecord::Base
       BREAK_PAGE_TYPE
   ].freeze
 
-  scope :without_nested, where("parent_id is NULL")
+  scope :without_nested, where(:parent_id => nil)
   scope :with_input_types, where("question_type NOT IN (?)", [HEADING_TYPE, BREAK_PAGE_TYPE])
 
   include CommonSurvey
 
   translates :title
-
-
 
   def parent
     SurveyQuestion.find_by_id(parent_id)
