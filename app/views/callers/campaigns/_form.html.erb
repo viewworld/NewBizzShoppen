@@ -95,5 +95,9 @@
       $(function() {
           $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
       });
+      function fetch_lists() {
+          $.get("<%= lists_for_owner_newsletters_newsletter_campaigns_path(:format => :js) -%>",
+                  "owner_email=" + $('#newsletter_owner_email').val());
+      }
   </script>
 </js:>
