@@ -25,9 +25,15 @@
         <%= form.input :success_rate, :input_html => {:style => "width:95px"} %>
       </ol>
     </fieldset>
+
+    <fieldset class="inputs labels_ta_r labels_200">
+      <ol class="align_inputs">
+        <%= form.input :import_contacts_from_lists, :onclick => "$('#newsletter_lists_selection').toggle()" %>
+      </ol>
+    </fieldset>
   </div>
 
-
+    <div id="newsletter_lists_selection"<%= ' style="display:none"'.html_safe unless @campaign.import_contacts_from_lists %>>
       <div class="pdd_10 no_pdd_t">
         <fieldset class="inputs labels_ta_r">
           <ol class="align_inputs">
@@ -60,7 +66,7 @@
           </div>
         </div>
       </div>
-
+    </div>
 </div>
 
 <div class="column_right">
@@ -95,6 +101,7 @@
       $(function() {
           $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
       });
+
       function fetch_lists() {
           $.get("<%= lists_for_owner_newsletters_newsletter_campaigns_path(:format => :js) -%>",
                   "owner_email=" + $('#newsletter_owner_email').val());
