@@ -1,0 +1,24 @@
+<% if !current_user.blank? and !Rails.env.development? and current_user.agent? %>
+    TIME_TO_CANCEL = 20 * 1000;
+    TIME_OUT = <%= Settings.logout_time.to_i %> * 60 * 1000;
+
+    setTimeout("check_session()", TIME_OUT);
+
+    function check_session(){
+        $.post("/user_session_log.js")
+    }
+
+    function extend_session(){
+        clearTimeout(window.t);
+        setTimeout("check_session()", TIME_OUT);
+    }
+
+    $('#modal_for_longer_session').dialog({
+        autoOpen: false,
+        buttons: {
+            "<%= t("layout.cancel_logout_button") %>": function() {
+                extend_session();
+                $(this).dialog("close");
+            }}
+    });
+<% end %>

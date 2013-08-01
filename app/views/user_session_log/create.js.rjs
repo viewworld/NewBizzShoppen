@@ -1,5 +1,7 @@
+page << %{ window.t = setTimeout("top.location='#{logout_path}'", TIME_TO_CANCEL); }
+
 if @user_session_log.nil? or @user_session_log.expired?
-    page << "$('#modal_for_longer_session').dialog('open')"
+  page << %{ $('#modal_for_longer_session').dialog('open'); }
 else
-    page << "extend_session();"
+    page << %{ extend_session(); }
 end
