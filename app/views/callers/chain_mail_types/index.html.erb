@@ -77,7 +77,8 @@
       <%= blank_state_message %>
   <% else %>
       <%= generic_table @chain_mail_types, :table_class => "chain_mail_types", :default_action => :edit, :cols => (@campaign ? 3 : 4), :link_scope => (@campaign ? [:callers, @campaign] : [:callers]),
-                        :link_to_show => false, :link_to_delete => false, :link_to_edit => @campaign ? [:edit_callers_campaign_chain_mail_type_path, @campaign] : [:edit_callers_chain_mail_type_path] do |blocks| %>
+                        :link_to_show => false, :link_to_delete => false, :link_to_edit => @campaign ? [:edit_callers_campaign_chain_mail_type_path, @campaign] : [:edit_callers_chain_mail_type_path],
+                        :custom_links => [:label => t("chain_mail_types.table.duplicate"), :link => @campaign ? [:duplicate_callers_campaign_chain_mail_type_path, @campaign] : [:duplicate_callers_chain_mail_type_path], :method => :post] do |blocks| %>
 
           <% blocks.headers do %>
             <th><%= t("chain_mail_types.table.name") %></th>

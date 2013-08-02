@@ -58,4 +58,15 @@ class Callers::ChainMailTypesController < Callers::CallerController
     end
   end
 
+  def duplicate
+    _copy = resource.deep_clone :with_callbacks => false, :include => [:chain_mail_items]
+    _copy.name = "(Copy of) #{_copy.name}"
+    if _copy.save
+      flash[:notice] = t("chain_mail_types.update.flash.duplicated")
+    else
+      flash[:alert] = "#{t("chain_mail_types.update.flash.not_duplicated")}#{_copy.errors.full_messages.join(', ')}"
+    end
+    redirect_to :back
+  end
+
 end

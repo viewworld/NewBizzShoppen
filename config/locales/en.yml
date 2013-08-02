@@ -359,6 +359,7 @@ en:
       campaign: "Campaign"
       active: "Active"
       archived: "Archived"
+      duplicate: "Duplicate"
     edit:
       header: "Editing chain mail type: %{name}"
       title: "Edit"
@@ -382,6 +383,8 @@ en:
     update:
       flash:
         result_changed: "Result has been changed. Please check if variables are correct in chain mail templates."
+        duplicated: "Chain mail type has been duplicated"
+        not_duplicated: "One or more errors occurred while trying to duplicate chain mail type:"
   lead_templates:
     table:
       name: Name

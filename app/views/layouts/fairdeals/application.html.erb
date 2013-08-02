@@ -178,7 +178,7 @@
         $('input.formtastic-ui-datepicker').datepicker({ dateFormat: '<%= I18n.t("date.formats.datepicker") %>' });
     });
 
-    <%= render :partial => '/shared/auto_log_out' %>
+    <%= render '/shared/auto_log_out' %>
 
     <% if current_user and current_user.has_one_of_roles?(:admin, :call_centre) %>
         start_notifications();
