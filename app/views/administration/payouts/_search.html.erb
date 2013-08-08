@@ -69,8 +69,19 @@
               <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}');" %>
             </p>
             <p style="padding: 0 10px 0 10px">
-              <%= label_tag :show_all_results, t("campaigns.show.search.all_results") %>
-              <%= check_box_tag :show_all_results, "1", @search.show_all_results == "1" %>
+              <%= label_tag :show_results_with_payout, t("campaigns.show.search.show_results_with_payout") %>
+              <%= hidden_field_tag :show_results_with_payout, "0" %>
+              <%= check_box_tag :show_results_with_payout, "1", @search.show_results_with_payout == "1" %>
+            </p>
+            <p style="padding: 0 10px 0 10px">
+              <%= label_tag :show_final_results, t("campaigns.show.search.show_final_results") %>
+              <%= hidden_field_tag :show_final_results, "0" %>
+              <%= check_box_tag :show_final_results, "1", @search.show_final_results == "1" %>
+            </p>
+            <p style="padding: 0 10px 0 10px">
+              <%= label_tag :show_temp_results, t("campaigns.show.search.show_temp_results") %>
+              <%= hidden_field_tag :show_temp_results, "0" %>
+              <%= check_box_tag :show_temp_results, "1", @search.show_temp_results == "1" %>
             </p>
           </div>
 

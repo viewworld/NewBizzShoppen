@@ -510,6 +510,9 @@ en:
         call_centres: "Call centres"
         call_centre_agents: "Call centre agents"
         all_results: "Show all results"
+        show_results_with_payout: "Show results with payout"
+        show_final_results: "Show final results"
+        show_temp_results: "Show temp results"
       search_button: Search
       export_button: Export
       table:
