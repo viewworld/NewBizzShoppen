@@ -12,4 +12,8 @@ class ArchivedEmail < ActiveRecord::Base
   scope :with_email, lambda{|email| where(:to => email)}
 
   belongs_to :sender, :class_name => "User"
+
+  def sent?
+    status == SENT
+  end
 end

@@ -35,7 +35,7 @@
               <td class="ta_c"><%= eb.to %></td>
               <td><%= eb.sender ? eb.sender.email : t("administration.email_bounces.index.view.anonymous") %></td>
               <td><%= eb.subject %></td>
-              <td><%= eb.bounced_at %></td>
+              <td><%= l eb.sent? ? eb.bounced_at : eb.created_at %></td>
               <td class="tda ta_r">
                 <ul-actions>
                   <li>
