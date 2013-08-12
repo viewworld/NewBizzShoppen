@@ -4,7 +4,7 @@ class Callers::SurveyRecipientsController < Callers::CallerController
 
   def new
     @contact = Contact.find(params[:contact_id])
-    if @contact.email_address.blank?
+    if @contact.email_address.blank? and params[:email_address]
       @contact.update_attribute(:email_address, params[:email_address])
     end
     @survey = Survey.find(params[:survey_id])
