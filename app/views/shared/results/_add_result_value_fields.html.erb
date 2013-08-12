@@ -88,12 +88,16 @@ end
     });
 
     function fillOutSurvey(contact_id, survey_id){
-        $.get("/callers/survey_recipients/new?contact_id=" + contact_id + "&survey_id=" + survey_id);
+        if($("#survey_contact_email_address").val() == ""){
+            alert("<%= t("surveys.shared.email_blank") %>");
+        } else {
+            $.get("/callers/survey_recipients/new?contact_id=" + contact_id + "&survey_id=" + survey_id + "&email_address=" + $("#survey_contact_email_address").val());
+        }
     }
 
     function sendSurvey(contact_id, survey_id){
         if($("#survey_contact_email_address").val() == ""){
-            alert("<%= t("surveys.shared.email_blank") %>")
+            alert("<%= t("surveys.shared.email_blank") %>");
         } else {
             $.get("/callers/survey_recipients/new?contact_id=" + contact_id + "&survey_id=" + survey_id + "&email_notification=1&email_address=" + $("#survey_contact_email_address").val());
             $('#send_survey').attr('disabled', 'disabled');
