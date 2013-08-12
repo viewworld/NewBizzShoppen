@@ -3015,6 +3015,7 @@ en:
           results: "#"
           calls: "C"
           hours: "Hours"
+          time_on_phone: "P"
           rate: "Rate"
           agent: "Agent"
           payout: "PayOut"

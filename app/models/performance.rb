@@ -20,14 +20,6 @@ class Performance < AgentPerformance
     time > 0 ? payout / time : 0
   end
 
-  def result_count
-    results.sum(:results)
-  end
-
-  def call_count
-    calls.sum(:calls)
-  end
-
   def flot_days
     {
         :value => values.select("created_at, sum(value) as value").group("created_at").reorder("created_at").map{|v| [v.created_at.to_time.to_i*1000, currency.from_euro(v.value)]},
@@ -59,6 +51,10 @@ class Performance < AgentPerformance
 
   def calls
     @calls ||= ::AgentTimesheet::Calls.for_campaigns(campaigns).created_between(date_from, date_to)
+  end
+
+  def time_on_phones
+    @time_on_phones ||= ::AgentTimesheet::TimeOnPhone.for_campaigns(campaigns).created_between(date_from, date_to)
   end
 
 end

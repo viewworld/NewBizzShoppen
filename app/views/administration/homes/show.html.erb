@@ -63,6 +63,7 @@
           <th class="tar"><%= t("admin_home.show.view.table.results") %></th>
           <th class="tar"><%= t("admin_home.show.view.table.value") %></th>
           <th class="tar"><%= t("admin_home.show.view.table.hours") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.time_on_phone") %></th>
           <th class="tar"><%= t("admin_home.show.view.table.rate") %></th>
           <th class="hr"></th>
         </tr>
@@ -77,6 +78,7 @@
               <td class="tar"><%= performance.result_count %></td>
               <td class="tar"><%= as_currency(performance.value, performance.currency, 0) %></td>
               <td class="tar"><%= performance.time.to_f.as_hours_and_minutes %></td>
+              <td class="tar"><%= performance.time_on_phone.to_f.as_hours_and_minutes %></td>
               <td class="tar"><%= as_currency(performance.value_rate, performance.currency, 0) %></td>
               <td></td>
             </tr>
@@ -90,13 +92,14 @@
           <td class="tar"><%= performance.result_count %></td>
           <td class="tar"><%= as_currency(performance.value, performance.currency, 0) %></td>
           <td class="tar"><%= performance.time.to_f.as_hours_and_minutes %></td>
+          <td class="tar"><%= performance.time_on_phone.to_f.as_hours_and_minutes %></td>
           <td class="tar"><%= as_currency(performance.value_rate, performance.currency, 0) %></td>
           <td></td>
         </tr>
         </tbody>
         <tfoot>
         <td class="fl"></td>
-        <td colspan="6"></td>
+        <td colspan="7"></td>
         <td class="fr"></td>
         </tfoot>
       </table>
@@ -110,6 +113,7 @@
           <th class="tar"><%= t("admin_home.show.view.table.results") %></th>
           <th class="tar"><%= t("admin_home.show.view.table.payout") %></th>
           <th class="tar"><%= t("admin_home.show.view.table.hours") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.time_on_phone") %></th>
           <th class="tar"><%= t("admin_home.show.view.table.rate") %></th>
           <th class="hr"></th>
         </tr>
@@ -124,6 +128,7 @@
                   <td class="tar"><%= performance.result_count %></td>
                   <td class="tar"><%= as_currency(performance.payout, performance.currency, 0) %></td>
                   <td class="tar"><%= performance.time.to_f.as_hours_and_minutes %></td>
+                  <td class="tar"><%= performance.time_on_phone.to_f.as_hours_and_minutes %></td>
                   <td class="tar"><%= as_currency(performance.rate, performance.currency, 0) %></td>
                   <td></td>
                 </tr>
@@ -137,13 +142,14 @@
           <td class="tar"><%= performance.result_count %></td>
           <td class="tar"><%= as_currency(performance.payout, performance.currency, 0) %></td>
           <td class="tar"><%= performance.time.to_f.as_hours_and_minutes %></td>
+          <td class="tar"><%= performance.time_on_phone.to_f.as_hours_and_minutes %></td>
           <td class="tar"><%= as_currency(performance.rate, performance.currency, 0) %></td>
           <td></td>
         </tr>
         </tbody>
         <tfoot>
         <td class="fl"></td>
-        <td colspan="6"></td>
+        <td colspan="7"></td>
         <td class="fr"></td>
         </tfoot>
       </table>
