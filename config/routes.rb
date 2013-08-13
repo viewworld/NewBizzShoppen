@@ -296,6 +296,7 @@ Nbs::Application.routes.draw do
       end
       resources :call_results
       resources :call_logs
+      resource :advanced_export, :only => [:new, :create]
     end
 
     resource :production, :controller => "production", :only => [:show] do

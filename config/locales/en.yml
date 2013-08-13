@@ -491,6 +491,7 @@ en:
       total_calls:  Total number of calls
       search_label: Search
       ranges_label: Predefined time ranges
+      advanced_export: "Advanced export"
       ranges:
         whole_campaign: whole campaign
         this_month: this month
