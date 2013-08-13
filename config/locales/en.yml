@@ -520,6 +520,8 @@ en:
         results: Results
         all_results: ALL RESULTS
         sum: SUM
+      advanced_export:
+        summary: Summary
     edit:
       edit_selected_contacts: Edit selected contacts
       label_assignments: Assignments
@@ -5179,3 +5181,10 @@ en:
       email_blank: "No email to send the survey."
       chain_mail: "Chain mail"
       lead_category: "Lead category"
+  advanced_export:
+    new:
+      header: "Advanced export"
+      search: "Select result and contact fields for export"
+      select_results: "Select results and fields"
+      select_contact_fields: "Select contact fields"
+      export: "Export as XLS"

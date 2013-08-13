@@ -16,6 +16,8 @@
                 </li>
               </ol>
             </fieldset>
+            <% elsif campaign.is_a? Campaign %>
+                <%= hidden_field_tag :campaign_ids, [campaign.id] %>
             <% end %>
 
             <% if current_user.has_any_role?(:admin, :call_centre) %>

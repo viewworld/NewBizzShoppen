@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:o="urn:schemas-microsoft-com:office:office"
+          xmlns:x="urn:schemas-microsoft-com:office:excel"
+          xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="<%= t("campaigns.show.advanced_export.summary") %>">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String"><%= t("campaigns.show.table.results") %></Data></Cell>
+        <% @headers.each do |header| %>
+            <Cell><Data ss:Type="String"><%= header %></Data></Cell>
+        <% end %>
+        <Cell><Data ss:Type="String"><%= t("campaigns.show.table.sum") %></Data></Cell>
+      </Row>
+      <% @results.each do |result| %>
+          <Row>
+            <Cell><Data ss:Type="String"><%= result.name %></Data></Cell>
+            <% rows = CallResult.for_table_row(@date_from, @date_to, [result.id], @agent_ids, @campaign.is_a?(Array) ? @campaign.map(&:id) : @campaign.id) %>
+            <% rows.each do |col| %>
+                <Cell><Data ss:Type="String"><%= col[:number] %></Data></Cell>
+            <% end %>
+            <Cell><Data ss:Type="String"><%= rows.map { |col| col[:number] }.sum %></Data></Cell>
+          </Row>
+      <% end %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= t("campaigns.show.table.all_results") %></Data></Cell>
+        <% result_row = CallResult.for_table_row(@date_from, @date_to, @results.map(& :id), @agent_ids, @campaign.is_a?(Array) ? @campaign.map(&:id) : @campaign.id) %>
+        <% result_row.each do |col| %>
+            <Cell><Data ss:Type="String"><%= col[:number] %></Data></Cell>
+        <% end %>
+        <Cell><Data ss:Type="String"><%= result_row.map { |col| col[:number] }.sum %></Data></Cell>
+      </Row>
+    </Table>
+  </Worksheet>
+  <% @results.each do |result| %>
+      <Worksheet ss:Name="<%= result.name %>">
+        <Table>
+          <Row>
+            <% result_fields = ResultField.find_all_by_id(@result_fields["result_#{result.id}"]) %>
+            <% (@contact_columns + result_fields.map(&:name)).map(&:humanize).each do |header| %>
+                <Cell><Data ss:Type="String"><%= header %></Data></Cell>
+            <% end %>
+          </Row>
+          <% result.call_results.find_all_by_id(@call_result_ids).each do |c| %>
+              <Row>
+                <% (@contact_columns.map{|attr| c.contact.send(attr).to_s.gsub(/[\n\r\t,]/, " ")} + c.result_values.find_all_by_result_field_id(result_fields.map(&:id)).map{|rf| rf.value.to_s.gsub(/[\n\r\t,]/, " ")}).each do |cell| %>
+                    <Cell><Data ss:Type="String"><%= cell %></Data></Cell>
+                <% end %>
+              </Row>
+          <% end %>
+        </Table>
+      </Worksheet>
+  <% end %>
+</Workbook>

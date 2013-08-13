@@ -13,7 +13,7 @@
     <param:actions>
       <ul class="header_actions">
         <li class="last">
-          <%= bt_link_to :invoice, t("campaigns.show.advanced_export"), new_callers_campaign_advanced_export_path(@campaign) %>
+          <%= bt_link_to_function :invoice, t("campaigns.show.advanced_export"), "submit_advanced_export()" %>
         </li>
       </ul>
     </param:actions>
@@ -34,5 +34,9 @@
     $(function() {
         $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
     });
+
+    function submit_advanced_export(){
+        $('#search_new').attr('action', '<%= new_callers_campaign_advanced_export_path(@campaign) %>').submit();
+    }
 </script>
 </js:>
