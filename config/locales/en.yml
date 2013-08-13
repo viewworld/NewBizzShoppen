@@ -520,8 +520,6 @@ en:
         results: Results
         all_results: ALL RESULTS
         sum: SUM
-      advanced_export:
-        summary: Summary
     edit:
       edit_selected_contacts: Edit selected contacts
       label_assignments: Assignments
@@ -5188,3 +5186,5 @@ en:
       select_results: "Select results and fields"
       select_contact_fields: "Select contact fields"
       export: "Export as XLS"
+    create:
+      summary: Summary
