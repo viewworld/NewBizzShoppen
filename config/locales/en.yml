@@ -5092,7 +5092,10 @@ en:
         type5: "Section heading"
         type6: "Break page"
       is_multiline: "Is multiline"
-      is_multiselect: "Is multiselect"
+      is_multiselect: "Type"
+      multiselect_types:
+        radios: "Radio buttons"
+        checkboxes: "Checkboxes"
     surveys:
       index:
         view:
