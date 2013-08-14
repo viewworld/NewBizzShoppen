@@ -195,6 +195,7 @@ en:
         monitor: "Monitor"
         sync_leads: "Sync leads"
         surveys: "Surveys"
+        chain_mails: "Chain mails"
       lead_user:
         lead_purchases: My leads
         lead_requests: My requested leads
@@ -4046,6 +4047,7 @@ en:
         deal_maker_role_enabled: "Deal maker role enabled"
         big_buyer: "Got credit"
         newsletter_manager: "Newsletter manager"
+        chain_mails_enabled: "Chain mails enabled"
       user/call_centre_agent:
         first_name: "First name"
         last_name: "Last name"

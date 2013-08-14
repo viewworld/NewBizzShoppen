@@ -10,6 +10,7 @@ class ChainMailType < ActiveRecord::Base
   belongs_to :campaign
   belongs_to :result
   belongs_to :email_template_signature
+  belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
 
   validates_presence_of :name, :first_execution_delay, :cycle_time, :execution_time, :unless => Proc.new{|cmt| cmt.skip_validations}
   validates_length_of :chain_mail_items, :execution_conditions, :minimum => 1, :unless => Proc.new{|cmt| cmt.skip_validations or cmt.add_new_item.present? }
@@ -24,6 +25,7 @@ class ChainMailType < ActiveRecord::Base
   scope :for_campaign, lambda{|campaign| where(:campaign_id => campaign.to_i)}
   scope :with_campaign, lambda{|c| where(:campaign_id => c.to_i)}
   scope :with_result, lambda{ |result| where(:result_id => result.id) }
+  scope :for_user, lambda { |user| user.admin? ? where("true") : where(:creator_id => user.id) }
 
   include ScopedSearch::Model
 
