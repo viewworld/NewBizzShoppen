@@ -542,6 +542,7 @@ Nbs::Application.routes.draw do
       end
       member do
         post :send_to_newsletters
+        get :setup
       end
     end
   end

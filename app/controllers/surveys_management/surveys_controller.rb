@@ -1,6 +1,6 @@
 class SurveysManagement::SurveysController < SurveysManagement::SurveysManagementController
   inherit_resources
-  before_filter :fetch_object, :only => [:edit, :update, :show, :destroy, :send_to_newsletters]
+  before_filter :fetch_object, :only => [:edit, :setup, :update, :show, :destroy, :send_to_newsletters]
 
   set_tab "campaigns"
   set_subtab "surveys"
