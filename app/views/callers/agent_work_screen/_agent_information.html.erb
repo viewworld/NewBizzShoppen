@@ -1,13 +1,13 @@
-<% @agent = (defined? @agent and @agent) ? @agent : current_user %>
+<% @agent ||= current_user %>
 <div class="frm_tiny">
 
   <p>
     <span style="float:left">
-        <strong><%= t("agent_work_screen.index.agent_information.value_created") %>: </strong>
-        <%= t("agent_work_screen.index.agent_information.today") %>: <%= as_currency(AgentInformation.today(@agent, @currency).value_created, @currency, 0) %> (<%= as_currency(TopAgent.value_for(:today, @currency), @currency, 0) %>),
-        <%= t("agent_work_screen.index.agent_information.this_week") %>: <%= as_currency(AgentInformation.week(@agent, @currency).value_created, @currency, 0) %> (<%= as_currency(TopAgent.value_for(:week, @currency), @currency, 0) %>),
-        <%= t("agent_work_screen.index.agent_information.this_quarter") %>: <%= as_currency(AgentInformation.quarter(@agent, @currency).value_created, @currency, 0) %> (<%= as_currency(TopAgent.value_for(:quarter, @currency), @currency, 0) %>),
-        <%= t("agent_work_screen.index.agent_information.this_year") %>: <%= as_currency(AgentInformation.year(@agent, @currency).value_created, @currency, 0) %> (<%= as_currency(TopAgent.value_for(:year, @currency), @currency, 0) %>)
+        <strong><%= t("agent_work_screen.index.agent_information.payout") %>: </strong>
+        <%= t("agent_work_screen.index.agent_information.today") %>: <%= as_currency(AgentInformation.today(@agent, @currency).payout, @currency, 0) %> (<%= as_currency(TopAgent.payout_for(:today, @currency), @currency, 0) %>),
+        <%= t("agent_work_screen.index.agent_information.this_week") %>: <%= as_currency(AgentInformation.week(@agent, @currency).payout, @currency, 0) %> (<%= as_currency(TopAgent.payout_for(:week, @currency), @currency, 0) %>),
+        <%= t("agent_work_screen.index.agent_information.this_quarter") %>: <%= as_currency(AgentInformation.quarter(@agent, @currency).payout, @currency, 0) %> (<%= as_currency(TopAgent.payout_for(:quarter, @currency), @currency, 0) %>),
+        <%= t("agent_work_screen.index.agent_information.this_year") %>: <%= as_currency(AgentInformation.year(@agent, @currency).payout, @currency, 0) %> (<%= as_currency(TopAgent.payout_for(:year, @currency), @currency, 0) %>)
     </span>
 
     <span style="float:right">
