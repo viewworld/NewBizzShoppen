@@ -34,6 +34,10 @@ class TopAgent
     TopAgent.send(symbol, Currency.dkk).time_on_phone
   end
 
+  def self.payout_for(symbol, currency)
+    TopAgent.send(symbol, currency).payout
+  end
+
   def self.week(currency)
     new(Time.now.beginning_of_week.to_date, Time.now.end_of_week.to_date, currency)
   end
@@ -83,6 +87,14 @@ class TopAgent
 
   def time
     if top = AgentTimesheet::Hours.with_date_between(date_from, date_to).select("sum(hours)").group("user_id").order("sum DESC").first
+      top.sum.to_f
+    else
+      0.0
+    end
+  end
+
+  def payout
+    if top = AgentTimesheet::Payout.with_date_between(date_from, date_to).select("sum(payout)").group("user_id").order("sum DESC").first
       top.sum.to_f
     else
       0.0

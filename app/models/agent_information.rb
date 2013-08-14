@@ -32,6 +32,10 @@ class AgentInformation
     AgentTimesheet::TimeOnPhone.with_date_between(date_from, date_to).for_agent(user).sum(:time_on_phone) / 3600.0
   end
 
+  def payout
+    AgentTimesheet::Payout.with_date_between(date_from, date_to).for_agent(user).sum(:payout)
+  end
+
   # helper initializers
 
   def self.today(user, currency = Currency.dkk)
