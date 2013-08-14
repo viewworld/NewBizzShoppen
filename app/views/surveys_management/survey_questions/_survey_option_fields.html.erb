@@ -16,9 +16,9 @@
         </li>
       </ol>
     </fieldset>
-    <% unless current_user.has_any_role?(:supplier, :category_supplier) %>
-        <fieldset class="inputs tags labels_ta_r">
-          <ol>
+    <fieldset class="inputs tags labels_ta_r">
+      <ol>
+        <% unless current_user.has_any_role?(:supplier, :category_supplier) %>
             <li class="string">
               <div class="tags_wrapper">
                 <label><%= t("tags.common.assigned_tags_label") %>:</label>
@@ -28,16 +28,18 @@
               <%= hidden_field_tag "#{f.object_name}[tag_list][]", "" %>
             </li>
             <li class="select">
-              <label><%= t("surveys.shared.chain_mail") %></label>
-              <%= f.select :chain_mail_type_id, SurveyChainMailType.with_active.map { |cm| [cm.name, cm.id]  }, :include_blank => true %>
-            </li>
-            <li class="select">
               <label><%= t("surveys.shared.lead_category") %></label>
               <%= f.select :category_id, LeadCategory.without_locked_and_not_published.map { |c| [c.to_s, c.id] }.sort, :include_blank => true %>
             </li>
-          </ol>
-        </fieldset>
-    <% end %>
+        <% end %>
+        <% if current_user.chain_mails_enabled? %>
+            <li class="select">
+              <label><%= t("surveys.shared.chain_mail") %></label>
+              <%= f.select :chain_mail_type_id, SurveyChainMailType.with_active.for_user(current_user).map { |cm| [cm.name, cm.id]  }, :include_blank => true %>
+            </li>
+        <% end %>
+      </ol>
+    </fieldset>
     <fieldset class="remove">
       <% if f.object.new_record? or f.object.survey_answers.empty? %>
         <%= bt_link_to :remove, t("shared.lead_templates.form.remove_lead_template_field"), "javascript:void(0)", :onclick => "remove_survey_option_field('#{div_survey_option_html_id}', #{f.object.new_record? ? 'null' : f.object.id})" %>

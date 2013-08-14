@@ -980,6 +980,10 @@ class User < ActiveRecord::Base
     active_subscription ? (read_attribute(:newsletter_manager) ? true : active_subscription.newsletter_manager?) : parent ? parent.newsletter_manager? : false
   end
 
+  def chain_mails_enabled?
+    admin? or read_attribute(:chain_mails_enabled) or active_subscription.try(:chain_mails_enabled?)
+  end
+
   def handle_privileges
     if subaccounts.any?
       if team_buyers?
