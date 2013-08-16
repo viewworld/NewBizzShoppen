@@ -76,6 +76,7 @@
             <%= form.input :big_buyer %>
             <%= form.input :newsletter_manager %>
             <%= form.input :chain_mails_enabled %>
+            <%= form.input :surveys_enabled %>
         <% end %>
         <% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
             <%= form.input :certification_level, :as => :select, :collection => User::CERTIFICATION_LEVELS.map { |c| [t("models.lead.certification.lvl#{c}"), c] }, :selected => @user.read_attribute(:certification_level) %>

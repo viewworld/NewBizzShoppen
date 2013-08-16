@@ -12,5 +12,6 @@ class SurveysManagement::SurveysManagementController < SecuredController
 
   def authorize_user_for_namespace!
     authorize_role(:admin, :call_centre, :category_supplier, :supplier)
+    raise CanCan::AccessDenied unless current_user.surveys_enabled?
   end
 end
