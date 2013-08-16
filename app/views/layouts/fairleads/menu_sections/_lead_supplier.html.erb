@@ -10,10 +10,14 @@
         <%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.lead_supplier.newsletter"), :tab => "newsletter" do %>
             <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.lead_supplier.sync_leads")), suppliers_newsletter_lists_path, :subtab => "newsletter_lists" %>
             <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.lead_supplier.monitor")), current_user.link_to_campaign_monitor_account, :subtab => "monitor", :target => '_blank' %>
-            <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.lead_supplier.surveys")), surveys_management_surveys_path, :subtab => "surveys" %>
         <% end %>
     <% end %>
-    <% if current_user.has_any_role?(:supplier, :category_supplier) and current_user.chain_mails_enabled? %>
-        <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.lead_supplier.chain_mails")), callers_chain_mail_types_path, :subtab => "chain_mail_type" %>
+    <% if current_user.has_any_role?(:supplier, :category_supplier) %>
+        <% if current_user.chain_mails_enabled? %>
+            <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.lead_supplier.chain_mails")), callers_chain_mail_types_path, :subtab => "chain_mail_type" %>
+        <% end %>
+        <% if current_user.surveys_enabled? %>
+            <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.lead_supplier.surveys")), surveys_management_surveys_path, :subtab => "surveys" %>
+        <% end %>
     <% end %>
 <% end %>

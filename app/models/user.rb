@@ -984,6 +984,10 @@ class User < ActiveRecord::Base
     admin? or read_attribute(:chain_mails_enabled) or active_subscription.try(:chain_mails_enabled?)
   end
 
+  def surveys_enabled?
+    admin? or read_attribute(:surveys_enabled) or active_subscription.try(:surveys_enabled?)
+  end
+
   def handle_privileges
     if subaccounts.any?
       if team_buyers?

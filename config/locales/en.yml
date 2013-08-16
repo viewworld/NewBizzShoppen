@@ -4048,6 +4048,7 @@ en:
         big_buyer: "Got credit"
         newsletter_manager: "Newsletter manager"
         chain_mails_enabled: "Chain mails enabled"
+        surveys_enabled: "Surveys enabled"
       user/call_centre_agent:
         first_name: "First name"
         last_name: "Last name"
@@ -4206,6 +4207,8 @@ en:
         free_deal_requests_in_free_period: "Number of free deal requests in free period"
         premium_deals: "Allow premium deals"
         newsletter_manager: "Newsletter manager"
+        chain_mails_enabled: "Chain mails enabled?"
+        surveys_enabled: "Surveys enabled?"
       newsletter_list:
         name: "Name"
         owner_email: "Owner email"
