@@ -1,6 +1,6 @@
 module Callers::UserSessionLogsHelper
 
-  def link_to_user_session_logs(additional_conditions)
+  def link_to_user_session_logs(additional_conditions={})
     callers_user_session_logs_path(
         :search => {
             :with_time_from => "#{params[:date_from] || Date.today} 00:00",
