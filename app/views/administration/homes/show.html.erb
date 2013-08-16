@@ -77,7 +77,7 @@
               <td class="tar"><%= performance.call_count %></td>
               <td class="tar"><%= performance.result_count %></td>
               <td class="tar"><%= as_currency(performance.value, performance.currency, 0) %></td>
-              <td class="tar"><%= performance.time.to_f.as_hours_and_minutes %></td>
+              <td class="tar"><%= link_to performance.time.to_f.as_hours_and_minutes, campaign_link_to_user_session_logs(campaign) %></td>
               <td class="tar"><%= performance.time_on_phone.to_f.as_hours_and_minutes %></td>
               <td class="tar"><%= as_currency(performance.value_rate, performance.currency, 0) %></td>
               <td></td>
@@ -127,7 +127,7 @@
                   <td class="tar"><%= performance.call_count %></td>
                   <td class="tar"><%= performance.result_count %></td>
                   <td class="tar"><%= as_currency(performance.payout, performance.currency, 0) %></td>
-                  <td class="tar"><%= performance.time.to_f.as_hours_and_minutes %></td>
+                  <td class="tar"><%= link_to performance.time.to_f.as_hours_and_minutes, agent_link_to_user_session_logs(agent) %></td>
                   <td class="tar"><%= performance.time_on_phone.to_f.as_hours_and_minutes %></td>
                   <td class="tar"><%= as_currency(performance.rate, performance.currency, 0) %></td>
                   <td></td>
