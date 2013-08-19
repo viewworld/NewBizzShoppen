@@ -1,14 +1,18 @@
 class Callers::CallerController < SecuredController
   def current_user
-    @user ||= ::User::CallCentre.find_by_id(super.id)
-    @user ||= ::User::CallCentreAgent.find_by_id(super.id)
-    @user ||= ::User::Admin.find_by_id(super.id)
-    @user ||= ::User::Agent.find_by_id(super.id)
+    authorized_roles.each do |_role|
+      @user ||= "::User::#{_role.to_s.camelize}".constantize.find_by_id(super.id)
+    end
+    @user
   end
 
   private
 
+  def authorized_roles
+    [:call_centre, :call_centre_agent, :admin, :agent]
+  end
+
   def authorize_user_for_namespace!
-    authorize_role(:call_centre, :call_centre_agent, :admin, :agent)
+    authorize_role(*authorized_roles)
   end
 end

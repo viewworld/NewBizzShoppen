@@ -6,16 +6,13 @@ class Callers::ChainMailTypesController < Callers::CallerController
 
   before_filter :fetch_campaign
   before_filter :set_klass, :only => [:new, :create]
+  before_filter :check_chain_mails_enabled
 
-  def current_user
-    id = self.class.superclass.superclass.instance_method(:current_user).bind(self).call.try(:id)
-    @user ||= ::User::CategorySupplier.find_by_id(id)
-    @user ||= ::User::Supplier.find_by_id(id)
-    super
+  def authorized_roles
+    [:call_centre, :call_centre_agent, :admin, :agent, :category_supplier, :supplier]
   end
 
-  def authorize_user_for_namespace!
-    authorize_role(:call_centre, :call_centre_agent, :admin, :agent, :supplier, :category_supplier)
+  def check_chain_mails_enabled
     raise CanCan::AccessDenied unless current_user.chain_mails_enabled?
   end
 
