@@ -201,16 +201,17 @@ describe Campaign do
       @contact1.agent_id.should == @call_centre_agent2.id
     end
 
+    # notifications for agents had been temporarily disabled (call_result.rb -> process_for_call_back)
     it "should remove notifications when contact is reassigned" do
       @contact1.assign_agent @call_centre_agent1
       CallResult.make!(:call_back, :contact => @contact1, :creator => @call_centre_agent1)
-      @call_centre_agent1.notifications.count.should == 1
+      @call_centre_agent1.notifications.count.should == 0
       @call_centre_agent2.notifications.count.should == 0
 
       @campaign.assign [@call_centre_agent2.id]
       @contact1.reload
       @call_centre_agent1.notifications.count.should == 0
-      @call_centre_agent2.notifications.count.should == 1
+      @call_centre_agent2.notifications.count.should == 0
     end
 
   end
