@@ -62,7 +62,7 @@ class CallResult < ActiveRecord::Base
     end
   end
 
-  PENDING_RESULT_TYPES = [:call_back, :not_interested_now]
+  PENDING_RESULT_TYPES = [:call_back, :not_interested_now, :call_back_private]
 
   scope :call_log_results, joins(:result).where(:results => {:final => false})
   scope :final_results, joins(:result).where(:results => {:final => true})
@@ -297,7 +297,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def process_for_call_log_result
-    contact.update_attributes(:pending => PENDING_RESULT_TYPES.include?(result.label))
+    contact.update_attributes(:pending => PENDING_RESULT_TYPES.include?(result.label)) unless contact.campaign.shared_contact_pool?
     contact.move_to_bottom
   end
 
@@ -327,6 +327,10 @@ class CallResult < ActiveRecord::Base
   def process_for_upgrade_to_member
     upgrade_to_user("member")
     process_for_final_result
+  end
+
+  def process_for_call_back_private
+    process_for_call_back
   end
 
   def prepare_user(role)

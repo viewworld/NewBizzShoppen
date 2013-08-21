@@ -21,8 +21,8 @@ class Campaign < ActiveRecord::Base
   has_many :call_logs
 
   validates_uniqueness_of :name
-  validates_presence_of :name, :max_contact_number, :category_id, :country_id, :start_date, :end_date, :cost_type
-  validates_numericality_of :max_contact_number, :only_integer => true, :greater_than_or_equal_to => 0
+  validates_presence_of :name, :category_id, :country_id, :start_date, :end_date, :cost_type
+  validates_numericality_of :max_contact_number, :only_integer => true, :greater_than_or_equal_to => 0, :if => :private_contact_pool?
   validate :fixed_cost_value_is_valid
 
   scope :with_keyword, lambda { |q| where("lower(name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
@@ -68,6 +68,10 @@ class Campaign < ActiveRecord::Base
   CRM_OPTION_CONTACT_EMAIL = 3.freeze
   CRM_OPTION_ALL = 4.freeze
   CRM_OPTIONS = [CRM_OPTION_OFF, CRM_OPTION_COMPANY_NAME, CRM_OPTION_CVR, CRM_OPTION_CONTACT_EMAIL, CRM_OPTION_ALL]
+
+  PRIVATE_CONTACT_POOL = 0
+  SHARED_CONTACT_POOL = 1
+  CONTACT_POOL_TYPES = [PRIVATE_CONTACT_POOL, SHARED_CONTACT_POOL]
 
   acts_as_newsletter_source
 
@@ -175,18 +179,24 @@ class Campaign < ActiveRecord::Base
   end
 
   def assign_contacts_to_agent(agent)
-    if agent.with_role.respond_to? :has_max_contacts_in_campaign?
-      #restore contact to call sheet if it's not pending anymore
-      pending_contacts = agent.contacts.with_pending_status(true)
-      while (not agent.with_role.has_max_contacts_in_campaign? self) and pending_contacts.present?
-        contact = pending_contacts.shift
-        contact.change_pending_status(false) unless contact.should_be_pending?(agent)
-      end
+    if private_contact_pool?
+      if agent.with_role.respond_to? :has_max_contacts_in_campaign?
+        #restore contact to call sheet if it's not pending anymore
+        pending_contacts = agent.contacts.with_pending_status(true)
+        while (not agent.with_role.has_max_contacts_in_campaign? self) and pending_contacts.present?
+          contact = pending_contacts.shift
+          contact.change_pending_status(false) unless contact.should_be_pending?(agent)
+        end
 
-      #assign new contacts to agent
-      contacts_list = contacts.available_to_assign(agent)
-      while (not agent.with_role.has_max_contacts_in_campaign? self) and contacts_list.present?
-        contacts_list.shift.assign_agent(agent.id)
+        #assign new contacts to agent
+        contacts_list = contacts.available_to_assign(agent)
+        while (not agent.with_role.has_max_contacts_in_campaign? self) and contacts_list.present?
+          contacts_list.shift.assign_agent(agent.id)
+        end
+      end
+    elsif shared_contact_pool?
+      if agent.contacts.for_campaign(self).empty? and available_contact = contacts.with_completed_status(false).with_pending_status(false).unassigned.first
+        available_contact.assign_agent(agent.id)
       end
     end
   end
@@ -424,5 +434,17 @@ class Campaign < ActiveRecord::Base
       contacts_scope = contacts_scope.where("leads.agent_id IN (?)", user.call_centre? ? [user.id] + user.subaccount_ids : user.id)
     end
     contacts_scope.select("DISTINCT(leads.id)").count
+  end
+
+  def private_contact_pool?
+    contact_pool_type == PRIVATE_CONTACT_POOL
+  end
+
+  def shared_contact_pool?
+    contact_pool_type == SHARED_CONTACT_POOL
+  end
+
+  def return_to_pool_all_for_agent(agent_id)
+    contacts.with_agent_id(agent_id).with_pending_status(false).each(&:return_to_pool) if agent_id
   end
 end

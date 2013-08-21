@@ -454,6 +454,9 @@ en:
       crm_option2: "Select by CVR"
       crm_option3: "Select by Email Address"
       crm_option4: "All must match"
+    contact_pool_types:
+      contact_pool0: "Private contact pool"
+      contact_pool1: "Shared contact pool"
     filter:
       header: Search
       keyword_label: Keyword

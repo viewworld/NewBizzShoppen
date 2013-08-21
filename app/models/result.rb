@@ -142,4 +142,10 @@ class Result < ActiveRecord::Base
   def check_call_results
     !call_results.present?
   end
+
+  class << self
+    def call_back_private
+      generic_results.find_by_name("Call back private")
+    end
+  end
 end
