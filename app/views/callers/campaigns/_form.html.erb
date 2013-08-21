@@ -12,6 +12,14 @@
         <%= form.input :category_id, :as => :select, :collection => LeadCategory.all, :include_blank => false %>
         <%= form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false %>
         <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false %>
+        <%= form.input :start_date, :as => :string,
+                       :wrapper_html => {:class => "date"},
+                       :input_html => {:class => "datepicker", :value => campaign.start_date},
+                       :hint => t('models.result_field.date_format') %>
+        <%= form.input :end_date, :as => :string,
+                       :wrapper_html => {:class => "date"},
+                       :input_html => {:class => "datepicker", :value => campaign.end_date},
+                       :hint => t('models.result_field.date_format') %>
       </ol>
     </fieldset>
 
@@ -32,17 +40,10 @@
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r">
       <ol class="align_inputs">
-        <%= form.input :start_date, :as => :string,
-                       :wrapper_html => {:class => "date"},
-                       :input_html => {:class => "datepicker", :value => campaign.start_date},
-                       :hint => t('models.result_field.date_format') %>
-        <%= form.input :end_date, :as => :string,
-                       :wrapper_html => {:class => "date"},
-                       :input_html => {:class => "datepicker", :value => campaign.end_date},
-                       :hint => t('models.result_field.date_format') %>
+        <%= form.input :contact_pool_type, :as => :radio, :collection => Campaign::CONTACT_POOL_TYPES.map { |pt| [t("campaigns.contact_pool_types.contact_pool#{pt}"), pt] }, :wrapper_html => {:class => "collection"} %>
         <%= form.input :max_contact_number, :input_html => {:style => "width:95px"} %>
-        <%= form.input :fixed_cost_value, :input_html => {:style => "width:95px"} %>
         <%= form.input :cost_type, :as => :radio, :collection => Campaign::COST_TYPES.map { |lnt| [t("campaigns.cost_types.cost_type#{lnt}"), lnt] }, :wrapper_html => {:class => "collection"} %>
+        <%= form.input :fixed_cost_value, :input_html => {:style => "width:95px"} %>
         <%= form.input :crm_option, :as => :radio, :collection => Campaign::CRM_OPTIONS.map { |lnt| [t("campaigns.crm_options.crm_option#{lnt}"), lnt] }, :wrapper_html => {:class => "collection"}, :label => t("campaigns.form.crm_options") %>
         <li class="select" style="padding-top:10px">
           <%= label_tag t("campaigns.form.crm_campaigns"), t("campaigns.form.crm_campaigns") %>
