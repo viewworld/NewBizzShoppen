@@ -25,7 +25,7 @@
         <% end %>
         <%= form.input :time_zone, :wrapper_html => { :class => "select"}, :input_html => {:style => "width: 240px"} %>
         <% if ['call_centre_agent'].include?(params[:role]) or @user.has_any_role?(:call_centre_agent) %>
-            <%= form.input :parent_id, :collection => User.with_call_centres.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false, :label => t("administration.users.edit.view.parent_id") %>
+            <%= form.input :parent_id, :collection => User.without_locked.with_call_centres.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false, :label => t("administration.users.edit.view.parent_id") %>
         <% end %>
         <% if ['lead_supplier', 'supplier', 'member'].include?(params[:role]) or @user.has_any_role?(:lead_supplier, :supplier, :member) %>
             <%= form.input :vat_number %>
