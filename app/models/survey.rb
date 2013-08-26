@@ -30,6 +30,10 @@ class Survey < ActiveRecord::Base
     User.where(:email => newsletter_owner_email).first
   end
 
+  def newsletter_owner_for(user)
+    user.admin? ? newsletter_owner : user
+  end
+
   def set_sending_details!(sending_started_at)
     self.last_sent_at = Time.now
     self.last_sent_recipients_count = SurveyRecipient.where(:survey_id => id).where("email_sent_at > ?", sending_started_at).count
