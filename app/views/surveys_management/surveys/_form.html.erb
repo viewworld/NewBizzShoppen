@@ -29,14 +29,16 @@
 
 <% if current_user.admin? or @survey.creator == current_user %>
     <div class="pdd_10 no_pdd_t">
-      <fieldset class="inputs labels_ta_r">
-        <ol class="align_inputs">
-          <li class="header">
-            <h3><%= t("surveys_management.surveys.edit.view.newsletter_lists_selection") %></h3>
-          </li>
-          <%= form.input :newsletter_owner_email %><%= bt_link_to :magnify, t("newsletters.newsletter_campaigns.form.fetch_lists"), "#", :onclick => "fetch_lists()" %>
-        </ol>
-      </fieldset>
+      <% if current_user.admin? %>
+          <fieldset class="inputs labels_ta_r">
+            <ol class="align_inputs">
+              <li class="header">
+                <h3><%= t("surveys_management.surveys.edit.view.newsletter_lists_selection") %></h3>
+              </li>
+              <%= form.input :newsletter_owner_email %><%= bt_link_to :magnify, t("newsletters.newsletter_campaigns.form.fetch_lists"), "#", :onclick => "fetch_lists()" %>
+            </ol>
+          </fieldset>
+      <% end %>
 
       <hl/>
       <div id="surveys_newsletter_lists">
@@ -44,7 +46,7 @@
           <div class="grid_210 fltl">&nbsp;</div>
           <div class="grid_240 fltl">
             <h3><%= t("surveys_management.surveys.form.all_lists") %></h3>
-            <%= select_tag "all_lists", options_for_select(((@survey.newsletter_owner ? @survey.newsletter_owner.newsletter_lists : [])-@survey.newsletter_lists).map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+            <%= select_tag "all_lists", options_for_select(((@survey.newsletter_owner_for(current_user) ? @survey.newsletter_owner_for(current_user).newsletter_lists : [])-@survey.newsletter_lists).map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
           </div>
 
           <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
