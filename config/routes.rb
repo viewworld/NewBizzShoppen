@@ -552,6 +552,7 @@ Nbs::Application.routes.draw do
         post :send_to_newsletters
         get :setup
       end
+      resources :email_templates
     end
   end
 

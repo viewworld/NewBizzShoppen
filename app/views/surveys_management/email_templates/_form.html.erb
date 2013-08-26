@@ -1,0 +1,22 @@
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_100">
+    <ol>
+      <%= form.input :subject %>
+      <% if current_user.admin? %>
+          <%= form.input :from %>
+          <%= form.input :bcc %>
+          <%= form.input :cc %>
+      <% end %>
+      <%= form.input :body,
+                     :label => false,
+                     :as => :ckeditor,
+                     :input_html => {
+                             :width => '1085px',
+                             :height => '300px',
+                             :toolbar => "EmailPopup"
+                     }
+
+      %>
+    </ol>
+  </fieldset>
+</div>
