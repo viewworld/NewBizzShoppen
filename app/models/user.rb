@@ -154,6 +154,7 @@ class User < ActiveRecord::Base
   before_validation :set_auto_generated_password_if_required, :set_role
   after_initialize :set_auto_buy_enabled
   before_create :generate_login_key
+  before_create :generate_api_key
 
   check_associations_before_destroy :leads, :lead_purchases, :lead_templates, :assigned_lead_purchases, :lead_requests, :leads_in_cart, :deals, :requested_deals, :campaigns, :contacts, :call_results, :subaccounts, :invoices
 
@@ -610,6 +611,10 @@ class User < ActiveRecord::Base
   def generate_login_key
     self.login_key = Digest::SHA1.hexdigest("#{created_at} -- #{id} -- #{Time.now}") unless login_key
     login_key
+  end
+
+  def generate_api_key
+    self.api_key = SecureRandom.hex(8)
   end
 
   def generate_login_key!
