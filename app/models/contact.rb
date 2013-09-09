@@ -35,6 +35,10 @@ class Contact < AbstractLead
   scope :with_survey_state, lambda { |state| joins(:survey_recipients).where( state.to_i < 0 ? ["survey_recipients.state = ? OR survey_recipients.state = ?", 1, 2] : ["survey_recipients.state = ?", state]) }
   scope :from_last_import, where(:last_import => true)
   scope :unassigned, where(:agent_id => nil)
+  scope :with_pending_result_type, select("distinct on (leads.id) leads.*, result_values.value").
+      joins(:call_results => [:result, :result_values]).
+      where("lower(replace(results.name, ' ', '_')) IN (?)", CallResult::PENDING_RESULT_TYPES.map(&:to_s)).
+      order("leads.id, result_values.value DESC")
   scoped_order :company_name
 
   acts_as_list :scope => [:campaign_id, :agent_id, :pending]

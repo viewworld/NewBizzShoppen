@@ -195,10 +195,14 @@ class Campaign < ActiveRecord::Base
         end
       end
     elsif shared_contact_pool?
-      if agent.contacts.for_campaign(self).empty? and available_contact = contacts.with_completed_status(false).with_pending_status(false).unassigned.first
+      if agent.contacts.for_campaign(self).empty? and available_contact = contacts.with_completed_status(false).with_pending_status(false).with_pending_result_type.unassigned.first
         available_contact.assign_agent(agent.id)
       end
     end
+  end
+
+  def fetch_contact_from_shared_contact_pool
+    contacts.with_pending_result_type.first
   end
 
   def has_user_as_member?(user)
