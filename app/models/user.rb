@@ -788,7 +788,7 @@ class User < ActiveRecord::Base
 
   def active_subscription
     active_sub = subscriptions.where("start_date <= ? and (end_date >= ? OR end_date IS NULL)", Date.today, Date.today).order("position DESC").first
-    if !active_sub and last_subscription
+    if !active_sub and last_subscription and last_subscription.may_prolong?
       last_subscription.prolong!
       active_sub = last_subscription
     end
