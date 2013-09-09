@@ -369,6 +369,14 @@ Nbs::Application.routes.draw do
     resource :login
   end
 
+  namespace :api do
+    resources :campaigns, :only => [] do
+      member do
+        get :contact
+      end
+    end
+  end
+
   resources :chain_mails
 
   match 'supplier_home' => 'supplier_home#show', :as => "supplier_home"
