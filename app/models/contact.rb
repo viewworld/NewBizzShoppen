@@ -35,10 +35,15 @@ class Contact < AbstractLead
   scope :with_survey_state, lambda { |state| joins(:survey_recipients).where( state.to_i < 0 ? ["survey_recipients.state = ? OR survey_recipients.state = ?", 1, 2] : ["survey_recipients.state = ?", state]) }
   scope :from_last_import, where(:last_import => true)
   scope :unassigned, where(:agent_id => nil)
-  scope :with_pending_result_type, select("distinct on (leads.id) leads.*, result_values.value").
-      joins(:call_results => [:result, :result_values]).
+  scope :uncompleted, with_completed_status(false)
+  scope :with_pending_result_type, #select("distinct on (leads.id) leads.*, result_values.value").
+      joins("INNER JOIN call_results ON call_results.id = (SELECT id FROM call_results cr WHERE cr.contact_id = leads.id ORDER BY cr.created_at DESC LIMIT 1) INNER JOIN results ON results.id = call_results.result_id INNER JOIN result_values ON result_values.call_result_id = call_results.id").
       where("lower(replace(results.name, ' ', '_')) IN (?)", CallResult::PENDING_RESULT_TYPES.map(&:to_s)).
-      order("leads.id, result_values.value DESC")
+      order("result_values.value ASC")
+  scope :without_pending_result_type, #select("distinct on (leads.id) leads.*").
+      joins("LEFT JOIN call_results ON call_results.id = (SELECT id FROM call_results cr WHERE cr.contact_id = leads.id ORDER BY cr.created_at DESC LIMIT 1) LEFT JOIN results ON results.id = call_results.result_id").
+      where("results.name IS NULL OR lower(replace(results.name, ' ', '_')) NOT IN (?)", CallResult::PENDING_RESULT_TYPES.map(&:to_s))
+  scope :by_position_asc, order("leads.position ASC")
   scoped_order :company_name
 
   acts_as_list :scope => [:campaign_id, :agent_id, :pending]
@@ -163,7 +168,7 @@ class Contact < AbstractLead
 
   def assign_agent(agent_id)
     self.reload
-    campaign.return_to_pool_all_for_agent(agent_id) if campaign.shared_contact_pool?
+    #campaign.return_to_pool_all_for_agent(agent_id) if campaign.shared_contact_pool?
     if agent_id.nil?
       self.contact_past_user_assignments.create(:user_id => read_attribute(:agent_id))
     end
