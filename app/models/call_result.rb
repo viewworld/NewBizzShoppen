@@ -297,7 +297,15 @@ class CallResult < ActiveRecord::Base
   end
 
   def process_for_call_log_result
-    contact.update_attributes(:pending => PENDING_RESULT_TYPES.include?(result.label)) unless contact.campaign.shared_contact_pool?
+    if contact.campaign.shared_contact_pool?
+      if result.call_back_private?
+        contact.update_attribute(:pending, true)
+      else
+        contact.update_attribute(:agent_id, nil)
+      end
+    else
+      contact.update_attributes(:pending => PENDING_RESULT_TYPES.include?(result.label))
+    end
     contact.move_to_bottom
   end
 

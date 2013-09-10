@@ -79,6 +79,10 @@ class Result < ActiveRecord::Base
     upgrades_to_category_supplier? or upgrades_to_supplier? or upgrades_to_member?
   end
 
+  def call_back_private?
+    name == "Call back private"
+  end
+
   def upgrades_to_user_role
     if upgrades_to_category_supplier?
       :category_supplier

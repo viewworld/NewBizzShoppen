@@ -42,7 +42,11 @@ class Callers::AgentWorkScreenController < Callers::CallerController
   end
 
   def set_contacts
-    @contacts = @agent.contacts.for_campaign(@campaign).with_pending_status(false)
+    @contacts = if @campaign.shared_contact_pool?
+                  [@campaign.assinged_contact_from_shared_pool(@agent)]
+                else
+                  @agent.contacts.for_campaign(@campaign).with_pending_status(false)
+                end
   end
 
   def set_pending_contacts
