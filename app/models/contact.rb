@@ -36,11 +36,10 @@ class Contact < AbstractLead
   scope :from_last_import, where(:last_import => true)
   scope :unassigned, where(:agent_id => nil)
   scope :uncompleted, with_completed_status(false)
-  scope :with_pending_result_type, #select("distinct on (leads.id) leads.*, result_values.value").
+  scope :with_pending_result_type,
       joins("INNER JOIN call_results ON call_results.id = (SELECT id FROM call_results cr WHERE cr.contact_id = leads.id ORDER BY cr.created_at DESC LIMIT 1) INNER JOIN results ON results.id = call_results.result_id INNER JOIN result_values ON result_values.call_result_id = call_results.id").
-      where("lower(replace(results.name, ' ', '_')) IN (?)", CallResult::PENDING_RESULT_TYPES.map(&:to_s)).
-      order("result_values.value ASC")
-  scope :without_pending_result_type, #select("distinct on (leads.id) leads.*").
+      where("lower(replace(results.name, ' ', '_')) IN (?)", CallResult::PENDING_RESULT_TYPES.map(&:to_s))
+  scope :without_pending_result_type,
       joins("LEFT JOIN call_results ON call_results.id = (SELECT id FROM call_results cr WHERE cr.contact_id = leads.id ORDER BY cr.created_at DESC LIMIT 1) LEFT JOIN results ON results.id = call_results.result_id").
       where("results.name IS NULL OR lower(replace(results.name, ' ', '_')) NOT IN (?)", CallResult::PENDING_RESULT_TYPES.map(&:to_s))
   scope :by_position_asc, order("leads.position ASC")

@@ -50,7 +50,7 @@ class Callers::AgentWorkScreenController < Callers::CallerController
   end
 
   def set_pending_contacts
-    @pending_contacts = @agent.contacts.for_campaign(@campaign).with_pending_status(true)
+    @pending_contacts = @agent.contacts.for_campaign(@campaign).with_pending_status(true).with_pending_result_type.reorder("result_values.value ASC")
   end
 
   def set_completed_contacts
