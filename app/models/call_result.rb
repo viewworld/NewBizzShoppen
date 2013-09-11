@@ -62,7 +62,7 @@ class CallResult < ActiveRecord::Base
     end
   end
 
-  PENDING_RESULT_TYPES = [:call_back, :not_interested_now]
+  PENDING_RESULT_TYPES = [:call_back, :not_interested_now, :call_back_private]
 
   scope :call_log_results, joins(:result).where(:results => {:final => false})
   scope :final_results, joins(:result).where(:results => {:final => true})
@@ -165,7 +165,7 @@ class CallResult < ActiveRecord::Base
   def call_log
     CallLog.talk.order("call_logs.created_at desc").
         where(:caller_id => creator_id).
-        where("call_logs.created_at < :call_result AND @EXTRACT(EPOCH FROM call_logs.created_at - :call_result) < 1800", :call_result => created_at).
+        where("call_logs.created_at < :call_result AND @EXTRACT(EPOCH FROM call_logs.created_at - :call_result) < 3600", :call_result => created_at).
         first
   end
 
@@ -297,7 +297,15 @@ class CallResult < ActiveRecord::Base
   end
 
   def process_for_call_log_result
-    contact.update_attributes(:pending => PENDING_RESULT_TYPES.include?(result.label))
+    if contact.campaign.shared_contact_pool?
+      if result.call_back_private?
+        contact.update_attribute(:pending, true)
+      else
+        contact.update_attribute(:agent_id, nil)
+      end
+    else
+      contact.update_attributes(:pending => PENDING_RESULT_TYPES.include?(result.label))
+    end
     contact.move_to_bottom
   end
 
@@ -327,6 +335,10 @@ class CallResult < ActiveRecord::Base
   def process_for_upgrade_to_member
     upgrade_to_user("member")
     process_for_final_result
+  end
+
+  def process_for_call_back_private
+    process_for_call_back
   end
 
   def prepare_user(role)

@@ -176,7 +176,13 @@
 
 <% if current_user.phone_enabled? %>
     <script>
+      <% unless Rails.env.development? %>
       flashvars.token = '<%= current_user.flashphoner_token %>';
+      <% end %>
+
+      <% if @campaign.auto_dialer %>
+      flashvars.auto_dial = true;
+      <% end %>
 
       $(function(){
           $('#phoneDiv').draggable();

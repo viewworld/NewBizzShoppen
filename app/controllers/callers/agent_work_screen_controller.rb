@@ -42,16 +42,18 @@ class Callers::AgentWorkScreenController < Callers::CallerController
   end
 
   def set_contacts
-    @contacts = @agent.contacts.for_campaign(@campaign).with_pending_status(false)
+    @contacts = if @campaign.shared_contact_pool?
+                  [@campaign.assinged_contact_from_shared_pool(@agent)]
+                else
+                  @agent.contacts.for_campaign(@campaign).with_pending_status(false)
+                end
   end
 
   def set_pending_contacts
-    @pending_contacts = @agent.contacts.for_campaign(@campaign).with_pending_status(true)
+    @pending_contacts = @agent.contacts.for_campaign(@campaign).with_pending_status(true).with_pending_result_type.reorder("result_values.value ASC")
   end
 
-  # TODO REFACTOR! it takes over 1s
   def set_completed_contacts
-    #@completed_contacts = @campaign.contacts.with_completed_status(true).select{ |contact| contact.current_call_result.creator == current_user.with_role }
     @completed_contacts = @campaign.contacts.with_completed_status(true).joins("RIGHT JOIN (SELECT contact_id, MAX(created_at) FROM call_results 	WHERE creator_type = '#{@agent.with_role.class.to_s}' and creator_id = #{@agent.id} GROUP BY contact_id) cs ON cs.contact_id = leads.id")
   end
 

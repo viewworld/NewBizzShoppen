@@ -512,7 +512,8 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
      {:name => "Send material", :final => false, :generic => true},
      {:name => "Upgrade to category supplier", :final => true, :generic => true},
      {:name => "Upgrade to supplier", :final => true, :generic => true},
-     {:name => "Upgrade to member", :final => true, :generic => true}].each do |result|
+     {:name => "Upgrade to member", :final => true, :generic => true},
+     {:name => "Call back private", :final => false, :generic => true}].each do |result|
       Result.create(result) unless Result.find_by_name(result[:name])
     end
 
@@ -524,7 +525,8 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
      {:name => "Material", :field_type => "5", :is_mandatory => true, :result => Result.find_by_name("Send material") },
      {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to category supplier") },
      {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to supplier") },
-     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to member") }
+     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to member") },
+     {:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Call back private") }
     ].each do |result_field|
       ResultField.create(result_field) unless ResultField.find_by_name_and_result_id(result_field[:name], result_field[:result].id)
     end
@@ -899,5 +901,12 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
 
   def merge_regular_user_session_logs
     UserSessionLog.regular_type.each(&:merge_regular!)
+  end
+
+  desc "add private call back", ""
+
+  def add_private_call_back
+    Result.create(:name => "Call back private", :final => false, :generic => true)
+    ResultField.create(:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Call back private"))
   end
 end
