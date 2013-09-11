@@ -901,7 +901,7 @@ function changePhoneNumber(number){
     if (currentCall == null) {
         $("#calleeText").val(number);
         $("#calleeText").trigger('keyup');
-        if (flashvars.auto_dial == true) {
+        if (isLogged && (flashvars.auto_dial == true)) {
             call();
         }
     }
