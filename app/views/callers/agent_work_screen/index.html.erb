@@ -176,7 +176,9 @@
       setup_jquery_deal_links_dialog();
 
       $(document).ready(function() {
+          <% unless @campaign.shared_contact_pool? %>
           $.get('<%= callers_campaign_agent_work_screen_call_sheet_path(@campaign, :other_user_id => params[:other_user_id]) %>')
+          <% end %>
           $.get('<%= callers_campaign_agent_work_screen_pending_call_path(@campaign, :other_user_id => params[:other_user_id]) %>')
           $.get('<%= callers_campaign_agent_work_screen_complete_contact_path(@campaign, :other_user_id => params[:other_user_id]) %>')
           $.get('<%= callers_agent_information_path(:currency_id => @campaign.currency_id) %>')
