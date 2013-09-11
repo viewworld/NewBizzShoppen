@@ -202,12 +202,12 @@ class Campaign < ActiveRecord::Base
   end
 
   def fetch_contact_from_shared_contact_pool(agent)
-    contacts.unassigned.uncompleted.with_pending_result_type.detect{|contact| !contact.should_be_pending?(agent)} ||
+    contacts.unassigned.uncompleted.with_pending_result_type.reorder("result_values.value ASC").detect{|contact| !contact.should_be_pending?(agent)} ||
         contacts.unassigned.uncompleted.without_pending_result_type.by_position_asc.first
   end
 
   def assinged_contact_from_shared_pool(agent)
-    agent.contacts.for_campaign(id).uncompleted.with_pending_result_type.detect{|contact| !contact.should_be_pending?(agent)} ||
+    agent.contacts.for_campaign(id).uncompleted.with_pending_result_type.reorder("result_values.value ASC").detect{|contact| !contact.should_be_pending?(agent)} ||
         agent.contacts.for_campaign(id).uncompleted.without_pending_result_type.by_position_asc.first
   end
 
