@@ -16,7 +16,8 @@ class Api::CampaignsController < Api::ApiController
 
   def fetch_campaign
     if @campaign = Campaign.find_by_id(params.delete(:id)) and @campaign.can_be_managed_by?(current_user)
-      [:action, :controller, :_method].each{|key| params.delete(key)}
+      _attributes = Contact::CSV_ATTRS + ['country_id']
+      params.keys.each{ |key| params.delete(key) unless _attributes.include?(key.to_s) }
     else
       render :text => 'Invalid campaign', :status => 403
     end
