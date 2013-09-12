@@ -33,8 +33,8 @@ module CampaignsHelper
   end
 
   def call_url(call_id)
-    if !call_id.blank? and filename = `find ./public/system/calls/ -name *-#{call_id}.*`.strip
-      "/system/calls/#{filename}"
+    if !call_id.blank? and (filename = `find public/system/calls/ -name *-#{call_id}.*`.strip) and !filename.blank?
+      filename.gsub('public','')
     else
       nil
     end
