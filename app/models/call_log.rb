@@ -2,7 +2,7 @@ class CallLog < ActiveRecord::Base
 
   belongs_to :contact
   belongs_to :campaign
-#  belongs_to :user, :polymorphic => true, :foreign_id => "caller_id", :foreign_type => "caller_type"
+  belongs_to :caller_user, :polymorphic => true, :foreign_key => "caller_id", :foreign_type => "caller_type"
 
   scope :for_campaigns, lambda { |campaign_ids| where("call_logs.campaign_id in (?)", campaign_ids.to_a) unless campaign_ids.to_a.empty? }
   scope :with_state, lambda { |state| where(:state => state) }

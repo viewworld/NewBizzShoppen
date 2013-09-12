@@ -26,7 +26,7 @@
           <% @call_logs.each do |call_log| %>
             <tr>
               <td></td>
-              <td><%= call_log.caller %></td>
+              <td><%= call_log.caller_user.try(:email) %></td>
               <td><%= call_log.contact %></td>
               <td><%= call_log.call_result.try(:result) %></td>
               <td><%= call_log.time_of_call %></td>
