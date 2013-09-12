@@ -96,8 +96,20 @@ module User::CampaignMonitorClient
       cm_exists? ? cm_client_id : cm_create!
     end
 
+    def fetch_or_create_empty_list(name)
+      NewsletterList.where(:name => name, :owner_id => self.id).first || NewsletterList.create(:name => name, :owner => self)
+    end
+
     def setup_empty_list!
-      NewsletterList.find_or_create_by_name("MyLeads", :owner => self)
+      list = fetch_or_create_empty_list(has_role?(:category_supplier) ? "SupplierCategoryList" : "MyLeads")
+      if has_role?(:category_supplier)
+        with_role.buying_categories.each do |category|
+          unless list.newsletter_sources.where(:sourceable_id => category.id, :source_type => NewsletterSource::LEAD_CATEGORY_SOURCE).first.present?
+            list.newsletter_sources.create(:sourceable => category, :source_type => NewsletterSource::LEAD_CATEGORY_SOURCE)
+          end
+        end
+      end
+      list
     end
 
     def setup_my_leads_list!
