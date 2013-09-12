@@ -13,7 +13,7 @@ module Callers::UserSessionLogsHelper
   end
 
   def agent_link_to_user_session_logs(agent)
-    link_to_user_session_logs :for_user => agent.id, :with_log_type => 1
+    link_to_user_session_logs :for_user => agent.id, :with_log_type => 0
   end
 
 end
