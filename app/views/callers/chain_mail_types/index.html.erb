@@ -1,36 +1,3 @@
-<search-box:>
-  <div class="search_box">
-    <div class="search_left"></div>
-    <div class="search_right"></div>
-    <h2><%= t("common.search") %></h2>
-
-    <div class="search_content">
-      <%= form_for @search, :url => callers_chain_mail_types_path do |f| %>
-          <fieldset class="inputs_vertical">
-            <ol class="no_pdd">
-              <li class="string">
-                <%= f.label :with_keyword, t("common.search_box.keyword_label") %>
-                <%= f.text_field :with_keyword %>
-              </li>
-              <li class="boolean">
-                <%= f.label :with_archived, t("common.search_box.archived_label") %>
-                <%= f.check_box :with_archived %>
-              </li>
-              <li class="commit">
-                <ibt c="bt_green" icon="magnify">
-                  <%= submit_tag t("common.search_box.search_button") %>
-                </ibt>
-                <p>
-                  <%= bt_clear_filter %>
-                </p>
-              </li>
-            </ol>
-          </fieldset>
-      <% end %>
-    </div>
-  </div>
-</search-box:>
-
 <column-mc:>
 
   <header>
