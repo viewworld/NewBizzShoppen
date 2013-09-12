@@ -2280,6 +2280,7 @@ en:
           delete_confirmation_message: "Are you sure?"
           button_bulk_subbaccounts_update: "Save"
           view_leads: View leads
+          without_locked: "Don't show locked"
       new:
         view:
           title: "New call centre agent"

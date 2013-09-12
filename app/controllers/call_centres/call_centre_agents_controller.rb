@@ -6,6 +6,7 @@ class CallCentres::CallCentreAgentsController < CallCentres::CallCentreControlle
     per_page = params[:per_page].blank? ? 25 : params[:per_page].to_i
     params[:search] ||= {}
     params[:search][:with_subaccounts] = current_user.id
+    params[:search][:without_locked] ||= true
 
     @search = User::CallCentreAgent.scoped_search(params[:search])
     @call_centre_agents = if per_page == 0
