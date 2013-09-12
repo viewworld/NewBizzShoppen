@@ -1786,6 +1786,8 @@ en:
             value: "Value"
             payout: "Payout"
             voice: "Voice result"
+            duration: "Duration"
+            download: "D/L"
           edit_values: "Edit values"
       edit_dynamic_values:
         view:

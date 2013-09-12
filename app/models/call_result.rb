@@ -163,7 +163,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def call_log
-    CallLog.talk.order("call_logs.created_at desc").
+    CallLog.finished.order("call_logs.created_at desc").
         where(:caller_id => creator_id).
         where("call_logs.created_at < :call_result AND @EXTRACT(EPOCH FROM call_logs.created_at - :call_result) < 3600", :call_result => created_at).
         first

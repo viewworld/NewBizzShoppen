@@ -35,13 +35,15 @@
           <th><%= t("administration.payouts.index.view.table.value") %></th>
           <th><%= t("administration.payouts.index.view.table.payout") %></th>
           <th><%= t("administration.payouts.index.view.table.voice") %></th>
+          <th><%= t("administration.payouts.index.view.table.duration") %></th>
+          <th><%= t("administration.payouts.index.view.table.download") %></th>
           <th class="hr"></th>
         </tr>
         </thead>
         <tfoot>
         <tr>
           <td class="fl"></td>
-          <td colspan="7"></td>
+          <td colspan="9"></td>
           <td class="fr"></td>
         </tr>
         </tfoot>
@@ -66,17 +68,23 @@
                 <%= text_field_tag "call_result[#{call_result.id}][payout]", call_result.payout, 'data-call-result-id' => call_result.id, :style => "width:45px" %>
                 <%= call_result.payout_currency %>
               </td>
-              <td>
-                <% if this_call_log = call_result.call_log %>
-                    <audio preload="none" src="<%= call_url(this_call_log.call_id) %>" controls="controls">
-                <% end %>
-              </td>
+              <% if call_log = call_result.call_log %>
+                <td>
+                  <% if call = call_url(call_log.call_id) %>
+                    <audio preload="none" src="<%= call %>" controls="controls">
+                  <% end %>
+                </td>
+                <td><%= seconds_to_minutes_and_seconds call_log.time_of_call %></td>
+                <td><%= link_to_call call_log.call_id %></td>
+              <% else %>
+                <td colspan="3"></td>
+              <% end %>
               <td class="cr"></td>
             </tr>
         <% end %>
         <% if will_paginate @call_results %>
             <tr class="pagination">
-              <td colspan="10" class="ta_c">
+              <td colspan="12" class="ta_c">
                 <%= will_paginate @call_results, :previous_label => '&laquo;', :next_label => '&raquo;' %>
               </td>
             </tr>
