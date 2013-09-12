@@ -67,8 +67,8 @@
                 <%= call_result.payout_currency %>
               </td>
               <td>
-                <% if this_call_url = call_url(call_result.call_id) %>
-                    <audio preload="none" src="<%= this_call_url %>" controls="controls">
+                <% if this_call_log = call_result.call_log %>
+                    <audio preload="none" src="<%= call_url(this_call_log.call_id) %>" controls="controls">
                 <% end %>
               </td>
               <td class="cr"></td>

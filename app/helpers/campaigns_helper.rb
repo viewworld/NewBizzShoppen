@@ -33,8 +33,7 @@ module CampaignsHelper
   end
 
   def call_url(call_id)
-    @calls ||= Dir.entries(File.join(Rails.root,'public/system/calls'))
-    if !call_id.blank? and filename = @calls.detect{|f| f.match(/#{call_id}\.(mp4|wav)$/)}
+    if !call_id.blank? and filename = `find ./public/system/calls/ -name *-#{call_id}.*`.strip
       "/system/calls/#{filename}"
     else
       nil
@@ -42,7 +41,6 @@ module CampaignsHelper
   end
 
   def link_to_call(call_id)
-    @calls ||= Dir.entries(File.join(Rails.root,'public/system/calls'))
     if fileurl = call_url(call_id)
       bt_link_to :download, fileurl[/(mp4|wav)$/,1], fileurl
     end
