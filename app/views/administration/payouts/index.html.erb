@@ -24,7 +24,7 @@
   <% if @call_results.blank?  %>
       <%= blank_state_message %>
   <% else %>
-      <table class="generic" cellspacing="0" cellpadding="0">
+      <table class="generic" cellspacing="0" cellpadding="0" id="payouts_table">
         <thead>
         <tr>
           <th class="hl"></th>
@@ -36,7 +36,7 @@
           <th><%= t("administration.payouts.index.view.table.payout") %></th>
           <th><%= t("administration.payouts.index.view.table.voice") %></th>
           <th><%= t("administration.payouts.index.view.table.duration") %></th>
-          <th><%= t("administration.payouts.index.view.table.download") %></th>
+          <th class="download"><%= t("administration.payouts.index.view.table.download") %></th>
           <th class="hr"></th>
         </tr>
         </thead>
