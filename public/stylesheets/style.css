@@ -2333,3 +2333,7 @@ ol.survey_questions_container.sortable li .bt.bt_grey .branched-option {
     margin-left: 150px;
     padding: 10px 20px 20px;
 }
+
+#payouts_table th.download {
+    width: 65px;
+}
