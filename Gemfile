@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'bundler'
 
-gem 'rails', '3.0.19'
+gem 'rails', '3.0.20'
 gem 'railties'
 gem 'yajl-ruby', "1.1.0", :require => 'yajl'
 
