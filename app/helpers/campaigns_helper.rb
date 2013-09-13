@@ -46,4 +46,17 @@ module CampaignsHelper
     end
   end
 
+  def results_for_select(campaign)
+    CallResult.joins(:result, :contact).
+        select("DISTINCT(results.id) as result_id, results.name as result_name").reorder("results.name").
+        where(:leads => { :campaign_id => campaign.id }).map{ |cr| [cr.result_name, cr.result_id] }
+  end
+
+  def agents_for_select(campaign)
+    User.select("DISTINCT(users.id), users.first_name, users.company_name, users.parent_id").
+        joins("INNER JOIN call_results ON call_results.creator_id = users.id INNER JOIN leads ON leads.id = call_results.contact_id").
+        where("leads.campaign_id = ?", campaign.id).
+        map{ |u| [u.screen_name, u.id] }
+  end
+
 end
