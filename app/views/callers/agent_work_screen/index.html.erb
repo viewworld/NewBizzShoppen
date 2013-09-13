@@ -16,7 +16,6 @@
   <% end %>
 
   <div id="agent_information"></div>
-  <%#= render :partial => "agent_information", :locals => @locals if current_user.has_any_role?(:agent,:call_centre_agent) %>
 
   <header back="true" backurl="#{callers_campaigns_path}">
     <param:content>
@@ -65,10 +64,6 @@
       <%= render :partial => "callers/agent_work_screen/contact_form", :locals => @locals if @contact %>
     </div>
 
-    <div id="call_info">
-      <%= render :partial => "callers/agent_work_screen/call_interface", :locals => @locals if @contact %>
-    </div>
-
     <br/>
 
     <header>
@@ -106,17 +101,14 @@
 
     <div id="call_sheet" style="display:none">
       <%= image_tag "/images/global_loader.gif" %>
-      <%#= render :partial => "callers/agent_work_screen/call_sheet", :locals => @locals %>
     </div>
 
     <div id="pending_calls" style="display:none">
       <%= image_tag "/images/global_loader.gif" %>
-      <%#= render :partial => "callers/agent_work_screen/pending_calls", :locals => @locals %>
     </div>
 
     <div id="completed_contacts" style="display:none">
       <%= image_tag "/images/global_loader.gif" %>
-      <%#= render :partial => "callers/agent_work_screen/completed_contacts", :locals => @locals %>
     </div>
   </div>
 
@@ -131,11 +123,7 @@
   <div id="modal_new_contact_form_div">
     <% @lead = @new_contact = Contact.new %>
     <%= semantic_form_for @new_contact, :url => url_for(:controller => "/callers/agent_work_screen/contacts", :action => :create, :campaign_id => @campaign.id), :html => {:method => :post, :id => "new_contact_form"}, :remote => true do |form| %>
-        <frm title="">
-          <param:content>
-            <%= render :partial => '/shared/leads/form', :locals => {:form => form, :campaign => @campaign, :contact => @new_contact} %>
-          </param:content>
-        </frm>
+        <%= render :partial => '/shared/leads/form', :locals => {:form => form, :campaign => @campaign, :contact => @new_contact} %>
     <% end %>
   </div>
 
@@ -180,8 +168,20 @@
           $.get('<%= callers_campaign_agent_work_screen_call_sheet_path(@campaign, :other_user_id => params[:other_user_id]) %>')
           <% end %>
           $.get('<%= callers_campaign_agent_work_screen_pending_call_path(@campaign, :other_user_id => params[:other_user_id]) %>')
-          $.get('<%= callers_campaign_agent_work_screen_complete_contact_path(@campaign, :other_user_id => params[:other_user_id]) %>')
+          $.get('<%= callers_campaign_agent_work_screen_complete_contact_path(@campaign, :other_user_id => params[:other_user_id], :empty_table => true) %>')
           $.get('<%= callers_agent_information_path(:currency_id => @campaign.currency_id) %>')
+      });
+
+      $('#completed_contacts_switch_link').click(function(){
+          if ($('#completed_contacts table#contacts').data('loaded') != true) {
+              $.get('<%= callers_campaign_agent_work_screen_complete_contact_path(@campaign) %>',
+                      {
+                          other_user_id: '<%= params[:other_user_id] %>'
+                      },
+                      function() {
+                        $('#completed_contacts table#contacts').data('loaded', true);
+              });
+          }
       });
 
       $('#modal_new_contact_form_div').dialog({

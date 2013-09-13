@@ -75,8 +75,12 @@ class Callers::AgentWorkScreenController < Callers::CallerController
   end
 
   def add_completed_to_locals
-    set_completed_contacts
-    @locals[:completed_contacts] = @completed_contacts
+    if params[:empty_table]
+      @locals[:completed_contacts] = []
+    else
+      set_completed_contacts
+      @locals[:completed_contacts] = @completed_contacts
+    end
   end
 
   def set_contact_managing

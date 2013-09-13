@@ -13,5 +13,5 @@ display_notice("<%= escape_javascript(t("contacts.create.flash.contact_not_be_cr
 <% end %>
 $("#results_sheet").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/results_sheet", :locals => @locals)) %>");
 $("#contact_info").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "callers/agent_work_screen/contact_form", :locals => @locals) : "") %>");
-$("#call_result_form").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "callers/agent_work_screen/call_result_form", :locals => @locals) : "") %>");
+//$("#call_result_form").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "callers/agent_work_screen/call_result_form", :locals => @locals) : "") %>");
 //loadScripts();

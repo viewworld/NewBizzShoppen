@@ -8,7 +8,7 @@ $('#contact_row_id_<%= @contact.id %>').addClass('highlight_row');
 <% end %>
 $("#results_sheet").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/results_sheet", :locals => @locals)) %>");
 $("#contact_info").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "callers/agent_work_screen/contact_form", :locals => @locals) : "") %>");
-$("#call_result_form").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "callers/agent_work_screen/call_result_form", :locals => @locals) : "") %>");
+//$("#call_result_form").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "callers/agent_work_screen/call_result_form", :locals => @locals) : "") %>");
 <% unless @contact %>
 display_notice("<%= escape_javascript(t("contacts.show.flash.you_have_no_contacts_assigned")) %>", false);
 <% end %>
