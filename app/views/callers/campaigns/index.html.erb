@@ -10,9 +10,7 @@
             <ol class="no_pdd">
               <li class="string">
                 <%= f.input :with_keyword, :label => t("campaigns.filter.keyword_label"), :required => false %>
-                <%= f.input :with_state, :as => :select, :collection => [[t("campaigns.filter.state_select_all"), "all"],
-                                                                         [t("campaigns.filter.state_select_active"), "active"],
-                                                                         [t("campaigns.filter.state_select_inactive"), "inactive"]],
+                <%= f.input :with_state, :as => :select, :collection => states_for_select,
                             :label           => t("campaigns.filter.state_label"), :include_blank => false, :required => false %>
               </li>
               <li class="commit">

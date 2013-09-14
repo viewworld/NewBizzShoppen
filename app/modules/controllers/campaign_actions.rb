@@ -15,8 +15,6 @@ module CampaignActions
     @all_results = Result.where("results.id IN (?)", campaign_result_ids)
     @result_ids = search_params[:result_ids] || @all_results.map(&:id)
 
-    @date_from = search_params[:date_from] ? search_params[:date_from].to_date : @campaign.is_a?(Array) ? @campaign.map(&:start_date).sort.first : @campaign.start_date
-    @date_to = search_params[:date_to] ? search_params[:date_to].to_date : @campaign.is_a?(Array) ? @campaign.map(&:end_date).sort.reverse.first : @campaign.end_date
     @final = (search_params[:final] and search_params[:final] == "yes") ? true : false
     @agent_ids = search_params[:agent_ids] || []
     if current_user.has_role?(:call_centre)

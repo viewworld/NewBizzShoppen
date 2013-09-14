@@ -21,24 +21,16 @@ class Campaign < ActiveRecord::Base
   has_many :call_logs
 
   validates_uniqueness_of :name
-  validates_presence_of :name, :category_id, :country_id, :start_date, :end_date, :cost_type
+  validates_presence_of :name, :category_id, :country_id, :cost_type, :state
   validates_numericality_of :max_contact_number, :only_integer => true, :greater_than_or_equal_to => 0, :if => :private_contact_pool?
   validate :fixed_cost_value_is_valid
 
   scope :with_keyword, lambda { |q| where("lower(name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
-  scope :with_state, lambda { |q|
-    case q
-      when "active" then
-        where("start_date <= '#{Date.today}' and end_date >= '#{Date.today}'")
-      when "inactive" then
-        where("start_date > '#{Date.today}' or end_date < '#{Date.today}'")
-      else
-        where("")
-    end }
-  scope :active_between, lambda {|from, to| where("(start_date BETWEEN '#{from}' AND '#{to}') OR (end_date BETWEEN '#{from}' AND '#{to}') or ('#{from}' BETWEEN start_date and end_date) or ('#{to}' BETWEEN start_date and end_date)")}
+  scope :with_state, lambda { |state| state.eql?("all") ? where("") : where(:state => state) }
+  scope :active, with_state("active")
 
   default_scope where(:deleted_at => nil)
-  scoped_order :name, :start_date, :end_date
+  scoped_order :name, :state
   scope :joins_on_category, joins("INNER JOIN categories ON campaigns.category_id=categories.id")
   scope :joins_on_country, joins("INNER JOIN countries ON campaigns.country_id=countries.id")
   scope :ascend_by_category, order("categories.name ASC").joins_on_category
@@ -72,6 +64,7 @@ class Campaign < ActiveRecord::Base
   PRIVATE_CONTACT_POOL = 0
   SHARED_CONTACT_POOL = 1
   CONTACT_POOL_TYPES = [PRIVATE_CONTACT_POOL, SHARED_CONTACT_POOL]
+  STATES = ['active', 'inactive', 'archived']
 
   acts_as_newsletter_source
 
@@ -325,7 +318,7 @@ class Campaign < ActiveRecord::Base
   end
 
   def active?
-    start_date <= Date.today and end_date >= Date.today
+    state == 'active'
   end
 
   def duplicate!(options={})

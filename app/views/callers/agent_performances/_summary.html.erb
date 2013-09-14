@@ -20,7 +20,7 @@
                  [Date.today.beginning_of_year, Date.today.end_of_year, t("admin_home.show.view.table.year")]
          ].each do |dates|
       %>
-          <% campaigns = Campaign.active_between(dates[0], dates[1]).available_for_user(current_user) %>
+          <% campaigns = Campaign.active.available_for_user(current_user) %>
           <% performance = Performance.new(dates[0], dates[1], [], campaigns, params[:currency_id]) %>
           <tr>
             <td></td>

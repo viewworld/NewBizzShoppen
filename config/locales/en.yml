@@ -474,8 +474,7 @@ en:
       name: Name
       category: Category
       country: Country
-      start_date: Start date
-      end_date: End date
+      state: State
       agents: Agents
       contacts: Contacts
       results: Results

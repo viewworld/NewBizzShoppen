@@ -59,4 +59,8 @@ module CampaignsHelper
         map{ |u| [u.screen_name, u.id] }
   end
 
+  def states_for_select
+    (['all']+Campaign::STATES).map{|s| [s.humanize, s]}
+  end
+
 end

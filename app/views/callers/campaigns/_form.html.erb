@@ -12,14 +12,7 @@
         <%= form.input :category_id, :as => :select, :collection => LeadCategory.all, :include_blank => false %>
         <%= form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false %>
         <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false %>
-        <%= form.input :start_date, :as => :string,
-                       :wrapper_html => {:class => "date"},
-                       :input_html => {:class => "datepicker", :value => campaign.start_date},
-                       :hint => t('models.result_field.date_format') %>
-        <%= form.input :end_date, :as => :string,
-                       :wrapper_html => {:class => "date"},
-                       :input_html => {:class => "datepicker", :value => campaign.end_date},
-                       :hint => t('models.result_field.date_format') %>
+        <%= form.input :state, :as => :select, :collection => ['active', 'inactive', 'archived'], :include_blank => false %>
       </ol>
     </fieldset>
 

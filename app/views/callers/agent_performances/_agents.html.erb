@@ -1,5 +1,5 @@
 <% search.all_agents.each do |agent| %>
-    <% if @performance_campaigns = Campaign.active_between(search.date_from, search.date_to).available_for_user(agent) and
+    <% if @performance_campaigns = Campaign.active.available_for_user(agent) and
             @agent_performance_all_campaigns = AgentPerformance.new(search.date_from, search.date_to, agent, @performance_campaigns, search.currency_id) and
             @performance_campaigns.count > 0 and @agent_performance_all_campaigns.show_results?(search.active_results)  %>
 

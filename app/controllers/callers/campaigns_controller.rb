@@ -11,7 +11,7 @@ class Callers::CampaignsController < Callers::CallerController
   before_filter :set_crm_campaigns, :only => [:update, :create]
 
   def new
-    @campaign = Campaign.new(:start_date => Date.today, :end_date => Date.today+1.week, :max_contact_number => 0,
+    @campaign = Campaign.new(:state => 'active', :max_contact_number => 0, :cost_type => 4,
                              :category_id => LeadCategory.first.id, :country_id => Country.first.id)
   end
 
