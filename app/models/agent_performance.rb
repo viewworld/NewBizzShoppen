@@ -5,8 +5,8 @@ class AgentPerformance
   def initialize(date_from, date_to, user, campaign, currency_id)
     self.date_from = (date_from||Date.today.beginning_of_week).to_date
     self.date_to = (date_to||Date.today.end_of_week).to_date
-    self.user = user.to_a.map(&:with_role)
-    self.campaigns = campaign.to_a.map(&:id)
+    self.user = Array(user).map(&:with_role)
+    self.campaigns = Array(campaign).map(&:id)
     self.currency = Currency.find_by_id(currency_id) || Currency.euro
   end
 

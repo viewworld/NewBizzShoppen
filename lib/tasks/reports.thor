@@ -74,7 +74,7 @@ class Reports < Thor
 
         1.upto(options[:spent]) do |hour_num|
           UserSessionLog.make!(:user => campaign_user, :campaign => @campaign, :log_type => UserSessionLog::TYPE_CAMPAIGN,
-                               :start_time => Time,now+(hour_num*60).minutes,
+                               :start_time => Time.now+(hour_num*60).minutes,
                                :end_time => Time.now+(hour_num*60).minutes+60.minutes)
         end
       end

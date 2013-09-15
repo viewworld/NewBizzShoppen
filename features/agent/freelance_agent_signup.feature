@@ -41,7 +41,7 @@ Feature: Freelance agent signup
     Then I should see translated "flash.agent_accounts.create.notice"
     And a confirmation message should be sent to user@domain.dom
 
-  @_tested @_done
+  @_tested @_done @wip
   Scenario: User signs up with valid data as a buyer
     Given setting for "email_verification_for_suppliers" is set to "1"
     When I go to supplier sign up

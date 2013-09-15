@@ -72,7 +72,7 @@ group :test do
   gem 'test-unit'
   gem 'pickle'
   gem 'spork'
-  gem 'mocha'
+  gem 'mocha', '0.13.2', :require => false
   gem 'faker', "0.3.1"
   gem 'machinist', '>= 2.0.0.beta1'
   gem 'fakeweb', :require => false

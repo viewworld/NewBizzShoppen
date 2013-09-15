@@ -4687,6 +4687,7 @@ en:
         request_information: "Request information"
         contact_me: "Get deal"
         price: "Price"
+        discounted_price: "Fairdeal price"
         save: "Save"
         view_deal: "View deal"
         group_deal_splash_label: "Group deal"
