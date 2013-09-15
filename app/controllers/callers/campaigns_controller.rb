@@ -18,7 +18,7 @@ class Callers::CampaignsController < Callers::CallerController
   def create
     @campaign = Campaign.new(params[:campaign])
     @campaign.creator = current_user
-    @campaign.results = Result.generic_results
+    #@campaign.results = Result.generic_results
     @campaign.users << current_user unless current_user.admin?
     create! do |success, failure|
       success.html { redirect_to edit_callers_campaign_path(@campaign) }

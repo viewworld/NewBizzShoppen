@@ -735,16 +735,18 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                                                   :country => country,
                                                   :max_contact_number => 3,
                                                   :creator => call_centre,
-                                                  :start_date => Date.today,
-                                                  :end_date => Date.today + 14.days, :currency => Currency.euro, :cost_type => Campaign::NO_COST})
+                                                  :state => 'active',
+                                                  :currency => Currency.euro,
+                                                  :cost_type => Campaign::NO_COST})
       #inactive campaign
       Campaign.find_or_create_by_name({:name => "Testing Two",
                                        :category => Category.where(:name => "Electronics").first,
                                        :country => Country.where(:name => "United Kingdom").first,
                                        :max_contact_number => 3,
                                        :creator => call_centre,
-                                       :start_date => Date.today - 15.days,
-                                       :end_date => Date.today - 1.days, :currency => Currency.euro, :cost_type => Campaign::NO_COST})
+                                       :state => 'inactive',
+                                       :currency => Currency.euro,
+                                       :cost_type => Campaign::NO_COST})
       campaign.results = Result.generic_results
       campaign.users = call_centre.subaccounts
 

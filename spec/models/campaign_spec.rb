@@ -32,10 +32,8 @@ describe Campaign do
       CallResult.make!(:contact => @contact4, :result => @result2, :creator => @call_centre_agent2)
 
       [@call_centre_agent1, @call_centre_agent2].each do |user|
-        (@campaign.start_date..@campaign.end_date).each do |d|
-          UserSessionLog.create(:start_time => Time.parse("#{d.to_s} 9:00"), :end_time => Time.parse("#{d.to_s} 17:00"),
-                              :user_id => user.id, :campaign_id => @campaign.id, :log_type => 1, :skip_other_logs => true)
-        end
+        UserSessionLog.create(:start_time => Time.parse("#{Date.today.to_s} 9:00"), :end_time => Time.parse("#{Date.today.to_s} 17:00"),
+                            :user_id => user.id, :campaign_id => @campaign.id, :log_type => 1, :skip_other_logs => true)
       end
       @campaign.reload
     end
