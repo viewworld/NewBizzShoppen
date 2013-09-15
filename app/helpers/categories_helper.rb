@@ -137,4 +137,8 @@ module CategoriesHelper
     end
   end
 
+  def categories_sorted_for_select(collection, order)
+    sorted_nested_set_options(collection, lambda(&order.to_sym)){|cat, i| "#{'&nbsp;&nbsp;&nbsp;'*cat.level}#{cat.name}".html_safe}
+  end
+
 end

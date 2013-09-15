@@ -6,7 +6,7 @@
         <% if @category_type == "LeadCategory" or @category.class == LeadCategory %>
             <li class="select">
               <label></label>
-              <%= form.select :parent_id, nested_set_options(@category_type.constantize, @category), {:include_blank => t("administration.categories.form.no_parent_category")} %>
+              <%= form.select :parent_id, categories_sorted_for_select(@category_type.constantize, :name), {:include_blank => t("administration.categories.form.no_parent_category")} %>
             </li>
         <% end %>
         <%= form.input :description, :as => :text, :input_html => {:style => "width:350px;height:150px"}  %>
