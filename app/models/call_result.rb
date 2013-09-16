@@ -263,12 +263,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def process_for_call_back
-    if Date.parse(result_values.first.value) > contact.campaign.end_date
-      process_for_final_result
-    else
-      #notify!
-      process_for_call_log_result
-    end
+    process_for_call_log_result
   end
 
   def process_for_not_interested_now
