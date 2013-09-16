@@ -73,9 +73,9 @@
 
               <p class="pdd_10 no_pdd_tb" style="margin-top:-8px;">
                 <%= t("campaigns.show.ranges_label") %>:<br/>
-                <% unless campaign.is_a?(Array) %>
-                    <%= link_to_function t("campaigns.show.ranges.whole_campaign"), "$('#date_from').val('#{campaign.is_a?(Array) ? date_from : campaign.start_date}');$('#date_to').val('#{campaign.is_a?(Array) ? date_to : campaign.end_date}');submit_search()" %>
-                <% end %>
+                <%# unless campaign.is_a?(Array) %>
+                    <%#= link_to_function t("campaigns.show.ranges.whole_campaign"), "$('#date_from').val('#{campaign.is_a?(Array) ? date_from : campaign.start_date}');$('#date_to').val('#{campaign.is_a?(Array) ? date_to : campaign.end_date}');submit_search()" %>
+                <%# end %>
                 <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#date_from').val('#{Date.today.beginning_of_month}');$('#date_to').val('#{Date.today.end_of_month}');submit_search()" %>
                 <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}');submit_search()" %>
                 <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}');submit_search()" %>
