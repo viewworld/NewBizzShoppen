@@ -7,5 +7,5 @@ old_row.remove();
 add_default_action_for_contact_row('contact_row_id_<%= @contact.id %>');
 
 $("#contact_info").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "callers/agent_work_screen/contact_form", :locals => @locals) : "") %>");
-//$("#call_result_form").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "callers/agent_work_screen/call_result_form", :locals => @locals) : "") %>");
+$("#call_result_form").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "callers/agent_work_screen/call_result_form", :locals => @locals) : "") %>");
 //loadScripts();
