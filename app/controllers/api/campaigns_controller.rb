@@ -15,7 +15,7 @@ class Api::CampaignsController < Api::ApiController
   private
 
   def fetch_campaign
-    if @campaign = Campaign.find_by_id(params.delete(:id)) and @campaign.can_be_managed_by?(current_user)
+    if @campaign = Campaign.find_by_id(params.delete(:id)) and @campaign.can_be_accessed_by?(current_user)
       _attributes = Contact::CSV_ATTRS + ['country_id']
       params.keys.each{ |key| params.delete(key) unless _attributes.include?(key.to_s) }
     else
