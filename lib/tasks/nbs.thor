@@ -912,12 +912,6 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     ResultField.create(:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Call back private"))
   end
 
-  desc "merge_regular_user_session_logs", ""
-
-  def merge_regular_user_session_logs
-    UserSessionLog.regular_type.each(&:merge_regular!)
-  end
-
   desc "import_contacts_from_newsletter_lists", ""
 
   def import_contacts_from_newsletter_lists
