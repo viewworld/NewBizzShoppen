@@ -5166,6 +5166,7 @@ en:
       setup:
         view:
           header: "Survey setup"
+          save_info: "All changes are autosaved"
     survey_recipients:
       index:
         view:
