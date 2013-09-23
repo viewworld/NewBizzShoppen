@@ -564,7 +564,6 @@ en:
       button_copy_selected_contacts: "Copy"
       button_bulk_add_to_newsletter_list_link: "Add to list"
       button_send_survey_to_selected: "Send survey"
-      lists_selection: "List selection for contacts sources"
     index:
       title: Campaigns
       edit: Edit
@@ -5141,8 +5140,11 @@ en:
           survey_link_hint: "This link is for chain mails only and it will be replaced by actual recipient unique link once chain mail is sent."
           last_sent_at: "Last sent at"
           last_sent_recipients_count: "Last sent to # subscribers"
-        preview_button: "Preview"
-        responses_button: "View responses"
+          preview_button: "Preview"
+          responses_button: "View responses"
+          intro_email_button: "Intro mail"
+          setup_button: "Setup survey"
+          edit_button: "General settings"
       form:
         move_right: "Add >"
         move_left: "< Remove"
@@ -5166,7 +5168,6 @@ en:
       setup:
         view:
           header: "Survey setup"
-          save_info: "All changes are autosaved"
     survey_recipients:
       index:
         view:
