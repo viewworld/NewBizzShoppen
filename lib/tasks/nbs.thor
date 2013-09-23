@@ -921,7 +921,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
   desc "import_contacts_from_newsletter_lists", ""
 
   def import_contacts_from_newsletter_lists
-    Campaign.where(:import_contacts_from_lists => true).each do |campaign|
+    Campaign.where(:import_contacts_from_lists_enabled => true).each do |campaign|
       campaign.import_contacts_from_lists!
     end
   end

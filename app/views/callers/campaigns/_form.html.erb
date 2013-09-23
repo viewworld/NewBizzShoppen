@@ -29,19 +29,19 @@
 
     <fieldset class="inputs labels_ta_r labels_200">
       <ol class="align_inputs">
-        <%= form.input :import_contacts_from_lists, :onclick => "$('#newsletter_lists_selection').toggle()" %>
+        <%= form.input :import_contacts_from_lists_enabled, :onclick => "$('#newsletter_lists_selection').toggle()" %>
       </ol>
     </fieldset>
   </div>
 
-    <div id="newsletter_lists_selection"<%= ' style="display:none"'.html_safe unless @campaign.import_contacts_from_lists %>>
+    <div id="newsletter_lists_selection"<%= ' style="display:none"'.html_safe unless @campaign.import_contacts_from_lists_enabled? %>>
       <div class="pdd_10 no_pdd_t">
         <fieldset class="inputs labels_ta_r">
           <ol class="align_inputs">
             <li class="header">
               <h3><%= t("campaigns.edit.lists_selection") %></h3>
             </li>
-            <%= text_field_tag :newsletter_owner_email, "", :class => "grid_190" %><%= bt_link_to :magnify, t("newsletters.newsletter_campaigns.form.fetch_lists"), "#", :class => "marg_5", :onclick => "fetch_lists()" %>
+            <%= text_field_tag :newsletter_owner_email, "", :class => "grid_190" %><%= bt_link_to :magnify, t("newsletters.newsletter_campaigns.form.fetch_lists"), "javascript:void(0)", :class => "marg_5", :onclick => "fetch_lists()" %>
           </ol>
         </fieldset>
 

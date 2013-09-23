@@ -237,7 +237,7 @@ describe Campaign do
       User::Supplier.make!(:email => "alyona@test.net", :tag_list => ["xyz_abc"], :first_name => "Alyona", :last_name => "Minkovsky", :company_name => "ZComp Ltd")
 
       #first import is done when import is enabled
-      @campaign.update_attribute(:import_contacts_from_lists, true)
+      @campaign.update_attribute(:import_contacts_from_lists_enabled, true)
 
       @campaign.contacts.count.should == 2
 

@@ -453,7 +453,7 @@ class Campaign < ActiveRecord::Base
   end
 
   def import_contacts_from_lists
-    if import_contacts_from_lists_changed? and import_contacts_from_lists?
+    if import_contacts_from_lists_enabled_changed? and import_contacts_from_lists_enabled?
       self.delay(:queue => "import_contacts_from_lists").import_contacts_from_lists!
     end
   end
