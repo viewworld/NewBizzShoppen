@@ -154,6 +154,7 @@ class User < ActiveRecord::Base
   before_validation :set_auto_generated_password_if_required, :set_role
   after_initialize :set_auto_buy_enabled
   before_create :generate_login_key
+  before_create :generate_api_key
 
   check_associations_before_destroy :leads, :lead_purchases, :lead_templates, :assigned_lead_purchases, :lead_requests, :leads_in_cart, :deals, :requested_deals, :campaigns, :contacts, :call_results, :subaccounts, :invoices
 
@@ -612,6 +613,10 @@ class User < ActiveRecord::Base
     login_key
   end
 
+  def generate_api_key
+    self.api_key = SecureRandom.hex(8)
+  end
+
   def generate_login_key!
     self.update_attribute(:login_key, generate_login_key)
     login_key
@@ -783,7 +788,7 @@ class User < ActiveRecord::Base
 
   def active_subscription
     active_sub = subscriptions.where("start_date <= ? and (end_date >= ? OR end_date IS NULL)", Date.today, Date.today).order("position DESC").first
-    if !active_sub and last_subscription
+    if !active_sub and last_subscription and last_subscription.may_prolong?
       last_subscription.prolong!
       active_sub = last_subscription
     end
@@ -978,6 +983,14 @@ class User < ActiveRecord::Base
 
   def newsletter_manager?
     active_subscription ? (read_attribute(:newsletter_manager) ? true : active_subscription.newsletter_manager?) : parent ? parent.newsletter_manager? : false
+  end
+
+  def chain_mails_enabled?
+    admin? or read_attribute(:chain_mails_enabled) or active_subscription.try(:chain_mails_enabled?)
+  end
+
+  def surveys_enabled?
+    admin? or call_centre? or read_attribute(:surveys_enabled) or active_subscription.try(:surveys_enabled?)
   end
 
   def handle_privileges

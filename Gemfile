@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'bundler'
 
-gem 'rails', '3.0.19'
+gem 'rails', '3.0.20'
 gem 'railties'
 gem 'yajl-ruby', "1.1.0", :require => 'yajl'
 
@@ -72,7 +72,7 @@ group :test do
   gem 'test-unit'
   gem 'pickle'
   gem 'spork'
-  gem 'mocha'
+  gem 'mocha', '0.13.2', :require => false
   gem 'faker', "0.3.1"
   gem 'machinist', '>= 2.0.0.beta1'
   gem 'fakeweb', :require => false

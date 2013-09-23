@@ -433,8 +433,7 @@ Result.blueprint(:upgrades_to_lead) do
 end
 
 Campaign.blueprint do
-  start_date { Date.today }
-  end_date { Date.today + 7.days }
+  state { 'active' }
   category { LeadCategory.make! }
   cost_type { Campaign::NO_COST }
   max_contact_number { 5 }

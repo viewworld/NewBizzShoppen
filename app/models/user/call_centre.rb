@@ -4,9 +4,8 @@ class ::User::CallCentre < ::User
   include Addresses
   include BankAccounts
   include CampaignMonitorClient
+  include User::CommonCaller
 
-  has_and_belongs_to_many :campaigns, :join_table => "campaigns_users", :foreign_key => "user_id"
-  has_many :contacts, :foreign_key => :agent_id, :order => "leads.position ASC"
   has_one :bank_address, :class_name => '::Address::Bank', :as => :addressable
 
   has_many :category_agents, :foreign_key => "user_id"
@@ -42,10 +41,6 @@ class ::User::CallCentre < ::User
 
   def comment_threads
     Comment.where(:commentable_id => leads.map(&:id))
-  end
-
-  def has_max_contacts_in_campaign?(campaign)
-    (contacts.for_campaign(campaign).with_pending_status(false).count >= campaign.max_contact_number)
   end
 
   def subaccounts_without_locked

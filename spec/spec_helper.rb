@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'spork'
 require 'fakeweb'
+require 'mocha/setup'
 
 FakeWeb.allow_net_connect = %r{(.*paypal\.com.*)$}
 

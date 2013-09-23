@@ -24,6 +24,7 @@ module ApplicationHelper
     options[:link_to_show] = true unless options.has_key?(:link_to_show)
     options[:link_to_edit] = true unless options.has_key?(:link_to_edit)
     options[:link_to_delete] = true unless options.has_key?(:link_to_delete)
+    options[:custom_links] ||= []
     render(:partial => '/shared/generic_table', :locals => options.merge({:collection => collection}.merge(@hb.results)))
   end
 
@@ -332,5 +333,29 @@ module ApplicationHelper
     else
       ""
     end
+  end
+
+  def sorted_nested_set_options(class_or_item, sort_proc, mover = nil, level = 0)
+    class_or_item = class_or_item.roots if class_or_item.is_a?(Class)
+    items = Array(class_or_item)
+    result = []
+    items.sort_by(&sort_proc).each do |root|
+      set = root.self_and_descendants
+      result += build_node(set[0], set, sort_proc, mover, level){|x, level| yield(x, level)}
+    end
+    result
+  end
+
+  def build_node(node, set, sort_proc, mover = nil, level = nil)
+    result ||= []
+    if mover.nil? || mover.new_record? || mover.move_possible?(i)
+      result << [yield(node, level), node.id]
+      unless node.leaf?
+        set.select{|i| i.parent_id == node.id}.sort_by(&sort_proc).map{ |i|
+          result.push(*build_node(i, set, sort_proc, mover, level.to_i + 1){|x, level| yield(x, level)})
+        }
+      end
+    end
+    result
   end
 end

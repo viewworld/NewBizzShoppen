@@ -1,7 +1,6 @@
 @page {
     size: a4 landscape;
-    margin: 15mm;
-
+    margin: 2mm;
 }
 
 table
@@ -9,12 +8,11 @@ table
     border: none;
 }
 
-.hl, hr,
+.hl, .hr,
 .cl, .cr,
 .fl, .fr
 {
-    padding: 0 !important;
-    width: 1px;
+    display: none;
 }
 
 table td,
@@ -25,7 +23,6 @@ table th
     vertical-align: top;    
     border: 1px solid #aaa;    
     text-align: center;
-    -pdf-keep-in-frame-mode: shrink;
 }
 
 table thead th
@@ -40,7 +37,6 @@ table tbody tr:first-child td
     font-weight: bold;
     vertical-align: middle;
     font-size: 10px;
-    -pdf-keep-in-frame-mode: overflow;
 }
 
 

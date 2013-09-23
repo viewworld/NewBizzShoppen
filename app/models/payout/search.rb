@@ -3,21 +3,23 @@ class Payout::Search
   attr_accessor :date_from, :date_to, :campaign_selection, :result_ids, :call_centre_id, :call_centre_agent_ids,  :user,
                 :call_centre, :all_call_centres, :all_call_centre_agents, :selected_agents, :current_user, :campaign_reports,
                 :all_campaigns, :campaign_ids, :all_results, :campaign_users, :search_options, :call_results, :filename, :currency,
-                :order_by, :order, :show_all_results
+                :order_by, :order, :show_results_with_payout, :show_final_results, :show_temp_results
 
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
   DEFAULT_OPTIONS = {
-      :date_from              => Date.today,
-      :date_to                => Date.today,
-      :campaign_selection     => "active",
-      :result_ids             => nil,
-      :call_centre_id         => nil,
-      :call_centre_agent_ids  => [],
-      :order_by               => 'date',
-      :order                  => 'ASC',
-      :show_all_results       => '0'
+      :date_from                => Date.today,
+      :date_to                  => Date.today,
+      :campaign_selection       => "active",
+      :result_ids               => nil,
+      :call_centre_id           => nil,
+      :call_centre_agent_ids    => [],
+      :order_by                 => 'date',
+      :order                    => 'ASC',
+      :show_results_with_payout => '1',
+      :show_final_results       => '1',
+      :show_temp_results        => '1'
   }
 
   PAYOUTS_PATH = "public/system/payouts"
@@ -58,7 +60,7 @@ class Payout::Search
 
     @campaign_ids = @campaign_ids || @campaigns.map(&:id)
 
-    @all_results = Result.for_campaigns(@campaign_ids).with_reported.where(:final => true)
+    @all_results = Result.for_campaigns(@campaign_ids).with_reported
 
     @result_ids ||= @all_results.map(&:id)
 
@@ -78,7 +80,17 @@ class Payout::Search
         where(:leads => { :campaign_id => @campaigns.map(&:id) }, :result_id => @result_ids ).
         created_at_from(@date_from).created_at_to(@date_to)
 
-    @call_results = @call_results.where("campaigns_results.value IS NOT NULL OR call_results.payout IS NOT NULL") unless @show_all_results == "1"
+    @call_results = @call_results.where("call_results.payout IS NOT NULL") if @show_results_with_payout == "1"
+
+    unless @show_final_results == "1" and @show_temp_results == "1"
+      @call_results = if @show_final_results == "0" and @show_temp_results == "0"
+        @call_results.empty
+      elsif @show_final_results == "1"
+        @call_results.where("results.final IS TRUE")
+      else
+        @call_results.where("results.final IS NOT TRUE")
+      end
+    end
 
     @call_results = @call_results.where(:creator_id => @selected_agents) unless @call_centre_agent_ids.empty?
 

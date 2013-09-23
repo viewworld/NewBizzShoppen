@@ -230,7 +230,11 @@ Nbs::Application.routes.draw do
   end
 
   namespace :callers do
-    resources :chain_mail_types, :controller => "chain_mail_types"
+    resources :chain_mail_types, :controller => "chain_mail_types" do
+      member do
+        post :duplicate
+      end
+    end
     resources :chain_mail_items
     resources :chain_mail_materials
     resources :campaigns do
@@ -285,9 +289,14 @@ Nbs::Application.routes.draw do
           post 'test_send_email'
         end
       end
-      resources :chain_mail_types, :controller => "chain_mail_types"
+      resources :chain_mail_types, :controller => "chain_mail_types" do
+        member do
+          post :duplicate
+        end
+      end
       resources :call_results
       resources :call_logs
+      resource :advanced_export, :only => [:new, :create]
     end
 
     resource :production, :controller => "production", :only => [:show] do
@@ -327,7 +336,6 @@ Nbs::Application.routes.draw do
     end
     resources :user_session_logs
     resources :survey_recipients
-    resources :chain_mail_types, :controller => "chain_mail_types"
   end
 
   namespace :comments do
@@ -359,6 +367,14 @@ Nbs::Application.routes.draw do
 
   namespace :flashphoner do
     resource :login
+  end
+
+  namespace :api do
+    resources :campaigns, :only => [] do
+      member do
+        get :contact
+      end
+    end
   end
 
   resources :chain_mails
@@ -534,7 +550,9 @@ Nbs::Application.routes.draw do
       end
       member do
         post :send_to_newsletters
+        get :setup
       end
+      resources :email_templates
     end
   end
 

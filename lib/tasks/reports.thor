@@ -57,14 +57,14 @@ class Reports < Thor
         campaign_user.contacts.where(:campaign_id => @campaign.id).each do |contact|
           1.upto(options[:results]).each do |res_num|
             CallResult.make!(:contact => contact, :result => @result, :creator => campaign_user,
-                             :created_at => @campaign.start_date+res_num.minutes)
+                             :created_at => Time.now+res_num.minutes)
           end
 
           all_upgraded = []
 
           1.upto(options[:upgraded]).each do |res_num|
             all_upgraded << CallResult.make!(:contact => contact, :result => @result_upgrades, :creator => campaign_user,
-                             :created_at => @campaign.start_date+res_num.minutes)
+                             :created_at => Time.now+res_num.minutes)
           end
 
           all_upgraded.first(options[:sold]).each do |cr|
@@ -74,8 +74,8 @@ class Reports < Thor
 
         1.upto(options[:spent]) do |hour_num|
           UserSessionLog.make!(:user => campaign_user, :campaign => @campaign, :log_type => UserSessionLog::TYPE_CAMPAIGN,
-                               :start_time => @campaign.start_date+(hour_num*60).minutes,
-                               :end_time => @campaign.start_date+(hour_num*60).minutes+60.minutes)
+                               :start_time => Time.now+(hour_num*60).minutes,
+                               :end_time => Time.now+(hour_num*60).minutes+60.minutes)
         end
       end
     end

@@ -62,7 +62,7 @@ class CallResult < ActiveRecord::Base
     end
   end
 
-  PENDING_RESULT_TYPES = [:call_back, :not_interested_now]
+  PENDING_RESULT_TYPES = [:call_back, :not_interested_now, :call_back_private]
 
   scope :call_log_results, joins(:result).where(:results => {:final => false})
   scope :final_results, joins(:result).where(:results => {:final => true})
@@ -79,7 +79,8 @@ class CallResult < ActiveRecord::Base
   scope :created_at_to, lambda { |to| where("call_results.created_at::DATE <= ?", to.to_date) }
   #scope :created_by_call_centres, lambda { |call_centres| where(:creator_id => User::CallCentre.find_all_by_id(call_centres).map(&:children).flatten.map(&:id)) }
   #scope :created_by_agents, lambda { |agents| where(:creator_id => agents.map(&:to_i)) }
-  scope :with_call_id, select("call_results.*, (select call_id from call_logs where state = 'TALK' and caller_id = call_results.creator_id and call_logs.created_at < call_results.created_at AND @EXTRACT(EPOCH FROM call_logs.created_at - call_results.created_at) < 1800 ORDER BY created_at DESC LIMIT 1) call_id")
+  scope :with_call_id, select("call_results.*, (select call_id from call_logs where state = 'TALK' and caller_id = call_results.creator_id and call_logs.created_at < call_results.created_at AND @EXTRACT(EPOCH FROM call_logs.created_at - call_results.created_at) < 3600 ORDER BY created_at DESC LIMIT 1) call_id")
+  scope :empty, where("1=0")
   default_scope :order => 'call_results.created_at DESC'
 
   def campaign_result
@@ -162,9 +163,9 @@ class CallResult < ActiveRecord::Base
   end
 
   def call_log
-    CallLog.talk.order("call_logs.created_at desc").
+    CallLog.finished.order("call_logs.created_at desc").
         where(:caller_id => creator_id).
-        where("call_logs.created_at < :call_result AND @EXTRACT(EPOCH FROM call_logs.created_at - :call_result) < 1800", :call_result => created_at).
+        where("call_logs.created_at < :call_result AND @EXTRACT(EPOCH FROM call_logs.created_at - :call_result) < 3600", :call_result => created_at).
         first
   end
 
@@ -262,12 +263,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def process_for_call_back
-    if Date.parse(result_values.first.value) > contact.campaign.end_date
-      process_for_final_result
-    else
-      #notify!
-      process_for_call_log_result
-    end
+    process_for_call_log_result
   end
 
   def process_for_not_interested_now
@@ -296,7 +292,15 @@ class CallResult < ActiveRecord::Base
   end
 
   def process_for_call_log_result
-    contact.update_attributes(:pending => PENDING_RESULT_TYPES.include?(result.label))
+    if contact.campaign.shared_contact_pool?
+      if result.call_back_private?
+        contact.update_attribute(:pending, true)
+      else
+        contact.update_attribute(:agent_id, nil)
+      end
+    else
+      contact.update_attributes(:pending => PENDING_RESULT_TYPES.include?(result.label))
+    end
     contact.move_to_bottom
   end
 
@@ -326,6 +330,10 @@ class CallResult < ActiveRecord::Base
   def process_for_upgrade_to_member
     upgrade_to_user("member")
     process_for_final_result
+  end
+
+  def process_for_call_back_private
+    process_for_call_back
   end
 
   def prepare_user(role)

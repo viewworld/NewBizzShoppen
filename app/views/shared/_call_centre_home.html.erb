@@ -1,0 +1,233 @@
+<column-mc:>
+  <header>
+    <param:content>
+      <%= t("home.show.view.call_centre_header", :name => screen_name_with_company_name(current_user)) %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to :key, t("supplier_home.show.view.sign_out"), '/logout' %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
+
+  <div id="performance">
+    <div class="column_2to3 fltl" style="padding: 0 15px 0 0" id="performance_table">
+      <frm title="#{t('admin_home.show.view.filters')}" c="no_marg">
+        <param:content>
+          <%= form_tag '', :id => "performance_form", :method => :get do %>
+              <fieldset class="inputs_vertical" style="width:95%;margin:auto;">
+                <ol class="no_pdd">
+                  <li class="date">
+                    <%= label_tag :date_from, t("campaigns.show.search.date_from") %>
+                    <%= text_field_tag :date_from, params[:date_from], :class => "datepicker" %>
+                  </li>
+                  <li class="date">
+                    <%= label_tag :date_to, t("campaigns.show.search.date_to") %>
+                    <%= text_field_tag :date_to, params[:date_to], :class => "datepicker" %>
+                  </li>
+                  <li class="select">
+                    <%= label_tag :currency_id, t("campaigns.show.search.currency_id") %>
+                    <%= select_tag :currency_id, options_for_select(Currency.active.map{|c| [c.name.to_s, c.id]}.sort, params[:currency_id]) %>
+                  </li>
+                  <li>
+                    <p class="pdd_10">
+                      <%= t("agent_home.show.view.agent_performance.time_range") %>:<br/>
+                      <%= link_to_function t("campaigns.show.ranges.all"), "$('#date_from').val('#{Date.new(2010)}');$('#date_to').val('#{Date.today}');$('#performance_form').submit()" %>&nbsp;
+                      <%= link_to_function t("campaigns.show.ranges.this_year"), "$('#date_from').val('#{Date.today.beginning_of_year}');$('#date_to').val('#{Date.today.end_of_year}');$('#performance_form').submit()" %>&nbsp;
+                      <%= link_to_function t("campaigns.show.ranges.this_quarter"), "$('#date_from').val('#{Date.today.beginning_of_quarter}');$('#date_to').val('#{Date.today.end_of_quarter}');$('#performance_form').submit()" %><br/>
+                      <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#date_from').val('#{Date.today.beginning_of_month}');$('#date_to').val('#{Date.today.end_of_month}');$('#performance_form').submit()" %>&nbsp;
+                      <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}');$('#performance_form').submit()" %>&nbsp;
+                      <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}');$('#performance_form').submit()" %>
+                    </p>
+                  </li>
+                  <li style="padding-top:15px;float:right">
+                    <ibt c="bt_green" icon="magnify" style="margin-top:20px;">
+                      <%= submit_tag t("agent_home.show.view.agent_performance.filter") %>
+                    </ibt>
+                  </li>
+                </ol>
+              </fieldset>
+          <% end %>
+        </param:content>
+      </frm>
+
+      <table class="generic" style="width:100%;margin:auto;margin-top:10px;">
+        <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= t("admin_home.show.view.table.campaign") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.calls") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.results") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.value") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.hours") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.time_on_phone") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.rate") %></th>
+          <th class="hr"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @performance_campaigns.to_a.each do |campaign| %>
+            <% if performance = Performance.new(params[:date_from], params[:date_to], current_user, campaign, params[:currency_id]) and performance.has_any_data? %>
+                <tr>
+                  <td></td>
+                  <td><%= link_to campaign, administration_payouts_path(:currency_id => params[:currency_id], :campaign_ids => [campaign.id], :result_ids => Result.for_campaigns(campaign.id).with_reported.where(:final => true).map(&:id), :date_from => params[:date_from], :date_to => params[:date_to], :campaign_selection => 'all'), :class => "default_action" %></td>
+                  <td class="tar"><%= performance.call_count %></td>
+                  <td class="tar"><%= performance.result_count %></td>
+                  <td class="tar"><%= as_currency(performance.value, performance.currency, 0) %></td>
+                  <td class="tar"><%= link_to performance.time.to_f.as_hours_and_minutes, campaign_link_to_user_session_logs(campaign) %></td>
+                  <td class="tar"><%= performance.time_on_phone.to_f.as_hours_and_minutes %></td>
+                  <td class="tar"><%= as_currency(performance.value_rate, performance.currency, 0) %></td>
+                  <td></td>
+                </tr>
+            <% end %>
+        <% end %>
+        <% performance = Performance.new(params[:date_from], params[:date_to], current_user, @performance_campaigns, params[:currency_id]) %>
+        <tr style="font-weight: bold;">
+          <td></td>
+          <td></td>
+          <td class="tar"><%= performance.call_count %></td>
+          <td class="tar"><%= performance.result_count %></td>
+          <td class="tar"><%= as_currency(performance.value, performance.currency, 0) %></td>
+          <td class="tar"><%= performance.time.to_f.as_hours_and_minutes %></td>
+          <td class="tar"><%= performance.time_on_phone.to_f.as_hours_and_minutes %></td>
+          <td class="tar"><%= as_currency(performance.value_rate, performance.currency, 0) %></td>
+          <td></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <td class="fl"></td>
+        <td colspan="7"></td>
+        <td class="fr"></td>
+        </tfoot>
+      </table>
+
+      <table class="generic" style="width:100%;margin:auto;margin-top:10px;">
+        <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= t("admin_home.show.view.table.agent") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.calls") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.results") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.payout") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.hours") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.time_on_phone") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.rate") %></th>
+          <th class="hr"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @agents.to_a.each do |agent| %>
+            <% if performance = AgentPerformance.new(params[:date_from], params[:date_to], agent, @performance_campaigns, params[:currency_id]) and performance.has_any_data? %>
+                <tr>
+                  <td></td>
+                  <td><%= link_to agent, administration_payouts_path(:currency_id => params[:currency_id], :call_centre_id => agent.parent_id , :call_centre_agent_ids => [agent.id], :date_from => params[:date_from], :date_to => params[:date_to], :campaign_selection => 'all'), :class => "default_action" %></td>
+                  <td class="tar"><%= performance.call_count %></td>
+                  <td class="tar"><%= performance.result_count %></td>
+                  <td class="tar"><%= as_currency(performance.payout, performance.currency, 0) %></td>
+                  <td class="tar"><%= link_to performance.time.to_f.as_hours_and_minutes, agent_link_to_user_session_logs(agent) %></td>
+                  <td class="tar"><%= performance.time_on_phone.to_f.as_hours_and_minutes %></td>
+                  <td class="tar"><%= as_currency(performance.rate, performance.currency, 0) %></td>
+                  <td></td>
+                </tr>
+            <% end %>
+        <% end %>
+        <% performance = AgentPerformance.new(params[:date_from], params[:date_to], @agents, @performance_campaigns, params[:currency_id]) %>
+        <tr style="font-weight: bold;">
+          <td></td>
+          <td></td>
+          <td class="tar"><%= performance.call_count %></td>
+          <td class="tar"><%= performance.result_count %></td>
+          <td class="tar"><%= as_currency(performance.payout, performance.currency, 0) %></td>
+          <td class="tar"><%= performance.time.to_f.as_hours_and_minutes %></td>
+          <td class="tar"><%= performance.time_on_phone.to_f.as_hours_and_minutes %></td>
+          <td class="tar"><%= as_currency(performance.rate, performance.currency, 0) %></td>
+          <td></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <td class="fl"></td>
+        <td colspan="7"></td>
+        <td class="fr"></td>
+        </tfoot>
+      </table>
+
+    </div>
+
+    <div class="column_1to3 fltl" id="performance_graph">
+      <frm title="#{t('agent_home.show.view.header_graph')}" c="no_marg">
+        <param:content>
+          <div style="padding:10px">
+            <div id="performance_graph_container" style="height:300px; padding:10px"></div>
+          </div>
+        </param:content>
+      </frm>
+
+      <div id="summary-tab"></div>
+
+    </div>
+    <clb/>
+  </div>
+
+</column-mc:>
+
+<js:>
+  <script type="text/javascript">
+
+      $(function(){
+          $('#summary-tab').load('<%= summary_callers_agent_performance_path(:date_from => params[:date_from], :date_to => params[:date_to], :currency_id => params[:currency_id]) %>');
+      });
+
+      $(function(){
+          $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+      });
+
+      $(function () {
+          <% performance = Performance.new(params[:date_from], params[:date_to], current_user, @performance_campaigns, params[:currency_id]) %>
+          var performance_data = <%= performance.flot_chart.to_json.html_safe %>;
+
+          function euroFormatter(v, axis) {
+              return v.toFixed(axis.tickDecimals) + " <%= raw performance.currency.name.html_safe %>";
+          }
+
+          function doPlot(position) {
+              $.plot($("#performance_graph_container"),
+                      [
+                          {
+                              data: performance_data.value, label: "Value",
+                              bars:
+                              {
+                                  show: true,
+                                  barWidth: 1000*60*60*6,
+                              },
+                          },
+                          {
+                              data: performance_data.cost, label: "Cost",
+                              bars:
+                              {
+                                  show: true,
+                                  barWidth: 1000*60*60*6,
+                              },
+                          }
+                      ],
+                      {
+                          xaxes: [ { mode: 'time', minTickSize: [1, "day"] } ],
+                          yaxes: [
+                              {
+                                  min: 0,
+                                  alignTicksWithAxis: position == "right" ? 1 : null,
+                                  position: position,
+                                  tickFormatter: euroFormatter
+                              } ],
+                          legend: { position: 'nw' }
+                      });
+          }
+
+          doPlot("right");
+      });
+
+  </script>
+</js:>
+

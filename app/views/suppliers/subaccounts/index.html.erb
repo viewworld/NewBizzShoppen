@@ -6,9 +6,11 @@
 
     <param:actions>
       <ul class="header_actions">
+        <% unless current_user.auto_buy_enabled %>
         <li>
           <%= bt_link_to :user, t("supplier.subaccounts.index.view.new_lead_supplier"), new_suppliers_subaccount_path(:role => "lead_supplier") %>
         </li>
+        <% end %>
         <li class="last">
           <%= bt_link_to :user, t("supplier.subaccounts.index.view.new_lead_user"), new_suppliers_subaccount_path(:role => "lead_user") %>
         </li>

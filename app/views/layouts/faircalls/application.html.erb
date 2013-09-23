@@ -168,43 +168,10 @@
         $('input.formtastic-ui-weekpicker').datepicker({ dateFormat: '<%= I18n.t("date.formats.datepicker") %>', showWeek: true });
     });
 
-
-    <% if !current_user.blank? and !Rails.env.development? and current_user.agent? %>
-    TIME_OUT = <%= Settings.logout_time.to_i %> * 60;
-
-    function set_logout_time() {
-        return setTimeout("top.location='<%= logout_path %>'", TIME_OUT * 1000 + 20 * 1000);
-    }
-
-    function set_logout_dialog_time() {
-        return setTimeout("check_session()", TIME_OUT * 1000);
-    }
-
-    function check_session(){
-        $.post("/user_session_log.js")
-    }
-
-    function extend_session(){
-        clearTimeout(window.t);
-        window.t = set_logout_time();
-        window.t2 = set_logout_dialog_time();
-    }
-
-    var t = set_logout_time();
-    var t2 = set_logout_dialog_time();
-
-    $('#modal_for_longer_session').dialog({
-        autoOpen: false,
-        buttons: { "<%= t("layout.cancel_logout_button") %>": function() {
-            extend_session();
-            $(this).dialog("close");
-        }}
-    });
-
-    <% end %>
+    <%= render '/shared/auto_log_out' %>
 
     <% if current_user and current_user.has_one_of_roles?(:admin, :call_centre) %>
-        start_notifications();
+//        start_notifications();
     <% end %>
 </script>
 

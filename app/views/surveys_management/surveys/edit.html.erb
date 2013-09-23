@@ -1,23 +1,14 @@
 <column-mc:>
   <%= javascript_include_tag :ckeditor %>
-  <%= javascript_include_tag "jquery.ui.nestedSortable" %>
   <header back="true"><%= t("surveys_management.surveys.edit.view.header") %><%= image_tag_for_locale %></header>
 
   <%= semantic_form_for @survey, :url => surveys_management_survey_path(@survey) do |form| %>
       <frm>
         <param:header>
-          <%= bt_link_to nil, t("surveys_management.surveys.edit.preview_button"), surveys_management_survey_path(@survey), :class => "fltr" %>
-          <%= bt_link_to nil, t("surveys_management.surveys.edit.responses_button"), surveys_management_survey_survey_recipients_path(@survey), :class => "fltr" %>
-          <% if @survey.newsletter_lists.any? %>
-              <%= bt_link_to nil, t("surveys_management.surveys.index.view.send_to_newsletters"), send_to_newsletters_surveys_management_survey_path(@survey), :class => "fltr", :method => :post,
-                             :confirm => t("surveys_management.surveys.index.view.send_to_newsletters_confirmation", :survey_name => @survey.name, :subscribers_count => @survey.total_subscribers) %>
-          <% end %>
-          <% if current_user.admin? %>
-              <%= bt_link_to nil, t("surveys_management.surveys.edit.intro_email_button"), edit_administration_email_template_path(@survey.survey_newsletter_email_template), :class => "fltr" %>
-          <% end %>
+            <%= render :partial => "menu", :locals => { :action => params[:action] } %>
         </param:header>
         <param:content>
-          <%= render :partial => 'form', :locals => {:form => form} %>
+            <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">

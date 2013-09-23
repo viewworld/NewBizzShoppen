@@ -14,6 +14,7 @@
           <th class="hl"></th>
           <th>Agent</th>
           <th>Contact</th>
+          <th>Result</th>
           <th>Duration</th>
           <th>Created at</th>
           <th>Listen</th>
@@ -25,8 +26,9 @@
           <% @call_logs.each do |call_log| %>
             <tr>
               <td></td>
-              <td><%= call_log.caller %></td>
+              <td><%= call_log.caller_user.try(:email) %></td>
               <td><%= call_log.contact %></td>
+              <td><%= call_log.call_result.try(:result) %></td>
               <td><%= call_log.time_of_call %></td>
               <td><%= format_date call_log.created_at, true %></td>
               <td>
@@ -40,12 +42,12 @@
         </tbody>
         <tfoot>
             <td class="fl"></td>
-            <td colspan="6"></td>
+            <td colspan="7"></td>
             <td class="fr"></td>
         </tfoot>
         <% if will_paginate @call_results %>
             <tr class="pagination">
-              <td colspan="8" class="ta_c">
+              <td colspan="9" class="ta_c">
                 <%= will_paginate @call_logs, :previous_label => '&laquo;', :next_label => '&raquo;' %>
               </td>
             </tr>

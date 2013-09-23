@@ -2,7 +2,7 @@
 <%= javascript_include_tag 'lead_translation_functions.js' %>
 
 <% if @agent_work_screen and @campaign and @call_result and @call_result.result %>
-    <% @campaign_result = @call_result.result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id } %>
+    <% @campaign_result = @call_result.result.campaigns_results.for_campaign(@campaign).first %>
 <% end %>
 
 <% @settings = @campaign_result ? @campaign_result.settings : {} %>

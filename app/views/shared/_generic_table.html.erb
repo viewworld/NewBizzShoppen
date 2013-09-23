@@ -24,13 +24,16 @@
         <td class="tda ta_r">
             <ul-actions>
               <% if link_to_show %>
-              <li><%= link_to t("views.generic_table.show"), link_to_show.is_a?(Array) ? send(*(link_to_show + Array(object))) :  link_scope+[object], :class => "#{'default_action' if default_action == :show}" %></li>
+                  <li><%= link_to t("views.generic_table.show"), link_to_show.is_a?(Array) ? send(*(link_to_show + Array(object))) :  link_scope+[object], :class => "#{'default_action' if default_action == :show}" %></li>
               <% end %>
               <% if link_to_edit %>
-              <li><%= link_to t("views.generic_table.edit"), link_to_edit.is_a?(Array) ? send(*(link_to_edit + Array(object))) : [:edit]+link_scope+[object], :class => "#{'default_action' if default_action == :edit}" %></li>
+                  <li><%= link_to t("views.generic_table.edit"), link_to_edit.is_a?(Array) ? send(*(link_to_edit + Array(object))) : [:edit]+link_scope+[object], :class => "#{'default_action' if default_action == :edit}" %></li>
               <% end %>
               <% if link_to_delete %>
-              <li><%= link_to t("views.generic_table.delete"), link_to_delete.is_a?(Array) ? send(*(link_to_delete + Array(object))) : link_scope+[object], :method => :delete, :confirm => t("views.generic_table.confirmation"), :class => "#{'default_action' if default_action == :delete}" %></li>
+                  <li><%= link_to t("views.generic_table.delete"), link_to_delete.is_a?(Array) ? send(*(link_to_delete + Array(object))) : link_scope+[object], :method => :delete, :confirm => t("views.generic_table.confirmation"), :class => "#{'default_action' if default_action == :delete}" %></li>
+              <% end %>
+              <% custom_links.each do |custom_link| %>
+                  <li><%= link_to custom_link[:label], send(*(custom_link[:link] + Array(object))), :method => (custom_link[:method] || :get) %></li>
               <% end %>
             </ul-actions>
         </td>

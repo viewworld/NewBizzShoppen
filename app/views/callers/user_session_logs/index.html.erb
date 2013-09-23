@@ -54,7 +54,7 @@
     </param:content>
   </header>
 
-  <p class="fltr" style="margin-top:-20px"><%= t("user_session_logs.index.total_hours") %>: <%= number_with_precision(@user_session_logs.sum(:hours_count).to_f, :precision => 0) %></p>
+  <p class="fltr" style="margin-top:-20px"><%= t("user_session_logs.index.total_hours") %>: <%= @user_session_logs.sum(:hours_count).to_f.as_hours_and_minutes %></p>
 
   <table class="generic">
     <thead>
@@ -84,7 +84,7 @@
           <td><%= usl.campaign %></td>
           <td><%= l usl.start_time.in_time_zone(usl.time_zone) %></td>
           <td><%= l usl.end_time.in_time_zone(usl.time_zone) %></td>
-          <td><%= number_with_precision(usl.hours_count, :precision => 2) %></td>
+          <td><%= usl.hours_count.to_f.as_hours_and_minutes %></td>
           <td><%= usl.regular? ? 'Regular' : 'Campaign' %></td>
           <td class="tda ta_r">
           </td>

@@ -1,39 +1,42 @@
-<table class="generic" style="width:100%;margin:auto;margin-top:10px;">
-  <thead>
-  <tr>
-    <th class="hl"></th>
-    <th></th>
-    <th class="tar"><%= t("admin_home.show.view.table.cost") %></th>
-    <th class="tar"><%= t("admin_home.show.view.table.value") %></th>
-    <th class="tar"><%= t("admin_home.show.view.table.total") %></th>
-    <th class="hr"></th>
-  </tr>
-  </thead>
-  <tbody>
-  <% [
-             [Date.today, Date.today, t("admin_home.show.view.table.today")],
-             [Date.today.beginning_of_week, Date.today.end_of_week, t("admin_home.show.view.table.week")],
-             [Date.today.beginning_of_month, Date.today.end_of_month, t("admin_home.show.view.table.month")],
-             [Date.today.beginning_of_quarter, Date.today.end_of_quarter, t("admin_home.show.view.table.quarter")],
-             [Date.today.beginning_of_year, Date.today.end_of_year, t("admin_home.show.view.table.year")]
-     ].each do |dates|
-  %>
-      <% campaigns = Campaign.active_between(dates[0], dates[1]).available_for_user(current_user) %>
-      <% agents = User.select("DISTINCT(users.*)").joins(:user_session_logs).where(:user_session_logs => { :campaign_id => campaigns, :end_date => params[:date_from]..params[:date_to] }) %>
-      <% performance = Performance.new(dates[0], dates[1], agents, campaigns, params[:currency_id]) %>
+<% cache "performance_summary_#{current_user.id}_#{params[:currency_id]}", :expires_in => 900 do  %>
+
+    <table class="generic" style="width:100%;margin:auto;margin-top:10px;">
+      <thead>
       <tr>
-        <td></td>
-        <td><b><%= dates[2] %></b></td>
-        <td class="tar"><%= as_currency(performance.cost, performance.currency, 0) %></td>
-        <td class="tar"><%= as_currency(performance.value, performance.currency, 0) %></td>
-        <td class="tar"><%= as_currency(performance.total, performance.currency, 0) %></td>
-        <td></td>
+        <th class="hl"></th>
+        <th></th>
+        <th class="tar"><%= t("admin_home.show.view.table.cost") %></th>
+        <th class="tar"><%= t("admin_home.show.view.table.value") %></th>
+        <th class="tar"><%= t("admin_home.show.view.table.total") %></th>
+        <th class="hr"></th>
       </tr>
-  <% end %>
-  </tbody>
-  <tfoot>
-  <td class="fl"></td>
-  <td colspan="4"></td>
-  <td class="fr"></td>
-  </tfoot>
-</table>
+      </thead>
+      <tbody>
+      <% [
+                 [Date.today, Date.today, t("admin_home.show.view.table.today")],
+                 [Date.today.beginning_of_week, Date.today.end_of_week, t("admin_home.show.view.table.week")],
+                 [Date.today.beginning_of_month, Date.today.end_of_month, t("admin_home.show.view.table.month")],
+                 [Date.today.beginning_of_quarter, Date.today.end_of_quarter, t("admin_home.show.view.table.quarter")],
+                 [Date.today.beginning_of_year, Date.today.end_of_year, t("admin_home.show.view.table.year")]
+         ].each do |dates|
+      %>
+          <% campaigns = Campaign.active.available_for_user(current_user) %>
+          <% performance = Performance.new(dates[0], dates[1], [], campaigns, params[:currency_id]) %>
+          <tr>
+            <td></td>
+            <td><b><%= dates[2] %></b></td>
+            <td class="tar"><%= as_currency(performance.cost, performance.currency, 0) %></td>
+            <td class="tar"><%= as_currency(performance.value, performance.currency, 0) %></td>
+            <td class="tar"><%= as_currency(performance.total, performance.currency, 0) %></td>
+            <td></td>
+          </tr>
+      <% end %>
+      </tbody>
+      <tfoot>
+      <td class="fl"></td>
+      <td colspan="4"></td>
+      <td class="fr"></td>
+      </tfoot>
+    </table>
+
+<% end %>

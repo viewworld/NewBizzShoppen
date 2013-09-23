@@ -209,7 +209,7 @@ class Deal < AbstractLead
     if (deal_price.to_f > 0 and discounted_price.to_f > 0 and deal_price > discounted_price)
       "#{(100 - discounted_price * 100 / deal_price).to_i}%"
     elsif general_discount?
-      "#{(discounted_price.to_f <= 100 and discounted_price.to_f > 0) ? discounted_price.to_i : 100}%"
+      saving
     else
       "0%"
     end
@@ -219,7 +219,7 @@ class Deal < AbstractLead
     if (deal_price.to_f > 0 and discounted_price.to_f > 0 and deal_price > discounted_price)
       (deal_price - discounted_price).to_f
     elsif general_discount?
-      discounted_price.to_f
+      saving
     else
       0
     end

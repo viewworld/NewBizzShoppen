@@ -28,11 +28,21 @@ class Contact < AbstractLead
   scope :available_to_assign, lambda { |user| all_available_to_assign.joins("left join contact_past_user_assignments on leads.id=contact_past_user_assignments.contact_id AND contact_past_user_assignments.user_id = #{user.id}").where("contact_past_user_assignments.user_id is NULL") }
   scope :with_results, joins(:call_results)
   scope :with_current_result_id, lambda { |result_id| joins("inner join call_results on call_results.id = (select id from call_results where contact_id = leads.id order by created_at desc limit 1)").where("call_results.result_id = ?", result_id) }
+  scope :without_current_result_id, lambda { |result_id| joins("inner join call_results on call_results.id = (select id from call_results where contact_id = leads.id order by created_at desc limit 1)").where("call_results.result_id <> ?", result_id) }
   scope :with_agents, lambda { |agent_ids| where("call_results.creator_id IN (:agent_ids)", {:agent_ids => agent_ids}) unless agent_ids.to_a.select { |id| !id.blank? }.empty? }
   scope :with_agent_id, lambda { |agent_id| where(:agent_id => agent_id) }
   scope :with_survey, lambda { |survey_id| joins(:survey_recipients).where("survey_recipients.survey_id = ?", survey_id) }
   scope :with_survey_state, lambda { |state| joins(:survey_recipients).where( state.to_i < 0 ? ["survey_recipients.state = ? OR survey_recipients.state = ?", 1, 2] : ["survey_recipients.state = ?", state]) }
   scope :from_last_import, where(:last_import => true)
+  scope :unassigned, where(:agent_id => nil)
+  scope :uncompleted, with_completed_status(false)
+  scope :with_pending_result_type,
+      joins("INNER JOIN call_results ON call_results.id = (SELECT id FROM call_results cr WHERE cr.contact_id = leads.id ORDER BY cr.created_at DESC LIMIT 1) INNER JOIN results ON results.id = call_results.result_id INNER JOIN result_values ON result_values.call_result_id = call_results.id").
+      where("lower(replace(results.name, ' ', '_')) IN (?)", CallResult::PENDING_RESULT_TYPES.map(&:to_s))
+  scope :without_pending_result_type,
+      joins("LEFT JOIN call_results ON call_results.id = (SELECT id FROM call_results cr WHERE cr.contact_id = leads.id ORDER BY cr.created_at DESC LIMIT 1) LEFT JOIN results ON results.id = call_results.result_id").
+      where("results.name IS NULL OR lower(replace(results.name, ' ', '_')) NOT IN (?)", CallResult::PENDING_RESULT_TYPES.map(&:to_s))
+  scope :by_position_asc, order("leads.position ASC")
   scoped_order :company_name
 
   acts_as_list :scope => [:campaign_id, :agent_id, :pending]
@@ -157,6 +167,7 @@ class Contact < AbstractLead
 
   def assign_agent(agent_id)
     self.reload
+    #campaign.return_to_pool_all_for_agent(agent_id) if campaign.shared_contact_pool?
     if agent_id.nil?
       self.contact_past_user_assignments.create(:user_id => read_attribute(:agent_id))
     end

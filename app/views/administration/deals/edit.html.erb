@@ -9,7 +9,7 @@
             <%= bt_link_to nil, t("administration.deals.edit.view.edit_deal_request_details_email_template"), edit_email_template_path(@deal.deal_request_details_email_template, :deal_id => @deal.id) %>
         </li>
         <li class="last">
-          <%= bt_link_to nil, t("administration.deals.edit.view.preview"), deal_path(@deal) %>
+          <%= bt_link_to nil, t("administration.deals.edit.view.preview"), deal_url(@deal, :host => Domain.for_site_and_locale(:fairdeals, I18n.locale).try(:name)), :target => "_blank" %>
         </li>
       </ul>
     </param:actions>

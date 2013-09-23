@@ -195,6 +195,7 @@ en:
         monitor: "Monitor"
         sync_leads: "Sync leads"
         surveys: "Surveys"
+        chain_mails: "Chain mails"
       lead_user:
         lead_purchases: My leads
         lead_requests: My requested leads
@@ -359,6 +360,7 @@ en:
       campaign: "Campaign"
       active: "Active"
       archived: "Archived"
+      duplicate: "Duplicate"
     edit:
       header: "Editing chain mail type: %{name}"
       title: "Edit"
@@ -382,6 +384,8 @@ en:
     update:
       flash:
         result_changed: "Result has been changed. Please check if variables are correct in chain mail templates."
+        duplicated: "Chain mail type has been duplicated"
+        not_duplicated: "One or more errors occurred while trying to duplicate chain mail type:"
   lead_templates:
     table:
       name: Name
@@ -450,6 +454,9 @@ en:
       crm_option2: "Select by CVR"
       crm_option3: "Select by Email Address"
       crm_option4: "All must match"
+    contact_pool_types:
+      contact_pool0: "Private contact pool"
+      contact_pool1: "Shared contact pool"
     filter:
       header: Search
       keyword_label: Keyword
@@ -467,8 +474,7 @@ en:
       name: Name
       category: Category
       country: Country
-      start_date: Start date
-      end_date: End date
+      state: State
       agents: Agents
       contacts: Contacts
       results: Results
@@ -488,6 +494,7 @@ en:
       total_calls:  Total number of calls
       search_label: Search
       ranges_label: Predefined time ranges
+      advanced_export: "Advanced export"
       ranges:
         whole_campaign: whole campaign
         this_month: this month
@@ -507,6 +514,9 @@ en:
         call_centres: "Call centres"
         call_centre_agents: "Call centre agents"
         all_results: "Show all results"
+        show_results_with_payout: "Show results with payout"
+        show_final_results: "Show final results"
+        show_temp_results: "Show temp results"
       search_button: Search
       export_button: Export
       table:
@@ -631,6 +641,7 @@ en:
         last_four_weeks: "Last 4 weeks"
         number_of_calls: "Number of calls"
         time_on_phone: "Time on phone"
+        payout: "Payout"
       logged_as_other_user: "Logged as user: %{user}"
   contacts:
     filter:
@@ -1775,6 +1786,8 @@ en:
             value: "Value"
             payout: "Payout"
             voice: "Voice result"
+            duration: "Duration"
+            download: "D/L"
           edit_values: "Edit values"
       edit_dynamic_values:
         view:
@@ -2267,6 +2280,7 @@ en:
           delete_confirmation_message: "Are you sure?"
           button_bulk_subbaccounts_update: "Save"
           view_leads: View leads
+          without_locked: "Don't show locked"
       new:
         view:
           title: "New call centre agent"
@@ -3010,6 +3024,7 @@ en:
           results: "#"
           calls: "C"
           hours: "Hours"
+          time_on_phone: "P"
           rate: "Rate"
           agent: "Agent"
           payout: "PayOut"
@@ -4038,6 +4053,8 @@ en:
         deal_maker_role_enabled: "Deal maker role enabled"
         big_buyer: "Got credit"
         newsletter_manager: "Newsletter manager"
+        chain_mails_enabled: "Chain mails enabled"
+        surveys_enabled: "Surveys enabled"
       user/call_centre_agent:
         first_name: "First name"
         last_name: "Last name"
@@ -4196,6 +4213,8 @@ en:
         free_deal_requests_in_free_period: "Number of free deal requests in free period"
         premium_deals: "Allow premium deals"
         newsletter_manager: "Newsletter manager"
+        chain_mails_enabled: "Chain mails enabled?"
+        surveys_enabled: "Surveys enabled?"
       newsletter_list:
         name: "Name"
         owner_email: "Owner email"
@@ -4669,6 +4688,7 @@ en:
         request_information: "Request information"
         contact_me: "Get deal"
         price: "Price"
+        discounted_price: "Fairdeal price"
         save: "Save"
         view_deal: "View deal"
         group_deal_splash_label: "Group deal"
@@ -5082,7 +5102,10 @@ en:
         type5: "Section heading"
         type6: "Break page"
       is_multiline: "Is multiline"
-      is_multiselect: "Is multiselect"
+      is_multiselect: "Type"
+      multiselect_types:
+        radios: "Radio buttons"
+        checkboxes: "Checkboxes"
     surveys:
       index:
         view:
@@ -5120,7 +5143,6 @@ en:
           last_sent_recipients_count: "Last sent to # subscribers"
         preview_button: "Preview"
         responses_button: "View responses"
-        intro_email_button: "Intro mail"
       form:
         move_right: "Add >"
         move_left: "< Remove"
@@ -5141,6 +5163,9 @@ en:
       show:
         view:
           preview: "Preview"
+      setup:
+        view:
+          header: "Survey setup"
     survey_recipients:
       index:
         view:
@@ -5172,3 +5197,12 @@ en:
       email_blank: "No email to send the survey."
       chain_mail: "Chain mail"
       lead_category: "Lead category"
+  advanced_export:
+    new:
+      header: "Advanced export"
+      search: "Select result and contact fields for export"
+      select_results: "Select results and fields"
+      select_contact_fields: "Select contact fields"
+      export: "Export as XLS"
+    create:
+      summary: Summary

@@ -69,8 +69,8 @@
             <% else %> 
                 <div class="deal_ft_prices">
                   <p class="row"><%= t("deals.index.view.price") %>: <%= as_currency(primary_deal.deal_price, primary_deal.currency) %></p>
-                  <p class="row"><%= t("deals.index.view.save") %>: <%= as_currency(primary_deal.discounted_price, primary_deal.currency) %></p>
-                  <p class="cell" style="text-transform:uppercase;"><%= t("deals.index.view.save") %><br/><%= primary_deal.saving %></p>
+                  <p class="row"><%= t("deals.index.view.discounted_price") %>: <%= as_currency(primary_deal.discounted_price, primary_deal.currency) %></p>
+                  <p class="cell" style="text-transform:uppercase;"><%= t("deals.index.view.save") %><br/><%= primary_deal._saving %></p>
                 </div>
             <% end %>
 

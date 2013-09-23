@@ -24,10 +24,14 @@ class Survey < ActiveRecord::Base
   before_destroy :can_be_destroyed
   after_save :check_email_template
 
-  scope :created_by, lambda { |creator| creator.has_any_role?(:category_supplier, :supplier) ? where("categories_surveys.category_id IN (?) OR creator_id = ?", creator.unique_category_ids, creator.id).joins(:categories) : where("creator_id = ?", creator.id) }
+  scope :created_by, lambda { |creator| creator.has_any_role?(:category_supplier, :supplier) ? where("categories_surveys.category_id IN (?) OR creator_id = ?", creator.unique_category_ids, creator.id).joins("LEFT JOIN categories_surveys ON categories_surveys.survey_id = surveys.id") : where("creator_id = ?", creator.id) }
 
   def newsletter_owner
     User.where(:email => newsletter_owner_email).first
+  end
+
+  def newsletter_owner_for(user)
+    user.admin? ? newsletter_owner : user
   end
 
   def set_sending_details!(sending_started_at)

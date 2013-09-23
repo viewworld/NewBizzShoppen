@@ -38,7 +38,7 @@ class LeadPurchase < LeadPurchaseBase
   def set_buyer_tag
     if lead
       lead.tag_list << "user_#{purchased_by}"
-      lead.save!(false)
+      lead.save!(:validate => false)
     end
   end
 

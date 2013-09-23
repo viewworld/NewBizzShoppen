@@ -217,8 +217,8 @@ Given /^campaign report data is generated$/ do
     CallResult.make!(:contact => @contact1_1, :result => @result_final_reported, :creator => @call_centre_agent1)
     CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
     CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
-    LeadPurchase.make!(:lead => @contact1_3.lead)
-    LeadPurchase.make!(:lead => @contact1_4.lead, :quantity => 5)
+    LeadPurchase.make!(:lead => @contact1_3.leads.first)
+    LeadPurchase.make!(:lead => @contact1_4.leads.first, :quantity => 5)
 end
 
 Given /^additional timesheet report data is generated$/ do

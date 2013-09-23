@@ -1,36 +1,3 @@
-<search-box:>
-  <div class="search_box">
-    <div class="search_left"></div>
-    <div class="search_right"></div>
-    <h2><%= t("common.search") %></h2>
-
-    <div class="search_content">
-      <%= form_for @search, :url => callers_chain_mail_types_path do |f| %>
-          <fieldset class="inputs_vertical">
-            <ol class="no_pdd">
-              <li class="string">
-                <%= f.label :with_keyword, t("common.search_box.keyword_label") %>
-                <%= f.text_field :with_keyword %>
-              </li>
-              <li class="boolean">
-                <%= f.label :with_archived, t("common.search_box.archived_label") %>
-                <%= f.check_box :with_archived %>
-              </li>
-              <li class="commit">
-                <ibt c="bt_green" icon="magnify">
-                  <%= submit_tag t("common.search_box.search_button") %>
-                </ibt>
-                <p>
-                  <%= bt_clear_filter %>
-                </p>
-              </li>
-            </ol>
-          </fieldset>
-      <% end %>
-    </div>
-  </div>
-</search-box:>
-
 <column-mc:>
 
   <header>
@@ -77,7 +44,8 @@
       <%= blank_state_message %>
   <% else %>
       <%= generic_table @chain_mail_types, :table_class => "chain_mail_types", :default_action => :edit, :cols => (@campaign ? 3 : 4), :link_scope => (@campaign ? [:callers, @campaign] : [:callers]),
-                        :link_to_show => false, :link_to_delete => false, :link_to_edit => @campaign ? [:edit_callers_campaign_chain_mail_type_path, @campaign] : [:edit_callers_chain_mail_type_path] do |blocks| %>
+                        :link_to_show => false, :link_to_delete => false, :link_to_edit => @campaign ? [:edit_callers_campaign_chain_mail_type_path, @campaign] : [:edit_callers_chain_mail_type_path],
+                        :custom_links => [:label => t("chain_mail_types.table.duplicate"), :link => @campaign ? [:duplicate_callers_campaign_chain_mail_type_path, @campaign] : [:duplicate_callers_chain_mail_type_path], :method => :post] do |blocks| %>
 
           <% blocks.headers do %>
             <th><%= t("chain_mail_types.table.name") %></th>

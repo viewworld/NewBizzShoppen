@@ -10,7 +10,7 @@ Feature: Agent information
     And I sign in as testreportscca01@nbs.com with password secret
     And I follow translated "layout.main_menu.call_centre_agent.campaigns"
 
-  @_done @_tested @selenium @wip
+  @_done @_tested @selenium
   Scenario: I can see my created value Today
     And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen/"
     And I wait 5 second

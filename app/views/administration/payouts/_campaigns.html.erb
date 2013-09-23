@@ -25,7 +25,7 @@
       <tbody id="invoices_list">
       <% call_results.each do |call_result| %>
           <tr class="<%= cycle("odd", "even") %>">
-            <td><%= l call_result.created_at, :format => :long %></td>
+            <td><%= l call_result.created_at.in_time_zone(call_result.creator.time_zone), :format => :long %></td>
             <td><%= call_result.result.name %></td>
             <td><%= "#{call_result.creator.email}, #{call_result.creator.full_name}" %></td>
             <td style="text-align: right;"><%= as_currency payouts[call_result.id], search.currency %></td>

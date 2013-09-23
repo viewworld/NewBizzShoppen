@@ -5,7 +5,19 @@
                                                                         :date_to => @date_to, :final => @final, :campaign_users => @campaign_users } %>
 </search-box:>
 <column-mc:>
-  <header back="true" backurl="javascript:history.back(-1)"><%= @campaign.name %></header>
+  <header back="true" backurl="javascript:history.back(-1)">
+    <param:content>
+      <%= @campaign.name %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to_function :invoice, t("campaigns.show.advanced_export"), "submit_advanced_export()" %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
 
   <div class="frm_tiny pdd_10">
 
@@ -22,5 +34,9 @@
     $(function() {
         $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
     });
+
+    function submit_advanced_export(){
+        $('#search_new').attr('action', '<%= new_callers_campaign_advanced_export_path(@campaign) %>').submit();
+    }
 </script>
 </js:>

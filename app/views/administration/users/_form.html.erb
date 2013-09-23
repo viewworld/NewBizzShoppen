@@ -24,8 +24,9 @@
             <% end %>
         <% end %>
         <%= form.input :time_zone, :wrapper_html => { :class => "select"}, :input_html => {:style => "width: 240px"} %>
+        <%= form.input :api_key, :input_html => { :disabled => true } %>
         <% if ['call_centre_agent'].include?(params[:role]) or @user.has_any_role?(:call_centre_agent) %>
-            <%= form.input :parent_id, :collection => User.with_call_centres.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false, :label => t("administration.users.edit.view.parent_id") %>
+            <%= form.input :parent_id, :collection => User.without_locked.with_call_centres.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false, :label => t("administration.users.edit.view.parent_id") %>
         <% end %>
         <% if ['lead_supplier', 'supplier', 'member'].include?(params[:role]) or @user.has_any_role?(:lead_supplier, :supplier, :member) %>
             <%= form.input :vat_number %>
@@ -75,6 +76,8 @@
         <% if ['supplier', 'category_supplier'].include?(params[:role]) or @user.has_any_role?(:supplier, :category_supplier) %>
             <%= form.input :big_buyer %>
             <%= form.input :newsletter_manager %>
+            <%= form.input :chain_mails_enabled %>
+            <%= form.input :surveys_enabled %>
         <% end %>
         <% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
             <%= form.input :certification_level, :as => :select, :collection => User::CERTIFICATION_LEVELS.map { |c| [t("models.lead.certification.lvl#{c}"), c] }, :selected => @user.read_attribute(:certification_level) %>

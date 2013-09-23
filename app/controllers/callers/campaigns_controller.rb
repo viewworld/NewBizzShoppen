@@ -11,14 +11,14 @@ class Callers::CampaignsController < Callers::CallerController
   before_filter :set_crm_campaigns, :only => [:update, :create]
 
   def new
-    @campaign = Campaign.new(:start_date => Date.today, :end_date => Date.today+1.week, :max_contact_number => 0,
+    @campaign = Campaign.new(:state => 'active', :max_contact_number => 0, :cost_type => 4,
                              :category_id => LeadCategory.first.id, :country_id => Country.first.id)
   end
 
   def create
     @campaign = Campaign.new(params[:campaign])
     @campaign.creator = current_user
-    @campaign.results = Result.generic_results
+    #@campaign.results = Result.generic_results
     @campaign.users << current_user unless current_user.admin?
     create! do |success, failure|
       success.html { redirect_to edit_callers_campaign_path(@campaign) }

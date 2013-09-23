@@ -1,0 +1,12 @@
+<%= bt_link_to nil, t("surveys_management.surveys.edit.view.preview_button"), surveys_management_survey_path(@survey), :class => "fltr" %>
+<% if action == "edit" %>
+    <%= bt_link_to nil, t("surveys_management.surveys.edit.view.setup_button"), setup_surveys_management_survey_path(@survey), :class => "fltr" %>
+<% else %>
+    <%= bt_link_to nil, t("surveys_management.surveys.edit.view.edit_button"), edit_surveys_management_survey_path(@survey), :class => "fltr" %>
+<% end %>
+<%= bt_link_to nil, t("surveys_management.surveys.edit.view.responses_button"), surveys_management_survey_survey_recipients_path(@survey), :class => "fltr" %>
+<% if @survey.newsletter_lists.any? %>
+    <%= bt_link_to nil, t("surveys_management.surveys.index.view.send_to_newsletters"), send_to_newsletters_surveys_management_survey_path(@survey), :class => "fltr", :method => :post,
+                   :confirm => t("surveys_management.surveys.index.view.send_to_newsletters_confirmation", :survey_name => @survey.name, :subscribers_count => @survey.total_subscribers) %>
+<% end %>
+<%= bt_link_to nil, t("surveys_management.surveys.edit.view.intro_email_button"), edit_surveys_management_survey_email_template_path(@survey, @survey.survey_newsletter_email_template), :class => "fltr" %>

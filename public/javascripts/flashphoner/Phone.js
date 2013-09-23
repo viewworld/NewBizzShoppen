@@ -39,6 +39,9 @@ var testInviteParameter = new Object;
 testInviteParameter['param1'] = "value1";
 testInviteParameter['param2'] = "value2";
 
+var ringingTimeout = 20000;
+var currentTimeout = null;
+
 // trace log to the console in the demo page
 function trace(funcName, param1, param2, param3) {
 
@@ -259,11 +262,11 @@ function addLogMessage(message) {
 
 function notifyFlashReady() {
 	$('#versionOfProduct').html(getVersion());
-    changePhoneNumber($('#contact_phone_number').val());
+    changePhoneNumber($('#contact_company_phone_number').val());
     if (flashvars.token != null) {
         loginByToken(flashvars.token);
     } else {
-        closeConnectingView();
+        openLoginView();
     }
 }
 
@@ -493,6 +496,7 @@ function notifyMessage(messageObject) {
 function notifyAddCall(call) {
     trace("notifyAddCall", call); // call.id, call.anotherSideUser
     createCallLog(call);
+//    clearTimeout(currentTimeout);
 
     if (currentCall != null && call.incoming == true) {
         hangup(call.id);
@@ -508,6 +512,16 @@ function notifyAddCall(call) {
         	toHangupState();
        	}
     }
+
+//    if (currentCall != null && call.incoming == false && call.state == 'RINGING') {
+//        trace("setTimeout");
+//        currentTimeout = setTimeout(function(){
+//            if (currentCall != null && flashphoner.getCurrentCall() == null) {
+//                hangup(currentCall.id);
+//                $('.quick_call_result').trigger('click');
+//            }
+//        }, ringingTimeout);
+//    }
 }
 
 function createCallView(call) {
@@ -899,8 +913,13 @@ function close(element) {
 
 function changePhoneNumber(number){
     if (currentCall == null) {
-        $("#calleeText").val(number);
+        if (number.match(/\d/g) != null) {
+            $("#calleeText").val(number.match(/\d/g).join(''));
+        }
         $("#calleeText").trigger('keyup');
+        if (isLogged && (flashvars.auto_dial == true) && ($("#calleeText").val() != '')) {
+            call();
+        }
     }
 }
 
@@ -913,7 +932,7 @@ $(function() {
         if (flashvars.token != null) {
             loginByToken(flashvars.token);
         } else {
-            closeConnectingView();
+            openLoginView();
         }
     });
     

@@ -3,7 +3,8 @@
   <div class="news_content">
     <h4><%= link_to communication.title,
                     communication.archived_email? ? callers_campaign_agent_work_screen_index_path(communication.related.contact.campaign, :selected_call_result_id => communication.related_id) :
-                    send("#{current_user.role.to_s.pluralize}_leads_path".to_sym, :unfold_comment_id => communication.related_id, :search => {:with_keyword => communication.related.header, :without_inactive => "false", :without_outdated => "false"}) %></h4>
+                    comments_lead_thread_path(communication.related, communication.communication_id) %>
+    </h4>
     <div class="news_text">
       <% if communication.archived_email? %>
       <%= t("agent_home.show.view.communication.email") %>: <%= communication.email %><br />

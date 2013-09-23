@@ -1,0 +1,104 @@
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r">
+    <ol class="align_inputs">
+      <li class="header">
+        <h3><%= t("surveys_management.surveys.edit.view.questions") %></h3>
+      </li>
+    </ol>
+  </fieldset>
+</div>
+
+<ol class="draggable_questions_container">
+  <% SurveyQuestion::QUESTION_TYPES.each do |qtype| %>
+      <li class="draggable_question_type survey_question" data-qtype="<%= qtype %>" data-id="null"><div class="bt bt_grey bt_icon"><span><p><%= image_tag("/images/bt_icons/#{qtype}.png") %><%= t("surveys_management.shared.question_types.type#{qtype}") %></p></span></div></li>
+  <% end %>
+</ol>
+
+<ol class="survey_questions_container sortable">
+  <%= render :partial => "survey_questions", :locals => { :survey_questions => @survey.survey_questions.without_nested } %>
+</ol>
+
+<script>
+    function removeQuestion(id){
+        if(confirm("<%= t("common.confirmation") %>")){
+            $.ajax({url: "/surveys_management/surveys/<%= @survey.id %>/survey_questions/" + id, type: "DELETE"});
+        }
+    }
+
+    function editQuestion(id, parent_id){
+        $.colorbox({href: "/surveys_management/surveys/<%= @survey.id %>/survey_questions/" + id + "/edit?parent_id=" + (!!parent_id ? parent_id : ''),
+            width: 700, maxHeight: 850, overlayClose: false
+        });
+    }
+
+    function updateQuestionsOrder(){
+        $.post("/surveys_management/surveys/<%= @survey.id %>/survey_questions/sort", { ids: serialize() });
+    }
+
+    $(function(){
+        $("ol.survey_questions_container").nestedSortable({
+            placeholder: 'placeholder',
+            forcePlaceholderSize:true,
+            handle: 'div',
+            helper: 'clone',
+            items: 'li',
+            opacity: .6,
+            revert: 250,
+            tabSize: 25,
+            tolerance: 'pointer',
+            toleranceElement: '> div',
+            update: function(event, ui) {
+                if(ui.item.hasClass("draggable_question")){
+                    currentId = ui.item.attr("data-id");
+                    prevParent = findQuestionParent(currentId, hQuestions);
+                    currentParent = findQuestionParent(currentId, hSerialize());
+                    if(prevParent != currentParent){
+                        if(currentParent != null){
+                            editQuestion(currentId, currentParent)
+                        } else {
+                            ui.item.find('span.branched-option').remove();
+                            $.ajax({url: "/surveys_management/surveys/<%= @survey.id %>/survey_questions/" + currentId + "/remove_parent", type: "PUT"});
+                            updateQuestionsOrder();
+                        }
+                    } else {
+                        updateQuestionsOrder();
+                    }
+
+                    hQuestions = hSerialize();
+                }
+            },
+            maxLevels: 2
+        }).disableSelection();
+
+        $("li.draggable_question_type").draggable({
+            revert: "invalid",
+            connectToSortable:"ol.survey_questions_container",
+            helper:"clone",
+            stop: function(event, ui){
+                setTimeout(function(){
+                    orderArray = serialize();
+                    position = orderArray.indexOf("null") + 1;
+                    if(position > 0){
+                        currentParent = findQuestionParent("null", hSerialize());
+                        if($(ui.helper).attr("data-qtype") == 6){
+                            $.post("/surveys_management/surveys/<%= @survey.id %>/survey_questions", {survey_question: {tmp_position: position, question_type: "6"}})
+                        } else {
+                            $.colorbox({href: "/surveys_management/surveys/<%= @survey.id %>/survey_questions/new?position=" + position + "&question_type=" + $(ui.helper).attr("data-qtype") + "&parent_id=" + (!!currentParent ? currentParent : ''),
+                                width: 700, height: $(ui.helper).attr("data-qtype") == 4 ? 850: 240, overlayClose: false,
+                                onClosed: function(){
+                                    $('ol.survey_questions_container').find("li[data-id=null]").remove();
+                                }
+                            });
+                        }
+                    }
+                }, 600);
+            }
+        });
+    });
+
+    var hQuestions = [];
+
+    $(function(){
+        hQuestions = hSerialize();
+    });
+</script>

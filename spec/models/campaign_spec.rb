@@ -32,10 +32,8 @@ describe Campaign do
       CallResult.make!(:contact => @contact4, :result => @result2, :creator => @call_centre_agent2)
 
       [@call_centre_agent1, @call_centre_agent2].each do |user|
-        (@campaign.start_date..@campaign.end_date).each do |d|
-          UserSessionLog.create(:start_time => Time.parse("#{d.to_s} 9:00"), :end_time => Time.parse("#{d.to_s} 17:00"),
-                              :user_id => user.id, :campaign_id => @campaign.id, :log_type => 1, :skip_other_logs => true)
-        end
+        UserSessionLog.create(:start_time => Time.parse("#{Date.today.to_s} 9:00"), :end_time => Time.parse("#{Date.today.to_s} 17:00"),
+                            :user_id => user.id, :campaign_id => @campaign.id, :log_type => 1, :skip_other_logs => true)
       end
       @campaign.reload
     end
@@ -201,16 +199,17 @@ describe Campaign do
       @contact1.agent_id.should == @call_centre_agent2.id
     end
 
+    # notifications for agents had been temporarily disabled (call_result.rb -> process_for_call_back)
     it "should remove notifications when contact is reassigned" do
       @contact1.assign_agent @call_centre_agent1
       CallResult.make!(:call_back, :contact => @contact1, :creator => @call_centre_agent1)
-      @call_centre_agent1.notifications.count.should == 1
+      @call_centre_agent1.notifications.count.should == 0
       @call_centre_agent2.notifications.count.should == 0
 
       @campaign.assign [@call_centre_agent2.id]
       @contact1.reload
       @call_centre_agent1.notifications.count.should == 0
-      @call_centre_agent2.notifications.count.should == 1
+      @call_centre_agent2.notifications.count.should == 0
     end
 
   end

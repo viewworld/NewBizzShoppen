@@ -1,0 +1,80 @@
+<column-mc:>
+  <header>
+    <param:content>
+      <%= t("advanced_export.new.header") %>
+    </param:content>
+  </header>
+
+  <%= semantic_form_for @advanced_export, :url => callers_campaign_advanced_export_path(@campaign, :format => :xls) do |f| %>
+      <%= f.input :campaign_ids, :as => :hidden %>
+      <%= f.input :agent_ids, :as => :hidden %>
+      <%= f.input :date_from, :as => :hidden %>
+      <%= f.input :date_to, :as => :hidden %>
+      <frm title="#{t('advanced_export.new.search')}">
+        <param:content>
+          <div class="pdd_10 no_pdd_t">
+            <div class="column_left">
+              <fieldset class="inputs labels_ta_r">
+                <legend class="label">
+                  <label><%= t("advanced_export.new.select_results") %></label>
+                </legend>
+                <ol>
+                <% @campaign.results.each do |result| %>
+                  <li class="pdd_10 no_pdd_lr">
+                    <%= label_tag "advanced_export[result_ids][#{result.id}]" do %>
+                        <%= check_box_tag "advanced_export[result_ids][#{result.id}]", result.id,
+                                          @advanced_export.result_ids.include?(result.id),
+                                          :class => "result", :name => "advanced_export[result_ids][]" %>
+                        <%= result.name.humanize %>
+                    <% end %>
+                    <ol class="pdd_20 no_pdd_tb">
+                      <% result.result_fields.each do |result_field| %>
+                        <li>
+                          <%= label_tag "advanced_export[result_fields][result_#{result.id}][#{result_field.id}]" do %>
+                            <%= check_box_tag "advanced_export[result_fields][result_#{result.id}][#{result_field.id}]", result_field.id,
+                                              @advanced_export.result_ids.include?(result.id),
+                                              :name => "advanced_export[result_fields][result_#{result.id}][]" %>
+                            <%= result_field.name %>
+                          <% end %>
+                        </li>
+                      <% end %>
+                    </ol>
+                  </li>
+                <% end %>
+                </ol>
+              </fieldset>
+              <div id="result_fields">
+              </div>
+              <clb/>
+            </div>
+
+            <div class="column_right">
+              <fieldset class="inputs labels_ta_r">
+                <ol>
+                  <%= f.input :contact_columns, :collection => Contact::CSV_ATTRS.map{|attr| [attr.humanize, attr]},
+                              :as => :check_boxes, :label => t("advanced_export.new.select_contact_fields") %>
+                </ol>
+              </fieldset>
+              <clb/>
+            </div>
+            <clb/>
+          </div>
+        </param:content>
+
+        <param:actions>
+          <ibt c="fltri">
+            <%= f.submit t("advanced_export.new.export") %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+
+  <script>
+    $(function(){
+        $('.result').click(function(){
+            $(this).closest('li').find('ol input').attr('checked', $(this).attr('checked'));
+        });
+    })
+  </script>
+
+</column-mc:>

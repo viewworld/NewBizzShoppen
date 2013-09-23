@@ -18,9 +18,11 @@ module Mail
       archived_email.body = mail.body.raw_source if mail.body
       archived_email.save
 
-      response = ::Postmark.send_through_postmark(mail)
-
-      archived_email.update_attributes(:message_id => response["MessageID"], :error_code => response["ErrorCode"], :status => ArchivedEmail::SENT)
+      if response = ::Postmark.send_through_postmark(mail)
+        archived_email.update_attributes(:message_id => response["MessageID"], :error_code => response["ErrorCode"], :status => ArchivedEmail::SENT)
+      else
+        archived_email.update_attributes(:status => ArchivedEmail::NOT_SENT)
+      end
     end
 
   end
