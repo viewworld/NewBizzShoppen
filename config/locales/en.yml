@@ -5123,6 +5123,7 @@ en:
           send_to_newsletters_confirmation: "Are you sure to send %{survey_name} survey to %{subscribers_count} newsletter subscribers?"
           last_sent_at_column: "Last sent at"
           last_sent_recipients_count_column: "Last sent to # subscribers"
+          send_to_newsletters_warning: "No list selected, please select a list and try again."
       edit:
         view:
           edit_question: "Edit"

@@ -5,7 +5,9 @@
   <%= semantic_form_for @survey, :url => surveys_management_survey_path(@survey) do |form| %>
       <frm>
         <param:header>
-            <%= render :partial => "menu", :locals => { :action => params[:action] } %>
+            <div id="survey_menu">
+              <%= render :partial => "menu", :locals => { :action => params[:action] } %>
+            </div>
         </param:header>
         <param:content>
             <%= render :partial => 'form', :locals => {:form => form} %>

@@ -20,6 +20,7 @@ class SurveysManagement::SurveysController < SurveysManagement::SurveysManagemen
     update! do |success, failure|
       success.html { redirect_to surveys_management_surveys_path }
       failure.html { render 'edit' }
+      success.js {  }
     end
   end
 

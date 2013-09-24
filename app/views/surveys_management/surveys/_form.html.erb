@@ -50,9 +50,9 @@
           </div>
 
           <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
-            <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("surveys_management.surveys.form.move_right"), "javascript:move_selected('all_lists','survey_newsletter_list_ids_')", :id => "move_right" %></p>
+            <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("surveys_management.surveys.form.move_right"), "javascript:move_selected('all_lists','survey_newsletter_list_ids_');autosave_newsletter_lists()", :id => "move_right" %></p>
 
-            <p class="ta_c pdd_5"><%= bt_link_to nil, t("surveys_management.surveys.form.move_left"), "javascript:move_selected('survey_newsletter_list_ids_','all_lists')", :id => "move_left" %></p>
+            <p class="ta_c pdd_5"><%= bt_link_to nil, t("surveys_management.surveys.form.move_left"), "javascript:move_selected('survey_newsletter_list_ids_','all_lists');autosave_newsletter_lists()", :id => "move_left" %></p>
           </div>
 
           <div class="grid_240 fltl">
@@ -163,5 +163,12 @@
     function fetch_lists() {
         $.get("<%= lists_for_owner_newsletters_newsletter_campaigns_path(:format => :js) -%>",
                 "owner_email=" + $('#survey_newsletter_owner_email').val());
+    }
+
+    function autosave_newsletter_lists() {
+        var ids = $('#survey_newsletter_list_ids_').children().map( function() { return $(this).val() } ).toArray();
+        ids.push("");
+        $.ajax({url: "/surveys_management/surveys/<%= @survey.id %>.js",
+            data: { "survey" : { "newsletter_list_ids": ids } }, type: "PUT"})
     }
 </script>
