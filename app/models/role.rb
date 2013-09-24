@@ -26,6 +26,10 @@ class Role
     false
   end
 
+  def new_record?
+    false
+  end
+
   def persisted?
     true
   end
