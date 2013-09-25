@@ -303,7 +303,7 @@ class Campaign < ActiveRecord::Base
       contact.creator_id = current_user.id
       contact.creator_type = "User"
       contact.category_id = campaign.category_id
-      contact.creator_name = current_user
+      contact.creator_name = current_user.to_s
       if current_user.has_any_role?(:agent, :call_centre_agent)
         contact.agent_id = current_user.id
       end

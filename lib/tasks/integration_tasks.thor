@@ -325,4 +325,14 @@ class IntegrationTasks < Thor
     #cloning templates for Campaigns
     Campaign.all.each(&:save)
   end
+
+  desc "correct_creator_name", ""
+  def correct_creator_name
+    ids = AbstractLead.where("substring(creator_name, '^([0-9]*)$')  != ''").select("DISTINCT(creator_name)").map { |i| i.creator_name.to_i }
+    ids.each do |id|
+      if (user = User.find_by_id(id))
+        AbstractLead.update_all(['creator_name = ?', user.full_name], ["(substring(creator_name, '^([0-9]*)$'))::int = ?", id])
+      end
+    end
+  end
 end

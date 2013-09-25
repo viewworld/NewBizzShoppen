@@ -341,7 +341,7 @@ class Category < ActiveRecord::Base
     lead.creator_id = current_user.id
     lead.creator_type = current_user.with_role.class.to_s
     lead.category_id = id
-    lead.creator_name = current_user
+    lead.creator_name = current_user.to_s
     lead
   end
 
