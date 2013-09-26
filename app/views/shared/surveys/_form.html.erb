@@ -1,7 +1,7 @@
 <%= form.fields_for :survey_answers, @survey_recipient.survey_answers.sort { |sa1, sa2| sa1.survey_question.position <=> sa2.survey_question.position } do |f| %>
     <% question = f.object.survey_question %>
     <% if question.is_of_type?(:heading) %>
-        <div class="pdd_10 no_pdd_t rltv">
+        <div pagebreak-id="<%= question.closest_page_break_id %>" class="pdd_10 no_pdd_t rltv">
           <fieldset class="inputs labels_ta_r labels_200">
             <ol class="align_inputs">
                 <li class="header">
@@ -10,10 +10,8 @@
             </ol>
           </fieldset>
         </div>
-    <% elsif question.is_of_type?(:break_page) %>
-        <div class="clb hl pdd_20"></div>
     <% else %>
-        <div class="question<%= " question_branch_#{question.parent_id} option_#{question.branch_option_id}".html_safe if question.parent_id.present? %>"<%= 'style="display: none;"'.html_safe  if question.parent_id.present? %>>
+        <div pagebreak-id="<%= question.closest_page_break_id %>" class="question<%= " question_branch_#{question.parent_id} option_#{question.branch_option_id}".html_safe if question.parent_id.present? %>"<%= 'style="display: none;"'.html_safe  if question.parent_id.present? %>>
         <div class="pdd_10 no_pdd_t rltv">
           <fieldset class="inputs labels_ta_r labels_200">
             <ol class="align_inputs">
@@ -65,6 +63,17 @@
     <% end %>
 <% end %>
 
+<% if @survey_recipient.survey.pages.count > 1 %>
+    <div class="pagination">
+    <% @survey_recipient.survey.pages.each_with_index do |page, i| %>
+        <div class="page-item" page-id="<%= page %>" style="display: inline-block">
+            <div class="inactive" style="display: inline-block"><em><%= i+1 %></em></div>
+            <div class="active" style="display: inline-block"><%= link_to (i+1).to_s, "javascript:void(0)", :onclick => "showPage(#{page})", :rel => "next" %></div>
+        </div>
+    <% end %>
+    </div>
+<% end %>
+
 <script type="text/javascript">
   function showQuestionsBranch(question_id, option_id){
       $('div.question.question_branch_' + question_id).hide();
@@ -73,10 +82,23 @@
       $('div.question.question_branch_' + question_id + '.option_' + option_id).show();
   }
 
+  function showPage(page){
+      $('div[pagebreak-id]').hide();
+      $('div[pagebreak-id=' + page + ']').show();
+
+      $('div.page-item div.inactive').hide();
+      $('div.page-item[page-id=' + page + '] div.inactive').show();
+      $('div.page-item div.active').show();
+      $('div.page-item[page-id=' + page + '] div.active').hide();
+  }
+
   $(function(){
       <% @survey_recipient.survey_answers.select { |sa| sa.survey_question.is_branched? and sa.survey_option_ids.present? }.each do |survey_answer| %>
         showQuestionsBranch(<%= survey_answer.survey_question_id %>, <%= survey_answer.survey_option_ids.first %>);
       <% end %>
       $(".datepicker").datepicker({ dateFormat: '<%= t("date.formats.datepicker") -%>' });
+      <% if @survey_recipient.survey.pages.count > 1 %>
+        showPage(<%= @survey_recipient.survey.pages.first %>);
+      <% end %>
   });
 </script>

@@ -44,6 +44,10 @@ class SurveyQuestion < ActiveRecord::Base
     SurveyQuestion.find_by_id(parent_id)
   end
 
+  def closest_page_break_id
+    survey.survey_questions.where("position >= ?", position).where(:question_type => BREAK_PAGE_TYPE).first.try(:id) || 0
+  end
+
   private
 
   def move_to_tmp_position

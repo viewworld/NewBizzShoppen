@@ -89,6 +89,12 @@ class Survey < ActiveRecord::Base
     "http://erhvervsanalyse.dk/s/#{uuid}"
   end
 
+  def pages
+    _pages = survey_questions.map { |q| q.is_of_type?(:break_page) ? q.id : nil  }
+    _pages.push(0) if _pages.last.nil?
+    _pages.compact
+  end
+
   private
 
   def can_be_destroyed
