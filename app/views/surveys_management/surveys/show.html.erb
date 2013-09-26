@@ -1,6 +1,10 @@
 <column-mc:>
 <header back="true"><%= @survey.name %> (<%= t("surveys_management.surveys.show.view.preview") %>)</header>
 
+<% unless @survey.welcome_page.blank? %>
+  <%= raw @survey.welcome_page %>
+<% end %>
+
 <%= semantic_form_for @survey_recipient, :url => survey_recipient_path do |form| %>
     <frm>
       <param:content>
@@ -12,5 +16,9 @@
         </ibt>
       </param:actions>
     </frm>
+<% end %>
+
+<% unless @survey.thank_you_page.blank? %>
+  <%= raw @survey.thank_you_page %>
 <% end %>
 </column-mc:>
