@@ -1,8 +1,6 @@
 class NewsletterSourceSynch < ActiveRecord::Base
   include ::CommonNewsletterSynch
 
-  attr_accessor :campaign_monitor_synch
-
   private
 
   def queue_name
@@ -39,7 +37,9 @@ class NewsletterSourceSynch < ActiveRecord::Base
     newsletter_list.newsletter_subscribers.each do |subscriber|
       newsletter_list.newsletter_list_subscribers.create(params_to_copy(subscriber))
     end
-    newsletter_list.newsletter_synches.create(:use_delayed_job => use_delayed_job)
+    if campaign_monitor_synch
+      newsletter_list.newsletter_synches.create(:use_delayed_job => false, :notificable => notificable)
+    end
     touch
   end
 end
