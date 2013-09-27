@@ -3,6 +3,8 @@ class NewsletterList < ActiveRecord::Base
   has_many :campaign_monitor_responses, :as => :resource
   has_many :newsletter_synches
   has_many :newsletter_subscribers
+  has_many :newsletter_list_subscribers
+  has_many :newsletter_source_synches
   has_many :custom_sources, :class_name => "NewsletterSource", :conditions => {:source_type => NewsletterSource::CUSTOM_SOURCE}
   has_and_belongs_to_many :newsletter_campaigns
 
@@ -10,7 +12,7 @@ class NewsletterList < ActiveRecord::Base
   before_save :extract_sourceable_objects, :extract_tag_groups
   before_destroy :cm_delete!, :if => :cm_exists?
   after_create do
-    self.newsletter_synches.create(:use_delayed_job => true)
+    self.newsletter_source_synches.create(:use_delayed_job => true, :campaign_monitor_synch => true)
   end
 
   after_save :check_if_owner_is_changed
@@ -81,7 +83,7 @@ class NewsletterList < ActiveRecord::Base
         cm_delete!
       end
       cm_synchronize!
-      newsletter_synches.create(:use_delayed_job => true)
+      newsletter_source_synches.create(:use_delayed_job => true, :campaign_monitor_synch => true)
     end
   end
 
@@ -179,6 +181,6 @@ class NewsletterList < ActiveRecord::Base
   end
 
   def to_s
-    "#{name} (#{newsletter_subscribers.count})"
+    "#{name} (#{newsletter_list_subscribers.count})"
   end
 end
