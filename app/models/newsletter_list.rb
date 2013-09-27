@@ -12,7 +12,7 @@ class NewsletterList < ActiveRecord::Base
   before_save :extract_sourceable_objects, :extract_tag_groups
   before_destroy :cm_delete!, :if => :cm_exists?
   after_create do
-    self.synchronize!
+    self.synchronize!(:sources_synch => true)
   end
 
   after_save :check_if_owner_is_changed
@@ -185,7 +185,7 @@ class NewsletterList < ActiveRecord::Base
   end
 
   def synchronize!(*args)
-    options = { :sources_synch => true, :campaign_monitor_synch => true, :use_delayed_job => true, :notificable => nil }.merge(args.extract_options!)
+    options = { :sources_synch => synch_with_sources?, :campaign_monitor_synch => true, :use_delayed_job => true, :notificable => nil }.merge(args.extract_options!)
     if options[:sources_synch]
       newsletter_source_synches.create(:use_delayed_job => options[:use_delayed_job], :campaign_monitor_synch => options[:campaign_monitor_synch], :notificable => options[:notificable])
     elsif options[:campaign_monitor_synch]

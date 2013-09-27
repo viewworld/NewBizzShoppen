@@ -4219,6 +4219,7 @@ en:
       newsletter_list:
         name: "Name"
         owner_email: "Owner email"
+        synch_with_sources: "Keep synchronized with sources"
       newsletter_campaign:
         name: "Name"
         owner_email: "Owner email"
