@@ -21,8 +21,11 @@ class NewsletterSourceSynch < ActiveRecord::Base
 
   def params_to_copy(subscriber)
     params = {}
-    if subscriber.subscriber_type == 'Contact'
-      (common_attrs + contact_attrs).each do |attr|
+    if %w(Contact Lead Deal).include?(subscriber.subscriber_type)
+      common_attrs.each do |attr|
+        params[attr] = subscriber.send(attr)
+      end
+      contact_attrs.each do |attr|
         params[attr] = subscriber.subscriber.send(attr)
       end
     else
@@ -33,10 +36,26 @@ class NewsletterSourceSynch < ActiveRecord::Base
     params
   end
 
-  def process!
+  def params_to_update(subscriber)
+    params = {}
+    attrs = %w(Contact Lead Deal).include?(subscriber.class.to_s) ? contact_attrs : basic_attrs
+    attrs.each do |attr|
+      params[attr] = subscriber.send(attr)
+    end
+    params
+  end
+
+  def synchronize_with_sources!
+    newsletter_list.newsletter_list_subscribers.from_sources.each do |list_subscriber|
+      NewsletterListSubscriber.update_all(params_to_update(list_subscriber.subscriber), { :id => list_subscriber.id })
+    end
     newsletter_list.newsletter_subscribers.each do |subscriber|
       newsletter_list.newsletter_list_subscribers.create(params_to_copy(subscriber))
     end
+  end
+
+  def process!
+    synchronize_with_sources!
     if campaign_monitor_synch
       newsletter_list.newsletter_synches.create(:use_delayed_job => false, :notificable => notificable)
     end

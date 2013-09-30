@@ -4,6 +4,7 @@ class CreateNewsletterListSubscribers < ActiveRecord::Migration
       t.integer :newsletter_list_id
       t.string :company_name
       t.string :company_phone_number
+      t.string :company_website
       t.string :address_line_1
       t.string :address_line_2
       t.string :address_line_3
