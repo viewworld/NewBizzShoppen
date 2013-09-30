@@ -47,7 +47,7 @@ class NewsletterSourceSynch < ActiveRecord::Base
 
   def synchronize_with_sources!
     newsletter_list.newsletter_list_subscribers.from_sources.each do |list_subscriber|
-      NewsletterListSubscriber.update_all(params_to_update(list_subscriber.subscriber), { :id => list_subscriber.id })
+      NewsletterListSubscriber.update_all(params_to_update(list_subscriber.subscriber), { :id => list_subscriber.id }) if list_subscriber.subscriber
     end
     newsletter_list.newsletter_subscribers.each do |subscriber|
       newsletter_list.newsletter_list_subscribers.create(params_to_copy(subscriber))
