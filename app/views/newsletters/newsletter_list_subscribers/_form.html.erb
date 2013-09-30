@@ -1,0 +1,39 @@
+<div class="column_left">
+  <div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r labels_180">
+      <ol class="align_inputs">
+        <li class="header">
+          <h3><%= t("shared.leads.form.company_information") %></h3>
+          <%= form.input :company_name, :hint => hint_for(@newsletter_list_subscriber, :company_name) %> <%= link_to(image_tag("icons/google_icon.png"), "http://www.google.com/search?q=#{@newsletter_list_subscriber.company_name.gsub(' ', "+")}", :target => "blank", :id => "google_search_for_company_name") unless @newsletter_list_subscriber.new_record? %>
+          <%= form.input :company_phone_number, :hint => hint_for(@newsletter_list_subscriber, :company_phone_number) %>
+          <%= form.input :company_website, :hint => hint_for(@newsletter_list_subscriber, :company_website) %>
+          <%= form.input :address_line_1, :hint => hint_for(@newsletter_list_subscriber, :address_line_1) %>
+          <%= form.input :address_line_2, :hint => hint_for(@newsletter_list_subscriber, :address_line_2) %>
+          <%= form.input :address_line_3, :hint => hint_for(@newsletter_list_subscriber, :address_line_3) %>
+          <%= form.input :zip_code, :hint => hint_for(@newsletter_list_subscriber, :zip_code) %>
+          <%= form.input :country_id, :as => :select, :collection => Country.all, :input_html => {:onchange => "refresh_phone_codes(); refresh_regions_list('lead');"}, :hint => hint_for(@newsletter_list_subscriber, :country_id) %>
+          <%= form.input :region_id, :as => :select, :collection => @newsletter_list_subscriber.country.present? ? @newsletter_list_subscriber.country.regions : [], :hint => hint_for(@newsletter_list_subscriber, :region_id) %>
+          <%= form.input :company_vat_no, :hint => hint_for(@newsletter_list_subscriber, :company_vat_no) %>
+          <%= form.input :company_ean_number, :hint => hint_for(@newsletter_list_subscriber, :company_ean_number) %>
+      </ol>
+    </fieldset>
+  </div>
+</div>
+<div class="column_right">
+  <div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r labels_160">
+      <ol class="align_inputs">
+        <li class="header">
+          <h3><%= t("shared.leads.form.contact_information") %></h3>
+        </li>
+        <%= form.input :contact_name, :hint => hint_for(@newsletter_list_subscriber, :contact_name) %>
+        <%= form.input :contact_title, :hint => hint_for(@newsletter_list_subscriber, :contact_title) %>
+        <%= form.input :direct_phone_number, :hint => hint_for(@newsletter_list_subscriber, :direct_phone_number) %>
+        <%= form.input :phone_number, :hint => hint_for(@newsletter_list_subscriber, :phone_number) %>
+        <%= form.input :email_address, :hint => hint_for(@newsletter_list_subscriber, :email_address) %>
+        <%= form.input :linkedin_url, :hint => hint_for(@newsletter_list_subscriber, :linkedin_url) %>
+        <%= form.input :facebook_url, :hint => hint_for(@newsletter_list_subscriber, :facebook_url) %>
+      </ol>
+    </fieldset>
+  </div>
+</div>

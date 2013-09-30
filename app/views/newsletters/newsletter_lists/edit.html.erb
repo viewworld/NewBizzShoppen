@@ -10,6 +10,7 @@
       <ul class="header_actions">
         <li class="last">
           <%= bt_link_to :plus, t("newsletters.newsletter_lists.index.view.synchronize"),  newsletters_newsletter_list_newsletter_synchronizations_path(@newsletter_list), :method => :post %>
+          <%= bt_link_to :plus, t("newsletters.newsletter_lists.index.view.new_subscriber"),  new_newsletters_newsletter_list_newsletter_list_subscriber_path(@newsletter_list) %>
         </li>
       </ul>
     </param:actions>

@@ -5011,6 +5011,7 @@ en:
           synchronization_scheduled: "Synchronization process will perform in the background. You will be notified when it's done."
           unsubscribe: "Unsubscribe"
           login_info: "Campaign Monitor login info"
+          new_subscriber: "New subscriber"
       new:
         view:
           header: "New newsletter list"
@@ -5085,6 +5086,17 @@ en:
           notice_queued_for_sending_to_subscribers: "Campaign has been successfully queued for sending to subscribers."
           notice_queued_for_sending_as_draft: "Campaign has been successfully queued for sending as draft."
           notice_not_sent: "Campaign could not be sent due to errors %{errors}"
+    newsletter_list_subscribers:
+      new:
+        view:
+          header: "New subscriber"
+          button_create: "Create"
+          button_cancel: "Cancel"
+      edit:
+        view:
+          header: "Edit subscriber"
+          button_update: "Save"
+          button_cancel: "Cancel"
   tags:
     common:
       assign_tags: "Assign tags"

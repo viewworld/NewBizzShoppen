@@ -111,6 +111,7 @@ Nbs::Application.routes.draw do
     root :to => "newsletter_lists#index"
     resources :newsletter_lists do
       resources :newsletter_synchronizations
+      resources :newsletter_list_subscribers
       collection do
         get 'sourceable_for_search'
       end

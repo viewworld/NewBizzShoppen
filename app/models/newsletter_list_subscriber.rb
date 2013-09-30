@@ -2,6 +2,7 @@ class NewsletterListSubscriber < ActiveRecord::Base
   belongs_to :newsletter_list
   belongs_to :subscriber, :polymorphic => true, :foreign_key => 'subscriber_id'
   belongs_to :creator, :polymorphic => true, :foreign_key => 'creator_id'
+  belongs_to :country
 
   validates :email_address, :presence => true
   validates_uniqueness_of :email_address, :scope => :newsletter_list_id
