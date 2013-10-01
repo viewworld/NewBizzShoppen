@@ -52,7 +52,7 @@ class Survey < ActiveRecord::Base
 
   def send_by_email(recipient)
     if recipient.is_a?(NewsletterList)
-      recipient.newsletter_subscribers.each do |subscriber|
+      recipient.newsletter_list_subscribers.each do |subscriber|
         create_survey_recipient(subscriber, true)
       end
     else
@@ -74,7 +74,7 @@ class Survey < ActiveRecord::Base
   end
 
   def total_subscribers
-    newsletter_lists.map { |nl| nl.newsletter_subscribers.count }.sum
+    newsletter_lists.map { |nl| nl.newsletter_list_subscribers.count }.sum
   end
 
   def total_answers
