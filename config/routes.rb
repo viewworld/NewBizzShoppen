@@ -442,6 +442,13 @@ Nbs::Application.routes.draw do
     end
   end
 
+  resource :subscribers_advanced_import, :only => [:create, :show] do
+    collection do
+      post 'choose'
+      post 'preview'
+    end
+  end
+
   resources :agent_accounts, :only => [:new, :create]
   resources :supplier_accounts, :only => [:new, :create]
   resources :member_accounts, :only => [:new, :create]

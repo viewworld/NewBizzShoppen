@@ -1,0 +1,25 @@
+<column-mc:>
+
+  <header><%= t("subscribers_advanced_import.show.view.header") %></header>
+
+  <% form_tag choose_subscribers_advanced_import_path, :method => :post, :multipart => true, :id => "advanced_import_form" do %>
+      <frm title="#{t('subscribers_advanced_import.show.view.title')}">
+        <param:content>
+          <div class="pdd_10 no_pdd_t">
+            <fieldset class="inputs labels_ta_r labels_180">
+              <ol class="align_inputs">
+                <%= file_field_tag 'attachment', :accept => 'spreadsheet/ods,spreadsheet/doc,spreadsheet/xdoc', :class => "fltl" %>
+                <%= select_tag :object_id, options_for_select(@lists) %>
+              </ol>
+            </fieldset>
+          </div>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= submit_tag t("advanced_import.show.view.button"), :name => "commit_create" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+
+</column-mc:>

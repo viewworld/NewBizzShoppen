@@ -25,6 +25,7 @@ class NewsletterList < ActiveRecord::Base
   scope :not_archived, where(:is_archived => false)
 
   include CommonNewsletter
+  include AdvancedImport
 
   private
 
@@ -191,5 +192,41 @@ class NewsletterList < ActiveRecord::Base
     elsif options[:campaign_monitor_synch]
       newsletter_synches.create(:use_delayed_job => options[:use_delayed_job], :notificable => options[:notificable])
     end
+  end
+
+  def self.advanced_import_subscribers_from_xls(options)
+    return false unless advanced_import_field_blank_validation(options[:subscriber_fields], options[:spreadsheet_fields])
+    subscriber_fields, spreadsheet_fields = options[:subscriber_fields].split(","), options[:spreadsheet_fields].split(",")
+    return false unless advanced_import_field_size_validation(subscriber_fields, spreadsheet_fields)
+
+    headers, spreadsheet = advanced_import_headers(options[:spreadsheet])
+    merged_fields = advanced_import_merged_fields(headers, subscriber_fields, spreadsheet_fields)
+    counter, errors = 0, []
+
+    newsletter_list = NewsletterList.find(options[:object_id])
+
+    ActiveRecord::Base.transaction do
+      2.upto(spreadsheet.last_row) do |line|
+        subscriber = newsletter_list.newsletter_list_subscribers.new
+        import_fields.each { |field| subscriber = assign_field(subscriber, field, spreadsheet.cell(line, merged_fields[field]), spreadsheet.celltype(line, merged_fields[field])) }
+        subscriber.creator = options[:current_user]
+        if subscriber.save
+          counter += 1
+        else
+          errors << "[line: #{line}] #{subscriber.errors.map { |k, v| "#{k} #{v}" }.*(", ")}"
+          raise ActiveRecord::Rollback
+        end
+      end
+    end
+
+    {:counter => "#{counter} / #{spreadsheet.last_row-1}", :errors => errors.*("<br/>")}
+  end
+
+  def self.import_fields
+    NewsletterListSubscriber::CSV_ATTRS
+  end
+
+  def self.required_import_fields
+    NewsletterListSubscriber::REQUIRED_FIELDS
   end
 end

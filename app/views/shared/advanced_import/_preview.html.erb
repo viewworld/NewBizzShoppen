@@ -29,7 +29,7 @@
             <%= hidden_field_tag :object_field, @object_field %>
             <%= hidden_field_tag :spreadsheet_field, @spreadsheet_field %>
             <%= hidden_field_tag :attachment, @attachment_file %>
-            <% if ["contact", "supplier", "lead"].include?(model_name) %>
+            <% if ["contact", "supplier", "lead", "subscriber"].include?(model_name) %>
                 <%= hidden_field_tag :object_id, @object_id %>
             <% end %>
             <% if model_name == "contact" %>

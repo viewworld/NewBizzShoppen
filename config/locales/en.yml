@@ -5225,3 +5225,18 @@ en:
       export: "Export as XLS"
     create:
       summary: Summary
+  subscribers_advanced_import:
+    show:
+      view:
+        header: "Subscribers import"
+        title: "Advanced import - create new subscribers from spreadsheet."
+    choose:
+      view:
+        header: "Subscribers import - fields selection"
+        object_fields_label: "Subscriber fields"
+    preview:
+      view:
+        header: "Subscribers import - preview"
+    create:
+      flash:
+        success: "Import completed. %{counter} subscribers have been successfully imported"
