@@ -459,9 +459,27 @@ class Campaign < ActiveRecord::Base
   end
 
   def import_contacts_from_lists!
-    NewsletterSubscriber.where("newsletter_list_id in (?)", newsletter_list_ids).where("email_address NOT IN (?)", contacts.empty? ? Array("empty") : contacts.select("email_address").map(&:email_address)).select("DISTINCT ON (email_address) *").each do |subscriber|
-      contacts.create(:email_address => subscriber.email_address, :creator => creator, :creator_name => creator.full_name, :company_name => subscriber.company_name, :country_id => country_id,
-                      :category_id => category_id, :contact_name => subscriber.name, :company_phone_number => "(missing phone)")
+    NewsletterListSubscriber.where(:newsletter_list_id => newsletter_list_ids).where("email_address NOT IN (?)", contacts.empty? ? Array("empty") : contacts.select("email_address").map(&:email_address)).select("DISTINCT ON (email_address) *").each do |subscriber|
+      params = {}
+      NewsletterListSubscriber::CSV_ATTRS.map(&:to_sym).each do |attr|
+        params[attr] = subscriber.send(attr)
+      end
+      params[:company_phone_number] = "(missing phone)" if params[:company_phone_number].blank?
+      contacts.create(params.merge(:creator => creator, :creator_name => creator.full_name, :category_id => category_id, :country_id => country_id, :newsletter_list_id => subscriber.newsletter_list_id))
+    end
+    true
+  end
+
+  def export_contacts_to_lists!
+    newsletter_lists.each do |newsletter_list|
+      contacts.where("leads.newsletter_list_id != (?)", newsletter_list.id).each do |contact|
+        params = {}
+        NewsletterListSubscriber::CSV_ATTRS.map(&:to_sym).each do |attr|
+          params[attr] = contact.send(attr)
+        end
+        params[:company_phone_number] = nil if params[:company_phone_number] == "(missing phone)"
+        newsletter_list.newsletter_list_subscribers.create(params.merge(:creator => creator, :subscriber_id => contact.id, :subscriber_type => "Contact"))
+      end
     end
     true
   end

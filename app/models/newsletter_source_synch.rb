@@ -15,17 +15,14 @@ class NewsletterSourceSynch < ActiveRecord::Base
     %w(email_address contact_name company_name login_key).each(&:to_sym)
   end
 
-  def contact_attrs
-    @attrs ||= newsletter_list.newsletter_list_subscribers.new.attributes.keys.except(NewsletterListSubscriber::RESTRICTED_ATTRS).each(&:to_sym)
-  end
-
   def params_to_copy(subscriber)
     params = {}
-    if %w(Contact Lead Deal).include?(subscriber.subscriber_type)
+    if %w(Contact Lead Deal AbstractLead).include?(subscriber.subscriber_type)
       common_attrs.each do |attr|
         params[attr] = subscriber.send(attr)
       end
-      contact_attrs.each do |attr|
+      params[:subscriber_type] = subscriber.subscriber.type if subscriber.subscriber_type == 'AbstractLead'
+      NewsletterListSubscriber::CSV_ATTRS.map(&:to_sym).each do |attr|
         params[attr] = subscriber.subscriber.send(attr)
       end
     else
