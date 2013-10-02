@@ -5026,6 +5026,7 @@ en:
             email_column: "E-mail"
             name_column: "Name"
             edit: "Edit"
+          sources_synch_pending: "Subscribers are being copied to list in the background"
       form:
         keyword_for_autocompleter: "Enter name of campaign, tag, subscription or role"
       archive:

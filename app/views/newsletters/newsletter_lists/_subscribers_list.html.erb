@@ -1,5 +1,6 @@
 <% if newsletter_subscribers.blank? %>
-    <%= blank_state_message %>
+    <% msg = (@newsletter_list.newsletter_sources.present? and @newsletter_list.newsletter_source_synches.present?) ? t("newsletters.newsletter_lists.edit.view.sources_synch_pending") : t("common.nothing_to_display") %>
+    <%= blank_state_message(msg) %>
 <% else %>
 <table id="newsletter_lists_table" class="generic">
   <thead>
