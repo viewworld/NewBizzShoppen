@@ -20,7 +20,6 @@ class CreateNewsletterListSubscribers < ActiveRecord::Migration
       t.string :email_address
       t.string :linkedin_url
       t.string :facebook_url
-      t.text :note
       t.string :login_key
       t.integer :creator_id
       t.string :creator_type
