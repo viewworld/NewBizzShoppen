@@ -32,6 +32,9 @@ class Nbs < Thor
     Settings.number_of_secondary_featured_deals = 3 if Settings.number_of_secondary_featured_deals.nil?
     Settings.cm_confirmation_email = Rails.env.production? ? "admin@fairleads.com" : "fairleads@selleo.com" if Settings.cm_confirmation_email.nil?
 
+    # additional header for fairdeals
+    Settings.fairdeals_subheader = "" if Settings.fairdeals_subheader.nil?
+
     Country.find_or_create_by_name("Denmark", :locale => "da", :detailed_locale => "da", :vat_rate => VatRate.new(:rate => 25))
     Country.find_or_create_by_name("United Kingdom", :locale => "en", :detailed_locale => "gb", :vat_rate => VatRate.new(:rate => 20))
 

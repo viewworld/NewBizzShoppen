@@ -52,6 +52,12 @@
     </div>
 
     <%= link_to image_tag("fairdeals/logo.png"), root_path, :class => "logo" %>
+
+    <% if Settings.fairdeals_subheader.present? -%>
+      <div class="subheader">
+         <%= Settings.fairdeals_subheader -%>
+      </div>
+    <% end -%>
   </div>
 
   <%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_supplier) && !current_user.big_buyer? %>
