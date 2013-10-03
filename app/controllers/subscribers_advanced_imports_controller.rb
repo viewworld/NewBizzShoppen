@@ -30,11 +30,6 @@ class SubscribersAdvancedImportsController < SecuredController
     end
   end
 
-  def destroy
-    @campaign.contacts.from_last_import.each { |c| c.destroy }
-    success(t("advanced_import.destroy.flash.success"))
-  end
-
   private
 
   def redirection_path
