@@ -464,7 +464,7 @@ class Campaign < ActiveRecord::Base
       params = NewsletterListSubscriber.subscriber_attribute_params(subscriber)
       params[:company_phone_number] = "(missing phone)" if params[:company_phone_number].blank?
       params[:company_name] = "(missing company name)" if params[:company_name].blank?
-      if contacts.where(subscriber.company_name.present? ? ["company_name = ?", subscriber.company_name] : ["email_address = ?", subscriber.email_address]).count == 0
+      unless subscriber.subscriber_type == 'Contact' and subscriber.subscriber.campaign_id == id
         contacts.create(params.merge(:creator => creator, :creator_name => creator.full_name, :category_id => category_id, :country_id => country_id,
                                      :newsletter_list_id => subscriber.newsletter_list_id, :newsletter_list_subscriber_id => subscriber.id))
       end
