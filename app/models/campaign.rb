@@ -459,11 +459,15 @@ class Campaign < ActiveRecord::Base
   end
 
   def import_contacts_from_lists!
-    NewsletterListSubscriber.where(:newsletter_list_id => newsletter_list_ids).where("email_address NOT IN (?)", contacts.empty? ? Array("empty") : contacts.select("email_address").map(&:email_address)).select("DISTINCT ON (email_address) *").each do |subscriber|
+    subscriber_ids = contacts.select("newsletter_list_subscriber_id").map(&:newsletter_list_subscriber_id)
+    NewsletterListSubscriber.where(:newsletter_list_id => newsletter_list_ids).where("id NOT IN (?)", subscriber_ids.empty? ? Array(0) : subscriber_ids).each do |subscriber|
       params = NewsletterListSubscriber.subscriber_attribute_params(subscriber)
       params[:company_phone_number] = "(missing phone)" if params[:company_phone_number].blank?
       params[:company_name] = "(missing company name)" if params[:company_name].blank?
-      contacts.create(params.merge(:creator => creator, :creator_name => creator.full_name, :category_id => category_id, :country_id => country_id, :newsletter_list_id => subscriber.newsletter_list_id))
+      if contacts.where(subscriber.company_name.present? ? ["company_name = ?", subscriber.company_name] : ["email_address = ?", subscriber.email_address]).count == 0
+        contacts.create(params.merge(:creator => creator, :creator_name => creator.full_name, :category_id => category_id, :country_id => country_id,
+                                     :newsletter_list_id => subscriber.newsletter_list_id, :newsletter_list_subscriber_id => subscriber.id))
+      end
     end
     true
   end
