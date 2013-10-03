@@ -2,6 +2,7 @@ class SubscribersAdvancedImportsController < SecuredController
   include AdvancedImportActions
 
   set_tab "import"
+  set_subtab "import_subscribers"
 
   def show
     @lists = (current_user.admin? ? NewsletterList.scoped : NewsletterList.created_or_owned_by(current_user)).without_archived.order(:name)

@@ -9,7 +9,7 @@
             <fieldset class="inputs labels_ta_r labels_180">
               <ol class="align_inputs">
                 <%= file_field_tag 'attachment', :accept => 'spreadsheet/ods,spreadsheet/doc,spreadsheet/xdoc', :class => "fltl" %>
-                <%= select_tag :object_id, options_for_select(@lists) %>
+                <%= select_tag :object_id, options_for_select(@lists, params[:newsletter_list_id]) %>
               </ol>
             </fieldset>
           </div>
