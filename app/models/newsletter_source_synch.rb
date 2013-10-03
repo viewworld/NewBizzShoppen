@@ -22,7 +22,7 @@ class NewsletterSourceSynch < ActiveRecord::Base
         params[attr] = subscriber.send(attr)
       end
       params[:subscriber_type] = subscriber.subscriber.type if subscriber.subscriber_type == 'AbstractLead'
-      NewsletterListSubscriber::CSV_ATTRS.map(&:to_sym).each do |attr|
+      NewsletterListSubscriber.selected_attributes.map(&:to_sym).each do |attr|
         params[attr] = subscriber.subscriber.send(attr)
       end
     else
@@ -35,7 +35,7 @@ class NewsletterSourceSynch < ActiveRecord::Base
 
   def params_to_update(subscriber)
     params = {}
-    attrs = %w(Contact Lead Deal).include?(subscriber.class.to_s) ? contact_attrs : basic_attrs
+    attrs = %w(Contact Lead Deal).include?(subscriber.class.to_s) ? NewsletterListSubscriber.selected_attributes : basic_attrs
     attrs.each do |attr|
       params[attr] = subscriber.send(attr)
     end

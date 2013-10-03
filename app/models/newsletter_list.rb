@@ -114,6 +114,13 @@ class NewsletterList < ActiveRecord::Base
     end
   end
 
+  def add_to_subscribers!(objects, creator=nil)
+    objects.each do |object|
+      params = NewsletterListSubscriber.subscriber_attribute_params(object)
+      newsletter_list_subscribers.create(params.merge(:creator => creator, :subscriber_id => object.id, :subscriber_type => object.class.to_s))
+    end
+  end
+
   def extract_sourceable_objects
     if sourceable_items and sourceable_items.is_a?(Array) and valid?
       sourceable_items.each do |source|

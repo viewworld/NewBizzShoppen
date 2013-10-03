@@ -15,4 +15,20 @@ class NewsletterListSubscriber < ActiveRecord::Base
   alias_attribute :name, :contact_name
 
   scope :from_sources, where('subscriber_id IS NOT NULL AND subscriber_type IS NOT NULL')
+
+  def self.selected_attributes
+    attrs = CSV_ATTRS.dup
+    ['country', 'region'].each do |a|
+      attrs[attrs.rindex(a)] = "#{a}_id"
+    end
+    attrs
+  end
+
+  def self.subscriber_attribute_params(object)
+    params = {}
+    selected_attributes.map(&:to_sym).each do |attr|
+      params[attr] = object.send(attr)
+    end
+    params
+  end
 end

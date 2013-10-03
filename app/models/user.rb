@@ -142,6 +142,8 @@ class User < ActiveRecord::Base
 
   attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :send_invitation, :auto_generate_password, :email_materials, :cancel_subscription, :subscription_plan_id, :assign_free_subscription_plan
 
+  alias_attribute :email_address, :email
+
   before_save :handle_locking, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled
   before_create :set_rss_token, :set_email_verification
   before_destroy :check_subscription_before_destroy
@@ -395,6 +397,8 @@ class User < ActiveRecord::Base
   def full_name
     "#{first_name} #{last_name}"
   end
+
+  alias_method :contact_name, :full_name
 
   def send_confirmation_instructions
     generate_confirmation_token if self.confirmation_token.nil?

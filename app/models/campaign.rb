@@ -460,10 +460,7 @@ class Campaign < ActiveRecord::Base
 
   def import_contacts_from_lists!
     NewsletterListSubscriber.where(:newsletter_list_id => newsletter_list_ids).where("email_address NOT IN (?)", contacts.empty? ? Array("empty") : contacts.select("email_address").map(&:email_address)).select("DISTINCT ON (email_address) *").each do |subscriber|
-      params = {}
-      NewsletterListSubscriber::CSV_ATTRS.map(&:to_sym).each do |attr|
-        params[attr] = subscriber.send(attr)
-      end
+      params = NewsletterListSubscriber.subscriber_attribute_params(subscriber)
       params[:company_phone_number] = "(missing phone)" if params[:company_phone_number].blank?
       contacts.create(params.merge(:creator => creator, :creator_name => creator.full_name, :category_id => category_id, :country_id => country_id, :newsletter_list_id => subscriber.newsletter_list_id))
     end
@@ -473,14 +470,12 @@ class Campaign < ActiveRecord::Base
   def export_contacts_to_lists!
     newsletter_lists.each do |newsletter_list|
       contacts.where("leads.newsletter_list_id != (?)", newsletter_list.id).each do |contact|
-        params = {}
-        NewsletterListSubscriber::CSV_ATTRS.map(&:to_sym).each do |attr|
-          params[attr] = contact.send(attr)
-        end
+        params = NewsletterListSubscriber.subscriber_attribute_params(contact)
         params[:company_phone_number] = nil if params[:company_phone_number] == "(missing phone)"
         newsletter_list.newsletter_list_subscribers.create(params.merge(:creator => creator, :subscriber_id => contact.id, :subscriber_type => "Contact"))
       end
     end
     true
   end
+
 end
