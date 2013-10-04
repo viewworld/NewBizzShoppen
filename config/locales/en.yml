@@ -216,6 +216,7 @@ en:
         import_leads: "Leads"
         import_suppliers: "Suppliers"
         import_members: "Members"
+        import_subscribers: "Subscribers"
       member:
         leads: My leads
         tenders: My tenders
@@ -4220,6 +4221,7 @@ en:
       newsletter_list:
         name: "Name"
         owner_email: "Owner email"
+        synch_with_sources: "Keep synchronized with sources"
       newsletter_campaign:
         name: "Name"
         owner_email: "Owner email"
@@ -5011,6 +5013,8 @@ en:
           synchronization_scheduled: "Synchronization process will perform in the background. You will be notified when it's done."
           unsubscribe: "Unsubscribe"
           login_info: "Campaign Monitor login info"
+          new_subscriber: "New subscriber"
+          import: "Import subscribers"
       new:
         view:
           header: "New newsletter list"
@@ -5025,6 +5029,7 @@ en:
             email_column: "E-mail"
             name_column: "Name"
             edit: "Edit"
+          sources_synch_pending: "Subscribers are being copied to list in the background"
       form:
         keyword_for_autocompleter: "Enter name of campaign, tag, subscription or role"
       archive:
@@ -5085,6 +5090,17 @@ en:
           notice_queued_for_sending_to_subscribers: "Campaign has been successfully queued for sending to subscribers."
           notice_queued_for_sending_as_draft: "Campaign has been successfully queued for sending as draft."
           notice_not_sent: "Campaign could not be sent due to errors %{errors}"
+    newsletter_list_subscribers:
+      new:
+        view:
+          header: "New subscriber"
+          button_create: "Create"
+          button_cancel: "Cancel"
+      edit:
+        view:
+          header: "Edit subscriber"
+          button_update: "Save"
+          button_cancel: "Cancel"
   tags:
     common:
       assign_tags: "Assign tags"
@@ -5213,3 +5229,18 @@ en:
       export: "Export as XLS"
     create:
       summary: Summary
+  subscribers_advanced_import:
+    show:
+      view:
+        header: "Subscribers import"
+        title: "Advanced import - create new subscribers from spreadsheet."
+    choose:
+      view:
+        header: "Subscribers import - fields selection"
+        object_fields_label: "Subscriber fields"
+    preview:
+      view:
+        header: "Subscribers import - preview"
+    create:
+      flash:
+        success: "Import completed. %{counter} subscribers have been successfully imported"

@@ -1,29 +1,19 @@
 class NewsletterSynch < ActiveRecord::Base
-
-  attr_accessor :use_delayed_job
-
-  validates_presence_of :newsletter_list_id
-
+  include ::CommonNewsletterSynch
   has_many :campaign_monitor_responses, :as => :resource
-  belongs_to :newsletter_list
-  belongs_to :notificable, :polymorphic => true
-
-  after_create do
-    if use_delayed_job
-      self.delay(:queue => 'campaign_monitor_synchronization').send(:process!)
-    else
-      self.send(:process!)
-    end
-  end
 
   private
+
+  def queue_name
+    'campaign_monitor_synchronization'
+  end
 
   # -------------------------------------------------------------------------------------------------------------------
   # Local subscribers
   # -------------------------------------------------------------------------------------------------------------------
 
   def all_local_subscribers
-    @all_local_subscribers ||= newsletter_list.newsletter_subscribers.map do |obj|
+    @all_local_subscribers ||= newsletter_list.newsletter_list_subscribers.map do |obj|
       custom_fields_array = [
                     { "Key" => "[CompanyName]", "Value" => obj.company_name, "Clear" => false},
                     { "Key" => "[ZipCode]", "Value" => obj.zip_code, "Clear" => false}
