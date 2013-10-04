@@ -12,7 +12,7 @@
 <div class="nav_search">
   <%= form_for @search, :url => deals_path, :html => {:id => "deals_search_form"} do |f| %>
     <%= hidden_field_tag :show_all, params[:show_all] %>
-    <%= f.text_field :with_keyword, :placeholder => "Enter keywords here..." %>
+    <%= f.text_field :with_keyword, :placeholder => t("layout.fairdeals.main_menu.search_keyword_placeholder") %>
     <ibt c="bt_green" icon="magnify">
       <%= submit_tag t("layout.fairdeals.main_menu.search"), :id => "search_new" %>
     </ibt>

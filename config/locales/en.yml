@@ -106,6 +106,7 @@ en:
         deals: "Deals"
         tenders: "Tenders"
         search: "Search"
+        search_keyword_placeholder: "Enter keywords here..."
         member:
           my_requests: "My deals"
     main_menu:
