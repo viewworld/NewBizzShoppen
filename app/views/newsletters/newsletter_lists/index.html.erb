@@ -73,7 +73,7 @@
     <% @newsletter_lists.each do |newsletter_list| %>
         <tr class="<%= cycle("odd", "even") %>">
           <td class="cl"></td>
-          <td><%= newsletter_list.owner.screen_name %></td>
+          <td><%= newsletter_list.owner ? newsletter_list.owner.screen_name : "-" %></td>
           <td><%= newsletter_list.name %></td>
           <td><%= newsletter_list.newsletter_list_subscribers.count %></td>
           <td><%= newsletter_list.last_synchronized_at %></td>
