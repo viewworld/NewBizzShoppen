@@ -21,3 +21,4 @@
 /public/javascripts/translations.js
 /public/system/agent_timesheets_cache/*
 /public/system/payouts/*
+/public/system/import_temp/*

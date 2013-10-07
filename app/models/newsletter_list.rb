@@ -3,6 +3,8 @@ class NewsletterList < ActiveRecord::Base
   has_many :campaign_monitor_responses, :as => :resource
   has_many :newsletter_synches
   has_many :newsletter_subscribers
+  has_many :newsletter_list_subscribers
+  has_many :newsletter_source_synches
   has_many :custom_sources, :class_name => "NewsletterSource", :conditions => {:source_type => NewsletterSource::CUSTOM_SOURCE}
   has_and_belongs_to_many :newsletter_campaigns
 
@@ -10,7 +12,7 @@ class NewsletterList < ActiveRecord::Base
   before_save :extract_sourceable_objects, :extract_tag_groups
   before_destroy :cm_delete!, :if => :cm_exists?
   after_create do
-    self.newsletter_synches.create(:use_delayed_job => true)
+    self.synchronize!(:sources_synch => true)
   end
 
   after_save :check_if_owner_is_changed
@@ -23,6 +25,7 @@ class NewsletterList < ActiveRecord::Base
   scope :not_archived, where(:is_archived => false)
 
   include CommonNewsletter
+  include AdvancedImport
 
   private
 
@@ -81,7 +84,7 @@ class NewsletterList < ActiveRecord::Base
         cm_delete!
       end
       cm_synchronize!
-      newsletter_synches.create(:use_delayed_job => true)
+      synchronize!
     end
   end
 
@@ -108,6 +111,13 @@ class NewsletterList < ActiveRecord::Base
   def add_to_custom_sources!(sourceable_objects)
     sourceable_objects.each do |sourceable_object|
       newsletter_sources.create(:source_type => NewsletterSource::CUSTOM_SOURCE, :sourceable => sourceable_object)
+    end
+  end
+
+  def add_to_subscribers!(objects, creator=nil)
+    objects.each do |object|
+      params = NewsletterListSubscriber.subscriber_attribute_params(object)
+      newsletter_list_subscribers.create(params.merge(:creator => creator, :subscriber_id => object.id, :subscriber_type => object.class.to_s))
     end
   end
 
@@ -179,6 +189,51 @@ class NewsletterList < ActiveRecord::Base
   end
 
   def to_s
-    "#{name} (#{newsletter_subscribers.count})"
+    "#{name} (#{newsletter_list_subscribers.count})"
+  end
+
+  def synchronize!(*args)
+    options = { :sources_synch => synch_with_sources?, :campaign_monitor_synch => true, :use_delayed_job => true, :notificable => nil }.merge(args.extract_options!)
+    if options[:sources_synch]
+      newsletter_source_synches.create(:use_delayed_job => options[:use_delayed_job], :campaign_monitor_synch => options[:campaign_monitor_synch], :notificable => options[:notificable])
+    elsif options[:campaign_monitor_synch]
+      newsletter_synches.create(:use_delayed_job => options[:use_delayed_job], :notificable => options[:notificable])
+    end
+  end
+
+  def self.advanced_import_subscribers_from_xls(options)
+    return false unless advanced_import_field_blank_validation(options[:subscriber_fields], options[:spreadsheet_fields])
+    subscriber_fields, spreadsheet_fields = options[:subscriber_fields].split(","), options[:spreadsheet_fields].split(",")
+    return false unless advanced_import_field_size_validation(subscriber_fields, spreadsheet_fields)
+
+    headers, spreadsheet = advanced_import_headers(options[:spreadsheet])
+    merged_fields = advanced_import_merged_fields(headers, subscriber_fields, spreadsheet_fields)
+    counter, errors = 0, []
+
+    newsletter_list = NewsletterList.find(options[:object_id])
+
+    ActiveRecord::Base.transaction do
+      2.upto(spreadsheet.last_row) do |line|
+        subscriber = newsletter_list.newsletter_list_subscribers.new
+        import_fields.each { |field| subscriber = assign_field(subscriber, field, spreadsheet.cell(line, merged_fields[field]), spreadsheet.celltype(line, merged_fields[field])) }
+        subscriber.creator = options[:current_user]
+        if subscriber.save
+          counter += 1
+        else
+          errors << "[line: #{line}] #{subscriber.errors.map { |k, v| "#{k} #{v}" }.*(", ")}"
+          raise ActiveRecord::Rollback
+        end
+      end
+    end
+
+    {:counter => "#{counter} / #{spreadsheet.last_row-1}", :errors => errors.*("<br/>")}
+  end
+
+  def self.import_fields
+    NewsletterListSubscriber::CSV_ATTRS
+  end
+
+  def self.required_import_fields
+    NewsletterListSubscriber::REQUIRED_FIELDS
   end
 end

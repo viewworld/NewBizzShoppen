@@ -10,7 +10,9 @@ class Newsletters::NewsletterSynchronizationsController < Newsletters::Newslette
   public
 
   def create
-    @newsletter_list.newsletter_synches.create(:use_delayed_job => true, :notificable => current_user)
+    sources_synch = params[:sources_synch].to_i == 1
+    campaign_monitor_synch = params[:campaign_monitor_synch].to_i == 1
+    @newsletter_list.synchronize!(:notificable => current_user, :sources_synch => sources_synch, :campaign_monitor_synch => campaign_monitor_synch)
     flash[:notice] = I18n.t("newsletters.newsletter_lists.index.view.synchronization_scheduled")
     redirect_to :back
   end

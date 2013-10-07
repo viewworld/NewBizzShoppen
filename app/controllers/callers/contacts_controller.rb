@@ -110,7 +110,7 @@ class Callers::ContactsController < Callers::CallerController
     else
       @newsletter_list = current_user.admin? ? NewsletterList.find(params[:newsletter_list_id]) : NewsletterList.created_or_owned_by(current_user).find(params[:newsletter_list_id])
       @contacts = Contact.where(:id => params[:contact_ids].gsub(/^,/, "").split(","))
-      @newsletter_list.add_to_custom_sources!(@contacts)
+      @newsletter_list.add_to_subscribers!(@contacts, current_user)
 
       flash[:notice] = t('contacts.batch_add_to_newsletter_list.flash.added_successfully', :newsletter_list => @newsletter_list.name, :contacts_count => @contacts.size)
     end

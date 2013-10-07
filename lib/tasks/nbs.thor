@@ -920,6 +920,8 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
   def import_contacts_from_newsletter_lists
     Campaign.where(:import_contacts_from_lists_enabled => true).each do |campaign|
       campaign.import_contacts_from_lists!
+      campaign.reload
+      campaign.export_contacts_to_lists!
     end
   end
 end

@@ -5,6 +5,7 @@ class NewsletterSource < ActiveRecord::Base
   before_save :assign_custom_source_class
 
   has_many :newsletter_subscribers
+  has_many :newsletter_list_subscribers
 
   CAMPAIGN_SOURCE          = 0.freeze
   LEAD_CATEGORY_SOURCE     = 1.freeze

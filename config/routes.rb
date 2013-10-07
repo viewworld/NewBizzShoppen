@@ -111,6 +111,7 @@ Nbs::Application.routes.draw do
     root :to => "newsletter_lists#index"
     resources :newsletter_lists do
       resources :newsletter_synchronizations
+      resources :newsletter_list_subscribers
       collection do
         get 'sourceable_for_search'
       end
@@ -435,6 +436,13 @@ Nbs::Application.routes.draw do
   end
 
   resource :suppliers_advanced_import, :only => [:create, :show] do
+    collection do
+      post 'choose'
+      post 'preview'
+    end
+  end
+
+  resource :subscribers_advanced_import, :only => [:create, :show] do
     collection do
       post 'choose'
       post 'preview'

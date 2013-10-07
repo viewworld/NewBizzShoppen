@@ -9,7 +9,10 @@
     <param:actions>
       <ul class="header_actions">
         <li class="last">
-          <%= bt_link_to :plus, t("newsletters.newsletter_lists.index.view.synchronize"),  newsletters_newsletter_list_newsletter_synchronizations_path(@newsletter_list), :method => :post %>
+          <%= bt_link_to :plus, t("newsletters.newsletter_lists.index.view.synchronize_sources"),  newsletters_newsletter_list_newsletter_synchronizations_path(@newsletter_list, :sources_synch => 1, :campaign_monitor_synch => 0), :method => :post %>
+          <%= bt_link_to :plus, t("newsletters.newsletter_lists.index.view.synchronize_cm"),  newsletters_newsletter_list_newsletter_synchronizations_path(@newsletter_list, :sources_synch => 0, :campaign_monitor_synch => 1), :method => :post %>
+          <%= bt_link_to :plus, t("newsletters.newsletter_lists.index.view.new_subscriber"),  new_newsletters_newsletter_list_newsletter_list_subscriber_path(@newsletter_list) %>
+          <%= bt_link_to :plus, t("newsletters.newsletter_lists.index.view.import"),  subscribers_advanced_import_path(:newsletter_list_id => @newsletter_list.id) %>
         </li>
       </ul>
     </param:actions>

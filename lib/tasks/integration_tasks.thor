@@ -335,4 +335,12 @@ class IntegrationTasks < Thor
       end
     end
   end
+
+  desc "gen_new_lists", ""
+  def gen_new_lists
+    NewsletterList.order("id").all.each do |nl|
+      puts "Newsletter #{nl.id}"
+      nl.synchronize!(:sources_synch => true, :campaign_monitor_synch => false, :use_delayed_job => false)
+    end
+  end
 end
