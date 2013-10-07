@@ -15,6 +15,8 @@ class Contact < AbstractLead
   has_many :notifications, :as => :notifier
 
   belongs_to :agent, :class_name => "User"
+  belongs_to :newsletter_list
+  belongs_to :newsletter_list_subscriber
   validates_presence_of :company_name, :company_phone_number, :creator_id, :category_id, :country_id, :campaign_id
   validates_presence_of :price, :purchase_decision_date, :if => :process_for_lead_information?
 
