@@ -20,7 +20,7 @@
         <% if @campaign.auto_dialer %>
         window.auto_dial = true;
         <% end %>
-        document.applets[0].API_Register("<%= current_user.sip_domain %>", "<%= current_user.sip_username %>", "<%= current_user.sip_password %>", "<%= current_user.sip_username %>", "<%= current_user.full_name %>");
+        document.applets[0].API_Register("<%= current_user.softphone_server.sip_domain %>", "<%= current_user.sip_username %>", "<%= current_user.sip_password %>", "<%= current_user.sip_username %>", "<%= current_user.full_name %>");
     });
 
     function webphonetojs(message) {
