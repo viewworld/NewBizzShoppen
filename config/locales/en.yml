@@ -5015,6 +5015,8 @@ en:
           login_info: "Campaign Monitor login info"
           new_subscriber: "New subscriber"
           import: "Import subscribers"
+          synchronize_sources: "Synchronize sources"
+          synchronize_cm: "Synchronize CM"
       new:
         view:
           header: "New newsletter list"
