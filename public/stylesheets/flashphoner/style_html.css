@@ -817,6 +817,7 @@ div with zero size.
 
 /* -------------- Z indexes -------------*/
 #phoneDiv {
+    background: #f5f5f5;
 	z-index: 1001;
 }
 #incomingDiv {

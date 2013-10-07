@@ -19,7 +19,5 @@ display_notice("<%= escape_javascript(t("contacts.show.flash.you_have_no_contact
 loadScripts();
 <% end %>
 <% if current_user.phone_enabled? %>
-    if (flashphoner.getCurrentCall() == null) {
-        changePhoneNumber($('#contact_company_phone_number').val());
-    }
+    changePhoneNumber($('#contact_company_phone_number').val());
 <% end %>

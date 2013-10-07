@@ -1,0 +1,56 @@
+<div id="phoneDiv" style="padding-left:0">
+  <p>Faircalls Webphone Applet</p>
+  <script src="http://www.mizu-voip.com/webphonedeploy.js"></script>
+  <script>
+    var attributes = { code:'webphone.webphone.class', name: 'webphone', archive: '/webphone.jar', codebase: '.', width:300, height:330 , MAYSCRIPT:true } ;
+    var parameters = {
+        JAVA_CODEBASE: '.',
+        MAYSCRIPT: 'true',
+        mayscript: 'yes',
+        scriptable: 'true',
+        voicerecording: 3,
+        voicerecfilename: 1,
+        voicerecftp_addr: 'ftp://caller:callrecord@faircalls.dk/calls/FILENAME',
+        jsscriptevent: 2
+    } ;
+
+    deployJava.runApplet(attributes, parameters, '1.5');
+    $(function(){
+        $('#phoneDiv').draggable();
+        <% if @campaign.auto_dialer %>
+        window.auto_dial = true;
+        <% end %>
+        document.applets[0].API_Register("<%= current_user.sip_domain %>", "<%= current_user.sip_username %>", "<%= current_user.sip_password %>", "<%= current_user.sip_username %>", "<%= current_user.full_name %>");
+    });
+
+    function webphonetojs(message) {
+        var arr = message.split(',');
+        var call = {};
+        if (arr[2] == "InProgress") {
+            call['state'] = 'RINGING';
+        } else if (arr[2] == "Speaking") {
+            call['state'] = 'TALK';
+        } else if (arr[2] == "Finished") {
+            call['state'] = 'FINISH';
+        }
+        if (call.state != undefined) {
+            call['caller'] = arr[4];
+            call['callee'] = arr[3];
+            $.post('/callers/call_logs', {
+                call_log: {
+                    state: call.state,
+                    callee: call.callee,
+                    caller: call.caller,
+                    caller_type: '<%= current_user.class.name %>',
+                    caller_id: <%= current_user.id %>,
+                    campaign_id: <%= @campaign.id %>,
+                    <% if @contact %>
+                    contact_id: <%= @contact.id %>
+                    <% end %>
+                }
+            });
+        }
+    }
+
+  </script>
+</div>

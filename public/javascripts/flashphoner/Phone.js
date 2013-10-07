@@ -911,19 +911,6 @@ function close(element) {
     element.css('visibility', 'hidden');
 }
 
-function changePhoneNumber(number){
-    if (currentCall == null) {
-        if (number.match(/\d/g) != null) {
-            $("#calleeText").val(number.match(/\d/g).join(''));
-        }
-        $("#calleeText").trigger('keyup');
-        if (isLogged && (flashvars.auto_dial == true) && ($("#calleeText").val() != '')) {
-            call();
-        }
-    }
-}
-
-
 /* --------------------- On document load we do... ------------------ */
 $(function() {
 

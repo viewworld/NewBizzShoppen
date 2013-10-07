@@ -39,6 +39,11 @@ class User < ActiveRecord::Base
   SUBSCRIBER_TYPE_SUBSCRIBER = "subscriber"
   SUBSCRIBER_TYPES = [['Ad-hoc', SUBSCRIBER_TYPE_AD_HOC], ['Subscriber', SUBSCRIBER_TYPE_SUBSCRIBER]]
 
+  FLASHPHONER = 1
+  MIZU = 2
+  PHONE_TYPES = [FLASHPHONER, MIZU]
+  PHONE_TYPES_WITH_LABELS = [['Flashphoner', FLASHPHONER], ['Mizu', MIZU]]
+
   include RoleModel
   include ScopedSearch::Model
   include RoleChange
@@ -54,6 +59,7 @@ class User < ActiveRecord::Base
   validates_presence_of :first_name, :last_name, :if => :validate_first_and_last_name?
   validates_uniqueness_of :email
   validate :payout_information_is_complete
+  validates :phone_type_id, :presence => true, :inclusion => User::PHONE_TYPES, :if => Proc.new{|u| u.phone_enabled?}
 
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
   has_many :owned_lead_requests, :class_name => 'LeadRequest', :foreign_key => :owner_id

@@ -1152,6 +1152,7 @@ en:
           campaign_monitor_credentials: "Campaign Monitor credentials"
           sip_credentials: "SIP phone credentials"
           softphone_server: "Softphone server"
+          softphone_type: "Softphone type"
           cm_username: "Username"
           cm_password: "Password"
       create:
