@@ -486,6 +486,7 @@ en:
       materials_repository: "Materials repository"
       description_tooltip_blank: "(no description)"
       call_backs: "Call backs"
+      time_spent: "Time spent"
     new:
       title: New campaign
       button_create: Create

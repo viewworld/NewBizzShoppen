@@ -229,6 +229,10 @@ class Campaign < ActiveRecord::Base
     name
   end
 
+  def total_time_spent
+    user_session_logs.campaign_type.sum(:hours_count)
+  end
+
 ########################################################################################################################
 #
 #   IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT

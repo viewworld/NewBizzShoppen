@@ -1,5 +1,5 @@
 <%
-   cols = 8
+   cols = 9
    cols += 1 if block_tools
 -%>
 
@@ -9,6 +9,7 @@
     <th class="hl"></th>
     <th><%= link_to t("campaigns.table.name"), order_for_scoped_search(:name) %></th>
     <th><%= link_to t("campaigns.table.category"), order_for_scoped_search(:category) %></th>
+    <th><%= t("campaigns.table.time_spent") %></th>
     <th><%= t("campaigns.table.call_backs") %></th>
     <th class="ta_r"><%= link_to t("campaigns.table.state"), order_for_scoped_search(:state) %></th>
     <th class="ta_r"><%= t("campaigns.table.agents") %></th>
@@ -38,6 +39,7 @@
           <%= campaign.name %>
         </td>
         <td><%= campaign.category %></td>
+        <td><%= campaign.total_time_spent.as_hours_and_minutes %></td>
         <td><%= campaign.call_backs_count(current_user) %></td>
         <td class="ta_r"><%= campaign.state %></td>
         <td class="ta_r"><%= campaign.users.count %></td>
