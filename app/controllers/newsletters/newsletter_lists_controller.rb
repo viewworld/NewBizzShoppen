@@ -9,6 +9,9 @@ class Newsletters::NewsletterListsController < Newsletters::NewslettersControlle
     params[:search] ||= {}
     @search = @newsletter_list.newsletter_list_subscribers.order("contact_name").scoped_search(params[:search])
     @newsletter_subscribers = @search.paginate(:show_all => params[:show_all], :page => params[:page], :per_page => 20)
+
+    @newsletter_list_subscribers_count = @newsletter_list.newsletter_list_subscribers(true).count
+    @newsletter_list_last_synchronized_at = @newsletter_list.last_synchronized_at
   end
 
   def create
