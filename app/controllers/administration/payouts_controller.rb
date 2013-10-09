@@ -25,6 +25,7 @@ class Administration::PayoutsController < Administration::AdministrationControll
 
   def call_result
     @call_result = CallResult.find(params[:id])
+    @call_result.save_without_callbacks = true
     @call_result.payout = params[:payout] if params[:payout]
     @call_result.value = params[:value] if params[:value]
   end
@@ -41,6 +42,7 @@ class Administration::PayoutsController < Administration::AdministrationControll
 
   def update_dynamic_values
     @call_result = CallResult.find(params[:id])
+    @call_result.save_without_callbacks = true
     @call_result.update_attributes(params[:call_result])
   end
 
