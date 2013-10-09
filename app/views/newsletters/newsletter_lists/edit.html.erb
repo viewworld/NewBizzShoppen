@@ -46,14 +46,12 @@
     </param:content>
 
     <param:actions>
-      <%#= form_tag administration_articles_path, :method => :post, :id => "form_new_article" do %>
-          <ul class="header_actions">
-            <li class="last">
-              <%= bt_link_to :download, t("newsletters.newsletter_lists.edit.view.button_bulk_download_link"), "", :id => "export_subscribers" %>
-            </li>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to :download, t("newsletters.newsletter_lists.edit.view.button_bulk_download_link"), "", :id => "export_subscribers" %>
+        </li>
 
-          </ul>
-      <% #end %>
+      </ul>
     </param:actions>
   </header>
 
