@@ -132,4 +132,21 @@ class NewsletterCampaign < ActiveRecord::Base
   def last_errors
     campaign_monitor_responses.where("created_at BETWEEN ? AND ?", Time.now-2.minutes, Time.now).select { |cr| !cr.response.include?("CreateSend::NotFound") }.map(&:response).join(", ")
   end
+
+  def synchronize_newsletter_lists!
+    result = true
+
+    transaction do
+      newsletter_lists(true).each do |newsletter_list|
+        synced_record = newsletter_list.synchronize!
+        unless synced_record.persisted?
+          result = false
+          raise ActiveRecord::Rollback
+        end
+      end
+    end
+
+    result
+  end
+
 end
