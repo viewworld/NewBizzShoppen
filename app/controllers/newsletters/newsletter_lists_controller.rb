@@ -1,12 +1,14 @@
 class Newsletters::NewsletterListsController < Newsletters::NewslettersController
   inherit_resources
-  before_filter :fetch_object, :only => [:edit, :update, :archive, :unsubscribe]
+  before_filter :fetch_object, :only => [:edit, :update, :archive, :unsubscribe, :bulk_subscribers_export]
 
   set_tab "campaigns"
   set_subtab "newsletter_lists"
 
   def edit
-    @newsletter_subscribers = @newsletter_list.newsletter_list_subscribers.order("contact_name").paginate(:show_all => params[:show_all], :page => params[:page], :per_page => 30)
+    params[:search] ||= {}
+    @search = @newsletter_list.newsletter_list_subscribers.order("contact_name").scoped_search(params[:search])
+    @newsletter_subscribers = @search.paginate(:show_all => params[:show_all], :page => params[:page], :per_page => 20)
   end
 
   def create
@@ -37,6 +39,15 @@ class Newsletters::NewsletterListsController < Newsletters::NewslettersControlle
       flash[:notice] = I18n.t("newsletters.newsletter_lists.archive.flash.notice_retrieved")
     end
     redirect_to newsletters_newsletter_lists_path
+  end
+
+  def bulk_subscribers_export
+    @newsletter_subscribers = @newsletter_list.newsletter_list_subscribers.order("contact_name")
+
+    respond_to do |format|
+      format.csv { send_data NewsletterListSubscriber.records_to_csv(@newsletter_subscribers), :filename => "contacts.csv" }
+      format.xls
+    end
   end
 
   def unsubscribe

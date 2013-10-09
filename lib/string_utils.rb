@@ -32,4 +32,8 @@ class StringUtils
     end
   end
 
+  def self.clear_for_export(str)
+    str.to_s.gsub(/[\n\r\t,]/, " ")
+  end
+
 end

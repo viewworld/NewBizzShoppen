@@ -1,6 +1,7 @@
 <% if campaign.cost_type == Campaign::AGENT_BILLING_RATE_COST and campaign.users.with_agents.empty? %>
     <p style="color: red; padding:  5px;"><%= t("models.campaign.no_agent_assigned") %></p>
 <% end %>
+
 <div class="column_left">
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_200">

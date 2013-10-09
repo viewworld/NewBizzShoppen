@@ -1,6 +1,11 @@
+require 'csv_exportable'
+
 class NewsletterListSubscriber < ActiveRecord::Base
   CSV_ATTRS = %w(company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country region company_vat_no company_ean_number contact_name contact_title direct_phone_number phone_number email_address linkedin_url facebook_url)
   REQUIRED_FIELDS = %w(email_address)
+
+  include ScopedSearch::Model
+  include CsvExportable
 
   belongs_to :newsletter_list
   belongs_to :subscriber, :polymorphic => true, :foreign_key => 'subscriber_id'
@@ -14,6 +19,13 @@ class NewsletterListSubscriber < ActiveRecord::Base
   alias_attribute :name, :contact_name
 
   scope :from_sources, where('subscriber_id IS NOT NULL AND subscriber_type IS NOT NULL')
+
+  scope :with_keyword, lambda { |q| where(%{
+      email_address ILIKE :keyword OR
+      contact_name ILIKE :keyword OR
+      company_name ILIKE :keyword
+    }, {:keyword => "%#{q}%"})
+  }
 
   def self.selected_attributes
     attrs = CSV_ATTRS.dup
@@ -30,4 +42,5 @@ class NewsletterListSubscriber < ActiveRecord::Base
     end
     params
   end
+
 end

@@ -5022,6 +5022,8 @@ en:
           button_cancel: "Cancel"
       edit:
         view:
+          button_bulk_download_link: "Export subscribers"
+          title_subscribers: "Subscribers"
           header: "Edit newsletter list"
           button_update: "Save"
           button_cancel: "Cancel"
