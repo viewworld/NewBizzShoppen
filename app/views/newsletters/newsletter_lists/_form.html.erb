@@ -5,6 +5,7 @@
           <ol class="align_inputs">
             <%= form.input :name %>
             <%= form.input :owner_email, :required => true, :input_html => { :disabled => @newsletter_list.newsletter_campaigns.not_sent_to_campaign_monitor.any? } %>
+            <%= form.input :description %>
           </ol>
         </fieldset>
     </div>
