@@ -7,10 +7,10 @@ class Newsletters::NewsletterListsController < Newsletters::NewslettersControlle
 
   def edit
     params[:search] ||= {}
-    @search = @newsletter_list.newsletter_list_subscribers.order("contact_name").scoped_search(params[:search])
+    @search = NewsletterListSubscriber.order("contact_name").scoped_search(params[:search])
+    @search.for_newsletter_list = @newsletter_list
     @newsletter_subscribers = @search.paginate(:show_all => params[:show_all], :page => params[:page], :per_page => 20)
-
-    @newsletter_list_subscribers_count = @newsletter_list.newsletter_list_subscribers(true).count
+    @newsletter_list_subscribers_count = @newsletter_list.newsletter_list_subscribers.count
     @newsletter_list_last_synchronized_at = @newsletter_list.last_synchronized_at
   end
 

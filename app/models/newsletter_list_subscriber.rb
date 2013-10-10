@@ -19,6 +19,7 @@ class NewsletterListSubscriber < ActiveRecord::Base
   alias_attribute :name, :contact_name
 
   scope :from_sources, where('subscriber_id IS NOT NULL AND subscriber_type IS NOT NULL')
+  scope :for_newsletter_list, lambda { |newsletter_list| where(:newsletter_list_id => newsletter_list.id) }
 
   scope :with_keyword, lambda { |q| where(%{
       email_address ILIKE :keyword OR
