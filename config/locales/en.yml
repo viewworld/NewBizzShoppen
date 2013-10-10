@@ -5096,7 +5096,6 @@ en:
           notice_queued_for_sending_as_draft: "Campaign has been successfully queued for sending as draft."
           notice_synced: "Campaign has been sent to synchronization"
           notice_not_sent: "Campaign could not be sent due to errors %{errors}"
-          notice_not_synced: "Campaign could not be synchronized"
     newsletter_list_subscribers:
       new:
         view:

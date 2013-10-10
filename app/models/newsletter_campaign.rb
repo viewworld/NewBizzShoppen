@@ -134,19 +134,7 @@ class NewsletterCampaign < ActiveRecord::Base
   end
 
   def synchronize_newsletter_lists!
-    result = true
-
-    transaction do
-      newsletter_lists(true).each do |newsletter_list|
-        synced_record = newsletter_list.synchronize!
-        unless synced_record.persisted?
-          result = false
-          raise ActiveRecord::Rollback
-        end
-      end
-    end
-
-    result
+    newsletter_lists.each(&:synchronize!)
   end
 
 end
