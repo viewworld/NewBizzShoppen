@@ -21,7 +21,13 @@
 
         <p class="ta_c pdd_5"><%= bt_link_to nil, t("newsletters.newsletter_campaigns.form.move_left"), "javascript:move_selected('newsletter_campaign_newsletter_list_ids_','all_lists')", :id => "move_left" %></p>
 
-        <p class="ta_c"><%= bt_link_to nil, t("newsletters.newsletter_campaigns.form.new_list"), new_newsletters_newsletter_list_path, :target => "_window" %></p>
+        <p class="ta_c pdd_5 no_pdd_b"><%= bt_link_to nil, t("newsletters.newsletter_campaigns.form.new_list"), new_newsletters_newsletter_list_path, :target => "_window" %></p>
+
+        <div class="ta_c pdd_20 no_pdd_r no_pdd_b">
+          <ibt icon="save">
+              <%= form.submit t("newsletters.newsletter_campaigns.edit.view.button_update_and_sync"), :name => "commit_sync", :onclick => "select_options_to_submit('newsletter_campaign_newsletter_list_ids_')" %>
+          </ibt>
+        </div>
       </div>
 
       <div class="grid_240 fltl">

@@ -66,9 +66,9 @@ class NewsletterCampaign < ActiveRecord::Base
     end
   end
 
-  def cm_synchronize_lists!
+  def cm_synchronize_lists!(use_delayed_job=false)
     newsletter_lists.each do |newsletter_list|
-      newsletter_list.newsletter_synches.create(:use_delayed_job => false)
+      newsletter_list.synchronize!(:use_delayed_job => use_delayed_job, :sources_synch => false)
     end
   end
 
@@ -132,4 +132,9 @@ class NewsletterCampaign < ActiveRecord::Base
   def last_errors
     campaign_monitor_responses.where("created_at BETWEEN ? AND ?", Time.now-2.minutes, Time.now).select { |cr| !cr.response.include?("CreateSend::NotFound") }.map(&:response).join(", ")
   end
+
+  def synchronize_newsletter_lists!
+    cm_synchronize_lists!(true)
+  end
+
 end
