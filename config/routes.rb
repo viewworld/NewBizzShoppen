@@ -116,6 +116,7 @@ Nbs::Application.routes.draw do
         get 'sourceable_for_search'
       end
       member do
+        post 'bulk_subscribers_export'
         post 'archive'
         post 'unsubscribe'
       end

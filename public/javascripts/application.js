@@ -489,3 +489,30 @@ function check_notifications() {
     });
     setTimeout("check_notifications()", notification_interval);
 }
+
+function exportDialog(jqEvent, jqSelectorFormExport, formatsHash) {
+    jqEvent.preventDefault();
+    
+    var formats = formatsHash || {};
+    var buttonsConfig = {};
+
+    var createButtonConfig = function(format) {
+        return function() {
+            $(this).dialog("close");
+            $(jqSelectorFormExport).attr('action', formats[format]);
+            $(jqSelectorFormExport).submit();                
+        }
+    }
+
+    for (var key in formats) {
+        if (formats[key]) {
+            buttonsConfig[key] = createButtonConfig(key);
+        }
+    }
+
+    $('#select_export_format').dialog({
+        height: 125,
+        modal: true,
+        buttons: buttonsConfig
+    });
+}

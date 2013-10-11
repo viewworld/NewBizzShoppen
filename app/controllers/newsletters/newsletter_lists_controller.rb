@@ -1,12 +1,17 @@
 class Newsletters::NewsletterListsController < Newsletters::NewslettersController
   inherit_resources
-  before_filter :fetch_object, :only => [:edit, :update, :archive, :unsubscribe]
+  before_filter :fetch_object, :only => [:edit, :update, :archive, :unsubscribe, :bulk_subscribers_export]
 
   set_tab "campaigns"
   set_subtab "newsletter_lists"
 
   def edit
-    @newsletter_subscribers = @newsletter_list.newsletter_list_subscribers.order("contact_name").paginate(:show_all => params[:show_all], :page => params[:page], :per_page => 30)
+    params[:search] ||= {}
+    @search = NewsletterListSubscriber.order("contact_name").scoped_search(params[:search])
+    @search.for_newsletter_list = @newsletter_list
+    @newsletter_subscribers = @search.paginate(:show_all => params[:show_all], :page => params[:page], :per_page => 20)
+    @newsletter_list_subscribers_count = @newsletter_list.newsletter_list_subscribers.count
+    @newsletter_list_last_synchronized_at = @newsletter_list.last_synchronized_at
   end
 
   def create
@@ -37,6 +42,16 @@ class Newsletters::NewsletterListsController < Newsletters::NewslettersControlle
       flash[:notice] = I18n.t("newsletters.newsletter_lists.archive.flash.notice_retrieved")
     end
     redirect_to newsletters_newsletter_lists_path
+  end
+
+  def bulk_subscribers_export
+    @newsletter_subscribers = @newsletter_list.newsletter_list_subscribers.order("contact_name")
+    @newsletter_subscribers = @newsletter_subscribers.where(:id => params[:ids]) if params[:ids].present?
+
+    respond_to do |format|
+      format.csv { send_data NewsletterListSubscriber.records_to_csv(@newsletter_subscribers), :filename => "contacts.csv" }
+      format.xls
+    end
   end
 
   def unsubscribe

@@ -5026,10 +5026,13 @@ en:
           button_cancel: "Cancel"
       edit:
         view:
+          button_bulk_download_link: "Export subscribers"
+          title_subscribers: "Subscribers"
           header: "Edit newsletter list"
           button_update: "Save"
           button_cancel: "Cancel"
           subscribers:
+            source_column: "Source"
             email_column: "E-mail"
             name_column: "Name"
             edit: "Edit"
