@@ -325,6 +325,7 @@ Nbs::Application.routes.draw do
     resource :agent_performance do
       member do
         get :summary
+        get :agents
       end
     end
     resources :call_logs

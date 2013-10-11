@@ -1,0 +1,27 @@
+<% @agents.to_a.each do |agent| %>
+    <% if performance = AgentPerformance.new(params[:date_from], params[:date_to], agent, @performance_campaigns, params[:currency_id]) and performance.has_any_data? %>
+        <tr>
+          <td></td>
+          <td><%= link_to agent, administration_payouts_path(:currency_id => params[:currency_id], :call_centre_id => agent.parent_id , :call_centre_agent_ids => [agent.id], :date_from => params[:date_from], :date_to => params[:date_to], :campaign_selection => 'all'), :class => "default_action" %></td>
+          <td class="tar"><%= performance.call_count %></td>
+          <td class="tar"><%= performance.result_count %></td>
+          <td class="tar"><%= as_currency(performance.payout, performance.currency, 0) %></td>
+          <td class="tar"><%= link_to performance.time.to_f.as_hours_and_minutes, agent_link_to_user_session_logs(agent) %></td>
+          <td class="tar"><%= performance.time_on_phone.to_f.as_hours_and_minutes %></td>
+          <td class="tar"><%= as_currency(performance.rate, performance.currency, 0) %></td>
+          <td></td>
+        </tr>
+    <% end %>
+<% end %>
+<% performance = AgentPerformance.new(params[:date_from], params[:date_to], @agents, @performance_campaigns, params[:currency_id]) %>
+<tr style="font-weight: bold;">
+  <td></td>
+  <td></td>
+  <td class="tar"><%= performance.call_count %></td>
+  <td class="tar"><%= performance.result_count %></td>
+  <td class="tar"><%= as_currency(performance.payout, performance.currency, 0) %></td>
+  <td class="tar"><%= performance.time.to_f.as_hours_and_minutes %></td>
+  <td class="tar"><%= performance.time_on_phone.to_f.as_hours_and_minutes %></td>
+  <td class="tar"><%= as_currency(performance.rate, performance.currency, 0) %></td>
+  <td></td>
+</tr>
