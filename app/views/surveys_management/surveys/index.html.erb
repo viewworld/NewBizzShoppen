@@ -40,7 +40,7 @@
         <% @surveys.each do |survey| %>
             <tr class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
-              <td><%= survey.creator rescue '-' %></td>
+              <td><%= survey.owner rescue '-' %></td>
               <td><%= survey.name %></td>
               <td><%= survey.last_sent_at %></td>
               <td><%= survey.last_sent_recipients_count %></td>
