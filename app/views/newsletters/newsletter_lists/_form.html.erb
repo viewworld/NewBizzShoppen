@@ -1,48 +1,61 @@
-<div class="pdd_10 no_pdd_t">
+<div class="form_newsletter">
+<div class="column_left">
+    <div class="pdd_10 no_pdd_t">
+        <fieldset class="inputs labels_ta_r labels_200">
+          <ol class="align_inputs">
+            <%= form.input :name %>
+            <%= form.input :owner_email, :required => true, :input_html => { :disabled => @newsletter_list.newsletter_campaigns.not_sent_to_campaign_monitor.any? } %>
+            <%= form.input :description, :input_html => {:style => "width:230px;height:100px"} %>
+          </ol>
+        </fieldset>
+    </div>
+</div>
+
+<div class="column_right">
     <fieldset class="inputs labels_ta_r labels_200">
-      <ol class="align_inputs">
-        <%= form.input :name %>
-        <%= form.input :owner_email, :required => true, :input_html => { :disabled => @newsletter_list.newsletter_campaigns.not_sent_to_campaign_monitor.any? } %>
-        <%= form.input :synch_with_sources %>
-        <div style="display: none">
-        <%= form.input :sourceable_items, :collection => [], :as => :select, :multiple => true %>
-        <%= form.input :tag_group_items, :collection => [], :as => :select, :multiple => true %>
-        </div>
-      </ol>
+        <ol class="align_inputs">
+            <%= form.input :synch_with_sources %>
+            <div style="display: none">
+                <%= form.input :sourceable_items, :collection => [], :as => :select, :multiple => true %>
+                <%= form.input :tag_group_items, :collection => [], :as => :select, :multiple => true %>
+            </div>
+        </ol>
     </fieldset>
 
-  <ul id="ul_sources_list" style="margin-left:210px;width:230px;margin-bottom:2px;padding:1px">
-  <%= form.fields_for :newsletter_sources, @newsletter_list.newsletter_sources.without_tags_and_custom do |builder| %>
-    <li id="li_source_<%= builder.object.id %>" style=""><%= render :partial => "newsletter_sources_fields", :locals => {:f => builder} %></li>
-  <% end %>
-  </ul>
-
-  <% tag_groups = @newsletter_list.newsletter_sources.with_tags.map(&:sourceable) %>
-  <% tag_groups.each do |tag_group| %>
-      <ul class="droppable" id="tag_group_<%= tag_group.new_record? ? "new#{Time.now.to_f.to_s.gsub(".", "")}" : tag_group.id %>" style="border: 1px solid grey;margin-left:210px;margin-bottom:2px;width:230px;padding:1px;">
-        <% tag_group.tags.each do |tag| %>
-            <li class="draggable" style="" id="tag_<%= tag.id %>">
-              <%= tag.name %>
-              <%= link_to_function image_tag("/images/icons/remove.png"), "remove_tag('#{tag.id}')" %>
+    <fieldset class="inputs labels_ta_r labels_200">
+        <ol class="align_inputs">
+            <li class="string">
+                <label><%= t("newsletters.newsletter_lists.form.keyword_for_autocompleter") %></label>
+                <%= text_field_tag "autocompleter", nil %>
             </li>
+        </ol>
+    </fieldset>
+
+    <ul id="ul_sources_list" style="margin-left:210px;width:230px;margin-bottom:2px;padding:1px">
+        <%= form.fields_for :newsletter_sources, @newsletter_list.newsletter_sources.without_tags_and_custom do |builder| %>
+            <li id="li_source_<%= builder.object.id %>" style=""><%= render :partial => "newsletter_sources_fields", :locals => {:f => builder} %></li>
         <% end %>
+    </ul>
 
-      </ul>
-  <% end %>
+    <% tag_groups = @newsletter_list.newsletter_sources.with_tags.map(&:sourceable) %>
+        <% tag_groups.each do |tag_group| %>
+            <ul class="droppable" id="tag_group_<%= tag_group.new_record? ? "new#{Time.now.to_f.to_s.gsub(".", "")}" : tag_group.id %>" style="border: 1px solid grey;margin-left:210px;margin-bottom:2px;width:230px;padding:1px;">
+                <% tag_group.tags.each do |tag| %>
+                    <li class="draggable" style="" id="tag_<%= tag.id %>">
+                        <%= tag.name %>
+                        <%= link_to_function image_tag("/images/icons/remove.png"), "remove_tag('#{tag.id}')" %>
+                    </li>
+                <% end %>
+            </ul>
+    <% end %>
 
-  <div id="newsletter_sources_tags"></div>
 
-  <fieldset class="inputs labels_ta_r labels_200">
-    <ol class="align_inputs">
-      <li class="string">
-        <label><%= t("newsletters.newsletter_lists.form.keyword_for_autocompleter") %></label>
-        <%= text_field_tag "autocompleter", nil %>
-      </li>
-    </ol>
-  </fieldset>
+    <div id="newsletter_sources_tags"></div>
 
-  <a data-remote="true" data-method="get" id="autocompleter_sourceable_form" href="<%= sourceable_for_search_newsletters_newsletter_lists_path(:format => :js) %>" class="display:none"></a>
+    <a data-remote="true" data-method="get" id="autocompleter_sourceable_form" href="<%= sourceable_for_search_newsletters_newsletter_lists_path(:format => :js) %>" class="display:none"></a>
+</div>
 
+<clb/>
 </div>
 
 

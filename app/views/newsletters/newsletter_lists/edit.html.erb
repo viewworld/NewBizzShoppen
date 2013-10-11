@@ -1,3 +1,11 @@
+<%- header_text = "%s: %d, %s: %s" % [
+  "Subscribers count",
+  @newsletter_list_subscribers_count,
+  "Last synced at",
+  @newsletter_list_last_synchronized_at
+  ]
+%>
+
 <column-mc:>
   <%= javascript_include_tag "jquery.autocomplete.min.js" %>
 
@@ -19,9 +27,9 @@
   </header>
 
   <%= semantic_form_for @newsletter_list, :remote => true, :url => newsletters_newsletter_list_path do |form| %>
-      <frm>
+      <frm title="#{header_text}">
         <param:content>
-          <%= render :partial => 'form', :locals => {:form => form} %>
+            <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
@@ -30,9 +38,77 @@
           <ibt c="bt_grey fltri">
             <%= button_to_function t("newsletters.newsletter_lists.edit.view.button_cancel"), "history.go(-1)" %>
           </ibt>
+          <ibt c="fltri show" s="display:none;">
+            <%= link_to_function "Show", "$('.form_newsletter, .frm_foot_actions .bt').toggle('slow');" %>
+          </ibt>
+          <ibt c="fltri hide">
+            <%= link_to_function "Hide", "$('.form_newsletter, .frm_foot_actions .bt').toggle('slow');" %>
+          </ibt>
         </param:actions>
       </frm>
   <% end %>
 
-  <%= render :partial => "subscribers_list", :locals => { :newsletter_subscribers => @newsletter_subscribers } %>
+
+  <header>
+    <param:content>
+      <%= t("newsletters.newsletter_lists.edit.view.title_subscribers") %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to :download, t("newsletters.newsletter_lists.edit.view.button_bulk_download_link"), "", :id => "export_subscribers" %>
+        </li>
+
+      </ul>
+    </param:actions>
+  </header>
+
+  <div class="fltl">
+    <%= bt_link_to_function nil, "Select / Unselect", "$('input.cb_newsletter_subscriber_id').each(function(){this.checked=!this.checked});" %>
+  </div>
+
+  <div class="fltr">
+    <%= form_for @search, :url => edit_newsletters_newsletter_list_path(@newsletter_list) do |f| %>
+        <p>
+          <%= f.text_field :with_keyword, {:placeholder => t("contacts.filter.keyword_label") } %>
+          <%= bt_link_to nil, t("contacts.filter.search_button"), "javascript:void(0)", :onclick => "$(this).parents('form').submit()" %>
+        </p>
+    <% end %>
+  </div>
+
+  <clb/>
+
+  <%= form_tag bulk_subscribers_export_newsletters_newsletter_list_path(@newsletter_list, :format => :xls), :method => :post, :id => "export_subscribers_form" do %>
+    <div id="bulk_export_data" class="hidden"></div>
+  <% end %>
+
+
+  <%= render :partial => "subscribers_list", :locals => { :newsletter_subscribers => @newsletter_subscribers, :show_checkboxes => true } %>
 </column-mc:>
+
+<js:>
+  <script type="text/javascript">
+    $('.show').hide();
+
+    $('#export_subscribers').click(function(e){
+      var dataContainer = $('#bulk_export_data');
+      // remove previous exports data
+      dataContainer.empty();
+
+      // bind new export data
+      $(".cb_newsletter_subscriber_id:checked").each(function() {
+        var id = $(this).val();
+        var input = $("<input type='hidden' name='ids[]' />");
+        input.val(id);
+        dataContainer.append(input);
+      });
+
+      // start export dialog
+      exportDialog(e, "#export_subscribers_form", {
+        "XLS" : '<%= bulk_subscribers_export_newsletters_newsletter_list_path(@newsletter_list, :format => :xls) %>',
+        "CSV" : '<%= bulk_subscribers_export_newsletters_newsletter_list_path(@newsletter_list, :format => :csv) %>'
+      });
+    });
+  </script>
+</js:>

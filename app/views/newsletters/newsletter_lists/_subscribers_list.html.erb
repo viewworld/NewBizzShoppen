@@ -1,3 +1,6 @@
+<% show_checkboxes ||= false %>
+<% extra_columns_count = show_checkboxes ? 1 : 0 %>
+
 <% if newsletter_subscribers.blank? %>
     <% msg = (@newsletter_list.newsletter_sources.present? and @newsletter_list.newsletter_source_synches.present?) ? t("newsletters.newsletter_lists.edit.view.sources_synch_pending") : t("common.nothing_to_display") %>
     <%= blank_state_message(msg) %>
@@ -6,8 +9,12 @@
   <thead>
   <tr>
     <th class="hl"></th>
+    <% if show_checkboxes %>
+        <th class="no_pdd_lr" style="width: 10px;"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></th>
+    <% end %>
     <th><%= t("newsletters.newsletter_lists.edit.view.subscribers.email_column") %></th>
     <th><%= t("newsletters.newsletter_lists.edit.view.subscribers.name_column") %></th>
+    <th><%= t("newsletters.newsletter_lists.edit.view.subscribers.source_column") %></th>
     <th class="ta_r"><%= t("newsletters.newsletter_lists.index.view.actions_column") %></th>
     <th class="hr"></th>
   </tr>
@@ -15,7 +22,7 @@
   <tfoot>
   <tr>
     <td class="fl"></td>
-    <td colspan="3"></td>
+    <td colspan="<%= 4 + extra_columns_count %>"></td>
     <td class="fr"></td>
   </tr>
   </tfoot>
@@ -23,8 +30,14 @@
   <% newsletter_subscribers.each do |newsletter_subscriber| %>
       <tr class="<%= cycle("odd", "even") %>">
         <td class="cl"></td>
+        <% if show_checkboxes %>
+            <td class="no_pdd_lr">
+              <%= check_box_tag "cb_newsletter_subscriber_#{newsletter_subscriber.id}", newsletter_subscriber.id, false, :class => "cb_newsletter_subscriber_id" %>
+            </td>
+        <% end %>
         <td><%= newsletter_subscriber.email_address %></td>
         <td><%= newsletter_subscriber.name %></td>
+        <td><%= newsletter_subscriber.newsletter_source_as_text %></td>
         <td class="tda ta_r">
           <ul-actions>
               <li>
@@ -37,7 +50,7 @@
   <% end %>
   <% if will_paginate(newsletter_subscribers) %>
       <tr class="pagination">
-        <td colspan="5" class="ta_c">
+        <td colspan="<%= 6 + extra_columns_count %>" class="ta_c">
           <%= will_paginate newsletter_subscribers, :previous_label => '&laquo;', :next_label => '&raquo;' %>
         </td>
       </tr>
