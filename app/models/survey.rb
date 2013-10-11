@@ -5,6 +5,7 @@ class Survey < ActiveRecord::Base
   has_many :survey_recipients, :dependent => :destroy
   has_many :survey_answers, :through => :survey_recipients
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
+  belongs_to :owner, :class_name => User.name
   belongs_to :lead_creator, :foreign_key => "lead_creator_id", :class_name => "User"
   belongs_to :link_clicked_chain_mail_type, :class_name => "ChainMailType"
   has_and_belongs_to_many :newsletter_lists

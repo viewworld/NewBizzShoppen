@@ -17,6 +17,7 @@
           <%= @survey.last_sent_at ? @survey.last_sent_at : "never" %>
         </span>
       </li>
+      <%= form.input :owner %>
       <li class="string optional">
         <label for="survey_last_sent_at"><%= t("surveys_management.surveys.edit.view.last_sent_recipients_count") %></label>
         <span style="margin-top:8px;display:inherit;">
