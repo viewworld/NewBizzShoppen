@@ -79,6 +79,7 @@
   <clb/>
 
   <%= form_tag bulk_subscribers_export_newsletters_newsletter_list_path(@newsletter_list, :format => :xls), :method => :post, :id => "export_subscribers_form" do %>
+    <div id="bulk_export_data" class="hidden"></div>
   <% end %>
 
 
@@ -90,10 +91,23 @@
     $('.show').hide();
 
     $('#export_subscribers').click(function(e){
-        exportDialog(e, "#export_subscribers_form", {
-          "XLS" : '<%= bulk_subscribers_export_newsletters_newsletter_list_path(@newsletter_list, :format => :xls) %>',
-          "CSV" : '<%= bulk_subscribers_export_newsletters_newsletter_list_path(@newsletter_list, :format => :csv) %>'
-        });
+      var dataContainer = $('#bulk_export_data');
+      // remove previous exports data
+      dataContainer.empty();
+
+      // bind new export data
+      $(".cb_newsletter_subscriber_id:checked").each(function() {
+        var id = $(this).val();
+        var input = $("<input type='hidden' name='ids[]' />");
+        input.val(id);
+        dataContainer.append(input);
+      });
+
+      // start export dialog
+      exportDialog(e, "#export_subscribers_form", {
+        "XLS" : '<%= bulk_subscribers_export_newsletters_newsletter_list_path(@newsletter_list, :format => :xls) %>',
+        "CSV" : '<%= bulk_subscribers_export_newsletters_newsletter_list_path(@newsletter_list, :format => :csv) %>'
+      });
     });
   </script>
 </js:>

@@ -46,6 +46,7 @@ class Newsletters::NewsletterListsController < Newsletters::NewslettersControlle
 
   def bulk_subscribers_export
     @newsletter_subscribers = @newsletter_list.newsletter_list_subscribers.order("contact_name")
+    @newsletter_subscribers = @newsletter_subscribers.where(:id => params[:ids]) if params[:ids].present?
 
     respond_to do |format|
       format.csv { send_data NewsletterListSubscriber.records_to_csv(@newsletter_subscribers), :filename => "contacts.csv" }
