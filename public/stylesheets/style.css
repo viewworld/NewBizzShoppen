@@ -2352,3 +2352,11 @@ ol.survey_questions_container.sortable li .bt.bt_grey .branched-option {
 #surveys_newsletter_lists .grid_120 {
     margin-top: 30px;
 }
+
+
+.ui-autocomplete {
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+  

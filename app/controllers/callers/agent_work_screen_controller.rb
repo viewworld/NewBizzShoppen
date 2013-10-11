@@ -14,6 +14,8 @@ class Callers::AgentWorkScreenController < Callers::CallerController
     @selected_call_result = params[:selected_call_result_id].blank? ? nil : CallResult.where(:creator_id => current_user.call_centre? ? current_user.subaccount_ids : current_user.id).find_by_id(params[:selected_call_result_id])
     @selected_contact = params[:selected_contact_id].blank? ? nil : @campaign.contacts.find(params[:selected_contact_id])
     redirect_to callers_campaign_agent_work_screen_index_path(Campaign.find(params[:change_campaign_id])) if params[:change_campaign_id]
+
+    @search_contacts = @campaign.contacts.where("company_name ILIKE :q OR company_phone_number ILIKE :q", :q => "%#{params[:term]}%").limit(100).order(:company_name)
   end
 
   private

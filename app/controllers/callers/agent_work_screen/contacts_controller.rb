@@ -40,7 +40,7 @@ class Callers::AgentWorkScreen::ContactsController < Callers::AgentWorkScreenCon
   end
 
   def contacts_for_search
-    @contacts = @campaign.contacts.where("lower(company_name) LIKE :q OR company_phone_number LIKE :q", :q => "%#{params[:term].downcase}%").limit(10).order(:company_name)
+    @contacts = @campaign.contacts.where("lower(company_name) LIKE :q OR company_phone_number LIKE :q OR phone_number LIKE :q", :q => "%#{params[:term].downcase}%").order(:company_name)
     respond_to do |format|
       format.js
     end
