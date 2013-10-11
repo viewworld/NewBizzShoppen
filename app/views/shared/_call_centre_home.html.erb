@@ -151,8 +151,8 @@
   <script type="text/javascript">
 
       $(function(){
-//          $('#summary-tab').load('<%= summary_callers_agent_performance_path(:date_from => params[:date_from], :date_to => params[:date_to], :currency_id => params[:currency_id]) %>');
           $('table.agents tbody').load('<%= agents_callers_agent_performance_path(:date_from => params[:date_from], :date_to => params[:date_to], :currency_id => params[:currency_id]) %>');
+          $('#summary-tab').load('<%= summary_callers_agent_performance_path(:date_from => params[:date_from], :date_to => params[:date_to], :currency_id => params[:currency_id]) %>');
       });
 
       $(function(){
