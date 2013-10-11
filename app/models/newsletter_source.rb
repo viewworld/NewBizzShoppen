@@ -44,4 +44,18 @@ class NewsletterSource < ActiveRecord::Base
       end
     end
   end
+
+  def sourceable_as_text
+    souce_type_name = I18n.t("models.newsletter_sources.types.type#{source_type}")
+
+    case source_type
+      when TAG_SOURCE
+        "#{souce_type_name}: #{sourceable.tag_list}"
+      when CUSTOM_SOURCE
+        souce_type_name
+      else
+        "#{sourceable.name} (#{souce_type_name})"
+    end
+  end
+
 end

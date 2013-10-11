@@ -5028,6 +5028,7 @@ en:
           button_update: "Save"
           button_cancel: "Cancel"
           subscribers:
+            source_column: "Source"
             email_column: "E-mail"
             name_column: "Name"
             edit: "Edit"

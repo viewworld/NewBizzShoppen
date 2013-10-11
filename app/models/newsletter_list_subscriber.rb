@@ -12,6 +12,7 @@ class NewsletterListSubscriber < ActiveRecord::Base
   belongs_to :creator, :polymorphic => true, :foreign_key => 'creator_id'
   belongs_to :country
   belongs_to :region
+  belongs_to :newsletter_source
 
   validates :email_address, :presence => true
   validates_uniqueness_of :subscriber_id, :scope => [:newsletter_list_id, :subscriber_type], :allow_blank => true
@@ -42,6 +43,10 @@ class NewsletterListSubscriber < ActiveRecord::Base
       params[attr] = object.send(attr)
     end
     params
+  end
+
+  def newsletter_source_as_text
+    newsletter_source.sourceable_as_text if newsletter_source
   end
 
 end
