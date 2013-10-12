@@ -1,17 +1,4 @@
 <% cache "performance_summary_#{current_user.id}_#{params[:currency_id]}", :expires_in => 900 do  %>
-
-    <table class="generic" style="width:100%;margin:auto;margin-top:10px;">
-      <thead>
-      <tr>
-        <th class="hl"></th>
-        <th></th>
-        <th class="tar"><%= t("admin_home.show.view.table.cost") %></th>
-        <th class="tar"><%= t("admin_home.show.view.table.value") %></th>
-        <th class="tar"><%= t("admin_home.show.view.table.total") %></th>
-        <th class="hr"></th>
-      </tr>
-      </thead>
-      <tbody>
       <% [
                  [Date.today, Date.today, t("admin_home.show.view.table.today")],
                  [Date.today.beginning_of_week, Date.today.end_of_week, t("admin_home.show.view.table.week")],
@@ -31,12 +18,4 @@
             <td></td>
           </tr>
       <% end %>
-      </tbody>
-      <tfoot>
-      <td class="fl"></td>
-      <td colspan="4"></td>
-      <td class="fr"></td>
-      </tfoot>
-    </table>
-
 <% end %>

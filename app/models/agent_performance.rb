@@ -18,6 +18,10 @@ class AgentPerformance
     @payout ||= currency.from_euro(payouts.sum(:payout))
   end
 
+  def value
+    @value ||= currency.from_euro(values.sum(:value))
+  end
+
   def rate
     time > 0 ? payout / time : 0
   end
@@ -77,6 +81,10 @@ class AgentPerformance
 
   def payouts
     @payouts ||= AgentTimesheet::Payout.for_campaigns(campaigns).for_users(user).created_between(date_from, date_to)
+  end
+
+  def values
+    @values ||= ::AgentTimesheet::Value.for_campaigns(campaigns).for_users(user).created_between(date_from, date_to)
   end
 
   def results

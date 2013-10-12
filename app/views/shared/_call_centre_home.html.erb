@@ -62,6 +62,7 @@
           <th class="tar"><%= t("admin_home.show.view.table.calls") %></th>
           <th class="tar"><%= t("admin_home.show.view.table.results") %></th>
           <th class="tar"><%= t("admin_home.show.view.table.payout") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.value") %></th>
           <th class="tar"><%= t("admin_home.show.view.table.hours") %></th>
           <th class="tar"><%= t("admin_home.show.view.table.time_on_phone") %></th>
           <th class="tar"><%= t("admin_home.show.view.table.rate") %></th>
@@ -77,6 +78,7 @@
                   <td class="tar"><%= performance.call_count %></td>
                   <td class="tar"><%= performance.result_count %></td>
                   <td class="tar"><%= as_currency(performance.payout, performance.currency, 0) %></td>
+                  <td class="tar"><%= as_currency(performance.value, performance.currency, 0) %></td>
                   <td class="tar"><%= link_to performance.time.to_f.as_hours_and_minutes, campaign_link_to_user_session_logs(campaign) %></td>
                   <td class="tar"><%= performance.time_on_phone.to_f.as_hours_and_minutes %></td>
                   <td class="tar"><%= as_currency(performance.value_rate, performance.currency, 0) %></td>
@@ -91,6 +93,7 @@
           <td class="tar"><%= performance.call_count %></td>
           <td class="tar"><%= performance.result_count %></td>
           <td class="tar"><%= as_currency(performance.payout, performance.currency, 0) %></td>
+          <td class="tar"><%= as_currency(performance.value, performance.currency, 0) %></td>
           <td class="tar"><%= performance.time.to_f.as_hours_and_minutes %></td>
           <td class="tar"><%= performance.time_on_phone.to_f.as_hours_and_minutes %></td>
           <td class="tar"><%= as_currency(performance.value_rate, performance.currency, 0) %></td>
@@ -99,7 +102,7 @@
         </tbody>
         <tfoot>
         <td class="fl"></td>
-        <td colspan="7"></td>
+        <td colspan="8"></td>
         <td class="fr"></td>
         </tfoot>
       </table>
@@ -112,6 +115,7 @@
           <th class="tar"><%= t("admin_home.show.view.table.calls") %></th>
           <th class="tar"><%= t("admin_home.show.view.table.results") %></th>
           <th class="tar"><%= t("admin_home.show.view.table.payout") %></th>
+          <th class="tar"><%= t("admin_home.show.view.table.value") %></th>
           <th class="tar"><%= t("admin_home.show.view.table.hours") %></th>
           <th class="tar"><%= t("admin_home.show.view.table.time_on_phone") %></th>
           <th class="tar"><%= t("admin_home.show.view.table.rate") %></th>
@@ -119,11 +123,11 @@
         </tr>
         </thead>
         <tbody>
-            <tr><td colspan="9"><%= image_tag "global_loader.gif" %></td></tr>
+            <tr><td colspan="10"><%= image_tag "global_loader.gif" %></td></tr>
         </tbody>
         <tfoot>
         <td class="fl"></td>
-        <td colspan="7"></td>
+        <td colspan="8"></td>
         <td class="fr"></td>
         </tfoot>
       </table>
@@ -139,7 +143,27 @@
         </param:content>
       </frm>
 
-      <div id="summary-tab"></div>
+      <div id="summary-tab">
+        <table class="generic" style="width:100%;margin:auto;margin-top:10px;">
+          <thead>
+          <tr>
+            <th class="hl"></th>
+            <th></th>
+            <th class="tar"><%= t("admin_home.show.view.table.cost") %></th>
+            <th class="tar"><%= t("admin_home.show.view.table.value") %></th>
+            <th class="tar"><%= t("admin_home.show.view.table.total") %></th>
+            <th class="hr"></th>
+          </tr>
+          </thead>
+          <tbody><tr><td colspan="6"><%= image_tag "global_loader.gif" %></td></tr></tbody>
+          <tfoot>
+          <td class="fl"></td>
+          <td colspan="4"></td>
+          <td class="fr"></td>
+          </tfoot>
+        </table>
+
+      </div>
 
     </div>
     <clb/>
@@ -152,7 +176,7 @@
 
       $(function(){
           $('table.agents tbody').load('<%= agents_callers_agent_performance_path(:date_from => params[:date_from], :date_to => params[:date_to], :currency_id => params[:currency_id]) %>');
-          $('#summary-tab').load('<%= summary_callers_agent_performance_path(:date_from => params[:date_from], :date_to => params[:date_to], :currency_id => params[:currency_id]) %>');
+          $('#summary-tab tbody').load('<%= summary_callers_agent_performance_path(:date_from => params[:date_from], :date_to => params[:date_to], :currency_id => params[:currency_id]) %>');
       });
 
       $(function(){
