@@ -115,10 +115,13 @@ class NewsletterList < ActiveRecord::Base
   end
 
   def add_to_subscribers!(objects, creator=nil)
+    saved = 0
     objects.each do |object|
       params = NewsletterListSubscriber.subscriber_attribute_params(object)
-      newsletter_list_subscribers.create(params.merge(:creator => creator, :subscriber_id => object.id, :subscriber_type => object.class.to_s))
+      subscriber = newsletter_list_subscribers.build(params.merge(:creator => creator, :subscriber_id => object.id, :subscriber_type => object.class.to_s))
+      saved += 1 if subscriber.save
     end
+    saved
   end
 
   def extract_sourceable_objects
