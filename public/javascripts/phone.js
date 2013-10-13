@@ -1,6 +1,6 @@
 function changePhoneNumber(number){
   if (number.match(/\d/g) != null) {
-    if (PHONE_TYPE == 1) {
+    if (window.phone_type == 1) {
       if (currentCall == null) {
         $("#calleeText").val(number.match(/\d/g).join(''));
         $("#calleeText").trigger('keyup');
@@ -8,8 +8,11 @@ function changePhoneNumber(number){
           call();
         }
       }
-    } else if ((PHONE_TYPE == 2) && (window.auto_dial == true)) {
-      document.applets[0].API_Call(1, number.match(/\d/g).join(''));
+    } else if ((window.phone_type == 2)) {
+      $("#PhoneNumber").val(number.match(/\d/g).join(''));
+      if ((window.auto_dial == true) && ($("#PhoneNumber").val() != '')) {
+        document.applets[0].API_Call(1, number.match(/\d/g).join(''));
+      }
     }
   }
 }
