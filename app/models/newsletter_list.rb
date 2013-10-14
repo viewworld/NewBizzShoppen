@@ -24,6 +24,7 @@ class NewsletterList < ActiveRecord::Base
 
   scope :not_archived, where(:is_archived => false)
 
+  include CommonOwner
   include CommonNewsletter
   include AdvancedImport
 

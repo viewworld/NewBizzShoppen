@@ -13,6 +13,7 @@ class NewsletterCampaign < ActiveRecord::Base
   SENT_TO_CM_AS_DRAFT = 4.freeze
   STATUSES = [SAVED_AS_DRAFT, QUEUED_FOR_SENDING_TO_SUBSCRIBERS, SENT_TO_CM_TO_SUBSCRIBERS, QUEUED_FOR_SENDING_AS_DRAFT, SENT_TO_CM_AS_DRAFT]
 
+  include CommonOwner
   include CommonNewsletter
 
   scope :not_sent_to_campaign_monitor, where("status NOT IN (?)", [NewsletterCampaign::SENT_TO_CM_TO_SUBSCRIBERS, NewsletterCampaign::SENT_TO_CM_AS_DRAFT])
