@@ -7,14 +7,16 @@
       <th class="hl"></th>
       <th class="no_pdd_lr" style="width:10px">&nbsp;</th>
       <th><%= t("campaigns_users.index.table.agent") %></th>
-      <th class="ta_c"><%= t("campaigns_users.index.table.campaigns") %></th>
+      <th><%= t("campaigns_users.index.table.contacts_in_this_campaign") %></th>
+      <th><%= t("campaigns_users.index.table.campaigns") %></th>
+      <th class="ta_c"><%= t("campaigns_users.index.table.total_contacts") %></th>
       <th class="hr"></th>
     </tr>
     </thead>
     <tfoot>
     <tr>
       <td class="fl"></td>
-      <td colspan="3"></td>
+      <td colspan="5"></td>
       <td class="fr"></td>
     </tr>
     </tfoot>
@@ -29,7 +31,9 @@
               <td><%= call_centre.screen_name %>
                 <%= link_to_function "(select all in call centre)", "$.each($('.cb_cu_#{call_centre.id}'), function(index, val){$('#' + this.id).attr('checked', !$('#' + this.id).attr('checked'))})" if call_centre.has_role?(:call_centre) %>
               </td>
-              <td class="ta_c"><%= call_centre.campaigns.size %></td>
+              <td><%#= call_centre.contacts.for_campaign(@campaign).count %></td>
+              <td><%#= call_centre.campaigns.size %></td>
+              <td class="ta_c"><%#= call_centre.contacts.count %></td>
               <td class="cr"></td>
             </tr>
             <% call_centre.has_role?(:call_centre) && call_centre.subaccounts_without_locked.each do |cc_agent| %>
@@ -40,7 +44,9 @@
                     <%= check_box_tag "campaign_user_id_#{cc_agent.id}", cc_agent.id, @campaign.users.include?(cc_agent), :name => "campaign_user_ids[]", :class => "cb_cu_#{call_centre.id}" %>
                   </td>
                   <td class="td_child_node"><%= cc_agent.full_name %></td>
-                  <td class="ta_c"><%= cc_agent.campaigns.size %></td>
+                  <td><%= cc_agent.contacts.for_campaign(@campaign).count %></td>
+                  <td><%= cc_agent.campaigns.size %></td>
+                  <td class="ta_c"><%= cc_agent.contacts.count %></td>
                   <td class="cr"></td>
                 </tr>
             <% end %>
@@ -49,7 +55,7 @@
 
     <tr class="main_actions">
       <td class="cl"></td>
-      <td colspan="3" class="no_pdd_lr">
+      <td colspan="5" class="no_pdd_lr">
         <%= bt_link_to :users, t("campaigns_users.index.button_assign"), "javascript:void(0)", :onclick => "$('#campaign_user_form').submit();" %>
       </td>
       <td class="cr"></td>

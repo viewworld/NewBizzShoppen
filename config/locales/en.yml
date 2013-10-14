@@ -797,6 +797,8 @@ en:
       table:
         agent: Agent
         campaigns: Campaigns
+        contacts_in_this_campaign: "Assigned contacts in this campaign"
+        total_contacts: "Total assigned contacts"
 
   results:
     index:
