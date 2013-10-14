@@ -40,6 +40,15 @@ class Survey < ActiveRecord::Base
     self.save
   end
 
+  def duplicate!
+    copy = deep_clone(
+      :with_callbacks => false,
+      :include => [:survey_questions]
+    )
+    copy.name = "(#{I18n.t('models.survey.duplication.copy_of')}) #{copy.name}"
+    copy.save
+  end
+
   def send_to_newsletter_lists!
     sending_started_at = Time.now
     newsletter_lists.each { |nl| send_by_email(nl) }

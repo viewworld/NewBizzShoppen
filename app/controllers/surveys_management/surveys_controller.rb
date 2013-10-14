@@ -1,6 +1,6 @@
 class SurveysManagement::SurveysController < SurveysManagement::SurveysManagementController
   inherit_resources
-  before_filter :fetch_object, :only => [:edit, :setup, :update, :show, :destroy, :send_to_newsletters]
+  before_filter :fetch_object, :only => [:edit, :setup, :update, :show, :destroy, :send_to_newsletters, :duplicate]
 
   set_tab "campaigns"
   set_subtab "surveys"
@@ -28,6 +28,16 @@ class SurveysManagement::SurveysController < SurveysManagement::SurveysManagemen
     destroy! do |success, failure|
       success.html { redirect_to surveys_management_surveys_path }
     end
+  end
+
+  def duplicate
+    if @survey.duplicate!
+      flash[:notice] = t("surveys_management.surveys.duplicate.flash.notice.duplication_success")
+    else
+      flash[:alert] = t("surveys_management.surveys.duplicate.flash.alert.duplication_failure")
+    end
+
+    redirect_to :back
   end
 
   def send_to_newsletters
