@@ -277,7 +277,8 @@ describe ChainMail do
   context "survey chain mail types" do
     before(:each) do
       setup_chain_mail_types(SurveyChainMailType)
-      @survey = Survey.make!
+      @creator = User::Admin.make!
+      @survey = Survey.make!(:creator => @creator, :owner => @creator)
     end
 
     it "should behave correctly for condition 'send if survey not opened'" do

@@ -6,7 +6,7 @@ module CommonOwner
 
       validate :owner_is_present_and_valid, :unless => Proc.new { |n| n.skip_validations }
 
-      scope :created_or_owned_by, lambda { |creator| where("creator_id = ? or owner_id = ?", creator.id, creator.id) }
+      scope :created_or_owned_by, lambda { |user| where("creator_id = ? or owner_id = ?", user.id, user.id) }
 
       attr_accessor :skip_validations
     end
@@ -29,6 +29,11 @@ module CommonOwner
     end
 
     private
+
+    # owner from creator should be set in callbacks per model (not every model sets owner from creator during creation)
+    def set_owner_from_creator
+      self.owner = creator
+    end
 
     def owner_is_present_and_valid
       if owner.nil?

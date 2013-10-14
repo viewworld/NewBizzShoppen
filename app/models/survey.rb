@@ -1,6 +1,6 @@
 class Survey < ActiveRecord::Base
-  include ScopedSearch::Model
   include CommonOwner
+  include ScopedSearch::Model
 
   has_many :survey_questions, :order => "position", :dependent => :destroy
   has_many :survey_recipients, :dependent => :destroy
@@ -21,6 +21,7 @@ class Survey < ActiveRecord::Base
   attr_accessor :skip_validations
 
   before_create :set_uuid
+  before_create :set_owner_from_creator
   before_destroy :can_be_destroyed
   after_save :check_email_template
 
@@ -46,7 +47,12 @@ class Survey < ActiveRecord::Base
       :include => [:survey_questions]
     )
     copy.name = "(#{I18n.t('models.survey.duplication.copy_of')}) #{copy.name}"
-    copy.save
+    
+    if copy.save
+      copy
+    else
+      nil
+    end
   end
 
   def send_to_newsletter_lists!
