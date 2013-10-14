@@ -463,12 +463,12 @@ class Campaign < ActiveRecord::Base
   end
 
   def import_contacts_from_lists!
-    subscriber_ids = contacts.select("newsletter_list_subscriber_id").map(&:newsletter_list_subscriber_id)
+    subscriber_ids = contacts.where("newsletter_list_subscriber_id IS NOT NULL").select("newsletter_list_subscriber_id").map(&:newsletter_list_subscriber_id)
     NewsletterListSubscriber.where(:newsletter_list_id => newsletter_list_ids).where("id NOT IN (?)", subscriber_ids.empty? ? Array(0) : subscriber_ids).each do |subscriber|
       params = NewsletterListSubscriber.subscriber_attribute_params(subscriber)
       params[:company_phone_number] = "(missing phone)" if params[:company_phone_number].blank?
       params[:company_name] = "(missing company name)" if params[:company_name].blank?
-      unless subscriber.subscriber_type == 'Contact' and subscriber.subscriber.campaign_id == id
+      unless subscriber.subscriber_type == 'Contact' and subscriber.subscriber and subscriber.subscriber.campaign_id == id
         contacts.create(params.merge(:creator => creator, :creator_name => creator.full_name, :category_id => category_id, :country_id => country_id,
                                      :newsletter_list_id => subscriber.newsletter_list_id, :newsletter_list_subscriber_id => subscriber.id))
       end
@@ -477,11 +477,12 @@ class Campaign < ActiveRecord::Base
   end
 
   def export_contacts_to_lists!
-    contacts.where(:newsletter_list_id => newsletter_list_ids).each do |contact|
-      params = {}
-      if contact.newsletter_list_subscriber
+    contacts.each do |contact|
+      newsletter_list_subscribers = [contact.newsletter_list_subscriber] + NewsletterListSubscriber.where(:newsletter_list_id => newsletter_list_ids, :subscriber_type => 'Contact', :subscriber_id => contact.id)
+      newsletter_list_subscribers.uniq.compact.each do |nls|
+        params = {}
         NewsletterListSubscriber.selected_attributes.each { |attr| params[attr] = contact.send(attr) }
-        NewsletterListSubscriber.update_all(params, { :id => contact.newsletter_list_subscriber_id })
+        NewsletterListSubscriber.update_all(params, { :id => nls.id })
       end
     end
     newsletter_lists.each do |newsletter_list|

@@ -215,6 +215,11 @@ describe Campaign do
   end
 
   context "newsletter lists as contacts sources" do
+
+    def synchronize!(lists)
+      lists.each { |l| l.synchronize!(:use_delayed_job => false, :sources_synch => true, :campaign_monitor_synch => false) }
+    end
+
     before(:each) do
       @campaign = Campaign.make!
 
@@ -233,8 +238,10 @@ describe Campaign do
     it "new subscribers should be imported as contacts" do
       @campaign.contacts.count.should == 0
 
-      User::Member.make!(:email => "johnny@cash.net", :tag_list => ["xyz_abc", "qwerty"], :first_name => "Johnny", :last_name => "Cash", :company_name => "ZComp Ltd")
+      User::Member.make!(:email => "johnny@cash.net", :tag_list => ["qwerty"], :first_name => "Johnny", :last_name => "Cash", :company_name => "ZComp Ltd")
       User::Supplier.make!(:email => "alyona@test.net", :tag_list => ["xyz_abc"], :first_name => "Alyona", :last_name => "Minkovsky", :company_name => "ZComp Ltd")
+
+      synchronize!([@list, @list2])
 
       #first import is done when import is enabled
       @campaign.update_attribute(:import_contacts_from_lists_enabled, true)
@@ -242,6 +249,8 @@ describe Campaign do
       @campaign.contacts.count.should == 2
 
       User::Supplier.make!(:email => "jim@example.net", :tag_list => ["xyz_abc"])
+
+      synchronize!([@list, @list2])
 
       @campaign.import_contacts_from_lists!
 
@@ -251,14 +260,36 @@ describe Campaign do
 
       @campaign.reload
 
-      #when contact of given email already exists then the subscriber should not be imported
-      User::Supplier.make!(:email => "tim@tim.pl", :tag_list => ["xyz_abc"], :company_name => "Some other corp")
+      User::Supplier.make!(:email => "tim2@tim.pl", :tag_list => ["xyz_abc"], :company_name => "Some other corp")
+
+      synchronize!([@list, @list2])
 
       @campaign.import_contacts_from_lists!
 
-      @campaign.contacts.count.should == 4
+      @campaign.contacts.count.should == 5
 
       @campaign.contacts.detect { |c| c.company_name == "Tim Ltd" and c.email_address == "tim@tim.pl" }.should_not be_nil
+
+      @list.newsletter_list_subscribers.count.should == 3
+      @list2.newsletter_list_subscribers.count.should == 1
+
+      @campaign.export_contacts_to_lists!
+
+      #second execution should not duplicate
+      @campaign.export_contacts_to_lists!
+
+      @list.newsletter_list_subscribers.count.should == 4
+      @list2.newsletter_list_subscribers.count.should == 4
+
+      @campaign.contacts.find_by_email_address("alyona@test.net").update_attribute(:company_name, "The A Company Ltd")
+      @campaign.reload
+      @campaign.export_contacts_to_lists!
+
+      @list.reload
+      @list2.reload
+
+      @list.newsletter_list_subscribers.where(:email_address => "alyona@test.net").first.company_name.should == "The A Company Ltd"
+      @list2.newsletter_list_subscribers.where(:email_address => "alyona@test.net").first.company_name.should == "The A Company Ltd"
     end
   end
 end
