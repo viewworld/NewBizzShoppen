@@ -21,11 +21,11 @@ class Survey < ActiveRecord::Base
   attr_accessor :skip_validations
 
   before_create :set_uuid
-  before_create :set_owner_from_creator
+  before_create :set_owner_from_creator_if_not_exists
   before_destroy :can_be_destroyed
   after_save :check_email_template
 
-  scope :created_by, lambda { |creator| creator.has_any_role?(:category_supplier, :supplier) ? where("categories_surveys.category_id IN (?) OR creator_id = ?", creator.unique_category_ids, creator.id).joins("LEFT JOIN categories_surveys ON categories_surveys.survey_id = surveys.id") : where("creator_id = ?", creator.id) }
+  scope :created_by, lambda { |creator| creator.has_any_role?(:category_supplier, :supplier) ? where("categories_surveys.category_id IN (?) OR creator_id = ? OR owner_id = ?", creator.unique_category_ids, creator.id, creator.id).joins("LEFT JOIN categories_surveys ON categories_surveys.survey_id = surveys.id") : created_or_owned_by(creator) }
 
   def newsletter_owner
     User.where(:email => newsletter_owner_email).first
@@ -97,7 +97,10 @@ class Survey < ActiveRecord::Base
   end
 
   def can_be_managed_by?(user)
-    user.admin? or (creator == user) or (user.has_any_role?(:category_supplier, :supplier) and (category_ids & user.unique_category_ids).present?)
+    is_admin = user.admin?
+    is_creator = (creator == user)
+    is_owner = is_owner_eql_to?(user)
+    is_admin or is_creator or is_owner or (user.has_any_role?(:category_supplier, :supplier) and (category_ids & user.unique_category_ids).present?)
   end
 
   def fake_permalink

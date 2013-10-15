@@ -31,8 +31,12 @@ module CommonOwner
     private
 
     # owner from creator should be set in callbacks per model (not every model sets owner from creator during creation)
-    def set_owner_from_creator
-      self.owner = creator
+    def set_owner_from_creator_if_not_exists
+      self.owner ||= creator
+    end
+
+    def is_owner_eql_to?(user)
+      owner && (owner.id == user.id)
     end
 
     def owner_is_present_and_valid
