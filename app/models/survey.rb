@@ -21,7 +21,7 @@ class Survey < ActiveRecord::Base
   attr_accessor :skip_validations
 
   before_create :set_uuid
-  before_create :set_owner_from_creator_if_not_exists
+  before_create :set_owner_from_creator, :unless => :owner
   before_destroy :can_be_destroyed
   after_save :check_email_template
 

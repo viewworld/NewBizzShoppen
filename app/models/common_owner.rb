@@ -1,7 +1,7 @@
 module CommonOwner
   def self.included(base)
     base.class_eval do
-      belongs_to :owner, :class_name => User.name
+      belongs_to :owner, :class_name => User
       belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
 
       validate :owner_is_present_and_valid, :unless => Proc.new { |n| n.skip_validations }
@@ -17,7 +17,7 @@ module CommonOwner
     public
 
     def owner_email
-      owner ? owner.email : nil
+      owner.try(:email)
     end
 
     def owner_email=(new_email)
@@ -31,8 +31,8 @@ module CommonOwner
     private
 
     # owner from creator should be set in callbacks per model (not every model sets owner from creator during creation)
-    def set_owner_from_creator_if_not_exists
-      self.owner ||= creator
+    def set_owner_from_creator
+      self.owner = creator
     end
 
     def is_owner_eql_to?(user)
