@@ -2,7 +2,7 @@
   <fieldset class="inputs labels_ta_r labels_100">
     <ol>
       <%= form.input :subject %>
-      <%= form.input :from %>
+      <%= form.input :from, :as => :select, :collection => ::EmailTemplate::FROM_SENDERS, :include_blank => false %>
       <%= form.input :bcc %>
       <%= form.input :cc %>
       <%= form.input :body,
@@ -15,7 +15,8 @@
                             }
 
       %>
-      <%= form.input :enable_custom_signature, :as => :boolean, :onclick => "show_hide_custom_signature()" %>
+      <%#= form.input :enable_custom_signature, :as => :boolean, :onclick => "show_hide_custom_signature()" %>
+      <%= form.input :email_template_signature_source, :as => :select, :collection => EmailTemplate.email_template_signature_collection, :include_blank => true %>
 
       <div id="custom_email_signature_div">
       <%= form.fields_for :email_template_signature, form.object.email_template_signature || EmailTemplateSignature.new(:related => form.object) do |builder| %>

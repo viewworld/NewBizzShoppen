@@ -2,10 +2,16 @@ require "vendor/plugins/e_template/app/models/email_template.rb"
 class EmailTemplate < ActiveRecord::Base
   include EmailTemplateHelp
 
+  FROM_SENDERS = [
+    ["Fairleads.com", "admin@fairleads.com"],
+    ["Erhvervsanalyse.dk", "admin@erhvervsanalyse.dk"]
+  ]
+
   translates :subject, :body
   has_many :email_template_translations
   belongs_to :resource, :polymorphic => true
   has_one :email_template_signature, :as => :related
+  belongs_to :email_template_signature_source, :class_name => EmailTemplateSignature.name
 
   validates_uniqueness_of :uniq_id, :scope => [:resource_type,:resource_id]
 
@@ -33,6 +39,10 @@ class EmailTemplate < ActiveRecord::Base
 
   def blank_template?
     uniq_id == "blank_template"
+  end
+
+  def self.email_template_signature_collection
+    EmailTemplateSignature.where(:related_type => EmailTemplate.name).all.map { |x| [x.display_name, x.id] }
   end
 
   private
