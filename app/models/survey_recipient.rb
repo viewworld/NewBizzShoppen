@@ -85,6 +85,7 @@ class SurveyRecipient < ActiveRecord::Base
   end
 
   def assign_option_tags!
+    return true unless recipient.respond_to?(:tag_list)
     tags = survey_answers.select { |sa| sa.question_type == SurveyQuestion::SELECT_TYPE }.map do |survey_answer|
       survey_answer.survey_options.map(&:tag_list).flatten
     end.flatten.uniq
@@ -131,9 +132,9 @@ class SurveyRecipient < ActiveRecord::Base
   end
 
   def email
-    case
-      when recipient.is_a?(AbstractLead) then recipient.email_address
-      when recipient.is_a?(User) then recipient.email
+    case recipient.class.to_s
+      when 'AbstractLead', 'NewsletterListSubscriber' then recipient.email_address
+      when 'User' then recipient.email
       else
         ""
     end
@@ -152,9 +153,9 @@ class SurveyRecipient < ActiveRecord::Base
   end
 
   def recipient_name(name_type)
-    names = case
-      when recipient.is_a?(AbstractLead) then recipient.contact_name.to_s.split(" ")
-      when recipient.is_a?(User) then [recipient.first_name, recipient.last_name]
+    names = case recipient.class.to_s
+      when 'AbstractLead', 'NewsletterListSubscriber' then recipient.contact_name.to_s.split(" ")
+      when 'User' then [recipient.first_name, recipient.last_name]
     end
 
     names[name_type == :first_name ? 0 : 1]

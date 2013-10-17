@@ -41,7 +41,7 @@
       <td>&nbsp;</td>
       <td class="cr"></td>
     </tr>
-    <% @survey.survey_questions.each do |survey_question| %>
+    <% @survey.survey_questions.with_input_types.each do |survey_question| %>
         <tr class="<%= cycle("odd", "even") %>">
           <td class="cl"></td>
           <td><%= survey_question.title %></td>

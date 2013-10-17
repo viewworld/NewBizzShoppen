@@ -61,7 +61,7 @@ class Survey < ActiveRecord::Base
   end
 
   def create_survey_recipient(recipient, from_newsletter=false, notify_recipient=true)
-    survey_recipients.create(:recipient => recipient.is_a?(NewsletterSubscriber) ? recipient.subscriber : recipient,
+    survey_recipients.create(:recipient => recipient.is_a?(NewsletterListSubscriber) ? recipient.subscriber || recipient : recipient,
                              :from_newsletter => from_newsletter, :skip_notify_recipient => !notify_recipient)
   end
 
