@@ -16,7 +16,7 @@
 
       %>
       <%#= form.input :enable_custom_signature, :as => :boolean, :onclick => "show_hide_custom_signature()" %>
-      <%= form.input :email_template_signature_source, :as => :select, :collection => EmailTemplate.email_template_signature_collection, :include_blank => true %>
+      <%= form.input :email_template_signature_source, :as => :select, :collection => EmailTemplate.email_template_signature_collection, :include_blank => true, :input_html => {:onchange => "change_email_template_signature();"} %>
 
       <div id="custom_email_signature_div">
       <%= form.fields_for :email_template_signature, form.object.email_template_signature || EmailTemplateSignature.new(:related => form.object) do |builder| %>
@@ -27,3 +27,33 @@
     </ol>
   </fieldset>
 </div>
+
+<div class="pdd_10">
+  <div id="preview_email_template_signature_header" class="<%= "hidden" unless form.object.email_template_signature_source.present? %>">
+    <strong>
+      Email template signature source preview:
+    </strong>
+  </div>
+  <div id="preview_email_template_signature" class="pdd_10">
+    <% if form.object.email_template_signature_source.present? %>
+      <%= render :partial => "administration/email_template_signature_sources/preview", :locals => {:resource => form.object.email_template_signature_source} %>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function change_email_template_signature() {
+    $("#preview_email_template_signature").empty();
+    $("#preview_email_template_signature_header").hide();
+
+    var selected = parseInt($("#email_template_email_template_signature_source_id").val(), 10);
+
+    if (!isNaN(selected)) {
+      var url = "/administration/email_template_signature_sources/" + selected;
+      $.get(url, function(data) {
+        $("#preview_email_template_signature_header").show();
+        $("#preview_email_template_signature").html(data);
+      });
+    }
+  }
+</script>

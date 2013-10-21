@@ -42,7 +42,7 @@ class EmailTemplate < ActiveRecord::Base
   end
 
   def self.email_template_signature_collection
-    EmailTemplateSignature.where(:related_type => EmailTemplate.name).all.map { |x| [x.display_name, x.id] }
+    EmailTemplateSignature.where(:related_type => EmailTemplate.name).distinct.all.map { |x| [x.display_name, x.id] }
   end
 
   private

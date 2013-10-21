@@ -40,6 +40,7 @@ Nbs::Application.routes.draw do
       end
     end
     resources :email_template_signatures
+    resources :email_template_signature_sources, :only => [:show]
     resources :leads
     resources :deals do
       resources :assets, :controller => "deal_assets", :only => [:create, :destroy]
