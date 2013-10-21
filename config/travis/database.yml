@@ -1,0 +1,4 @@
+test:
+  adapter: postgresql
+  database: nbs_test
+  username: postgres

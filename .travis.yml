@@ -1,0 +1,19 @@
+language: ruby
+bundler_args: --without development --deployment
+cache: bundler
+rvm:
+- 1.8.7
+before_install:
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- ! 'echo ''gem: --no-ri --no-rdoc'' > ~/.gemrc'
+before_script:
+- export RAILS_ENV=test
+- cp -f config/travis/database.yml config/database.yml
+- bundle exec rake db:drop db:create db:migrate
+- thor nbs:seed
+- thor nbs:t
+script: bundle exec rspec spec --format documentation
+branches:
+  only:
+  - master
