@@ -12,8 +12,8 @@ before_script:
 - export RAILS_ENV=test
 - cp -f config/travis/database.yml config/database.yml
 - bundle exec rake db:drop db:create db:migrate
-- thor nbs:seed
-- thor nbs:t
+- bundle exec thor nbs:seed
+- bundle exec thor nbs:t
 script: bundle exec rspec spec --format documentation
 branches:
   only:
