@@ -46,7 +46,7 @@ class Survey < ActiveRecord::Base
       :with_callbacks => false,
       :include => [:survey_questions]
     )
-    copy.name = "(#{I18n.t('models.survey.duplication.copy_of')}) #{copy.name}"
+    copy.name = "#{I18n.t('models.survey.duplication.copy_of')} #{copy.name}"
     
     if copy.save
       copy

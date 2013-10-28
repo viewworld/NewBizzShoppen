@@ -1,7 +1,7 @@
 module CommonOwner
   def self.included(base)
     base.class_eval do
-      belongs_to :owner, :class_name => User
+      belongs_to :owner, :class_name => User.name
       belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
 
       validate :owner_is_present_and_valid, :unless => Proc.new { |n| n.skip_validations }

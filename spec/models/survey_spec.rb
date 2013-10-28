@@ -22,7 +22,7 @@ describe Survey do
     it "should add '(Copy of)' prefix for name for survey" do
       @duplicated_survey = @survey.duplicate!
       @duplicated_survey.should_not be_nil
-      @duplicated_survey.name.should match /\(Copy of\)/
+      @duplicated_survey.name.should match /Copy of/
     end
 
     it "should duplicate survey with questions and without results" do
@@ -54,6 +54,8 @@ describe Survey do
       @survey.newsletter_lists << @list
       @survey.save
       @survey.reload
+      @list.synchronize!(:campaign_monitor_synch => false, :use_delayed_job => false)
+      @list.reload
     end
 
     it "should send to newsletter list" do
