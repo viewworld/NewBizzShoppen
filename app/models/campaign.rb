@@ -478,12 +478,7 @@ class Campaign < ActiveRecord::Base
 
   def export_contacts_to_lists!
     contacts.each do |contact|
-      newsletter_list_subscribers = [contact.newsletter_list_subscriber] + NewsletterListSubscriber.where(:newsletter_list_id => newsletter_list_ids, :subscriber_type => 'Contact', :subscriber_id => contact.id)
-      newsletter_list_subscribers.uniq.compact.each do |nls|
-        params = {}
-        NewsletterListSubscriber.selected_attributes.each { |attr| params[attr] = contact.send(attr) }
-        NewsletterListSubscriber.update_all(params, { :id => nls.id })
-      end
+      contact.copy_attributes_to_newsletter_subscribers!
     end
     newsletter_lists.each do |newsletter_list|
       contacts.where("leads.newsletter_list_id != (?)", newsletter_list.id).each do |contact|

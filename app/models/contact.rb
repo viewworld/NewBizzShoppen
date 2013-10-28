@@ -53,6 +53,8 @@ class Contact < AbstractLead
 
   acts_as_taggable
 
+  after_update :sync_with_campaign_sources
+
 
   class << self
 
@@ -292,4 +294,19 @@ class Contact < AbstractLead
     company_name
   end
 
+  def sync_with_campaign_sources
+    if campaign and campaign.import_contacts_from_lists_enabled? and campaign.newsletter_lists.present?
+      copy_attributes_to_newsletter_subscribers!
+    end
+  end
+
+  def campaign_source_subscriber_ids
+    ([newsletter_list_subscriber] + NewsletterListSubscriber.where(:newsletter_list_id => campaign.newsletter_list_ids, :subscriber_type => 'Contact', :subscriber_id => id)).uniq.compact.map(&:id)
+  end
+
+  def copy_attributes_to_newsletter_subscribers!
+    params = {}
+    NewsletterListSubscriber.selected_attributes.each { |attr| params[attr] = send(attr) }
+    NewsletterListSubscriber.update_all(params, { :id => campaign_source_subscriber_ids })
+  end
 end
