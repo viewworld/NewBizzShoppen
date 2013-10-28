@@ -41,7 +41,7 @@ class Campaign < ActiveRecord::Base
   scope :available_for_user, lambda { |user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin }
 
   before_save :set_euro_fixed_cost_value, :set_euro_production_value_per_hour
-  after_save :check_email_templates, :correct_session_logs_if_cost_type_changed, :import_contacts_from_lists
+  after_save :check_email_templates, :correct_session_logs_if_cost_type_changed, :perform_import_contacts_from_lists
 
   FIXED_COST = 0.freeze
   AGENT_BILLING_RATE_COST = 1.freeze
@@ -456,7 +456,7 @@ class Campaign < ActiveRecord::Base
     contacts.with_agent_id(agent_id).with_pending_status(false).each(&:return_to_pool) if agent_id
   end
 
-  def import_contacts_from_lists
+  def perform_import_contacts_from_lists
     if import_contacts_from_lists_enabled_changed? and import_contacts_from_lists_enabled?
       self.delay(:queue => "import_contacts_from_lists").import_contacts_from_lists!
     end
