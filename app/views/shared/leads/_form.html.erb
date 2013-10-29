@@ -94,6 +94,9 @@
               <% end %>
 
               <% form.object.price = @campaign_result.value.to_f if @campaign_result and @settings["use_value_as_lead_price"].eql?("1") %>
+              <% if @campaign %>
+                <% form.object.currency = @campaign.currency %>
+              <% end %>
 
               <% if @settings["prompt_for_price"].eql?("0") %>
                   <%= form.input :price, :as => :hidden %>
