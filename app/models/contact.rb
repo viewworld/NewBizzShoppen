@@ -295,7 +295,7 @@ class Contact < AbstractLead
   end
 
   def sync_with_campaign_sources
-    if campaign and campaign.import_contacts_from_lists_enabled? and campaign.newsletter_lists.present?
+    if campaign and campaign.import_contacts_from_lists_enabled? and campaign.sync_with_campaign_source? and campaign.newsletter_lists.present?
       copy_attributes_to_newsletter_subscribers!
     end
   end
