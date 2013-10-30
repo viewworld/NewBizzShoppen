@@ -103,12 +103,18 @@ class Lead < AbstractLead
   after_update :send_instant_notification_to_subscribers
   after_save :auto_buy
   after_create :update_deal_created_leads_count
+  after_save :update_lead_purchases_euro_price_cache!, :if => :euro_price_changed?
+
   attr_protected :published
   attr_accessor :dont_send_email_with_deal_details_and_files
 
   acts_as_taggable
 
   private
+
+  def update_lead_purchases_euro_price_cache!
+    self.lead_purchases.update_all(:euro_price => self.euro_price)
+  end
 
   def check_if_category_can_publish_leads
     if category and !category.can_publish_leads?
