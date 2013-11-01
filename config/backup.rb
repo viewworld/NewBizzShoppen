@@ -21,12 +21,12 @@ Backup::Model.new(:fairleads_db_backup, 'Fairleads db backup') do
   notify_by Mail do |mail|
     mail.on_success           = true
 
-    mail.from                 = "selleo.test@gmail.com"
-    mail.to                   = "aossowski@gmail.com"
-    mail.address              = "smtp.gmail.com"
+    mail.from                 = "aossowski+backup@gmail.com"
+    mail.to                   = "aossowski+backup@gmail.com"
+    mail.address              = "smtp.mandrillapp.com"
     mail.port                 = 587
-    mail.user_name            = "selleo.test@gmail.com"
-    mail.password             = "secret4gmail"
+    mail.user_name            = "smtp.mandrillapp.com"
+    mail.password             = "ympXXtaT9PwIgNhTWj2jMg"
     mail.authentication       = "plain"
     mail.enable_starttls_auto = true
   end
@@ -54,12 +54,12 @@ Backup::Model.new(:fairleads_assets_backup, 'Fairleads assets backup') do
   notify_by Mail do |mail|
     mail.on_success           = true
 
-    mail.from                 = "selleo.test@gmail.com"
-    mail.to                   = "aossowski@gmail.com"
-    mail.address              = "smtp.gmail.com"
+    mail.from                 = "aossowski+backup@gmail.com"
+    mail.to                   = "aossowski+backup@gmail.com"
+    mail.address              = "smtp.mandrillapp.com"
     mail.port                 = 587
-    mail.user_name            = "selleo.test@gmail.com"
-    mail.password             = "secret4gmail"
+    mail.user_name            = "smtp.mandrillapp.com"
+    mail.password             = "ympXXtaT9PwIgNhTWj2jMg"
     mail.authentication       = "plain"
     mail.enable_starttls_auto = true
   end
