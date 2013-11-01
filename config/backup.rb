@@ -24,8 +24,9 @@ Backup::Model.new(:fairleads_db_backup, 'Fairleads db backup') do
     mail.from                 = "aossowski+backup@gmail.com"
     mail.to                   = "aossowski+backup@gmail.com"
     mail.address              = "smtp.mandrillapp.com"
+    mail.domain               = "smtp.mandrillapp.com"
     mail.port                 = 587
-    mail.user_name            = "smtp.mandrillapp.com"
+    mail.user_name            = "aossowski@gmail.com"
     mail.password             = "ympXXtaT9PwIgNhTWj2jMg"
     mail.authentication       = "plain"
     mail.enable_starttls_auto = true
@@ -57,8 +58,9 @@ Backup::Model.new(:fairleads_assets_backup, 'Fairleads assets backup') do
     mail.from                 = "aossowski+backup@gmail.com"
     mail.to                   = "aossowski+backup@gmail.com"
     mail.address              = "smtp.mandrillapp.com"
+    mail.domain               = "smtp.mandrillapp.com"
     mail.port                 = 587
-    mail.user_name            = "smtp.mandrillapp.com"
+    mail.user_name            = "aossowski@gmail.com"
     mail.password             = "ympXXtaT9PwIgNhTWj2jMg"
     mail.authentication       = "plain"
     mail.enable_starttls_auto = true
