@@ -15,7 +15,7 @@ Backup::Model.new(:fairleads_db_backup, 'Fairleads db backup') do
     server.ip         = "u63403.your-backup.de"
     server.port       = 22
     server.path       = "~/backups/"
-    server.keep       = 5
+    server.keep       = 15
   end
 
   notify_by Mail do |mail|
@@ -49,7 +49,7 @@ Backup::Model.new(:fairleads_assets_backup, 'Fairleads assets backup') do
     server.ip         = "u63403.your-backup.de"
     server.port       = 22
     server.path       = "~/backups/"
-    server.keep       = 5
+    server.keep       = 15
   end
 
   notify_by Mail do |mail|
