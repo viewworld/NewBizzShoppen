@@ -44,6 +44,7 @@ class Contact < AbstractLead
   scope :without_pending_result_type,
       joins("LEFT JOIN call_results ON call_results.id = (SELECT id FROM call_results cr WHERE cr.contact_id = leads.id ORDER BY cr.created_at DESC LIMIT 1) LEFT JOIN results ON results.id = call_results.result_id").
       where("results.name IS NULL OR lower(replace(results.name, ' ', '_')) NOT IN (?)", CallResult::PENDING_RESULT_TYPES.map(&:to_s))
+  scope :not_pending_for, lambda { |agent| where("result_values.value <= ?", DateTime.now.in_time_zone(agent.time_zone)) }
   scope :by_position_asc, order("leads.position ASC")
   scoped_order :company_name
 
