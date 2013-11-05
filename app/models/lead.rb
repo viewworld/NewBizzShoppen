@@ -103,10 +103,10 @@ class Lead < AbstractLead
   after_update :send_instant_notification_to_subscribers
   after_save :auto_buy
   after_create :update_deal_created_leads_count
-  after_save :update_lead_purchases_euro_price_cache!, :if => :euro_price_changed?
+  after_save :update_lead_purchases_euro_price_cache!, :if => :recalculate_lead_purchases_euro_value
 
   attr_protected :published
-  attr_accessor :dont_send_email_with_deal_details_and_files
+  attr_accessor :dont_send_email_with_deal_details_and_files, :recalculate_lead_purchases_euro_value
 
   acts_as_taggable
 
