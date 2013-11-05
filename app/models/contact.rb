@@ -176,17 +176,17 @@ class Contact < AbstractLead
     if agent_id.nil?
       self.contact_past_user_assignments.create(:user_id => read_attribute(:agent_id))
     end
-    self.remove_from_list
+    #self.remove_from_list
     self.update_attributes(:agent_id => agent_id)
-    self.insert_at
+    #self.insert_at
     self.move_to_bottom
   end
 
   def change_pending_status(pending)
     self.reload
-    self.remove_from_list
+    #self.remove_from_list
     self.update_attributes(:pending => pending)
-    self.insert_at
+    #self.insert_at
     self.move_to_bottom
   end
 
@@ -309,5 +309,10 @@ class Contact < AbstractLead
     params = {}
     NewsletterListSubscriber.selected_attributes.each { |attr| params[attr] = send(attr) }
     NewsletterListSubscriber.update_all(params, { :id => campaign_source_subscriber_ids })
+  end
+
+  def move_to_bottom
+    return unless in_list?
+    assume_bottom_position
   end
 end
