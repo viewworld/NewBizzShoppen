@@ -41,6 +41,7 @@ class Campaign < ActiveRecord::Base
   scope :available_for_user, lambda { |user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin }
 
   before_save :set_euro_fixed_cost_value, :set_euro_production_value_per_hour
+  before_save :set_creator_type, :if => :creator_id_changed?
   after_save :check_email_templates, :correct_session_logs_if_cost_type_changed, :perform_import_contacts_from_lists
 
   FIXED_COST = 0.freeze
@@ -108,6 +109,10 @@ class Campaign < ActiveRecord::Base
     if cost_type_changed?
       apply_billing_rate_to_user_session_logs!
     end
+  end
+
+  def set_creator_type
+    self.creator_type = User.find(creator_id).with_role.class.name
   end
 
   public
