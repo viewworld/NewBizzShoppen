@@ -10,6 +10,10 @@
       <% end %>
   <% end %>
 
+  <% if current_user && current_user.has_role?(:supplier) %>
+    <%= main_menu_link_to "Public", categories_path, :tab => "browse_leads" %>
+  <% end %>
+
   <% if current_user_has_role?(:admin) or (current_user and current_user.show_deals?) %>
     <%= main_menu_link_to(t("layout.main_menu.shared.browse_deals"), deal_categories_path, :tab => "browse_deals") %>
   <% end %>

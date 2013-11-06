@@ -5,22 +5,22 @@ class CategoriesController < ApplicationController
   before_filter :set_category_type
 
   def index
+    params[:search] ||= {}
+    params[:search][:with_roots] = true
+
     if user_signed_in? and current_user.admin?
-      params[:search] ||= {}
       params[:search][:with_unique] = "true" if params[:search][:with_unique].nil?
       params[:search][:with_public] = "true" if params[:search][:with_public].nil?
     end
 
     @search = @category_type.constantize.scoped_search(params[:search])
-    @categories = @search.roots_for(current_user).order("name")
+    @categories = @search.order("name")
   end
 
   private
 
   def check_category_supplier
-    if current_user and current_user.has_role?(:category_supplier)
-      redirect_to category_home_page_path(current_user.parent_buying_categories.first.cached_slug)
-    end
+    # left intentionally blank to remove logic from inherited controller
   end
 
   def set_category_type

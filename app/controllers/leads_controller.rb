@@ -128,9 +128,7 @@ class LeadsController < ApplicationController
   end
 
   def check_category_supplier
-    if current_user and current_user.has_role?(:category_supplier)
-      redirect_to category_home_page_path(current_user.parent_buying_categories.first.cached_slug)
-    end
+    # left intentionally blank to remove logic from inherited controller
   end
 
   def check_token

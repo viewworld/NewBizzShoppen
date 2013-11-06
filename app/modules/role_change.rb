@@ -56,7 +56,9 @@ module RoleChange
 
     def keep_address
       if roles_mask_changed? and !parent
-        self.address.addressable_type = "User::#{role.to_s.classify}"
+        if self.address
+          self.address.addressable_type = "User::#{role.to_s.classify}"
+        end
       end
     end
   end

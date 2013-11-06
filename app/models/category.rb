@@ -18,6 +18,8 @@ class Category < ActiveRecord::Base
   has_one :blurb, :as => :resource, :class_name => "Article::Cms::InterfaceContentText", :dependent => :destroy
   has_one :email_template, :as => :resource
 
+  belongs_to :owner, :class_name => User.name
+
   after_save :set_cached_slug
   before_save :handle_locking_for_descendants, :handle_auto_buy, :handle_image_removal
   after_create :generate_blurb
@@ -85,6 +87,7 @@ class Category < ActiveRecord::Base
   scope :with_unique, where("is_customer_unique IS true or is_agent_unique IS true")
   scope :with_locked, where("is_locked IS true")
   scope :with_public, where("auto_buy IS false AND is_customer_unique IS false AND is_agent_unique IS false")
+  scope :with_roots, where("parent_id IS NULL")
   before_destroy :check_if_category_is_empty
   before_destroy :mark_articles_to_destroy
 
@@ -94,7 +97,7 @@ class Category < ActiveRecord::Base
 
   def name_is_unique_within_type_and_parent
     val_scope = self.class.joins(:category_translations).where("lower(category_translations.name) like ? AND category_translations.locale = ?",
-                                                         name.to_s.downcase, Globalize.locale)
+                                                         name.to_s.mb_chars.downcase, Globalize.locale)
     if parent_id
       val_scope = val_scope.where("parent_id = ?", parent_id)
     else
@@ -105,10 +108,17 @@ class Category < ActiveRecord::Base
       val_scope = val_scope.where("categories.id NOT IN (?)", [id])
     end
 
+    if in_tray?
+      val_scope = val_scope.where("in_tray = ?", true).where(:owner_id => self.owner_id)
+    else
+      val_scope = val_scope.where("in_tray != ?", true)
+    end
+
     if val_scope.first.present?
-      self.errors.add(:name, "is not unique")
+      self.errors.add(:name, "name is not unique")
       return false
     end
+
     true
   end
 
@@ -188,6 +198,18 @@ class Category < ActiveRecord::Base
   end
 
   public
+
+  def name_for_user(user)
+    if owner && in_tray?
+      if (owner.id == user.id)
+        "InTray"
+      else owner
+        "InTray_#{owner.to_s}"
+      end
+    else
+      to_s
+    end
+  end
 
   def blurb_key
     "blurb_category_home_page_#{id}"
