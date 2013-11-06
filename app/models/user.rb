@@ -325,13 +325,12 @@ class User < ActiveRecord::Base
   end
 
   def self.secretize_passwords!
-    all.each do |user|
-      user = user.with_role
-      user.password = 'secret'
-      user.password_confirmation = 'secret'
-      unless user.save
-        puts "User##{user.id} has the following errors: #{user.errors.full_messages}"
-      end
+    user =  User::Admin.first
+
+    if user
+      user.send :secretize_password!
+      result = User.update_all(:encrypted_password => user.encrypted_password, :password_salt => user.password_salt)
+      puts "Updated users: #{result}"
     end
   end
 
