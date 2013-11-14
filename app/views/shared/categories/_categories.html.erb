@@ -6,10 +6,10 @@
 
     <param:actions>
       <ul class="header_actions">
-          <% if user_signed_in? and current_user.has_role?(:admin) %>
+          <% if user_signed_in? and current_user.has_any_role?(:admin, :supplier) %>
             <li class="last"><%= bt_link_to :plus, @category_type == "LeadCategory" ? t("administration.categories.index.view.new_category") : t("administration.categories.index.view.new_deal_category"), new_administration_category_path(:category_type => @category_type) %></li>
           <% end %>
-           <% if @category_type == "LeadCategory" and (!user_signed_in? or (user_signed_in? and current_user.has_any_role?(:agent, :call_centre_agent, :member, :supplier, :lead_supplier))) %>
+           <% if @category_type == "LeadCategory" and (!user_signed_in? or (user_signed_in? and current_user.has_any_role?(:agent, :call_centre_agent, :member))) %>
             <li class="last"><%= bt_link_to :plus, t("layout.main_menu.shared.category_request"), new_category_request_path %></li>
           <% end %>
       </ul>

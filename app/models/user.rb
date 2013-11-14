@@ -592,6 +592,10 @@ class User < ActiveRecord::Base
     has_any_role?([:agent, :call_centre, :call_centre_agent])
   end
 
+  def supplier_non_admin?
+    !admin? && supplier?
+  end
+
   def supplier?
     has_any_role?([:supplier, :category_supplier, :lead_supplier])
   end
@@ -1054,7 +1058,7 @@ class User < ActiveRecord::Base
       save(:validate => false)
     end
   end
-  
+
   def queue
     "user_#{id}"
   end

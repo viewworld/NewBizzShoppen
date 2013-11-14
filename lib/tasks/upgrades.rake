@@ -44,7 +44,9 @@ namespace :nbs do
 
           category.save!
 
-          user.categories << category
+          unless category.persisted?
+            user.categories << category
+          end
 
           puts "##{category.id}"
 

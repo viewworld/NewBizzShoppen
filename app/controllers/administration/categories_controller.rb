@@ -1,8 +1,10 @@
-class Administration::CategoriesController < Administration::AdministrationController
+class Administration::CategoriesController < Administration::AdministrationWithSupplierController
   inherit_resources
 
   before_filter :set_category_type
   before_filter :set_tab, :only => [:new,:create]
+
+  before_filter :filter_category_params_for_roles, :only => [:create, :update]
 
   def new
     @category = @category_type.constantize.new(:buyout_enabled => false)
@@ -12,6 +14,8 @@ class Administration::CategoriesController < Administration::AdministrationContr
     @category = @category_type.constantize.new(params[:category])
     @category.customers = []
     @category.agents = []
+    @category.is_customer_unique = true if current_user.supplier_non_admin?
+
     respond_to do |format|
       if @category.save
         @category.customer_ids = params[:category][:customer_ids]
@@ -47,6 +51,12 @@ class Administration::CategoriesController < Administration::AdministrationContr
   end
 
   private
+
+  def filter_category_params_for_roles
+    if current_user.supplier_non_admin? && params[:category]
+      params[:category].delete(:is_customer_unique)
+    end
+  end
 
   def set_category_type
     @category_type = params[:category_type] || "LeadCategory"
