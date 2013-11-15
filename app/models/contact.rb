@@ -161,6 +161,11 @@ class Contact < AbstractLead
     new_lead.update_attribute(:published, false)
     new_lead.update_attribute(:published, true)
 
+    campaign_result = CampaignsResult.where(:result_id => utl_cr.result.id, :campaign_id => self.campaign_id).first
+    if campaign_result.settings["prompt_for_decision_date"].eql?("0")
+      new_lead.update_attribute(:purchase_decision_date, Date.parse("01.01.2099"))
+    end
+
     if tag_list.any?
       lead = Lead.find(lead.id)
       tag_list.each do |tag|
