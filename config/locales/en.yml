@@ -3485,6 +3485,8 @@ en:
         state1: "Visited"
         state2: "Completed"
     survey:
+      duplication:
+        copy_of: "Copy of"
       upgrade_contacts_to_leads:
         categories_empty: "At least one category has to be assigned."
       lead_creator:
@@ -5146,6 +5148,8 @@ en:
           name_column: "Name"
           actions_column: "Actions"
           edit: "Edit"
+          duplicate: "Duplicate"
+          duplication_confirmation: "Are you sure you want to duplicate the survey?"
           destroy: "Destroy"
           send_to_newsletters: "Send to newsletters"
           total_column: "Total #"
@@ -5178,6 +5182,7 @@ en:
           intro_email_button: "Intro mail"
           setup_button: "Setup survey"
           edit_button: "General settings"
+          duplicate_button: "Duplicate"
       form:
         move_right: "Add >"
         move_left: "< Remove"
@@ -5191,6 +5196,12 @@ en:
         flash:
           notice:
             survey_queued_for_sending_to_newsletters: "Survey has been queued for sending to newsletter lists"
+      duplicate:
+        flash:
+          notice:
+            duplication_success: "Survey has been successfully duplicated"
+          alert:
+            duplication_failure: "Duplication of survey failed"
       new:
         view:
           button_create: "Create"

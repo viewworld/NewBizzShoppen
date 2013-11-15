@@ -548,6 +548,9 @@ Nbs::Application.routes.draw do
 
   namespace :surveys_management do
     resources :surveys do
+      member do
+        post :duplicate
+      end
       resources :survey_questions do
         collection do
           post :sort

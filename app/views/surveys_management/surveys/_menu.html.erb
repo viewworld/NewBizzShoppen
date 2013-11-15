@@ -13,3 +13,5 @@
                    :class => "fltr" %>
 <% end %>
 <%= bt_link_to nil, t("surveys_management.surveys.edit.view.intro_email_button"), edit_surveys_management_survey_email_template_path(@survey, @survey.survey_newsletter_email_template), :class => "fltr" %>
+
+<%= bt_link_to nil, t("surveys_management.surveys.edit.view.duplicate_button"), duplicate_surveys_management_survey_path(@survey), :class => "fltr", :confirm => t("surveys_management.surveys.index.view.duplication_confirmation"), :method => :post %>
