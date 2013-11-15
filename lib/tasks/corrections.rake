@@ -15,7 +15,7 @@ namespace :nbs do
 
         lead.currency = lead.campaign.currency
         lead.euro_price = new_currency.to_euro(lead.price)
-        laed.recalculate_lead_purchases_euro_value = true
+        lead.recalculate_lead_purchases_euro_value = true
         lead.notify_suppliers_after_update = false # do not send email notifications
 
         puts "Updating lead id: ##{lead.id}, lead.price: #{lead.price}, currency_was: #{old_currency.name}##{old_currency.id}, euro_price_was: #{old_euro_price} -> currency_now: #{new_currency.name}##{new_currency.id} euro_price_now: #{lead.euro_price}"
