@@ -4241,6 +4241,8 @@ en:
         lead_creator_id: "Lead creator"
         link_clicked_chain_mail_type_id: "Link clicked chain mail"
         use_chain_mail_as_intro_mail: "Use chain mail as intro mail"
+      campaign:
+        sync_with_campaign_source: "Synchronise with master list (campaign sources)"
   users:
     delayed_jobs:
       view_all: "View all"

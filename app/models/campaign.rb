@@ -41,7 +41,8 @@ class Campaign < ActiveRecord::Base
   scope :available_for_user, lambda { |user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin }
 
   before_save :set_euro_fixed_cost_value, :set_euro_production_value_per_hour
-  after_save :check_email_templates, :correct_session_logs_if_cost_type_changed, :import_contacts_from_lists
+  before_save :set_creator_type, :if => :creator_id_changed?
+  after_save :check_email_templates, :correct_session_logs_if_cost_type_changed, :perform_import_contacts_from_lists
 
   FIXED_COST = 0.freeze
   AGENT_BILLING_RATE_COST = 1.freeze
@@ -108,6 +109,10 @@ class Campaign < ActiveRecord::Base
     if cost_type_changed?
       apply_billing_rate_to_user_session_logs!
     end
+  end
+
+  def set_creator_type
+    self.creator_type = User.find(creator_id).with_role.class.name
   end
 
   public
@@ -196,12 +201,12 @@ class Campaign < ActiveRecord::Base
   end
 
   def fetch_contact_from_shared_contact_pool(agent)
-    contacts.unassigned.uncompleted.with_pending_result_type.reorder("result_values.value ASC").detect{|contact| !contact.should_be_pending?(agent)} ||
+    contacts.unassigned.uncompleted.with_pending_result_type.not_pending_for(agent).reorder("result_values.value ASC").first ||
         contacts.unassigned.uncompleted.without_pending_result_type.by_position_asc.first
   end
 
   def assinged_contact_from_shared_pool(agent)
-    agent.contacts.for_campaign(id).uncompleted.with_pending_result_type.reorder("result_values.value ASC").detect{|contact| !contact.should_be_pending?(agent)} ||
+    agent.contacts.for_campaign(id).uncompleted.with_pending_result_type.not_pending_for(agent).reorder("result_values.value ASC").first ||
         agent.contacts.for_campaign(id).uncompleted.without_pending_result_type.by_position_asc.first
   end
 
@@ -456,7 +461,7 @@ class Campaign < ActiveRecord::Base
     contacts.with_agent_id(agent_id).with_pending_status(false).each(&:return_to_pool) if agent_id
   end
 
-  def import_contacts_from_lists
+  def perform_import_contacts_from_lists
     if import_contacts_from_lists_enabled_changed? and import_contacts_from_lists_enabled?
       self.delay(:queue => "import_contacts_from_lists").import_contacts_from_lists!
     end
@@ -478,12 +483,7 @@ class Campaign < ActiveRecord::Base
 
   def export_contacts_to_lists!
     contacts.each do |contact|
-      newsletter_list_subscribers = [contact.newsletter_list_subscriber] + NewsletterListSubscriber.where(:newsletter_list_id => newsletter_list_ids, :subscriber_type => 'Contact', :subscriber_id => contact.id)
-      newsletter_list_subscribers.uniq.compact.each do |nls|
-        params = {}
-        NewsletterListSubscriber.selected_attributes.each { |attr| params[attr] = contact.send(attr) }
-        NewsletterListSubscriber.update_all(params, { :id => nls.id })
-      end
+      contact.copy_attributes_to_newsletter_subscribers!
     end
     newsletter_lists.each do |newsletter_list|
       contacts.where("leads.newsletter_list_id != (?)", newsletter_list.id).each do |contact|

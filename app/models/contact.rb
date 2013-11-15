@@ -44,6 +44,7 @@ class Contact < AbstractLead
   scope :without_pending_result_type,
       joins("LEFT JOIN call_results ON call_results.id = (SELECT id FROM call_results cr WHERE cr.contact_id = leads.id ORDER BY cr.created_at DESC LIMIT 1) LEFT JOIN results ON results.id = call_results.result_id").
       where("results.name IS NULL OR lower(replace(results.name, ' ', '_')) NOT IN (?)", CallResult::PENDING_RESULT_TYPES.map(&:to_s))
+  scope :not_pending_for, lambda { |agent| where("result_values.value <= ?", DateTime.now.in_time_zone(agent.time_zone)) }
   scope :by_position_asc, order("leads.position ASC")
   scoped_order :company_name
 
@@ -52,6 +53,8 @@ class Contact < AbstractLead
   accepts_nested_attributes_for :call_results, :result_values
 
   acts_as_taggable
+
+  after_update :sync_with_campaign_sources
 
 
   class << self
@@ -173,17 +176,17 @@ class Contact < AbstractLead
     if agent_id.nil?
       self.contact_past_user_assignments.create(:user_id => read_attribute(:agent_id))
     end
-    self.remove_from_list
+    #self.remove_from_list
     self.update_attributes(:agent_id => agent_id)
-    self.insert_at
+    #self.insert_at
     self.move_to_bottom
   end
 
   def change_pending_status(pending)
     self.reload
-    self.remove_from_list
+    #self.remove_from_list
     self.update_attributes(:pending => pending)
-    self.insert_at
+    #self.insert_at
     self.move_to_bottom
   end
 
@@ -292,4 +295,24 @@ class Contact < AbstractLead
     company_name
   end
 
+  def sync_with_campaign_sources
+    if campaign and campaign.import_contacts_from_lists_enabled? and campaign.sync_with_campaign_source? and campaign.newsletter_lists.present?
+      copy_attributes_to_newsletter_subscribers!
+    end
+  end
+
+  def campaign_source_subscriber_ids
+    ([newsletter_list_subscriber] + NewsletterListSubscriber.where(:newsletter_list_id => campaign.newsletter_list_ids, :subscriber_type => 'Contact', :subscriber_id => id)).uniq.compact.map(&:id)
+  end
+
+  def copy_attributes_to_newsletter_subscribers!
+    params = {}
+    NewsletterListSubscriber.selected_attributes.each { |attr| params[attr] = send(attr) }
+    NewsletterListSubscriber.update_all(params, { :id => campaign_source_subscriber_ids })
+  end
+
+  def move_to_bottom
+    return unless in_list?
+    assume_bottom_position
+  end
 end

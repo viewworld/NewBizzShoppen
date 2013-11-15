@@ -306,9 +306,9 @@ class CallResult < ActiveRecord::Base
 
   def process_for_final_result
     contact.notifications.scoped.dismiss_all
-    contact.remove_from_list
+    #contact.remove_from_list
     contact.update_attributes(:completed => true, :agent_id => nil)
-    contact.insert_at
+    #contact.insert_at
   end
 
   def process_for_send_material
