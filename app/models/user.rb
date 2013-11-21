@@ -167,7 +167,7 @@ class User < ActiveRecord::Base
   check_associations_before_destroy :leads, :lead_purchases, :lead_templates, :assigned_lead_purchases, :lead_requests, :leads_in_cart, :deals, :requested_deals, :campaigns, :contacts, :call_results, :subaccounts, :invoices
 
   liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_supplier_category_home_url,
-         :screen_name, :first_name, :last_name, :home_page_url, :autologin_link
+         :screen_name, :first_name, :last_name, :home_page_url, :autologin_link, :unsubscribe_link
   require 'digest/sha1'
 
   acts_as_taggable
@@ -639,6 +639,14 @@ class User < ActiveRecord::Base
     autologin_link_temp + "/login_keys?key=#{generate_login_key!}"
   end
 
+  def unsubscribe_link
+    autologin_link_temp = ""
+    if domain
+      autologin_link_temp << "www.#{domain.name}"
+    end
+    autologin_link_temp + "/login_keys?key=#{login_key}&redirect=/my_profile"
+  end
+
   def clear_login_key!
     self.update_attribute(:login_key, nil)
   end
@@ -1053,7 +1061,7 @@ class User < ActiveRecord::Base
       save(:validate => false)
     end
   end
-  
+
   def queue
     "user_#{id}"
   end

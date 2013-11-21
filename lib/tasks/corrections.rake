@@ -27,5 +27,31 @@ namespace :nbs do
       puts "Leads processed successfully: #{success_count} / #{leads_count}"
     end
 
+    desc "Add unsubscribe link to 'upgrade_contact_to_member' email template"
+    task :add_unsubscribe_link_to_upgrade_contact_to_member_email_template => :environment do
+      templates = EmailTemplate.where(:uniq_id => "upgrade_contact_to_member").all
+      uniq_body_count = templates.map(&:body).uniq.size
+
+      if uniq_body_count > 1
+        puts "Task can not be performed - 'upgrade_contact_to_member' templates body are ambiguous"
+      else
+        templates.each do |template|
+          template.body = %{
+<p>Fairdeals username: {{user.email}}</p>
+<p>Fairdeals password: {{password}}</p>
+<p>Screen name: {{user.screen_name}}</p>
+<p>
+	<a href="{{user.home_page_url}}">{{user.home_page_url}}</a>
+</p>
+<p>
+	<a href="{{user.unsubscribe_link}}">Unsubscribe and close account</a>
+</p>
+          }
+          saved = template.save
+          puts "Updating: EmailTemplate##{template.id} - #{saved ? 'OK' : 'Fail'}"
+        end
+      end
+    end
+
   end
 end
