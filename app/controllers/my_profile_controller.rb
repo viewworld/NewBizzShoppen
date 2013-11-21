@@ -14,6 +14,15 @@ class MyProfileController < SecuredController
   end
 
   def update
+    if current_user.member?
+      if params[:user_member] && ActiveRecord::ConnectionAdapters::Column.value_to_boolean(params[:user_member][:unsubscribe_and_close_account])
+        current_user.unsubscribe_and_close_account!
+        sign_out current_user
+        redirect_to root_path
+        return
+      end
+    end
+
     @user = current_user
     if @user.update_attributes(params["user_#{@user.role.to_s}".to_sym])
       flash[:notice] = I18n.t("my_profile.update.controller.successful_update_notice")

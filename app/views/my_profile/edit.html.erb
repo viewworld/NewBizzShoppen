@@ -28,4 +28,27 @@
       </frm>
   <% end %>
 
+  <% if current_user.member? %>
+      <%= semantic_form_for @user, :url => my_profile_path, :method => :put do |form| %>
+          <frm title="#{t('my_profile.edit.view.unsubscribe_and_close_account')}">
+            <param:content>
+              <div class="column_left">
+                <div class="pdd_10 no_pdd_t">
+                  <fieldset class="inputs labels_ta_r labels_160">
+                    <ol>
+                      <%= form.input :unsubscribe_and_close_account, :as => :boolean, :label => t('my_profile.edit.view.unsubscribe_and_close_account_terms') %>
+                    </ol>
+                  </fieldset>
+                </div>
+              </div>
+            </param:content>
+            <param:actions>
+              <ibt c="fltri" icon="save">
+                <%= form.submit t("my_profile.edit.view.unsubscribe_and_close_account_submit") %>
+              </ibt>
+            </param:actions>
+          </frm>
+      <% end %>
+  <% end %>
+
 </column-mc:>

@@ -786,7 +786,7 @@ en:
         successfully_updated: Call result has been successfully updated.
     destroy:
       flash:
-        successfully_removed: Call result has been successfully removed.         
+        successfully_removed: Call result has been successfully removed.
 
 
   campaigns_users:
@@ -3175,6 +3175,9 @@ en:
         social_unlink_link: "unlink from my profile"
         disable_bought_notification_label: "Don't send me e-mails when I buy a lead"
         subscription_management: "Subscription management"
+        unsubscribe_and_close_account: "Unsubscribe and close account"
+        unsubscribe_and_close_account_terms: "I agree to unsubscribe and close my account"
+        unsubscribe_and_close_account_submit: "Unsubscribe and close"
     update:
       controller:
         successful_update_notice: "Your profile has been successfully updated!"
@@ -3731,7 +3734,7 @@ en:
       create:
         notice: "Result type was successfully created."
       update:
-        notice: "Result type was successfully updated."        
+        notice: "Result type was successfully updated."
     actions:
       create:
         notice: "%{resource_name} was successfully created."
@@ -4689,7 +4692,7 @@ en:
     create:
       flash:
         success: "Import completed. %{counter} leads have been successfully imported"
-        
+
   deals:
     index:
       view:
