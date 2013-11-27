@@ -40,7 +40,7 @@ class Campaign < ActiveRecord::Base
   scope :descend_by_country, order("countries.name DESC").joins_on_country
   scope :available_for_user, lambda { |user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin }
 
-  attr_accessor :contacts_from_lists_modified
+  attr_reader :contacts_from_lists_modified
 
   before_save :set_euro_fixed_cost_value, :set_euro_production_value_per_hour
   before_save :set_creator_type, :if => :creator_id_changed?
