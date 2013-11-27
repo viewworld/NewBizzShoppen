@@ -44,7 +44,8 @@ class Campaign < ActiveRecord::Base
 
   before_save :set_euro_fixed_cost_value, :set_euro_production_value_per_hour
   before_save :set_creator_type, :if => :creator_id_changed?
-  after_save :check_email_templates, :correct_session_logs_if_cost_type_changed, :perform_import_contacts_from_lists
+  after_save :check_email_templates, :correct_session_logs_if_cost_type_changed
+  after_save :perform_import_contacts_from_lists, :if => :should_perform_import_contacts_from_lists?
 
   FIXED_COST = 0.freeze
   AGENT_BILLING_RATE_COST = 1.freeze
@@ -467,10 +468,12 @@ class Campaign < ActiveRecord::Base
     contacts.with_agent_id(agent_id).with_pending_status(false).each(&:return_to_pool) if agent_id
   end
 
+  def should_perform_import_contacts_from_lists?
+    !!(import_contacts_from_lists_enabled? && (import_contacts_from_lists_enabled_changed? || contacts_from_lists_modified))
+  end
+
   def perform_import_contacts_from_lists
-    if import_contacts_from_lists_enabled? && (import_contacts_from_lists_enabled_changed? || contacts_from_lists_modified)
-      self.delay(:queue => "import_contacts_from_lists").import_contacts_from_lists!
-    end
+    self.delay(:queue => "import_contacts_from_lists").import_contacts_from_lists!
   end
 
   def import_contacts_from_lists!
