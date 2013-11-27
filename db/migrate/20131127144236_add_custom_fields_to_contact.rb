@@ -2,7 +2,7 @@ class AddCustomFieldsToContact < ActiveRecord::Migration
 
   TABLE_NAMES = [
     :leads,
-    :newsletter_list_subscriber
+    :newsletter_list_subscribers
   ]
 
   CUSTOM_COLUMN_NAMES = [
@@ -18,7 +18,7 @@ class AddCustomFieldsToContact < ActiveRecord::Migration
   def self.up
     TABLE_NAMES.each do |table_name|
       CUSTOM_COLUMN_NAMES.each do |column_name|
-        add_column table_name, :string, column_name
+        add_column table_name, column_name, :string
       end
     end
   end
