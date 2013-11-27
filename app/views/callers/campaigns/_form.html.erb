@@ -56,13 +56,14 @@
             </div>
 
             <div class="grid_120 fltl">
-              <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("surveys_management.surveys.form.move_right"), "javascript:move_selected('all_lists','campaign_newsletter_list_ids_')", :id => "move_right" %></p>
+              <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("surveys_management.surveys.form.move_right"), "javascript:move_selected('all_lists','campaign_newsletter_list_ids_');set_modification_flag_on('#campaign_contacts_from_lists_modified')", :id => "move_right" %></p>
 
-              <p class="ta_c pdd_5"><%= bt_link_to nil, t("surveys_management.surveys.form.move_left"), "javascript:move_selected('campaign_newsletter_list_ids_','all_lists')", :id => "move_left" %></p>
+              <p class="ta_c pdd_5"><%= bt_link_to nil, t("surveys_management.surveys.form.move_left"), "javascript:move_selected('campaign_newsletter_list_ids_','all_lists');set_modification_flag_on('#campaign_contacts_from_lists_modified')", :id => "move_left" %></p>
             </div>
 
             <div class="grid_200 fltr">
               <h3 class="pdd_10"><%= t("surveys_management.surveys.form.selected_lists") %></h3>
+              <%= form.input :contacts_from_lists_modified, :as => :hidden %>
               <%= select_tag "campaign[newsletter_list_ids][]", options_for_select(campaign.newsletter_lists.map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10} %>
             </div>
             <clb/>

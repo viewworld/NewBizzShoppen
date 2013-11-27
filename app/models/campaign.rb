@@ -40,6 +40,8 @@ class Campaign < ActiveRecord::Base
   scope :descend_by_country, order("countries.name DESC").joins_on_country
   scope :available_for_user, lambda { |user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin }
 
+  attr_accessor :contacts_from_lists_modified
+
   before_save :set_euro_fixed_cost_value, :set_euro_production_value_per_hour
   before_save :set_creator_type, :if => :creator_id_changed?
   after_save :check_email_templates, :correct_session_logs_if_cost_type_changed, :perform_import_contacts_from_lists
@@ -127,6 +129,10 @@ class Campaign < ActiveRecord::Base
 
   def to_i
     id
+  end
+
+  def contacts_from_lists_modified=(value)
+    @contacts_from_lists_modified = ActiveRecord::ConnectionAdapters::Column.value_to_boolean(value)
   end
 
   def creator_full_name
@@ -462,7 +468,7 @@ class Campaign < ActiveRecord::Base
   end
 
   def perform_import_contacts_from_lists
-    if import_contacts_from_lists_enabled_changed? and import_contacts_from_lists_enabled?
+    if import_contacts_from_lists_enabled? && (import_contacts_from_lists_enabled_changed? || contacts_from_lists_modified)
       self.delay(:queue => "import_contacts_from_lists").import_contacts_from_lists!
     end
   end
