@@ -3178,6 +3178,7 @@ en:
         unsubscribe_and_close_account: "Unsubscribe and close account"
         unsubscribe_and_close_account_terms: "I agree to unsubscribe and close my account"
         unsubscribe_and_close_account_submit: "Unsubscribe and close"
+        go_to_unsubscribe: "Go to Unsubscribe page"
     update:
       controller:
         successful_update_notice: "Your profile has been successfully updated!"

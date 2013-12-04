@@ -644,7 +644,7 @@ class User < ActiveRecord::Base
     if domain
       autologin_link_temp << "www.#{domain.name}"
     end
-    autologin_link_temp + "/login_keys?key=#{login_key}&redirect=/my_profile"
+    autologin_link_temp + "/login_keys?key=#{login_key}&redirect=/my_profile/unsubscribe"
   end
 
   def clear_login_key!

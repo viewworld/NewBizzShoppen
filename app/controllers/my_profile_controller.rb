@@ -71,6 +71,10 @@ class MyProfileController < SecuredController
     redirect_to my_profile_path
   end
 
+  def unsubscribe
+    @user = current_user
+  end
+
   protected
 
   def redirect_if_my_profile_hidden
