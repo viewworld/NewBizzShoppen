@@ -173,9 +173,13 @@
 
   <% if (@newsletter_lists = current_user.admin? ? NewsletterList.all : NewsletterList.created_or_owned_by(current_user)) and @newsletter_lists.present? %>
       <%= form_tag batch_add_to_newsletter_list_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_add_to_newsletter_list_form" do %>
-          <label><%= t("campaigns.edit.label_newsletter_lists") %></label><%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_add_to_newsletter_list" %>
-          <%= select_tag "newsletter_list_id", options_for_select((@newsletter_lists).map { |nl| [nl.name.to_s, nl.id] }.sort) %>
+          <label><%= t("campaigns.edit.label_lists") %></label><%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_add_to_newsletter_list" %>
+          <%= select_tag "newsletter_list_id", options_for_select((@newsletter_lists).map { |nl| [nl.name.to_s, nl.id] }.sort), :class => "smaller" %>
           <%= bt_link_to :plus, t("campaigns.edit.button_bulk_add_to_newsletter_list_link"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_add_to_newsletter_list');$('#batch_add_to_newsletter_list_form').submit();" %>
+
+          <%= select_tag "result_id", options_for_select(results_for_select(@campaign)), :class => "smaller" %>
+          <%= hidden_field_tag "bulk_add_from_result", nil, :id => "bulk_add_to_newsletter_list_from_result" %>
+          <%= bt_link_to :plus, t("campaigns.edit.button_bulk_add_to_newsletter_list_from_result_link"), "javascript:void(0)", :onclick => "set_modification_flag_on('#bulk_add_to_newsletter_list_from_result');$('#batch_add_to_newsletter_list_form').submit();" %>
       <% end %>
   <% end %>
 

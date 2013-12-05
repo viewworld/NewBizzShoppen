@@ -105,15 +105,21 @@ class Callers::ContactsController < Callers::CallerController
   end
 
   def batch_add_to_newsletter_list
-    if params[:contact_ids].blank?
-      flash[:notice] = t('contacts.batch_remove.flash.no_contacts_selected')
-    else
-      @newsletter_list = current_user.admin? ? NewsletterList.find(params[:newsletter_list_id]) : NewsletterList.created_or_owned_by(current_user).find(params[:newsletter_list_id])
+    @newsletter_list = current_user.admin? ? NewsletterList.find(params[:newsletter_list_id]) : NewsletterList.created_or_owned_by(current_user).find(params[:newsletter_list_id])
+
+    if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(params[:bulk_add_from_result])
+      result = Result.find(params[:result_id])
+      @contacts = result.contacts.where(:campaign_id => @campaign.id)
+      new_subscribers = @newsletter_list.add_to_subscribers!(@contacts, current_user)
+      flash[:notice] = t('contacts.batch_add_to_newsletter_list.flash.added_successfully', :newsletter_list => @newsletter_list.name, :contacts_count => new_subscribers)
+    elsif params[:contact_ids].present?
       @contacts = Contact.where(:id => params[:contact_ids].gsub(/^,/, "").split(","))
       new_subscribers = @newsletter_list.add_to_subscribers!(@contacts, current_user)
-
       flash[:notice] = t('contacts.batch_add_to_newsletter_list.flash.added_successfully', :newsletter_list => @newsletter_list.name, :contacts_count => new_subscribers)
+    else
+      flash[:notice] = t('contacts.batch_remove.flash.no_contacts_selected')
     end
+
     redirect_to edit_callers_campaign_path(@campaign)
   end
 
