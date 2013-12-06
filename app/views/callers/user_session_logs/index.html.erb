@@ -1,3 +1,4 @@
+<%- total_hours = @user_session_logs.sum(:hours_count).to_f %>
 <search-box:>
   <div class="search_box">
     <div class="search_left"></div>
@@ -26,6 +27,7 @@
               <li class="string">
                 <%= f.label :with_time_to, t("login_time_requests.new.search.time_to") %>
                 <%= f.text_field :with_time_to, :class => "datetimepicker" %>
+                <%= hidden_field_tag :skip_defaults, '1' %>
               </li>
               <li class="select">
                 <%= f.label :with_log_type, t("login_time_requests.new.search.log_type") %>
@@ -37,9 +39,21 @@
                   <%= submit_tag t("administration.articles.index.view.search_button") %>
                 </ibt>
                 <p>
-                  <%= bt_clear_filter %>
+                  <%= bt_clear_filter callers_user_session_logs_path(:skip_defaults => 1) %>
                 </p>
               </li>
+            </ol>
+          </fieldset>
+
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <%- @filters.each do |key, data| %>
+                <li class="commit">
+                  <ibt c="bt_green" icon="magnify">
+                    <%= link_to_function t("administration.articles.index.view.search_#{key}"), "document.location = '#{data}'" %>
+                  </ibt>
+                </li>
+              <%- end %>
             </ol>
           </fieldset>
       <% end %>
@@ -54,7 +68,7 @@
     </param:content>
   </header>
 
-  <p class="fltr" style="margin-top:-20px"><%= t("user_session_logs.index.total_hours") %>: <%= @user_session_logs.sum(:hours_count).to_f.as_hours_and_minutes %></p>
+  <p class="fltr" style="margin-top:-20px"><%= t("user_session_logs.index.total_hours") %>: <%= total_hours.as_hours_and_minutes %></p>
 
   <table class="generic">
     <thead>
@@ -66,6 +80,7 @@
           <th><%= t("login_time_requests.new.table.end_time") %></th>
           <th><%= t("login_time_requests.new.table.hours") %></th>
           <th><%= t("login_time_requests.new.table.log_type") %></th>
+          <th>U</th>
           <th></th>
           <th class="hr"></th>
         </tr>
@@ -73,7 +88,7 @@
     <tfoot>
         <tr>
           <td class="fl"></td>
-          <td colspan="7"></td>
+          <td colspan="8"></td>
           <td class="fr"></td>
         </tr>
     </tfoot>
@@ -86,6 +101,7 @@
           <td><%= l usl.end_time.in_time_zone(usl.time_zone) %></td>
           <td><%= usl.hours_count.to_f.as_hours_and_minutes %></td>
           <td><%= usl.regular? ? 'Regular' : 'Campaign' %></td>
+          <td><%= number_with_precision(usl.utilisation(total_hours), :precision => 3) + "%" %></td>
           <td class="tda ta_r">
           </td>
           <td class="cr"></td>
@@ -93,7 +109,7 @@
     <% end %>
     <tr>
       <td class="cl"></td>
-      <td colspan="7">
+      <td colspan="8">
         <%= will_paginate @user_session_logs_paginated %>
       </td>
       <td class="cr"></td>

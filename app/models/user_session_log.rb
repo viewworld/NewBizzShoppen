@@ -36,6 +36,7 @@ class UserSessionLog < ActiveRecord::Base
   scope :active_regular_for_user, lambda{ |user| regular_type.for_user(user).active }
   scope :with_time_from, lambda{ |time| where("start_time >= ?", Time.zone.parse(time)) }
   scope :with_time_to, lambda{ |time| where("end_time <= ?", Time.zone.parse(time)) }
+  scope :with_hours, lambda { where("hours_count > 0") }
 
   include ScopedSearch::Model
 
@@ -56,6 +57,14 @@ class UserSessionLog < ActiveRecord::Base
   end
 
   public
+
+  def utilisation(total)
+    if total.to_f > 0
+      hours_count.to_f / total * 100
+    else
+      0
+    end
+  end
 
   def self.close_all_campaign_logs_for_user(user)
     campaign_type.for_user(user).active.each do |usl|

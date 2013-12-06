@@ -786,7 +786,7 @@ en:
         successfully_updated: Call result has been successfully updated.
     destroy:
       flash:
-        successfully_removed: Call result has been successfully removed.         
+        successfully_removed: Call result has been successfully removed.
 
 
   campaigns_users:
@@ -1413,6 +1413,10 @@ en:
           header: "Articles"
           new_article: "New article"
           search_button: "Search"
+          search_today: "Today"
+          search_yesterday: "Yesterday"
+          search_this_week: "This week"
+          search_this_month: "This month"
           id: "ID"
           type: "Type"
           title: "Title"
@@ -3731,7 +3735,7 @@ en:
       create:
         notice: "Result type was successfully created."
       update:
-        notice: "Result type was successfully updated."        
+        notice: "Result type was successfully updated."
     actions:
       create:
         notice: "%{resource_name} was successfully created."
@@ -4689,7 +4693,7 @@ en:
     create:
       flash:
         success: "Import completed. %{counter} leads have been successfully imported"
-        
+
   deals:
     index:
       view:
