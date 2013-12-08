@@ -28,4 +28,15 @@
       </frm>
   <% end %>
 
+  <% if current_user.member? %>
+      <frm title="#{t('my_profile.edit.view.unsubscribe_and_close_account')}">
+        <param:content>
+          <div class="pdd_10 ta_c">
+            <%= bt_link_to nil, t('my_profile.edit.view.go_to_unsubscribe'), unsubscribe_my_profile_path %>
+          </div>
+        </param:content>
+      </frm>
+
+  <% end %>
+
 </column-mc:>
