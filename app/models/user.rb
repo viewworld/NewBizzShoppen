@@ -336,6 +336,20 @@ class User < ActiveRecord::Base
 
   public
 
+  def copy_custom_fields_from_contact(contact)
+    [
+      :pnumber,
+      :nnmid,
+      :custom_1,
+      :custom_2,
+      :custom_3,
+      :custom_4,
+      :custom_5
+    ].each do |field_name|
+      self.send("#{field_name}=", contact.send(field_name))
+    end
+  end
+
   def available_login_time_requests
     if admin?
       LoginTimeRequest
@@ -1053,7 +1067,7 @@ class User < ActiveRecord::Base
       save(:validate => false)
     end
   end
-  
+
   def queue
     "user_#{id}"
   end

@@ -2,7 +2,8 @@ class AddCustomFieldsToContact < ActiveRecord::Migration
 
   TABLE_NAMES = [
     :leads,
-    :newsletter_list_subscribers
+    :newsletter_list_subscribers,
+    :users
   ]
 
   CUSTOM_COLUMN_NAMES = [
