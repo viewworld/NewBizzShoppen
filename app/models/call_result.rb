@@ -365,6 +365,7 @@ class CallResult < ActiveRecord::Base
 
   def upgrade_to_user(role)
     user, new_password = prepare_user(role)
+    user.copy_custom_fields_from_contact(contact)
     user.save
     user.generate_login_key!
 
