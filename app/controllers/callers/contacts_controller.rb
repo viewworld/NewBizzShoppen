@@ -105,12 +105,12 @@ class Callers::ContactsController < Callers::CallerController
   end
 
   def batch_add_to_newsletter_list
-    operation = NewsletterListSubscribersAdder.new(current_user, params)
+    subscribers_adder = NewsletterListSubscribersAdder.new(current_user, params)
 
-    if operation.ok?
-      flash[:notice] = operation.notice
+    if subscribers_adder.save
+      flash[:notice] = t('contacts.batch_add_to_newsletter_list.flash.added_successfully', :newsletter_list => subscribers_adder.name, :contacts_count => subscribers_adder.contacts_count)
     else
-      flash[:alert] = operation.alert
+      flash[:alert] = t('contacts.batch_remove.flash.no_contacts_selected')
     end
 
     redirect_to edit_callers_campaign_path(@campaign)

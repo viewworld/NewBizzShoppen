@@ -71,7 +71,6 @@ module Nbs
 
     require "#{config.root}/lib/i18n_utils.rb"
     require "#{config.root}/lib/string_utils.rb"
-    require "#{config.root}/lib/params_utils.rb"
     config.after_initialize do
       I18nUtils.populate! if Rails.env == "development"
       I18nUtils.export_for_js!("common.js")

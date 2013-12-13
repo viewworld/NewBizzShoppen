@@ -1,45 +1,44 @@
 class NewsletterListSubscribersAdder
 
-  attr_accessor :current_user,
-                :params,
-                :newsletter_list
+  attr_reader :current_user,
+              :params,
+              :newsletter_list,
+              :contacts_count
 
-  attr_reader :notice,
-              :alert
+  private :current_user,
+          :params,
+          :newsletter_list
+
+  delegate :name, :to => :newsletter_list
 
   def initialize(current_user, params)
-    self.current_user = current_user
-    self.params = params
-
-    process
+    @current_user = current_user
+    @params = params
   end
 
-  public
+  def save
+    @newsletter_list = current_user.admin? ? NewsletterList.find(params[:newsletter_list_id]) : NewsletterList.created_or_owned_by(current_user).find(params[:newsletter_list_id])
 
-  def ok?
-    alert.blank?
+    if bulk_add? || params[:contact_ids].present?
+      @contacts_count = newsletter_list.add_to_subscribers!(contacts, current_user)
+      return true
+    end
+
+    false
   end
 
   private
 
-  def process
-    self.newsletter_list = current_user.admin? ? NewsletterList.find(params[:newsletter_list_id]) : NewsletterList.created_or_owned_by(current_user).find(params[:newsletter_list_id])
-
-    if ParamsUtils.boolean?(params[:bulk_add_from_result])
-      result = Result.find(params[:result_id])
-      contacts = result.contacts.where(:campaign_id => params[:campaign_id])
-      new_subscribers = newsletter_list.add_to_subscribers!(contacts, current_user)
-      @notice = I18n.t('contacts.batch_add_to_newsletter_list.flash.added_successfully', :newsletter_list => newsletter_list.name, :contacts_count => new_subscribers)
-
-    elsif params[:contact_ids].present?
-      ids = ParamsUtils.split_by_commas(params[:contact_ids])
-      contacts = Contact.where(:id => ids)
-      new_subscribers = newsletter_list.add_to_subscribers!(contacts, current_user)
-      @notice = I18n.t('contacts.batch_add_to_newsletter_list.flash.added_successfully', :newsletter_list => newsletter_list.name, :contacts_count => new_subscribers)
-
+  def contacts
+    if bulk_add?
+      Result.find(params[:result_id]).contacts.where(:campaign_id => params[:campaign_id])
     else
-      @alert = I18n.t('contacts.batch_remove.flash.no_contacts_selected')
+      Contact.where(:id => params[:contact_ids].gsub(/^,/, '').split(','))
     end
+  end
+
+  def bulk_add?
+    params[:bulk_add_from_result] == '1'
   end
 
 end
