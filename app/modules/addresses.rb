@@ -4,6 +4,8 @@ module Addresses
     base.class_eval do
       has_one :address, :as => :addressable, :autosave => true
 
+      delegate :zip_code, :address_line_1, :address_line_2, :address_line_3, :region_id, :country_id, :to => :address
+
       accepts_nested_attributes_for :address
 
       validates_associated :address
