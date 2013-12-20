@@ -17,13 +17,12 @@ class TimeSearchFilter
     h = {'data-search' => true}
     values = {}
     # take values from predefined filter if specified
-    values = builder_filter_by_name(opts[:filter]) if opts[:filter]
+    values = build_filter_by_name(opts[:filter]) if opts[:filter]
     # take explicit values if specified (also overrides predefined filter)
     values[:from] = opts[:from] if opts[:from]
     values[:to] = opts[:to] if opts[:to]
     h["data-search-attr-#{opts[:field_id_from]}"] = format_value(values[:from], opts[:format]).to_s if opts[:field_id_from]
     h["data-search-attr-#{opts[:field_id_to]}"] = format_value(values[:to], opts[:format]).to_s if opts[:field_id_to]
-    h["data-search-after-filter"] = opts[:after_filter].to_s if opts[:after_filter]
     if opts[:submit_function]
       h["data-search-submit-function"] = opts[:submit_function]
     else
@@ -60,7 +59,7 @@ class TimeSearchFilter
     build_filter(nil, nil)
   end
 
-  def self.builder_filter_by_name(filter)
+  def self.build_filter_by_name(filter)
     if ALLOWED_FILTERS.include?(filter)
       send("filter_#{filter}")
     else
