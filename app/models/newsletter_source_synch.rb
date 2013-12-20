@@ -12,7 +12,7 @@ class NewsletterSourceSynch < ActiveRecord::Base
   end
 
   def basic_attrs
-    %w(email_address contact_name company_name login_key company_ean_number company_vat_no contact_title zip_code address_line_1 address_line_2 address_line_3 direct_phone_number phone_number region_id country_id).each(&:to_sym)
+    %w(email_address contact_name company_name login_key company_ean_number company_vat_no contact_title zip_code address_line_1 address_line_2 address_line_3 direct_phone_number phone_number region_id country_id pnumber nnmid custom_1 custom_2 custom_3 custom_4 custom_5).each(&:to_sym)
   end
 
   def params_to_copy(subscriber)
@@ -37,10 +37,21 @@ class NewsletterSourceSynch < ActiveRecord::Base
 
   def params_to_update(subscriber)
     params = {}
-    attrs = %w(Contact Lead Deal).include?(subscriber.class.to_s) ? NewsletterListSubscriber.selected_attributes : basic_attrs
-    attrs.each do |attr|
-      params[attr] = subscriber.with_role.send(attr)
+    typeOfUser = !%w(Contact Lead Deal).include?(subscriber.class.to_s)
+    attrs = typeOfUser ? basic_attrs : NewsletterListSubscriber.selected_attributes
+
+    if typeOfUser
+      attrs.each do |attr|
+        if subscriber.with_role.respond_to? attr
+          params[attr] = subscriber.with_role.send(attr)
+        end
+      end
+    else
+      attrs.each do |attr|
+        params[attr] = subscriber.send(attr)
+      end
     end
+
     params
   end
 

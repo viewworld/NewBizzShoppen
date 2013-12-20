@@ -63,6 +63,13 @@
         <%= form.input :phone %>
         <%= form.input :direct_phone_number %>
         <%= form.input :email %>
+        <%= form.input :pnumber %>
+        <%= form.input :nnmid %>
+        <%= form.input :custom_1 %>
+        <%= form.input :custom_2 %>
+        <%= form.input :custom_3 %>
+        <%= form.input :custom_4 %>
+        <%= form.input :custom_5 %>
         <% if @user.big_buyer? %>
             <%= form.input :big_buyer_purchase_limit %>
         <% end %>
@@ -163,7 +170,7 @@
         </div>
         <clb/>
       </div>
-    </div>    
+    </div>
 <% end %>
 
 <% if (!['category_supplier'].include?(params[:role]) and !@user.has_role?(:category_supplier)) and (['supplier'].include?(params[:role]) or @user.has_roles?(:supplier)) %>
