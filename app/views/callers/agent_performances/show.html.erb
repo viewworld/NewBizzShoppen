@@ -19,14 +19,15 @@
                 </ol>
               </fieldset>
               <fieldset class="inputs labels_ta_r">
-
                 <ol class="align_inputs">
-                  <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.all"), "$('#search_date_from').val('#{Date.new(2010)}');$('#search_date_to').val('#{Date.today}');" %></span>
-                  <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.this_year"), "$('#search_date_from').val('#{Date.today.beginning_of_year}');$('#search_date_to').val('#{Date.today.end_of_year}');" %></span>
-                  <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.this_quarter"), "$('#search_date_from').val('#{Date.today.beginning_of_quarter}');$('#search_date_to').val('#{Date.today.end_of_quarter}');" %></span>
-                  <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.this_month"), "$('#search_date_from').val('#{Date.today.beginning_of_month}');$('#search_date_to').val('#{Date.today.end_of_month}');" %></span>
-                  <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.this_week"), "$('#search_date_from').val('#{Date.today.beginning_of_week}');$('#search_date_to').val('#{Date.today.end_of_week}');" %></span>
-                  <span class="pdd_5"><%= link_to_function t("campaigns.show.ranges.today"), "$('#search_date_from').val('#{Date.today}');$('#search_date_to').val('#{Date.today}');" %></span>
+                  <span class="pdd_5">
+                    <%= link_to t("campaigns.show.ranges.all"), 'javascript:void(0)', TimeSearchFilter.get_filter_data(:filter => :today, :field_id_from => "search_date_from", :field_id_to => "search_date_to", :format => TimeSearchFilter::FORMAT_YYYY_MM_DD, :from => Date.new(2010)) %>
+                  </span>
+                  <%- [:this_year, :this_quarter, :this_month, :this_week, :today].each do |filter| %>
+                    <span class="pdd_5">
+                      <%= link_to t("campaigns.show.ranges.#{filter}"), 'javascript:void(0)', TimeSearchFilter.get_filter_data(:filter => filter, :field_id_from => "search_date_from", :field_id_to => "search_date_to", :format => TimeSearchFilter::FORMAT_YYYY_MM_DD) %>
+                    </span>
+                  <%- end %>
                 </ol>
               </fieldset>
 

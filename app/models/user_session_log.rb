@@ -8,6 +8,8 @@ class UserSessionLog < ActiveRecord::Base
   before_save :cache_hours_count
   after_save :close_logs_for_other_campaigns_and_regular, :unless => :skip_other_logs
 
+  delegate :screen_name, :to => :user, :prefix => true
+
   TYPE_REGULAR = 0
   TYPE_CAMPAIGN = 1
   DEBUG = true
@@ -58,7 +60,8 @@ class UserSessionLog < ActiveRecord::Base
 
   public
 
-  def utilisation(total)
+  # utilisation
+  def percentage_of_hours(total)
     if total.to_f > 0
       hours_count.to_f / total * 100
     else

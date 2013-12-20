@@ -88,12 +88,14 @@
                   <li>
                     <p class="pdd_10">
                       <%= t("agent_home.show.view.agent_performance.time_range") %>:<br/>
-                      <%= link_to_function t("campaigns.show.ranges.all"), "$('#date_from').val('#{Date.new(2010)}');$('#date_to').val('#{Date.today}');$('#performance_form').submit()" %>&nbsp;
-                      <%= link_to_function t("campaigns.show.ranges.this_year"), "$('#date_from').val('#{Date.today.beginning_of_year}');$('#date_to').val('#{Date.today.end_of_year}');$('#performance_form').submit()" %>&nbsp;
-                      <%= link_to_function t("campaigns.show.ranges.this_quarter"), "$('#date_from').val('#{Date.today.beginning_of_quarter}');$('#date_to').val('#{Date.today.end_of_quarter}');$('#performance_form').submit()" %><br/>
-                      <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#date_from').val('#{Date.today.beginning_of_month}');$('#date_to').val('#{Date.today.end_of_month}');$('#performance_form').submit()" %>&nbsp;
-                      <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}');$('#performance_form').submit()" %>&nbsp;
-                      <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}');$('#performance_form').submit()" %>
+                      <%= link_to t("campaigns.show.ranges.all"), 'javascript:void(0)', TimeSearchFilter.get_filter_data(:filter => :today, :from => Date.new(2010), :field_id_from => "date_from", :field_id_to => "date_to", :format => TimeSearchFilter::FORMAT_YYYY_MM_DD, :submit => true) %>&nbsp;
+
+                      <%- [:this_year, :this_quarter, :this_month, :this_week, :today].each do |filter| %>
+                        <%= link_to t("campaigns.show.ranges.#{filter}"), 'javascript:void(0)', TimeSearchFilter.get_filter_data(:filter => filter, :field_id_from => "date_from", :field_id_to => "date_to", :format => TimeSearchFilter::FORMAT_YYYY_MM_DD, :submit => true) %>&nbsp;
+                        <%- if filter == :this_quarter %>
+                          <br/>
+                        <%- end %>
+                      <%- end %>
                     </p>
                   </li>
                   <li style="padding-top:15px;float:right">
@@ -246,7 +248,7 @@
                 <%= render :partial => 'lead', :collection => @new_leads, :as => :lead %>
             <% else %>
                 <%= render :partial => 'shared/blank_data_li' %>
-            <% end %>         
+            <% end %>
           </ul>
         </param:content>
       </frm>

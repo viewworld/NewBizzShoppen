@@ -64,9 +64,9 @@
             </fieldset>
             <p class="pdd_10">
               <%= t("campaign_reports.index.ranges_label") %>:<br/>
-              <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#date_from').val('#{Date.today.beginning_of_month}');$('#date_to').val('#{Date.today.end_of_month}');" %>
-              <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}');" %>
-              <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}');" %>
+              <%- [:this_month, :this_week, :today].each do |filter| %>
+                <%= link_to t("campaigns.show.ranges.#{filter}"), "javascript:void(0);", TimeSearchFilter.get_filter_data(:filter => filter, :field_id_from => "date_from", :field_id_to => "date_to", :format => TimeSearchFilter::FORMAT_YYYY_MM_DD)  %>
+              <%- end %>
             </p>
             <p style="padding: 0 10px 0 10px">
               <%= label_tag :show_results_with_payout, t("campaigns.show.search.show_results_with_payout") %>

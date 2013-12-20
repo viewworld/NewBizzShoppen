@@ -54,6 +54,7 @@ gem "selenium-webdriver", "~> 2.31.0"
 #gem 'airbrake', '3.1.1'
 gem "recaptcha", :require => "recaptcha/rails"
 gem 'newrelic_rpm'
+gem 'draper', '~> 0.12.0'
 
 group :staging do
   gem 'system-metrics'
