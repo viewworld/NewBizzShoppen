@@ -149,6 +149,9 @@ class User < ActiveRecord::Base
   attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :send_invitation, :auto_generate_password, :email_materials, :cancel_subscription, :subscription_plan_id, :assign_free_subscription_plan
 
   alias_attribute :email_address, :email
+  alias_attribute :phone_number, :phone
+  alias_attribute :company_vat_no, :vat_number
+  alias_attribute :contact_title, :title
 
   before_save :handle_locking, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled
   before_create :set_rss_token, :set_email_verification

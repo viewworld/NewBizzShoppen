@@ -3,7 +3,7 @@ class Lead < AbstractLead
   NOVELTY_LEVEL_RANGES = [(0..8), (9..30), (31..INFINITY)]
   HOTNESS_LEVEL_RANGES = [(29..INFINITY), (7..28), (-INFINITY..6)]
   BLACK_LISTED_ATTRIBUTES = [:published]
-  CSV_ATTRS = %w(company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country region company_vat_no company_ean_number contact_name direct_phone_number phone_number email_address linkedin_url facebook_url is_international header description hidden_description purchase_value price currency published sale_limit purchase_decision_date)
+  CSV_ATTRS = %w(company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country region company_vat_no company_ean_number contact_name direct_phone_number phone_number email_address linkedin_url facebook_url is_international header description hidden_description purchase_value price currency published sale_limit purchase_decision_date pnumber nnmid custom_1 custom_2 custom_3 custom_4 custom_5)
   REQUIRED_FIELDS = %w(company_name address_line_1 address_line_3 zip_code country contact_name phone_number header description hidden_description price currency sale_limit purchase_decision_date)
   NUMERIC_FIELDS = %w(price sale_limit)
 
