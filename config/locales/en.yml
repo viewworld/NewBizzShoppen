@@ -705,7 +705,7 @@ en:
         removed_successfully: "Removal has been performed successfully"
     import_xls:
       flash:
-        unknown_format: "Sorry. You can upload only ODC, XLS and XLSX files."
+        unknown_format: "Sorry. You can upload only ODS, XLS and XLSX files."
     update:
       flash:
         successfully_updated: Contact has been successfully updated.
@@ -4676,7 +4676,7 @@ en:
     choose:
       flash:
         error_wrong_title: "Sorry. We have found unsafe character in headers. Only underscore, space, number and letters are allowed."
-        error_wrong_file: "Sorry. You can upload only ODC, XLS and XLSX file."
+        error_wrong_file: "Sorry. You can upload only ODS, XLS and XLSX file."
       view:
         title: "Advanced Import"
         object_selected_fields_label: "use this fields"
