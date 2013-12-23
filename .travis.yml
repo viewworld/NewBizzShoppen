@@ -18,3 +18,7 @@ script: bundle exec rspec spec --format documentation
 branches:
   only:
   - master
+notifications:
+  email:
+    recipients:
+    - irek.skrobis@gmail.com
