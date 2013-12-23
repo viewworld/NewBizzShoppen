@@ -4,10 +4,42 @@ describe Survey do
   fixtures :all
 
   before(:each) do
-    @survey = Survey.make!
+    @creator = User::Admin.make!
+    @survey = Survey.make!(:creator => @creator, :owner => @creator)
     @survey.survey_questions.make!(:question_type => SurveyQuestion::SELECT_TYPE)
     @survey.survey_questions.make!
     @survey.survey_questions.make!
+  end
+
+  context "surveys duplicating" do
+    before(:each) do
+      # populate some answers
+      @survey.survey_questions.each do |survey_question|
+        survey_question.survey_answers.make!
+      end
+    end
+
+    it "should add '(Copy of)' prefix for name for survey" do
+      @duplicated_survey = @survey.duplicate!
+      @duplicated_survey.should_not be_nil
+      @duplicated_survey.name.should match /Copy of/
+    end
+
+    it "should duplicate survey with questions and without results" do
+      @survey.should have(3).survey_questions
+
+      @survey.survey_questions.each do |survey_question|
+        survey_question.should have(1).survey_answers
+      end
+
+      @duplicated_survey = @survey.duplicate!
+      @duplicated_survey.should_not be_nil
+      @duplicated_survey.should have(3).survey_questions
+
+      @duplicated_survey.survey_questions.each do |survey_question|
+        survey_question.should have(0).survey_answers
+      end
+    end
   end
 
   context "general sending" do
@@ -22,6 +54,8 @@ describe Survey do
       @survey.newsletter_lists << @list
       @survey.save
       @survey.reload
+      @list.synchronize!(:campaign_monitor_synch => false, :use_delayed_job => false)
+      @list.reload
     end
 
     it "should send to newsletter list" do

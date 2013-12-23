@@ -3,7 +3,7 @@ class Lead < AbstractLead
   NOVELTY_LEVEL_RANGES = [(0..8), (9..30), (31..INFINITY)]
   HOTNESS_LEVEL_RANGES = [(29..INFINITY), (7..28), (-INFINITY..6)]
   BLACK_LISTED_ATTRIBUTES = [:published]
-  CSV_ATTRS = %w(company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country region company_vat_no company_ean_number contact_name direct_phone_number phone_number email_address linkedin_url facebook_url is_international header description hidden_description purchase_value price currency published sale_limit purchase_decision_date)
+  CSV_ATTRS = %w(company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country region company_vat_no company_ean_number contact_name direct_phone_number phone_number email_address linkedin_url facebook_url is_international header description hidden_description purchase_value price currency published sale_limit purchase_decision_date pnumber nnmid custom_1 custom_2 custom_3 custom_4 custom_5)
   REQUIRED_FIELDS = %w(company_name address_line_1 address_line_3 zip_code country contact_name phone_number header description hidden_description price currency sale_limit purchase_decision_date)
   NUMERIC_FIELDS = %w(price sale_limit)
 
@@ -103,12 +103,18 @@ class Lead < AbstractLead
   after_update :send_instant_notification_to_subscribers
   after_save :auto_buy
   after_create :update_deal_created_leads_count
+  after_save :update_lead_purchases_euro_price_cache!, :if => :recalculate_lead_purchases_euro_value
+
   attr_protected :published
-  attr_accessor :dont_send_email_with_deal_details_and_files
+  attr_accessor :dont_send_email_with_deal_details_and_files, :recalculate_lead_purchases_euro_value
 
   acts_as_taggable
 
   private
+
+  def update_lead_purchases_euro_price_cache!
+    self.lead_purchases.update_all(:euro_price => self.euro_price)
+  end
 
   def check_if_category_can_publish_leads
     if category and !category.can_publish_leads?

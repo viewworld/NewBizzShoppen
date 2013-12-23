@@ -149,6 +149,9 @@ class User < ActiveRecord::Base
   attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :send_invitation, :auto_generate_password, :email_materials, :cancel_subscription, :subscription_plan_id, :assign_free_subscription_plan
 
   alias_attribute :email_address, :email
+  alias_attribute :phone_number, :phone
+  alias_attribute :company_vat_no, :vat_number
+  alias_attribute :contact_title, :title
 
   before_save :handle_locking, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled
   before_create :set_rss_token, :set_email_verification
@@ -167,7 +170,7 @@ class User < ActiveRecord::Base
   check_associations_before_destroy :leads, :lead_purchases, :lead_templates, :assigned_lead_purchases, :lead_requests, :leads_in_cart, :deals, :requested_deals, :campaigns, :contacts, :call_results, :subaccounts, :invoices
 
   liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_supplier_category_home_url,
-         :screen_name, :first_name, :last_name, :home_page_url, :autologin_link
+         :screen_name, :first_name, :last_name, :home_page_url, :autologin_link, :unsubscribe_link
   require 'digest/sha1'
 
   acts_as_taggable
@@ -325,17 +328,30 @@ class User < ActiveRecord::Base
   end
 
   def self.secretize_passwords!
-    all.each do |user|
-      user = user.with_role
-      user.password = 'secret'
-      user.password_confirmation = 'secret'
-      unless user.save
-        puts "User##{user.id} has the following errors: #{user.errors.full_messages}"
-      end
+    user =  User::Admin.first
+
+    if user
+      user.send :secretize_password!
+      result = User.update_all(:encrypted_password => user.encrypted_password, :password_salt => user.password_salt)
+      puts "Updated users: #{result}"
     end
   end
 
   public
+
+  def copy_custom_fields_from_contact(contact)
+    [
+      :pnumber,
+      :nnmid,
+      :custom_1,
+      :custom_2,
+      :custom_3,
+      :custom_4,
+      :custom_5
+    ].each do |field_name|
+      self.send("#{field_name}=", contact.send(field_name))
+    end
+  end
 
   def available_login_time_requests
     if admin?
@@ -642,6 +658,14 @@ class User < ActiveRecord::Base
       autologin_link_temp << "www.#{domain.name}"
     end
     autologin_link_temp + "/login_keys?key=#{generate_login_key!}"
+  end
+
+  def unsubscribe_link
+    autologin_link_temp = ""
+    if domain
+      autologin_link_temp << "www.#{domain.name}"
+    end
+    autologin_link_temp + "/login_keys?key=#{login_key}&redirect=/my_profile/unsubscribe"
   end
 
   def clear_login_key!

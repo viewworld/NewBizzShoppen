@@ -306,9 +306,9 @@ class CallResult < ActiveRecord::Base
 
   def process_for_final_result
     contact.notifications.scoped.dismiss_all
-    contact.remove_from_list
+    #contact.remove_from_list
     contact.update_attributes(:completed => true, :agent_id => nil)
-    contact.insert_at
+    #contact.insert_at
   end
 
   def process_for_send_material
@@ -365,6 +365,7 @@ class CallResult < ActiveRecord::Base
 
   def upgrade_to_user(role)
     user, new_password = prepare_user(role)
+    user.copy_custom_fields_from_contact(contact)
     user.save
     user.generate_login_key!
 
@@ -381,7 +382,7 @@ class CallResult < ActiveRecord::Base
     self.upgraded_user = user
     deliver_email_for_upgraded_user(user, new_password)
   end
-  
+
   def deliver_material
     template = contact.campaign.send_material_email_template || EmailTemplate.global.where(:uniq_id => 'result_send_material').first
     template = customize_email_template(template)
@@ -432,7 +433,7 @@ class CallResult < ActiveRecord::Base
                                        },
                                        assets_to_path_names(send_material_result_value.materials)).deliver!
   end
-  
+
   def set_last_call_result_in_contact
     self.contact.update_attribute(:last_call_result_at, created_at)
   end

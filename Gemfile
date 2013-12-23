@@ -51,8 +51,9 @@ gem 'cucumber_fm-core', '0.1', :require => 'cucumber_feature_manager'
 gem 'acts-as-taggable-on', '~> 2.2.2'
 gem 'createsend'
 gem "selenium-webdriver", "~> 2.31.0"
-gem 'airbrake', '3.1.1'
+#gem 'airbrake', '3.1.1'
 gem "recaptcha", :require => "recaptcha/rails"
+gem 'newrelic_rpm'
 
 group :staging do
   gem 'system-metrics'

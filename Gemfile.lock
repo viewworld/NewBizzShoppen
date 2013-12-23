@@ -75,9 +75,6 @@ GEM
       activesupport (~> 3.0)
       moretea-awesome_nested_set
     addressable (2.2.7)
-    airbrake (3.1.1)
-      activesupport
-      builder
     arel (2.0.10)
     autotest (4.4.6)
       ZenTest (>= 4.4.1)
@@ -228,6 +225,7 @@ GEM
     net-ssh (2.1.4)
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
+    newrelic_rpm (3.6.8.168)
     nifty-generators (0.4.6)
     nokogiri (1.5.0)
     oauth (0.4.5)
@@ -342,7 +340,6 @@ DEPENDENCIES
   activeadmin!
   acts-as-taggable-on (~> 2.2.2)
   acts_as_commentable_with_threading
-  airbrake (= 3.1.1)
   ajaxful_rating!
   autotest
   autotest-rails
@@ -386,6 +383,7 @@ DEPENDENCIES
   mocha (= 0.13.2)
   mongrel
   nested_set (= 1.5.4)
+  newrelic_rpm
   nifty-generators
   paperclip (= 2.3.6)
   paypal-recurring!

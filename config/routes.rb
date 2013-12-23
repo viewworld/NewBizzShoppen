@@ -479,6 +479,7 @@ Nbs::Application.routes.draw do
       put 'social_unlink'
       get 'unlink'
       put 'remove_category_supplier'
+      get 'unsubscribe'
     end
     resources :subscription_plans, :only => [] do
       collection do
@@ -548,6 +549,9 @@ Nbs::Application.routes.draw do
 
   namespace :surveys_management do
     resources :surveys do
+      member do
+        post :duplicate
+      end
       resources :survey_questions do
         collection do
           post :sort

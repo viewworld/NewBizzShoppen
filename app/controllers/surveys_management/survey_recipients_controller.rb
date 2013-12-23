@@ -6,7 +6,8 @@ class SurveysManagement::SurveyRecipientsController < SurveysManagement::Surveys
   set_subtab "surveys"
 
   def export
-    @survey_recipients = SurveyRecipient.for_survey(@survey).with_state(SurveyRecipient::STATE_COMPLETED)
+    @survey_recipients = SurveyRecipient.for_survey(@survey).with_state(SurveyRecipient::STATE_COMPLETED).
+        includes(:recipient => :country, :survey_answers => {:survey_options => :translations})
 
     respond_to do |format|
       format.xls { send_data render_to_string, :filename => "survey_responses.xls" }

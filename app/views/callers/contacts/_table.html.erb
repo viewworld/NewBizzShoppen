@@ -1,5 +1,5 @@
 <%
-   cols = agent_work_screen ? 7 : 6
+   cols = agent_work_screen ? 14 : 13
    cols += 1 if show_checkboxes
    cols += 1 if not block_tools.nil?
 -%>
@@ -19,6 +19,13 @@
     <% end %>
     <th><%= t("contacts.table.result") %></th>
     <th><%= t("contacts.table.note") %></th>
+    <th><%= t("formtastic.labels.contact.pnumber") %></th>
+    <th><%= t("formtastic.labels.contact.nnmid") %></th>
+    <th><%= t("formtastic.labels.contact.custom_1") %></th>
+    <th><%= t("formtastic.labels.contact.custom_2") %></th>
+    <th><%= t("formtastic.labels.contact.custom_3") %></th>
+    <th><%= t("formtastic.labels.contact.custom_4") %></th>
+    <th><%= t("formtastic.labels.contact.custom_5") %></th>
     <% if block_tools %>
         <th class="ta_r">
           <%= t("contacts.table.actions") %>
@@ -54,6 +61,13 @@
             <td>-</td>
             <td>-</td>
         <% end %>
+        <td><%= value_or_none contact.pnumber %></td>
+        <td><%= value_or_none contact.nnmid %></td>
+        <td><%= value_or_none contact.custom_1 %></td>
+        <td><%= value_or_none contact.custom_2 %></td>
+        <td><%= value_or_none contact.custom_3 %></td>
+        <td><%= value_or_none contact.custom_4 %></td>
+        <td><%= value_or_none contact.custom_5 %></td>
         <% if block_tools %>
             <td class="tda ta_r">
               <%= with_output_buffer { block_tools.call(contact) } %>

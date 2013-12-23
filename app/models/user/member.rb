@@ -1,7 +1,9 @@
 class User::Member < ::User
   ROLES = [:member]
-  CSV_ATTRS = %w{email first_name last_name company_name address_line_1 address_line_2 address_line_3 zip_code country region  phone vat_number}
+  CSV_ATTRS = %w{email first_name last_name company_name address_line_1 address_line_2 address_line_3 zip_code country region phone vat_number pnumber nnmid custom_1 custom_2 custom_3 custom_4 custom_5}
   REQUIRED_FIELDS = %w{email first_name last_name company_name address_line_1 address_line_3 zip_code}
+
+  attr_accessor :unsubscribe_and_close_account
 
   include User::RegistrationValidations
   include User::CommonAgent
@@ -14,6 +16,16 @@ class User::Member < ::User
   has_many :leads, :as => :creator
 
   public
+
+  def unsubscribe_and_close_account!
+    NewsletterListSubscriber.where(:subscriber_id => self.id).each do |nls|
+      nls.destroy
+    end
+
+    lock_access!
+
+    self
+  end
 
   def can_publish_leads?
     false

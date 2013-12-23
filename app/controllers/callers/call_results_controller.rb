@@ -8,7 +8,7 @@ class Callers::CallResultsController < Callers::CallerController
   before_filter :set_call_result, :only => [:edit, :update, :destroy]
   before_filter :set_category, :only => [:new, :edit]
   before_filter lambda {authorize_manage_rights(@contact)}, :except => :index
-  before_filter lambda {authorize_manage_rights(@call_result)}, :only => [:edit,:update,:destroy]  
+  before_filter lambda {authorize_manage_rights(@call_result)}, :only => [:edit,:update,:destroy]
 
   def new
     @call_result = CallResult.new

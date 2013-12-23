@@ -4,7 +4,7 @@ class Callers::AgentWorkScreen::CallResultsController < Callers::AgentWorkScreen
 
   before_filter :set_result, :only => :new
   before_filter :set_call_result, :only => [:edit, :update, :destroy]
-  before_filter :set_category, :only => [:new, :edit]  
+  before_filter :set_category, :only => [:new, :edit]
 
 
   def new
@@ -59,7 +59,7 @@ class Callers::AgentWorkScreen::CallResultsController < Callers::AgentWorkScreen
         add_pending_to_locals
       }
       failure.js {}
-    end    
+    end
   end
 
 
@@ -79,7 +79,7 @@ class Callers::AgentWorkScreen::CallResultsController < Callers::AgentWorkScreen
   def set_contact_managing
     @contact_managing = false
   end
-  
+
   def set_category
     category = LeadCategory.find_by_id(params[:category_id])
     @contact.update_attribute(:category, category) if category

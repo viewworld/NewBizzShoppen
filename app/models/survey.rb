@@ -1,10 +1,10 @@
 class Survey < ActiveRecord::Base
+  include CommonOwner
   include ScopedSearch::Model
 
   has_many :survey_questions, :order => "position", :dependent => :destroy
   has_many :survey_recipients, :dependent => :destroy
   has_many :survey_answers, :through => :survey_recipients
-  belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
   belongs_to :lead_creator, :foreign_key => "lead_creator_id", :class_name => "User"
   belongs_to :link_clicked_chain_mail_type, :class_name => "ChainMailType"
   has_and_belongs_to_many :newsletter_lists
@@ -21,10 +21,11 @@ class Survey < ActiveRecord::Base
   attr_accessor :skip_validations
 
   before_create :set_uuid
+  before_create :set_owner_from_creator, :unless => :owner
   before_destroy :can_be_destroyed
   after_save :check_email_template
 
-  scope :created_by, lambda { |creator| creator.has_any_role?(:category_supplier, :supplier) ? where("categories_surveys.category_id IN (?) OR creator_id = ?", creator.unique_category_ids, creator.id).joins("LEFT JOIN categories_surveys ON categories_surveys.survey_id = surveys.id") : where("creator_id = ?", creator.id) }
+  scope :created_by, lambda { |creator| creator.has_any_role?(:category_supplier, :supplier) ? where("categories_surveys.category_id IN (?) OR creator_id = ? OR owner_id = ?", creator.unique_category_ids, creator.id, creator.id).joins("LEFT JOIN categories_surveys ON categories_surveys.survey_id = surveys.id") : created_or_owned_by(creator) }
 
   def newsletter_owner
     User.where(:email => newsletter_owner_email).first
@@ -38,6 +39,20 @@ class Survey < ActiveRecord::Base
     self.last_sent_at = Time.now
     self.last_sent_recipients_count = SurveyRecipient.where(:survey_id => id).where("email_sent_at > ?", sending_started_at).count
     self.save
+  end
+
+  def duplicate!
+    copy = deep_clone(
+      :with_callbacks => false,
+      :include => [:survey_questions]
+    )
+    copy.name = "#{I18n.t('models.survey.duplication.copy_of')} #{copy.name}"
+    
+    if copy.save
+      copy
+    else
+      nil
+    end
   end
 
   def send_to_newsletter_lists!
@@ -82,7 +97,10 @@ class Survey < ActiveRecord::Base
   end
 
   def can_be_managed_by?(user)
-    user.admin? or (creator == user) or (user.has_any_role?(:category_supplier, :supplier) and (category_ids & user.unique_category_ids).present?)
+    is_admin = user.admin?
+    is_creator = (creator == user)
+    is_owner = is_owner_eql_to?(user)
+    is_admin or is_creator or is_owner or (user.has_any_role?(:category_supplier, :supplier) and (category_ids & user.unique_category_ids).present?)
   end
 
   def fake_permalink

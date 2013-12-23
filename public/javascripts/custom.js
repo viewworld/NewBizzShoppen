@@ -60,6 +60,10 @@ $("#" + src + " option").each(function()
 });
 }
 
+function set_modification_flag_on(selector) {
+    $(selector).val(1);
+}
+
 function move_selected_unique(src,dst){
 $("#" + src + " option:selected").each(function()
 {

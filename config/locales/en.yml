@@ -705,7 +705,7 @@ en:
         removed_successfully: "Removal has been performed successfully"
     import_xls:
       flash:
-        unknown_format: "Sorry. You can upload only ODC, XLS and XLSX files."
+        unknown_format: "Sorry. You can upload only ODS, XLS and XLSX files."
     update:
       flash:
         successfully_updated: Contact has been successfully updated.
@@ -786,7 +786,7 @@ en:
         successfully_updated: Call result has been successfully updated.
     destroy:
       flash:
-        successfully_removed: Call result has been successfully removed.         
+        successfully_removed: Call result has been successfully removed.
 
 
   campaigns_users:
@@ -3175,6 +3175,10 @@ en:
         social_unlink_link: "unlink from my profile"
         disable_bought_notification_label: "Don't send me e-mails when I buy a lead"
         subscription_management: "Subscription management"
+        unsubscribe_and_close_account: "Unsubscribe and close account"
+        unsubscribe_and_close_account_terms: "I agree to unsubscribe and close my account"
+        unsubscribe_and_close_account_submit: "Unsubscribe and close"
+        go_to_unsubscribe: "Go to Unsubscribe page"
     update:
       controller:
         successful_update_notice: "Your profile has been successfully updated!"
@@ -3485,6 +3489,8 @@ en:
         state1: "Visited"
         state2: "Completed"
     survey:
+      duplication:
+        copy_of: "Copy of"
       upgrade_contacts_to_leads:
         categories_empty: "At least one category has to be assigned."
       lead_creator:
@@ -3729,7 +3735,7 @@ en:
       create:
         notice: "Result type was successfully created."
       update:
-        notice: "Result type was successfully updated."        
+        notice: "Result type was successfully updated."
     actions:
       create:
         notice: "%{resource_name} was successfully created."
@@ -3831,6 +3837,13 @@ en:
         email_address: "Email address"
         linkedin_url: "Linkedin url"
         facebook_url: "Facebook url"
+        pnumber: "P#"
+        nnmid: "NNMID"
+        custom_1: "Custom 1"
+        custom_2: "Custom 2"
+        custom_3: "Custom 3"
+        custom_4: "Custom 4"
+        custom_5: "Custom 5"
       lead_translation:
         header: "Header"
         description: "Description"
@@ -3907,6 +3920,13 @@ en:
         email_address: "Email address"
         linkedin_url: "Linkedin url"
         facebook_url: "Facebook url"
+        pnumber: "P#"
+        nnmid: "NNMID"
+        custom_1: "Custom 1"
+        custom_2: "Custom 2"
+        custom_3: "Custom 3"
+        custom_4: "Custom 4"
+        custom_5: "Custom 5"
         note: "Internal note"
 
       invoice:
@@ -3981,6 +4001,13 @@ en:
         not_charge_vat: "Do not charge VAT"
         agreement_read: "Agreement read"
         skip_email_verification: "Don't verify email address"
+        pnumber: "P#"
+        nnmid: "NNMID"
+        custom_1: "Custom 1"
+        custom_2: "Custom 2"
+        custom_3: "Custom 3"
+        custom_4: "Custom 4"
+        custom_5: "Custom 5"
       user/agent:
         company_name: "Company name"
         first_name: "First name"
@@ -4004,6 +4031,13 @@ en:
         deal_maker_role_enabled: "Deal maker role enabled"
         billing_rate: "Billing rate"
         currency_id: "Currency"
+        pnumber: "P#"
+        nnmid: "NNMID"
+        custom_1: "Custom 1"
+        custom_2: "Custom 2"
+        custom_3: "Custom 3"
+        custom_4: "Custom 4"
+        custom_5: "Custom 5"
       user/call_centre:
         company_name: "Company name"
         can_edit_payout_information: "Can edit payout information"
@@ -4025,6 +4059,13 @@ en:
         billing_rate: "Billing rate"
         currency_id: "Currency"
         bank_name: "Bank name"
+        pnumber: "P#"
+        nnmid: "NNMID"
+        custom_1: "Custom 1"
+        custom_2: "Custom 2"
+        custom_3: "Custom 3"
+        custom_4: "Custom 4"
+        custom_5: "Custom 5"
       user/admin:
         first_name: "First name"
         last_name: "Last name"
@@ -4038,6 +4079,13 @@ en:
         agreement_read: "Agreement read"
         skip_email_verification: "Don't verify email address"
         time_zone: "Time zone"
+        pnumber: "P#"
+        nnmid: "NNMID"
+        custom_1: "Custom 1"
+        custom_2: "Custom 2"
+        custom_3: "Custom 3"
+        custom_4: "Custom 4"
+        custom_5: "Custom 5"
       user/supplier:
         first_name: "First name"
         last_name: "Last name"
@@ -4062,6 +4110,13 @@ en:
         newsletter_manager: "Newsletter manager"
         chain_mails_enabled: "Chain mails enabled"
         surveys_enabled: "Surveys enabled"
+        pnumber: "P#"
+        nnmid: "NNMID"
+        custom_1: "Custom 1"
+        custom_2: "Custom 2"
+        custom_3: "Custom 3"
+        custom_4: "Custom 4"
+        custom_5: "Custom 5"
       user/call_centre_agent:
         first_name: "First name"
         last_name: "Last name"
@@ -4073,6 +4128,13 @@ en:
         password: "Password"
         password_confirmation: "Password confirmation"
         skip_email_verification: "Don't verify email address"
+        pnumber: "P#"
+        nnmid: "NNMID"
+        custom_1: "Custom 1"
+        custom_2: "Custom 2"
+        custom_3: "Custom 3"
+        custom_4: "Custom 4"
+        custom_5: "Custom 5"
       user/lead_supplier:
         first_name: "First name"
         last_name: "Last name"
@@ -4086,6 +4148,13 @@ en:
         lead_supplier_role_enabled: "Lead supplier role enabled"
         hide_profile_page: "Hide profile page"
         hide_lead_prices: "Hide lead prices"
+        pnumber: "P#"
+        nnmid: "NNMID"
+        custom_1: "Custom 1"
+        custom_2: "Custom 2"
+        custom_3: "Custom 3"
+        custom_4: "Custom 4"
+        custom_5: "Custom 5"
       user/lead_user:
         first_name: "First name"
         last_name: "Last name"
@@ -4099,6 +4168,13 @@ en:
         lead_supplier_role_enabled: "Lead supplier role enabled"
         hide_profile_page: "Hide profile page"
         hide_lead_prices: "Hide lead prices"
+        pnumber: "P#"
+        nnmid: "NNMID"
+        custom_1: "Custom 1"
+        custom_2: "Custom 2"
+        custom_3: "Custom 3"
+        custom_4: "Custom 4"
+        custom_5: "Custom 5"
       user/member:
         company_name: "Company name"
         first_name: "First name"
@@ -4114,6 +4190,13 @@ en:
         skip_email_verification: "Don't verify email address"
         title: "Title"
         time_zone: "Time zone"
+        pnumber: "P#"
+        nnmid: "NNMID"
+        custom_1: "Custom 1"
+        custom_2: "Custom 2"
+        custom_3: "Custom 3"
+        custom_4: "Custom 4"
+        custom_5: "Custom 5"
       user/category_supplier:
         first_name: "First name"
         last_name: "Last name"
@@ -4137,6 +4220,13 @@ en:
         big_buyer: "Got credit"
         auto_buy_enabled: "Auto buy enabled"
         newsletter_manager: "Newsletter manager"
+        pnumber: "P#"
+        nnmid: "NNMID"
+        custom_1: "Custom 1"
+        custom_2: "Custom 2"
+        custom_3: "Custom 3"
+        custom_4: "Custom 4"
+        custom_5: "Custom 5"
       country:
         name: "Country name"
       lead_template:
@@ -4241,6 +4331,8 @@ en:
         lead_creator_id: "Lead creator"
         link_clicked_chain_mail_type_id: "Link clicked chain mail"
         use_chain_mail_as_intro_mail: "Use chain mail as intro mail"
+      campaign:
+        sync_with_campaign_source: "Synchronise with master list (campaign sources)"
   users:
     delayed_jobs:
       view_all: "View all"
@@ -4584,7 +4676,7 @@ en:
     choose:
       flash:
         error_wrong_title: "Sorry. We have found unsafe character in headers. Only underscore, space, number and letters are allowed."
-        error_wrong_file: "Sorry. You can upload only ODC, XLS and XLSX file."
+        error_wrong_file: "Sorry. You can upload only ODS, XLS and XLSX file."
       view:
         title: "Advanced Import"
         object_selected_fields_label: "use this fields"
@@ -4685,7 +4777,7 @@ en:
     create:
       flash:
         success: "Import completed. %{counter} leads have been successfully imported"
-        
+
   deals:
     index:
       view:
@@ -5144,6 +5236,8 @@ en:
           name_column: "Name"
           actions_column: "Actions"
           edit: "Edit"
+          duplicate: "Duplicate"
+          duplication_confirmation: "Are you sure you want to duplicate the survey?"
           destroy: "Destroy"
           send_to_newsletters: "Send to newsletters"
           total_column: "Total #"
@@ -5176,6 +5270,7 @@ en:
           intro_email_button: "Intro mail"
           setup_button: "Setup survey"
           edit_button: "General settings"
+          duplicate_button: "Duplicate"
       form:
         move_right: "Add >"
         move_left: "< Remove"
@@ -5189,6 +5284,12 @@ en:
         flash:
           notice:
             survey_queued_for_sending_to_newsletters: "Survey has been queued for sending to newsletter lists"
+      duplicate:
+        flash:
+          notice:
+            duplication_success: "Survey has been successfully duplicated"
+          alert:
+            duplication_failure: "Duplication of survey failed"
       new:
         view:
           button_create: "Create"

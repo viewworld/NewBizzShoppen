@@ -1,6 +1,6 @@
 class ::User::Supplier < ::User
   ROLES = [:supplier, :lead_supplier]
-  CSV_ATTRS = %w{email first_name last_name company_name address_line_1 address_line_2 address_line_3 zip_code country region phone vat_number}
+  CSV_ATTRS = %w{email first_name last_name company_name address_line_1 address_line_2 address_line_3 zip_code country region phone vat_number pnumber nnmid custom_1 custom_2 custom_3 custom_4 custom_5}
   REQUIRED_FIELDS = %w{email first_name last_name company_name address_line_1 address_line_3 zip_code}
 
   include User::RegistrationValidations
@@ -129,6 +129,4 @@ class ::User::Supplier < ::User
   include AdvancedUserImport
 
 ########################################################################################################################
-
-
 end

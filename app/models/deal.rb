@@ -4,7 +4,7 @@ class Deal < AbstractLead
   VOUCHER_UNTIL_TYPE_DATE = 0.freeze
   VOUCHER_UNTIL_TYPE_WEEKS = 1.freeze
 
-  CSV_ATTRS = %w(header company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country region company_vat_no company_ean_number contact_name start_date end_date)
+  CSV_ATTRS = %w(header company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country region company_vat_no company_ean_number contact_name start_date end_date pnumber nnmid custom_1 custom_2 custom_3 custom_4 custom_5)
 
   has_one :deal_request_details_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'deal_request_details'", :dependent => :destroy
   has_one :logo, :class_name => "Asset::DealLogo", :as => :resource, :conditions => "asset_type = 'Asset::DealLogo'", :dependent => :destroy
@@ -256,8 +256,8 @@ class Deal < AbstractLead
 
   def current_four_week_period_end_date
     current_four_week_period_start_date + 28.days
-  end  
-  
+  end
+
   def next_group_deal
     if deal = Deal.without_inactive.order("id ASC").where("id > ?", self.id).first
       deal
