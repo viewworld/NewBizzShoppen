@@ -33,13 +33,13 @@
         <%= form.input :email_address, :hint => hint_for(@newsletter_list_subscriber, :email_address) %>
         <%= form.input :linkedin_url, :hint => hint_for(@newsletter_list_subscriber, :linkedin_url) %>
         <%= form.input :facebook_url, :hint => hint_for(@newsletter_list_subscriber, :facebook_url) %>
-        <%= form.input :pnumber %>
-        <%= form.input :nnmid %>
-        <%= form.input :custom_1 %>
-        <%= form.input :custom_2 %>
-        <%= form.input :custom_3 %>
-        <%= form.input :custom_4 %>
-        <%= form.input :custom_5 %>
+        <%= form.input :pnumber, :as => :string %>
+        <%= form.input :nnmid, :as => :string %>
+        <%= form.input :custom_1, :as => :string %>
+        <%= form.input :custom_2, :as => :string %>
+        <%= form.input :custom_3, :as => :string %>
+        <%= form.input :custom_4, :as => :string %>
+        <%= form.input :custom_5, :as => :string %>
       </ol>
     </fieldset>
   </div>

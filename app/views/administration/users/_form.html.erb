@@ -63,13 +63,13 @@
         <%= form.input :phone %>
         <%= form.input :direct_phone_number %>
         <%= form.input :email %>
-        <%= form.input :pnumber %>
-        <%= form.input :nnmid %>
-        <%= form.input :custom_1 %>
-        <%= form.input :custom_2 %>
-        <%= form.input :custom_3 %>
-        <%= form.input :custom_4 %>
-        <%= form.input :custom_5 %>
+        <%= form.input :pnumber, :as => :string %>
+        <%= form.input :nnmid, :as => :string %>
+        <%= form.input :custom_1, :as => :string %>
+        <%= form.input :custom_2, :as => :string %>
+        <%= form.input :custom_3, :as => :string %>
+        <%= form.input :custom_4, :as => :string %>
+        <%= form.input :custom_5, :as => :string %>
         <% if @user.big_buyer? %>
             <%= form.input :big_buyer_purchase_limit %>
         <% end %>
