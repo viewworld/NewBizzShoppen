@@ -18,7 +18,7 @@ class Category < ActiveRecord::Base
   has_one :blurb, :as => :resource, :class_name => "Article::Cms::InterfaceContentText", :dependent => :destroy
   has_one :email_template, :as => :resource
 
-  belongs_to :owner, :class_name => User.name
+  has_one :owner, :class_name => "User", :foreign_key => :deal_category_id
 
   after_save :set_cached_slug
   before_save :handle_locking_for_descendants, :handle_auto_buy, :handle_image_removal
@@ -200,12 +200,10 @@ class Category < ActiveRecord::Base
   public
 
   def name_for_user(user)
-    if owner && in_tray?
-      if (owner.id == user.id)
-        "InTray"
-      else owner
-        "InTray_#{owner.to_s}"
-      end
+    if in_tray? && user && user.id == owner.id
+      "In Tray"
+    elsif in_tray?
+      "In Tray #{owner.to_s}"
     else
       to_s
     end

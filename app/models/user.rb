@@ -13,8 +13,7 @@ class User < ActiveRecord::Base
       ['Agent', 'agent'],
       ['Supplier', 'supplier'],
       ['Call centre', 'call_centre'],
-      ['Member', 'member'],
-      ['Category supplier', 'category_supplier']
+      ['Member', 'member']
   ]
   ADDITIONAL_USER_ROLES_WITH_LABELS = [['Lead user', "lead_user"], ['Lead supplier', "lead_supplier"], ["Call centre agent", "call_centre_agent"], ["Superadmin", "superadmin"]]
 
@@ -543,8 +542,18 @@ class User < ActiveRecord::Base
     has_any_role?(:supplier)
   end
 
+  def has_public_access?
+    false
+  end
+
   def accessible_categories_ids
-    User::Supplier.find(parent_id.blank? ? id : parent_id).category_interests.map(&:category_id)
+    return [] unless supplier = User::Supplier.find_by_id(parent_id || id)
+
+    if supplier.has_public_access?
+      LeadCategory.without_locked_and_not_published.with_supplier_unique(supplier).map(&:id)
+    elsif supplier
+      supplier.category_interests.map(&:category_id)
+    end
   end
 
   def has_role?(r)

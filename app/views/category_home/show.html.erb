@@ -1,7 +1,7 @@
 <column-mc:>
   <header>
     <param:content>
-      <%= t("category_home.show.view.header") %> <%= @home_category.name %>
+      <%= t("category_home.show.view.header") %> <%= @home_category.name_for_user(current_user) %>
     </param:content>
 
     <% if user_signed_in? %>

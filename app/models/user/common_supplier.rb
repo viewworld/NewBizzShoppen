@@ -14,7 +14,7 @@ module User::CommonSupplier
     private
 
     def make_buying_categories_unique
-      if auto_buy_enabled? and is_category_supplier?
+      if auto_buy_enabled? and supplier?
         (respond_to?(:buying_categories) ? buying_categories : with_role.buying_categories).select { |c| !c.is_customer_unique? }.each do |category|
           category.update_attribute(:is_customer_unique, true)
           CategoryCustomer.create(:user => self, :category => category)

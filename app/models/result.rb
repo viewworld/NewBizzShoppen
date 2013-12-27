@@ -63,10 +63,6 @@ class Result < ActiveRecord::Base
     result_fields.map(&:field_type).include?(ResultField::MATERIAL.to_s)
   end
 
-  def upgrades_to_category_supplier?
-    name == "Upgrade to category supplier"
-  end
-
   def upgrades_to_supplier?
     name == "Upgrade to supplier"
   end
