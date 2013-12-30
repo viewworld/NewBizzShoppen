@@ -582,7 +582,9 @@ Nbs::Application.routes.draw do
 
   root :to => "supplier_home#show"
 
-  ActiveAdmin.routes(self)
+  if !File.basename($0) == "rake" && ARGV.grep(/db:/).any?
+    ActiveAdmin.routes(self)
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
