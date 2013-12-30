@@ -3,19 +3,19 @@ require 'faker'
 require 'spec/support/overwrites/lorem'
 
 LeadCategory.blueprint do
-  name { Faker::Lorem.words(2).to_s + Time.now.to_f.to_s.sub('.','') }
+  name { Faker::Lorem.words(2).to_s + rand.to_s }
   description { Faker::Lorem.sentences(2).to_s }
   default_price { 0.0 }
   currency { Currency.make! }
 end
 
 DealCategory.blueprint do
-  name { Faker::Lorem.words(2).to_s + Time.now.to_f.to_s.sub('.','') }
+  name { Faker::Lorem.words(2).to_s + rand.to_s }
   description { Faker::Lorem.sentences(2).to_s }
 end
 
 Country.blueprint do
-  name { Faker::Address.uk_country + Time.now.to_f.to_s.sub('.','') }
+  name { Faker::Address.uk_country + rand.to_s }
   locale { "en" }
 end
 
@@ -118,7 +118,7 @@ UnconfirmedLead.blueprint do
 end
 
 Currency.blueprint do
-  name { Faker::Lorem.words(1).to_s + Time.now.to_f.to_s.sub('.','') }
+  name { Faker::Lorem.words(1).to_s + rand.to_s }
   symbol { ['&euro;','&pound;','$'][rand(3)]}
   active { true }
   exchange_rate { 1 }
@@ -240,7 +240,7 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
-  first_name { Faker::Name.first_name + Time.now.to_f.to_s.sub('.','') }
+  first_name { Faker::Name.first_name + rand.to_s }
   last_name { Faker::Name.last_name }
   agreement_read { true }
   roles_mask { 2 }
@@ -265,7 +265,7 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
-  first_name { Faker::Name.first_name + Time.now.to_f.to_s.sub('.','') }
+  first_name { Faker::Name.first_name + rand.to_s }
   last_name { Faker::Name.last_name }
   agreement_read { true }
   roles_mask { 8 }
@@ -279,7 +279,7 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
-  first_name { Faker::Name.first_name + Time.now.to_f.to_s.sub('.','') }
+  first_name { Faker::Name.first_name + rand.to_s }
   last_name { Faker::Name.last_name }
   agreement_read { true }
   buying_categories { Array(LeadCategory.make!) }
@@ -605,7 +605,7 @@ NewsletterCampaign.blueprint do
 end
 
 ActsAsTaggableOn::Tag.blueprint do
-  name { Faker::Lorem.words(1).to_s + "#{Time.now.to_f.to_s.gsub('.','')}" }
+  name { Faker::Lorem.words(1).to_s + rand.to_s }
 end
 
 Survey.blueprint do

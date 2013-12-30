@@ -85,7 +85,7 @@ describe ChainMail do
 
         # condition not met, all remaining emails in chain deleted
         ChainMail.count.should == 0
-        Delayed::Job.count.should == 0
+        @chain_mail.delayed_jobs.count.should == 0
 
         # ===========================
         # part 2: condition met
@@ -163,7 +163,7 @@ describe ChainMail do
 
         # chain stopped
         ChainMail.count.should == 0
-        Delayed::Job.count.should == 0
+        @chain_mail2.delayed_jobs.count.should == 0
       end
 
       it "should behave correctly for condition 'send if link clicked and loggedin'" do

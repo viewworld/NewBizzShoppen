@@ -132,12 +132,7 @@ class SurveyRecipient < ActiveRecord::Base
   end
 
   def email
-    case recipient.class.to_s
-      when 'AbstractLead', 'NewsletterListSubscriber' then recipient.email_address
-      when 'User' then recipient.email
-      else
-        ""
-    end
+    recipient.try(:email_address)
   end
 
   def company_name
@@ -153,12 +148,8 @@ class SurveyRecipient < ActiveRecord::Base
   end
 
   def recipient_name(name_type)
-    names = case recipient.class.to_s
-      when 'AbstractLead', 'NewsletterListSubscriber' then recipient.contact_name.to_s.split(" ")
-      when 'User' then [recipient.first_name, recipient.last_name]
-    end
-
-    names[name_type == :first_name ? 0 : 1]
+    names = recipient.try(:contact_name).split(" ") || ""
+    names.split(" ")[name_type == :first_name ? 0 : 1]
   end
 
   def survey_name
