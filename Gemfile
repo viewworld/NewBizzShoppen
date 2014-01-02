@@ -78,6 +78,7 @@ group :test do
   gem 'autotest'
   gem 'headless'
   gem 'rubyzip', '0.9.9'
+  gem 'test-unit'
 end
 
 gem 'capistrano'
