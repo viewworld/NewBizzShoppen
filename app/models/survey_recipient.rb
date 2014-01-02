@@ -90,7 +90,7 @@ class SurveyRecipient < ActiveRecord::Base
       survey_answer.survey_options.map(&:tag_list).flatten
     end.flatten.uniq
 
-    tags.each { | tag| recipient.tag_list << tag }
+    tags.each { |tag| recipient.tag_list << tag }
     recipient.save
   end
 
@@ -120,8 +120,8 @@ class SurveyRecipient < ActiveRecord::Base
 
     if recipient.is_a?(Contact) and !recipient.completed? and survey.upgrade_contacts_to_leads? and recipient.call_results.detect { |cr| cr.result_id == upgrade_to_lead_result.id }.nil?
       campaign_result = upgrade_to_lead_result.campaigns_results.for_campaign(recipient.campaign).first
-      recipient.attributes = { :currency_id => recipient.campaign.currency_id, :price => (campaign_result.settings["use_value_as_lead_price"] == "1" ? campaign_result.value.to_f : 0.0),
-                               :purchase_decision_date => (Date.today+1.year).to_s, :sale_limit => 1, :header => survey.name, :published => true }
+      recipient.attributes = {:currency_id => recipient.campaign.currency_id, :price => (campaign_result.settings['use_value_as_lead_price'] == '1' ? campaign_result.value.to_f : 0.0),
+                              :purchase_decision_date => (Date.today+1.year).to_s, :sale_limit => 1, :header => survey.name, :published => true}
       recipient.save
 
       call_result = CallResult.new(:result_id => upgrade_to_lead_result.id, :survey_recipient => self)
@@ -185,7 +185,7 @@ class SurveyRecipient < ActiveRecord::Base
   end
 
   def answer_for_question(question)
-    survey_answers.detect{ |sa| sa.survey_question_id == question.id }
+    survey_answers.detect { |sa| sa.survey_question_id == question.id }
   end
 
   private
