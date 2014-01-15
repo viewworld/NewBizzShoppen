@@ -3248,6 +3248,9 @@ en:
       deal_id_label: "Deal id"
       voucher_number_label: "Voucher number"
       validate_button: "Validate"
+  sign_in:
+    purchase_manager_form:
+      forgot_password: forgot?
 
   shared:
     accounts:

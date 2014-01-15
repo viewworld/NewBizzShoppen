@@ -6,7 +6,11 @@
                   <ol class="align_inputs no_pdd">
                     <li> <%= render :partial => "shared/accounts/social_login_for_sign_in", :locals => { :deal_request_id => deal.id } %></li>
                     <%= f.input :email, :input_html => {:tabindex => 1} %>
-                    <%= f.input :password, :input_html => {:tabindex => 2} %>
+                    <%= f.input :password,
+                                :label => raw(I18n.t('activerecord.attributes.user.password') +
+                                                      " (#{content_tag(:span, link_to(t('.forgot_password'), new_password_path(User), :target => :blank), :class => 'label_link')})"),
+                                :input_html => {:tabindex => 2},
+                                :label_html => {:style => 'width: 160px'}%>
                     <%= f.input :remember_me, :as => :boolean, :required => false, :input_html => {:tabindex => 3} %>
                     <li class="commit">
                       <ibt>
