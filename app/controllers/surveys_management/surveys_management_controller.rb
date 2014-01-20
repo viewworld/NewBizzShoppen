@@ -14,4 +14,8 @@ class SurveysManagement::SurveysManagementController < SecuredController
     authorize_role(:admin, :call_centre, :category_supplier, :supplier)
     raise CanCan::AccessDenied unless current_user.surveys_enabled?
   end
+
+  def fetch_survey
+    @survey = Survey.find(params[:survey_id])
+  end
 end

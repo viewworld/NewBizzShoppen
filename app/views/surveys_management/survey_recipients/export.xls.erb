@@ -9,7 +9,7 @@
     <% contact_contact_information_fields = %w(contact_name direct_phone_number phone_number linkedin_url facebook_url email_address) %>
     <% contact_information = contact_company_information_fields + contact_contact_information_fields %>
     <% user_information_fields = ["company_name", "", "", "address_line_1", "address_line_2", "address_line_3", "zip_code", "country", "region", "vat_number", "company_ean_number", "full_name", "direct_phone_number", "phone", "", "", "email"] %>
-    <% questions = @survey.survey_questions %>
+    <% questions = survey.survey_questions %>
     <Table>
       <Row>
         <% contact_information.map(&:humanize).each do |header| %>
@@ -22,7 +22,7 @@
             <Cell><Data ss:Type="String"><%= question.title %></Data></Cell>
         <% end %>
       </Row>
-      <% @survey_recipients.each do |survey_recipient| %>
+      <% survey_recipients.each do |survey_recipient| %>
           <% recipient = survey_recipient.recipient %>
           <Row>
             <%if recipient.is_a?(User) %>

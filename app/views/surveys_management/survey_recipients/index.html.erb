@@ -6,7 +6,9 @@
 
     <param:actions>
       <ul class="header_actions">
-        <li class="last"><%= bt_link_to :download, t("surveys_management.survey_recipients.index.view.export"), export_surveys_management_survey_survey_recipients_path(@survey, :format => "xls"), :method => :post %></li>
+        <li class="last"><%= bt_link_to :download, t('surveys_management.survey_recipients.index.view.export'),
+                                        surveys_management_survey_survey_recipients_export_path(@survey, :format => 'xls'),
+                                        :method => :post %></li>
       </ul>
 
     </param:actions>

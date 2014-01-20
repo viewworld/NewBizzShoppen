@@ -560,11 +560,8 @@ Nbs::Application.routes.draw do
           put :remove_parent
         end
       end
-      resources :survey_recipients do
-        collection do
-          post :export
-        end
-      end
+      resources :survey_recipients
+      resource :survey_recipients_export, :only => [:create, :show], :controller => "survey_recipients_export"
       member do
         post :send_to_newsletters
         get :setup

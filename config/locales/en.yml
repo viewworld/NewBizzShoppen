@@ -5317,6 +5317,15 @@ en:
           header: "Survey response from %{email} for %{survey_name}"
           next: "Next >>"
           previous: "<< Previous"
+    survey_recipients_export:
+      create:
+        flash:
+          notice:
+            success: We are generating a file for you. You will receive an email with a link within a few moments.
+      show:
+        flash:
+          alert:
+            failure: Sorry, you don't have permission to see this survey.
   surveys:
     show:
       view:

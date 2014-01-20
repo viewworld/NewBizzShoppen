@@ -64,7 +64,9 @@
                         <%= link_to t("surveys_management.surveys.index.view.view_responses"), surveys_management_survey_survey_recipients_path(survey) %>
                       </li>
                       <li>
-                        <%= link_to t("surveys_management.survey_recipients.index.view.export"), export_surveys_management_survey_survey_recipients_path(survey, :format => "xls"), :method => :post %>
+                        <%= link_to t('surveys_management.survey_recipients.index.view.export'),
+                                    surveys_management_survey_survey_recipients_export_path(survey, :format => 'xls'),
+                                    :method => :post %>
                       </li>
                   <% end %>
                   <li>
