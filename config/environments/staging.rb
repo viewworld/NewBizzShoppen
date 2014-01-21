@@ -30,7 +30,7 @@ Nbs::Application.configure do
   config.action_mailer.default_url_options = {:host => 'fairleads.selleo.com'}
 
   config.action_mailer.delivery_method = :file
-  config.action_mailer.file_settings = {:location => 'log/emails}
+  config.action_mailer.file_settings = {:location => 'log/emails'}
 
   config.middleware.swap ActionDispatch::ParamsParser,
                          ActionDispatch::ParamsParser,
