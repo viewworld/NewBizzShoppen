@@ -54,3 +54,41 @@ All emails are stored in **log/emails** directory.
 ```
 cd /srv/nbs/staging/current/log/emails
 ```
+
+## Installation on local machine
+
+#### Ruby
+
+ree-1.8.7-2012.02
+
+```
+rvm use ree@nbs --create
+```
+
+#### PDF (pisa.py)
+
+```
+sudo apt-get install python python-setuptools
+sudo apt-get install python-dev build-essential libfreetype6 libfreetype6-dev
+sudo easy_install html5lib
+sudo easy_install reportlab
+sudo easy_install pisa
+```
+
+#### Domains
+
+```
+/etc/hosts
+(ubuntu)
+127.0.1.1	faircalls.dk
+127.0.1.1	faircalls.eu
+127.0.1.1	fairdeals.dk
+127.0.1.1	erhvervsanalyse.dk
+127.0.1.1	fairdeals.com
+(osx)
+127.0.0.1	faircalls.dk
+127.0.0.1	faircalls.eu
+127.0.0.1	fairdeals.dk
+127.0.0.1	erhvervsanalyse.dk
+127.0.0.1	fairdeals.com
+```
