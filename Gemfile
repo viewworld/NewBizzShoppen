@@ -57,6 +57,7 @@ group :development do
   gem 'nifty-generators'
   gem 'bullet'
   gem 'letter_opener'
+  gem 'pry', '~> 0.9.12.4'
 end
 
 group :test do
