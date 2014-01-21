@@ -24,3 +24,19 @@ ssh rails@fairleads.com
 cd /srv/nbs/staging/current
 RAILS_ENV=staging bundle exec rails c
 ```
+
+#### Deployment
+
+Deploy from **master** branch.
+
+```
+cap deploy
+```
+
+#### Mailer
+
+All emails are stored in **log/emails** directory.
+
+```
+cd /srv/nbs/staging/current/log/emails
+```
