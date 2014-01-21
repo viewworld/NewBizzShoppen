@@ -1,7 +1,64 @@
 NBS - Fair Platform
 ===================
 
-## Environments
+## Prerequisites
+
+### Development
+
+#### Environment
+
+1. Install ruby: ruby ree 1.8.7
+
+On OSX Mavericks you can use following code to install REE
+
+```
+export CPPFLAGS=-I/opt/X11/include
+xcode-select --install
+rvm reinstall ree-1.8.7-2011.03
+```
+
+2. Setup your .rvmrc
+
+* `rvm use ree@nbs --create`
+
+3. Install gems
+
+* `bundle`
+
+In case of problems installing Gherkin, run `gem install gherkin -v '2.3.5' -- --with-cflags=-w` and then `bundle` again
+
+If you experience following error when installing `active-admin`
+
+```
+ArgumentError: wrong number of arguments (1 for 0)
+An error occurred while installing activeadmin (0.3.4), and Bundler cannot continue.
+Make sure that `gem install activeadmin -v '0.3.4'` succeeds before bundling.
+```
+
+then try running `gem update bundler` and then `bundle` again
+
+#### Database setup
+
+* Copy `database.example.yml` to `database.yml`
+* Amend your db user name within `database.yml` if necessary
+* `rake db:create db:migrate`
+
+In case you experience following error
+
+```
+rake aborted!
+syntax error on line 50, col 11: `'
+```
+
+please, double check if db user name is present within `database.yml`
+
+## Testing
+
+#### Running tests
+
+* To run unit tests suite, run `rspec spec`
+* To run acceptance tests suite, run `cucumber`
+
 
 ### Development
 
