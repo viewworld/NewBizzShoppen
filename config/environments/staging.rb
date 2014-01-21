@@ -27,10 +27,11 @@ Nbs::Application.configure do
   # config.action_controller.asset_host = "http://static-fairleads.s3.amazonaws.com"
 
   #Required by Devise
-  config.action_mailer.default_url_options = {:host => 'beta.fairleads.com'}
+  config.action_mailer.default_url_options = {:host => 'fairleads.selleo.com'}
 
-  config.action_mailer.delivery_method     = :postmark
-  config.action_mailer.postmark_settings = { :api_key => "a132d83a-7585-444a-b3cf-a522acfcb9fb" }
+  config.action_mailer.delivery_method = :file
+  config.action_mailer.file_settings = {:location => 'log/emails}
+
   config.middleware.swap ActionDispatch::ParamsParser,
                          ActionDispatch::ParamsParser,
                          Mime::JSON => lambda { |body| Yajl.load(body).with_indifferent_access }
