@@ -48,6 +48,7 @@ gem 'acts-as-taggable-on', '~> 2.2.2'
 gem 'createsend'
 gem 'recaptcha', :require => 'recaptcha/rails'
 gem 'newrelic_rpm'
+gem 'activerecord-database-views'
 
 group :staging do
   gem 'system-metrics'
