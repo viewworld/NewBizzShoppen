@@ -39,6 +39,8 @@ class Domain < ActiveRecord::Base
   def name_for_env
     if Rails.env.development?
       "#{name}:3000"
+    elsif Rails.env.staging?
+      "#{site}.selleo.com"
     elsif Rails.env.production?
       "www.#{name}"
     else

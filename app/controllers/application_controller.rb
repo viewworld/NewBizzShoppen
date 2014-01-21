@@ -43,11 +43,7 @@ class ApplicationController < ActionController::Base
     if user_signed_in? and current_user and !is_current_user_on_correct_domain? and current_user.domain.present?
       key = current_user.generate_login_key!
       sign_out(current_user)
-      if Rails.env.staging?
-        redirect_to "http://#{current_user.domain.name}/login_keys/?key=#{key}"
-      else
-        redirect_to "http://#{current_user.domain.name_for_env}/login_keys/?key=#{key}"
-      end
+      redirect_to "http://#{current_user.domain.name_for_env}/login_keys/?key=#{key}"
     end
   end
 
