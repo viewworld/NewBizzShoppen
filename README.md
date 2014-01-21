@@ -1,9 +1,9 @@
 NBS - NewBizzShoppen - Fair Platform
 ====================================
 
-# Environments
+## Environments
 
-## Staging
+### Staging
 
 Applications:
 
