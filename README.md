@@ -7,14 +7,14 @@ NBS - Fair Platform
 
 #### Environment
 
-**Install ruby: ruby ree 1.8.7**
+**Install ruby: ree 1.8.7**
 
 On OSX Mavericks you can use following code to install REE
 
 ```
 export CPPFLAGS=-I/opt/X11/include
 xcode-select --install
-rvm reinstall ree-1.8.7-2011.03
+rvm reinstall ree-1.8.7-2012.02
 ```
 
 **Setup your .rvmrc**
