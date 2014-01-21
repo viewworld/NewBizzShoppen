@@ -6,7 +6,7 @@ worker_processes 4
 working_directory "/srv/nbs/staging/current"
 
 #listen "/srv/nbs/staging/shared/pids/staging.socket", :backlog => 64
-listen 30000, :backlog => 64
+listen 40000, :backlog => 64
 
 timeout 30
 
