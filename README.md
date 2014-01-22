@@ -94,7 +94,7 @@ export RUBY_HEAP_FREE_MIN=500000
 
 And reload the environment or `. ~/.bashrc`.
 
-## Testing
+### Testing
 
 #### Running tests
 
