@@ -7,10 +7,8 @@ default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 
 set(:rvm_ruby_string) {"ree@nbs"}
-require 'rvm/capistrano'
-
-require "delayed/recipes"
 set :delayed_job_args, "-n 2"
+set :delayed_job_command, 'bundle exec script/delayed_job'
 
 set :stages, %w(staging production testing)
 set :default_stage, "staging"
@@ -26,6 +24,8 @@ set :rvm_type, :user
 role :web, "144.76.32.51"
 role :app, "144.76.32.51"
 role :db,  "144.76.32.51", :primary => true
+
+set :bundle_without, [:development, :test]
 
 set :user, "rails"
 set :use_sudo, false
@@ -50,11 +50,8 @@ end
 after "deploy:finalize_update", "prepare_database"
 after "deploy:finalize_update", "deploy:cleanup"
 
-after "deploy:stop",    "delayed_job:stop"
-after "deploy:start",   "delayed_job:start"
 after "deploy:restart", "delayed_job:restart"
 
 task :prepare_database, :roles => :app do
   run "cp #{app_path}/etc/database.yml #{release_path}/config/database.yml"
-  run "cd #{release_path} && bundle --quiet"
 end
