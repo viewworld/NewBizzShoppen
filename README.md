@@ -17,13 +17,19 @@ xcode-select --install
 rvm reinstall ree-1.8.7-2012.02
 ```
 
+or 
+
+```
+rvm install ree --without-tcl --without-t
+```
+
 **Setup your .rvmrc**
 
-* `rvm use ree@nbs --create`
+`rvm use ree@nbs --create`
 
 **Install gems**
 
-* `bundle`
+`bundle`
 
 In case of problems installing Gherkin, run `gem install gherkin -v '2.3.5' -- --with-cflags=-w` and then `bundle` again
 
