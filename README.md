@@ -101,7 +101,6 @@ And reload the environment or `. ~/.bashrc`.
 * To run unit tests suite, run `rspec spec`
 * To run acceptance tests suite, run `cucumber`
 
-
 ## Staging
 
 Applications:
@@ -138,4 +137,29 @@ All emails are stored in **log/emails** directory.
 
 ```
 cd /srv/nbs/staging/current/log/emails
+```
+
+## Production
+
+Applications:
+
+- fairleads.com
+- fairdeals.com
+- faircalls.com
+- erhvervsanalyse.com
+
+#### Rails Console
+
+```
+ssh rails@fairleads.com
+cd /srv/nbs/production/current
+RAILS_ENV=production bundle exec rails c
+```
+
+#### Deployment
+
+Deploy from **staging** branch.
+
+```
+cap production deploy
 ```
