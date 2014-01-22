@@ -29,8 +29,8 @@ Nbs::Application.configure do
   #Required by Devise
   config.action_mailer.default_url_options = {:host => 'fairleads.selleo.com'}
 
-  config.action_mailer.delivery_method = :file
-  config.action_mailer.file_settings = {:location => 'log/emails'}
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
 
   config.middleware.swap ActionDispatch::ParamsParser,
                          ActionDispatch::ParamsParser,
@@ -38,4 +38,3 @@ Nbs::Application.configure do
 end
 
 I18n.default_locale = :"en"
-
