@@ -155,6 +155,24 @@ All emails are stored in **log/emails** directory.
 cd /srv/nbs/staging/current/log/emails
 ```
 
+#### Mailcatcher
+
+Run:
+
+```
+ssh rails@fairleads.com
+cd /srv/nbs/staging/current
+cd /srv/nbs/staging/current; mailcatcher --http-port 10801 --smtp-ip localhost --http-ip 144.76.32.51 --smtp-port 1025 &
+```
+
+Stop:
+
+```
+ssh rails@fairleads.com
+cd /srv/nbs/staging/current
+ps aux | grep staging | grep mailcatcher | awk {'print $2'} | xargs kill -QUIT
+```
+
 ## Production
 
 Applications:
