@@ -5293,6 +5293,12 @@ en:
             duplication_success: "Survey has been successfully duplicated"
           alert:
             duplication_failure: "Duplication of survey failed"
+      destroy:
+        flash:
+          notice:
+            destroy_success: Survey was successfully destroyed.
+          alert:
+            destroy_failure: Survey can't be destroyed if survey has been connected to campaign or survey has been already sent to someone.
       new:
         view:
           button_create: "Create"

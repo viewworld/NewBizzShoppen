@@ -25,9 +25,12 @@ class SurveysManagement::SurveysController < SurveysManagement::SurveysManagemen
   end
 
   def destroy
-    destroy! do |success, failure|
-      success.html { redirect_to surveys_management_surveys_path }
+    if @survey.destroy
+      flash[:notice] = t("surveys_management.surveys.destroy.flash.notice.destroy_success")
+    else
+      flash[:alert] = t("surveys_management.surveys.destroy.flash.alert.destroy_failure")
     end
+    redirect_to surveys_management_surveys_path
   end
 
   def duplicate

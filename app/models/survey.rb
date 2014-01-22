@@ -116,7 +116,7 @@ class Survey < ActiveRecord::Base
   private
 
   def can_be_destroyed
-    newsletter_lists.empty? and campaigns.empty? and survey_answers.empty?
+    survey_recipients.empty? and campaigns.empty? and survey_answers.empty?
   end
 
   def categories_and_lead_creator_present
