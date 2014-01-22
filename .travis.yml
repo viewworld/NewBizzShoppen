@@ -5,7 +5,7 @@ env:
   - TEST_SUITE=unit
   - TEST_SUITE=acceptance
 rvm:
-  - 1.8.7
+  - ree
 before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
@@ -17,6 +17,11 @@ before_script:
   - bundle exec rake db:drop db:create db:migrate
   - bundle exec thor nbs:seed
   - bundle exec thor nbs:t
+  - export RUBY_HEAP_MIN_SLOTS=1000000
+  - export RUBY_HEAP_SLOTS_INCREMENT=1000000
+  - export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
+  - export RUBY_GC_MALLOC_LIMIT=1000000000
+  - export RUBY_HEAP_FREE_MIN=500000
 script: bundle exec rake tests:suite:$TEST_SUITE
 branches:
   only:
