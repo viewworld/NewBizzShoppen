@@ -106,6 +106,14 @@ And reload the environment or `. ~/.bashrc`.
 
 #### Running tests
 
+* Prepare your database
+
+```
+RAILS_ENV=test bundle exec rake db:drop db:create db:migrate
+RAILS_ENV=test bundle exec thor nbs:seed
+RAILS_ENV=test bundle exec thor nbs:t
+```
+
 * To run unit tests suite, run `rspec spec`
 * To run acceptance tests suite, run `cucumber`
 
