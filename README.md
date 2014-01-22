@@ -157,6 +157,8 @@ cd /srv/nbs/staging/current/log/emails
 
 #### Mailcatcher
 
+Address: [http://144.76.32.51:10801/](http://144.76.32.51:10801/)
+
 Run:
 
 ```
