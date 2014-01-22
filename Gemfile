@@ -53,6 +53,7 @@ gem 'rubyzip', '0.9.9'
 
 group :staging do
   gem 'system-metrics'
+  gem 'mailcatcher'
 end
 
 group :development do

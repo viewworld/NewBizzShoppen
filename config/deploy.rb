@@ -21,9 +21,11 @@ set :scm, :git
 set :ssh_options, {:forward_agent => true}
 set :rvm_type, :user
 
-role :web, "144.76.32.51"
-role :app, "144.76.32.51"
-role :db,  "144.76.32.51", :primary => true
+set :server_ip, '144.76.32.51'
+
+role :web, fetch(:server_ip)
+role :app, fetch(:server_ip)
+role :db,  fetch(:server_ip), :primary => true
 
 set :bundle_without, [:development, :test]
 
@@ -54,4 +56,31 @@ after "deploy:restart", "delayed_job:restart"
 
 task :prepare_database, :roles => :app do
   run "cp #{app_path}/etc/database.yml #{release_path}/config/database.yml"
+end
+
+namespace :mailcatcher do
+  def rails_env
+    fetch(:rails_env, false) ? "RAILS_ENV=#{fetch(:rails_env)}" : ''
+  end
+
+  def pid_file
+    "/tmp/mailcatcher_#{fetch(:rails_env)}.pid"
+  end
+
+  def args
+    {
+      :web_ip => fetch(:mailcatcher_web_ip, '127.0.0.1'),
+      :web_port => fetch(:mailcatcher_web_port, '10801'),
+      :smtp_ip => fetch(:mailcatcher_smtp_ip, '127.0.0.1'),
+      :smtp_port => fetch(:mailcatcher_smtp_port, '1025')
+    }.inject('') {|acc, (attr,val)| acc << " --#{attr.to_s.gsub('_', '-')} #{val}"}
+  end
+
+  task :stop do
+    run %Q(if [ -f #{pid_file} ]; then cat #{pid_file} | xargs kill -9; fi)
+  end
+
+  task :start do
+    run "cd #{current_path} && #{rails_env} bundle exec mailcatcher #{args} & echo $! > #{pid_file}"
+  end
 end
