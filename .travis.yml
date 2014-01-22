@@ -1,24 +1,27 @@
 language: ruby
 bundler_args: --without development --deployment
 cache: bundler
+env:
+  - TEST_SUITE=unit
+  - TEST_SUITE=acceptance
 rvm:
-- 1.8.7
+  - 1.8.7
 before_install:
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
-- ! 'echo ''gem: --no-ri --no-rdoc'' > ~/.gemrc'
-- bundle config build.gherkin --with-cflags=-w
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - ! 'echo ''gem: --no-ri --no-rdoc'' > ~/.gemrc'
+  - bundle config build.gherkin --with-cflags=-w
 before_script:
-- export RAILS_ENV=test
-- cp -f config/travis/database.yml config/database.yml
-- bundle exec rake db:drop db:create db:migrate
-- bundle exec thor nbs:seed
-- bundle exec thor nbs:t
-script: bundle exec rspec spec --format documentation
+  - export RAILS_ENV=test
+  - cp -f config/travis/database.yml config/database.yml
+  - bundle exec rake db:drop db:create db:migrate
+  - bundle exec thor nbs:seed
+  - bundle exec thor nbs:t
+script: bundle exec rake tests:suite:$TEST_SUITE
 branches:
   only:
-  - master
+    - master
 notifications:
   email:
     recipients:
-    - irek.skrobis@gmail.com
+      - irek.skrobis@gmail.com
