@@ -68,6 +68,8 @@ sudo easy_install reportlab
 sudo easy_install pisa
 ```
 
+On Mac OS X just install python extensions.
+
 #### Domains
 
 ```
