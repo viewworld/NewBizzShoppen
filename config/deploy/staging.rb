@@ -7,6 +7,3 @@ set :mailcatcher_smtp_port, 1025
 
 set :mailcatcher_http_ip, fetch(:server_ip)
 set :mailcatcher_http_port, 10801
-
-before "deploy:restart", "mailcatcher:stop"
-after "deploy:restart", "mailcatcher:start"
