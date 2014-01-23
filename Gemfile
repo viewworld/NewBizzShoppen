@@ -31,7 +31,7 @@ gem 'roo'
 gem 'ckeditor', '3.4.3.pre'
 gem 'aws-s3'
 gem 'i18n-active_record'
-gem 'whenever', :require => false
+gem 'whenever', '~> 0.9.0', :require => false
 gem 'acts_as_commentable_with_threading'
 gem 'memcache-client'
 gem 'devise_rpx_connectable'
