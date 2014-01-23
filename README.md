@@ -131,6 +131,11 @@ HTTP Basi Auth credentials:
 - username: fairleads
 - password: staging
 
+Admin credentials:
+
+- username: aossowski@gmail.com
+- password: secret
+
 #### Rails Console
 
 ```
