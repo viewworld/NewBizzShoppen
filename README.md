@@ -204,3 +204,13 @@ Deploy from **staging** branch.
 ```
 cap production deploy
 ```
+
+## Monitoring
+
+### NewRelic Server Setup
+
+Go through steps from [page](https://rpm.newrelic.com/accounts/477822/servers/get_started#platform=debian).
+
+### Monit
+
+You can check stats [here](http://admin:s3ll3o@fairleads.com:2812)
