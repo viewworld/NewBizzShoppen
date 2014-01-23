@@ -14,11 +14,6 @@ set :stages, %w(staging production testing)
 set :default_stage, "staging"
 set(:rails_env) {stage}
 
-set :whenever_environment, defer { rails_env }
-set :whenever_identifier, defer { "#{application}_#{stage}" }
-set :whenever_command, 'bundle exec whenever'
-require "whenever/capistrano"
-
 set :application, "nbs"
 set :app_path, "/srv/#{application}"
 set :repository,  "git@github.com:Selleo/NewBizzShoppen.git"
@@ -39,6 +34,14 @@ set :user, 'rails'
 set :use_sudo, false
 
 set :keep_releases, 3
+
+set :whenever_environment, defer { rails_env }
+set :whenever_identifier, defer { "#{application}_#{stage}" }
+set :whenever_command, 'bundle exec whenever'
+require "whenever/capistrano/v2/recipes"
+
+before 'deploy:restart', 'whenever:update_crontab'
+after 'deploy:rollback', 'whenever:update_crontab'
 
 namespace :deploy do
   task :start do
