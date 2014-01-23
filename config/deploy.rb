@@ -12,6 +12,12 @@ set :delayed_job_command, 'bundle exec script/delayed_job'
 
 set :stages, %w(staging production testing)
 set :default_stage, "staging"
+set(:rails_env) {stage}
+
+set :whenever_environment, defer { rails_env }
+set :whenever_identifier, defer { "#{application}_#{stage}" }
+set :whenever_command, 'bundle exec whenever'
+require "whenever/capistrano"
 
 set :application, "nbs"
 set :app_path, "/srv/#{application}"
@@ -29,9 +35,8 @@ role :db,  fetch(:server_ip), :primary => true
 
 set :bundle_without, [:development, :test]
 
-set :user, "rails"
+set :user, 'rails'
 set :use_sudo, false
-set(:rails_env) {stage}
 
 set :keep_releases, 3
 

@@ -6,3 +6,11 @@ require 'capistrano/ext/multistage'
 require 'rvm/capistrano'
 require "delayed/recipes"
 require "bundler/capistrano"
+
+require 'capistrano/server_definition'
+require 'capistrano/role'
+class Capistrano::Configuration
+  def role_names_for_host(host)
+    roles.map {|role_name, role| role_name if role.include?(host) }.compact || []
+  end
+end
