@@ -27,7 +27,17 @@ class SurveyRecipient < ActiveRecord::Base
   STATE_COMPLETED = 2.freeze
 
   def survey_link
-    "#{Rails.env.development? ? "http://erhvervsanalyse.dk:3000" : "http://#{'beta.' if Rails.env.staging?}erhvervsanalyse.dk"}/survey/#{uuid}"
+    "http://erhvervsanalyse.#{domain_for_survey_link}/survey/#{uuid}"
+  end
+
+  def domain_for_survey_link
+    if Rails.env.development?
+      'dk:3000'
+    elsif Rails.env.staging?
+      'selleo.com'
+    else
+      'dk'
+    end
   end
 
   def build_answer(question)
