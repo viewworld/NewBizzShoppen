@@ -3,7 +3,7 @@ namespace :tests do
     desc 'run cucumber tests'
     task :acceptance => :environment do
       unless system 'cucumber'
-        fail 'acceptance suite  not passed'
+        fail 'acceptance suite not passed'
       end
     end
 
