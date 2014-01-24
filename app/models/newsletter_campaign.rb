@@ -31,11 +31,11 @@ class NewsletterCampaign < ActiveRecord::Base
 
   def domain_name
     if Rails.env.staging?
-      "beta.fairleads.com"
+      'fairleads.selleo.com'
     elsif Rails.env.testing?
-      "testing.fairleads.com"
+      'testing.fairleads.com'
     else
-      "fairleads.com"
+      'fairleads.com'
     end
   end
 
