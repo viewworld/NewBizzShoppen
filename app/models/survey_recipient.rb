@@ -106,7 +106,7 @@ class SurveyRecipient < ActiveRecord::Base
   end
 
   def assign_tags_for_recipient_user(tags)
-    user_from_contact = User.find_by_contact_id(recipient.id)
+    user_from_contact = User.find_by_contact_id(recipient.id).try(:with_role)
     if user_from_contact
       tags.each { |tag| user_from_contact.tag_list << tag }
       user_from_contact.save(false)
