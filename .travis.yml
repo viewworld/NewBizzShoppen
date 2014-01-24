@@ -17,6 +17,7 @@ before_script:
   - bundle exec rake db:drop db:create db:migrate
   - bundle exec thor nbs:seed
   - bundle exec thor nbs:t
+  - bundle exec rake tests:suite:prepare:$TEST_SUITE
   - export RUBY_HEAP_MIN_SLOTS=1000000
   - export RUBY_HEAP_SLOTS_INCREMENT=1000000
   - export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
