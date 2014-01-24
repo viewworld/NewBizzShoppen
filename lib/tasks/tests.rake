@@ -17,6 +17,7 @@ namespace :tests do
     namespace :prepare do
       task :acceptance => :environment do
         Rake::Task['nbs:refresh_test_db'].invoke
+        system 'sed -i".bak" "/SET lock_timeout/d" db/snapshots/cucumber.sql'
       end
 
       task :unit => :environment do
