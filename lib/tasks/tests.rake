@@ -2,12 +2,16 @@ namespace :tests do
   namespace :suite do
     desc 'run cucumber tests'
     task :acceptance => :environment do
-      system 'cucumber'
+      unless system 'cucumber'
+        fail 'acceptance suite  not passed'
+      end
     end
 
     desc 'run rspec tests'
     task :unit => :environment do
-      system 'rspec spec --format documentation'
+      unless system 'rspec spec --format documentation'
+        fail 'rSpec suite not passed'
+      end
     end
 
     namespace :prepare do
