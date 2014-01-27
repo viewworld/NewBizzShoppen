@@ -13,7 +13,7 @@ class Nbs < Thor
     Settings.default_deals_per_page = 30 if Settings.default_deals_per_page.nil?
     Settings.certification_level_1 = 10 if Settings.certification_level_1.nil?
     Settings.certification_level_2 = 20 if Settings.certification_level_2.nil?
-    Settings.logout_time = 5 if Settings.logout_time.nil? #minutes 
+    Settings.logout_time = 5 if Settings.logout_time.nil? #minutes
     Settings.contact_us_email = (Rails.env.production? or Rails.env.test?) ? "admin@fairleads.com" : "contact@nbs.fake.com" if Settings.contact_us_email.nil?
     Settings.contact_us_phone = Rails.env.production? ? "" : "+44 0000000" if Settings.contact_us_phone.nil?
     Settings.contact_us_skype = Rails.env.production? ? "" : "fairleads_contact" if Settings.contact_us_skype.nil?
@@ -897,7 +897,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     Subscription.send_reminder_about_end_of_free_period
   end
 
-  desc "synchronize newsletter lists", ""
+  desc "synchronize_newsletter_lists", ""
 
   def synchronize_newsletter_lists
     NewsletterSynch.process!
