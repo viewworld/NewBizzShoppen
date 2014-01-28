@@ -121,10 +121,10 @@ RAILS_ENV=test bundle exec thor nbs:t
 
 Applications:
 
-- fairleads.selleo.com
-- fairdeals.selleo.com
-- faircalls.selleo.com
-- erhvervsanalyse.selleo.com
+- [fairleads.selleo.com](http://fairleads.selleo.com/)
+- [fairdeals.selleo.com](http://fairdeals.selleo.com/)
+- [faircalls.selleo.com](http://faircalls.selleo.com/)
+- [erhvervsanalyse.selleo.com](http://erhvervsanalyse.selleo.com/)
 
 HTTP Basi Auth credentials:
 
