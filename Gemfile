@@ -72,15 +72,14 @@ group :test do
   gem 'cucumber', '0.10.0'
   gem 'cucumber-rails', '0.3.2'
   gem 'pickle'
-  gem 'spork'
+  gem 'spork', '1.0.0rc4'
   gem 'mocha', '0.13.2', :require => false
   gem 'faker', '0.3.1'
   gem 'machinist', '>= 2.0.0.beta1'
   gem 'fakeweb', :require => false
   gem 'webmock', :require => false
-  gem 'rspec', '=2.0.1'
   gem 'launchy', '0.4.0'
-  gem 'rspec-rails', '= 2.0.1'
+  gem 'rspec-rails', '2.14.1'
   gem 'autotest-rails'
   gem 'autotest'
   gem 'headless'
