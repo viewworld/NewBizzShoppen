@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'spork'
 require 'fakeweb'
-require 'mocha/setup'
+require 'mocha/api'
 
 FakeWeb.allow_net_connect = %r{(.*paypal\.com.*)$}
 
@@ -26,7 +26,6 @@ Spork.prefork do
     config.fixture_path               = "#{::Rails.root}/spec/fixtures"
     config.use_transactional_fixtures = true
   end
-
 end
 
 Spork.each_run do
