@@ -5,28 +5,9 @@ class Domain < ActiveRecord::Base
   before_save :assure_default
   after_save :change_default
 
-  scope :for_locale, lambda { |locale| where("locale = ?", locale.to_s) }
-  scope :for_site, lambda { |site| where("site = ?", site.to_s) }
+  scope :for_locale, lambda { |locale| where(:locale => locale.to_s) }
+  scope :for_site, lambda { |site| where(:site => site.to_s) }
   scope :with_default, where(:default => true)
-
-  private
-
-  def assure_default
-    if !default and default_changed? and (Domain.for_locale(locale).for_site(site).with_default.size.eql?(1) and Domain.for_locale(locale).for_site(site).with_default.first.eql?(self))
-      self.errors.add(:default, :cannot_be_disabled)
-      false
-    end
-  end
-
-  def change_default
-    if default? and default_changed?
-      Domain.for_locale(locale).for_site(site).with_default.each do |d|
-        d.update_attribute(:default, false) unless d.eql?(self)
-      end
-    end
-  end
-
-  public
 
   def self.for_site_and_locale(site,locale)
     Domain.where(:site => site, :locale => locale).first || Domain.where(:site => site).with_default.first
@@ -45,6 +26,25 @@ class Domain < ActiveRecord::Base
       "www.#{name}"
     else
       name
+    end
+  end
+
+  private
+
+  def assure_default
+    if !default && default_changed? &&
+      (Domain.for_locale(locale).for_site(site).with_default.size.eql?(1) &&
+       Domain.for_locale(locale).for_site(site).with_default.first.eql?(self))
+      self.errors.add(:default, :cannot_be_disabled)
+      false
+    end
+  end
+
+  def change_default
+    if default? && default_changed?
+      Domain.for_locale(locale).for_site(site).with_default.each do |domain|
+        domain.update_attribute(:default, false) unless domain.eql?(self)
+      end
     end
   end
 end
