@@ -184,10 +184,10 @@ ps aux | grep staging | grep mailcatcher | awk {'print $2'} | xargs kill -QUIT
 
 Applications:
 
-- fairleads.com
-- fairdeals.com
-- faircalls.com
-- erhvervsanalyse.com
+- [fairleads.com](http://www.fairleads.com/) / [fairleads.dk](http://www.fairleads.dk/)
+- [fairdeals.dk](http://www.fairdeals.dk/)
+- [faircalls.dk](http://www.faircalls.dk/)
+- [erhvervsanalyse.dk](http://www.erhvervsanalyse.dk/)
 
 #### Rails Console
 
