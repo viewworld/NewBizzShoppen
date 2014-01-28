@@ -60,6 +60,9 @@ group :development do
   gem 'nifty-generators'
   gem 'bullet'
   gem 'letter_opener'
+end
+
+group :test, :development do
   gem 'pry', '~> 0.9.12.4'
 end
 
@@ -82,6 +85,7 @@ group :test do
   gem 'autotest'
   gem 'headless'
   gem 'test-unit'
+  gem 'shoulda-matchers', '~> 2.0.0'
 end
 
 gem 'capistrano'
@@ -90,4 +94,3 @@ gem 'rvm-capistrano'
 gem 'rake', '~> 0.8.7'
 gem 'daemons', '~> 1.1.9'
 gem 'ruby-debug'
-
