@@ -1027,6 +1027,10 @@ class User < ActiveRecord::Base
     admin? or call_centre? or read_attribute(:surveys_enabled) or active_subscription.try(:surveys_enabled?)
   end
 
+  def pipeline_reports_enabled?
+    read_attribute(:pipeline_reports_enabled) or active_subscription.try(:pipeline_reports_enabled?)
+  end
+
   def handle_privileges
     if subaccounts.any?
       if team_buyers?

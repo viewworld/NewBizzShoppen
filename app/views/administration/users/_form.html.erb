@@ -103,6 +103,9 @@
             <%= form.input :dont_show_my_deals, :as => :boolean %>
             <%= form.input :auto_buy_enabled, :as => :boolean %>
         <% end %>
+        <% if %w(category_supplier supplier).include?(params[:role]) or @user.has_any_role?(:supplier, :category_supplier) %>
+           <%= form.input :pipeline_reports_enabled, :as => :boolean %>
+        <% end %>
         <% if ['agent', 'call_centre_agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:call_centre_agent, :call_centre, :agent) %>
             <%= form.input :billing_rate %>
             <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => true %>
