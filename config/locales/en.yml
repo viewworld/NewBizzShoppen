@@ -4314,6 +4314,7 @@ en:
         premium_deals: "Allow premium deals"
         newsletter_manager: "Newsletter manager"
         chain_mails_enabled: "Chain mails enabled?"
+        pipeline_reports_enabled: "Pipeline reports enabled?"
         surveys_enabled: "Surveys enabled?"
       newsletter_list:
         name: "Name"

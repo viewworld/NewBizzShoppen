@@ -100,8 +100,13 @@ class SubscriptionPlan < ActiveRecord::Base
       self.big_buyer = false
       self.deal_maker = false
       self.newsletter_manager = false
+      self.chain_mails_enabled = false
+      self.surveys_enabled = false
+      self.pipeline_reports_enabled = false
+      self.free_deals_in_free_period = 0
     elsif has_any_role?(:supplier, :category_supplier)
       self.premium_deals = false
+      self.free_deal_requests_in_free_period = 0
     end
     true
   end
