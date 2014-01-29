@@ -1,0 +1,12 @@
+<p>
+  <%= t("lead_supplier.lead_purchases.index.view.rating_level") %>
+  <%= select_tag :rating_level, options_for_select(LeadPurchase::RATING_LEVELS.map { |l| [t("activerecord.attributes.lead_purchase.rating_levels.rating_level#{l}"), l] }.sort, lead_purchase.rating_level), :include_blank => true, :onchange => "set_rating_level(this.value, #{lead_purchase.id})", :id => "rating_level_#{lead_purchase.id}", :style => "width: 140px" %>
+</p>
+
+<div id="rating_reson_div_<%= lead_purchase.id %>" style="<%= 'display:none;' unless lead_purchase.is_rated_as_unsatisfactory? %>">
+  <%= t("lead_supplier.lead_purchases.index.view.rating_reason") %>
+  <br/>
+  <%= text_area_tag :rating_reason, lead_purchase.rating_reason, :id => "rating_reason_#{lead_purchase.id}", :style => "width:200px;height: 35px" %>
+  <br/>
+  <%= bt_link_to :save, t("lead_supplier.lead_purchases.index.view.update_rating_button"), "javascript:save_rating(#{lead_purchase.id})", :style => "margin-top: 4px;" %>
+</div>
