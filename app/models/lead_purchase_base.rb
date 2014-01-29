@@ -1,7 +1,7 @@
 class LeadPurchaseBase < ActiveRecord::Base
   set_table_name "lead_purchases"
 
-  STATUSES = %w(not_contacted contacted meeting signed archived).freeze
+  STATUSES = %w(not_contacted contacted meeting signed archived proposal).freeze
 
   belongs_to :lead
   belongs_to :owner, :class_name => "User::Supplier", :foreign_key => "owner_id"
