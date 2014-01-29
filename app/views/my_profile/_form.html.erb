@@ -46,6 +46,9 @@
         <% if current_user.supplier? %>
             <%= form.input :lead_notification_type, :as => :radio, :collection => User::LEAD_NOTIFICATION_TYPES.map { |lnt| [t("users.lead_notification_types.notification_type#{lnt}"), lnt] }, :wrapper_html => {:class => "collection"} %>
             <%= form.input :disable_bought_notification, :label => t('my_profile.edit.view.disable_bought_notification_label') %>
+            <% if current_user.pipeline_reports_enabled? %>
+              <%= form.input :pipeline_report_currency_id, :collection => currencies_for_select, :include_blank => false %>
+            <% end %>
         <% end %>
       </ol>
     </fieldset>
