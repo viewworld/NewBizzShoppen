@@ -3,7 +3,7 @@ bundler_args: --without development --deployment
 cache: bundler
 env:
   - TEST_SUITE=unit
-  - TEST_SUITE=acceptance
+#  - TEST_SUITE=acceptance
 rvm:
   - ree
 before_install:
@@ -15,15 +15,15 @@ before_script:
   - export RAILS_ENV=test
   - cp -f config/travis/database.yml config/database.yml
   - bundle exec rake db:drop db:create db:migrate
-  - bundle exec thor nbs:seed
-  - bundle exec thor nbs:t
+#  - bundle exec thor nbs:seed
+#  - bundle exec thor nbs:t
   - bundle exec rake tests:suite:prepare:$TEST_SUITE
   - export RUBY_HEAP_MIN_SLOTS=1000000
   - export RUBY_HEAP_SLOTS_INCREMENT=1000000
   - export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
   - export RUBY_GC_MALLOC_LIMIT=1000000000
   - export RUBY_HEAP_FREE_MIN=500000
-script: bundle exec rake tests:suite:$TEST_SUITE
+script: bundle exec rspec spec
 branches:
   only:
     - master
