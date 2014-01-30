@@ -3123,6 +3123,7 @@ en:
           bulk_rating: "Rating"
           bulk_update_button: Update all selected leads
           lead_response_date: "Response date:"
+          decision_date: "Decision date:"
           rating_level: "Rating:"
           rating_reason: "Reason:"
           rating_reason_empty: "You have to provide reson for your rating!"
