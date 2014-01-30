@@ -187,6 +187,9 @@ en:
         lead_requests: Requested leads
         invoices: "Invoices"
         pipeline_reports: Pipeline
+        pipeline_reports_by_state: By state
+        pipeline_reports_by_week: By week
+        pipeline_reports_by_month: By month
         interests: "Interests settings"
         not_invoiced: "Not Invoiced Leads"
       lead_supplier:
