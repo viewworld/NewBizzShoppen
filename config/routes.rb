@@ -147,6 +147,7 @@ Nbs::Application.routes.draw do
       resource :lead_email, :only => [:new, :create]
     end
     resource :bulk_cart_items, :controller => "bulk_cart_items", :only => [:create]
+    resources :pipeline_reports, :only => :index
   end
   match 'suppliers/bulk_lead_purchase_export' => 'suppliers/bulk_lead_purchase_export#create', :as => "bulk_lead_purchase_export"
   match 'suppliers/bulk_lead_purchase_print' => 'suppliers/bulk_lead_purchase_print#create', :as => "bulk_lead_purchase_print"
