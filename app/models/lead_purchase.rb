@@ -12,6 +12,8 @@ class LeadPurchase < LeadPurchaseBase
   belongs_to :lead, :counter_cache => :lead_purchases_counter
   has_one :invoice_line, :as => :payable
 
+  validates_numericality_of :value, :estimate, :allow_blank => true, :allow_nil => true
+
   before_save :assign_to_proper_owner_if_accessible
   before_save :change_contacted_state
   before_save :handle_new_deadline
@@ -23,6 +25,7 @@ class LeadPurchase < LeadPurchaseBase
   after_save :deliver_bought_notification
   after_create :refresh_lead_category
   after_create :set_buyer_tag
+  before_save :calculate_euro_value, :calculate_euro_pipeline_value
 
   liquid :id, :header, :description, :hidden_description, :company_name, :contact_name, :contact_title, :email_address, :direct_phone_number,
          :phone_number, :address, :rating_level_as_text, :rating_reason, :url
@@ -110,6 +113,16 @@ class LeadPurchase < LeadPurchaseBase
 
   def set_euro_price
     self.euro_price = lead.currency.to_euro(lead.price)
+  end
+
+  def calculate_euro_value
+    self.euro_value = lead.currency.to_euro(value) if value_changed? && value.present?
+  end
+
+  def calculate_euro_pipeline_value
+    if (euro_value_changed? or estimate_changed?) && euro_value.present? && estimate.present?
+      self.euro_pipeline_value = (euro_value * estimate / 100.0).round(2)
+    end
   end
 
   public
