@@ -339,57 +339,60 @@ class Campaign < ActiveRecord::Base
   end
 
   def duplicate!(options={})
-    options = { :with_contacts => true, :with_call_results => true, :with_agent_time => true, :user_to_notify => nil }.merge(options)
+    campaign = ActiveRecord::Base.transaction do
+      options = { :with_contacts => true, :with_call_results => true, :with_agent_time => true, :user_to_notify => nil }.merge(options)
 
-    clone_config = [:campaigns_results,
-                    {:send_material_email_template => :translations},
-                    {:upgrade_contact_to_buyer_email_template => :translations},
-                    {:upgrade_contact_to_category_buyer_email_template => :translations},
-                    {:upgrade_contact_to_member_email_template => :translations}]
+      clone_config = [:campaigns_results,
+                      {:send_material_email_template => :translations},
+                      {:upgrade_contact_to_buyer_email_template => :translations},
+                      {:upgrade_contact_to_category_buyer_email_template => :translations},
+                      {:upgrade_contact_to_member_email_template => :translations}]
 
-    if options[:with_agent_time]
-      clone_config << :user_session_logs
-    end
-
-    if options[:with_contacts]
-      if options[:with_call_results]
-        clone_config << :call_logs
-        clone_config << {:contacts => [{:call_results => [:result_values, :archived_email]}, :contact_past_user_assignments, {:lead_template_values => :lead_template_value_translations}, :translations]}
-      else
-        clone_config << {:contacts => [{:lead_template_values => :lead_template_value_translations}, :translations]}
+      if options[:with_agent_time]
+        clone_config << :user_session_logs
       end
-    end
 
-    campaign = self.deep_clone!(:with_callbacks => false, :include => clone_config)
+      if options[:with_contacts]
+        if options[:with_call_results]
+          clone_config << :call_logs
+          clone_config << {:contacts => [{:call_results => [:result_values, :archived_email]}, :contact_past_user_assignments, {:lead_template_values => :lead_template_value_translations}, :translations]}
+        else
+          clone_config << {:contacts => [{:lead_template_values => :lead_template_value_translations}, :translations]}
+        end
+      end
 
-    campaign.users = users
-    campaign.name = "Copy of #{name} #{Time.now.strftime("%d-%m-%Y %H:%M:%S")}"
-    campaign.save
+      campaign = self.deep_clone!(:with_callbacks => false, :include => clone_config)
 
-    results = ResultValue.where("field_type::INT = ? and leads.campaign_id = ?", ResultField::MATERIAL, campaign.id).
+      campaign.users = users
+      campaign.name = "Copy of #{name} #{Time.now.strftime("%d-%m-%Y %H:%M:%S")}"
+      campaign.save
+
+      results = ResultValue.where("field_type::INT = ? and leads.campaign_id = ?", ResultField::MATERIAL, campaign.id).
         joins("INNER JOIN call_results on call_results.id=result_values.call_result_id INNER JOIN leads ON call_results.contact_id=leads.id").
         readonly(false)
 
-    materials.each do |material|
-      _material = material.clone
-      _material.save
-      _material.asset = material.asset
-      _material.save
-      campaign.materials << _material
-      if selected = results.select { |rv| rv.value.to_i == material.id } and !selected.empty?
-        selected.each { |rv| rv.update_attribute(:value, _material.id.to_s) }
+      materials.each do |material|
+        _material = material.clone
+        _material.save
+        _material.asset = material.asset
+        _material.save
+        campaign.materials << _material
+        if selected = results.select { |rv| rv.value.to_i == material.id } and !selected.empty?
+          selected.each { |rv| rv.update_attribute(:value, _material.id.to_s) }
+        end
       end
-    end
 
-    if options[:with_contacts] and !options[:with_call_results]
-      campaign.contacts.each { |contact| contact.update_attributes(:completed => false, :agent_id => nil) }
+      if options[:with_contacts] and !options[:with_call_results]
+        campaign.contacts.each { |contact| contact.update_attributes(:completed => false, :agent_id => nil) }
+      end
+      campaign
     end
 
     if options[:user_to_notify]
       options[:user_to_notify].notify!(
-          :title => I18n.t("notifications.campaign.duplicated.title", :campaign_name => name),
-          :text => I18n.t("notifications.campaign.duplicated.text", :url => "http://#{options[:user_to_notify].domain_name}/callers/campaigns/#{campaign.id}/edit"),
-          :notifier => self)
+        :title => I18n.t("notifications.campaign.duplicated.title", :campaign_name => name),
+        :text => I18n.t("notifications.campaign.duplicated.text", :url => "http://#{options[:user_to_notify].domain_name}/callers/campaigns/#{campaign.id}/edit"),
+        :notifier => self)
     end
 
     campaign
@@ -397,17 +400,19 @@ class Campaign < ActiveRecord::Base
   handle_asynchronously :duplicate!, :queue => 'duplications'
 
   def clear!(options={})
-    options = { :with_contacts => true, :with_call_results => true, :with_agent_time => true, :user_to_notify => nil }.merge(options)
+    ActiveRecord::Base.transaction do
+      options = { :with_contacts => true, :with_call_results => true, :with_agent_time => true, :user_to_notify => nil }.merge(options)
 
-    if options[:with_contacts]
-      contacts.destroy_all
-    elsif options[:with_call_results]
-      CallResult.joins(:contact).where("campaign_id = ?", id).readonly(false).destroy_all
-      Contact.update_all({:completed => false, :agent_id => nil}, {:campaign_id => id})
-    end
+      if options[:with_contacts]
+        contacts.destroy_all
+      elsif options[:with_call_results]
+        CallResult.joins(:contact).where(:campaign_id => id).readonly(false).destroy_all
+        Contact.update_all({:completed => false, :agent_id => nil}, {:campaign_id => id})
+      end
 
-    if options[:with_agent_time]
-      user_session_logs.delete_all
+      if options[:with_agent_time]
+        user_session_logs.delete_all
+      end
     end
 
     if options[:user_to_notify]
