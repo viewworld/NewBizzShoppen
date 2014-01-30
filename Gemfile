@@ -85,6 +85,8 @@ group :test do
   gem 'headless'
   gem 'test-unit'
   gem 'shoulda-matchers', '~> 2.0.0'
+  gem 'codeclimate-test-reporter', '~> 0.3.0'
+  gem 'simplecov', '~> 0.8.2'
 end
 
 gem 'capistrano'
