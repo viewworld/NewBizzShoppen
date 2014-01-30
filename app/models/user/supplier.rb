@@ -19,6 +19,7 @@ class ::User::Supplier < ::User
   has_many :categories, :through => :category_interests
   has_many :invoices, :foreign_key => "user_id"
   has_many :accessible_lead_purchases, :foreign_key => :owner_id, :class_name => "LeadPurchase", :conditions => "accessible_from IS NOT NULL"
+  has_many :pipeline_reports, :foreign_key => :owner_id
 
   accepts_nested_attributes_for :lead_purchases
 
