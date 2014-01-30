@@ -7,12 +7,12 @@ Nbs::Application.configure do
   config.cache_classes = true
 
   # Log error messages when you accidentally call methods on nil.
-  config.whiny_nils = true
+  config.whiny_nils = false
 
   # Show full error reports and disable caching
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local       = false
   config.action_view.debug_rjs             = true
-  config.action_controller.perform_caching = false
+  config.action_controller.perform_caching = true
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
@@ -22,6 +22,10 @@ Nbs::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+
+  # Disable Rails's static asset server
+  # In production, Apache or nginx will already do this
+  config.serve_static_assets               = true
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://static-fairleads.s3.amazonaws.com"
@@ -36,5 +40,3 @@ Nbs::Application.configure do
                          ActionDispatch::ParamsParser,
                          Mime::JSON => lambda { |body| Yajl.load(body).with_indifferent_access }
 end
-
-I18n.default_locale = :"en"
