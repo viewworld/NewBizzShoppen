@@ -94,7 +94,7 @@ group :test do
   # gem 'simplecov', '~> 0.8.2'
 end
 
-gem 'capistrano'
+gem 'capistrano', '2.15.5'
 gem 'capistrano-ext', '>= 1.2.1'
 gem 'rvm-capistrano'
 gem 'rake', '~> 0.8.7'
