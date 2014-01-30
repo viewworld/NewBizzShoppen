@@ -652,3 +652,31 @@ div.pagination .disabled
     margin-right: 0px;
     width: 492px;
 }
+
+
+/* --- leads table ---
+------------------------------------------------------------------------------------------ */
+
+.leads_table .leads_table_dates_outer
+{
+    height: 50px;
+    margin-top: 2px;
+    position: relative;
+}
+
+.leads_table .leads_table_dates_inner
+{
+    position: absolute;
+    width: 260px;
+}
+
+.leads_table .leads_table_date
+{
+    display: inline-block;
+    margin-right: 12px;
+}
+
+.leads_table span.cke_skin_kama
+{
+    margin: 4px 0;
+}

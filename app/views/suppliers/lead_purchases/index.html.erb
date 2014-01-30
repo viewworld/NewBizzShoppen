@@ -140,21 +140,25 @@
                                  options_for_select(LeadPurchaseBase.statuses_for_select, lead_purchase.state),
                                  :onchange => "$.post('#{suppliers_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[state]':this.value} );" %>
                 </p>
-                <% if current_user.subaccounts.present? %>
-                    <p>
-                      <%= label_tag :response_deadline, t("lead_supplier.lead_purchases.index.view.lead_response_date") %>
+                <div class="leads_table_dates_outer">
+                  <div class="leads_table_dates_inner">
+                    <% if current_user.subaccounts.present? %>
+                        <div class="leads_table_date">
+                          <%= label_tag :response_deadline, t("lead_supplier.lead_purchases.index.view.lead_response_date") %>
+                          <br/>
+                          <%= text_field_tag :response_deadline, lead_purchase.response_deadline.blank? ? nil : lead_purchase.response_deadline.strftime(I18n.t("date.format.standard")), :id => "response_deadline_datepicker_#{lead_purchase.id}", :class => "date" %>
+                        </div>
+                    <% end %>
+                    <div class="leads_table_date">
+                      <%= label_tag :decision_date, t('lead_supplier.lead_purchases.index.view.decision_date') %>
                       <br/>
-                      <%= text_field_tag :response_deadline, lead_purchase.response_deadline.blank? ? nil : lead_purchase.response_deadline.strftime(I18n.t("date.format.standard")), :id => "response_deadline_datepicker_#{lead_purchase.id}", :class => "date" %>
-                    </p>
-                <% end %>
-                <p>
-                  <%= label_tag :decision_date, t('lead_supplier.lead_purchases.index.view.decision_date') %>
-                  <br/>
-                  <%= text_field_tag :decision_date,
-                                     lead_purchase.decision_date.blank? ? nil : lead_purchase.decision_date.strftime(I18n.t('date.format.standard')),
-                                     :id => "decision_date_datepicker_#{lead_purchase.id}",
-                                     :class => 'date' %>
-                </p>
+                      <%= text_field_tag :decision_date,
+                                         lead_purchase.decision_date.blank? ? nil : lead_purchase.decision_date.strftime(I18n.t('date.format.standard')),
+                                         :id => "decision_date_datepicker_#{lead_purchase.id}",
+                                         :class => 'date' %>
+                    </div>
+                  </div>
+                </div>
             <% end %>
 
             <% blocks.hidden_area do |lead_purchase| %>
