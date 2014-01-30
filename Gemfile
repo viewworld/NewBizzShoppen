@@ -85,8 +85,9 @@ group :test do
   gem 'headless'
   gem 'test-unit'
   gem 'shoulda-matchers', '~> 2.0.0'
-  gem 'codeclimate-test-reporter', '~> 0.3.0'
-  gem 'simplecov', '~> 0.8.2'
+  # CodeClimate isn't compatible with REE (Ruby 1.8.x) it requires 1.9 or newer
+  # gem 'codeclimate-test-reporter', '~> 0.3.0'
+  # gem 'simplecov', '~> 0.8.2'
 end
 
 gem 'capistrano'
