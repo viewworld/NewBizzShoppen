@@ -75,6 +75,9 @@ GEM
       activesupport (~> 3.0)
       moretea-awesome_nested_set
     addressable (2.2.7)
+    airbrake (3.1.15)
+      builder
+      multi_json
     arel (2.0.10)
     autotest (4.4.6)
       ZenTest (>= 4.4.1)
@@ -387,6 +390,7 @@ DEPENDENCIES
   activerecord-database-views
   acts-as-taggable-on (~> 2.2.2)
   acts_as_commentable_with_threading
+  airbrake (~> 3.1.15)
   ajaxful_rating!
   autotest
   autotest-rails
