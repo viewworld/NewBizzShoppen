@@ -14,23 +14,22 @@ class ChainMailer
 
   def deliver!
     if @chain_mail.keep_sending?
-      orig_locale = I18n.locale
-      I18n.locale = @country.locale.to_sym
-      ApplicationMailer.email_template(
+      I18n.with_locale(@country.locale.to_sym) do
+        ApplicationMailer.email_template(
           @to,
           :blank_template,
           @country,
           @options,
           @attachment_paths
-      ).deliver
-      I18n.locale = orig_locale
+        ).deliver
+      end
       @chain_mail.email_sent!(:position => @options[:position])
     else
       @chain_mail.destroy
     end
   end
+
   unless Rails.env.development?
     handle_asynchronously :deliver!, :queue => Proc.new{|i| i.queue }, :run_at => Proc.new{|i| i.run_at }
   end
-
 end
