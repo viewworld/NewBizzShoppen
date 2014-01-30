@@ -342,8 +342,8 @@ class Lead < AbstractLead
 
   def deliver_instant_notification_to_subscribers
     unless category.auto_buy?
-      category.supplier_subscribers.where("lead_notification_type = ?", User::LEAD_NOTIFICATION_INSTANT).each do |user|
-        deliver_email_template(user.email, "lead_notification_instant")
+      category.supplier_subscribers.where(:lead_notification_type => User::LEAD_NOTIFICATION_INSTANT).each do |user|
+        deliver_email_template(user.email, 'lead_notification_instant')
       end
     end
   end
@@ -382,5 +382,4 @@ class Lead < AbstractLead
   def has_any_survey_recipients?
     survey_recipients_for_category.any?
   end
-
 end
