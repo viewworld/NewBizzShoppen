@@ -150,6 +150,7 @@
             <% end %>
 
             <% blocks.hidden_area do |lead_purchase| %>
+                <%= render :partial => 'suppliers/lead_purchases/pipeline_values_form', :locals => {:lead_purchase => lead_purchase} %>
             <% end %>
 
             <% blocks.tools do |lead_purchase| %>

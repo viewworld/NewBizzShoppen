@@ -32,3 +32,35 @@ function save_owner_note(lead_purchase_id) {
     });
     $('#owner_note_form_' + lead_purchase_id).parents('.row_tooltip').effect('highlight', {color: '#d8ff9a'}, 500);
 }
+
+function save_pipeline_report_values(lead_purchase_id) {
+    lead_purchase_id = lead_purchase_id.toString();
+    value = $('#value_' + lead_purchase_id).val();
+    estimate = $('#estimate_' + lead_purchase_id).val();
+    if (isNumeric(value) && isNumeric(estimate)) {
+        $.post('/suppliers/lead_purchases/' + lead_purchase_id, {
+            '_method': 'put',
+            'lead_purchase[value]': value,
+            'lead_purchase[estimate]': estimate,
+            'format': 'js'
+        });
+        display_pipeline_value_result(calculate_pipeline_value(value, estimate), 'green', lead_purchase_id)
+    }
+    else {
+        display_pipeline_value_result('error...', 'red', lead_purchase_id)
+    }
+}
+
+function display_pipeline_value_result(result, color, lead_purchase_id){
+    result_container = $('#pipeline_value_' + lead_purchase_id);
+    result_container.html(result);
+    result_container.effect('highlight', {color: color}, 2000)
+}
+
+function calculate_pipeline_value(value, estimate) {
+    return Math.round(parseFloat(value) * parseFloat(estimate) / 100 * 100) / 100
+}
+
+function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}

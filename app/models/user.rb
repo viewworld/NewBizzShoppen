@@ -95,6 +95,7 @@ class User < ActiveRecord::Base
   belongs_to :softphone_server
   has_many :surveys, :as => :creator
   has_many :survey_recipients, :as => :recipient, :dependent => :destroy
+  belongs_to :pipeline_report_currency, :class_name => 'Currency'
 
   alias_method :parent, :user
 
