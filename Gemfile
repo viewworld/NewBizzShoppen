@@ -56,6 +56,10 @@ group :staging do
   gem 'mailcatcher'
 end
 
+group :staging, :production do
+  gem 'airbrake', '~> 3.1.15'
+end
+
 group :development do
   gem 'nifty-generators'
   gem 'bullet'
