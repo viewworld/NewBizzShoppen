@@ -12,17 +12,17 @@ class TemplateMailer
   end
 
   def deliver!
-    orig_locale = I18n.locale
-    I18n.locale = @country.locale.to_sym
-    ApplicationMailer.email_template(
+    I18n.with_locale(@country.locale.to_sym) do
+      ApplicationMailer.email_template(
         @to,
         @email_template,
         @country,
         @options,
         @attachment_paths
-    ).deliver
-    I18n.locale = orig_locale
+      ).deliver
+    end
   end
+
   unless Rails.env.development?
     handle_asynchronously :deliver!, :queue => Proc.new{|i| i.queue }, :run_at => Proc.new{|i| i.run_at }
   end
