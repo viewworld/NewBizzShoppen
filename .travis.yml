@@ -27,7 +27,11 @@ script: bundle exec rspec spec
 branches:
   only:
     - master
+    - staging
 notifications:
-  email:
-    recipients:
-      - irek.skrobis@gmail.com
+  hipchat:
+    rooms:
+      - 48a2260ad2549b2915d4deb954d6ea@416311
+    template:
+      - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message} (<a href="%{build_url}">Details</a>/<a href="%{compare_url}">Change view</a>)'
+    format: html
