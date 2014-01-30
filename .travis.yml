@@ -35,3 +35,6 @@ notifications:
     template:
       - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message} (<a href="%{build_url}">Details</a>/<a href="%{compare_url}">Change view</a>)'
     format: html
+addons:
+  code_climate:
+    repo_token: '2818a47955f9881e1c00f6c2cbd45149c161e125e0a8c6d6f9356487a89c8fcf'
