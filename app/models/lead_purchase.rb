@@ -182,4 +182,7 @@ class LeadPurchase < LeadPurchaseBase
     "http://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/suppliers/lead_purchases/#{id}"
   end
 
+  def calculate_pipeline_value
+    value.is_a?(Numeric) && estimate.is_a?(Numeric) ? (value * estimate / 100.0).round(2) : 'N/A'
+  end
 end
