@@ -3,7 +3,5 @@
   <%= label_tag :owner_note, t("lead_supplier.lead_purchases.index.view.owner_note") %>
   <br/>
   <%= text_area_tag :owner_note, lead_purchase.owner_note, :id => "owner_note_#{lead_purchase.id}", :style => "width: 510px;height:150px;margin-bottom:5px;" %>
-  <p>
-  <%= bt_link_to :save, t("lead_supplier.lead_purchases.index.view.update_owner_note"), "javascript:save_owner_note(#{lead_purchase.id})" %>
-  </p>
+  <%= bt_link_to :save, t("lead_supplier.lead_purchases.index.view.update_owner_note"), "javascript:save_owner_note(#{lead_purchase.id})", :class => "fltl" %>
 </div>
