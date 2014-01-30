@@ -186,6 +186,7 @@ en:
         subaccounts: Team
         lead_requests: Requested leads
         invoices: "Invoices"
+        pipeline_reports: Pipeline
         interests: "Interests settings"
         not_invoiced: "Not Invoiced Leads"
       lead_supplier:
@@ -2881,6 +2882,10 @@ en:
           created_by: "Created by"
           button_update: "Save"
           button_cancel: "Cancel"
+    pipeline_reports:
+      index:
+        view:
+          header: Pipeline reports
   categories:
     index:
       view:

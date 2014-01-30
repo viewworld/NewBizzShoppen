@@ -1,5 +1,10 @@
 <% if current_user.team_buyers? %>
-    <%= main_menu_link_to t("layout.main_menu.supplier.subaccounts"), suppliers_subaccounts_path, :tab => "subaccounts" %>
-    <%= main_menu_link_to t("layout.main_menu.supplier.lead_requests"), suppliers_lead_requests_path, :tab => "requested_leads" %>
+    <%= main_menu_link_to t('layout.main_menu.supplier.subaccounts'), suppliers_subaccounts_path, :tab => 'subaccounts' %>
+    <%= main_menu_link_to t('layout.main_menu.supplier.lead_requests'), suppliers_lead_requests_path, :tab => 'requested_leads' %>
 <% end %>
-<%= main_menu_link_to t("layout.main_menu.supplier.invoices"), suppliers_invoices_path, :tab => "invoices" %>
+<%= main_menu_link_to t('layout.main_menu.supplier.invoices'), suppliers_invoices_path, :tab => 'invoices' %>
+<% if current_user.pipeline_reports_enabled? %>
+    <%= main_menu_link_to t('layout.main_menu.supplier.pipeline_reports'),
+                          suppliers_pipeline_reports_path,
+                          :tab => 'pipeline_reports' %>
+<% end %>
