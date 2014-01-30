@@ -147,6 +147,14 @@
                       <%= text_field_tag :response_deadline, lead_purchase.response_deadline.blank? ? nil : lead_purchase.response_deadline.strftime(I18n.t("date.format.standard")), :id => "response_deadline_datepicker_#{lead_purchase.id}", :class => "date" %>
                     </p>
                 <% end %>
+                <p>
+                  <%= label_tag :decision_date, t('lead_supplier.lead_purchases.index.view.decision_date') %>
+                  <br/>
+                  <%= text_field_tag :decision_date,
+                                     lead_purchase.decision_date.blank? ? nil : lead_purchase.decision_date.strftime(I18n.t('date.format.standard')),
+                                     :id => "decision_date_datepicker_#{lead_purchase.id}",
+                                     :class => 'date' %>
+                </p>
             <% end %>
 
             <% blocks.hidden_area do |lead_purchase| %>
@@ -205,6 +213,11 @@
                 update_lead_response_deadline('<%= suppliers_lead_purchase_path(lead_purchase) %>', this.value)
             }
         });
+        $("#decision_date_datepicker_<%= lead_purchase.id %>").datepicker({ dateFormat: '<%= I18n.t('date.formats.datepicker') %>',
+            onSelect: function(dateText, inst) {
+                update_lead_decision_date('<%= suppliers_lead_purchase_path(lead_purchase) %>', this.value)
+            }
+        });
     <% end %>
       setup_ckeditors_for_lead_purchases([<%= @lead_purchases.map(&:id).join(',') %>])
     });
@@ -228,8 +241,12 @@
 
     function update_lead_response_deadline(url, field_value)
     {
-
         $.post(url, {'_method':'put', 'lead_purchase[response_deadline]':field_value});
+    }
+
+    function update_lead_decision_date(url, field_value)
+    {
+        $.post(url, {'_method':'put', 'lead_purchase[decision_date]':field_value});
     }
 
     function share_lead_by_email(lead_purchase_id) {
