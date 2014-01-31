@@ -100,7 +100,7 @@ class SurveyRecipient < ActiveRecord::Base
       survey_answer.survey_options.map(&:tag_list).flatten
     end.flatten.uniq
 
-    assign_tags_for_recipient_user(tags) if recipient.class.name == 'Contact'
+    assign_tags_for_recipient_user(tags) if recipient.is_a?(Contact)
     tags.each { |tag| recipient.tag_list << tag }
     recipient.save
   end
@@ -108,7 +108,7 @@ class SurveyRecipient < ActiveRecord::Base
   def assign_tags_for_recipient_user(tags)
     user_from_contact = User.find_by_contact_id(recipient.id).try(:with_role)
     if user_from_contact
-      tags.each { |tag| user_from_contact.tag_list << tag }
+      user_from_contact.tag_list += tags
       user_from_contact.save(false)
     end
   end
