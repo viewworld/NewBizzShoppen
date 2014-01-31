@@ -1029,7 +1029,7 @@ class User < ActiveRecord::Base
   end
 
   def pipeline_reports_enabled?
-    read_attribute(:pipeline_reports_enabled) || active_subscription.try(:pipeline_reports_enabled?)
+    read_attribute(:pipeline_reports_enabled) || active_subscription.try(:pipeline_reports_enabled)
   end
 
   def handle_privileges
