@@ -1,3 +1,51 @@
 <column-mc:>
   <header><%= t('supplier.pipeline_reports.index.view.header') %></header>
+
+  <table class="generic">
+    <thead>
+    <tr>
+      <th class="hl"></th>
+      <% %w(company_name lead_header contact_name decision_date state value estimate pipeline_value).each do |field| %>
+          <th><%= t(field, :scope => 'supplier.pipeline_reports.index.view.table') %></th>
+      <% end %>
+      <th class="hr"></th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="8"></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <% @pipeline_report.each do |group| %>
+        <td class="cl"></td>
+        <td colspan="8"><b><%= group[:title] %></b></td>
+        <td class="cr"></td>
+        <% group[:lines].each do |line| %>
+            <tr class="<%= cycle('odd', 'even') %>">
+              <td class="cl"></td>
+              <td><%= line.company_name %></td>
+              <td><%= line.header %></td>
+              <td><%= line.contact_name %></td>
+              <td><%= line.decision_date %></td>
+              <td><%= line.state %></td>
+              <td><%= line.euro_value %></td>
+              <td><%= line.estimate %></td>
+              <td><%= line.euro_pipeline_value %></td>
+              <td class="cr"></td>
+            </tr>
+        <% end %>
+        <tr class="<%= cycle('odd', 'even') %>">
+          <td class="cl"></td>
+          <td colspan="5"></td>
+          <td><b><%= group[:euro_value_sum] %></b></td>
+          <td></td>
+          <td><b><%= group[:euro_pipeline_value_sum] %></b></td>
+          <td class="cr"></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
 </column-mc:>

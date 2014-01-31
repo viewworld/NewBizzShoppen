@@ -2889,6 +2889,15 @@ en:
       index:
         view:
           header: Pipeline reports
+          table:
+            company_name: Company name
+            lead_header: Lead name
+            contact_name: Contact name
+            decision_date: Decision date
+            state: State
+            value: Value
+            estimate: %
+            pipeline_value: Pipeline value
   categories:
     index:
       view:
