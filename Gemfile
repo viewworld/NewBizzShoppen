@@ -71,7 +71,7 @@ group :test, :development do
 end
 
 group :test do
-  gem 'database_cleaner'
+  gem 'database_cleaner', '1.2.0'
   gem 'capybara', '1.1.4'
   gem 'cucumber', '0.10.0'
   gem 'cucumber-rails', '0.3.2'
@@ -82,13 +82,15 @@ group :test do
   gem 'machinist', '>= 2.0.0.beta1'
   gem 'fakeweb', :require => false
   gem 'webmock', :require => false
-  gem 'launchy', '0.4.0'
+  gem 'launchy', '2.1'
   gem 'rspec-rails', '2.14.1'
   gem 'autotest-rails'
   gem 'autotest'
   gem 'headless'
   gem 'test-unit'
   gem 'shoulda-matchers', '~> 2.0.0'
+  gem 'email_spec', '~> 1.5.0'
+  gem 'factory_girl', '~> 2.6.4'
   # CodeClimate isn't compatible with REE (Ruby 1.8.x) it requires 1.9 or newer
   # gem 'codeclimate-test-reporter', '~> 0.3.0'
   # gem 'simplecov', '~> 0.8.2'
