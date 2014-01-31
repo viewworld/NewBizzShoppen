@@ -481,6 +481,16 @@ class Campaign < ActiveRecord::Base
     self.delay(:queue => "import_contacts_from_lists").import_contacts_from_lists!
   end
 
+  def import_contacts_from_newsletter_lists!
+    ActiveRecord::Base.transaction do
+      import_contacts_from_lists!
+      reload
+      export_contacts_to_lists!
+    end
+  end
+
+  handle_asynchronously :import_contacts_from_newsletter_lists!, :queue => 'newsletter_list'
+
   def import_contacts_from_lists!
     subscriber_ids = contacts.where("newsletter_list_subscriber_id IS NOT NULL").select("newsletter_list_subscriber_id").map(&:newsletter_list_subscriber_id)
     NewsletterListSubscriber.where(:newsletter_list_id => newsletter_list_ids).where("id NOT IN (?)", subscriber_ids.empty? ? Array(0) : subscriber_ids).each do |subscriber|
@@ -509,5 +519,4 @@ class Campaign < ActiveRecord::Base
     end
     true
   end
-
 end
