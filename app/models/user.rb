@@ -1021,15 +1021,15 @@ class User < ActiveRecord::Base
   end
 
   def chain_mails_enabled?
-    admin? or read_attribute(:chain_mails_enabled) or active_subscription.try(:chain_mails_enabled?)
+    admin? || read_attribute(:chain_mails_enabled) || active_subscription.try(:chain_mails_enabled?)
   end
 
   def surveys_enabled?
-    admin? or call_centre? or read_attribute(:surveys_enabled) or active_subscription.try(:surveys_enabled?)
+    admin? || call_centre? || read_attribute(:surveys_enabled) || active_subscription.try(:surveys_enabled?)
   end
 
   def pipeline_reports_enabled?
-    read_attribute(:pipeline_reports_enabled) or active_subscription.try(:pipeline_reports_enabled?)
+    read_attribute(:pipeline_reports_enabled) || active_subscription.try(:pipeline_reports_enabled?)
   end
 
   def handle_privileges
