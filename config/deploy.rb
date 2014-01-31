@@ -41,6 +41,7 @@ set :whenever_command, 'bundle exec whenever'
 require "whenever/capistrano/v2/recipes"
 
 before 'deploy:restart', 'whenever:update_crontab'
+before 'deploy:restart', 'deploy:migrate'
 after 'deploy:rollback', 'whenever:update_crontab'
 
 namespace :deploy do
