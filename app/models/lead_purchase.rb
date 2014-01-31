@@ -196,6 +196,10 @@ class LeadPurchase < LeadPurchaseBase
   end
 
   def calculate_pipeline_value
-    value.is_a?(Numeric) && estimate.is_a?(Numeric) ? (value * estimate / 100.0).round(2) : 'N/A'
+    can_calculate_pipeline_value? ? (value * estimate / 100.0).round(2) : 'N/A'
+  end
+
+  def can_calculate_pipeline_value?
+    value.is_a?(Numeric) && estimate.is_a?(Numeric)
   end
 end
