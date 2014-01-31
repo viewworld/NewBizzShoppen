@@ -42,7 +42,7 @@ class PipelineReportGenerator
        :lead_header => line.header,
        :contact_name => line.contact_name,
        :decision_date => line.decision_date,
-       :state_for_display => line.state_for_display,
+       :state => line.state_for_display,
        :value => line.euro_value_for_currency(currency),
        :estimate => line.estimate,
        :pipeline_value => line.euro_pipeline_value_for_currency(currency)}
