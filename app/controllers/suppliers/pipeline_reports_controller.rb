@@ -2,7 +2,9 @@ class Suppliers::PipelineReportsController < Suppliers::AdvancedSupplierControll
   before_filter :check_if_pipeline_reports_enabled
 
   def index
-    @pipeline_report = PipelineReportGenerator.new(current_user, params[:order]).result
+    pipeline_report = PipelineReportGenerator.new(current_user, params[:order])
+    @result = pipeline_report.result
+    @currency = pipeline_report.currency
   end
 
   private
