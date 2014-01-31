@@ -17,7 +17,7 @@ xcode-select --install
 rvm reinstall ree-1.8.7-2012.02
 ```
 
-or 
+or
 
 ```
 rvm install ree --without-tcl --without-t
@@ -115,7 +115,17 @@ RAILS_ENV=test bundle exec thor nbs:t
 ```
 
 * To run unit tests suite, run `rspec spec`
-* To run acceptance tests suite, run `cucumber`
+
+#### Run Cucumber features on local machine
+
+* Prepare your database:
+
+```
+RAILS_ENV=test bundle exec rake nbs:refresh_test_db
+```
+
+* Download Firefox (17.0) [mac version](http://download-euro.oldapps.com/Firefox/Apple/Firefox%2017.0.2esr.dmg) and export it to `Downloads` directory.
+* To run acceptance tests suite, run `FIREFOX_PATH=~/Downloads/Firefox.app/Contents/MacOS/firefox-bin cucumber`
 
 ## Staging
 
