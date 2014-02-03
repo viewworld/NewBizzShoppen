@@ -4,7 +4,7 @@ class PipelineReport < ActiveRecord::Base
   FIELDS_FOR_DISPLAY = %w(company_name lead_header contact_name decision_date state value estimate pipeline_value)
 
   def state_for_display
-    I18n.t("lead_purchases.statuses.#{LeadPurchase::STATUSES[state]}")
+    I18n.t(LeadPurchase::STATUSES[state], :scope => 'lead_purchases.statuses')
   end
 
   def euro_value_for_currency(currency)
