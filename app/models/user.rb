@@ -1033,7 +1033,7 @@ class User < ActiveRecord::Base
   end
 
   def pipeline_currency
-    pipeline_report_currency ||= Currency.euro
+    self.pipeline_report_currency ||= Currency.euro
   end
 
   def handle_privileges

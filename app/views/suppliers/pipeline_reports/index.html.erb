@@ -1,52 +1,5 @@
 <column-mc:>
   <header><%= t('supplier.pipeline_reports.index.view.header') %></header>
-
-  <table class="generic">
-    <thead>
-    <tr>
-      <th class="hl"></th>
-      <% PipelineReport::FIELDS_FOR_DISPLAY.each do |field| %>
-          <th><%= t(field, :scope => 'supplier.pipeline_reports.index.view.table') %></th>
-      <% end %>
-      <th class="hr"></th>
-    </tr>
-    </thead>
-    <tfoot>
-    <tr>
-      <td class="fl"></td>
-      <td colspan="8"></td>
-      <td class="fr"></td>
-    </tr>
-    </tfoot>
-    <tbody>
-    <% @result.each do |group| %>
-        <td class="cl"></td>
-        <td colspan="8"><b><%= group[:title] %></b></td>
-        <td class="cr"></td>
-        <% group[:lines].each do |line| %>
-            <tr class="<%= cycle('odd', 'even') %>">
-              <td class="cl"></td>
-              <% PipelineReport::FIELDS_FOR_DISPLAY.each do |field| %>
-                  <td>
-                    <% if %w(value pipeline_value).include?(field) %>
-                        <%= raw as_currency(line[field.to_sym], @currency) %>
-                    <% else %>
-                        <%= line[field.to_sym] %>
-                    <% end %>
-                  </td>
-              <% end %>
-              <td class="cr"></td>
-            </tr>
-        <% end %>
-        <tr class="<%= cycle('odd', 'even') %>">
-          <td class="cl"></td>
-          <td colspan="5"></td>
-          <td><b><%= raw as_currency(group[:value_sum], @currency) %></b></td>
-          <td></td>
-          <td><b><%= raw as_currency(group[:pipeline_value_sum], @currency) %></b></td>
-          <td class="cr"></td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
+  <%= render :partial => 'pipeline_report', :locals => {:result => @pipeline_report.result,
+                                                        :currency => @pipeline_report.currency} %>
 </column-mc:>
