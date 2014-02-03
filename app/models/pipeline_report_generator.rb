@@ -2,26 +2,30 @@ class PipelineReportGenerator
   attr_reader :user, :order, :report_lines
   attr_accessor :currency
 
+  delegate :pipeline_reports, :to => :user
+
   def initialize(user, order)
     @user = user
     @order = order
     @currency = user.pipeline_report_currency ||= Currency.euro
-    @report_lines = user.pipeline_reports.order(order_by_state? ? 'state, year, week, header' : "year, #{order}, header")
+    @report_lines = fetch_report_lines
   end
 
   def result
-    [].tap do |result|
-      titles.each do |title|
-        lines = lines(title)
-        result << {:title => title_for_display(title),
-                   :lines => lines_to_array_of_hash(lines),
-                   :value_sum => to_users_currency(lines.sum(&:euro_value)),
-                   :pipeline_value_sum => to_users_currency(lines.sum(&:euro_pipeline_value))}
-      end
+    titles.map do |title|
+      lines = lines(title)
+      {:title => title_for_display(title),
+       :lines => lines_to_array_of_hash(lines),
+       :value_sum => to_users_currency(lines.sum(&:euro_value)),
+       :pipeline_value_sum => to_users_currency(lines.sum(&:euro_pipeline_value))}
     end
   end
 
   private
+
+  def fetch_report_lines
+    pipeline_reports.order(order_by_state? ? 'state, year, week, header' : "year, #{order}, header")
+  end
 
   def lines(title)
     order_by_state? ? lines_for_order_state(title) : lines_for_week_or_month_state(title)
@@ -32,8 +36,8 @@ class PipelineReportGenerator
   end
 
   def lines_for_week_or_month_state(title)
-    title_array = title.split(', ')
-    report_lines.select { |report_line| report_line.year == title_array.last.to_i && report_line.send(order) == title_array.first.to_i }
+    title_array = title.split(', ').map(&:to_i)
+    report_lines.select { |report_line| report_line.year == title_array.last && report_line.send(order) == title_array.first }
   end
 
   def lines_to_array_of_hash(lines)
