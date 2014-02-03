@@ -7,7 +7,7 @@ class PipelineReportGenerator
   def initialize(user, order)
     @user = user
     @order = order
-    @currency = user.pipeline_report_currency ||= Currency.euro
+    @currency = user.pipeline_currency
     @report_lines = fetch_report_lines
   end
 
@@ -15,9 +15,9 @@ class PipelineReportGenerator
     titles.map do |title|
       lines = lines(title)
       {:title => title_for_display(title),
-       :lines => lines_to_array_of_hash(lines),
-       :value_sum => to_users_currency(lines.sum(&:euro_value)),
-       :pipeline_value_sum => to_users_currency(lines.sum(&:euro_pipeline_value))}
+       :lines => lines_to_hashes(lines),
+       :value_sum => to_user_currency(lines.sum(&:euro_value)),
+       :pipeline_value_sum => to_user_currency(lines.sum(&:euro_pipeline_value))}
     end
   end
 
@@ -40,7 +40,7 @@ class PipelineReportGenerator
     report_lines.select { |report_line| report_line.year == title_array.last && report_line.send(order) == title_array.first }
   end
 
-  def lines_to_array_of_hash(lines)
+  def lines_to_hashes(lines)
     lines.map do |line|
       {:company_name => line.company_name,
        :lead_header => line.header,
@@ -69,7 +69,7 @@ class PipelineReportGenerator
     order_by_state? ? report_line.state : "#{report_line.send(order)}, #{report_line.year}"
   end
 
-  def to_users_currency(number)
+  def to_user_currency(number)
     currency.from_euro(number)
   end
 end

@@ -1032,6 +1032,10 @@ class User < ActiveRecord::Base
     read_attribute(:pipeline_reports_enabled) || active_subscription.try(:pipeline_reports_enabled)
   end
 
+  def pipeline_currency
+    pipeline_report_currency ||= Currency.euro
+  end
+
   def handle_privileges
     if subaccounts.any?
       if team_buyers?
