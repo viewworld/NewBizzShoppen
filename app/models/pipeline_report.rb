@@ -1,7 +1,7 @@
 class PipelineReport < ActiveRecord::Base
-  belongs_to :user, :foreign_key => :owner_id
-
   FIELDS_FOR_DISPLAY = %w(company_name lead_header contact_name decision_date state value estimate pipeline_value)
+
+  belongs_to :user, :foreign_key => :owner_id
 
   def state_for_display
     I18n.t(LeadPurchase::STATUSES[state], :scope => 'lead_purchases.statuses')
