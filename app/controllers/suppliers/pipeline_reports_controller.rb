@@ -2,7 +2,8 @@ class Suppliers::PipelineReportsController < Suppliers::AdvancedSupplierControll
   before_filter :check_if_pipeline_reports_enabled
 
   def index
-    @pipeline_report = PipelineReportGenerator.new(current_user, params[:order])
+    @order = params[:order]
+    @pipeline_report = PipelineReportGenerator.new(current_user, @order)
     respond_to do |format|
       format.html
       format.pdf { send_file PipelineReportPdf.new(current_user, @pipeline_report).to_file, :type => 'application/pdf' }

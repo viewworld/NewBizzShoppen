@@ -1,5 +1,19 @@
 <column-mc:>
-  <header><%= t('supplier.pipeline_reports.index.view.header') %></header>
+  <header>
+    <param:content>
+      <%= t('supplier.pipeline_reports.index.view.header') %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to :download, t('supplier.pipeline_reports.index.view.download_as_pdf'),
+                         suppliers_pipeline_reports_path(:order => @order, :format => :pdf) %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
+
   <%= render :partial => 'pipeline_report', :locals => {:result => @pipeline_report.result,
                                                         :currency => @pipeline_report.currency} %>
 </column-mc:>
