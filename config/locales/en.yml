@@ -2898,6 +2898,7 @@ en:
             value: Value
             estimate: %
             pipeline_value: Pipeline value
+          download_as_pdf: Download as PDF
   categories:
     index:
       view:
