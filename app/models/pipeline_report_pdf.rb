@@ -1,5 +1,6 @@
 class PipelineReportPdf
   attr_reader :current_user, :pipeline_report_result, :pipeline_report_currency
+  private :current_user, :pipeline_report_result, :pipeline_report_currency
 
   def initialize(current_user, pipeline_report)
     @current_user = current_user
@@ -37,15 +38,15 @@ class PipelineReportPdf
   end
 
   def file_name
-    @file_name ||= "pipeline_report_#{current_user.id}_#{Time.now.strftime('%Y%m%d%H%M')}"
+    @file_name ||= "pipeline_report_#{current_user.id}_#{Time.now.strftime('%Y%m%d%H%M%S')}"
   end
 
   def temp_file
-    @temp_file ||= rails_root("public/system/#{file_name}.html")
+    Rails.root.join("public/system/#{file_name}.html")
   end
 
   def file
-    @file ||= rails_root("public/system/invoice_cache/#{file_name}.pdf")
+    Rails.root.join("public/system/pipeline_report_cache/#{file_name}.pdf")
   end
 
   def template
@@ -53,10 +54,6 @@ class PipelineReportPdf
   end
 
   def template_file
-    @template_file ||= rails_root('app/views/suppliers/pipeline_reports/_pipeline_report.html.erb')
-  end
-
-  def rails_root(file)
-    Rails.root.join(file)
+    Rails.root.join('app/views/suppliers/pipeline_reports/_pipeline_report.html.erb')
   end
 end
