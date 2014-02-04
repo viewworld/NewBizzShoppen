@@ -3,10 +3,10 @@ class Suppliers::PipelineReportsController < Suppliers::AdvancedSupplierControll
 
   def index
     @order = params[:order]
-    @pipeline_report = PipelineReportGenerator.new(current_user, @order)
+    @pipeline_report_generator = PipelineReportGenerator.new(current_user, @order)
     respond_to do |format|
       format.html
-      format.pdf { send_file PipelineReportPdf.new(current_user, @pipeline_report).to_file, :type => 'application/pdf' }
+      format.pdf { send_file PipelineReportPdf.new(current_user, @pipeline_report_generator).to_file, :type => 'application/pdf' }
     end
   end
 

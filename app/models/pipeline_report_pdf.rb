@@ -2,10 +2,10 @@ class PipelineReportPdf
   attr_reader :current_user, :pipeline_report_result, :pipeline_report_currency
   private :current_user, :pipeline_report_result, :pipeline_report_currency
 
-  def initialize(current_user, pipeline_report)
+  def initialize(current_user, pipeline_report_generator)
     @current_user = current_user
-    @pipeline_report_result = pipeline_report.result
-    @pipeline_report_currency = pipeline_report.currency
+    @pipeline_report_result = pipeline_report_generator.result
+    @pipeline_report_currency = pipeline_report_generator.currency
   end
 
   def to_file
