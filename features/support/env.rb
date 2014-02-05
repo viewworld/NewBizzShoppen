@@ -17,6 +17,10 @@ def load_db
   `psql -U #{dbuser} -d #{dbname} -f #{backup}`
 end
 
+def run_on_darwin?
+  `uname -a` !~ /darwin/i
+end
+
 Spork.prefork do
   ENV["RAILS_ENV"]                                  ||= "test"
   require File.expand_path(File.dirname(__FILE__) + '/../../config/environment')
@@ -36,7 +40,7 @@ Spork.prefork do
   require 'machinist/active_record'
   require 'webmock/cucumber'
   require "lib/webmock_fix"
-  # require 'headless'
+  require 'headless' if run_on_darwin?
 
   ActiveSupport::Deprecation.silenced = true
   selenium_requests = %r{/((__.+__)|(hub/session.*)|(.*paypal\.com.*))$}
@@ -110,8 +114,11 @@ Spork.each_run do
   #  at_exit do
   #    DatabaseCleaner.clean
   #  end
-  # require 'headless'
 
-  # headless = Headless.new
-  # headless.start
+  if run_on_darwin?
+    require 'headless'
+
+    headless = Headless.new
+    headless.start
+  end
 end
