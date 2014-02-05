@@ -36,7 +36,7 @@ Spork.prefork do
   require 'capybara/cucumber'
   require 'capybara/session'
 
-  # require "#{Rails.root}/spec/support/blueprints" # or wherever they live
+  require "#{Rails.root}/spec/support/blueprints" # or wherever they live
   require 'machinist/active_record'
   require 'webmock/cucumber'
   require "lib/webmock_fix"
