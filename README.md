@@ -127,6 +127,20 @@ RAILS_ENV=test bundle exec rake nbs:refresh_test_db
 * Download Firefox (17.0) [mac version](http://download-euro.oldapps.com/Firefox/Apple/Firefox%2017.0.2esr.dmg) and export it to `Downloads` directory.
 * To run acceptance tests suite, run `FIREFOX_PATH=~/Downloads/Firefox.app/Contents/MacOS/firefox-bin cucumber`
 
+### Local CI
+
+```
+# Run CruiseControl.rb
+
+ssh tgn@192.168.10.23
+cd projects/cruisecontrol.rb/
+rvm use ree@cruise
+bundle
+bundle exec ./cruise start &
+```
+
+Visit local [CruiseControl.rb](http://192.168.10.23:3333)
+
 ## Staging
 
 Applications:
