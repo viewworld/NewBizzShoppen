@@ -37,17 +37,17 @@ Feature: Subscriptions Paypal
     Then last email sent should have been sent to recipient "kastomer@nbs.fake"
     And last email sent should have subject "Paypal recurring payment cancelled. Reactivate it!"
 
-  @_done @_tested @tc_file_mgmt
-  Scenario: When user cancels recurring billing in Paypal and billing date comes an unpaid invoice should be generated
-    Given user with email "kastomer@nbs.fake" and password "secret" and role "supplier" exists with confirmed paypal subscription named "Paypal for supp" with attributes "subscription_period:1,billing_cycle:1"
-    And active subscription for user "kastomer@nbs.fake" has been canceled in paypal
-    And date today is "2020-12-12"
-    And I run ruby "SubscriptionSubPeriod.create_unpaid_invoices_for_unpaid_sub_periods"
-    Then first invoice for user "kastomer@nbs.fake" is not paid
-    Given I am on the homepage
-    And I sign in as kastomer@nbs.fake with password secret
-    And I visit link to pay unpaid invoice for user "kastomer@nbs.fake"
-    And I press translated "paypal_unpaid_invoices.show.view.pay_invoice"
+  # @_done @_tested @tc_file_mgmt @_deprecated2014
+  # Scenario: When user cancels recurring billing in Paypal and billing date comes an unpaid invoice should be generated
+  #   Given user with email "kastomer@nbs.fake" and password "secret" and role "supplier" exists with confirmed paypal subscription named "Paypal for supp" with attributes "subscription_period:1,billing_cycle:1"
+  #   And active subscription for user "kastomer@nbs.fake" has been canceled in paypal
+  #   And date today is "2020-12-12"
+  #   And I run ruby "SubscriptionSubPeriod.create_unpaid_invoices_for_unpaid_sub_periods"
+  #   Then first invoice for user "kastomer@nbs.fake" is not paid
+  #   Given I am on the homepage
+  #   And I sign in as kastomer@nbs.fake with password secret
+  #   And I visit link to pay unpaid invoice for user "kastomer@nbs.fake"
+  #   And I press translated "paypal_unpaid_invoices.show.view.pay_invoice"
 
   @_done @_tested_elsewhere
   Scenario: User should be able to pay the missing amount using link/button in the email he receives

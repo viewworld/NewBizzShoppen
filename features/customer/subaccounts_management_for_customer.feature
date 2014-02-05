@@ -146,24 +146,24 @@ Scenario: I can bulk lock/unlock lead buyer/lead user accounts
   And I follow "unlock_selected"
   And I should see translated "flash.bulk_subaccounts_update.update.notice"
 
-@_tested @_done
-Scenario: I can sort by name, last name, department
-  Given an user with role lead_supplier and email lead_buyer1@person.com exists as subaccount for customer bob@person.com
-  And user lead_buyer1@person.com with role lead_supplier exists with attributes "first_name:William,last_name:Craig,department:Public Relations"
-  And an user with role lead_supplier and email lead_buyer2@person.com exists as subaccount for customer bob@person.com
-  And user lead_buyer2@person.com with role lead_supplier exists with attributes "first_name:Adam,last_name:McDowell,department:QA"
-  And an user with role lead_user and email lead_user3@person.com exists as subaccount for customer bob@person.com
-  And user lead_user3@person.com with role lead_user exists with attributes "first_name:John,last_name:Lennox,department:Development"
-  And I go to suppliers subaccounts
-  When I follow translated "supplier.subaccounts.index.view.first_name_column"
-  And I follow translated "supplier.subaccounts.index.view.first_name_column"
-  Then I should have value "William" in the css path "tr:nth-child(1) td:nth-child(3)"
-  When I follow translated "supplier.subaccounts.index.view.last_name_column"
-  And I follow translated "supplier.subaccounts.index.view.last_name_column"
-  Then I should have value "McDowell" in the css path "tr:nth-child(1) td:nth-child(4)"
-  When I follow translated "supplier.subaccounts.index.view.department_column"
-  And I follow translated "supplier.subaccounts.index.view.department_column"
-  Then I should have value "QA" in the css path "tr:nth-child(1) td:nth-child(5)"
+# @_tested @_done @_deprecated2014
+# Scenario: I can sort by name, last name, department
+#   Given an user with role lead_supplier and email lead_buyer1@person.com exists as subaccount for customer bob@person.com
+#   And user lead_buyer1@person.com with role lead_supplier exists with attributes "first_name:William,last_name:Craig,department:Public Relations"
+#   And an user with role lead_supplier and email lead_buyer2@person.com exists as subaccount for customer bob@person.com
+#   And user lead_buyer2@person.com with role lead_supplier exists with attributes "first_name:Adam,last_name:McDowell,department:QA"
+#   And an user with role lead_user and email lead_user3@person.com exists as subaccount for customer bob@person.com
+#   And user lead_user3@person.com with role lead_user exists with attributes "first_name:John,last_name:Lennox,department:Development"
+#   And I go to suppliers subaccounts
+#   When I follow translated "supplier.subaccounts.index.view.first_name_column"
+#   And I follow translated "supplier.subaccounts.index.view.first_name_column"
+#   Then I should have value "William" in the css path "tr:nth-child(1) td:nth-child(3)"
+#   When I follow translated "supplier.subaccounts.index.view.last_name_column"
+#   And I follow translated "supplier.subaccounts.index.view.last_name_column"
+#   Then I should have value "McDowell" in the css path "tr:nth-child(1) td:nth-child(4)"
+#   When I follow translated "supplier.subaccounts.index.view.department_column"
+#   And I follow translated "supplier.subaccounts.index.view.department_column"
+#   Then I should have value "QA" in the css path "tr:nth-child(1) td:nth-child(5)"
 
 @added @_tested @_done
 Scenario: I can sort by completed leads, new leads requested, num. of leads assigned last 30days, num. of leads assigned last 12months, num. of leads assigned last total

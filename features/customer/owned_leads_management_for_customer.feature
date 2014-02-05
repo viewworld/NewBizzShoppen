@@ -229,21 +229,21 @@ Scenario: Hidden description should be truncated and expandable by JS
   And I follow translated "common.js.read_more"
   Then I should see translated "common.js.collapse_expanded_text"
 
-@m6 @tgn @selenium @_tested @_requested @_done
-Scenario: I can add note to owned lead
-  When I go to supplier lead purchases
-  And I show accordion details for row "#lead_single_purchase_1"
-  And I fill in "owner_note_1" with "My custom note"
-  Then I follow translated "lead_supplier.lead_purchases.index.view.update_owner_note"
-  When I go to supplier lead purchases
-  And I show accordion details for row "#lead_single_purchase_1"
-  And the "owner_note_1" field should contain "My custom note"
+# @m6 @tgn @selenium @_tested @_requested @_done @_deprecated2014
+# Scenario: I can add note to owned lead
+#   When I go to supplier lead purchases
+#   And I show accordion details for row "#lead_single_purchase_1"
+#   And I fill in "owner_note_1" with "My custom note"
+#   Then I follow translated "lead_supplier.lead_purchases.index.view.update_owner_note"
+#   When I go to supplier lead purchases
+#   And I show accordion details for row "#lead_single_purchase_1"
+#   And the "owner_note_1" field should contain "My custom note"
 
 # https://redmine.selleo.com/issues/4021
 # I should see show page when I click a row!
 @m6 @ao @_deprecated @_done @_requested
 Scenario: I should not see show page for owned lead when accordion style listing is used
-    
+
 @m7 @_requested @_tested @tgn @_done
 Scenario: I can't see purchase value on my leads listing
   When I go to supplier lead purchases
@@ -279,7 +279,7 @@ Scenario: I should see hidden lead details on a lead public view if I have bough
   Given lead "Printers ultimate deal" has attributes "hidden_description:Very secret description"
   Given I am on public lead page for Printers ultimate deal
   And I should see "Very secret description"
-  
+
 #10939
 @m32 @_requested @_done @_tested @tgn
 Scenario: I should be notified when lead is bought by autobuy (e-mail should include whole lead information)

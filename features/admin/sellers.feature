@@ -43,19 +43,19 @@ Feature: Sellers
     And I should see translated "administration.sellers.show.view.vat_no"
     And I should see translated "administration.sellers.show.view.country"
 
-  @_done
-  Scenario: Invoice number should be scoped to Seller
-    When there is a seller with attributes "company_name:SellerOne"
-    And there is a seller with attributes "company_name:SellerTwo"
-    And I follow translated "layout.main_menu.admin.invoices"
-    And I select "SellerOne" from "invoice_seller_id"
-    And I press translated "administration.invoices.index.view.create_invoice"
-    And I follow translated "layout.main_menu.admin.invoices"
-    And I select "SellerTwo" from "invoice_seller_id"
-    And I press translated "administration.invoices.index.view.create_invoice"
-    And I follow translated "layout.main_menu.admin.invoices"
-    Then I should see "1/201" in the "1" row of table "#invoices tbody"
-    And I should see "1/201" in the "2" row of table "#invoices tbody"
+  # @_done @_deprecated2014
+  # Scenario: Invoice number should be scoped to Seller
+  #   When there is a seller with attributes "company_name:SellerOne"
+  #   And there is a seller with attributes "company_name:SellerTwo"
+  #   And I follow translated "layout.main_menu.admin.invoices"
+  #   And I select "SellerOne" from "invoice_seller_id"
+  #   And I press translated "administration.invoices.index.view.create_invoice"
+  #   And I follow translated "layout.main_menu.admin.invoices"
+  #   And I select "SellerTwo" from "invoice_seller_id"
+  #   And I press translated "administration.invoices.index.view.create_invoice"
+  #   And I follow translated "layout.main_menu.admin.invoices"
+  #   Then I should see "1/201" in the "1" row of table "#invoices tbody"
+  #   And I should see "1/201" in the "2" row of table "#invoices tbody"
 
   @selenium @_done
   Scenario: One seller can be selected as default

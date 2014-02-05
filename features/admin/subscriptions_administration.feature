@@ -100,17 +100,17 @@ Scenario: Subscriptions will automatically prolong for the next billing cycle
 @_done @tested_elsewhere @tgn
 Scenario: I can specify billing date (+/- number of weeks from subscription end date)
 
-@_done @_tested @tgn
-Scenario: I can customize invoice email for this subscription
-  Given subscription plan exists with attributes "name: SubscrTest"
-  When I click hidden link by url regex "/administration\/subscription_plans$/"
-  And I fill in "search_with_keyword" with "SubscrTest"
-  And I press translated "administration.subscription_plans.index.view.search_button"
-  And I click hidden link by url regex "/administration\/subscription_plans\/\d+\/edit$/"
-  Then I follow translated "administration.subscription_plans.edit.view.edit_email_template"
-  And I fill in "email_template_subject" with "Invoice customised"
-  And I press translated "administration.email_templates.edit.view.button_update"
-  And I should be on administration edit subscription plan named SubscrTest
+# @_done @_tested @tgn @_deprecated2014
+# Scenario: I can customize invoice email for this subscription
+#   Given subscription plan exists with attributes "name: SubscrTest"
+#   When I click hidden link by url regex "/administration\/subscription_plans$/"
+#   And I fill in "search_with_keyword" with "SubscrTest"
+#   And I press translated "administration.subscription_plans.index.view.search_button"
+#   And I click hidden link by url regex "/administration\/subscription_plans\/\d+\/edit$/"
+#   Then I follow translated "administration.subscription_plans.edit.view.edit_email_template"
+#   And I fill in "email_template_subject" with "Invoice customised"
+#   And I press translated "administration.email_templates.edit.view.button_update"
+#   And I should be on administration edit subscription plan named SubscrTest
 
 @_done @tested_elsewhere @tgn
 Scenario: I can enable and disable selected subscriptions

@@ -36,13 +36,13 @@ Scenario: I can filter leads based on category
 @tgn @_done @_tested @_deprecated
 Scenario: I can filter leads based on deal value range
 
-@ao @added @_done @_tested
+@ao @added @_done @_tested @_deprecated
 Scenario: I can filter leads based on zip code
-  When I fill in "search_with_zip_code" with "123"
-  And I press translated "leads.index.search.search_button"
-  Then I should see "Printers ultimate deal"
-  And I should not see "Monitors LCD deal"
-  And I should see "1" rows in a table with headers within "table.leads_table"
+#   When I fill in "search_with_zip_code" with "123"
+#   And I press translated "leads.index.search.search_button"
+#   Then I should see "Printers ultimate deal"
+#   And I should not see "Monitors LCD deal"
+#   And I should see "1" rows in a table with headers within "table.leads_table"
 
 @tgn @_tested @_done
 Scenario: I can filter leads based on country

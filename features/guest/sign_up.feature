@@ -83,32 +83,32 @@ Feature: Sign up feature
     And I follow translated "supplier_home.show.view.create_new_supplier_account"
     And I choose "user_category_supplier_subscription_plan_id"
 
-  @m21 @_requested @subscriptions @tgn @_done @_tested
-  Scenario: I can select only subscription types which are active and match my role
-    Given subscription plan exists with attributes "name:Premium supplier,assigned_roles:category_supplier,big_buyer:1"
-    And subscription plan has following lines
-    | name | price |
-    | abc  | 23.0  |
-    | def  | 11.0  |
-    Given subscription plan exists with attributes "name:Ultra member,assigned_roles:member,big_buyer:1,team_buyers:1"
-    And subscription plan has following lines
-    | name | price |
-    | abc  | 99.0  |
-    | def  | 11.0  |
-    Given subscription plan exists with attributes "name:Secret category supplier,assigned_roles:category_supplier,big_buyer:1,team_buyers:1,is_public:0"
-    And subscription plan has following lines
-    | name | price |
-    | abc  | 99.0  |
-    | def  | 11.0  |
-    When I am on the supplier home page
-    And I follow translated "supplier_home.show.view.create_new_supplier_account"
-    And I should see "Premium supplier"
-    And I should not see "Ultra member"
-    And I should not see "Secret category supplier"
-    Given I visit domain http://fairdeals.dk
-    When I follow translated "fairdeals_home.show.view.get_free_account"
-    And I should not see "Premium supplier"
-    And I should see "Ultra member"
+  # @m21 @_requested @subscriptions @tgn @_done @_tested @_deprecated2014
+  # Scenario: I can select only subscription types which are active and match my role
+  #   Given subscription plan exists with attributes "name:Premium supplier,assigned_roles:category_supplier,big_buyer:1"
+  #   And subscription plan has following lines
+  #   | name | price |
+  #   | abc  | 23.0  |
+  #   | def  | 11.0  |
+  #   Given subscription plan exists with attributes "name:Ultra member,assigned_roles:member,big_buyer:1,team_buyers:1"
+  #   And subscription plan has following lines
+  #   | name | price |
+  #   | abc  | 99.0  |
+  #   | def  | 11.0  |
+  #   Given subscription plan exists with attributes "name:Secret category supplier,assigned_roles:category_supplier,big_buyer:1,team_buyers:1,is_public:0"
+  #   And subscription plan has following lines
+  #   | name | price |
+  #   | abc  | 99.0  |
+  #   | def  | 11.0  |
+  #   When I am on the supplier home page
+  #   And I follow translated "supplier_home.show.view.create_new_supplier_account"
+  #   And I should see "Premium supplier"
+  #   And I should not see "Ultra member"
+  #   And I should not see "Secret category supplier"
+  #   Given I visit domain http://fairdeals.dk
+  #   When I follow translated "fairdeals_home.show.view.get_free_account"
+  #   And I should not see "Premium supplier"
+  #   And I should see "Ultra member"
 
   #9514
   @m26 @_requested @tgn @_done @_tested_elsewhere

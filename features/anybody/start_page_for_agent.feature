@@ -6,9 +6,9 @@ Background: I am a guest and I am on the home page
   Given I visit domain http://faircalls.eu
   Given I am on the home page
 
-@ao @m3 @_done
+@ao @m3 @_done @_deprecated
 Scenario: I can see welcome text fetch from the database
-  Then I should see "Blurb agent home"
+#   Then I should see "Blurb agent home"
 
 @m3 @ao @_done
 Scenario: I can see 3 latest agent news excerpts
@@ -49,27 +49,27 @@ Scenario: I can't see inactive leads on latest leads
   And I follow translated "agent_home.show.view.complete_list_link" within "#latest_leads"
   Then I should see translated "common.nothing_to_display"
 
-@m3 @ao @_done
-Scenario: I can go to details of agent news
-  Given published agent news exists with attributes "title:FirstNews"                                                                                                      i
-  When I am on the agent home page
-  And I follow translated "agent_home.show.view.read_more_link" within "#news"
-  Then I should be on FirstNews news page
+# @m3 @ao @_done @_deprecated2014
+# Scenario: I can go to details of agent news
+#   Given published agent news exists with attributes "title:FirstNews"                                                                                                      i
+#   When I am on the agent home page
+#   And I follow translated "agent_home.show.view.read_more_link" within "#news"
+#   Then I should be on FirstNews news page
 
-@ao @_tested @_done
-Scenario: I can go to details of bestsellers
-  Given lead AwesomeLead exists within category Test
-  And AwesomeLead is a best seller
-  When I am on the agent home page
-  And I follow "AwesomeLead" within "#best_sellers"
-  Then I should be on the AwesomeLead lead page
+# @ao @_tested @_done @_deprecated2014
+# Scenario: I can go to details of bestsellers
+#   Given lead AwesomeLead exists within category Test
+#   And AwesomeLead is a best seller
+#   When I am on the agent home page
+#   And I follow "AwesomeLead" within "#best_sellers"
+#   Then I should be on the AwesomeLead lead page
 
-@ao @_tested @_done
-Scenario: I can go to details of latest leads
-  Given lead AwesomeLead exists within category Test
-  When I am on the agent home page
-  And I follow "AwesomeLead" within "#latest_leads"
-  Then I should be on the AwesomeLead lead page
+# @ao @_tested @_done @_deprecated2014
+# Scenario: I can go to details of latest leads
+#   Given lead AwesomeLead exists within category Test
+#   When I am on the agent home page
+#   And I follow "AwesomeLead" within "#latest_leads"
+#   Then I should be on the AwesomeLead lead page
 
 @m3 @ao @_done @_tested
 Scenario: I can go to agent news listing
@@ -78,12 +78,12 @@ Scenario: I can go to agent news listing
   And I follow translated "agent_home.show.view.complete_list_link" within "#latest_leads"
   Then I should see "AwesomeLead" within ".leads_table"
 
-@ao @_tested @_done
-Scenario: I can go to bestsellers listing
-  When I am on the agent home page
-  And I follow translated "agent_home.show.view.complete_list_link" within "#best_sellers"
-  Then I should be on the leads page
-  And I should see translated "leads.index.bestsellers_header"
+# @ao @_tested @_done @_deprecated2014
+# Scenario: I can go to bestsellers listing
+#   When I am on the agent home page
+#   And I follow translated "agent_home.show.view.complete_list_link" within "#best_sellers"
+#   Then I should be on the leads page
+#   And I should see translated "leads.index.bestsellers_header"
 
 @ao @_tested @_done
 Scenario: I can go to latest leads listing
@@ -98,11 +98,11 @@ Scenario: I can go to buyer page by clicking “CLICK HERE IF YOU ARE A BUYER”
 #  And I follow translated "agent_home.show.view.buyer_link"
 #  Then I should be on the supplier home page
 
-@ao @_tested @_done
-Scenario: I can go to creation of new agent account page
-  When I am on the agent home page
-  And I follow translated "agent_home.show.view.create_new_agent_account"
-  Then I should be on agent sign up page
+# @ao @_tested @_done @_deprecated2014
+# Scenario: I can go to creation of new agent account page
+#   When I am on the agent home page
+#   And I follow translated "agent_home.show.view.create_new_agent_account"
+#   Then I should be on agent sign up page
 
 # bestsellers removed
 @ao @m3 @_done @_deprecated

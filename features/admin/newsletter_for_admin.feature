@@ -9,21 +9,21 @@ Feature: Newsletter for admin
   @_done @_tested_elsewhere
   Scenario: I should see three positions under Campaigns menu tab: TM-Campaigns, Lists, Newsletter
 
-  @_done @_tested
-  Scenario: I can create new list with a unique name
-    And I follow translated "newsletters.newsletter_lists.index.view.new_newsletter_list"
-    And I fill in "newsletter_list_name" with "Test newsletter"
-    And I fill in "newsletter_list_owner_email" with "blazejek@gmail.com"
-    And I press translated "newsletters.newsletter_lists.new.view.button_create"
-    And I wait 4 second
-    Given I add user role source for role "member" to newsletter list "Test newsletter"
-    And I should see "Test newsletter"
-    And display all hidden actions
-    And I follow translated "newsletters.newsletter_lists.index.view.edit"
-    And I fill in "newsletter_list_owner_email" with "translator_call_centre@nbs.com"
-    And I should see "member (Role)"
-    And I should see "translator_purchase_manager@nbs.com"
-    And I press translated "newsletters.newsletter_lists.edit.view.button_update"
+  # @_done @_tested @_deprecated2014
+  # Scenario: I can create new list with a unique name
+  #   And I follow translated "newsletters.newsletter_lists.index.view.new_newsletter_list"
+  #   And I fill in "newsletter_list_name" with "Test newsletter"
+  #   And I fill in "newsletter_list_owner_email" with "blazejek@gmail.com"
+  #   And I press translated "newsletters.newsletter_lists.new.view.button_create"
+  #   And I wait 4 second
+  #   Given I add user role source for role "member" to newsletter list "Test newsletter"
+  #   And I should see "Test newsletter"
+  #   And display all hidden actions
+  #   And I follow translated "newsletters.newsletter_lists.index.view.edit"
+  #   And I fill in "newsletter_list_owner_email" with "translator_call_centre@nbs.com"
+  #   And I should see "member (Role)"
+  #   And I should see "translator_purchase_manager@nbs.com"
+  #   And I press translated "newsletters.newsletter_lists.edit.view.button_update"
 
   @_done @_tested_elsewhere
   Scenario: I can set owner for a list (e-mail address of admin, call centre, supplier/category supplier)

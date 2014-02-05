@@ -65,39 +65,39 @@ Scenario: I can create a new lead and continue (create another one)
   And I should see translated "flash.leads.create.notice"
   And I should see translated "agent.leads.new.view.title"
 
-@_tested @selenium @noguess @_done
-Scenario: I can add an extra language while creating lead. This will include lead title, purchase desc, hidden desc
-  Given Category Test category 1 is created
-  And Country Denmark is created
-  And I go to agents leads
-  And I select "Test category 1" from "category_id"
-  Given I follow translated "agent.leads.index.view.new_lead"
-  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
-  And I fill in "lead_description" with "Lorem ipsum"
-  And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
-  And I fill in "lead_purchase_value" with "10000"
-  And I fill in "lead_price" with "100"
-  And I select "3" from "lead_sale_limit"
-  #And I fill in "area" with "global"
-  And I select "Denmark" from "lead_country_id"
-  And I fill in "lead_company_name" with "Printing company"
-  And I fill in "lead_contact_name" with "Marek Kowalski"
-  And I fill in "lead_phone_number" with "123456789"
-  And I fill in "lead_email_address" with "my@email.com"
-  And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_address_line_3" with "Bielsko-Biała"
-  And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with date that is "5" days from now
-  And I select translated "models.locale.da" from "locale_picker"
-  And I fill in "lead_lead_translations_attributes_0_header" with "DK header"
-  And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
-  And I fill in "lead_lead_translations_attributes_0_hidden_description" with "DK hidden description"
-  And I press translated "agent.leads.new.view.button_create"
-  And I should be on agents leads
-  And I should see translated "flash.leads.create.notice"
-  Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
-  And I should see "DK description"
-  And I should see "DK hidden description"
+# @_tested @selenium @noguess @_done @_deprecated2014
+# Scenario: I can add an extra language while creating lead. This will include lead title, purchase desc, hidden desc
+#   Given Category Test category 1 is created
+#   And Country Denmark is created
+#   And I go to agents leads
+#   And I select "Test category 1" from "category_id"
+#   Given I follow translated "agent.leads.index.view.new_lead"
+#   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
+#   And I fill in "lead_description" with "Lorem ipsum"
+#   And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
+#   And I fill in "lead_purchase_value" with "10000"
+#   And I fill in "lead_price" with "100"
+#   And I select "3" from "lead_sale_limit"
+#   #And I fill in "area" with "global"
+#   And I select "Denmark" from "lead_country_id"
+#   And I fill in "lead_company_name" with "Printing company"
+#   And I fill in "lead_contact_name" with "Marek Kowalski"
+#   And I fill in "lead_phone_number" with "123456789"
+#   And I fill in "lead_email_address" with "my@email.com"
+#   And I fill in "lead_address_line_1" with "Kaminskiego 19"
+#   And I fill in "lead_address_line_3" with "Bielsko-Biała"
+#   And I fill in "lead_zip_code" with "23-2911"
+#   And I fill in "datepicker" with date that is "5" days from now
+#   And I select translated "models.locale.da" from "locale_picker"
+#   And I fill in "lead_lead_translations_attributes_0_header" with "DK header"
+#   And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
+#   And I fill in "lead_lead_translations_attributes_0_hidden_description" with "DK hidden description"
+#   And I press translated "agent.leads.new.view.button_create"
+#   And I should be on agents leads
+#   And I should see translated "flash.leads.create.notice"
+#   Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
+#   And I should see "DK description"
+#   And I should see "DK hidden description"
 
 @tgn @added @_tested @selenium @m1 @_done
 Scenario: Published checkbox should be selected by default
@@ -174,73 +174,73 @@ Scenario: I can add linkedin and facebook links to lead's contact information
   And I should be on agents leads
   And I should see translated "flash.leads.create.notice"
 
-@m5 @added @lead_templates @tgn @selenium @_tested @_done
-Scenario: I have to fill out the templates which are mandatory
-  Given template named "Computers details" for category "Computers" is created by user "bob@person.com" with role "agent"
-  And template named "Computers details" is mandatory
-  And template named "Computers details" has following fields "computers count:false:false, operating systems:false:false"
-  And I go to agents leads
-  And I select "Computers" from "category_id"
-  And I follow translated "agent.leads.index.view.new_lead"
-  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
-  And I fill in "lead_description" with "Lorem ipsum"
-  And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
-  And I fill in "lead_purchase_value" with "10000"
-  And I fill in "lead_price" with "100"
-  And I select "3" from "lead_sale_limit"
-  And I select "Denmark" from "lead_country_id"
-  And I fill in "lead_contact_name" with "Marek Kowalski"
-  And I fill in "lead_phone_number" with "123456789"
-  And I fill in "lead_company_name" with "Printing company"
-  And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_address_line_3" with "Bielsko-Biała"
-  And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with date that is "5" days from now
-  And I fill in "lead_lead_template_values_attributes_0_value" with "123"
-  And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
-  And I press translated "agent.leads.new.view.button_create"
-  And I should see translated "flash.leads.create.notice"
-  Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
-  And the "lead_lead_template_values_attributes_0_value" field should contain "123"
-  And the "lead_lead_template_values_attributes_1_value" field should contain "Ms Windows Vista"
+# @m5 @added @lead_templates @tgn @selenium @_tested @_done @_deprecated2014
+# Scenario: I have to fill out the templates which are mandatory
+#   Given template named "Computers details" for category "Computers" is created by user "bob@person.com" with role "agent"
+#   And template named "Computers details" is mandatory
+#   And template named "Computers details" has following fields "computers count:false:false, operating systems:false:false"
+#   And I go to agents leads
+#   And I select "Computers" from "category_id"
+#   And I follow translated "agent.leads.index.view.new_lead"
+#   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
+#   And I fill in "lead_description" with "Lorem ipsum"
+#   And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
+#   And I fill in "lead_purchase_value" with "10000"
+#   And I fill in "lead_price" with "100"
+#   And I select "3" from "lead_sale_limit"
+#   And I select "Denmark" from "lead_country_id"
+#   And I fill in "lead_contact_name" with "Marek Kowalski"
+#   And I fill in "lead_phone_number" with "123456789"
+#   And I fill in "lead_company_name" with "Printing company"
+#   And I fill in "lead_address_line_1" with "Kaminskiego 19"
+#   And I fill in "lead_address_line_3" with "Bielsko-Biała"
+#   And I fill in "lead_zip_code" with "23-2911"
+#   And I fill in "datepicker" with date that is "5" days from now
+#   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
+#   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
+#   And I press translated "agent.leads.new.view.button_create"
+#   And I should see translated "flash.leads.create.notice"
+#   Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
+#   And the "lead_lead_template_values_attributes_0_value" field should contain "123"
+#   And the "lead_lead_template_values_attributes_1_value" field should contain "Ms Windows Vista"
 
-@m5 @added @lead_templates @tgn @selenium @_tested @_done
-Scenario: I can select additional templates that are optional
-  Given template named "Computers details" for category "Computers" is created by user "bob@person.com" with role "agent"
-  And template named "Computers details" is mandatory
-  And template named "Computers details" has following fields "computers count:false:false, operating systems:false:false"
-  Given template named "Fax details" for category "Computers" is created by user "bob@person.com" with role "agent"
-  And template named "Fax details" is not mandatory
-  And template named "Fax details" has following fields "fax software version:false:false, date of purchase:false:false"
-  And I go to agents leads
-  And I select "Computers" from "category_id"
-  And I follow translated "agent.leads.index.view.new_lead"
-  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
-  And I fill in "lead_description" with "Lorem ipsum"
-  And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
-  And I fill in "lead_purchase_value" with "10000"
-  And I fill in "lead_price" with "100"
-  And I select "3" from "lead_sale_limit"
-  And I select "Denmark" from "lead_country_id"
-  And I fill in "lead_contact_name" with "Marek Kowalski"
-  And I fill in "lead_phone_number" with "123456789"
-  And I fill in "lead_company_name" with "Printing company"
-  And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_address_line_3" with "Bielsko-Biała"
-  And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with date that is "5" days from now
-  And I fill in "lead_lead_template_values_attributes_0_value" with "123"
-  And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
-  Then I select "Fax details" from "optional_templates_picker"
-  And I fill in "lead_lead_template_values_attributes_2_value" with "FaxFree v3"
-  And I fill in "lead_lead_template_values_attributes_3_value" with "21-01-2010"
-  And I press translated "agent.leads.new.view.button_create"
-  And I should see translated "flash.leads.create.notice"
-  Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
-  And the "lead_lead_template_values_attributes_0_value" field should contain "123"
-  And the "lead_lead_template_values_attributes_1_value" field should contain "Ms Windows Vista"
-  And the "lead_lead_template_values_attributes_2_value" field should contain "FaxFree v3"
-  And the "lead_lead_template_values_attributes_3_value" field should contain "21-01-2010"
+# @m5 @added @lead_templates @tgn @selenium @_tested @_done @_deprecated2014
+# Scenario: I can select additional templates that are optional
+#   Given template named "Computers details" for category "Computers" is created by user "bob@person.com" with role "agent"
+#   And template named "Computers details" is mandatory
+#   And template named "Computers details" has following fields "computers count:false:false, operating systems:false:false"
+#   Given template named "Fax details" for category "Computers" is created by user "bob@person.com" with role "agent"
+#   And template named "Fax details" is not mandatory
+#   And template named "Fax details" has following fields "fax software version:false:false, date of purchase:false:false"
+#   And I go to agents leads
+#   And I select "Computers" from "category_id"
+#   And I follow translated "agent.leads.index.view.new_lead"
+#   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
+#   And I fill in "lead_description" with "Lorem ipsum"
+#   And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
+#   And I fill in "lead_purchase_value" with "10000"
+#   And I fill in "lead_price" with "100"
+#   And I select "3" from "lead_sale_limit"
+#   And I select "Denmark" from "lead_country_id"
+#   And I fill in "lead_contact_name" with "Marek Kowalski"
+#   And I fill in "lead_phone_number" with "123456789"
+#   And I fill in "lead_company_name" with "Printing company"
+#   And I fill in "lead_address_line_1" with "Kaminskiego 19"
+#   And I fill in "lead_address_line_3" with "Bielsko-Biała"
+#   And I fill in "lead_zip_code" with "23-2911"
+#   And I fill in "datepicker" with date that is "5" days from now
+#   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
+#   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
+#   Then I select "Fax details" from "optional_templates_picker"
+#   And I fill in "lead_lead_template_values_attributes_2_value" with "FaxFree v3"
+#   And I fill in "lead_lead_template_values_attributes_3_value" with "21-01-2010"
+#   And I press translated "agent.leads.new.view.button_create"
+#   And I should see translated "flash.leads.create.notice"
+#   Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
+#   And the "lead_lead_template_values_attributes_0_value" field should contain "123"
+#   And the "lead_lead_template_values_attributes_1_value" field should contain "Ms Windows Vista"
+#   And the "lead_lead_template_values_attributes_2_value" field should contain "FaxFree v3"
+#   And the "lead_lead_template_values_attributes_3_value" field should contain "21-01-2010"
 
 @m5 @added @lead_templates @selenium @tgn @_tested @_done
 Scenario: Lead templates for given category consist of my templates, my call centre's, admin's and global
@@ -278,73 +278,73 @@ Scenario: Lead templates for given category consists of templates from that cate
   Then I should see "Computers details"
   And I should see "Modems details"
 
-@m5 @added @lead_templates @tgn @selenium @_tested @_done
-Scenario: When new translation to lead is added I can also write translation for the templates
-  Given template named "Computers details" for category "Computers" is created by user "bob@person.com" with role "agent"
-  And template named "Computers details" is mandatory
-  And template named "Computers details" has following fields "computers count:false:false, operating systems:false:false"
-  And I go to agents leads
-  And I select "Computers" from "category_id"
-  And I follow translated "agent.leads.index.view.new_lead"
-  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
-  And I fill in "lead_description" with "Lorem ipsum"
-  And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
-  And I fill in "lead_purchase_value" with "10000"
-  And I fill in "lead_price" with "100"
-  And I select "3" from "lead_sale_limit"
-  And I select "Denmark" from "lead_country_id"
-  And I fill in "lead_contact_name" with "Marek Kowalski"
-  And I fill in "lead_phone_number" with "123456789"
-  And I fill in "lead_company_name" with "Printing company"
-  And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_address_line_3" with "Bielsko-Biała"
-  And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with date that is "5" days from now
-  And I fill in "lead_lead_template_values_attributes_0_value" with "123"
-  And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
-  And I select translated "models.locale.da" from "locale_picker"
-  And I fill in "lead_lead_translations_attributes_0_header" with "DK header"
-  And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
-  And I fill in "lead_lead_translations_attributes_0_hidden_description" with "DK hidden description"
-  And I fill in "lead_lead_template_values_attributes_0_lead_template_value_translations_attributes_0_value" with "123 translated"
-  And I fill in "lead_lead_template_values_attributes_1_lead_template_value_translations_attributes_0_value" with "Ms Windows Vista translated"
-  And I press translated "agent.leads.new.view.button_create"
-  And I should see translated "flash.leads.create.notice"
-  Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
-  And the "lead_lead_template_values_attributes_0_value" field should contain "123"
-  And the "lead_lead_template_values_attributes_1_value" field should contain "Ms Windows Vista"
-  And the "lead_lead_template_values_attributes_0_lead_template_value_translations_attributes_0_value" field should contain "123 translated"
-  And the "lead_lead_template_values_attributes_1_lead_template_value_translations_attributes_0_value" field should contain "Ms Windows Vista translated"
+# @m5 @added @lead_templates @tgn @selenium @_tested @_done @_deprecated2014
+# Scenario: When new translation to lead is added I can also write translation for the templates
+#   Given template named "Computers details" for category "Computers" is created by user "bob@person.com" with role "agent"
+#   And template named "Computers details" is mandatory
+#   And template named "Computers details" has following fields "computers count:false:false, operating systems:false:false"
+#   And I go to agents leads
+#   And I select "Computers" from "category_id"
+#   And I follow translated "agent.leads.index.view.new_lead"
+#   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
+#   And I fill in "lead_description" with "Lorem ipsum"
+#   And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
+#   And I fill in "lead_purchase_value" with "10000"
+#   And I fill in "lead_price" with "100"
+#   And I select "3" from "lead_sale_limit"
+#   And I select "Denmark" from "lead_country_id"
+#   And I fill in "lead_contact_name" with "Marek Kowalski"
+#   And I fill in "lead_phone_number" with "123456789"
+#   And I fill in "lead_company_name" with "Printing company"
+#   And I fill in "lead_address_line_1" with "Kaminskiego 19"
+#   And I fill in "lead_address_line_3" with "Bielsko-Biała"
+#   And I fill in "lead_zip_code" with "23-2911"
+#   And I fill in "datepicker" with date that is "5" days from now
+#   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
+#   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
+#   And I select translated "models.locale.da" from "locale_picker"
+#   And I fill in "lead_lead_translations_attributes_0_header" with "DK header"
+#   And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
+#   And I fill in "lead_lead_translations_attributes_0_hidden_description" with "DK hidden description"
+#   And I fill in "lead_lead_template_values_attributes_0_lead_template_value_translations_attributes_0_value" with "123 translated"
+#   And I fill in "lead_lead_template_values_attributes_1_lead_template_value_translations_attributes_0_value" with "Ms Windows Vista translated"
+#   And I press translated "agent.leads.new.view.button_create"
+#   And I should see translated "flash.leads.create.notice"
+#   Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
+#   And the "lead_lead_template_values_attributes_0_value" field should contain "123"
+#   And the "lead_lead_template_values_attributes_1_value" field should contain "Ms Windows Vista"
+#   And the "lead_lead_template_values_attributes_0_lead_template_value_translations_attributes_0_value" field should contain "123 translated"
+#   And the "lead_lead_template_values_attributes_1_lead_template_value_translations_attributes_0_value" field should contain "Ms Windows Vista translated"
 
-@m5 @added @lead_templates @tgn @selenium @_tested @_done
-Scenario: I have to fill out the fields that are mandatory in mandatory or optional template
-  Given template named "Computers details" for category "Computers" is created by user "bob@person.com" with role "agent"
-  And template named "Computers details" is mandatory
-  And template named "Computers details" has following fields "computers count:false:true, operating systems:false:true, purchase date:false:false"
-  And I go to agents leads
-  And I select "Computers" from "category_id"
-  And I follow translated "agent.leads.index.view.new_lead"
-  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
-  And I fill in "lead_description" with "Lorem ipsum"
-  And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
-  And I fill in "lead_purchase_value" with "10000"
-  And I fill in "lead_price" with "100"
-  And I select "3" from "lead_sale_limit"
-  And I select "Denmark" from "lead_country_id"
-  And I fill in "lead_contact_name" with "Marek Kowalski"
-  And I fill in "lead_phone_number" with "123456789"
-  And I fill in "lead_company_name" with "Printing company"
-  And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_address_line_3" with "Bielsko-Biała"
-  And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with date that is "5" days from now
-  And I fill in "lead_lead_template_values_attributes_0_value" with "123"
-  And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
-  And I press translated "agent.leads.new.view.button_create"
-  And I should see translated "flash.leads.create.notice"
-  Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
-  And the "lead_lead_template_values_attributes_0_value" field should contain "123"
-  And the "lead_lead_template_values_attributes_1_value" field should contain "Ms Windows Vista"
+# @m5 @added @lead_templates @tgn @selenium @_tested @_done @_deprecated2014
+# Scenario: I have to fill out the fields that are mandatory in mandatory or optional template
+#   Given template named "Computers details" for category "Computers" is created by user "bob@person.com" with role "agent"
+#   And template named "Computers details" is mandatory
+#   And template named "Computers details" has following fields "computers count:false:true, operating systems:false:true, purchase date:false:false"
+#   And I go to agents leads
+#   And I select "Computers" from "category_id"
+#   And I follow translated "agent.leads.index.view.new_lead"
+#   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
+#   And I fill in "lead_description" with "Lorem ipsum"
+#   And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
+#   And I fill in "lead_purchase_value" with "10000"
+#   And I fill in "lead_price" with "100"
+#   And I select "3" from "lead_sale_limit"
+#   And I select "Denmark" from "lead_country_id"
+#   And I fill in "lead_contact_name" with "Marek Kowalski"
+#   And I fill in "lead_phone_number" with "123456789"
+#   And I fill in "lead_company_name" with "Printing company"
+#   And I fill in "lead_address_line_1" with "Kaminskiego 19"
+#   And I fill in "lead_address_line_3" with "Bielsko-Biała"
+#   And I fill in "lead_zip_code" with "23-2911"
+#   And I fill in "datepicker" with date that is "5" days from now
+#   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
+#   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
+#   And I press translated "agent.leads.new.view.button_create"
+#   And I should see translated "flash.leads.create.notice"
+#   Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
+#   And the "lead_lead_template_values_attributes_0_value" field should contain "123"
+#   And the "lead_lead_template_values_attributes_1_value" field should contain "Ms Windows Vista"
 
 @m5 @added @lead_templates @tgn @selenium @_tested @_done
 Scenario: When there is only one template present for a lead and it is optional then it should be displayed by default
@@ -444,27 +444,27 @@ Scenario: I can pick region for a country from dropdown
 @duplicated
 Scenario: I can see international phone dialing prefix filled accordlingly to selected language/locale
 
-@m5 @unique_categories @added @_tested @tgn @_done
-Scenario: I can't publish a lead in unique category if I'm not assigned to it
-  Given there are no categories
-  And Category Test category 1 is created
-  And Category Agent Unique Category is created
-  And category "Agent Unique Category" is unique for user with email "bob@person.com" role "agent"
-  And I go to agents leads
-  Then "category_id" dropdown should have values "Test category 1,Agent Unique Category"
+# @m5 @unique_categories @added @_tested @tgn @_done @_deprecated2014
+# Scenario: I can't publish a lead in unique category if I'm not assigned to it
+#   Given there are no categories
+#   And Category Test category 1 is created
+#   And Category Agent Unique Category is created
+#   And category "Agent Unique Category" is unique for user with email "bob@person.com" role "agent"
+#   And I go to agents leads
+#   Then "category_id" dropdown should have values "Test category 1,Agent Unique Category"
 
-@m5 @unique_categories @added @_tested @tgn@_done
-Scenario: I can publish leads only in unique categories if I'm assigned at least to one
-  Given there are no categories
-  And Category Test category 1 is created
-  And Category Agent Unique Category is created
-  And category "Agent Unique Category" is unique for user with email "bob@person.com" role "agent"
-  Given I have user with email other_agent@nbs.com and role agent
-  And Category Other Agent Unique Category is created
-  And category "Other Agent Unique Category" is unique for user with email "other_agent@nbs.com" role "agent"
-  And I go to agents leads
-  Then "category_id" dropdown should have values "Test category 1,Agent Unique Category"
-  And "category_id" dropdown should not have values "Other Agent Unique Category"
+# @m5 @unique_categories @added @_tested @tgn@_done @_deprecated2014
+# Scenario: I can publish leads only in unique categories if I'm assigned at least to one
+#   Given there are no categories
+#   And Category Test category 1 is created
+#   And Category Agent Unique Category is created
+#   And category "Agent Unique Category" is unique for user with email "bob@person.com" role "agent"
+#   Given I have user with email other_agent@nbs.com and role agent
+#   And Category Other Agent Unique Category is created
+#   And category "Other Agent Unique Category" is unique for user with email "other_agent@nbs.com" role "agent"
+#   And I go to agents leads
+#   Then "category_id" dropdown should have values "Test category 1,Agent Unique Category"
+#   And "category_id" dropdown should not have values "Other Agent Unique Category"
 
 @m6 @tgn @_tested @added @lead_templates @selenium @_done
 Scenario: When the template's field is of the note type then I should see textarea instead of textbox
@@ -484,7 +484,7 @@ Scenario: I should see hint for every field when creating a lead
   And I select "Test category 1" from "category_id"
   And I follow translated "agent.leads.index.view.new_lead"
   And I should see CSS path "p[class*='inline-hints']"
-  
+
 @m6 @tgn @selenium @_tested @_done
 Scenario: I can choose region during creation of a lead
   Given country "Denmark" has regions "Region #1, Region #2, Region #3"

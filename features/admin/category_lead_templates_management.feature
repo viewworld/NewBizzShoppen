@@ -34,24 +34,24 @@ Scenario: I can create a category and add new lead templates to it which I can m
   And I should see "Editing category: Test category"
   And I should see "Example of template"
 
-@added @selenium @_tested @_done
-Scenario: I can edit a category and add new lead templates to it which I can mark as mandatory or optional
-  Given Category named "Vehicles" already exists
-  Then I go to administration categories
-  And I follow translated "administration.categories.index.view.edit_link"
-  And I follow translated "administration.categories.edit.view.new_template"
-  And I fill in "lead_template_name" with "Example of template"
-  And I check "lead_template_is_mandatory"
-  And I follow translated "shared.lead_templates.form.new_lead_template_field"
-  And I fill in "lead_template_lead_template_fields_attributes_0_name" with "example attr 1"
-  And I follow translated "shared.lead_templates.form.new_lead_template_field"
-  And I fill in "lead_template_lead_template_fields_attributes_1_name" with "example attr 2"
-  And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
-  And I check "lead_template_lead_template_fields_attributes_1_is_mandatory"
-  Then I press translated "administration.lead_templates.new.view.button_create"
-  And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
-  Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
-  Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
+# @added @selenium @_tested @_done @_deprecated2014
+# Scenario: I can edit a category and add new lead templates to it which I can mark as mandatory or optional
+#   Given Category named "Vehicles" already exists
+#   Then I go to administration categories
+#   And I follow translated "administration.categories.index.view.edit_link"
+#   And I follow translated "administration.categories.edit.view.new_template"
+#   And I fill in "lead_template_name" with "Example of template"
+#   And I check "lead_template_is_mandatory"
+#   And I follow translated "shared.lead_templates.form.new_lead_template_field"
+#   And I fill in "lead_template_lead_template_fields_attributes_0_name" with "example attr 1"
+#   And I follow translated "shared.lead_templates.form.new_lead_template_field"
+#   And I fill in "lead_template_lead_template_fields_attributes_1_name" with "example attr 2"
+#   And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
+#   And I check "lead_template_lead_template_fields_attributes_1_is_mandatory"
+#   Then I press translated "administration.lead_templates.new.view.button_create"
+#   And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
+#   Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
+#   Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
 
 @added @_tested @_done
 Scenario: I can mark templates as mandatory or optional for given category even if they were created by agents
@@ -65,22 +65,22 @@ Scenario: I can mark templates as mandatory or optional for given category even 
   Then I follow translated "administration.categories.edit.view.edit_template"
   And the "lead_template_is_mandatory" checkbox should be checked
 
-@added @selenium @_tested @_done
-Scenario: I can edit lead templates that were created by me
-  Given template named "Computer details" for category "Computers" is created by user "bob@person.com" with role "admin"
-  Then I go to administration categories
-  And I follow translated "administration.categories.index.view.edit_link"
-  And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
-  And I should see translated "shared.lead_templates.form.new_lead_template_field"
-  And I follow translated "shared.lead_templates.form.new_lead_template_field"
-  And I fill in "lead_template_lead_template_fields_attributes_0_name" with "example attr 1"
-  And I follow translated "shared.lead_templates.form.new_lead_template_field"
-  And I fill in "lead_template_lead_template_fields_attributes_1_name" with "example attr 2"
-  And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
-  Then I press translated "administration.lead_templates.edit.view.button_update"
-  And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
-  Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
-  Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
+# @added @selenium @_tested @_done @_deprecated2014
+# Scenario: I can edit lead templates that were created by me
+#   Given template named "Computer details" for category "Computers" is created by user "bob@person.com" with role "admin"
+#   Then I go to administration categories
+#   And I follow translated "administration.categories.index.view.edit_link"
+#   And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
+#   And I should see translated "shared.lead_templates.form.new_lead_template_field"
+#   And I follow translated "shared.lead_templates.form.new_lead_template_field"
+#   And I fill in "lead_template_lead_template_fields_attributes_0_name" with "example attr 1"
+#   And I follow translated "shared.lead_templates.form.new_lead_template_field"
+#   And I fill in "lead_template_lead_template_fields_attributes_1_name" with "example attr 2"
+#   And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
+#   Then I press translated "administration.lead_templates.edit.view.button_update"
+#   And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
+#   Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
+#   Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
 
 @added @_tested @_done
 Scenario: I can delete lead templates that were created by me and were not filled out by anyone
@@ -163,20 +163,20 @@ Scenario: I can see a category name for which lead temlpate is being created
   And I follow translated "administration.categories.edit.view.new_template"
   Then I should see "New lead template in category Vehicles"
 
-@tgn @_requested @m10 @tgn @selenium @_tested @_done
-Scenario: I can edit any kind of template even created by other users
-  Given template named "Computer details" for category "Computers" is created by user "call_centrebiz@person.com" with role "call_centre"
-  Then I go to administration categories
-  And I follow translated "administration.categories.index.view.edit_link"
-  And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
-  And I should see translated "shared.lead_templates.form.new_lead_template_field"
-  And I follow translated "shared.lead_templates.form.new_lead_template_field"
-  And I fill in "lead_template_lead_template_fields_attributes_0_name" with "example attr 1"
-  And I follow translated "shared.lead_templates.form.new_lead_template_field"
-  And I fill in "lead_template_lead_template_fields_attributes_1_name" with "example attr 2"
-  And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
-  And I uncheck "lead_template_is_active"
-  Then I press translated "administration.lead_templates.edit.view.button_update"
-  And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
-  Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
-  Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
+# @tgn @_requested @m10 @tgn @selenium @_tested @_done @_deprecated2014
+# Scenario: I can edit any kind of template even created by other users
+#   Given template named "Computer details" for category "Computers" is created by user "call_centrebiz@person.com" with role "call_centre"
+#   Then I go to administration categories
+#   And I follow translated "administration.categories.index.view.edit_link"
+#   And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
+#   And I should see translated "shared.lead_templates.form.new_lead_template_field"
+#   And I follow translated "shared.lead_templates.form.new_lead_template_field"
+#   And I fill in "lead_template_lead_template_fields_attributes_0_name" with "example attr 1"
+#   And I follow translated "shared.lead_templates.form.new_lead_template_field"
+#   And I fill in "lead_template_lead_template_fields_attributes_1_name" with "example attr 2"
+#   And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
+#   And I uncheck "lead_template_is_active"
+#   Then I press translated "administration.lead_templates.edit.view.button_update"
+#   And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
+#   Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
+#   Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"

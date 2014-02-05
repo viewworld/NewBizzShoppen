@@ -20,41 +20,41 @@ Background:
   And user "customer2@nbs.com" with role "supplier" has attributes "first_name: John, company_name: John Doe"
   And I sign in as agent1@nbs.com with password supersecret
 
-@_tested @_done
-Scenario: I can see the amount of comments per lead on listing of my leads
-  When I follow translated "layout.main_menu.agent.leads"
-  And I fill in "search_with_keyword" with "lead#1"
-  And I press translated "agent.leads.index.view.search_button"
-  And I should see "(1)"
+# @_tested @_done @_deprecated2014
+# Scenario: I can see the amount of comments per lead on listing of my leads
+#   When I follow translated "layout.main_menu.agent.leads"
+#   And I fill in "search_with_keyword" with "lead#1"
+#   And I press translated "agent.leads.index.view.search_button"
+#   And I should see "(1)"
 
-@m0
-Scenario: I can click on comment list and get a popup with comments from different ppl
+# @m0 @_deprecated2014-blank
+# Scenario: I can click on comment list and get a popup with comments from different ppl
 
-@m0
-Scenario: I can click on details of a specific comment
+# @m0 @_deprecated2014-blank
+# Scenario: I can click on details of a specific comment
 
-@_tested @selenium @_done
-Scenario: I can see the comment conversation details
-  When I follow translated "layout.main_menu.agent.leads"
-  And I fill in "search_with_keyword" with "lead#3"
-  And I press translated "agent.leads.index.view.search_button"
-  And I follow translated "comments.shared.show_comments"
-  Then I should see "Comment title #1"
-  Then I should see "Comment title #2"
-  Then I should see "Comment title #3"
+# @_tested @selenium @_done @_deprecated2014
+# Scenario: I can see the comment conversation details
+#   When I follow translated "layout.main_menu.agent.leads"
+#   And I fill in "search_with_keyword" with "lead#3"
+#   And I press translated "agent.leads.index.view.search_button"
+#   And I follow translated "comments.shared.show_comments"
+#   Then I should see "Comment title #1"
+#   Then I should see "Comment title #2"
+#   Then I should see "Comment title #3"
 
-@_tested @selenium @_done
-Scenario: I can respond to a comment and my comment is added to the conversation
-  When I follow translated "layout.main_menu.agent.leads"
-  And I fill in "search_with_keyword" with "lead#1"
-  And I press translated "agent.leads.index.view.search_button"
-  And I follow translated "comments.shared.show_comments"
-  And I follow translated "comments.threads.show.view.reply" within ".row_tooltip_content"
-  And I fill in "comment_title" with "Reply to First Lead1 comment" within ".lead_threads_container_div"
-  And I fill in "comment_body" with "Body reply to First Lead1 comment" within ".lead_threads_container_div"
-  And I press translated "comments.threads.show.view.create_comment_button"
-  Then I should see "Reply to First Lead1 comment"
-  And I should see "Body reply to First Lead1 comment"
+# @_tested @selenium @_done @_deprecated2014
+# Scenario: I can respond to a comment and my comment is added to the conversation
+#   When I follow translated "layout.main_menu.agent.leads"
+#   And I fill in "search_with_keyword" with "lead#1"
+#   And I press translated "agent.leads.index.view.search_button"
+#   And I follow translated "comments.shared.show_comments"
+#   And I follow translated "comments.threads.show.view.reply" within ".row_tooltip_content"
+#   And I fill in "comment_title" with "Reply to First Lead1 comment" within ".lead_threads_container_div"
+#   And I fill in "comment_body" with "Body reply to First Lead1 comment" within ".lead_threads_container_div"
+#   And I press translated "comments.threads.show.view.create_comment_button"
+#   Then I should see "Reply to First Lead1 comment"
+#   And I should see "Body reply to First Lead1 comment"
 
 @_tested @_done
 Scenario: I can browse all comments with pagination
@@ -83,10 +83,10 @@ Scenario: I can filter comments
   Then I should see "Lead#1"
   And I should not see "Lead#2"
 
-@added @_tested @selenium @_done
-Scenario: I cannot start new thread
-  When I follow translated "layout.main_menu.agent.leads"
-  And I fill in "search_with_keyword" with "lead#3"
-  And I press translated "agent.leads.index.view.search_button"
-  And I follow translated "comments.shared.show_comments"
-  And I should not see translated "comments.threads.new.view.header" with options "header: Lead#3"
+# @added @_tested @selenium @_done @_deprecated2014
+# Scenario: I cannot start new thread
+#   When I follow translated "layout.main_menu.agent.leads"
+#   And I fill in "search_with_keyword" with "lead#3"
+#   And I press translated "agent.leads.index.view.search_button"
+#   And I follow translated "comments.shared.show_comments"
+#   And I should not see translated "comments.threads.new.view.header" with options "header: Lead#3"

@@ -21,30 +21,30 @@ Feature: Debtors
     And a lead TestLead1 exists within category Computers and is bought by user kastomer@nbs.fake with role supplier
     And a lead TestLead2 exists within category Computers and is bought by user kastomer2@nbs.fake with role supplier
 
-  @m6 @ao @_done @nontestable
-  Scenario: When I click on row on debtors listing then an invoice should be created
+  # @m6 @ao @_done @nontestable @_deprecated2014-blank
+  # Scenario: When I click on row on debtors listing then an invoice should be created
 
-  @m21 @_requested @subscriptions @tgn @_tested @_done
-  Scenario: I can filter debtors by type (ad hoc / subscribers)
-    When I follow translated "layout.main_menu.admin.upcoming_invoices"
-    And I select "Ad-hoc" from "search_with_subscriber_type"
-    And I press translated "administration.upcoming_invoices.index.view.search_button"
-    Then I should see "Muzykant"
-    Then I should see "Vai"
+  # @m21 @_requested @subscriptions @tgn @_tested @_done @_deprecated2014
+  # Scenario: I can filter debtors by type (ad hoc / subscribers)
+  #   When I follow translated "layout.main_menu.admin.upcoming_invoices"
+  #   And I select "Ad-hoc" from "search_with_subscriber_type"
+  #   And I press translated "administration.upcoming_invoices.index.view.search_button"
+  #   Then I should see "Muzykant"
+  #   Then I should see "Vai"
 
-  @m21 @_requested @tgn @_done @_tested
-  Scenario: I can filter debtors by role
-    When I follow translated "layout.main_menu.admin.upcoming_invoices"
-    Then I should see translated "administration.upcoming_invoices.index.view.search.with_role"
-    When I select translated "administration.upcoming_invoices.index.view.search.role_supplier" from "search_with_role"
-    And I press translated "administration.upcoming_invoices.index.view.search_button"
-    And I should see "Janko Muzykant"
-    When I select translated "administration.upcoming_invoices.index.view.search.role_member" from "search_with_role"
-    And I press translated "administration.upcoming_invoices.index.view.search_button"
-    And I should not see "Janko Muzykant"
+  # @m21 @_requested @tgn @_done @_tested @_deprecated2014
+  # Scenario: I can filter debtors by role
+  #   When I follow translated "layout.main_menu.admin.upcoming_invoices"
+  #   Then I should see translated "administration.upcoming_invoices.index.view.search.with_role"
+  #   When I select translated "administration.upcoming_invoices.index.view.search.role_supplier" from "search_with_role"
+  #   And I press translated "administration.upcoming_invoices.index.view.search_button"
+  #   And I should see "Janko Muzykant"
+  #   When I select translated "administration.upcoming_invoices.index.view.search.role_member" from "search_with_role"
+  #   And I press translated "administration.upcoming_invoices.index.view.search_button"
+  #   And I should not see "Janko Muzykant"
 
-  @m21 @_requested @subscriptions @_done @tgn @tested_elsewhere
-  Scenario: When lead is bought the user is added ad-hoc flag
+  # @m21 @_requested @subscriptions @_done @tgn @tested_elsewhere @_deprecated2014-blank
+  # Scenario: When lead is bought the user is added ad-hoc flag
 
   @m21 @_requested @subscriptions @_done @_tested @tgn
   Scenario: At subscription billing date user is added a subscriber flag (rake task)
@@ -59,104 +59,102 @@ Feature: Debtors
     And user subscriptions are reviewed by rake task
     And user "kastomer2@nbs.fake" with role "supplier" should have attributes "subscriber_type:'subscriber'"
 
-  @m21 @_requested @subscriptions @selenium @tgn @_done @_tested
-  Scenario: If user has ad-hoc flag then at subscription date items are added to subscription invoice and flag is changed to subscriber
-    Given subscription plan exists with attributes "name:Premium supplier, subscription_period:12"
-    And subscription plan has currency named "DKK"
-    And subscription plan has following lines
-      | name                 | price |
-      | subscr premium line1 |    99 |
-      | subscr premium line2 |     3 |
-    Given user with email "kastomer2@nbs.fake" upgrades to subscription named "Premium supplier"
-    And user with email "kastomer2@nbs.fake" has billing date today for active subscription
-    When I click hidden link by url regex "/administration\/invoicing\/upcoming_invoices/"
-    And I fill in "search_with_keyword" with "TestLead2"
-    And I press translated "administration.upcoming_invoices.index.view.search_button"
-    And I check "mark_all"
-    And I follow translated "administration.upcoming_invoices.index.view.invoice_selected"
-    Then I should not see "Vai"
-    And user "kastomer2@nbs.fake" with role "supplier" should have attributes "subscriber_type:'subscriber'"
-    And first invoice exists for user "kastomer2@nbs.fake" with the following invoice lines
-      | name                 | netto_price |
-      | TestLead2            |         120 |
-      | subscr premium line1 |          99 |
-      | subscr premium line2 |           3 |
+  # @m21 @_requested @subscriptions @selenium @tgn @_done @_tested @_deprecated2014
+  # Scenario: If user has ad-hoc flag then at subscription date items are added to subscription invoice and flag is changed to subscriber
+  #   Given subscription plan exists with attributes "name:Premium supplier, subscription_period:12"
+  #   And subscription plan has currency named "DKK"
+  #   And subscription plan has following lines
+  #     | name                 | price |
+  #     | subscr premium line1 |    99 |
+  #     | subscr premium line2 |     3 |
+  #   Given user with email "kastomer2@nbs.fake" upgrades to subscription named "Premium supplier"
+  #   And user with email "kastomer2@nbs.fake" has billing date today for active subscription
+  #   When I click hidden link by url regex "/administration\/invoicing\/upcoming_invoices/"
+  #   And I fill in "search_with_keyword" with "TestLead2"
+  #   And I press translated "administration.upcoming_invoices.index.view.search_button"
+  #   And I check "mark_all"
+  #   And I follow translated "administration.upcoming_invoices.index.view.invoice_selected"
+  #   Then I should not see "Vai"
+  #   And user "kastomer2@nbs.fake" with role "supplier" should have attributes "subscriber_type:'subscriber'"
+  #   And first invoice exists for user "kastomer2@nbs.fake" with the following invoice lines
+  #     | name                 | netto_price |
+  #     | TestLead2            |         120 |
+  #     | subscr premium line1 |          99 |
+  #     | subscr premium line2 |           3 |
 
-  @m21 @_requested @tgn @_done @tested_elsewhere
-  Scenario: I can select multiple debtors (checkboxes)
+  # @m21 @_requested @tgn @_done @tested_elsewhere @_deprecated2014-blank
+  # Scenario: I can select multiple debtors (checkboxes)
 
-  @m21 @_requested @tgn @_done @tested_elsewhere
-  Scenario: I can click "Invoice selected" to generate invoices for selected users
+  # @m21 @_requested @tgn @_done @tested_elsewhere @_deprecated2014-blank
+  # Scenario: I can click "Invoice selected" to generate invoices for selected users
 
-  @m21 @_requested @selenium @tgn @_tested @_done @tgn
-  Scenario: When multiple debtors are selected for invoicing then seller company is assigned to each of them based on their subscription's seller
-    Given there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:123" for country "Denmark"
-    Given subscription plan exists with attributes "name:Premium supplier, subscription_period:12"
-    And subscription plan has currency named "DKK"
-    And subscription plan has seller "DannyTheSeller"
-    And subscription plan has following lines
-      | name                 | price |
-      | subscr premium line1 |    99 |
-      | subscr premium line2 |     3 |
-    Given user with email "kastomer@nbs.fake" upgrades to subscription named "Premium supplier"
-    And user with email "kastomer@nbs.fake" has billing date today for active subscription
-    Given user with email "kastomer2@nbs.fake" upgrades to subscription named "Premium supplier"
-    And user with email "kastomer2@nbs.fake" has billing date today for active subscription
+  # @m21 @_requested @selenium @tgn @_tested @_done @tgn @_deprecated2014
+  # Scenario: When multiple debtors are selected for invoicing then seller company is assigned to each of them based on their subscription's seller
+  #   Given there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:123" for country "Denmark"
+  #   Given subscription plan exists with attributes "name:Premium supplier, subscription_period:12"
+  #   And subscription plan has currency named "DKK"
+  #   And subscription plan has seller "DannyTheSeller"
+  #   And subscription plan has following lines
+  #     | name                 | price |
+  #     | subscr premium line1 |    99 |
+  #     | subscr premium line2 |     3 |
+  #   Given user with email "kastomer@nbs.fake" upgrades to subscription named "Premium supplier"
+  #   And user with email "kastomer@nbs.fake" has billing date today for active subscription
+  #   Given user with email "kastomer2@nbs.fake" upgrades to subscription named "Premium supplier"
+  #   And user with email "kastomer2@nbs.fake" has billing date today for active subscription
 
-    When I click hidden link by url regex "/administration\/invoicing\/upcoming_invoices/"
-    And I check "mark_all"
-    And I follow translated "administration.upcoming_invoices.index.view.invoice_selected"
-    Then first invoice for user "kastomer@nbs.fake" with role "supplier" has seller with company name "DannyTheSeller"
-    And first invoice for user "kastomer2@nbs.fake" with role "supplier" has seller with company name "DannyTheSeller"
+  #   When I click hidden link by url regex "/administration\/invoicing\/upcoming_invoices/"
+  #   And I check "mark_all"
+  #   And I follow translated "administration.upcoming_invoices.index.view.invoice_selected"
+  #   Then first invoice for user "kastomer@nbs.fake" with role "supplier" has seller with company name "DannyTheSeller"
+  #   And first invoice for user "kastomer2@nbs.fake" with role "supplier" has seller with company name "DannyTheSeller"
 
-  @m21 @_requested @tgn @_done @_tested
-  Scenario: I should see total amount of money that should be paid by debtors in the bottom of the table
-    When I click hidden link by url regex "/administration\/invoicing\/upcoming_invoices/"
-    Then I should see "240"
+  # @m21 @_requested @tgn @_done @_tested @_deprecated2014
+  # Scenario: I should see total amount of money that should be paid by debtors in the bottom of the table
+  #   When I click hidden link by url regex "/administration\/invoicing\/upcoming_invoices/"
+  #   Then I should see "240"
 
-  @m21 @_requested @tgn @non_testable @_done
-  Scenario: Debtors list should NOT be paginated
-  
-  @m21 @_requested @subscriptions @tgn @_done @_tested
-  Scenario: I can see members in the debtors list and invoice them as suppliers
-    Given I have user with email member7@rt.tv and role member
-    And user "member7@rt.tv" with role "member" has attributes "first_name:Hank, last_name:Fox"
-    Given subscription plan exists with attributes "name:Premium supplier, subscription_period:12, assigned_roles:member"
-    And subscription plan has currency named "DKK"
-    And subscription plan has following lines
-      | name                 | price |
-      | subscr premium line1 |    99 |
-      | subscr premium line2 |     3 |
-    Given user with email "member7@rt.tv" upgrades to subscription named "Premium supplier"
-    And user with email "member7@rt.tv" has billing date today for active subscription
-    When I click hidden link by url regex "/administration\/invoicing\/upcoming_invoices/"
-    And I should see "Fox"
+  # @m21 @_requested @tgn @non_testable @_done @_deprecated2014-blank
+  # Scenario: Debtors list should NOT be paginated
 
- @m21 @_requested @selenium @_done @tested_elsewhere @tgn
- Scenario: When multiple debtors are selected for invoicing then if there is no seller than default one is applied
-    
- @m21 @_requested @subscriptions @tgn @_done @tested_elsewhere
- Scenario: Not invoiced items should be added to the subscription invoice at billing time
+  # @m21 @_requested @subscriptions @tgn @_done @_tested @_deprecated2014
+  # Scenario: I can see members in the debtors list and invoice them as suppliers
+  #   Given I have user with email member7@rt.tv and role member
+  #   And user "member7@rt.tv" with role "member" has attributes "first_name:Hank, last_name:Fox"
+  #   Given subscription plan exists with attributes "name:Premium supplier, subscription_period:12, assigned_roles:member"
+  #   And subscription plan has currency named "DKK"
+  #   And subscription plan has following lines
+  #     | name                 | price |
+  #     | subscr premium line1 |    99 |
+  #     | subscr premium line2 |     3 |
+  #   Given user with email "member7@rt.tv" upgrades to subscription named "Premium supplier"
+  #   And user with email "member7@rt.tv" has billing date today for active subscription
+  #   When I click hidden link by url regex "/administration\/invoicing\/upcoming_invoices/"
+  #   And I should see "Fox"
+
+ # @m21 @_requested @selenium @_done @tested_elsewhere @tgn @_deprecated2014-blank
+ # Scenario: When multiple debtors are selected for invoicing then if there is no seller than default one is applied
+
+ # @m21 @_requested @subscriptions @tgn @_done @tested_elsewhere @_deprecated2014-blank
+ # Scenario: Not invoiced items should be added to the subscription invoice at billing time
 
  #8337
- @m22 @_requested @tgn @_done @_tested
- Scenario: When I issue an invoice for subscriber then I should not see the screen to select user/seller
-   Given there is a seller with attributes "first_name:John, last_name:Koval, company_name:TestSeller88"
-   And subscription plan exists with attributes "name:TestSubPlan, subscription_period:4"
-   And subscription plan has seller "TestSeller88"
-   And subscription plan has following lines
-   | name                 | price |
-   | subscr premium line1 |    99 |
-   | subscr premium line2 |     3 |
-   Given user with email "kastomer@nbs.fake" upgrades to subscription named "TestSubPlan"
-   When I follow translated "layout.main_menu.admin.upcoming_invoices"
-   Then I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-   And "invoice_seller_id" should be selected for value "TestSeller88"
+ # @m22 @_requested @tgn @_done @_tested @_deprecated2014
+ # Scenario: When I issue an invoice for subscriber then I should not see the screen to select user/seller
+ #   Given there is a seller with attributes "first_name:John, last_name:Koval, company_name:TestSeller88"
+ #   And subscription plan exists with attributes "name:TestSubPlan, subscription_period:4"
+ #   And subscription plan has seller "TestSeller88"
+ #   And subscription plan has following lines
+ #   | name                 | price |
+ #   | subscr premium line1 |    99 |
+ #   | subscr premium line2 |     3 |
+ #   Given user with email "kastomer@nbs.fake" upgrades to subscription named "TestSubPlan"
+ #   When I follow translated "layout.main_menu.admin.upcoming_invoices"
+ #   Then I follow translated "administration.upcoming_invoices.index.view.create_invoice"
+ #   And "invoice_seller_id" should be selected for value "TestSeller88"
 
  #8332
- @m22 @_requested @_done @_tested @ao
- Scenario: I should see total value
-   When I follow translated "layout.main_menu.admin.upcoming_invoices"
-   Then I should see translated "administration.upcoming_invoices.index.view.total_in_euro"
-
-
+ # @m22 @_requested @_done @_tested @ao @_deprecated2014
+ # Scenario: I should see total value
+ #   When I follow translated "layout.main_menu.admin.upcoming_invoices"
+ #   Then I should see translated "administration.upcoming_invoices.index.view.total_in_euro"

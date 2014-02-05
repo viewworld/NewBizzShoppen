@@ -7,23 +7,23 @@ Feature: Agent dealmaker
     And I sign in as agent@nbs.com with password secret
     And I follow translated "layout.main_menu.shared.deal_maker_users"
 
-  @_done @_tested @tgn
-  Scenario: I can create member (procurement manager) account
-    Then I follow translated "deal_maker_users.index.view.new_member"
-    And I fill in "user_first_name" with "Anna"
-    And I fill in "user_last_name" with "Lee"
-    And I fill in "user_company_name" with "Lee Inc"
-    And I fill in "user_address_attributes_address_line_1" with "Vlodivostok"
-    And I fill in "user_address_attributes_address_line_2" with "Vlodivostok"
-    And I fill in "user_address_attributes_address_line_3" with "Vlodivostok"
-    And I fill in "user_address_attributes_zip_code" with "22-222"
-    And I fill in "user_email" with "annalee@nbs.com"
-    And I fill in "user_phone" with "+43 2312321313"
-    And I fill in "user_password" with "secret"
-    And I fill in "user_password_confirmation" with "secret"
-    And the "user_skip_email_verification" checkbox should be checked
-    And I press translated "deal_maker_users.new.view.button_create"
-    Then I should see translated "deal_maker_users.create.flash.user_creation_successful"
+  # @_done @_tested @tgn @_deprecated2014
+  # Scenario: I can create member (procurement manager) account
+  #   Then I follow translated "deal_maker_users.index.view.new_member"
+  #   And I fill in "user_first_name" with "Anna"
+  #   And I fill in "user_last_name" with "Lee"
+  #   And I fill in "user_company_name" with "Lee Inc"
+  #   And I fill in "user_address_attributes_address_line_1" with "Vlodivostok"
+  #   And I fill in "user_address_attributes_address_line_2" with "Vlodivostok"
+  #   And I fill in "user_address_attributes_address_line_3" with "Vlodivostok"
+  #   And I fill in "user_address_attributes_zip_code" with "22-222"
+  #   And I fill in "user_email" with "annalee@nbs.com"
+  #   And I fill in "user_phone" with "+43 2312321313"
+  #   And I fill in "user_password" with "secret"
+  #   And I fill in "user_password_confirmation" with "secret"
+  #   And the "user_skip_email_verification" checkbox should be checked
+  #   And I press translated "deal_maker_users.new.view.button_create"
+  #   Then I should see translated "deal_maker_users.create.flash.user_creation_successful"
 
   @_done @_tested @tgn
   Scenario: I can create category supplier (buyer) account

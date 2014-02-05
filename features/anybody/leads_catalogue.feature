@@ -2,7 +2,7 @@
 Feature: Leads catalogue
 
 Background:
-  Given I am on the homepage
+  When I am on the homepage
   And I make sure current locale is "en"
   And I am not sign in
   And I visit domain http://faircalls.eu
@@ -185,46 +185,46 @@ Scenario: I should see only tree for selected root category
   And I should not see "Computers"
   And I should not see "Business"
 
-@m13 @_requested @request_leads @ao @$_guest @_done @_tested
+@m13 @_requested @request_leads @ao @$_guest @_done @_tested @_deprecated
 Scenario: I can request a category and more leads for category as a guest
-  When there are no leads
-  And I follow translated "layout.main_menu.shared.category_request"
-  Then I should see translated "category_requests.new.view.header"
-  When I go to browse leads
-  And I follow category "Electronics"
-  And I follow translated "leads.index.request_more_leads"
-  Then I should see translated "more_leads_requests.new.view.header" with options "category:Electronics"
+  # When there are no leads
+  # And I follow translated "layout.main_menu.shared.category_request"
+  # Then I should see translated "category_requests.new.view.header"
+  # When I go to browse leads
+  # And I follow category "Electronics"
+  # And I follow translated "leads.index.request_more_leads"
+  # Then I should see translated "more_leads_requests.new.view.header" with options "category:Electronics"
 
 #6054
 # If a category has "0" leads it should display "Sold out" instead.
-@m13 @_requested @ao @$_guest @_done @_tested
+@m13 @_requested @ao @$_guest @_done @_tested @_deprecated
 Scenario: I can see "Sold out" message when there are no leads in category
-  Given there are no categories
-  And Category named "Sample category" already exists
-  And Category named "Sample category#2" already exists
-  And Lead named "Lead sample" exists within "Sample category#2" category
-  And I go to browse leads
-  Then I should see translated "layout.main_menu.shared.sold_out" within "#categories_table tbody tr:nth-child(1) td:nth-child(3)"
-  And I should not see translated "layout.main_menu.shared.sold_out" within "#categories_table tbody tr:nth-child(2) td:nth-child(3)"
+  # Given there are no categories
+  # And Category named "Sample category" already exists
+  # And Category named "Sample category#2" already exists
+  # And Lead named "Lead sample" exists within "Sample category#2" category
+  # And I go to browse leads
+  # Then I should see translated "layout.main_menu.shared.sold_out" within "#categories_table tbody tr:nth-child(1) td:nth-child(3)"
+  # And I should not see translated "layout.main_menu.shared.sold_out" within "#categories_table tbody tr:nth-child(2) td:nth-child(3)"
 
-@m14 @_requested @$_guest @request_more_leads @ao @_done @_tested
+@m14 @_requested @$_guest @request_more_leads @ao @_done @_tested @_deprecated
 Scenario: I can provide additional information in Note field when requesting more leads for category
-  When there are no leads
-  And I follow translated "layout.main_menu.shared.category_request"
-  Then I should see translated "category_requests.new.view.header"
-  When I go to browse leads
-  And I follow category "Electronics"
-  And I follow translated "leads.index.request_more_leads"
-  And I fill in "email_template_preview_company_name" with "blah blah company name blah"
-  And I fill in "email_template_preview_contact_name" with "blah contact name blah blah"
-  And I fill in "email_template_preview_contact_email" with "zorro@zorro.pl"
-  And I fill in "email_template_preview_contact_phone" with "blah blah contact phone blah"
-  And I fill in "email_template_preview_note" with "blah note blah blah"
-  And I press translated "contact_us.new.view.send_email_button"
-  And last email sent should have been sent to cc "zorro@zorro.pl"
-  And last email sent should have content "blah note blah blah"
+  # When there are no leads
+  # And I follow translated "layout.main_menu.shared.category_request"
+  # Then I should see translated "category_requests.new.view.header"
+  # When I go to browse leads
+  # And I follow category "Electronics"
+  # And I follow translated "leads.index.request_more_leads"
+  # And I fill in "email_template_preview_company_name" with "blah blah company name blah"
+  # And I fill in "email_template_preview_contact_name" with "blah contact name blah blah"
+  # And I fill in "email_template_preview_contact_email" with "zorro@zorro.pl"
+  # And I fill in "email_template_preview_contact_phone" with "blah blah contact phone blah"
+  # And I fill in "email_template_preview_note" with "blah note blah blah"
+  # And I press translated "contact_us.new.view.send_email_button"
+  # And last email sent should have been sent to cc "zorro@zorro.pl"
+  # And last email sent should have content "blah note blah blah"
 
-@m14 @_requested @$_guest @request_more_leads @ao @_done @_tested_elsewhere
+@m14 @_requested @$_guest @request_more_leads @ao @_done @_tested_elsewhere @_deprecated
 Scenario: I should receive copy of the email which is sent when I request more leads for category
 
 # only child (1 level)
