@@ -10,18 +10,18 @@ Background:
   Then I sign in as agent@person.com with password supersecret
   And I go to agents lead templates
 
-@added @_tested @_done
-Scenario: I can list all lead templates that were created by me
-  Given template named "Computer details" for category "Computers" is created by user "other_agent@nbs.com" with role "agent"
-  Given template named "Printers details" for category "Computers" is created by user "agent@person.com" with role "agent"
-  Given template named "Modems details" for category "Computers" is created by user "agent@person.com" with role "agent"
-  And I go to browse leads
-  And I follow translated "categories.index.view.view_lead_templates"
-  And I select "" from "search_with_category"
-  And I press translated "agent.lead_templates.index.view.search_button"
-  Then I should see "Printers details"
-  Then I should see "Modems details"
-  Then I should not see "Computer details"
+# @added @_tested @_done @_deprecated2014
+# Scenario: I can list all lead templates that were created by me
+#   Given template named "Computer details" for category "Computers" is created by user "other_agent@nbs.com" with role "agent"
+#   Given template named "Printers details" for category "Computers" is created by user "agent@person.com" with role "agent"
+#   Given template named "Modems details" for category "Computers" is created by user "agent@person.com" with role "agent"
+#   And I go to browse leads
+#   And I follow translated "categories.index.view.view_lead_templates"
+#   And I select "" from "search_with_category"
+#   And I press translated "agent.lead_templates.index.view.search_button"
+#   Then I should see "Printers details"
+#   Then I should see "Modems details"
+#   Then I should not see "Computer details"
 
 @added @selenium @_tested @_done
 Scenario: I can create new lead template for given category
@@ -64,17 +64,17 @@ Scenario: I can edit lead template that was created by me
   Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
   Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
 
-@added @_tested @_done
-Scenario: I can delete lead template that was created by me and was not filled out by anyone
-  Given template named "Printers details" for category "Computers" is created by user "agent@person.com" with role "agent"
-  Then I go to agents lead templates
-  And I follow translated "agent.lead_templates.index.view.destroy"
-  Then I should see translated "agent.lead_templates.destroy.flash.deletion_successful"
-  Given template named "Computers details" for category "Computers" is created by user "agent@person.com" with role "agent"
-  And template named "Computers details" is filled out by someone
-  Then I go to agents lead templates
-  And I follow translated "agent.lead_templates.index.view.destroy"
-  Then I should see translated "agent.lead_templates.destroy.flash.deletion_failure"
+# @added @_tested @_done @_deprecated2014
+# Scenario: I can delete lead template that was created by me and was not filled out by anyone
+#   Given template named "Printers details" for category "Computers" is created by user "agent@person.com" with role "agent"
+#   Then I go to agents lead templates
+#   And I follow translated "agent.lead_templates.index.view.destroy"
+#   Then I should see translated "agent.lead_templates.destroy.flash.deletion_successful"
+#   Given template named "Computers details" for category "Computers" is created by user "agent@person.com" with role "agent"
+#   And template named "Computers details" is filled out by someone
+#   Then I go to agents lead templates
+#   And I follow translated "agent.lead_templates.index.view.destroy"
+#   Then I should see translated "agent.lead_templates.destroy.flash.deletion_failure"
 
 @added @_tested @selenium @_done
 Scenario: I can add translation for the lead template name and its fields
@@ -93,21 +93,21 @@ Scenario: I can add translation for the lead template name and its fields
   Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
   And the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
 
-@m6 @tgn @_tested @_done
-Scenario: Make it possible to duplicate lead templates (from lead templates listings)
-  Given template named "Computer details" for category "Computers" is created by user "agent@person.com" with role "agent"
-  And template named "Computer details" is mandatory
-  And template named "Computer details" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
-  Then I go to agents lead templates
-  And I follow translated "agent.lead_templates.index.view.duplicate"
-  Then the "lead_template_name" field should contain "Computer details"
-  And checkbox named "lead_template_is_mandatory" should be checked
-  And the "lead_template_lead_template_fields_attributes_0_name" field should contain "field #1"
-  And the "lead_template_lead_template_fields_attributes_1_name" field should contain "field #2"
-  And the "lead_template_lead_template_fields_attributes_2_name" field should contain "field #3"
-  And checkbox named "lead_template_lead_template_fields_attributes_0_is_hidden" should be checked
-  And checkbox named "lead_template_lead_template_fields_attributes_1_is_hidden" should be checked
-  And checkbox named "lead_template_lead_template_fields_attributes_2_is_hidden" should not be checked
-  And checkbox named "lead_template_lead_template_fields_attributes_0_is_mandatory" should be checked
-  And checkbox named "lead_template_lead_template_fields_attributes_1_is_mandatory" should not be checked
-  And checkbox named "lead_template_lead_template_fields_attributes_2_is_mandatory" should not be checked
+# @m6 @tgn @_tested @_done @_deprecated2014
+# Scenario: Make it possible to duplicate lead templates (from lead templates listings)
+#   Given template named "Computer details" for category "Computers" is created by user "agent@person.com" with role "agent"
+#   And template named "Computer details" is mandatory
+#   And template named "Computer details" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
+#   Then I go to agents lead templates
+#   And I follow translated "agent.lead_templates.index.view.duplicate"
+#   Then the "lead_template_name" field should contain "Computer details"
+#   And checkbox named "lead_template_is_mandatory" should be checked
+#   And the "lead_template_lead_template_fields_attributes_0_name" field should contain "field #1"
+#   And the "lead_template_lead_template_fields_attributes_1_name" field should contain "field #2"
+#   And the "lead_template_lead_template_fields_attributes_2_name" field should contain "field #3"
+#   And checkbox named "lead_template_lead_template_fields_attributes_0_is_hidden" should be checked
+#   And checkbox named "lead_template_lead_template_fields_attributes_1_is_hidden" should be checked
+#   And checkbox named "lead_template_lead_template_fields_attributes_2_is_hidden" should not be checked
+#   And checkbox named "lead_template_lead_template_fields_attributes_0_is_mandatory" should be checked
+#   And checkbox named "lead_template_lead_template_fields_attributes_1_is_mandatory" should not be checked
+#   And checkbox named "lead_template_lead_template_fields_attributes_2_is_mandatory" should not be checked

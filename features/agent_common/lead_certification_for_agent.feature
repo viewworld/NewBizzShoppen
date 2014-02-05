@@ -5,50 +5,50 @@ Background:
   Given I am on the homepage
   And I visit domain http://faircalls.eu
 
-@_done @_tested
-Scenario: I can mark a lead as certified
-  When there are no leads
-  And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
-  And lead BestLead is created by user agent007@nbs.com with role agent
-  And I am on the home page
-  And I sign in as agent007@nbs.com with password secret
-  And I follow translated "layout.main_menu.agent.leads"
-  And I really click hidden link by url regex "/agents\/leads\/\d+\/certifications/"
-  Then I should see translated "agent.lead_certifications.index.view.sent_successfully"
+# @_done @_tested @_deprecated2014
+# Scenario: I can mark a lead as certified
+#   When there are no leads
+#   And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
+#   And lead BestLead is created by user agent007@nbs.com with role agent
+#   And I am on the home page
+#   And I sign in as agent007@nbs.com with password secret
+#   And I follow translated "layout.main_menu.agent.leads"
+#   And I really click hidden link by url regex "/agents\/leads\/\d+\/certifications/"
+#   Then I should see translated "agent.lead_certifications.index.view.sent_successfully"
 
-@_done @_tested
-Scenario: When lead is certified then email is sent to lead's contact with confirmation request
-  When there are no leads
-  And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
-  And lead BestLead is created by user agent007@nbs.com with role agent
-  And lead "BestLead" has attributes "email_address:james@bond.co.uk"
-  And I am on the home page
-  And I sign in as agent007@nbs.com with password secret
-  And I follow translated "layout.main_menu.agent.leads"
-  And I really click hidden link by url regex "/agents\/leads\/\d+\/certifications/"
-  And last email sent should have been sent to recipient "james@bond.co.uk"
-  And last email sent should have content "edit?token="
+# @_done @_tested @_deprecated2014
+# Scenario: When lead is certified then email is sent to lead's contact with confirmation request
+#   When there are no leads
+#   And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
+#   And lead BestLead is created by user agent007@nbs.com with role agent
+#   And lead "BestLead" has attributes "email_address:james@bond.co.uk"
+#   And I am on the home page
+#   And I sign in as agent007@nbs.com with password secret
+#   And I follow translated "layout.main_menu.agent.leads"
+#   And I really click hidden link by url regex "/agents\/leads\/\d+\/certifications/"
+#   And last email sent should have been sent to recipient "james@bond.co.uk"
+#   And last email sent should have content "edit?token="
 
-@_done @_tested
-Scenario: I can see that the lead I have marked as certified was confirmed by the contact
-  When there are no leads
-  And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
-  And lead BestLead is created by user agent007@nbs.com with role agent
-  And lead "BestLead" has attributes "email_address:james@bond.co.uk"
-  And I am on the home page
-  And I sign in as agent007@nbs.com with password secret
-  And I follow translated "layout.main_menu.agent.leads"
-  And I really click hidden link by url regex "/agents\/leads\/\d+\/certifications/"
-  Then I should see translated "leads.listing.certification_status"
-  And I should see translated "leads.certification.status_0"
-  And I sign out
-  And I visit certification url for lead "BestLead"
-  And I press translated "leads.certification.confirm"
-  And I am on the home page
-  And I sign in as agent007@nbs.com with password secret
-  And I follow translated "layout.main_menu.agent.leads"
-  Then I should see translated "leads.listing.certification_status"
-  And I should see translated "leads.certification.status_3"
+# @_done @_tested @_deprecated2014
+# Scenario: I can see that the lead I have marked as certified was confirmed by the contact
+#   When there are no leads
+#   And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
+#   And lead BestLead is created by user agent007@nbs.com with role agent
+#   And lead "BestLead" has attributes "email_address:james@bond.co.uk"
+#   And I am on the home page
+#   And I sign in as agent007@nbs.com with password secret
+#   And I follow translated "layout.main_menu.agent.leads"
+#   And I really click hidden link by url regex "/agents\/leads\/\d+\/certifications/"
+#   Then I should see translated "leads.listing.certification_status"
+#   And I should see translated "leads.certification.status_0"
+#   And I sign out
+#   And I visit certification url for lead "BestLead"
+#   And I press translated "leads.certification.confirm"
+#   And I am on the home page
+#   And I sign in as agent007@nbs.com with password secret
+#   And I follow translated "layout.main_menu.agent.leads"
+#   Then I should see translated "leads.listing.certification_status"
+#   And I should see translated "leads.certification.status_3"
 
 # 5770
 # put this button next to others on new lead form, when clicked a certification request should be sent
@@ -141,22 +141,22 @@ Scenario: When creating a new lead I can click "Create and certify"
   And last email sent should have been sent to recipient "kowalski@person.com"
 
 # 5769
-@m11 @_requested @is @_done @_tested
-Scenario: I should see "Recertify" button when Lead's contact email changes and certification request has benn already sent
-  When there are no leads
-  And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
-  And lead BestLead is created by user agent007@nbs.com with role agent
-  And lead "BestLead" has attributes "email_address:john@rambo.fake"
-  And I am on the home page
-  And I sign in as agent007@nbs.com with password secret
-  And I follow translated "layout.main_menu.agent.leads"
-  When lead "BestLead" certification request is sent
-  When lead "BestLead" has attributes "email_address:bad@guy.fake"
-  And I follow translated "layout.main_menu.agent.leads"
-  Then I should not see translated "agent.leads.index.view.certify"
-  Then I should see translated "agent.leads.index.view.recertify"
-  Then I follow translated "agent.leads.index.view.recertify"
-  Then I should see translated "agent.lead_certifications.index.view.sent_successfully"
+# @m11 @_requested @is @_done @_tested @_deprecated2014
+# Scenario: I should see "Recertify" button when Lead's contact email changes and certification request has benn already sent
+#   When there are no leads
+#   And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
+#   And lead BestLead is created by user agent007@nbs.com with role agent
+#   And lead "BestLead" has attributes "email_address:john@rambo.fake"
+#   And I am on the home page
+#   And I sign in as agent007@nbs.com with password secret
+#   And I follow translated "layout.main_menu.agent.leads"
+#   When lead "BestLead" certification request is sent
+#   When lead "BestLead" has attributes "email_address:bad@guy.fake"
+#   And I follow translated "layout.main_menu.agent.leads"
+#   Then I should not see translated "agent.leads.index.view.certify"
+#   Then I should see translated "agent.leads.index.view.recertify"
+#   Then I follow translated "agent.leads.index.view.recertify"
+#   Then I should see translated "agent.lead_certifications.index.view.sent_successfully"
 
 # 5765
 @m11 @_requested @tgn @_tested @_done
@@ -188,19 +188,19 @@ Scenario: I can't see "Sales information", "Price", "Currency", "Category", "Cou
 # rename "Lead information" to "Procurement information", "Editing lead" to  "Certify information"
 # and "Certification" link to "Certify"
 # and add blurb text to /leads/1/edit page
-@m11 @_requested @tgn @_done @_tested
-Scenario: I can see blurb, "Procurement information", "Certify information" and "Certify" link
-  When there are no leads
-  And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
-  Given lead BestLead is created by user agent007@nbs.com with role agent
-  When lead "BestLead" certification request is sent
-  And I visit certification url for lead "BestLead"
-  Then I should see translated "leads.certification.header"
-  And I should see translated "leads.certification.member_information"
-  And I should see "Blurb certify information"
-  Given I am not sign in
-  When there are no leads
-  Given lead BestLead is created by user agent007@nbs.com with role agent
-  And I sign in as agent007@nbs.com with password secret
-  And I go to agents leads
-  And I follow translated "agent.leads.index.view.certify"
+# @m11 @_requested @tgn @_done @_tested @_deprecated2014
+# Scenario: I can see blurb, "Procurement information", "Certify information" and "Certify" link
+#   When there are no leads
+#   And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
+#   Given lead BestLead is created by user agent007@nbs.com with role agent
+#   When lead "BestLead" certification request is sent
+#   And I visit certification url for lead "BestLead"
+#   Then I should see translated "leads.certification.header"
+#   And I should see translated "leads.certification.member_information"
+#   And I should see "Blurb certify information"
+#   Given I am not sign in
+#   When there are no leads
+#   Given lead BestLead is created by user agent007@nbs.com with role agent
+#   And I sign in as agent007@nbs.com with password secret
+#   And I go to agents leads
+#   And I follow translated "agent.leads.index.view.certify"

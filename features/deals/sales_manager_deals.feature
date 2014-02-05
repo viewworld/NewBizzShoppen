@@ -5,22 +5,22 @@ Feature: Deals from Sales Manager perspective
     Then user "buyer@nbs.com" has deal maker role enabled
     And I sign in as buyer@nbs.com with password secret
 
-  @_done @_tested
-  Scenario: I can see new tab "My deals" right to the "My leads"
-    Then I should see translated "layout.main_menu.lead_supplier.my_deals"
+  # @_done @_tested @_deprecated2014
+  # Scenario: I can see new tab "My deals" right to the "My leads"
+  #   Then I should see translated "layout.main_menu.lead_supplier.my_deals"
 
-  @_done @_tested
-  Scenario: I can see a list of my created deals sorted by creation date when I click "My deals"
-    Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:awesome|description:awesome|hidden_description:awesome|start_date:2011-01-01|end_date:2011-01-01|company_name:starks"
-    Then I wait 1 second
-    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
-    Then a deal is created by "translator_customer@nbs.com" for user "translator_customer@nbs.com" and category "Business deals" with attributes "header:hidden|description:hidden|hidden_description:hidden|start_date:2011-01-01|end_date:2011-01-01|company_name:starks"
-    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
-    And I select "" from "search_active_is"
-    And I press translated "leads.index.search.search_button"
-    Then I should not see "hidden"
-    Then I should see "super" before "awesome"
-    Then I filter and sort deals with my deals translation "layout.main_menu.lead_supplier.my_deals"
+  # @_done @_tested @_deprecated2014
+  # Scenario: I can see a list of my created deals sorted by creation date when I click "My deals"
+  #   Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:awesome|description:awesome|hidden_description:awesome|start_date:2011-01-01|end_date:2011-01-01|company_name:starks"
+  #   Then I wait 1 second
+  #   Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+  #   Then a deal is created by "translator_customer@nbs.com" for user "translator_customer@nbs.com" and category "Business deals" with attributes "header:hidden|description:hidden|hidden_description:hidden|start_date:2011-01-01|end_date:2011-01-01|company_name:starks"
+  #   Then I follow translated "layout.main_menu.lead_supplier.my_deals"
+  #   And I select "" from "search_active_is"
+  #   And I press translated "leads.index.search.search_button"
+  #   Then I should not see "hidden"
+  #   Then I should see "super" before "awesome"
+  #   Then I filter and sort deals with my deals translation "layout.main_menu.lead_supplier.my_deals"
 
   @_done @_tested_elsewhere
   Scenario: I can filter the list by "active" and "inactive" deals
@@ -152,49 +152,49 @@ Feature: Deals from Sales Manager perspective
     And I check "lead_template_lead_template_fields_attributes_1_is_mandatory"
     Then I press translated "agent.lead_templates.new.view.button_create"
 
-  @_done @_tested @selenium
-  Scenario: I can use existing templates for this category
-    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
-    And user "buyer@nbs.com" has assigned role "deal_maker"
-    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
-    Given template named "Computer details1" for category "Xeper" is created by user "agent@person.com" with role "agent"
-    And template named "Computer details1" is mandatory
-    And template named "Computer details1" is global
-    And template named "Computer details1" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
-    Given template named "Computer details2" for category "Xeper" is created by user "buyer@nbs.com" with role "supplier"
-    And template named "Computer details2" is mandatory
-    And template named "Computer details2" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
-    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
-    Then I follow translated "deals.common.listing.view.new_deal"
-    Then I fill deal creation form
-    And I fill in "deal_header" with "Templates deal test"
-    And I check "deal_published"
-    And I select "Computer details2" from "all_templates"
-    And I select "Electronics deals" from "deal_category_id"
-    And I follow translated "administration.categories.form.move_users_right"
-    Then I press translated "supplier.deals.new.view.create_button"
-    And I fill in "search_with_keyword" with "Templates deal test"
-    And I press translated "leads.index.search.search_button"
-    And I click hidden link by url regex "/suppliers\/deals\/\d+\/edit/"
-    And "deal_deal_template_ids_" dropdown should have values "Computer details2"
-    Then I am not sign in
-    And I visit domain http://fairdeals.eu
-    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
-    And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
-    Then I sign in as purchase_manager101@nbs.com with password supersecret
-    And I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow category "Electronics deals"
-    And I follow translated "deals.index.view.view_deal"
-    And I confirm a js popup on the next step
-    And I follow translated "deals.index.view.contact_me"
-    And I fill in "lead_lead_template_values_attributes_0_value" with "some val1"
-    And I fill in "lead_lead_template_values_attributes_3_value" with "some val2"
-    Then I should see "Computer details1"
-    Then I should see "Computer details2"
-    And I press translated "member.leads.new.view.button_create"
-    And I wait 3 second
-    And I should see "Templates deal test"
+  # @_done @_tested @selenium @_deprecated2014
+  # Scenario: I can use existing templates for this category
+  #   And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
+  #   And user "buyer@nbs.com" has assigned role "deal_maker"
+  #   Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+  #   Given template named "Computer details1" for category "Xeper" is created by user "agent@person.com" with role "agent"
+  #   And template named "Computer details1" is mandatory
+  #   And template named "Computer details1" is global
+  #   And template named "Computer details1" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
+  #   Given template named "Computer details2" for category "Xeper" is created by user "buyer@nbs.com" with role "supplier"
+  #   And template named "Computer details2" is mandatory
+  #   And template named "Computer details2" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
+  #   Then I follow translated "layout.main_menu.lead_supplier.my_deals"
+  #   Then I follow translated "deals.common.listing.view.new_deal"
+  #   Then I fill deal creation form
+  #   And I fill in "deal_header" with "Templates deal test"
+  #   And I check "deal_published"
+  #   And I select "Computer details2" from "all_templates"
+  #   And I select "Electronics deals" from "deal_category_id"
+  #   And I follow translated "administration.categories.form.move_users_right"
+  #   Then I press translated "supplier.deals.new.view.create_button"
+  #   And I fill in "search_with_keyword" with "Templates deal test"
+  #   And I press translated "leads.index.search.search_button"
+  #   And I click hidden link by url regex "/suppliers\/deals\/\d+\/edit/"
+  #   And "deal_deal_template_ids_" dropdown should have values "Computer details2"
+  #   Then I am not sign in
+  #   And I visit domain http://fairdeals.eu
+  #   And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
+  #   When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
+  #   And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
+  #   Then I sign in as purchase_manager101@nbs.com with password supersecret
+  #   And I follow translated "layout.fairdeals.main_menu.deals"
+  #   And I follow category "Electronics deals"
+  #   And I follow translated "deals.index.view.view_deal"
+  #   And I confirm a js popup on the next step
+  #   And I follow translated "deals.index.view.contact_me"
+  #   And I fill in "lead_lead_template_values_attributes_0_value" with "some val1"
+  #   And I fill in "lead_lead_template_values_attributes_3_value" with "some val2"
+  #   Then I should see "Computer details1"
+  #   Then I should see "Computer details2"
+  #   And I press translated "member.leads.new.view.button_create"
+  #   And I wait 3 second
+  #   And I should see "Templates deal test"
 
   @_done @tested_elsewhere
   Scenario: Mandatory templates for category should be automatically included

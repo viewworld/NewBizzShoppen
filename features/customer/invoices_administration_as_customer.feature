@@ -10,9 +10,9 @@ Feature: Invoices administration as customer
     And invoice line for first invoice exists for user "jon@lajoie.ca" with role "supplier" with attributes "netto_price:100,quantity:1,vat_rate:23,netto_value:100,brutto_value:123"
     And I follow translated "layout.main_menu.supplier.invoices"
 
-  @_done
-  Scenario: I can see a list of my invoices
-    Then I should see "1" rows in a table with headers within "#invoices"
+  # @_done @_deprecated2014
+  # Scenario: I can see a list of my invoices
+  #   Then I should see "1" rows in a table with headers within "#invoices"
 
   @_done
   Scenario: I can see number of my invoice
@@ -42,10 +42,10 @@ Feature: Invoices administration as customer
     When I follow translated "supplier.invoices.index.view.show_invoice"
     Then I should not see CSS path "div.status_data"
 
-  @_done @tc_file_mgmt
-  Scenario: I can download invoice as PDF file
-    When I follow translated "supplier.invoices.index.view.show_invoice"
-    And I follow translated PDF link "supplier.invoices.show.view.download_pdf"
-    Then I should see translated "supplier.invoices.show.view.from"
-    And I should see translated "supplier.invoices.show.view.total"
-    And I should see translated "supplier.invoices.show.view.payment_method"
+  # @_done @tc_file_mgmt @_deprecated2014
+  # Scenario: I can download invoice as PDF file
+  #   When I follow translated "supplier.invoices.index.view.show_invoice"
+  #   And I follow translated PDF link "supplier.invoices.show.view.download_pdf"
+  #   Then I should see translated "supplier.invoices.show.view.from"
+  #   And I should see translated "supplier.invoices.show.view.total"
+  #   And I should see translated "supplier.invoices.show.view.payment_method"

@@ -2,38 +2,37 @@
 Feature: Vouchers
 
   Background:
-  Given I am on the homepage
+    Given I am on the homepage
 
-  @_done @_tested @tc_file_mgmt
-  Scenario: When voucher is enabled for deal then 'get deal' request redirect to deal information request page, after click on "ok" user is redirected to paypal for payment
-    And I visit domain http://fairdeals.eu
-    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
-    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL|voucher_enabled:true|voucher_until_type:1|deal_price:2|discounted_price:1|voucher_max_number:3|voucher_how_to_redeem:you can redeem it by calling me"
-    Then voucher number with index "0" for deal "software components" has number "000000001" and state "new"
-    And I am signed up and confirmed as user with email translator_purchase_manager@nbs.com and password supersecret and role member
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10,billing_cycle:10"
-    And user with email "translator_purchase_manager@nbs.com" upgrades to subscription named "Premium member"
-    And I sign in as translator_purchase_manager@nbs.com with password secret
-    Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow category "Business deals"
-    Then I should see "software components"
-    Then I follow translated "deals.index.view.view_deal"
-    Then I follow translated "deals.index.view.contact_me"
-    And I press translated "member.leads.new.view.button_create"
-    Then I press translated "member.leads.show.view.go_to_paypal"
-    Then I should see "redirecting to paypal, please wait..."
-    #check paypal response
-    Then paypal voucher payment succeeded for deal "software components" and user with email "translator_purchase_manager@nbs.com" and role "member"
-    Then last email sent should have been sent to recipient "translator_purchase_manager@nbs.com"
-    Then last email sent should have subject "You have new voucher"
-    #check displaying
-    And I visit domain http://fairdeals.eu
-    Then I follow translated "layout.fairdeals.main_menu.member.my_requests"
-    And I click hidden link by url regex "/members\/requests\/\d+\/edit/"
-  And I should see "you can redeem it by calling me"
-    Then I should see translated "member.leads.edit.view.voucher_label"
-    Then I follow translated "member.leads.edit.view.voucher_link"
-
+  # @_done @_tested @tc_file_mgmt @_deprecated2014
+  # Scenario: When voucher is enabled for deal then 'get deal' request redirect to deal information request page, after click on "ok" user is redirected to paypal for payment
+  #   And I visit domain http://fairdeals.eu
+  #   And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
+  #   Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL|voucher_enabled:true|voucher_until_type:1|deal_price:2|discounted_price:1|voucher_max_number:3|voucher_how_to_redeem:you can redeem it by calling me"
+  #   Then voucher number with index "0" for deal "software components" has number "000000001" and state "new"
+  #   And I am signed up and confirmed as user with email translator_purchase_manager@nbs.com and password supersecret and role member
+  #   When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10,billing_cycle:10"
+  #   And user with email "translator_purchase_manager@nbs.com" upgrades to subscription named "Premium member"
+  #   And I sign in as translator_purchase_manager@nbs.com with password secret
+  #   Then I follow translated "layout.fairdeals.main_menu.deals"
+  #   And I follow category "Business deals"
+  #   Then I should see "software components"
+  #   Then I follow translated "deals.index.view.view_deal"
+  #   Then I follow translated "deals.index.view.contact_me"
+  #   And I press translated "member.leads.new.view.button_create"
+  #   Then I press translated "member.leads.show.view.go_to_paypal"
+  #   Then I should see "redirecting to paypal, please wait..."
+  #   #check paypal response
+  #   Then paypal voucher payment succeeded for deal "software components" and user with email "translator_purchase_manager@nbs.com" and role "member"
+  #   Then last email sent should have been sent to recipient "translator_purchase_manager@nbs.com"
+  #   Then last email sent should have subject "You have new voucher"
+  #   #check displaying
+  #   And I visit domain http://fairdeals.eu
+  #   Then I follow translated "layout.fairdeals.main_menu.member.my_requests"
+  #   And I click hidden link by url regex "/members\/requests\/\d+\/edit/"
+  #   And I should see "you can redeem it by calling me"
+  #   Then I should see translated "member.leads.edit.view.voucher_label"
+  #   Then I follow translated "member.leads.edit.view.voucher_link"
 
   @_done @_tested
   Scenario: Deal is not displayed when max number of vouchers has been bought
@@ -52,28 +51,28 @@ Feature: Vouchers
   @_done @tested_elsewhere
   Scenario: If member (purchase manager) have paid subscription he can buy voucher
 
-  @_done @tested_elsewhere
+    @_done @tested_elsewhere
   Scenario: Voucher can by bought through paypal
 
-  @_done @tested_elsewhere
+    @_done @tested_elsewhere
   Scenario: When voucher is bought an invoice is generated and set to paid
 
-  @_done @tested_elsewhere
+    @_done @tested_elsewhere
   Scenario: When voucher is bought an invoice is send to user
 
-  @_done @tested_elsewhere
+    @_done @tested_elsewhere
   Scenario: When voucher is bought lead is created as normal, and pdf voucher is generated
 
-  @_done @tested_elsewhere
+    @_done @tested_elsewhere
   Scenario: When voucher is bought pdf voucher is send to user in confirmation mail
 
-  @_done @deprecated
+    @_done @deprecated
   Scenario: When voucher is bought then unique 9 digit/capital_letters code is generated
 
-  @_done @tested_elsewhere
+    @_done @tested_elsewhere
   Scenario: When voucher is bought user can display it on get deal page: fairdeals logo, company logo, deal name, heading picture voucher value (deal price) price paid (discounted deal price) valid until, detailed description, fine print, how to redeem, voucher number (?)
 
-  @selenium @_done @_tested
+    @selenium @_done @_tested
   Scenario: Admin can enable voucher for deal
     And I sign in as admin@nbs.com with password secret
     Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
@@ -89,15 +88,15 @@ Feature: Vouchers
     Then user "agent@nbs.com" has deal maker role enabled
     Then I enable voucher with role "agent"
 
-  @selenium @_done @_tested @faircalls
-  Scenario: Call center with deal maker role can enable voucher for deal
-    And I visit domain http://faircalls.eu
-    And I sign in as translator_call_centre@nbs.com with password secret
-    Then a deal is created by "translator_call_centre@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
-    Then I am on the call_centre deal edit page for super
-    Then I should not see "Voucher enabled"
-    Then user "translator_call_centre@nbs.com" has deal maker role enabled
-    Then I enable voucher with role "call_centre"
+  # @selenium @_done @_tested @faircalls @_deprecated2014
+  # Scenario: Call center with deal maker role can enable voucher for deal
+  #   And I visit domain http://faircalls.eu
+  #   And I sign in as translator_call_centre@nbs.com with password secret
+  #   Then a deal is created by "translator_call_centre@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+  #   Then I am on the call_centre deal edit page for super
+  #   Then I should not see "Voucher enabled"
+  #   Then user "translator_call_centre@nbs.com" has deal maker role enabled
+  #   Then I enable voucher with role "call_centre"
 
   @selenium @_done @_tested @faircalls
   Scenario: Call center agent with deal maker role can enable voucher for deal
@@ -112,12 +111,12 @@ Feature: Vouchers
   @_done @_tested_elsewhere
   Scenario: When deal has enabled voucher then admin/agent can edit how_to_redeem and valid_until (fix date or number of weeks from procurement date) and number of vouchers
 
-  @_done @_tested @tc_file_mgmt
-  Scenario: When deal has enabled voucher then admin/agent can edit heading picture
-    Then I add picture for voucher with role "admin"
-    Then I add picture for voucher with role "agent"
-    Then I add picture for voucher with role "call_centre"
-    Then I add picture for voucher with role "call_centre_agent"
+  # @_done @_tested @tc_file_mgmt @_deprecated2014
+  # Scenario: When deal has enabled voucher then admin/agent can edit heading picture
+  #   Then I add picture for voucher with role "admin"
+  #   Then I add picture for voucher with role "agent"
+  #   Then I add picture for voucher with role "call_centre"
+  #   Then I add picture for voucher with role "call_centre_agent"
 
   @_done @_tested
   Scenario: Supplier can see voucher information but can not edit it
@@ -177,8 +176,8 @@ Feature: Vouchers
   @_done @_tested_elsewhere
   Scenario: user can provide unique code and validate it after he click "validate voucher"
 
-  @_done @_tested_elsewhere
+    @_done @_tested_elsewhere
   Scenario: user receive proper message after voucher validation
 
-  @_done @_tested_elsewhere
+    @_done @_tested_elsewhere
   Scenario: user can use voucher after successful validation

@@ -38,23 +38,23 @@ Feature: Category buyer rules
     Then I should see translated "supplier.subaccounts.create.flash.subaccount_creation_successful"
     And user "driscoll@person.noserver.com" should have role "category_supplier"
 
-  @_done
-  Scenario: I can add lead buyers when registered from category home page
-    When Category named "Best Leads" already exists
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes ""
-    And user "jon@lajoie.ca" has team buyers enabled
-    And I am on category home page for Best Leads
-    And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "layout.main_menu.supplier.subaccounts"
-    Then I follow translated "supplier.subaccounts.index.view.new_lead_supplier"
-    And I fill in "user_lead_supplier_first_name" with "Mark"
-    And I fill in "user_lead_supplier_last_name" with "Driscoll"
-    And I fill in "user_lead_supplier_email" with "driscoll@person.noserver.com"
-    And I fill in "user_lead_supplier_password" with "secret"
-    And I fill in "user_lead_supplier_password_confirmation" with "secret"
-    And I press translated "supplier.subaccounts.new.view.button_create"
-    Then I should see translated "supplier.subaccounts.create.flash.subaccount_creation_successful"
-    And user "driscoll@person.noserver.com" should have role "category_supplier"
+  # @_done @_deprecated2014
+  # Scenario: I can add lead buyers when registered from category home page
+  #   When Category named "Best Leads" already exists
+  #   And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes ""
+  #   And user "jon@lajoie.ca" has team buyers enabled
+  #   And I am on category home page for Best Leads
+  #   And I sign in as jon@lajoie.ca with password secret
+  #   And I follow translated "layout.main_menu.supplier.subaccounts"
+  #   Then I follow translated "supplier.subaccounts.index.view.new_lead_supplier"
+  #   And I fill in "user_lead_supplier_first_name" with "Mark"
+  #   And I fill in "user_lead_supplier_last_name" with "Driscoll"
+  #   And I fill in "user_lead_supplier_email" with "driscoll@person.noserver.com"
+  #   And I fill in "user_lead_supplier_password" with "secret"
+  #   And I fill in "user_lead_supplier_password_confirmation" with "secret"
+  #   And I press translated "supplier.subaccounts.new.view.button_create"
+  #   Then I should see translated "supplier.subaccounts.create.flash.subaccount_creation_successful"
+  #   And user "driscoll@person.noserver.com" should have role "category_supplier"
 
   @_done
   Scenario: Subaccounts should have access only to parents category
@@ -112,21 +112,21 @@ Feature: Category buyer rules
     And I select "Worst Leads" from "category"
     Then I should be on category leads page for Worst Leads
 
-  @m6 @added @_done @_tested
-  Scenario: If category buyer has more than one category he can access all of them
-    When Category named "Basic Leads" already exists
-    And Category named "Worst Leads" already exists
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Basic Leads" with attributes ""
-    And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
-    And user "jon@lajoie.ca" has team buyers enabled
-    And user "jon@lajoie.ca" is assigned to category "Worst Leads" as category buyer
-    And I am on the home page
-    And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
-    Then I should be on category leads page for Basic Leads
-    And I am on the category home page for Worst Leads
-    And I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
-    Then I should be on category leads page for Worst Leads
+  # @m6 @added @_done @_tested @_deprecated2014
+  # Scenario: If category buyer has more than one category he can access all of them
+  #   When Category named "Basic Leads" already exists
+  #   And Category named "Worst Leads" already exists
+  #   And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Basic Leads" with attributes ""
+  #   And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
+  #   And user "jon@lajoie.ca" has team buyers enabled
+  #   And user "jon@lajoie.ca" is assigned to category "Worst Leads" as category buyer
+  #   And I am on the home page
+  #   And I sign in as jon@lajoie.ca with password secret
+  #   And I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
+  #   Then I should be on category leads page for Basic Leads
+  #   And I am on the category home page for Worst Leads
+  #   And I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
+  #   Then I should be on category leads page for Worst Leads
 
   @m6 @added @_done @_tested
   Scenario: Category buyer can't access categories he's not assigned to
@@ -139,33 +139,33 @@ Feature: Category buyer rules
     And I am on category home page for Worst Leads
     Then I should be on category home page for Basic Leads
 
-  @m6 @added @_done @_tested
-  Scenario: Subaccounts should have access to all parents category
-    When Category named "Best Leads" already exists
-    And Category named "Worst Leads" already exists
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes ""
-    And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
-    And user "jon@lajoie.ca" has team buyers enabled
-    And user "jon@lajoie.ca" is assigned to category "Worst Leads" as category buyer
-    And I am on category home page for Best Leads
-    And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "layout.main_menu.supplier.subaccounts"
-    Then I follow translated "supplier.subaccounts.index.view.new_lead_supplier"
-    And I fill in "user_lead_supplier_first_name" with "Mark"
-    And I fill in "user_lead_supplier_last_name" with "Driscoll"
-    And I fill in "user_lead_supplier_email" with "driscoll@person.noserver.com"
-    And I fill in "user_lead_supplier_password" with "secret"
-    And I fill in "user_lead_supplier_password_confirmation" with "secret"
-    And I press translated "supplier.subaccounts.new.view.button_create"
-    And I sign out
-    And user "driscoll@person.noserver.com" is confirmed
-    When I sign in as driscoll@person.noserver.com with password secret
-    Then I should be on category home page for Best Leads
-    When I follow translated "layout.main_menu.shared.browse_leads"
-    Then I should be on category home leads page for Best Leads
-    When I am on the category home page for Worst Leads
-    And I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
-    Then I should be on category leads page for Worst Leads
+  # @m6 @added @_done @_tested @_deprecated2014
+  # Scenario: Subaccounts should have access to all parents category
+  #   When Category named "Best Leads" already exists
+  #   And Category named "Worst Leads" already exists
+  #   And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes ""
+  #   And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
+  #   And user "jon@lajoie.ca" has team buyers enabled
+  #   And user "jon@lajoie.ca" is assigned to category "Worst Leads" as category buyer
+  #   And I am on category home page for Best Leads
+  #   And I sign in as jon@lajoie.ca with password secret
+  #   And I follow translated "layout.main_menu.supplier.subaccounts"
+  #   Then I follow translated "supplier.subaccounts.index.view.new_lead_supplier"
+  #   And I fill in "user_lead_supplier_first_name" with "Mark"
+  #   And I fill in "user_lead_supplier_last_name" with "Driscoll"
+  #   And I fill in "user_lead_supplier_email" with "driscoll@person.noserver.com"
+  #   And I fill in "user_lead_supplier_password" with "secret"
+  #   And I fill in "user_lead_supplier_password_confirmation" with "secret"
+  #   And I press translated "supplier.subaccounts.new.view.button_create"
+  #   And I sign out
+  #   And user "driscoll@person.noserver.com" is confirmed
+  #   When I sign in as driscoll@person.noserver.com with password secret
+  #   Then I should be on category home page for Best Leads
+  #   When I follow translated "layout.main_menu.shared.browse_leads"
+  #   Then I should be on category home leads page for Best Leads
+  #   When I am on the category home page for Worst Leads
+  #   And I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
+  #   Then I should be on category leads page for Worst Leads
 
   @m6 @added @_done @_tested
   Scenario: Subaccounts for Category buyer can't access categories parent is not assigned to
@@ -179,15 +179,15 @@ Feature: Category buyer rules
     And I am on category home page for Worst Leads
     Then I should be on category home page for Basic Leads
 
-  #deprecated since every category supplier has company uniq category created
+    #deprecated since every category supplier has company uniq category created
   @m6 @added @_done @_tested @_requested @_deprecated
   Scenario: I can't login when I have no categories assigned
-#    When Category named "SampleCat" already exists
-#    When I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "SampleCat"
-#    And user "jon@lajoie.ca" has no buying categories
-#    And I am on the home page
-#    And I sign in as jon@lajoie.ca with password secret
-#    Then I should see translated "common.no_categories_for_category_supplier"
+    #    When Category named "SampleCat" already exists
+    #    When I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "SampleCat"
+    #    And user "jon@lajoie.ca" has no buying categories
+    #    And I am on the home page
+    #    And I sign in as jon@lajoie.ca with password secret
+    #    Then I should see translated "common.no_categories_for_category_supplier"
 
   @m6 @added @ao @_done @_tested
   Scenario: I can edit lead buyer that belongs to my account
@@ -263,22 +263,22 @@ Feature: Category buyer rules
     And I should not see "WymuszeniePierwszenstwa" within "table.categories_table"
 
   #9513
-  @m26 @_requested @_done @_tested @tgn
-  Scenario: I can see My deals tab only when I have deal maker role or I was marked by admin as Show my deals
-    Given I am not sign in
-    And I have user with email category_supplier@nbs.com and role category_supplier
-    And user "category_supplier@nbs.com" with role "category_supplier" has attributes "dont_show_my_deals:false"
-    And I sign in as category_supplier@nbs.com with password secret
-    Then I should not see CSS path "a[tab='browse_deals']"
-    And I should see CSS path "a[tab='deals']"
+  # @m26 @_requested @_done @_tested @tgn @_deprecated2014
+  # Scenario: I can see My deals tab only when I have deal maker role or I was marked by admin as Show my deals
+  #   Given I am not sign in
+  #   And I have user with email category_supplier@nbs.com and role category_supplier
+  #   And user "category_supplier@nbs.com" with role "category_supplier" has attributes "dont_show_my_deals:false"
+  #   And I sign in as category_supplier@nbs.com with password secret
+  #   Then I should not see CSS path "a[tab='browse_deals']"
+  #   And I should see CSS path "a[tab='deals']"
 
-    And user "category_supplier@nbs.com" with role "category_supplier" has attributes "dont_show_my_deals:true"
-    Then I go to the homepage
-    And I should not see CSS path "a[tab='deals']"
+  #   And user "category_supplier@nbs.com" with role "category_supplier" has attributes "dont_show_my_deals:true"
+  #   Then I go to the homepage
+  #   And I should not see CSS path "a[tab='deals']"
 
-    And user "category_supplier@nbs.com" has deal maker role enabled
-    Then I go to the homepage
-    And I should see CSS path "a[tab='deals']"
+  #   And user "category_supplier@nbs.com" has deal maker role enabled
+  #   Then I go to the homepage
+  #   And I should see CSS path "a[tab='deals']"
 
   #9513
   @m26 @_requested @tgn @_done @_tested_elsewhere
@@ -300,6 +300,3 @@ Feature: Category buyer rules
   #10109
   @m29 @_done @_non_testable @tgn @_requested
   Scenario: I should see my accessible categories hierarchically sorted in a dropdown on Browse leads page
-
-
-

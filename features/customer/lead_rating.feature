@@ -72,25 +72,25 @@ Scenario: Agent is informed when his lead is rated as 'unsatisfactory'
   And last email sent should have content "has been rated as"
 
 # should this listing include all ratings or only unsatisfactory?
-@_tested @_done @faircalls
-Scenario: As agent I can view 'unsatisfactory' ratings regarding my leads
-  Given I am not sign in
-  And I visit domain http://faircalls.eu
-  And I am on the homepage
-  And I am signed up and confirmed as user with email agent@person.com and password supersecret and role agent
-  Given lead Ultimate monitors deal is created by user agent@person.com with role agent
-  And a lead Ultimate monitors deal exists within category Computers and is bought by user bob@person.com with role supplier
-  And a lead "Ultimate monitors deal" has good rating
-  Given lead Ultimate mouses deal is created by user agent@person.com with role agent
-  And a lead Ultimate mouses deal exists within category Computers and is bought by user bob@person.com with role supplier
-  And a lead "Ultimate mouses deal" has bad rating
-  Then I sign in as agent@person.com with password supersecret
-  And I go to agents leads
-  Then I follow translated "leads.table.unsatisfactory_rating"
-  Then I follow translated "leads.table.unsatisfactory_rating"
-  Then I should have translated value "leads.listing.has_unsatisfactory_rating_yes" in the css path "tr:nth-child(1) td:nth-child(14)"
-  Given I follow translated "leads.listing.has_unsatisfactory_rating_yes"
-  Then I should see translated "agent.leads.edit.view.rating_level"
+# @_tested @_done @faircalls @_deprecated2014
+# Scenario: As agent I can view 'unsatisfactory' ratings regarding my leads
+#   Given I am not sign in
+#   And I visit domain http://faircalls.eu
+#   And I am on the homepage
+#   And I am signed up and confirmed as user with email agent@person.com and password supersecret and role agent
+#   Given lead Ultimate monitors deal is created by user agent@person.com with role agent
+#   And a lead Ultimate monitors deal exists within category Computers and is bought by user bob@person.com with role supplier
+#   And a lead "Ultimate monitors deal" has good rating
+#   Given lead Ultimate mouses deal is created by user agent@person.com with role agent
+#   And a lead Ultimate mouses deal exists within category Computers and is bought by user bob@person.com with role supplier
+#   And a lead "Ultimate mouses deal" has bad rating
+#   Then I sign in as agent@person.com with password supersecret
+#   And I go to agents leads
+#   Then I follow translated "leads.table.unsatisfactory_rating"
+#   Then I follow translated "leads.table.unsatisfactory_rating"
+#   Then I should have translated value "leads.listing.has_unsatisfactory_rating_yes" in the css path "tr:nth-child(1) td:nth-child(14)"
+#   Given I follow translated "leads.listing.has_unsatisfactory_rating_yes"
+#   Then I should see translated "agent.leads.edit.view.rating_level"
 
 
 # should this listing include all ratings or only unsatisfactory?

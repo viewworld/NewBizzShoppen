@@ -22,12 +22,12 @@ Feature: User accounts management
    Then I should see translated "administration.users.index.view.title"
    Then I follow "1"
 
-@_tested @_done
- Scenario: I can sort users
-  Given I follow translated "administration.users.index.view.email"
-  Then I should have value "aaaaaaaagent.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(6)"
-  Given I follow translated "administration.users.index.view.email"
-  Then I should have value "zzzenon.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(6)"
+# @_tested @_done @_deprecated2014
+#  Scenario: I can sort users
+#   Given I follow translated "administration.users.index.view.email"
+#   Then I should have value "aaaaaaaagent.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(6)"
+#   Given I follow translated "administration.users.index.view.email"
+#   Then I should have value "zzzenon.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(6)"
 
  @_tested @_done
  Scenario: I can filter users [...]
@@ -77,16 +77,16 @@ Feature: User accounts management
    And I sign in as deleted_person@domain.dom with password secret
    Then I should see translated "devise.failure.invalid"
 
-@m5 @tgn @_tested @_done
-Scenario: I can invoice an account
-  Given I have user with email bigbuyer1@person.com and role supplier
-  And there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,vat_no:123" for country "Denmark"
-  And User bigbuyer1@person.com with role supplier is big buyer
-  And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role supplier
-  Given I go to administration users
-  And I click hidden translated link "administration.users.index.view.create_invoice"
-  Then I press translated "administration.invoices.new.view.button_create"
-  And I should see translated "administration.invoices.edit.view.form.general_information"
+# @m5 @tgn @_tested @_done @_deprecated2014
+# Scenario: I can invoice an account
+#   Given I have user with email bigbuyer1@person.com and role supplier
+#   And there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,vat_no:123" for country "Denmark"
+#   And User bigbuyer1@person.com with role supplier is big buyer
+#   And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role supplier
+#   Given I go to administration users
+#   And I click hidden translated link "administration.users.index.view.create_invoice"
+#   Then I press translated "administration.invoices.new.view.button_create"
+#   And I should see translated "administration.invoices.edit.view.form.general_information"
 
 @m5 @tgn @selenium @_tested @_done
 Scenario: I can toggle select/deselect accounts on active page
@@ -130,15 +130,15 @@ Scenario: I can override the certification level of any agent or call centre
   And I press translated "administration.users.edit.view.button_update_user"
   Then I should see translated "administration.users.update.flash.user_update_successful"
 
-@m6 @tgn @_tested @_done
-Scenario: In users listing I can see unpaid leads count
-  Given I have user with email big_buyer.biz@nbs.com and role supplier
-  And User big_buyer.biz@nbs.com with role supplier is big buyer
-  And a lead Super computers #1 exists within category Computers and is bought by user big_buyer.biz@nbs.com with role supplier
-  And all users have refreshed cache counters
-  Then I fill in "search_with_keyword" with "big_buyer.biz@nbs.com"
-  And I press translated "administration.users.index.view.search_button"
-  Then I should have value "1" in the css path "tr:nth-child(1) td:nth-child(8)"
+# @m6 @tgn @_tested @_done @_deprecated2014
+# Scenario: In users listing I can see unpaid leads count
+#   Given I have user with email big_buyer.biz@nbs.com and role supplier
+#   And User big_buyer.biz@nbs.com with role supplier is big buyer
+#   And a lead Super computers #1 exists within category Computers and is bought by user big_buyer.biz@nbs.com with role supplier
+#   And all users have refreshed cache counters
+#   Then I fill in "search_with_keyword" with "big_buyer.biz@nbs.com"
+#   And I press translated "administration.users.index.view.search_button"
+#   Then I should have value "1" in the css path "tr:nth-child(1) td:nth-child(8)"
 
 @m6 @_done @_tested @_requested
 Scenario: I can change category buyer to regular buyer
@@ -368,31 +368,31 @@ Scenario: When editing a call centre agent I can see it's name in format "fullna
   And I click hidden link by url regex "/users\/\d+\/edit/"
   Then I should see /[\w]+ @ \w+/ within ".header_ribbon"
 
-@ao @_requested @m7 @_done @_tested
-Scenario: When editing call center agent I can navigate to call center's edit page
-  Given I am signed up and confirmed as user with email kol_senter@nbs.com and password secret and role call_centre with attributes "company_name:Selleo"
-  And an user with role call_centre_agent and email sab@nbs.com belongs to call centre kol_senter@nbs.com
-  And I go to administration users
-  And I select "Call centre agent" from "search_with_role"
-  And I fill in "search_with_keyword" with "sab@nbs.com"
-  And I press translated "administration.users.index.view.search_button"
-  And I click hidden link by url regex "/users\/\d+\/edit/"
-  And I follow "Selleo" within ".header_ribbon"
-  Then I should be on administration edit user for kol_senter@nbs.com
+# @ao @_requested @m7 @_done @_tested @_deprecated2014
+# Scenario: When editing call center agent I can navigate to call center's edit page
+#   Given I am signed up and confirmed as user with email kol_senter@nbs.com and password secret and role call_centre with attributes "company_name:Selleo"
+#   And an user with role call_centre_agent and email sab@nbs.com belongs to call centre kol_senter@nbs.com
+#   And I go to administration users
+#   And I select "Call centre agent" from "search_with_role"
+#   And I fill in "search_with_keyword" with "sab@nbs.com"
+#   And I press translated "administration.users.index.view.search_button"
+#   And I click hidden link by url regex "/users\/\d+\/edit/"
+#   And I follow "Selleo" within ".header_ribbon"
+#   Then I should be on administration edit user for kol_senter@nbs.com
 
-@ao @_requested @m7 @_done @_tested
-Scenario: When editing call center agent I can navigate to list of leads created by this agent
-  Given I am signed up and confirmed as user with email kol_senter@nbs.com and password secret and role call_centre with attributes "company_name:Selleo"
-  And an user with role call_centre_agent and email sab@nbs.com belongs to call centre kol_senter@nbs.com
-  And lead SabKolSenterLead is created by user sab@nbs.com with role call_centre_agent
-  And I go to administration users
-  And I select "Call centre agent" from "search_with_role"
-  And I fill in "search_with_keyword" with "sab@nbs.com"
-  And I press translated "administration.users.index.view.search_button"
-  And I click hidden link by url regex "/users\/\d+\/edit/"
-  And I follow translated "administration.users.edit.view.view_created_leads"
-  Then I should see "SabKolSenterLead" within "#leads"
-  And I should see "3" rows in a table with headers within "#leads"
+# @ao @_requested @m7 @_done @_tested @_deprecated2014
+# Scenario: When editing call center agent I can navigate to list of leads created by this agent
+#   Given I am signed up and confirmed as user with email kol_senter@nbs.com and password secret and role call_centre with attributes "company_name:Selleo"
+#   And an user with role call_centre_agent and email sab@nbs.com belongs to call centre kol_senter@nbs.com
+#   And lead SabKolSenterLead is created by user sab@nbs.com with role call_centre_agent
+#   And I go to administration users
+#   And I select "Call centre agent" from "search_with_role"
+#   And I fill in "search_with_keyword" with "sab@nbs.com"
+#   And I press translated "administration.users.index.view.search_button"
+#   And I click hidden link by url regex "/users\/\d+\/edit/"
+#   And I follow translated "administration.users.edit.view.view_created_leads"
+#   Then I should see "SabKolSenterLead" within "#leads"
+#   And I should see "3" rows in a table with headers within "#leads"
 
 @_requested @m8b @_done @_tested
 Scenario: I should have 'Don't verify email address' for every user I create
@@ -484,29 +484,29 @@ Scenario: It should be possible for me to login using new password
   And I sign in as bob@person.com with password newpass
   Then I should see translated "layout.logout_link" with options "user_email:bob@person.com"
 
-@added @m8b @_done @_tested @faircalls
-Scenario: It should be possible for other users to login after password change
-  Given someone is signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
-  And I sign out
-  And I visit domain http://faircalls.eu
-  And I am on the home page
-  And I sign in as ejdzent@nbs.com with password secret
-  Then I should see translated "devise.sessions.signed_in"
-  When I sign out
-  And I visit domain http://localhost
-  And I am on the home page
-  And I sign in as bob@person.com with password supersecret
-  And I am on administration edit user for ejdzent@nbs.com
-  And I follow translated "administration.users.edit.view.change_password_link"
-  And I fill in "user_password" with "newpass"
-  And I fill in "user_password_confirmation" with "newpass"
-  And I press translated "password.edit.view.button_update_user"
-  Then I should see translated "password.flashes.successfully_changed"
-  When I sign out
-  And I visit domain http://faircalls.eu
-  And I am on the home page
-  And I sign in as ejdzent@nbs.com with password newpass
-  Then I should see translated "devise.sessions.signed_in"
+# @added @m8b @_done @_tested @faircalls @_deprecated2014
+# Scenario: It should be possible for other users to login after password change
+#   Given someone is signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
+#   And I sign out
+#   And I visit domain http://faircalls.eu
+#   And I am on the home page
+#   And I sign in as ejdzent@nbs.com with password secret
+#   Then I should see translated "devise.sessions.signed_in"
+#   When I sign out
+#   And I visit domain http://localhost
+#   And I am on the home page
+#   And I sign in as bob@person.com with password supersecret
+#   And I am on administration edit user for ejdzent@nbs.com
+#   And I follow translated "administration.users.edit.view.change_password_link"
+#   And I fill in "user_password" with "newpass"
+#   And I fill in "user_password_confirmation" with "newpass"
+#   And I press translated "password.edit.view.button_update_user"
+#   Then I should see translated "password.flashes.successfully_changed"
+#   When I sign out
+#   And I visit domain http://faircalls.eu
+#   And I am on the home page
+#   And I sign in as ejdzent@nbs.com with password newpass
+#   Then I should see translated "devise.sessions.signed_in"
 
 @_requested @m8b @_done @_tested @_deprecated
 Scenario: I can see company name on the users listing (in favour of dynamically displayed full name/company name)
@@ -545,15 +545,15 @@ Scenario: The header of users listing should include total number of users: 'Use
   And I am on administration users page
   Then I should see /Total:\s\d+/
 
-@added @m9 @tgn @_tested @_done
-Scenario: When I change the certification of call centre then its agents certification should be refreshed too
-  Given an user with role call_centre_agent and email ccagent01@person.com belongs to call centre call_centre1@person.com
-  Then I fill in "search_with_keyword" with "call_centre1@person.com"
-  And I press translated "administration.users.index.view.search_button"
-  And I click hidden link by url regex "/users\/\d+\/edit/"
-  And I select translated "models.lead.certification.lvl13" from "user_call_centre_certification_level"
-  And I press translated "password.edit.view.button_update_user"
-  And user "ccagent01@person.com" with role "call_centre_agent" has certification level 3
+# @added @m9 @tgn @_tested @_done @_deprecated2014
+# Scenario: When I change the certification of call centre then its agents certification should be refreshed too
+#   Given an user with role call_centre_agent and email ccagent01@person.com belongs to call centre call_centre1@person.com
+#   Then I fill in "search_with_keyword" with "call_centre1@person.com"
+#   And I press translated "administration.users.index.view.search_button"
+#   And I click hidden link by url regex "/users\/\d+\/edit/"
+#   And I select translated "models.lead.certification.lvl13" from "user_call_centre_certification_level"
+#   And I press translated "password.edit.view.button_update_user"
+#   And user "ccagent01@person.com" with role "call_centre_agent" has certification level 3
 
 @m10 @_requested @_done @_tested
 Scenario: I can see a role name of newly created user like "New buyer account”
@@ -801,25 +801,25 @@ Scenario: I can see user's active subscription on user's edit page and button to
 
 #8331
 # VAT rate 25%: 240 => 300 + subscription
-@m22 @_requested @_done @_tested @ao
-Scenario: When editing a user I can click a button and go to invoices page filtered for this user
-  When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
-  And User kastomer@nbs.fake with role supplier is from country Denmark
-  And User kastomer@nbs.fake with role supplier is big buyer
-  And lead TestLead1 exists with attributes "price:120"
-  And lead TestLead2 exists with attributes "price:120"
-  And currency "DKK" exists with attributes "exchange_rate:1"
-  And lead TestLead1 exists with currency "DKK"
-  And lead TestLead2 exists with currency "DKK"
-  And a lead TestLead1 exists within category Computers and is bought by user kastomer@nbs.fake with role supplier
-  And a lead TestLead2 exists within category Computers and is bought by user kastomer@nbs.fake with role supplier
-  And I go to administration edit user for kastomer@nbs.fake
-  And I follow translated "administration.users.edit.view.view_user_debts"
-  Then I should see "240.00" within "#invoices_list"
-  And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-  And I go to administration edit user for kastomer@nbs.fake
-  And I follow translated "administration.users.edit.view.view_user_invoices"
-  And I should see "312.50" within "#invoices_list"
+# @m22 @_requested @_done @_tested @ao @_deprecated2014
+# Scenario: When editing a user I can click a button and go to invoices page filtered for this user
+#   When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
+#   And User kastomer@nbs.fake with role supplier is from country Denmark
+#   And User kastomer@nbs.fake with role supplier is big buyer
+#   And lead TestLead1 exists with attributes "price:120"
+#   And lead TestLead2 exists with attributes "price:120"
+#   And currency "DKK" exists with attributes "exchange_rate:1"
+#   And lead TestLead1 exists with currency "DKK"
+#   And lead TestLead2 exists with currency "DKK"
+#   And a lead TestLead1 exists within category Computers and is bought by user kastomer@nbs.fake with role supplier
+#   And a lead TestLead2 exists within category Computers and is bought by user kastomer@nbs.fake with role supplier
+#   And I go to administration edit user for kastomer@nbs.fake
+#   And I follow translated "administration.users.edit.view.view_user_debts"
+#   Then I should see "240.00" within "#invoices_list"
+#   And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
+#   And I go to administration edit user for kastomer@nbs.fake
+#   And I follow translated "administration.users.edit.view.view_user_invoices"
+#   And I should see "312.50" within "#invoices_list"
 
 #8605
 @m23 @subscriptions @_requested @_done @_tested

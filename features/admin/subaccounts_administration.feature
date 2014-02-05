@@ -54,12 +54,12 @@ Scenario: I can display a list of subaccounts of big-buyer account
   And I should not see "customer@person.com"
 
 # 4.04.11 / sort by age is deprecated / no way to set up this value in interface
-@tgn @_done @_tested
-Scenario: I can sort by coulmns type, email (name, last name, age are deprecated)
-  Given I follow translated "administration.users.index.view.email"
-  Then I should have value "ann.lead_user2@person.com" in the css path "tr:nth-child(1) td:nth-child(6)"
+# @tgn @_done @_tested @_deprecated2014
+# Scenario: I can sort by coulmns type, email (name, last name, age are deprecated)
+#   Given I follow translated "administration.users.index.view.email"
+#   Then I should have value "ann.lead_user2@person.com" in the css path "tr:nth-child(1) td:nth-child(6)"
 
-@m6 @added @tgn @_tested @_done
+@m6 @added @tgn @_tested @_done @_deprecated2014
 Scenario: I can sort by bought, created, volume sold, revenue, payout %
   Given customer "customer@person.com" has no subaccounts
   And an user with role lead_supplier and email ann.lead_buyer@person.com exists as subaccount for customer customer@person.com

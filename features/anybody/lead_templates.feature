@@ -21,43 +21,43 @@ Scenario: User can see created by in Lead Template edit view
 @_done @_tested_elsewhere
 Scenario: User can see created by in Lead Templates listing
 
-@_done @_tested
+@_done @_tested @_deprecated
 Scenario: There should not be Lead Templates tab for any user
-  Given I am on the homepage
-  Then I sign in as agent@nbs.com with password secret
-  Then I should not see "Lead templates"
-  Given I go to the logout page
-  Given I visit domain http://fairleads.eu
-  Given I am on the homepage
-  Then I sign in as buyer@nbs.com with password secret
-  Then I should not see "Lead templates"
-  Given I go to the logout page
-  Given I visit domain http://faircalls.eu
-  Given I am on the homepage
-  Then I sign in as translator_call_centre@nbs.com with password secret
-  Then I should not see "Lead templates"
-  Given I go to the logout page
-  Given I visit domain http://fairleads.eu
-  Given I am on the homepage
-  Then I sign in as translator_customer@nbs.com with password secret
-  Then I should not see "Lead templates"
-  Given I go to the logout page
-  Given I visit domain http://fairdeals.eu
-  Given I am on the homepage
-  Then I sign in as translator_purchase_manager@nbs.com with password secret
-  Then I should not see "Lead templates"
-  Given I go to the logout page
-  Given I visit domain http://fairleads.eu
-  Given I am on the homepage
-  Then I sign in as translator_category_buyer@nbs.com with password secret
-  Then I should not see "Lead templates"
-  Given I go to the logout page
-  Given I visit domain http://faircalls.eu
-  Given I am on the homepage
-  Then I sign in as translator_call_centre_agent@nbs.com with password secret
-  Then I should not see "Lead templates"
-  
+#   Given I am on the homepage
+#   Then I sign in as agent@nbs.com with password secret
+#   Then I should not see "Lead templates"
+#   Given I go to the logout page
+#   Given I visit domain http://fairleads.eu
+#   Given I am on the homepage
+#   Then I sign in as buyer@nbs.com with password secret
+#   Then I should not see "Lead templates"
+#   Given I go to the logout page
+#   Given I visit domain http://faircalls.eu
+#   Given I am on the homepage
+#   Then I sign in as translator_call_centre@nbs.com with password secret
+#   Then I should not see "Lead templates"
+#   Given I go to the logout page
+#   Given I visit domain http://fairleads.eu
+#   Given I am on the homepage
+#   Then I sign in as translator_customer@nbs.com with password secret
+#   Then I should not see "Lead templates"
+#   Given I go to the logout page
+#   Given I visit domain http://fairdeals.eu
+#   Given I am on the homepage
+#   Then I sign in as translator_purchase_manager@nbs.com with password secret
+#   Then I should not see "Lead templates"
+#   Given I go to the logout page
+#   Given I visit domain http://fairleads.eu
+#   Given I am on the homepage
+#   Then I sign in as translator_category_buyer@nbs.com with password secret
+#   Then I should not see "Lead templates"
+#   Given I go to the logout page
+#   Given I visit domain http://faircalls.eu
+#   Given I am on the homepage
+#   Then I sign in as translator_call_centre_agent@nbs.com with password secret
+#   Then I should not see "Lead templates"
+
 # 5776
 @_done @_tested_elsewhere
 Scenario: When I access templates listing from browse leads page then I should see template creator
-  
+

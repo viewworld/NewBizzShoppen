@@ -57,20 +57,20 @@ Scenario: I can edit email template for send material result type
 Scenario: I can edit global email template to be sent when lead is bought
   Then I should see "Bought lead notification"
 
-@m13 @_requested @auto_buy @is @_done @_tested
-Scenario: I can edit category specific email template to be sent when lead is bought
-  Then I follow translated "layout.main_menu.shared.browse_leads"
-  When I uncheck "search_with_unique"
-  And I uncheck "search_with_public"
-  And I fill in "search_with_keyword" with "electronics"
-  Then I press translated "administration.categories.index.view.search.search_button"
-  Then category "Electronics" has email template - "No"
-  Then I follow translated "administration.categories.index.view.edit_link"
-  Then I should see "Electronics"
-  And I follow translated "administration.categories.edit.view.edit_email_template"
-  Then I press translated "administration.email_templates.edit.view.button_update"
-  Then I should see translated "administration.category_email_templates.update.controller.successful_update_notice"
-  Then category "Electronics" has email template - "Yes"
+# @m13 @_requested @auto_buy @is @_done @_tested @_deprecated2014
+# Scenario: I can edit category specific email template to be sent when lead is bought
+#   Then I follow translated "layout.main_menu.shared.browse_leads"
+#   When I uncheck "search_with_unique"
+#   And I uncheck "search_with_public"
+#   And I fill in "search_with_keyword" with "electronics"
+#   Then I press translated "administration.categories.index.view.search.search_button"
+#   Then category "Electronics" has email template - "No"
+#   Then I follow translated "administration.categories.index.view.edit_link"
+#   Then I should see "Electronics"
+#   And I follow translated "administration.categories.edit.view.edit_email_template"
+#   Then I press translated "administration.email_templates.edit.view.button_update"
+#   Then I should see translated "administration.category_email_templates.update.controller.successful_update_notice"
+#   Then category "Electronics" has email template - "Yes"
 
 @m17 @_requested @email_signature @is @_done @_tested @selenium
 Scenario: For each country I can specify email signature

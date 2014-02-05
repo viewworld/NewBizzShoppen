@@ -26,6 +26,3 @@ Feature: Deals
     Given I am not sign in
     And I sign in as kategory_bajer@nbs.com with password secret
     Then I should see CSS path "a[tab='browse_deals']"
-    Then I should see CSS path "a[tab='deals']"
-
-

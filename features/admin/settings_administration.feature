@@ -30,10 +30,10 @@ Scenario: I can click save to save changes made
 Scenario: Confirmation prompt is being displayed when I try to save changes made
   Then I press translated "administration.settings.edit.view.button_update_settings"
 
-@tgn @_done @_tested @selenium
-Scenario: I can click cancel and go back (browser history)
-  Then I press translated "administration.settings.edit.view.button_cancel"
-  And I should be on the homepage
+# @tgn @_done @_tested @selenium @_deprecated2014
+# Scenario: I can click cancel and go back (browser history)
+#   Then I press translated "administration.settings.edit.view.button_cancel"
+#   And I should be on the homepage
 
 @m4 @tgn @added @agent_certification @_tested @_done
 Scenario: When I change the certification levels in settings then agents' levels should be refreshed too (unless their certifications are locked)
@@ -125,94 +125,94 @@ Scenario: I can specify youtube url for each locale
 Scenario: I can set default auto buy max for 4 weeks
   And I fill in "setting_5" with "11"
 
-@m18 @settings @_done @_tested
-Scenario: I can enable/disable email verification for procurement managers
-  And setting for "email_verification_for_members" is set to "0"
-  And I sign out
-  And I visit domain http://fairdeals.eu
-  When I go to member sign up
-  And I fill in the following:
-    | user_member_first_name            | Jon             |
-    | user_member_last_name             | Lajoie          |
-    | user_member_company_name          | Lajoie Inc      |
-    | user_member_phone                 | 48928217272     |
-    | user_member_email                 | jon@lajoie.ca   |
-    | user_member_password              | secret          |
-    | user_member_password_confirmation | secret          |
-    | user_member_address_attributes_address_line_1        | Sunset Blv 32   |
-    | user_member_address_attributes_address_line_2        | Montreal        |
-    | user_member_address_attributes_zip_code              | 43-270          |
-    | user_member_address_attributes_address_line_3        | Quebec          |
-  And I select "Denmark" from "user_member_address_attributes_country_id"
-  And I check "user_member_agreement_read"
-  And I choose "user_member_subscription_plan_id"
-  And I press translated "member_accounts.new.view.button_create_account"
-  Then I should be signed in
-  And I sign out
-  And setting for "email_verification_for_members" is set to "1"
-  When I go to member sign up
-  And I fill in the following:
-    | user_member_first_name            | Jon             |
-    | user_member_last_name             | Lajoie          |
-    | user_member_company_name          | Lajoie Inc      |
-    | user_member_phone                 | 48928217272     |
-    | user_member_email                 | jon2@lajoie.ca   |
-    | user_member_password              | secret          |
-    | user_member_password_confirmation | secret          |
-    | user_member_address_attributes_address_line_1        | Sunset Blv 32   |
-    | user_member_address_attributes_address_line_2        | Montreal        |
-    | user_member_address_attributes_zip_code              | 43-270          |
-    | user_member_address_attributes_address_line_3        | Quebec          |
-  And I select "Denmark" from "user_member_address_attributes_country_id"
-  And I check "user_member_agreement_read"
-  And I choose "user_member_subscription_plan_id"
-  And I press translated "member_accounts.new.view.button_create_account"
-  Then I should see translated "flash.member_accounts.create.notice"
+# @m18 @settings @_done @_tested @_deprecated2014
+# Scenario: I can enable/disable email verification for procurement managers
+#   And setting for "email_verification_for_members" is set to "0"
+#   And I sign out
+#   And I visit domain http://fairdeals.eu
+#   When I go to member sign up
+#   And I fill in the following:
+#     | user_member_first_name            | Jon             |
+#     | user_member_last_name             | Lajoie          |
+#     | user_member_company_name          | Lajoie Inc      |
+#     | user_member_phone                 | 48928217272     |
+#     | user_member_email                 | jon@lajoie.ca   |
+#     | user_member_password              | secret          |
+#     | user_member_password_confirmation | secret          |
+#     | user_member_address_attributes_address_line_1        | Sunset Blv 32   |
+#     | user_member_address_attributes_address_line_2        | Montreal        |
+#     | user_member_address_attributes_zip_code              | 43-270          |
+#     | user_member_address_attributes_address_line_3        | Quebec          |
+#   And I select "Denmark" from "user_member_address_attributes_country_id"
+#   And I check "user_member_agreement_read"
+#   And I choose "user_member_subscription_plan_id"
+#   And I press translated "member_accounts.new.view.button_create_account"
+#   Then I should be signed in
+#   And I sign out
+#   And setting for "email_verification_for_members" is set to "1"
+#   When I go to member sign up
+#   And I fill in the following:
+#     | user_member_first_name            | Jon             |
+#     | user_member_last_name             | Lajoie          |
+#     | user_member_company_name          | Lajoie Inc      |
+#     | user_member_phone                 | 48928217272     |
+#     | user_member_email                 | jon2@lajoie.ca   |
+#     | user_member_password              | secret          |
+#     | user_member_password_confirmation | secret          |
+#     | user_member_address_attributes_address_line_1        | Sunset Blv 32   |
+#     | user_member_address_attributes_address_line_2        | Montreal        |
+#     | user_member_address_attributes_zip_code              | 43-270          |
+#     | user_member_address_attributes_address_line_3        | Quebec          |
+#   And I select "Denmark" from "user_member_address_attributes_country_id"
+#   And I check "user_member_agreement_read"
+#   And I choose "user_member_subscription_plan_id"
+#   And I press translated "member_accounts.new.view.button_create_account"
+#   Then I should see translated "flash.member_accounts.create.notice"
 
-@m18 @settings @_done @_tested
-Scenario: I can enable/disable email verification for sales managers
-  And setting for "email_verification_for_suppliers" is set to "0"
-  And I sign out
-  When I go to supplier sign up
-  And I fill in the following:
-      | user_category_supplier_first_name            | Bob             |
-      | user_category_supplier_last_name             | Taker           |
-      | user_category_supplier_company_name          | LeadsInt Ltd    |
-      | user_category_supplier_phone                 | 48928217272     |
-      | user_category_supplier_email                 | user@domain.dom |
-      | user_category_supplier_password              | secret          |
-      | user_category_supplier_password_confirmation | secret          |
-      | user_category_supplier_address_attributes_address_line_1        | Sunset Blv 32   |
-      | user_category_supplier_address_attributes_address_line_2        | London          |
-      | user_category_supplier_address_attributes_zip_code              | 43-270          |
-      | user_category_supplier_address_attributes_address_line_3        | Wesley             |
-  And I select "Denmark" from "user_category_supplier_address_attributes_country_id"
-  And I check "user_category_supplier_agreement_read"
-  And I choose "user_category_supplier_subscription_plan_id"
-  And I press translated "supplier_accounts.new.view.button_create_account"
-  Then I should see translated "devise.sessions.new.controller.successfully_logged_in"
-  And I should be signed in
-  And I should be on the home page
-  And setting for "email_verification_for_suppliers" is set to "1"
-  And I sign out
-  When I go to supplier sign up
-  And I fill in the following:
-      | user_category_supplier_first_name            | Bob             |
-      | user_category_supplier_last_name             | Taker           |
-      | user_category_supplier_company_name          | LeadsInt Ltd    |
-      | user_category_supplier_phone                 | 48928217272     |
-      | user_category_supplier_email                 | user2@domain.dom |
-      | user_category_supplier_password              | secret          |
-      | user_category_supplier_password_confirmation | secret          |
-      | user_category_supplier_address_attributes_address_line_1        | Sunset Blv 32   |
-      | user_category_supplier_address_attributes_address_line_2        | London          |
-      | user_category_supplier_address_attributes_zip_code              | 43-270          |
-      | user_category_supplier_address_attributes_address_line_3        | Wesley             |
-  And I select "Denmark" from "user_category_supplier_address_attributes_country_id"
-  And I check "user_category_supplier_agreement_read"
-  And I choose "user_category_supplier_subscription_plan_id"
-  And I press translated "supplier_accounts.new.view.button_create_account"
-  Then I should see translated "flash.supplier_accounts.create.notice"
+# @m18 @settings @_done @_tested @_deprecated2014
+# Scenario: I can enable/disable email verification for sales managers
+#   And setting for "email_verification_for_suppliers" is set to "0"
+#   And I sign out
+#   When I go to supplier sign up
+#   And I fill in the following:
+#       | user_category_supplier_first_name            | Bob             |
+#       | user_category_supplier_last_name             | Taker           |
+#       | user_category_supplier_company_name          | LeadsInt Ltd    |
+#       | user_category_supplier_phone                 | 48928217272     |
+#       | user_category_supplier_email                 | user@domain.dom |
+#       | user_category_supplier_password              | secret          |
+#       | user_category_supplier_password_confirmation | secret          |
+#       | user_category_supplier_address_attributes_address_line_1        | Sunset Blv 32   |
+#       | user_category_supplier_address_attributes_address_line_2        | London          |
+#       | user_category_supplier_address_attributes_zip_code              | 43-270          |
+#       | user_category_supplier_address_attributes_address_line_3        | Wesley             |
+#   And I select "Denmark" from "user_category_supplier_address_attributes_country_id"
+#   And I check "user_category_supplier_agreement_read"
+#   And I choose "user_category_supplier_subscription_plan_id"
+#   And I press translated "supplier_accounts.new.view.button_create_account"
+#   Then I should see translated "devise.sessions.new.controller.successfully_logged_in"
+#   And I should be signed in
+#   And I should be on the home page
+#   And setting for "email_verification_for_suppliers" is set to "1"
+#   And I sign out
+#   When I go to supplier sign up
+#   And I fill in the following:
+#       | user_category_supplier_first_name            | Bob             |
+#       | user_category_supplier_last_name             | Taker           |
+#       | user_category_supplier_company_name          | LeadsInt Ltd    |
+#       | user_category_supplier_phone                 | 48928217272     |
+#       | user_category_supplier_email                 | user2@domain.dom |
+#       | user_category_supplier_password              | secret          |
+#       | user_category_supplier_password_confirmation | secret          |
+#       | user_category_supplier_address_attributes_address_line_1        | Sunset Blv 32   |
+#       | user_category_supplier_address_attributes_address_line_2        | London          |
+#       | user_category_supplier_address_attributes_zip_code              | 43-270          |
+#       | user_category_supplier_address_attributes_address_line_3        | Wesley             |
+#   And I select "Denmark" from "user_category_supplier_address_attributes_country_id"
+#   And I check "user_category_supplier_agreement_read"
+#   And I choose "user_category_supplier_subscription_plan_id"
+#   And I press translated "supplier_accounts.new.view.button_create_account"
+#   Then I should see translated "flash.supplier_accounts.create.notice"
 
 #7450
 @m19 @_requested @settings @_done @_tested @tgn

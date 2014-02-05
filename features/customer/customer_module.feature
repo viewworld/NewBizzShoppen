@@ -118,24 +118,24 @@ Scenario: If customer is category buyer he/she can see also unique categories
 #  Then I should see "Best Leads"
 #  And I should see "Unique Leads"
 
-@added @m6 @ao @_done @_tested  @_requested
-Scenario: If customer is category buyer with assigned unique categories he can access them
-  When I sign out
-  And Category named "Best Leads" already exists
-  And Category named "Unique Leads" already exists
-  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
-  And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
-  And category "Unique Leads" is unique for user with email "jon@lajoie.ca" role "supplier"
-  And lead Uniqlead exists within category Unique Leads
-  And I am on the home page
-  And I sign in as jon@lajoie.ca with password secret
-  And I am on category home page for Unique Leads
-  Then I should be on category home page for Unique Leads
-  And I should see "Uniqlead" within "#latest_leads"
-  When I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
-  Then I should be on category home leads page for Unique Leads
-  And I should see "Uniqlead"
-  And I should see "1" rows in a table with headers within ".leads_table tbody"
+# @added @m6 @ao @_done @_tested @_requested @_deprecated2014
+# Scenario: If customer is category buyer with assigned unique categories he can access them
+#   When I sign out
+#   And Category named "Best Leads" already exists
+#   And Category named "Unique Leads" already exists
+#   And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
+#   And user "jon@lajoie.ca" with role "category_supplier" has attributes "auto_buy_enabled:false"
+#   And category "Unique Leads" is unique for user with email "jon@lajoie.ca" role "supplier"
+#   And lead Uniqlead exists within category Unique Leads
+#   And I am on the home page
+#   And I sign in as jon@lajoie.ca with password secret
+#   And I am on category home page for Unique Leads
+#   Then I should be on category home page for Unique Leads
+#   And I should see "Uniqlead" within "#latest_leads"
+#   When I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
+#   Then I should be on category home leads page for Unique Leads
+#   And I should see "Uniqlead"
+#   And I should see "1" rows in a table with headers within ".leads_table tbody"
 
 # all countries are selected after sign up
 # https://redmine.selleo.com/issues/5423
@@ -240,11 +240,11 @@ Scenario: I can see a back button when on configure interests page
 Scenario: After first login I should be redirected to my home page instead of interests config
   Then I should be on supplier home
 
-@m10 @_requested @_done @_tested
-Scenario: Interests are automatically configured after account is created - all countries and categories should be selected with disabled notifications
-  When I am on supplier interests page
-  Then checkbox named "country_1" should be checked
-  And checkbox named "country_2" should be checked
-  And checkbox named "category_1" should not be checked
-  And checkbox named "category_2" should not be checked
-  And checkbox named "category_3" should not be checked
+# @m10 @_requested @_done @_tested @_deprecated2014
+# Scenario: Interests are automatically configured after account is created - all countries and categories should be selected with disabled notifications
+#   When I am on supplier interests page
+#   Then checkbox named "country_1" should be checked
+#   And checkbox named "country_2" should be checked
+#   And checkbox named "category_1" should not be checked
+#   And checkbox named "category_2" should not be checked
+#   And checkbox named "category_3" should not be checked

@@ -12,7 +12,7 @@ Feature: Deals from admin perspective
   @_done @_tested
   Scenario: I can list deals
     Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:awesome|description:awesome|hidden_description:awesome|start_date:2011-01-01|end_date:2011-01-01|company_name:starks"
-    Then I wait 1 second
+    Then I wait 4 second
     Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then I filter and sort deals with my deals translation "layout.main_menu.admin.deals"
 
@@ -99,67 +99,67 @@ Feature: Deals from admin perspective
     And I follow "Deals"
     Then I should see translated "shared.deals.table.company_name" within "table#deals"
 
-  @m21 @_done @_tested @ao
-  Scenario: I can click a link to see public deal description (shows the deal as presented to procurement manager)
-    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks|group_deal:true|published:1|group_deal:1|price:123|deal_price:100|discounted_price:25|social_media_description:quo vadis"
-    Then I should see translated "layout.main_menu.admin.deals"
-    And I am on the administration deal edit page for super
-    Then I should see "Saving: 75.00 (75%)"
+  # @m21 @_done @_tested @ao @_deprecated2014
+  # Scenario: I can click a link to see public deal description (shows the deal as presented to procurement manager)
+  #   Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks|group_deal:true|published:1|group_deal:1|price:123|deal_price:100|discounted_price:25|social_media_description:quo vadis"
+  #   Then I should see translated "layout.main_menu.admin.deals"
+  #   And I am on the administration deal edit page for super
+  #   Then I should see "Saving: 75.00 (75%)"
 
   #9414
-  @m27 @_requested @selenium @tgn @_done @_tested
-  Scenario: Deals awaiting approval should be marked
-    Given I am not sign in
-    And user "translator_call_centre@nbs.com" has deal maker role enabled
-    And I am on the homepage
-    Given I visit domain http://faircalls.eu
-    And I sign in as translator_call_centre@nbs.com with password secret
-    Then I follow translated "layout.main_menu.call_centre.deals"
-    Then I follow translated "deals.common.listing.view.new_deal"
-    Then I follow translated "call_centre.deals.new.view.certify"
-    Then I certify deal with translation "call_centre.deals.new.view.create_button"
-    And I sign out
-    And I visit domain http://localhost
-    Given I am on the homepage
-    And I sign in as admin@nbs.com with password secret
-    And I follow translated "layout.main_menu.admin.deals"
-    Then I should see translated "shared.deals.table.awaiting_approval"
+  # @m27 @_requested @selenium @tgn @_done @_tested @_deprecated2014
+  # Scenario: Deals awaiting approval should be marked
+  #   Given I am not sign in
+  #   And user "translator_call_centre@nbs.com" has deal maker role enabled
+  #   And I am on the homepage
+  #   Given I visit domain http://faircalls.eu
+  #   And I sign in as translator_call_centre@nbs.com with password secret
+  #   Then I follow translated "layout.main_menu.call_centre.deals"
+  #   Then I follow translated "deals.common.listing.view.new_deal"
+  #   Then I follow translated "call_centre.deals.new.view.certify"
+  #   Then I certify deal with translation "call_centre.deals.new.view.create_button"
+  #   And I sign out
+  #   And I visit domain http://localhost
+  #   Given I am on the homepage
+  #   And I sign in as admin@nbs.com with password secret
+  #   And I follow translated "layout.main_menu.admin.deals"
+  #   Then I should see translated "shared.deals.table.awaiting_approval"
 
   #10045
-  @m29 @_requested @selenium @tgn @_done @_tested
-  Scenario: I can click Show all for deals and Is active option for filter is by default set to Yes
-    Given pagination page size for deals is set to 2
-    Given a deal named "deal001" exists within category "Electronics"
-    And a deal named "deal002" exists within category "Electronics"
-    And a deal named "deal003" exists within category "Electronics"
-    And a deal named "deal004" exists within category "Electronics"
-    Then I follow translated "layout.main_menu.admin.deals"
-    And "search_active_is" should be selected for value "Yes"
-    And I should see "2" rows with id like "deal_" in a table
-    And I follow translated "common.show_all"
-    And I should see "4" rows with id like "deal_" in a table
+  # @m29 @_requested @selenium @tgn @_done @_tested @_deprecated2014
+  # Scenario: I can click Show all for deals and Is active option for filter is by default set to Yes
+  #   Given pagination page size for deals is set to 2
+  #   Given a deal named "deal001" exists within category "Electronics"
+  #   And a deal named "deal002" exists within category "Electronics"
+  #   And a deal named "deal003" exists within category "Electronics"
+  #   And a deal named "deal004" exists within category "Electronics"
+  #   Then I follow translated "layout.main_menu.admin.deals"
+  #   And "search_active_is" should be selected for value "Yes"
+  #   And I should see "2" rows with id like "deal_" in a table
+  #   And I follow translated "common.show_all"
+  #   And I should see "4" rows with id like "deal_" in a table
 
   #10252
   @m29 @_requested @tgn @_done @_tested_elsewhere
   Scenario: I can click to see all deals on one page
 
   #11044
-  @m33 @_requested @_done @_tested @tgn
-  Scenario: I can search for deals with given tags
-    Given a deal named "Deal01" exists within category "Leisure Deals"
-    And a deal named "Deal02" exists within category "Leisure Deals"
-    And a deal named "Deal03" exists within category "Leisure Deals"
-    And a deal named "Deal04" exists within category "Leisure Deals"
-    And deal with header "Deal01" has tags "vendor"
-    And deal with header "Deal02" has tags "vendor, partner"
-    And deal with header "Deal03" has tags "vendor, partner"
-    When I visit page "/administration/deals" with tags "vendor" set as search
-    Then I should see "Deal01"
-    And I should see "Deal02"
-    And I should see "Deal03"
-    And I should not see "Deal04"
-    When I visit page "/administration/deals" with tags "vendor, partner" set as search
-    Then I should not see "Deal01"
-    And I should see "Deal02"
-    And I should see "Deal03"
-    And I should not see "Deal04"
+  # @m33 @_requested @_done @_tested @tgn @_deprecated2014
+  # Scenario: I can search for deals with given tags
+  #   Given a deal named "Deal01" exists within category "Leisure Deals"
+  #   And a deal named "Deal02" exists within category "Leisure Deals"
+  #   And a deal named "Deal03" exists within category "Leisure Deals"
+  #   And a deal named "Deal04" exists within category "Leisure Deals"
+  #   And deal with header "Deal01" has tags "vendor"
+  #   And deal with header "Deal02" has tags "vendor, partner"
+  #   And deal with header "Deal03" has tags "vendor, partner"
+  #   When I visit page "/administration/deals" with tags "vendor" set as search
+  #   Then I should see "Deal01"
+  #   And I should see "Deal02"
+  #   And I should see "Deal03"
+  #   And I should not see "Deal04"
+  #   When I visit page "/administration/deals" with tags "vendor, partner" set as search
+  #   Then I should not see "Deal01"
+  #   And I should see "Deal02"
+  #   And I should see "Deal03"
+  #   And I should not see "Deal04"

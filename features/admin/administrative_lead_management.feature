@@ -249,22 +249,22 @@ Scenario: I can sort leads by all of the new columns
   Then I should see "Some lead #3" before "Some lead #5"
 
   #10863
-  @m32 @_requested @selenium @_done @_tested
-  Scenario: I should be able to delete a lead
-    When there are no leads
-    And lead Monitors ultimate deal exists with attributes "price:999.99"
-    And I have user with email bigbuyer1@person.com and role supplier
-    And User bigbuyer1@person.com with role supplier is big buyer
-    And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role supplier
-    When I click hidden link by url regex "/administration\/invoicing\/upcoming_invoices/"
-    Then I should see "999.99"
-    And I follow translated "layout.main_menu.admin.leads"
-    And display all hidden actions
-    And I confirm a js popup on the next step
-    And I follow translated "administration.leads.index.view.delete"
-    Then I should not see "Monitors ultimate deal"
-    When I click hidden link by url regex "/administration\/invoicing\/upcoming_invoices/"
-    Then I should not see "999.99"
+  # @m32 @_requested @selenium @_done @_tested @_deprecated2014
+  # Scenario: I should be able to delete a lead
+  #   When there are no leads
+  #   And lead Monitors ultimate deal exists with attributes "price:999.99"
+  #   And I have user with email bigbuyer1@person.com and role supplier
+  #   And User bigbuyer1@person.com with role supplier is big buyer
+  #   And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role supplier
+  #   When I click hidden link by url regex "/administration\/invoicing\/upcoming_invoices/"
+  #   Then I should see "999.99"
+  #   And I follow translated "layout.main_menu.admin.leads"
+  #   And display all hidden actions
+  #   And I confirm a js popup on the next step
+  #   And I follow translated "administration.leads.index.view.delete"
+  #   Then I should not see "Monitors ultimate deal"
+  #   When I click hidden link by url regex "/administration\/invoicing\/upcoming_invoices/"
+  #   Then I should not see "999.99"
 
   #10863
   @m32 @_requested @_done @_tested_elsewhere

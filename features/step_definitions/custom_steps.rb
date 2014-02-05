@@ -12,13 +12,13 @@ Given /^Country (.+) is created$/ do |name|
 end
 
 Given /^I run ruby "([^\"]*)"$/ do |ruby|
-print "result of: #{ruby}\n\n"
-eval ruby
-print "\n\n"
+  print "result of: #{ruby}\n\n"
+  eval ruby
+  print "\n\n"
 end
 
 Then /^I should have value "([^"]*)" in the css path "([^"]*)"$/ do |value, css_path|
-   assert page.find(css_path).text == value
+  assert page.find(css_path).text == value
 end
 
 Then /^I should have value "([^"]*)" in the xpath path "([^"]*)"$/ do |value, xpath|
@@ -200,7 +200,7 @@ Given /^date today is "([^"]*)"$/ do |date|
 end
 
 Given /^class "([^"]*)" method "([^"]*)" returns "([^"]*)"$/ do |klass, method, arg|
-    klass.constantize.stubs(method.to_sym).returns(arg)
+  klass.constantize.stubs(method.to_sym).returns(arg)
 end
 
 def options_hash_to_s(options)
@@ -208,10 +208,10 @@ def options_hash_to_s(options)
 end
 
 def options_s_to_hash(options)
-  Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys  
+  Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
 end
 
 Then /^I follow edit for email template named "([^"]*)"$/ do |template_uniq_id|
-   template = EmailTemplate.find_by_uniq_id(template_uniq_id)
+  template = EmailTemplate.find_by_uniq_id(template_uniq_id)
   visit "/administration/email_templates/#{template.id}/edit"
 end

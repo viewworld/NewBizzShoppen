@@ -57,24 +57,24 @@ Feature: Subscription management for user
     And I should see translated "subscriptions.can_be_canceled_at" with options "cancel_date:{Date.today+4.weeks};localize:long"
     And I should see translated "subscriptions.cant_be_upgraded_nor_downgraded"
 
-  @selenium @_done @_tested
-  Scenario: When I upgrade my subscription to more expensive in the middle of billing cycle then I will pay only for the used part of cycle
-    And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
-    And I follow translated "layout.my_profile_link"
-    And I confirm a js popup on the next step
-    And I follow translated "subscriptions.listing.upgrade"
-    And I follow translated "layout.my_profile_link"
-    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "200"
-    And the date is "13" days from now
-    And I follow translated "layout.my_profile_link"
-    And I confirm a js popup on the next step
-    And I follow translated "subscriptions.listing.upgrade"
-    And I follow translated "layout.my_profile_link"
-    When I sign out
-    And the date is "14" days from now
-    And I sign in as admin@nbs.com with password secret
-    And I am on administration upcoming invoices
-    Then I should see "46.43" within "tbody#invoices_list tr:nth-of-type(1)"
+  # @selenium @_done @_tested @_deprecated2014
+  # Scenario: When I upgrade my subscription to more expensive in the middle of billing cycle then I will pay only for the used part of cycle
+  #   And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
+  #   And I follow translated "layout.my_profile_link"
+  #   And I confirm a js popup on the next step
+  #   And I follow translated "subscriptions.listing.upgrade"
+  #   And I follow translated "layout.my_profile_link"
+  #   When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "200"
+  #   And the date is "13" days from now
+  #   And I follow translated "layout.my_profile_link"
+  #   And I confirm a js popup on the next step
+  #   And I follow translated "subscriptions.listing.upgrade"
+  #   And I follow translated "layout.my_profile_link"
+  #   When I sign out
+  #   And the date is "14" days from now
+  #   And I sign in as admin@nbs.com with password secret
+  #   And I am on administration upcoming invoices
+  #   Then I should see "46.43" within "tbody#invoices_list tr:nth-of-type(1)"
 
   @selenium @_done @_tested
   Scenario: I can't downgrade my subscription when it entered into the lockup period
@@ -115,21 +115,21 @@ Feature: Subscription management for user
     When I follow translated "layout.my_profile_link"
     Then user "supp@nbs.com" should not be big buyer
 
-  @selenium @_done @_tested
-  Scenario: I loose deal maker role if my subscription has deal maker disabled
-    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0,deal_maker:1" and price "200"
-    When I follow translated "layout.my_profile_link"
-    And I confirm a js popup on the next step
-    And I follow translated "subscriptions.listing.upgrade"
-    And I follow translated "layout.my_profile_link"
-    Then user "supp@nbs.com" should be deal maker
-    And I follow translated "layout.my_profile_link"
-    And I confirm a js popup on the next step
-    And I follow translated "subscriptions.listing.cancel"
-    When the date is "29" days from now
-    When I follow translated "layout.my_profile_link"
-    Then I should see "Free supplier subscription" within ".subscription_plans"
-    Then user "supp@nbs.com" should not be deal maker
+  # @selenium @_done @_tested @_deprecated2014
+  # Scenario: I loose deal maker role if my subscription has deal maker disabled
+  #   When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0,deal_maker:1" and price "200"
+  #   When I follow translated "layout.my_profile_link"
+  #   And I confirm a js popup on the next step
+  #   And I follow translated "subscriptions.listing.upgrade"
+  #   And I follow translated "layout.my_profile_link"
+  #   Then user "supp@nbs.com" should be deal maker
+  #   And I follow translated "layout.my_profile_link"
+  #   And I confirm a js popup on the next step
+  #   And I follow translated "subscriptions.listing.cancel"
+  #   When the date is "29" days from now
+  #   When I follow translated "layout.my_profile_link"
+  #   Then I should see "Free supplier subscription" within ".subscription_plans"
+  #   Then user "supp@nbs.com" should not be deal maker
 
   @selenium @_done @_tested
   Scenario: I can manage team buyers if my subscription has team buyers enabled
@@ -214,14 +214,14 @@ Feature: Subscription management for user
   Scenario: When I upgrade my subscription and invoice is issued the creadit line value for my previous subscription should be subsctracted
 
   #8333
-  @m22 @_requested @selenium @_done @_tested
-  Scenario: Billing date for subscription should be the day it started
-    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
-    And I follow translated "layout.my_profile_link"
-    And I confirm a js popup on the next step
-    And I follow translated "subscriptions.listing.upgrade"
-    And I follow translated "layout.my_profile_link"
-    When I sign out
-    And I sign in as admin@nbs.com with password secret
-    And I am on administration upcoming invoices
-    Then I should see "100.00" within "tbody#invoices_list tr:nth-of-type(1)"
+  # @m22 @_requested @selenium @_done @_tested @_deprecated2014
+  # Scenario: Billing date for subscription should be the day it started
+  #   When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
+  #   And I follow translated "layout.my_profile_link"
+  #   And I confirm a js popup on the next step
+  #   And I follow translated "subscriptions.listing.upgrade"
+  #   And I follow translated "layout.my_profile_link"
+  #   When I sign out
+  #   And I sign in as admin@nbs.com with password secret
+  #   And I am on administration upcoming invoices
+  #   Then I should see "100.00" within "tbody#invoices_list tr:nth-of-type(1)"

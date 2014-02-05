@@ -7,12 +7,12 @@ Background: I am logged in as a system admin
   And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
   Then I sign in as jon@lajoie.ca with password secret
 
-@_done
-Scenario: I can see a listing of all news
-  When there are 3 agent news
-  And there are 2 purchase manager news
-  And I follow translated "layout.main_menu.admin.news"
-  Then I should see "5" rows in a table with headers within "#news_table"
+# @_done @_deprecated2014
+# Scenario: I can see a listing of all news
+#   When there are 3 agent news
+#   And there are 2 purchase manager news
+#   And I follow translated "layout.main_menu.admin.news"
+#   Then I should see "5" rows in a table with headers within "#news_table"
 
 @_done
 Scenario: I can sort listing of all news by creation date and title
@@ -117,17 +117,17 @@ Scenario: When you edit a news article you should be able to cancel, and have th
   Then I should be on administration news page
   And I should see translated "common.nothing_to_display"
 
-@m5 @category_home_pages @ao @_done
-Scenario: I can see all news for categories
-  When Category named "Best Leads" already exists
-  And there is a published news for category "Best Leads"
-  And Category named "Worst Leads" already exists
-  And there is a published news for category "Worst Leads"
-  And I am on the home page
-  And I follow translated "layout.main_menu.admin.news"
-  And I select translated "administration.news.index.view.category_homes" from "search_with_subclass"
-  And I press translated "administration.news.index.view.search_button"
-  Then I should see "2" rows in a table with headers within "#news_table"
+# @m5 @category_home_pages @ao @_done @_deprecated2014
+# Scenario: I can see all news for categories
+#   When Category named "Best Leads" already exists
+#   And there is a published news for category "Best Leads"
+#   And Category named "Worst Leads" already exists
+#   And there is a published news for category "Worst Leads"
+#   And I am on the home page
+#   And I follow translated "layout.main_menu.admin.news"
+#   And I select translated "administration.news.index.view.category_homes" from "search_with_subclass"
+#   And I press translated "administration.news.index.view.search_button"
+#   Then I should see "2" rows in a table with headers within "#news_table"
 
 @m5 @category_home_pages @ao @selenium @_done
 Scenario: I can update and change category for category news

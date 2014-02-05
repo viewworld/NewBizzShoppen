@@ -162,23 +162,23 @@ Scenario:  When comment is blocked I should not see it's children
   And I should not see "Comment title #2"
   And I should not see "Comment title #3"
 
-@_requested @m10 @selenium @tgn @_tested @_done @faircalls
-Scenario: I can block particular agent from further dialog with given buyer
-  Given someone is signed up and confirmed as user with email agent99@nbs.com and password secret and role agent
-  And lead Lead#6 is created by user agent99@nbs.com with role agent
-  And a lead Lead#6 exists within category Computers and is bought by user customer2@nbs.com with role supplier
-  And comment thread for lead "Lead#6" was posted by users "customer2@nbs.com, agent99@nbs.com"
-  Given I follow translated "layout.main_menu.admin.leads"
-  And I fill in "search_with_keyword" with "Lead#6"
-  And I press translated "administration.leads.index.view.search_button"
-  And I follow translated "comments.shared.show_comments"
-  When I follow translated "comments.threads.show.view.block_user"
-  Then I am not sign in
-  And I visit domain http://faircalls.eu
-  Given I sign in as agent99@nbs.com with password secret
-  Then I follow translated "layout.main_menu.agent.leads"
-  And I follow translated "comments.shared.show_comments"
-  Then I should not see translated "comments.threads.show.view.reply"
+# @_requested @m10 @selenium @tgn @_tested @_done @faircalls @_deprecated2014
+# Scenario: I can block particular agent from further dialog with given buyer
+#   Given someone is signed up and confirmed as user with email agent99@nbs.com and password secret and role agent
+#   And lead Lead#6 is created by user agent99@nbs.com with role agent
+#   And a lead Lead#6 exists within category Computers and is bought by user customer2@nbs.com with role supplier
+#   And comment thread for lead "Lead#6" was posted by users "customer2@nbs.com, agent99@nbs.com"
+#   Given I follow translated "layout.main_menu.admin.leads"
+#   And I fill in "search_with_keyword" with "Lead#6"
+#   And I press translated "administration.leads.index.view.search_button"
+#   And I follow translated "comments.shared.show_comments"
+#   When I follow translated "comments.threads.show.view.block_user"
+#   Then I am not sign in
+#   And I visit domain http://faircalls.eu
+#   Given I sign in as agent99@nbs.com with password secret
+#   Then I follow translated "layout.main_menu.agent.leads"
+#   And I follow translated "comments.shared.show_comments"
+#   Then I should not see translated "comments.threads.show.view.reply"
 
 # filter on screen name, email address, company name
 @_requested @m10 @tgn @_tested @_done
@@ -204,17 +204,17 @@ Scenario: I can filter by users - any user involved in the conversation
   And I should not see "Lead#7"
   And I should not see "Lead#6"
 
-@_requested @m10 @tgn @selenium @_tested @_done
-Scenario: I can see Hide/Show links beside the destroy link to collapse/expand certain conversations (threads)
-  Given a lead Lead#6 exists within category Computers and is bought by user customer2@nbs.com with role supplier
-  And I have user with email agent1@nbs.com and role agent
-  And comment thread for lead "Lead#6" was posted by users "customer2@nbs.com, agent1@nbs.com, customer2@nbs.com"
-  When I follow translated "layout.main_menu.admin.leads"
-  And I fill in "search_with_keyword" with "lead#6"
-  And I press translated "administration.leads.index.view.search_button"
-  And I follow translated "comments.shared.show_comments"
-  Then I should see "Comment title #1"
-  And I should see "Comment title #2"
-  And I should see "Comment title #3"
-  And I follow translated "comments.threads.show.view.hide_thread"
-  And I follow translated "comments.threads.show.view.show_thread"
+# @_requested @m10 @tgn @selenium @_tested @_done @_deprecated2014
+# Scenario: I can see Hide/Show links beside the destroy link to collapse/expand certain conversations (threads)
+#   Given a lead Lead#6 exists within category Computers and is bought by user customer2@nbs.com with role supplier
+#   And I have user with email agent1@nbs.com and role agent
+#   And comment thread for lead "Lead#6" was posted by users "customer2@nbs.com, agent1@nbs.com, customer2@nbs.com"
+#   When I follow translated "layout.main_menu.admin.leads"
+#   And I fill in "search_with_keyword" with "lead#6"
+#   And I press translated "administration.leads.index.view.search_button"
+#   And I follow translated "comments.shared.show_comments"
+#   Then I should see "Comment title #1"
+#   And I should see "Comment title #2"
+#   And I should see "Comment title #3"
+#   And I follow translated "comments.threads.show.view.hide_thread"
+#   And I follow translated "comments.threads.show.view.show_thread"

@@ -28,6 +28,6 @@ Scenario: I can create a user account by seleceting its type and filling in the 
   Then I press translated "administration.users.edit.view.button_update_user"
   And I should see translated "administration.users.create.flash.user_creation_successful"
 
-@m6 @tgn @_tested @_done
-Scenario: When I log in I should be redirected to home tab
-  Then I should be on the homepage
+# @m6 @tgn @_tested @_done @_deprecated2014
+# Scenario: When I log in I should be redirected to home tab
+#   Then I should be on the homepage

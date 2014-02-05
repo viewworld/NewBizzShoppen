@@ -46,19 +46,19 @@ Feature: VAT rates
     And I follow translated "layout.my_profile_link"
     Then I should see translated "formtastic.labels.user/supplier.vat_number"
 
-  @_done
-  Scenario: Agents/PurchaseManagers can edit vat number in profile
-    When I am signed up and confirmed as user with email ejdzent@lajoie.ca and password secret and role agent
-    And I am signed up and confirmed as user with email piem@lajoie.ca and password secret and role member
-    Given I visit domain http://faircalls.eu
-    And I sign in as ejdzent@lajoie.ca with password secret
-    And I follow translated "layout.my_profile_link"
-    Then I should not see translated "formtastic.labels.user.vat_number"
-    When I sign out
-    Given I visit domain http://fairdeals.eu
-    And I sign in as piem@lajoie.ca with password secret
-    And I follow translated "layout.my_profile_link"
-    Then I should not see translated "formtastic.labels.user.vat_number"
+  # @_done @_deprecated2014
+  # Scenario: Agents/PurchaseManagers can edit vat number in profile
+  #   When I am signed up and confirmed as user with email ejdzent@lajoie.ca and password secret and role agent
+  #   And I am signed up and confirmed as user with email piem@lajoie.ca and password secret and role member
+  #   Given I visit domain http://faircalls.eu
+  #   And I sign in as ejdzent@lajoie.ca with password secret
+  #   And I follow translated "layout.my_profile_link"
+  #   Then I should not see translated "formtastic.labels.user.vat_number"
+  #   When I sign out
+  #   Given I visit domain http://fairdeals.eu
+  #   And I sign in as piem@lajoie.ca with password secret
+  #   And I follow translated "layout.my_profile_link"
+  #   Then I should not see translated "formtastic.labels.user.vat_number"
 
   @_done
   Scenario: Administrator can set the no charge vat flag when vat number is specified
@@ -93,63 +93,63 @@ Feature: VAT rates
     And I press translated "administration.vat_rates.new.view.button_create"
     Then I should see "has already been taken"
 
-  @_done
-  Scenario: When VAT rate for a country is set, clients from this country should have this rate applied on invoice if they are not paying VAT in their country
-    When VAT rate for "Denmark" is set to "27"
-    And lead Awesome Lead exists within category Computers
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
-    And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier
-    And User kastomer@nbs.fake with role supplier is big buyer
-    And User kastomer@nbs.fake with role supplier is from country Denmark
-    And user "kastomer@nbs.fake" with role "lead_supplier" added lead "Awesome Lead" to cart
-    And I run ruby "puts User.where(:email => 'kastomer@nbs.fake').first.with_role.country.name"
-    And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "layout.main_menu.admin.upcoming_invoices"
-    And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-    And I follow translated "administration.invoices.edit.view.show_invoice"
-    Then I should see "27.00%" within ".invoice_data"
+  # @_done @_deprecated2014
+  # Scenario: When VAT rate for a country is set, clients from this country should have this rate applied on invoice if they are not paying VAT in their country
+  #   When VAT rate for "Denmark" is set to "27"
+  #   And lead Awesome Lead exists within category Computers
+  #   And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
+  #   And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier
+  #   And User kastomer@nbs.fake with role supplier is big buyer
+  #   And User kastomer@nbs.fake with role supplier is from country Denmark
+  #   And user "kastomer@nbs.fake" with role "lead_supplier" added lead "Awesome Lead" to cart
+  #   And I run ruby "puts User.where(:email => 'kastomer@nbs.fake').first.with_role.country.name"
+  #   And I sign in as jon@lajoie.ca with password secret
+  #   And I follow translated "layout.main_menu.admin.upcoming_invoices"
+  #   And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
+  #   And I follow translated "administration.invoices.edit.view.show_invoice"
+  #   Then I should see "27.00%" within ".invoice_data"
 
-  @_done
-  Scenario: When VAT rate for a country is set, clients from this country should not have this rate applied on invoice if they are paying VAT in their country
-    When VAT rate for "Denmark" is set to "27"
-    And lead Awesome Lead exists within category Computers
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
-    And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "not_charge_vat:1"
-    And User kastomer@nbs.fake with role supplier is big buyer
-    And User kastomer@nbs.fake with role supplier is from country Denmark
-    And user "kastomer@nbs.fake" with role "lead_supplier" added lead "Awesome Lead" to cart
-    And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "layout.main_menu.admin.upcoming_invoices"
-    And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-    And I follow translated "administration.invoices.edit.view.show_invoice"
-    Then I should not see "27%" within ".invoice_data"
+  # @_done @_deprecated2014
+  # Scenario: When VAT rate for a country is set, clients from this country should not have this rate applied on invoice if they are paying VAT in their country
+  #   When VAT rate for "Denmark" is set to "27"
+  #   And lead Awesome Lead exists within category Computers
+  #   And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
+  #   And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "not_charge_vat:1"
+  #   And User kastomer@nbs.fake with role supplier is big buyer
+  #   And User kastomer@nbs.fake with role supplier is from country Denmark
+  #   And user "kastomer@nbs.fake" with role "lead_supplier" added lead "Awesome Lead" to cart
+  #   And I sign in as jon@lajoie.ca with password secret
+  #   And I follow translated "layout.main_menu.admin.upcoming_invoices"
+  #   And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
+  #   And I follow translated "administration.invoices.edit.view.show_invoice"
+  #   Then I should not see "27%" within ".invoice_data"
 
-   @selenium @_done
-   Scenario: When creating invoice manually by admin, VAT field should be prepopulated if country has vat rate set and user doesnt pay vat in his country
-     When VAT rate for "Denmark" is set to "27"
-     And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
-     And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Wielki,last_name:Szu,company_name:WielkiSzuLtd"
-     And User kastomer@nbs.fake with role supplier is from country Denmark
-     And I sign in as jon@lajoie.ca with password secret
-     And I click hidden link by url regex "/administration\/invoicing\/invoices/"
-     And I select "WielkiSzuLtd, kastomer@nbs.fake" from "invoice_user_id"
-     And I press translated "administration.invoices.index.view.create_invoice"
-     And I follow "add_fields_invoice_lines"
-     Then the "1" field with id like "_vat_rate" should contain "27.0"
-     And the "invoice_charge_vat" checkbox should be checked
+  # @selenium @_done @_deprecated2014
+  # Scenario: When creating invoice manually by admin, VAT field should be prepopulated if country has vat rate set and user doesnt pay vat in his country
+  #   When VAT rate for "Denmark" is set to "27"
+  #   And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
+  #   And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Wielki,last_name:Szu,company_name:WielkiSzuLtd"
+  #   And User kastomer@nbs.fake with role supplier is from country Denmark
+  #   And I sign in as jon@lajoie.ca with password secret
+  #   And I click hidden link by url regex "/administration\/invoicing\/invoices/"
+  #   And I select "WielkiSzuLtd, kastomer@nbs.fake" from "invoice_user_id"
+  #   And I press translated "administration.invoices.index.view.create_invoice"
+  #   And I follow "add_fields_invoice_lines"
+  #   Then the "1" field with id like "_vat_rate" should contain "27.0"
+  #   And the "invoice_charge_vat" checkbox should be checked
 
-  @selenium @_done
-  Scenario: When creating invoice manually by admin, VAT field should be zero and disabled if country has vat rate set but user pays vat in his country
-    When VAT rate for "Denmark" is set to "27"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
-    And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Wielki,last_name:Szu,company_name:WielkiSzuLtd,not_charge_vat:1"
-    And I sign in as jon@lajoie.ca with password secret
-    And I click hidden link by url regex "/administration\/invoicing\/invoices/"
-    And I select "WielkiSzuLtd, kastomer@nbs.fake" from "invoice_user_id"
-    And I press translated "administration.invoices.index.view.create_invoice"
-    And I follow "add_fields_invoice_lines"
-    Then the "1" field with id like "_vat_rate" should contain "0"
-    And the "invoice_charge_vat" checkbox should not be checked
+  # @selenium @_done @_deprecated2014
+  # Scenario: When creating invoice manually by admin, VAT field should be zero and disabled if country has vat rate set but user pays vat in his country
+  #   When VAT rate for "Denmark" is set to "27"
+  #   And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
+  #   And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Wielki,last_name:Szu,company_name:WielkiSzuLtd,not_charge_vat:1"
+  #   And I sign in as jon@lajoie.ca with password secret
+  #   And I click hidden link by url regex "/administration\/invoicing\/invoices/"
+  #   And I select "WielkiSzuLtd, kastomer@nbs.fake" from "invoice_user_id"
+  #   And I press translated "administration.invoices.index.view.create_invoice"
+  #   And I follow "add_fields_invoice_lines"
+  #   Then the "1" field with id like "_vat_rate" should contain "0"
+  #   And the "invoice_charge_vat" checkbox should not be checked
 
   # Make country a textfield (we won’t create a new VAT for existing country, so it should be ok just to create both new country and VAT)
   @m5 @ao @_done
