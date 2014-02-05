@@ -1,4 +1,6 @@
 class PipelineReportPdf
+  TIME_FORMAT = '%Y%m%d%H%M%S'
+
   attr_reader :current_user, :pipeline_report_result, :pipeline_report_currency
   private :current_user, :pipeline_report_result, :pipeline_report_currency
 
@@ -9,6 +11,7 @@ class PipelineReportPdf
   end
 
   def to_file
+    FileUtils.mkdir_p(Rails.root.join(directory))
     File.open(temp_file, 'w') { |f| f.write(output) }
     `python public/html2pdf/pisa.py #{temp_file} #{file}`
     File.delete(temp_file)
@@ -38,15 +41,19 @@ class PipelineReportPdf
   end
 
   def file_name
-    @file_name ||= "pipeline_report_#{current_user.id}_#{Time.now.strftime('%Y%m%d%H%M%S')}"
+    @file_name ||= "pipeline_report_#{Time.now.strftime(TIME_FORMAT)}"
   end
 
   def temp_file
-    Rails.root.join("public/system/#{file_name}.html")
+    Rails.root.join("public/system/#{file_name}_#{current_user.id}.html")
   end
 
   def file
-    Rails.root.join("public/system/pipeline_report_cache/#{file_name}.pdf")
+    Rails.root.join("#{directory}/#{file_name}.pdf")
+  end
+
+  def directory
+    "public/system/pipeline_report_cache/#{current_user.id}"
   end
 
   def template
