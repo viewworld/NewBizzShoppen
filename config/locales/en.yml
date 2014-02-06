@@ -4324,7 +4324,7 @@ en:
         can_be_upgraded: "Can be upgraded?"
         can_be_downgraded: "Can be downgraded?"
         team_buyer: "Team buyer enabled?"
-        big_buyer: "Big buyer enabled?"
+        big_buyer: "Got credit enabled?"
         deal_maker: "Deal maker role enabled?"
         seller_id: "Seller"
         assigned_roles: "Roles"
