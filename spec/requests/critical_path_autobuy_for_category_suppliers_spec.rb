@@ -13,29 +13,29 @@ describe 'Critical Path Autobuy for category suppliers' do
   let(:seller) { Seller.make! }
   let(:currency) { Currency.make! }
 
-  # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-subscription-creation
-  it 'subscription creation' do
+  it 'autobuy for category suppliers' do
+    # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-subscription-creation
+    # 'subscription creation'
     # I go to fairleads.com
     get '/'
     expect(response).to render_template('supplier_home/guest')
 
     # I sign in as admin
     post '/users/sign_in', {:user => {:email => admin.email, :password => 'secret'}}
-    expect(response.code).to eq '302'
     expect(response).to redirect_to('/administration')
     follow_redirect!
-    expect(response.code).to eq '200'
+    expect(response).to be_success
 
     # I click Subscription plans subtab of Reports
     expect(response.body).to have_link('Subscriptions', :href => '/administration/subscription_plans')
     get '/administration/subscription_plans'
-    expect(response.code).to eq '200'
+    expect(response).to be_success
 
     # I click New subscription plan
     expect(response.body).to have_link('New subscription plan', :href => '/administration/subscription_plans/new')
 
     get '/administration/subscription_plans/new'
-    expect(response.code).to eq '200'
+    expect(response).to be_success
 
     # I fill in Name with Supplier Premium
     # I fill in Subscription period with 5, Billing cycle with 1, Billing date with 0
@@ -90,23 +90,21 @@ describe 'Critical Path Autobuy for category suppliers' do
 
     # I press Save
     expect { post '/administration/subscription_plans', fields.merge(lines) }.to change(SubscriptionPlan, :count).by(1)
-    expect(response.code).to eq '302'
     expect(response).to redirect_to('/administration/subscription_plans')
     follow_redirect!
-    expect(response.code).to eq '200'
+    expect(response).to be_success
     expect(response.body).to include 'Subscription plan was successfully created.'
 
     # I logout
     get '/logout'
     expect(response).to redirect_to('/')
-    expect(response.code).to eq '302'
     follow_redirect!
-    expect(response.code).to eq '200'
+    expect(response).to be_success
     expect(response.body).to include 'Signed out successfully.'
-  end
 
-  # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-category-supplier-signup
-  it 'category supplier signup', :pending => true do
+    #
+    # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-category-supplier-signup
+    # 'category supplier signup' do
     # I go to fairleads.com
     # I click New category supplier account
     # I fill in First name, Last name, Company name with ‘My Company’, Address line 1, Address line 2, City, Zip code, Email with premiumsupplier@example.com, Password, Password Confirmation
@@ -115,10 +113,10 @@ describe 'Critical Path Autobuy for category suppliers' do
     # I press Create
     # I should be signed in as premiumsupplier@example.com
     # I log out
-  end
 
-  # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-agent-signup--lead-creation
-  it 'agent signup & lead creation', :pending => true do
+    #
+    # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-agent-signup--lead-creation
+    # 'agent signup & lead creation'
     # I go to faircalls.dk
     # I click New agent account
     # I fill in First name, Last name, Address line 1, Address line 2, City, Zip code, Email with ‘agent@example.com, Password, Password Confirmation
@@ -133,10 +131,10 @@ describe 'Critical Path Autobuy for category suppliers' do
     # I fill in Company name, Address line 1, Address line 2, City, Zip code, Name, Phone number, Public header with ‘My Test Lead’, Public description, Price
     # I press Create
     # I log out
-  end
 
-  # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-lead-purchases--invoices-for-category-supplier
-  it 'lead purchases & invoices for Category Supplier', :pending => true do
+    #
+    # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-lead-purchases--invoices-for-category-supplier
+    # 'lead purchases & invoices for Category Supplier'
     # I go to fairleads.com
     # I sign in as premiumsupplier@example.com
     # I click My leads tab
@@ -149,10 +147,10 @@ describe 'Critical Path Autobuy for category suppliers' do
     # I click Pending Leads
     # I should see My Test Lead
     # I log out
-  end
 
-  # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-invoice-creation
-  it 'invoice creation', :pending => true do
+    #
+    # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-invoice-creation
+    # 'invoice creation'
     # I go to fairleads.com
     # I sign in as admin
     # I click Invoices subtab of Reports
@@ -160,10 +158,10 @@ describe 'Critical Path Autobuy for category suppliers' do
     # I press Create invoice
     # I should see ‘Invoice was successfully created’
     # I log out
-  end
 
-  # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-unpaid-invoices-for-category-supplier
-  it 'upaid invoices for category supplier', :pending => true do
+    #
+    # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-unpaid-invoices-for-category-supplier
+    # 'upaid invoices for category supplier'
     # I go to fairleads.com
     # I sign in as premiumsupplier@example.com
     # I click Invoices tab
