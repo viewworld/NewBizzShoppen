@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe 'Critical Path Autobuy for category suppliers' do
-
   before do
     with_site('fairleads')
     with_locale('en')
@@ -9,7 +8,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     without_confirmation_email!
   end
 
-  let(:admin) { u = User::Admin.make!(:confirmed_at => Time.now) }
+  let(:admin) { User::Admin.make!(:confirmed_at => Time.now) }
 
   # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-subscription-creation
   it 'subscription creation' do
