@@ -6,9 +6,12 @@ describe 'Critical Path Autobuy for category suppliers' do
     with_locale('en')
     stub_currency_euro
     without_confirmation_email!
+    without_invoice_email_template!
   end
 
   let(:admin) { User::Admin.make!(:confirmed_at => Time.now) }
+  let(:seller) { Seller.make! }
+  let(:currency) { Currency.make! }
 
   # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-subscription-creation
   it 'subscription creation' do
@@ -24,16 +27,82 @@ describe 'Critical Path Autobuy for category suppliers' do
     expect(response.code).to eq '200'
 
     # I click Subscription plans subtab of Reports
-    # I click New subscription
+    expect(response.body).to have_link('Subscriptions', :href => '/administration/subscription_plans')
+    get '/administration/subscription_plans'
+    expect(response.code).to eq '200'
+
+    # I click New subscription plan
+    expect(response.body).to have_link('New subscription plan', :href => '/administration/subscription_plans/new')
+
+    get '/administration/subscription_plans/new'
+    expect(response.code).to eq '200'
+
     # I fill in Name with Supplier Premium
     # I fill in Subscription period with 5, Billing cycle with 1, Billing date with 0
     # I select DKK from Currency
     # I select Category Supplier from Roles
     # I click New line
-    # I fill in Name with ‘Supplier premium 5 weeks’, Price with 12
+    # I fill in Name with 'Supplier premium 5 weeks', Price with 12
     # I check Got credit enabled?
+    #
+    # VALIDATE ALL NECESSARY FIELDS
+    #
+
+    fields = {'subscription_plan[name]' => 'Supplier Premium',
+              'subscription_plan[subscription_text]' => '',
+              'subscription_plan[subscription_period]' => '5',
+              'subscription_plan[billing_cycle]' => '1',
+              'subscription_plan[lockup_period]' => '0',
+              'subscription_plan[billing_period]' => '0',
+              'subscription_plan[free_period]' => '',
+              'subscription_plan[currency_id]' => currency.id,
+              'subscription_plan[seller_id]' => seller.id,
+              'subscription_plan[assigned_roles][]' => 'category_supplier',
+              'subscription_plan[is_active]' => '0',
+              'subscription_plan[is_active]' => '1',
+              'subscription_plan[is_public]' => '0',
+              'subscription_plan[is_public]' => '1',
+              'subscription_plan[can_be_upgraded]' => '0',
+              'subscription_plan[can_be_upgraded]' => '1',
+              'subscription_plan[can_be_downgraded]' => '0',
+              'subscription_plan[can_be_downgraded]' => '1',
+              'subscription_plan[premium_deals]' => '0',
+              'subscription_plan[free_deal_requests_in_free_period]' => '0',
+              'subscription_plan[team_buyers]' => '0',
+              'subscription_plan[big_buyer]' => '0',
+              'subscription_plan[big_buyer]' => '1',
+              'subscription_plan[deal_maker]' => '0',
+              'subscription_plan[newsletter_manager]' => '0',
+              'subscription_plan[chain_mails_enabled]' => '0',
+              'subscription_plan[surveys_enabled]' => '0',
+              'subscription_plan[pipeline_reports_enabled]' => '0',
+              'subscription_plan[use_paypal]' => '0',
+              'subscription_plan[paypal_retries]' => '1',
+              'subscription_plan[automatic_downgrading]' => '0',
+              'subscription_plan[automatic_downgrade_subscription_plan_id]' => '1',
+              'subscription_plan[paypal_billing_at_start]' => 'true'}
+    fields.each do |field, _|
+      expect(response.body).to have_field field
+    end
+
+    lines = {'subscription_plan[subscription_plan_lines_attributes][1391677822159][name]' => 'Supplier premium 5 weeks',
+             'subscription_plan[subscription_plan_lines_attributes][1391677822159][price]' => '15'}
+
     # I press Save
+    expect { post '/administration/subscription_plans', fields.merge(lines) }.to change(SubscriptionPlan, :count).by(1)
+    expect(response.code).to eq '302'
+    expect(response).to redirect_to('/administration/subscription_plans')
+    follow_redirect!
+    expect(response.code).to eq '200'
+    expect(response.body).to include 'Subscription plan was successfully created.'
+
     # I logout
+    get '/logout'
+    expect(response).to redirect_to('/')
+    expect(response.code).to eq '302'
+    follow_redirect!
+    expect(response.code).to eq '200'
+    expect(response.body).to include 'Signed out successfully.'
   end
 
   # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-category-supplier-signup
