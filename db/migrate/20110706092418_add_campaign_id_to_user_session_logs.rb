@@ -2,7 +2,6 @@ class AddCampaignIdToUserSessionLogs < ActiveRecord::Migration
   def self.up
     add_column :user_session_logs, :campaign_id, :integer
     add_column :user_session_logs, :hours_count, :float
-    UserSessionLog.all.each{|usl| usl.save}
   end
 
   def self.down

@@ -3,7 +3,6 @@ class AddSynchWithSourcesToNewsletterLists < ActiveRecord::Migration
     add_column :newsletter_lists, :synch_with_sources, :boolean, :default => true
     add_column :leads, :newsletter_list_id, :integer
     add_column :leads, :newsletter_list_subscriber_id, :integer
-    execute "UPDATE newsletter_lists SET synch_with_sources = 't' WHERE synch_with_sources IS NULL"
   end
 
   def self.down

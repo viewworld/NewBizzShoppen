@@ -1,7 +1,6 @@
 class AddNoPricesForTeamMembersToCategories < ActiveRecord::Migration
   def self.up
     add_column :categories, :no_prices_for_team_members, :boolean, :default => false
-    execute "UPDATE categories SET no_prices_for_team_members = FALSE"
   end
 
   def self.down

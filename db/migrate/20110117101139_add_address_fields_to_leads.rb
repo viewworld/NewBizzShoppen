@@ -6,12 +6,6 @@ class AddAddressFieldsToLeads < ActiveRecord::Migration
     add_column :leads, :city, :string
     add_column :leads, :zip_code, :string
     add_column :leads, :county, :string
-    Lead.all.each do |lead|
-      lead.address_line_1 = lead.address.split("\n").join("")[0..200]
-      lead.city = "Geneva"
-      lead.zip_code = "29-838"
-      lead.save
-    end
     remove_column :leads, :address
   end
 

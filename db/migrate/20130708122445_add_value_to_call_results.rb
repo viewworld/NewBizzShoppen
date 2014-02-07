@@ -8,17 +8,6 @@ class AddValueToCallResults < ActiveRecord::Migration
       t.integer :call_result_id
       t.float :dynamic_euro_value
     end
-
-    CampaignsResult.includes(:campaign).where("campaign_id IS NOT NULL").where("value IS NOT NULL").where("is_dynamic_value = ?", false).each do |cr|
-      CallResult.update_all({:value => cr.value, :euro_value => cr.euro_value}, { :result_id => cr.result_id, :contact_id => cr.campaign.contact_ids })
-    end
-
-    CampaignsResultField.includes(:campaign).where("campaign_id IS NOT NULL").where(:is_dynamic_value => true).each do |crf|
-      CallResult.where(:contact_id => crf.campaign.contact_ids, :result_id => crf.result_field.result_id).each do |cr|
-        cr.call_result_fields.create(:dynamic_euro_value => crf.dynamic_euro_value, :campaigns_result_field_id => crf.id)
-      end
-    end
-
     execute %{
               CREATE OR REPLACE VIEW dynamic_result_values AS
               SELECT distinct(result_values.id) AS id,

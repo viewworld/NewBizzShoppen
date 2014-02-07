@@ -1,7 +1,6 @@
 class AddDisableBoughtNotificationToUser < ActiveRecord::Migration
   def self.up
     add_column :users, :disable_bought_notification, :boolean, :default => false
-    User.update_all("disable_bought_notification = false")
   end
 
   def self.down
