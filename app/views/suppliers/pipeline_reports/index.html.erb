@@ -15,5 +15,6 @@
   </header>
 
   <%= render :partial => 'pipeline_report', :locals => {:result => @pipeline_report_generator.result,
-                                                        :currency => @pipeline_report_generator.currency} %>
+                                                        :currency => @pipeline_report_generator.currency,
+                                                        :pdf => false} %>
 </column-mc:>
