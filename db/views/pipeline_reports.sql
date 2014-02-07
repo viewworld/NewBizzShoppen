@@ -1,4 +1,5 @@
- SELECT lp.owner_id,
+ SELECT lp.id as lead_purchase_id,
+        lp.owner_id,
         COALESCE(lp.euro_value, 0.0) as euro_value,
         COALESCE(lp.estimate, 0.0) as estimate,
         COALESCE(lp.euro_pipeline_value, 0.0) as euro_pipeline_value,
