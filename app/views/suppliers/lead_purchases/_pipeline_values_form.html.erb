@@ -2,16 +2,15 @@
     <div id="pipeline_report_form_<%= lead_purchase.id %>">
       <%= label_tag :value, t('lead_supplier.lead_purchases.index.view.value', :currency => lead_purchase.lead.currency.to_s) %>
       <br/>
-      <%= text_field_tag :value, lead_purchase.value, :id => "value_#{lead_purchase.id}" %>
+      <%= text_field_tag :value, lead_purchase.value, :id => "value_#{lead_purchase.id}",
+                         :onKeyDown => "save_pipeline_report_values_timer(#{lead_purchase.id})" %>
       <br/>
       <%= label_tag :estimate, t('lead_supplier.lead_purchases.index.view.estimate') %>
       <br/>
-      <%= text_field_tag :estimate, lead_purchase.estimate, :id => "estimate_#{lead_purchase.id}" %>
+      <%= text_field_tag :estimate, lead_purchase.estimate, :id => "estimate_#{lead_purchase.id}",
+                         :onKeyDown => "save_pipeline_report_values_timer(#{lead_purchase.id})"%>
       <br/>
       <%= label_tag :pipeline_value, "#{t('lead_supplier.lead_purchases.index.view.pipeline_value')}:" %>
       <span id="pipeline_value_<%= lead_purchase.id %>"><%= lead_purchase.calculate_pipeline_value %></span>
-      <p>
-        <%= bt_link_to :save, t('lead_supplier.lead_purchases.index.view.update_pipeline_values'), "javascript:save_pipeline_report_values(#{lead_purchase.id})" %>
-      </p>
     </div>
 <% end %>

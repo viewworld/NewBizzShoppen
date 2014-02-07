@@ -33,6 +33,13 @@ function save_owner_note(lead_purchase_id) {
     $('#owner_note_form_' + lead_purchase_id).parents('.row_tooltip').effect('highlight', {color: '#d8ff9a'}, 500);
 }
 
+function save_pipeline_report_values_timer(lead_purchase_id){
+    clearTimeout($.data(this, 'timer'));
+    $(this).data('timer', setTimeout(function() {
+        save_pipeline_report_values(lead_purchase_id);
+    }, 1500));
+}
+
 function save_pipeline_report_values(lead_purchase_id) {
     lead_purchase_id = lead_purchase_id.toString();
     value = $('#value_' + lead_purchase_id).val();
@@ -47,7 +54,7 @@ function save_pipeline_report_values(lead_purchase_id) {
         display_pipeline_value_result(calculate_pipeline_value(value, estimate), 'green', lead_purchase_id)
     }
     else {
-        display_pipeline_value_result('error...', 'red', lead_purchase_id)
+        display_pipeline_value_result('provide two numbers...', 'red', lead_purchase_id)
     }
 }
 
