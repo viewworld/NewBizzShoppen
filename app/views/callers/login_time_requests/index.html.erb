@@ -89,7 +89,7 @@
           <td><%= ltr.campaign.name %></td>
           <td><%= l ltr.start_time %></td>
           <td><%= l ltr.end_time %></td>
-          <td><%= number_with_precision(ltr.hours_count, :precision => 2) %></td>
+          <td><%= ltr.hours_count %></td>
           <td><%= ltr.aasm_state %></td>
           <td class="tda ta_r">
             <% if ltr.can_be_managed_by?(current_user) %>
