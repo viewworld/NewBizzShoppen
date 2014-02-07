@@ -59,7 +59,7 @@
       </ol>
     </fieldset>
     <% if user_signed_in? and (current_user.admin? or current_user.agent?)  %>
-      <%= render :partial => "/shared/tags/assigned_tags", :locals => { :object => @lead } %>
+      <%= render 'shared/tags/assigned_tags', :object => @lead %>
     <% end %>
   </div>
 </div>
