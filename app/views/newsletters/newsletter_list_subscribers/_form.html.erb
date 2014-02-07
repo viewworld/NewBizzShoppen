@@ -42,5 +42,8 @@
         <%= form.input :custom_5, :as => :string %>
       </ol>
     </fieldset>
+    <% if user_signed_in? and (current_user.admin? or current_user.agent?)  %>
+      <%= render '/shared/tags/assigned_tags', :object => form.object.subscriber %>
+    <% end %>
   </div>
 </div>
