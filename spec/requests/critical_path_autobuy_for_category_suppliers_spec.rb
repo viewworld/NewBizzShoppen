@@ -3,15 +3,15 @@ require 'spec_helper'
 describe 'Critical Path Autobuy for category suppliers' do
   before do
     with_site('fairleads')
-    with_locale('en')
-    stub_currency_euro
+    Locale.make!
+    VatRate.make!
     without_confirmation_email!
     without_invoice_email_template!
   end
 
   let(:admin) { User::Admin.make!(:confirmed_at => Time.now) }
   let(:seller) { Seller.make! }
-  let(:currency) { Currency.make! }
+  let!(:currency) { Currency.make!(:name => 'EUR', :global_default => true) }
 
   it 'autobuy for category suppliers' do
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-subscription-creation
@@ -27,12 +27,12 @@ describe 'Critical Path Autobuy for category suppliers' do
     expect(response).to be_success
 
     # I click Subscription plans subtab of Reports
-    expect(response.body).to have_link('Subscriptions', :href => '/administration/subscription_plans')
+    body_has_to(:have_link, 'Subscriptions', :href => '/administration/subscription_plans')
     get '/administration/subscription_plans'
     expect(response).to be_success
 
     # I click New subscription plan
-    expect(response.body).to have_link('New subscription plan', :href => '/administration/subscription_plans/new')
+    body_has_to(:have_link, 'New subscription plan', :href => '/administration/subscription_plans/new')
 
     get '/administration/subscription_plans/new'
     expect(response).to be_success
@@ -82,7 +82,7 @@ describe 'Critical Path Autobuy for category suppliers' do
               'subscription_plan[automatic_downgrade_subscription_plan_id]' => '1',
               'subscription_plan[paypal_billing_at_start]' => 'true'}
     fields.each do |field, _|
-      expect(response.body).to have_field field
+      body_has_to(:have_field, field)
     end
 
     lines = {'subscription_plan[subscription_plan_lines_attributes][1391677822159][name]' => 'Supplier premium 5 weeks',
@@ -90,29 +90,85 @@ describe 'Critical Path Autobuy for category suppliers' do
 
     # I press Save
     expect { post '/administration/subscription_plans', fields.merge(lines) }.to change(SubscriptionPlan, :count).by(1)
+    subscription_plan = SubscriptionPlan.last
+
     expect(response).to redirect_to('/administration/subscription_plans')
     follow_redirect!
     expect(response).to be_success
-    expect(response.body).to include 'Subscription plan was successfully created.'
+    has_flash 'Subscription plan was successfully created.'
 
     # I logout
     get '/logout'
     expect(response).to redirect_to('/')
     follow_redirect!
     expect(response).to be_success
-    expect(response.body).to include 'Signed out successfully.'
+    has_flash 'Signed out successfully.'
 
     #
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-category-supplier-signup
     # 'category supplier signup' do
     # I go to fairleads.com
+
+    get '/'
+    expect(response).to render_template('supplier_home/guest')
+
+    body_has_to(:have_link, 'Create new supplier account', :href => '/supplier_accounts/new')
+
     # I click New category supplier account
+    get '/supplier_accounts/new'
+    expect(response).to be_success
+
     # I fill in First name, Last name, Company name with ‘My Company’, Address line 1, Address line 2, City, Zip code, Email with premiumsupplier@example.com, Password, Password Confirmation
     # I select Supplier premium from Subscriptions
     # I check Agree to T&C
     # I press Create
+    #
+    # VALIDATE ALL NECESSARY FIELDS
+    #
+
+    fields = {'user_category_supplier[subscription_plan_id]' => subscription_plan.id,
+              'user_category_supplier[first_name]' => 'FirstName',
+              'user_category_supplier[last_name]' => 'LastName',
+              'user_category_supplier[company_name]' => 'CompanyName',
+              'user_category_supplier[address_attributes][address_line_1]' => 'AddressLine1',
+              'user_category_supplier[address_attributes][address_line_2]' => 'AddressLine2',
+              'user_category_supplier[address_attributes][address_line_3]' => 'City',
+              'user_category_supplier[address_attributes][zip_code]' => 'ZipCode',
+              'user_category_supplier[address_attributes][country_id]' => Country.first.id,
+              'user_category_supplier[address_attributes][region_id]' => '',
+              'user_category_supplier[vat_number]' => '',
+              'user_category_supplier[phone]' => '',
+              'user_category_supplier[email]' => 'premiumsupplier@example.com',
+              'user_category_supplier[password]' => 'password',
+              'user_category_supplier[password_confirmation]' => 'password',
+              'user_category_supplier[time_zone]' => 'UTC',
+              'user_category_supplier[agreement_read]' => '0',
+              'user_category_supplier[agreement_read]' => '1',
+              'user_category_supplier[newsletter_on]' => '0',
+              'user_category_supplier[newsletter_on]' => '1'}
+
+    fields.each do |field, _|
+      body_has_to(:have_field, field)
+    end
+
+    lines = { 'user_category_supplier[rpx_identifier]' => '1' }
+
+    expect { post '/supplier_accounts', fields.merge(lines) }.to change(Subscription, :count).by(1)
+
+    expect(response).to redirect_to '/'
+    follow_redirect!
+
+    has_flash 'Your account has been successfully created! You are now signed in.'
+
     # I should be signed in as premiumsupplier@example.com
-    # I log out
+    body_has_to(:include, 'premiumsupplier@example.com')
+
+    # I logout
+    get '/logout'
+    expect(response).to redirect_to('/companyname')
+    follow_redirect!
+    expect(response).to be_success
+    has_flash 'Signed out successfully.'
 
     #
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-agent-signup--lead-creation
