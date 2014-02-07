@@ -27,6 +27,14 @@
                 <td>
                   <% if %w(value pipeline_value).include?(field) %>
                       <%= raw as_currency(line[field.to_sym], currency) %>
+                  <% elsif field == 'lead_header' %>
+                      <% if pdf %>
+                          <%= line[:lead_header] %>
+                      <% else %>
+                          <%= link_to line[:lead_header],
+                                      current_user.has_role?(:supplier) ? suppliers_lead_purchase_path(line[:lead_purchase_id]) : lead_users_lead_purchase_path(line[:lead_purchase_id]),
+                                      :class => "default_action" %>
+                      <% end %>
                   <% else %>
                       <%= line[field.to_sym] %>
                   <% end %>

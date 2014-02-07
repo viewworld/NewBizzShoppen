@@ -42,7 +42,8 @@ class PipelineReportGenerator
 
   def lines_to_hashes(lines)
     lines.map do |line|
-      {:company_name => line.company_name,
+      {:lead_purchase_id => line.lead_purchase_id,
+       :company_name => line.company_name,
        :lead_header => line.header,
        :contact_name => line.contact_name,
        :decision_date => line.decision_date,

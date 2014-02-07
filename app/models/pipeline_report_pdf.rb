@@ -37,7 +37,8 @@ class PipelineReportPdf
                        :type => :erb,
                        :layout => '/app/views/layouts/pdf',
                        :locals => {:result => pipeline_report_result,
-                                   :currency => pipeline_report_currency})
+                                   :currency => pipeline_report_currency,
+                                   :pdf => true})
   end
 
   def file_name
