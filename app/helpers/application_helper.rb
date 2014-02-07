@@ -362,4 +362,14 @@ module ApplicationHelper
     end
     result
   end
+
+  def fairdeals_host
+    if Rails.env.production?
+      'www.fairdeals.dk'
+    elsif Rails.env.staging?
+      'fairdeals.selleo.com'
+    else
+      'fairdeals.dk:3000'
+    end
+  end
 end
