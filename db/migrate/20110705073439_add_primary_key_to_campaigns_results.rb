@@ -21,10 +21,6 @@ class AddPrimaryKeyToCampaignsResults < ActiveRecord::Migration
 
     add_column :results, :is_success, :boolean, :default => false
     add_column :results, :is_reported, :boolean, :default => false
-
-    ActiveRecord::Migration.execute "UPDATE results SET is_success = 'f' WHERE is_success IS NULL"
-    ActiveRecord::Migration.execute "UPDATE results SET is_reported = 'f' WHERE is_reported IS NULL"
-
     add_column :campaigns_results, :value, :float
     add_column :campaigns_results, :euro_value, :float
     add_column :campaigns_results, :expected_completed_per_hour, :float

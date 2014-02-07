@@ -2,11 +2,6 @@ class AddIsReportedToCampaignsResults < ActiveRecord::Migration
   def self.up
     add_column :campaigns_results, :is_reported, :boolean, :default => false
     add_column :campaigns_results, :is_success, :boolean, :default => false
-
-    Result.all.each do |result|
-      result.campaigns_results.each { |cr| cr.update_attributes(:is_reported => result.is_reported?, :is_success => result.is_success?) }
-    end
-
     execute %{
               CREATE OR REPLACE VIEW dynamic_result_values AS
               SELECT distinct(result_values.id) AS id,

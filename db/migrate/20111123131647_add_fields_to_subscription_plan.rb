@@ -1,10 +1,7 @@
 class AddFieldsToSubscriptionPlan < ActiveRecord::Migration
   def self.up
     add_column :subscription_plans, :subscription_period, :integer
-    execute "UPDATE subscription_plans SET subscription_period = billing_cycle"
-
     add_column :subscriptions, :subscription_period, :integer
-    execute "UPDATE subscriptions SET subscription_period = billing_cycle"
 
     add_column :subscription_plans, :free_deals_in_free_period, :integer, :default => 0
     add_column :subscriptions, :free_deals_in_free_period, :integer, :default => 0
@@ -23,8 +20,6 @@ class AddFieldsToSubscriptionPlan < ActiveRecord::Migration
 
     add_column :subscription_plans, :automatic_downgrade_subscription_plan_id, :integer, :default => nil
     add_column :subscriptions, :automatic_downgrade_subscription_plan_id, :integer, :default => nil
-
-    execute "UPDATE subscription_plans SET use_paypal = 'f' WHERE use_paypal IS NULL"
   end
 
   def self.down

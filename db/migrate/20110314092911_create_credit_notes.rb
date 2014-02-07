@@ -9,7 +9,6 @@ class CreateCreditNotes < ActiveRecord::Migration
     end
 
     add_column :invoice_lines, :is_credited, :boolean, :default => false
-    execute "UPDATE invoice_lines SET is_credited = FALSE"
   end
 
   def self.down

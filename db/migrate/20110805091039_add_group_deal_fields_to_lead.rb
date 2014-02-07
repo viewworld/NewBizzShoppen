@@ -4,8 +4,6 @@ class AddGroupDealFieldsToLead < ActiveRecord::Migration
     add_column :leads, :discounted_price, :decimal, :precision => 10, :scale => 2
     add_column :leads, :social_media_description, :text
     add_column :leads, :created_leads, :integer, :default => 0
-    Deal.update_all("group_deal = false")
-    Deal.update_all("created_leads = 0")
   end
 
   def self.down
