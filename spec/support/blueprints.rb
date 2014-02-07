@@ -14,6 +14,13 @@ DealCategory.blueprint do
   description { Faker::Lorem.sentences(2).to_s }
 end
 
+Locale.blueprint do
+  language { 'English' }
+  code { 'en' }
+  symbol { 'EN' }
+  enabled { true }
+end
+
 Country.blueprint do
   name { Faker::Address.uk_country + rand.to_s }
   locale { "en" }
