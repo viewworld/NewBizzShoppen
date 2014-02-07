@@ -1,7 +1,6 @@
-
 .invoice_show
 {
-    padding-top: 20px;    
+    padding-top: 20px;
 }
 
 .invoice_show table
@@ -10,7 +9,7 @@
 }
 
 .invoice_show table tbody tr td,
-.invoice_show table thead tr th    
+.invoice_show table thead tr th
 {
     vertical-align: middle;
     padding: 2px 5px;
@@ -23,8 +22,6 @@
     padding: 20px 0;
     font-weight: bold;
 }
-
-
 
 table.from_to_table
 {
@@ -43,12 +40,10 @@ table.from_to_table tbody tr td
     padding-right: 15%;
 }
 
-
 .invoice_data table
 {
     margin-bottom: 25px;
 }
-
 
 .invoice_data table thead tr th
 {
@@ -72,7 +67,7 @@ table.from_to_table tbody tr td
 }
 
 .invoice_data table tbody tr td.empty,
-.invoice_data table tbody tr.space td    
+.invoice_data table tbody tr.space td
 {
     background: none;
     border-bottom: none;
@@ -115,6 +110,25 @@ table.from_to_table tbody tr td
     body, table
     {
         font: 12px Arial, Helvetica, Verdana, Tahoma, sans-serif;
+    }
+
+    .pipeline table th { width: 12.5%; }
+
+    .pipeline table { margin-top: 25px; }
+
+    .pipeline table thead tr th.th_value { width: 120px;}
+    .pipeline table thead tr th.hl { width: 0;}
+    .pipeline table thead tr th.hr { width: 0;}
+    .pipeline table thead tr th.th_percent
+    {
+      text-align: center;
+      width: 60px;
+    }
+
+    div.date {
+      text-align: right;
+      float: right;
+      margin-top: -20px !important;
     }
 
     *

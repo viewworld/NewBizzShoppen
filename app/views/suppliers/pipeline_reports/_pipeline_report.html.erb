@@ -1,56 +1,74 @@
-<table class="generic">
-  <thead>
-  <tr>
-    <th class="hl"></th>
-    <% PipelineReport::FIELDS_FOR_DISPLAY.each do |field| %>
-        <th><%= t(field, :scope => 'supplier.pipeline_reports.index.view.table') %></th>
+<% image_path_suffix = "invoices/logo_fairdeals.jpg" %>
+<div class="<%= 'invoice_data' if pdf %> pipeline">
+  <% if pdf %>
+    <% if defined?(root_url) %>
+      <%= image_tag image_path_suffix, :alt => "logo", :width => 150 %>
+    <% else %>
+      <img src="../images/<%= image_path_suffix %>" alt="logo" width="150"/>
     <% end %>
-    <th class="hr"></th>
-  </tr>
-  </thead>
-  <tfoot>
-  <tr>
-    <td class="fl"></td>
-    <td colspan="8"></td>
-    <td class="fr"></td>
-  </tr>
-  </tfoot>
-  <tbody>
-  <% result.each do |group| %>
-      <td class="cl"></td>
-      <td colspan="8"><b><%= group[:title] %></b></td>
-      <td class="cr"></td>
-      <% group[:lines].each do |line| %>
+
+    <div class="date"><%= Date.today %></div>
+  <% end %>
+
+  <table class="generic">
+    <thead>
+      <tr>
+        <th class="hl"></th>
+        <th><%= t('company_name', :scope => 'supplier.pipeline_reports.index.view.table') %></th>
+        <th><%= t('lead_header', :scope => 'supplier.pipeline_reports.index.view.table') %></th>
+        <th><%= t('contact_name', :scope => 'supplier.pipeline_reports.index.view.table') %></th>
+        <th><%= t('decision_date', :scope => 'supplier.pipeline_reports.index.view.table') %></th>
+        <th><%= t('state', :scope => 'supplier.pipeline_reports.index.view.table') %></th>
+        <th><%= t('value', :scope => 'supplier.pipeline_reports.index.view.table') %></th>
+        <th class="th_percent"><%= t('estimate', :scope => 'supplier.pipeline_reports.index.view.table') %></th>
+        <th class="th_value ta_r"><%= t('pipeline_value', :scope => 'supplier.pipeline_reports.index.view.table') %></th>
+        <th class="hr"></th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <td class="fl"></td>
+        <td colspan="8"></td>
+        <td class="fr"></td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <% result.each do |group| %>
+        <td class="cl"></td>
+        <td colspan="8"><b><%= group[:title] %></b></td>
+        <td class="cr"></td>
+        <% group[:lines].each do |line| %>
           <tr class="<%= cycle('odd', 'even') %>">
             <td class="cl"></td>
             <% PipelineReport::FIELDS_FOR_DISPLAY.each do |field| %>
-                <td>
-                  <% if %w(value pipeline_value).include?(field) %>
-                      <%= raw as_currency(line[field.to_sym], currency) %>
-                  <% elsif field == 'lead_header' %>
-                      <% if pdf %>
-                          <%= line[:lead_header] %>
-                      <% else %>
-                          <%= link_to line[:lead_header],
-                                      current_user.has_role?(:supplier) ? suppliers_lead_purchase_path(line[:lead_purchase_id]) : lead_users_lead_purchase_path(line[:lead_purchase_id]),
-                                      :class => "default_action" %>
-                      <% end %>
+              <td class= <%= 'ta_r' if field == 'pipeline_value' %>>
+                <% if %w(value pipeline_value).include?(field) %>
+                  <%= raw as_currency(line[field.to_sym], currency) %>
+                <% elsif field == 'lead_header' %>
+                  <% if pdf %>
+                    <%= line[:lead_header] %>
                   <% else %>
-                      <%= line[field.to_sym] %>
+                    <%= link_to line[:lead_header],
+                      current_user.has_role?(:supplier) ? suppliers_lead_purchase_path(line[:lead_purchase_id]) : lead_users_lead_purchase_path(line[:lead_purchase_id]),
+                      :class => "default_action" %>
                   <% end %>
-                </td>
+                <% else %>
+                  <%= line[field.to_sym] %>
+                <% end %>
+              </td>
             <% end %>
             <td class="cr"></td>
           </tr>
+        <% end %>
+        <tr class="<%= cycle('odd', 'even') %>">
+          <td class="cl"></td>
+          <td colspan="5"></td>
+          <td><b><%= raw as_currency(group[:value_sum], currency) %></b></td>
+          <td></td>
+          <td class="ta_r"><b><%= raw as_currency(group[:pipeline_value_sum], currency) %></b></td>
+          <td class="cr"></td>
+        </tr>
       <% end %>
-      <tr class="<%= cycle('odd', 'even') %>">
-        <td class="cl"></td>
-        <td colspan="5"></td>
-        <td><b><%= raw as_currency(group[:value_sum], currency) %></b></td>
-        <td></td>
-        <td><b><%= raw as_currency(group[:pipeline_value_sum], currency) %></b></td>
-        <td class="cr"></td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
