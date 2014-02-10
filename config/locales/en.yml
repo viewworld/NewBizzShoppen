@@ -5340,6 +5340,10 @@ en:
         view:
           header: "Survey responses for %{survey_name}"
           email: "E-mail"
+          company_name: Company name
+          contact_name: Contact name
+          company_phone: Company phone
+          contact_phone: Contact phone
           show: "Show"
           all_responses: "All responses"
           export: "Export to XLS"
