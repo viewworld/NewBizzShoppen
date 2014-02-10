@@ -21,15 +21,19 @@
         <thead>
         <tr>
           <th class="hl"></th>
-          <th><%= t("surveys_management.survey_recipients.index.view.email") %></th>
-          <th class="ta_r"><%= t("surveys_management.surveys.index.view.actions_column") %></th>
+          <th><%= t('surveys_management.survey_recipients.index.view.email') %></th>
+          <th><%= t('surveys_management.survey_recipients.index.view.company_name') %></th>
+          <th><%= t('surveys_management.survey_recipients.index.view.contact_name') %></th>
+          <th><%= t('surveys_management.survey_recipients.index.view.company_phone') %></th>
+          <th><%= t('surveys_management.survey_recipients.index.view.contact_phone') %></th>
+          <th class="ta_r"><%= t('surveys_management.surveys.index.view.actions_column') %></th>
           <th class="hr"></th>
         </tr>
         </thead>
         <tfoot>
         <tr>
           <td class="fl"></td>
-          <td colspan="2"></td>
+          <td colspan="6"></td>
           <td class="fr"></td>
         </tr>
         </tfoot>
@@ -38,6 +42,10 @@
             <tr class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
               <td><%= survey_recipient.email %></td>
+              <td><%= survey_recipient.recipient.company_name %></td>
+              <td><%= survey_recipient.recipient.contact_name %></td>
+              <td><%= survey_recipient.recipient.company_phone_number if survey_recipient.recipient.respond_to?(:company_phone_number) %></td>
+              <td><%= survey_recipient.recipient.phone_number %></td>
               <td class="tda ta_r">
                 <ul-actions>
                   <li>
@@ -50,7 +58,7 @@
         <% end %>
         <% if will_paginate %>
             <tr class="pagination">
-              <td colspan="7" class="ta_c">
+              <td colspan="11" class="ta_c">
                 <%= will_paginate @surveys, :previous_label => '&laquo;', :next_label => '&raquo;' %>
               </td>
             </tr>
