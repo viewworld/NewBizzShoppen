@@ -42,10 +42,10 @@
             <tr class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
               <td><%= survey_recipient.email %></td>
-              <td><%= survey_recipient.recipient.company_name %></td>
-              <td><%= survey_recipient.recipient.contact_name %></td>
-              <td><%= survey_recipient.recipient.company_phone_number if survey_recipient.recipient.respond_to?(:company_phone_number) %></td>
-              <td><%= survey_recipient.recipient.phone_number %></td>
+              <td><%= survey_recipient.recipient_company_name %></td>
+              <td><%= survey_recipient.recipient_contact_name %></td>
+              <td><%= survey_recipient.company_phone_number %></td>
+              <td><%= survey_recipient.recipient_phone_number %></td>
               <td class="tda ta_r">
                 <ul-actions>
                   <li>

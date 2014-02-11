@@ -22,6 +22,8 @@ class SurveyRecipient < ActiveRecord::Base
   scope :for_survey, lambda { |survey| where(:survey_id => survey.id) }
   scope :with_state, lambda { |state| where(:state => state) }
 
+  delegate :company_name, :contact_name, :phone_number, :to => :recipient, :prefix => :recipient
+
   STATE_NOT_VISITED = 0.freeze
   STATE_VISITED = 1.freeze
   STATE_COMPLETED = 2.freeze
@@ -205,6 +207,10 @@ class SurveyRecipient < ActiveRecord::Base
 
   def answer_for_question(question)
     survey_answers.detect { |sa| sa.survey_question_id == question.id }
+  end
+
+  def company_phone_number
+    recipient.company_phone_number if recipient.respond_to?(:company_phone_number)
   end
 
   private
