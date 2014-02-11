@@ -1,4 +1,5 @@
 class SurveyOption < ActiveRecord::Base
+  CSV_ATTRS = %w(title)
 
   has_and_belongs_to_many :survey_answers
   belongs_to :survey_question
