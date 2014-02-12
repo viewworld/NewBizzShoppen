@@ -11,4 +11,8 @@ class SurveyOption < ActiveRecord::Base
   translates :title
 
   acts_as_taggable
+
+  def to_s
+    title
+  end
 end
