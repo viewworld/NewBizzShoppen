@@ -57,8 +57,19 @@
 </search-box:>
 
 <column-mc:>
-<header><%= t("lead_supplier.lead_purchases.index.view.header") %></header>
+<header>
+  <param:content>
+    <%= t('lead_supplier.lead_purchases.index.view.header') %>
+  </param:content>
 
+  <param:actions>
+    <ul class="header_actions">
+      <li class="last">
+        <%= bt_link_to :plus, t('lead_supplier.lead_purchases.index.view.add_lead_link'), new_suppliers_lead_path %>
+      </li>
+    </ul>
+  </param:actions>
+</header>
 
 <% if @lead_purchases.blank? %>
     <%= blank_state_message %>

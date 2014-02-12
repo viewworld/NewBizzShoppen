@@ -3126,6 +3126,7 @@ en:
       index:
         view:
           header: My leads
+          add_lead_link: Add lead
           download_csv_link: CSV
           download_xls_link: XLS
           print_link: Print
@@ -3166,6 +3167,10 @@ en:
             search_button: "Search"
             zip_code: "Zip code"
           bulk_download_csv_all: "Download all"
+    leads:
+      index:
+        view:
+          header: New lead
     bulk_lead_share_by_email:
       new:
         view:
