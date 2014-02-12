@@ -2,11 +2,13 @@ require 'spec_helper'
 
 describe 'Critical Path Autobuy for category suppliers' do
   before do
+    Settings.big_supplier_purchase_limit = 10000
     with_site('fairleads')
     Locale.make!
     VatRate.make!
     without_confirmation_email!
     without_invoice_email_template!
+    without_lead_notification!
   end
 
   let(:admin) { User::Admin.make!(:confirmed_at => Time.now) }
@@ -71,7 +73,6 @@ describe 'Critical Path Autobuy for category suppliers' do
               'subscription_plan[premium_deals]' => '0',
               'subscription_plan[free_deal_requests_in_free_period]' => '0',
               'subscription_plan[team_buyers]' => '0',
-              'subscription_plan[big_buyer]' => '0',
               'subscription_plan[big_buyer]' => '1',
               'subscription_plan[deal_maker]' => '0',
               'subscription_plan[newsletter_manager]' => '0',
@@ -141,8 +142,8 @@ describe 'Critical Path Autobuy for category suppliers' do
               'user_category_supplier[vat_number]' => '',
               'user_category_supplier[phone]' => '',
               'user_category_supplier[email]' => 'premiumsupplier@example.com',
-              'user_category_supplier[password]' => 'password',
-              'user_category_supplier[password_confirmation]' => 'password',
+              'user_category_supplier[password]' => 'secret',
+              'user_category_supplier[password_confirmation]' => 'secret',
               'user_category_supplier[time_zone]' => 'UTC',
               'user_category_supplier[agreement_read]' => '0',
               'user_category_supplier[agreement_read]' => '1',
@@ -196,8 +197,8 @@ describe 'Critical Path Autobuy for category suppliers' do
               'user_agent[address_attributes][region_id]' => '',
               'user_agent[phone]' => '',
               'user_agent[email]' => 'agent@example.com',
-              'user_agent[password]' => 'password',
-              'user_agent[password_confirmation]' => 'password',
+              'user_agent[password]' => 'secret',
+              'user_agent[password_confirmation]' => 'secret',
               'user_agent[time_zone]' => 'UTC',
               'user_agent[agreement_read]' => '1',
               'user_agent[newsletter_on]' => '1'}
@@ -224,14 +225,14 @@ describe 'Critical Path Autobuy for category suppliers' do
     # I click My leads tab
     body_has_to(:have_link, 'My leads', :href => '/agents/leads')
     get '/agents/leads'
-    main_response = response
+      # main_response = response
 
-    # I select My company from Categories # AJAX request
-    get '/categories.js'
-    expect(response).to be_success
-    body_has_to(:include, company_name)
+      # # I select My company from Categories # AJAX request
+      # get '/categories.js'
+      # expect(response).to be_success
+      # body_has_to(:include, company_name)
 
-    response = main_response
+      # response = main_response
     # I press New lead
     expect(response.body).to have_link('New lead', :href => '#')
     get "/agents/leads/new?category_id=#{lead_category.id}"
@@ -283,17 +284,71 @@ describe 'Critical Path Autobuy for category suppliers' do
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-lead-purchases--invoices-for-category-supplier
     # 'lead purchases & invoices for Category Supplier'
     # I go to fairleads.com
+    with_site('fairleads')
+    get '/'
+
+    fields = {'user[email]' => 'premiumsupplier@example.com',
+              'user[password]' => 'secret'}
+
+    fields.each do |field, _|
+      body_has_to(:have_field, field)
+    end
+
+    # I should be signed in as premiumsupplier@example.com
     # I sign in as premiumsupplier@example.com
+    post '/users/sign_in', fields
+    expect(response).to redirect_to "/#{lead_category.cached_slug}"
+    follow_redirect!
+
+    body_has_to(:include, 'premiumsupplier@example.com')
+    body_has_to(:have_link, 'My leads', :href => '/suppliers/lead_purchases')
+
     # I click My leads tab
+    get '/suppliers/lead_purchases'
+    expect(response).to be_success
+
     # I should see My Test Lead
+    body_has_to(:include, 'Lead Public Header')
+
     # I check My Test Lead
+    expect(response.body).to have_field('lead_purchase_ids[]', :value => LeadPurchase.last.id)
     # I select Meeting from State
+    expect(response.body).to have_select('bulk_state', :with_options => ['Meeting'])
+
+    attributes = {'bulk_state' => 2,
+              'route_to' => '/suppliers/bulk_lead_purchase_update',
+              'lead_purchase_ids[]' => LeadPurchase.last.id}
+
     # I press Update all selected leads
+    post '/bulk_action', attributes, { 'HTTP_REFERER' => '/suppliers/lead_purchases' }
+
+    expect(response).to redirect_to '/suppliers/lead_purchases'
+    follow_redirect!
+
+    has_flash 'Leads have been updated successfully!'
+
     # I should see Meeting selected in State select for My Test Lead
+    expect(response.body).to have_select('state', :selected => ['Meeting'])
+
     # I click Invoices tab
+    body_has_to(:have_link, 'Invoices', :href => '/suppliers/invoices')
+    get '/suppliers/invoices'
+    expect(response).to be_success
+
     # I click Pending Leads
+    body_has_to(:have_link, 'Pending leads', :href => '/suppliers/not_invoiced_leads')
+    get '/suppliers/not_invoiced_leads'
+    expect(response).to be_success
+
     # I should see My Test Lead
+    body_has_to(:include, 'Lead Public Header')
+
     # I log out
+    get '/logout'
+    expect(response).to redirect_to "/#{lead_category.cached_slug}"
+    follow_redirect!
+    expect(response).to be_success
+    has_flash 'Signed out successfully.'
 
     #
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-invoice-creation

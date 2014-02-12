@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
   end
 
   def update_log_entries
-    if user_signed_in? and !UserSessionLog::EXCLUDED_CONTROLLERS.include?(self.class.to_s)
+    if user_signed_in? && !UserSessionLog::EXCLUDED_CONTROLLERS.include?(self.class.to_s) && current_user
       UserSessionLog.update_regular_time(current_user)
       if (self.class.name.match(/::AgentWorkScreen/) or UserSessionLog::CAMPAIGN_CONTROLLERS.include?(self.class.to_s)) and params[:campaign_id] and !logged_as_other_user?
         UserSessionLog.update_campaign_time(current_user, params[:campaign_id])
