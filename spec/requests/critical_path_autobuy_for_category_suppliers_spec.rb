@@ -174,15 +174,60 @@ describe 'Critical Path Autobuy for category suppliers' do
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-agent-signup--lead-creation
     # 'agent signup & lead creation'
     # I go to faircalls.dk
+    with_site('faircalls')
+    get '/'
+
     # I click New agent account
+    body_has_to(:have_link, 'Create new agent account', :href => '/agent_accounts/new')
+    expect(response).to render_template('supplier_home/guest')
+    get '/agent_accounts/new'
+
     # I fill in First name, Last name, Address line 1, Address line 2, City, Zip code, Email with ‘agent@example.com, Password, Password Confirmation
     # I check Agree to T&C
+    fields = {'user_agent[first_name]' => 'FirstName',
+              'user_agent[last_name]' => 'LastName',
+              'user_agent[address_attributes][address_line_1]' => 'AddressLine1',
+              'user_agent[address_attributes][address_line_2]' => 'AddressLine2',
+              'user_agent[address_attributes][address_line_3]' => 'City',
+              'user_agent[address_attributes][zip_code]' => 'ZipCode',
+              'user_agent[address_attributes][country_id]' => Country.first.id,
+              'user_agent[address_attributes][region_id]' => '',
+              'user_agent[phone]' => '',
+              'user_agent[email]' => 'agent@example.com',
+              'user_agent[password]' => 'password',
+              'user_agent[password_confirmation]' => 'password',
+              'user_agent[time_zone]' => 'UTC',
+              'user_agent[agreement_read]' => '1',
+              'user_agent[newsletter_on]' => '1'}
+
+    fields.each do |field, _|
+      body_has_to(:have_field, field)
+    end
+
+    lines = { 'user_agent[rpx_identifier]' => '1' }
+
     # I press Create
     # I should get email with confirmation link
     # I confirm my account with link from email
+    expect { post '/agent_accounts', fields.merge(lines) }.to change(User::Agent, :count).by(1)
+
+    expect(response).to redirect_to '/'
+    follow_redirect!
+
+    has_flash 'Your account has been successfully created! You are now signed in.'
+
     # I should be signed in as agent@example.com
+    body_has_to(:include, 'agent@example.com')
+
     # I click My leads tab
-    # I select My company from Categories
+    body_has_to(:have_link, 'My leads', :href => '/agents/leads')
+    get '/agents/leads'
+
+    # I select My company from Categories # AJAX request
+    get '/categories.js'
+    expect(response).to be_success
+    body_has_to(:include, 'CompanyName')
+
     # I press New lead
     # I fill in Company name, Address line 1, Address line 2, City, Zip code, Name, Phone number, Public header with ‘My Test Lead’, Public description, Price
     # I press Create

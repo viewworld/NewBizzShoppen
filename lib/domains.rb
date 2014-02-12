@@ -5,9 +5,13 @@ module Rack
     end
 
     def call(env)
-      env['rack.session'][:site] = domain(env).site
-      env['rack.session'][:layout] = "layouts/#{domain(env).site}/application"
+      env['rack.session'][:site] = site(env)
+      env['rack.session'][:layout] = "layouts/#{site(env)}/application"
       @app.call env
+    end
+
+    def site(env)
+      domain(env).site
     end
 
     private
