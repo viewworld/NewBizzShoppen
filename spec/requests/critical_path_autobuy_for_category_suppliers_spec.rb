@@ -9,6 +9,8 @@ describe 'Critical Path Autobuy for category suppliers' do
     without_confirmation_email!
     without_invoice_email_template!
     without_lead_notification!
+    admin.roles << :superadmin
+    admin.save!
   end
 
   let(:admin) { User::Admin.make!(:confirmed_at => Time.now) }
@@ -354,12 +356,39 @@ describe 'Critical Path Autobuy for category suppliers' do
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-invoice-creation
     # 'invoice creation'
     # I go to fairleads.com
+    with_site('fairleads')
+    get '/'
+    expect(response).to render_template('supplier_home/guest')
+
     # I sign in as admin
+    post '/users/sign_in', {:user => {:email => admin.email, :password => 'secret'}}
+    expect(response).to redirect_to('/administration')
+    follow_redirect!
+
     # I click Invoices subtab of Reports
+    body_has_to(:have_link, 'Invoices', :href => '/administration/invoicing/invoices', :subtab => 'invoices')
+    get '/administration/invoicing/invoices'
+
     # I select ‘My Company, premiumsupplier@example.com’ from User
+    expect(response.body).to have_select('invoice[user_id]', :with_options => ["#{lead_category.name}, #{admin.email}"])
+
     # I press Create invoice
+    expect(response.body).to have_button('invoice_submit')
+
+    expect { post('/administration/invoicing/invoices',
+                  {'invoice[user_id]' => admin.id, 'invoice[seller_id]' => Seller.last.id}) }.to change(Invoice, :count).by(1)
+    expect(response).to redirect_to("/administration/invoicing/invoices/#{Invoice.order(:id).last.id}/edit")
+    follow_redirect!
+
     # I should see ‘Invoice was successfully created’
+    has_flash 'Invoice was successfully created.'
+
     # I log out
+    get '/logout'
+    expect(response).to redirect_to '/'
+    follow_redirect!
+    expect(response).to be_success
+    has_flash 'Signed out successfully.'
 
     #
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-unpaid-invoices-for-category-supplier
