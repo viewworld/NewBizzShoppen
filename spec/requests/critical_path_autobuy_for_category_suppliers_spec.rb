@@ -376,7 +376,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     expect(response.body).to have_button('invoice_submit')
 
     expect { post('/administration/invoicing/invoices',
-                  {'invoice[user_id]' => admin.id, 'invoice[seller_id]' => Seller.last.id}) }.to change(Invoice, :count).by(1)
+                  {'invoice[user_id]' => User.find_by_email('premiumsupplier@example.com').id, 'invoice[seller_id]' => Seller.last.id}) }.to change(Invoice, :count).by(1)
     expect(response).to redirect_to("/administration/invoicing/invoices/#{Invoice.order(:id).last.id}/edit")
     follow_redirect!
 
@@ -394,13 +394,55 @@ describe 'Critical Path Autobuy for category suppliers' do
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-unpaid-invoices-for-category-supplier
     # 'upaid invoices for category supplier'
     # I go to fairleads.com
+    with_site('fairleads')
+    get '/'
+
     # I sign in as premiumsupplier@example.com
+    fields = {'user[email]' => 'premiumsupplier@example.com',
+              'user[password]' => 'secret'}
+
+    fields.each do |field, _|
+      body_has_to(:have_field, field)
+    end
+
+    post '/users/sign_in', fields
+    expect(response).to redirect_to "/#{lead_category.cached_slug}"
+    follow_redirect!
+
     # I click Invoices tab
+    body_has_to(:have_link, 'Invoices', :href => '/suppliers/invoices', :subtab => 'invoices')
+    get '/suppliers/invoices'
+    expect(response).to be_success
+
     # I click Pending Leads
+    body_has_to(:have_link, 'Pending leads', :href => '/suppliers/not_invoiced_leads')
+    get '/suppliers/not_invoiced_leads'
+    expect(response).to be_success
+
     # I should NOT see My Test Lead
+    body_has_to(:include, 'No leads to display')
+    expect(response.body).to_not include 'Lead Public Header'
+
     # I click Due invoices
+    body_has_to(:have_link, 'Due invoices', :href => '/suppliers/invoices?search[with_paid]=0')
+    get '/suppliers/invoices?search[with_paid]=0'
+    expect(response).to be_success
+
     # I should see 1 invoice
+    body_has_to(:have_link, 'Show', :href => "/suppliers/invoices/#{Invoice.last.id}")
+
     # I click Show
+    get "/suppliers/invoices/#{Invoice.last.id}"
+    expect(response).to be_success
+
     # I should see My Test Lead
+    body_has_to(:include, 'Lead Public Header')
+
+    # I log out
+    get '/logout'
+    expect(response).to redirect_to "/#{lead_category.cached_slug}"
+    follow_redirect!
+    expect(response).to be_success
+    has_flash 'Signed out successfully.'
   end
 end
