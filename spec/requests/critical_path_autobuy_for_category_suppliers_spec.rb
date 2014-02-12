@@ -11,6 +11,8 @@ describe 'Critical Path Autobuy for category suppliers' do
 
   let(:admin) { User::Admin.make!(:confirmed_at => Time.now) }
   let(:seller) { Seller.make! }
+  let(:company_name) { 'CompanyName' }
+  let(:lead_category) { LeadCategory.find_by_name(company_name) }
   let!(:currency) { Currency.make!(:name => 'EUR', :global_default => true) }
 
   it 'autobuy for category suppliers' do
@@ -129,7 +131,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     fields = {'user_category_supplier[subscription_plan_id]' => subscription_plan.id,
               'user_category_supplier[first_name]' => 'FirstName',
               'user_category_supplier[last_name]' => 'LastName',
-              'user_category_supplier[company_name]' => 'CompanyName',
+              'user_category_supplier[company_name]' => company_name,
               'user_category_supplier[address_attributes][address_line_1]' => 'AddressLine1',
               'user_category_supplier[address_attributes][address_line_2]' => 'AddressLine2',
               'user_category_supplier[address_attributes][address_line_3]' => 'City',
@@ -222,16 +224,60 @@ describe 'Critical Path Autobuy for category suppliers' do
     # I click My leads tab
     body_has_to(:have_link, 'My leads', :href => '/agents/leads')
     get '/agents/leads'
+    main_response = response
 
     # I select My company from Categories # AJAX request
     get '/categories.js'
     expect(response).to be_success
-    body_has_to(:include, 'CompanyName')
+    body_has_to(:include, company_name)
 
+    response = main_response
     # I press New lead
+    expect(response.body).to have_link('New lead', :href => '#')
+    get "/agents/leads/new?category_id=#{lead_category.id}"
+    expect(response).to be_success
+
     # I fill in Company name, Address line 1, Address line 2, City, Zip code, Name, Phone number, Public header with ‘My Test Lead’, Public description, Price
+    fields = {'lead[company_name]' => 'LeadCompanyName',
+              'lead[company_phone_number]' => '+44 123456123',
+              'lead[company_website]' => 'http://selleo.com',
+              'lead[address_line_1]' => 'ul. Kaminskiego 19',
+              'lead[address_line_2]' => 'Room 203',
+              'lead[address_line_3]' => 'Bielsko-Biala',
+              'lead[zip_code]' => '43-300',
+              'lead[country_id]' => '2',
+              'lead[contact_name]' => 'Joe Doe',
+              'lead[direct_phone_number]' => '+44 123123123',
+              'lead[phone_number]' => '+44 123123123',
+              'lead[email_address]' => 'lead@example.com',
+              'lead[category_id]' => lead_category.id,
+              'lead[is_international]' => '0',
+              'lead[header]' => 'Lead Public Header',
+              'lead[description]' => 'Lead Public Description',
+              'lead[purchase_value]' => '0',
+              'lead[price]' => '20',
+              'lead[currency_id]' => currency.id,
+              'lead[published]' => '0',
+              'lead[published]' => '1',
+              'lead[sale_limit]' => '1',
+              'lead[purchase_decision_date]' => Date.today.to_s}
+
+    fields.each do |field, _|
+      body_has_to(:have_field, field)
+    end
+    lines = { 'lead[category_is_changed]' => '0' }
+
     # I press Create
+    expect { post '/agents/leads', fields.merge(lines) }.to change(Lead, :count).by(1)
+    expect(response).to redirect_to '/agents/leads'
+    follow_redirect!
+
     # I log out
+    get '/logout'
+    expect(response).to redirect_to('/agent_home')
+    follow_redirect!
+    expect(response).to be_success
+    has_flash 'Signed out successfully.'
 
     #
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-lead-purchases--invoices-for-category-supplier
