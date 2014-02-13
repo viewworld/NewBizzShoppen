@@ -1,14 +1,13 @@
 class CWeek
-
   include Comparable
 
   attr :date
 
   def initialize(week = nil, year = nil)
     @date = Date.commercial(
-        year || Date.today.year,
-        week || Date.today.cweek,
-        1
+      year || Date.today.year,
+      week || Date.today.cweek,
+      1
     )
   end
 
@@ -26,7 +25,7 @@ class CWeek
 
   def succ
     next_week = @date + 1.week
-    CWeek.new(next_week.cweek, next_week.year)
+    CWeek.new(next_week.cweek, next_week.end_of_week.year)
   end
 
   def cweek
@@ -46,7 +45,5 @@ class CWeek
   end
 
   def days(weekends = true)
-
   end
-
 end
