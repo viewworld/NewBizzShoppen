@@ -103,11 +103,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     has_flash 'Subscription plan was successfully created.'
 
     # I logout
-    get '/logout'
-    expect(response).to redirect_to('/')
-    follow_redirect!
-    expect(response).to be_success
-    has_flash 'Signed out successfully.'
+    logout
 
     #
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-category-supplier-signup
@@ -169,11 +165,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     body_has_to(:include, 'premiumsupplier@example.com')
 
     # I logout
-    get '/logout'
-    expect(response).to redirect_to('/companyname')
-    follow_redirect!
-    expect(response).to be_success
-    has_flash 'Signed out successfully.'
+    logout '/companyname'
 
     #
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-agent-signup--lead-creation
@@ -276,11 +268,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     follow_redirect!
 
     # I log out
-    get '/logout'
-    expect(response).to redirect_to('/agent_home')
-    follow_redirect!
-    expect(response).to be_success
-    has_flash 'Signed out successfully.'
+    logout '/agent_home'
 
     #
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-lead-purchases--invoices-for-category-supplier
@@ -346,11 +334,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     body_has_to(:include, 'Lead Public Header')
 
     # I log out
-    get '/logout'
-    expect(response).to redirect_to "/#{lead_category.cached_slug}"
-    follow_redirect!
-    expect(response).to be_success
-    has_flash 'Signed out successfully.'
+    logout "/#{lead_category.cached_slug}"
 
     #
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-invoice-creation
@@ -384,11 +368,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     has_flash 'Invoice was successfully created.'
 
     # I log out
-    get '/logout'
-    expect(response).to redirect_to '/'
-    follow_redirect!
-    expect(response).to be_success
-    has_flash 'Signed out successfully.'
+    logout
 
     #
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-unpaid-invoices-for-category-supplier
@@ -439,10 +419,6 @@ describe 'Critical Path Autobuy for category suppliers' do
     body_has_to(:include, 'Lead Public Header')
 
     # I log out
-    get '/logout'
-    expect(response).to redirect_to "/#{lead_category.cached_slug}"
-    follow_redirect!
-    expect(response).to be_success
-    has_flash 'Signed out successfully.'
+    logout "/#{lead_category.cached_slug}"
   end
 end
