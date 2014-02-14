@@ -1,9 +1,7 @@
 require 'spec_helper'
 
 describe Suppliers::LeadsController do
-  before do
-    create(:locale)
-  end
+  before { create(:locale) }
   include_context 'category supplier signed in'
 
   describe '#new' do
