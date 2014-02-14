@@ -3,6 +3,12 @@ require 'spec_helper'
 describe 'Critical Path Autobuy for category suppliers' do
   include_context 'request specs context'
 
+  let(:last_lead_purchase) { LeadPurchase.last }
+  let(:last_invoice) { Invoice.order(:id).last }
+  let(:last_seller) { Seller.last }
+  let(:premiumsupplier_email) { 'premiumsupplier@example.com' }
+  let(:premiumsupplier) { User.find_by_email(premiumsupplier_email) }
+
   it 'autobuy for category suppliers' do
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-subscription-creation
     # 'subscription creation'
@@ -119,7 +125,7 @@ describe 'Critical Path Autobuy for category suppliers' do
               'user_category_supplier[address_attributes][region_id]' => '',
               'user_category_supplier[vat_number]' => '',
               'user_category_supplier[phone]' => '',
-              'user_category_supplier[email]' => 'premiumsupplier@example.com',
+              'user_category_supplier[email]' => premiumsupplier_email,
               'user_category_supplier[password]' => 'secret',
               'user_category_supplier[password_confirmation]' => 'secret',
               'user_category_supplier[time_zone]' => 'UTC',
@@ -136,7 +142,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     has_flash 'Your account has been successfully created! You are now signed in.'
 
     # I should be signed in as premiumsupplier@example.com
-    body_has_to(:include, 'premiumsupplier@example.com')
+    body_has_to(:include, premiumsupplier_email)
 
     # I logout
     logout '/companyname'
@@ -240,7 +246,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     with_site('fairleads')
     get '/'
 
-    fields = {'user[email]' => 'premiumsupplier@example.com',
+    fields = {'user[email]' => premiumsupplier_email,
               'user[password]' => 'secret'}
 
     body_include_fields fields
@@ -250,7 +256,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     post '/users/sign_in', fields
     follow_with_redirect "/#{lead_category.cached_slug}"
 
-    body_has_to(:include, 'premiumsupplier@example.com')
+    body_has_to(:include, premiumsupplier_email)
     body_has_to(:have_link, 'My leads', :href => '/suppliers/lead_purchases')
 
     # I click My leads tab
@@ -261,13 +267,13 @@ describe 'Critical Path Autobuy for category suppliers' do
     body_has_to(:include, 'Lead Public Header')
 
     # I check My Test Lead
-    body_has_to(:have_field, 'lead_purchase_ids[]', :value => LeadPurchase.last.id)
+    body_has_to(:have_field, 'lead_purchase_ids[]', :value => last_lead_purchase.id)
     # I select Meeting from State
     body_has_to(:have_select, 'bulk_state', :with_options => ['Meeting'])
 
     attributes = {'bulk_state' => 2,
               'route_to' => '/suppliers/bulk_lead_purchase_update',
-              'lead_purchase_ids[]' => LeadPurchase.last.id}
+              'lead_purchase_ids[]' => last_lead_purchase.id}
 
     # I press Update all selected leads
     post '/bulk_action', attributes, { 'HTTP_REFERER' => '/suppliers/lead_purchases' }
@@ -318,8 +324,8 @@ describe 'Critical Path Autobuy for category suppliers' do
     body_has_to(:have_button, 'invoice_submit')
 
     expect { post('/administration/invoicing/invoices',
-                  {'invoice[user_id]' => User.find_by_email('premiumsupplier@example.com').id, 'invoice[seller_id]' => Seller.last.id}) }.to change(Invoice, :count).by(1)
-    follow_with_redirect "/administration/invoicing/invoices/#{Invoice.order(:id).last.id}/edit"
+                  {'invoice[user_id]' => premiumsupplier.id, 'invoice[seller_id]' => last_seller.id}) }.to change(Invoice, :count).by(1)
+    follow_with_redirect "/administration/invoicing/invoices/#{last_invoice.id}/edit"
 
     # I should see ‘Invoice was successfully created’
     has_flash 'Invoice was successfully created.'
@@ -335,7 +341,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     get '/'
 
     # I sign in as premiumsupplier@example.com
-    fields = {'user[email]' => 'premiumsupplier@example.com',
+    fields = {'user[email]' => premiumsupplier_email,
               'user[password]' => 'secret'}
 
     body_include_fields fields
@@ -363,7 +369,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     expect(response).to be_success
 
     # I should see 1 invoice
-    body_has_to(:have_link, 'Show', :href => "/suppliers/invoices/#{Invoice.last.id}")
+    body_has_to(:have_link, 'Show', :href => "/suppliers/invoices/#{last_invoice.id}")
 
     # I click Show
     get "/suppliers/invoices/#{Invoice.last.id}"
