@@ -217,7 +217,7 @@ describe 'Critical Path Autobuy for category suppliers' do
 
     # I press New lead
     get '/agents/leads'
-    expect(response.body).to have_link('New lead', :href => '#')
+    body_has_to(:have_link, 'New lead', :href => '#')
     get "/agents/leads/new?category_id=#{lead_category.id}"
     expect(response).to be_success
 
@@ -288,9 +288,9 @@ describe 'Critical Path Autobuy for category suppliers' do
     body_has_to(:include, 'Lead Public Header')
 
     # I check My Test Lead
-    expect(response.body).to have_field('lead_purchase_ids[]', :value => LeadPurchase.last.id)
+    body_has_to(:have_field, 'lead_purchase_ids[]', :value => LeadPurchase.last.id)
     # I select Meeting from State
-    expect(response.body).to have_select('bulk_state', :with_options => ['Meeting'])
+    body_has_to(:have_select, 'bulk_state', :with_options => ['Meeting'])
 
     attributes = {'bulk_state' => 2,
               'route_to' => '/suppliers/bulk_lead_purchase_update',
@@ -304,7 +304,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     has_flash 'Leads have been updated successfully!'
 
     # I should see Meeting selected in State select for My Test Lead
-    expect(response.body).to have_select('state', :selected => ['Meeting'])
+    body_has_to(:have_select, 'state', :selected => ['Meeting'])
 
     # I click Invoices tab
     body_has_to(:have_link, 'Invoices', :href => '/suppliers/invoices')
@@ -339,10 +339,10 @@ describe 'Critical Path Autobuy for category suppliers' do
     get '/administration/invoicing/invoices'
 
     # I select ‘My Company, premiumsupplier@example.com’ from User
-    expect(response.body).to have_select('invoice[user_id]', :with_options => ["#{lead_category.name}, #{admin.email}"])
+    body_has_to(:have_select, 'invoice[user_id]', :with_options => ["#{lead_category.name}, #{admin.email}"])
 
     # I press Create invoice
-    expect(response.body).to have_button('invoice_submit')
+    body_has_to(:have_button, 'invoice_submit')
 
     expect { post('/administration/invoicing/invoices',
                   {'invoice[user_id]' => User.find_by_email('premiumsupplier@example.com').id, 'invoice[seller_id]' => Seller.last.id}) }.to change(Invoice, :count).by(1)
@@ -384,7 +384,7 @@ describe 'Critical Path Autobuy for category suppliers' do
 
     # I should NOT see My Test Lead
     body_has_to(:include, 'No leads to display')
-    expect(response.body).to_not include 'Lead Public Header'
+    body_has_to_not(:include, 'Lead Public Header')
 
     # I click Due invoices
     body_has_to(:have_link, 'Due invoices', :href => '/suppliers/invoices?search[with_paid]=0')
