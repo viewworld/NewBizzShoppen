@@ -85,10 +85,8 @@ describe 'Critical Path Autobuy for category suppliers' do
               'subscription_plan[automatic_downgrading]' => '0',
               'subscription_plan[automatic_downgrade_subscription_plan_id]' => '1',
               'subscription_plan[paypal_billing_at_start]' => 'true'}
-    fields.each do |field, _|
-      body_has_to(:have_field, field)
-    end
 
+    body_include_fields fields
     lines = {'subscription_plan[subscription_plan_lines_attributes][1391677822159][name]' => 'Supplier premium 5 weeks',
              'subscription_plan[subscription_plan_lines_attributes][1391677822159][price]' => '15'}
 
@@ -146,11 +144,9 @@ describe 'Critical Path Autobuy for category suppliers' do
               'user_category_supplier[newsletter_on]' => '0',
               'user_category_supplier[newsletter_on]' => '1'}
 
-    fields.each do |field, _|
-      body_has_to(:have_field, field)
-    end
-
+    body_include_fields fields
     lines = { 'user_category_supplier[rpx_identifier]' => '1' }
+
     expect { post '/supplier_accounts', fields.merge(lines) }.to change(Subscription, :count).by(1)
     follow_with_redirect
     has_flash 'Your account has been successfully created! You are now signed in.'
@@ -191,10 +187,7 @@ describe 'Critical Path Autobuy for category suppliers' do
               'user_agent[agreement_read]' => '1',
               'user_agent[newsletter_on]' => '1'}
 
-    fields.each do |field, _|
-      body_has_to(:have_field, field)
-    end
-
+    body_include_fields fields
     lines = { 'user_agent[rpx_identifier]' => '1' }
 
     # I press Create
@@ -246,9 +239,7 @@ describe 'Critical Path Autobuy for category suppliers' do
               'lead[sale_limit]' => '1',
               'lead[purchase_decision_date]' => Date.today.to_s}
 
-    fields.each do |field, _|
-      body_has_to(:have_field, field)
-    end
+    body_include_fields fields
     lines = { 'lead[category_is_changed]' => '0' }
 
     # I press Create
@@ -268,9 +259,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     fields = {'user[email]' => 'premiumsupplier@example.com',
               'user[password]' => 'secret'}
 
-    fields.each do |field, _|
-      body_has_to(:have_field, field)
-    end
+    body_include_fields fields
 
     # I should be signed in as premiumsupplier@example.com
     # I sign in as premiumsupplier@example.com
@@ -365,9 +354,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     fields = {'user[email]' => 'premiumsupplier@example.com',
               'user[password]' => 'secret'}
 
-    fields.each do |field, _|
-      body_has_to(:have_field, field)
-    end
+    body_include_fields fields
 
     post '/users/sign_in', fields
     follow_with_redirect "/#{lead_category.cached_slug}"
