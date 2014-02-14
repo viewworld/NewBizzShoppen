@@ -24,6 +24,7 @@ class Nbs < Thor
     Settings.resend_certification_notification_after_days = 15 if Settings.resend_certification_notification_after_days.nil?
     Settings.expire_certification_notification_after_days = 15 if Settings.expire_certification_notification_after_days.nil?
     Settings.default_deal_admin_email = Rails.env.production? ? "" : "agent@nbs.com" if Settings.default_deal_admin_email.nil?
+    Settings.default_lead_creator_email = 'dj@fairleads.com' if Settings.default_lead_creator_email.nil?
     # email verification settings
     Settings.email_verification_for_members = "0" if Settings.email_verification_for_members.nil?
     Settings.email_verification_for_suppliers = "0" if Settings.email_verification_for_suppliers.nil?

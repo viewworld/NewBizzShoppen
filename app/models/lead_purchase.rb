@@ -7,6 +7,8 @@ class LeadPurchase < LeadPurchaseBase
     require 'lead_additional_buyout'
   end
 
+  attr_accessor :without_notifications
+
   belongs_to :assignee, :class_name => "User::LeadUser", :foreign_key => "assignee_id"
   belongs_to :purchaser, :class_name => "User::LeadSupplier", :foreign_key => "purchased_by"
   belongs_to :lead, :counter_cache => :lead_purchases_counter
@@ -19,10 +21,10 @@ class LeadPurchase < LeadPurchaseBase
   before_save :handle_new_deadline
   before_save :set_assigned_at
   before_create :set_euro_price
-  after_save :deliver_lead_rated_as_unsatisfactory_email
-  after_save :deliver_about_to_expire_email
+  after_save :deliver_lead_rated_as_unsatisfactory_email, :unless => :without_notifications
+  after_save :deliver_about_to_expire_email, :unless => :without_notifications
   before_create :assign_to_purchaser
-  after_save :deliver_bought_notification
+  after_save :deliver_bought_notification, :unless => :without_notifications
   after_create :refresh_lead_category
   after_create :set_buyer_tag
   before_save :calculate_euro_value, :calculate_euro_pipeline_value
