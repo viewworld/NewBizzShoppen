@@ -16,4 +16,5 @@ shared_context 'request specs context' do
   let(:company_name) { 'CompanyName' }
   let(:lead_category) { LeadCategory.find_by_name(company_name) }
   let!(:currency) { Currency.make!(:name => 'EUR', :global_default => true) }
+  let(:country) { Country.first }
 end
