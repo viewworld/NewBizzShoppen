@@ -22,9 +22,19 @@
         <%= form.input :address_line_2, :hint => hint_for(@lead, :address_line_2) %>
         <%= form.input :address_line_3, :hint => hint_for(@lead, :address_line_3) %>
         <%= form.input :zip_code, :hint => hint_for(@lead, :zip_code) %>
-        <%= form.input :country_id, :as => :select, :collection => Country.all, :required => true, :input_html => {:onchange => "refresh_phone_codes(); refresh_regions_list('lead');"}, :hint => hint_for(@lead, :country_id) %>
-        <%= form.input :region_id, :as => :select, :collection => @lead.country.present? ? @lead.country.regions : [], :hint => hint_for(@lead, :region_id) %>
-        <%= form.input :company_vat_no, :hint => hint_for(@lead, :company_vat_no) %>
+        <% unless @supplier %>
+            <%= form.input :country_id,
+                           :as => :select,
+                           :collection => Country.all,
+                           :required => true,
+                           :input_html => {:onchange => "refresh_phone_codes(); refresh_regions_list('lead');"},
+                           :hint => hint_for(@lead, :country_id) %>
+            <%= form.input :region_id,
+                           :as => :select,
+                           :collection => @lead.country.present? ? @lead.country.regions : [],
+                           :hint => hint_for(@lead, :region_id) %>
+        <% end %>
+            <%= form.input :company_vat_no, :hint => hint_for(@lead, :company_vat_no) %>
         <%= form.input :company_ean_number, :hint => hint_for(@lead, :company_ean_number) %>
         <% if current_user.has_any_role?(:admin, :call_centre) %>
             <%= form.input :tmp_creator_id, :as => :select, :collection => (current_user.has_role?(:call_centre) ? User.with_call_centre_agents(current_user) : User.with_agents_without_call_centres).map { |u| [u.email, u.id] }, :selected => @lead.tmp_creator_id.blank? ? @lead.creator_id : @lead.tmp_creator_id %>
@@ -76,8 +86,18 @@
           <li class="header">
             <h3><%= current_user.has_role?(:member) ? t("shared.leads.form.member.lead_information") : t("shared.leads.form.lead_information") %></h3>
           </li>
-          <% categories = current_user.has_role?(:admin) ? LeadCategory.without_locked.all : current_user.has_role?(:call_centre) ? LeadCategory.without_locked.with_call_centre_unique(current_user).all : current_user.has_role?(:member) ? LeadCategory.without_locked.with_agent_unique(current_user).without_supplier_unique.all : LeadCategory.without_locked.with_agent_unique(current_user).all %>
-          <%= form.input :category_id, :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(categories), :required => current_user.has_role?(:member), :include_blank => current_user.has_role?(:member), :input_html => {:onchange => (@contact ? "" : "check_templates_compatibility(#{@lead.new_record? ? 0 : @lead.id}, $('#lead_category_id').val());")}, :hint => hint_for(@lead, :category_id) %>
+          <% categories = current_user.has_role?(:admin) ? LeadCategory.without_locked.all :
+                             current_user.has_role?(:call_centre) ? LeadCategory.without_locked.with_call_centre_unique(current_user).all :
+                                     current_user.has_role?(:member) ? LeadCategory.without_locked.with_agent_unique(current_user).without_supplier_unique.all :
+                                             current_user.has_role?(:supplier) ? current_user.with_role.parent_accessible_categories.all :
+                                             LeadCategory.without_locked.with_agent_unique(current_user).all %>
+          <%= form.input :category_id,
+                         :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id),
+                         :collection => nested_set_options(categories),
+                         :required => current_user.has_role?(:member),
+                         :include_blank => current_user.has_role?(:member),
+                         :input_html => {:onchange => (@contact ? '' : "check_templates_compatibility(#{@lead.new_record? ? 0 : @lead.id}, $('#lead_category_id').val());")},
+                         :hint => hint_for(@lead, :category_id) %>
           <%= form.input :category_is_changed, :as => :hidden, :value => "0" %>
           <% if current_user.has_role?(:member) %>
               <%= form.input :is_international, :as => :hidden, :value => 0 %>
@@ -94,27 +114,31 @@
                   <%= form.input :hidden_description, :input_html => {:style => "height: 140px; width: 600px"}, :hint => hint_for(@lead, :hidden_description) %>
               <% end %>
 
-              <% if @settings["prompt_for_purchase_value"].eql?("0") %>
-                  <%= form.input :purchase_value, :as => :hidden %>
-              <% else %>
-                  <%= form.input :purchase_value, :hint => hint_for(@lead, :purchase_value) %>
-              <% end %>
+              <% unless @supplier %>
+                  <% if @settings['prompt_for_purchase_value'].eql?('0') %>
+                      <%= form.input :purchase_value, :as => :hidden %>
+                  <% else %>
+                      <%= form.input :purchase_value, :hint => hint_for(@lead, :purchase_value) %>
+                  <% end %>
 
-              <% form.object.price = @campaign_result.value.to_f if @campaign_result and @settings["use_value_as_lead_price"].eql?("1") %>
-              <% if @campaign %>
-                <% form.object.currency = @campaign.currency %>
-              <% end %>
+                  <% form.object.price = @campaign_result.value.to_f if @campaign_result and @settings['use_value_as_lead_price'].eql?('1') %>
+                  <% if @campaign %>
+                      <% form.object.currency = @campaign.currency %>
+                  <% end %>
 
-              <% if @settings["prompt_for_price"].eql?("0") %>
-                  <%= form.input :price, :as => :hidden %>
-              <% else %>
-                  <%= form.input :price, :hint => hint_for(@lead, :price) %>
-              <% end %>
+                  <% if @settings['prompt_for_price'].eql?('0') %>
+                      <%= form.input :price, :as => :hidden %>
+                  <% else %>
+                      <%= form.input :price, :hint => hint_for(@lead, :price) %>
+                  <% end %>
 
-              <% if @settings["prompt_for_currency"].eql?("0") %>
-                  <%= form.input :currency_id, :as => :hidden %>
-              <% else %>
-                  <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false, :hint => hint_for(@lead, :currency_id) %>
+                  <% if @settings['prompt_for_currency'].eql?('0') %>
+                      <%= form.input :currency_id, :as => :hidden %>
+                  <% else %>
+                      <%= form.input :currency_id, :collection => currencies_for_select,
+                                     :include_blank => false,
+                                     :hint => hint_for(@lead, :currency_id) %>
+                  <% end %>
               <% end %>
 
           <% end %>
@@ -162,32 +186,43 @@
        <% end %>
     <% end %>
 
-    <div class="pdd_10 no_pdd_t">
-      <fieldset class="inputs labels_ta_r labels_180">
-        <ol class="align_inputs">
+    <% unless @supplier %>
+        <div class="pdd_10 no_pdd_t">
+          <fieldset class="inputs labels_ta_r labels_180">
+            <ol class="align_inputs">
 
-          <% if !@settings["prompt_for_sale_limit"].eql?("0") or !@settings["prompt_for_decision_date"].eql?("0")  %>
-              <li class="header">
-                <h3><%= current_user.has_role?(:member) ? t("shared.leads.form.member.sales_information") : t("shared.leads.form.sales_information") %></h3>
-              </li>
-          <% end %>
+              <% if !@settings['prompt_for_sale_limit'].eql?('0') or !@settings['prompt_for_decision_date'].eql?('0') %>
+                  <li class="header">
+                    <h3><%= current_user.has_role?(:member) ? t('shared.leads.form.member.sales_information') : t('shared.leads.form.sales_information') %></h3>
+                  </li>
+              <% end %>
 
-          <%= form.input :notify_suppliers_after_update, :as => :boolean, :hint => hint_for(@lead, :notify_suppliers_after_update) unless @lead.lead_purchases.empty? %>
+              <%= form.input :notify_suppliers_after_update,
+                             :as => :boolean,
+                             :hint => hint_for(@lead, :notify_suppliers_after_update) unless @lead.lead_purchases.empty? %>
 
-          <% if @settings["prompt_for_sale_limit"].eql?("0") %>
-              <%= form.input :sale_limit, :as => :hidden %>
-          <% else %>
-              <%= form.input :sale_limit, :as => :select, :collection => (1..10), :include_blank => false, :hint => hint_for(@lead, :sale_limit), :label => current_user.has_role?(:member) ? t("shared.leads.form.member.sale_limit_label") : true %>
-          <% end %>
+              <% if @settings['prompt_for_sale_limit'].eql?('0') %>
+                  <%= form.input :sale_limit, :as => :hidden %>
+              <% else %>
+                  <%= form.input :sale_limit, :as => :select,
+                                 :collection => (1..10),
+                                 :include_blank => false,
+                                 :hint => hint_for(@lead, :sale_limit),
+                                 :label => current_user.has_role?(:member) ? t('shared.leads.form.member.sale_limit_label') : true %>
+              <% end %>
 
-          <% if @settings["prompt_for_decision_date"].eql?("0") %>
-              <%= form.input :purchase_decision_date, :as => :hidden %>
-          <% else %>
-              <%= form.input :purchase_decision_date, :as => (user_signed_in? and current_user.has_role?(:member)) ? :string : :datepicker, :wrapper_html => {:class => "date"}, :hint => hint_for(@lead, :purchase_decision_date) %>
-          <% end %>
-        </ol>
-      </fieldset>
-    </div>
+              <% if @settings['prompt_for_decision_date'].eql?('0') %>
+                  <%= form.input :purchase_decision_date, :as => :hidden %>
+              <% else %>
+                  <%= form.input :purchase_decision_date,
+                                 :as => (user_signed_in? and current_user.has_role?(:member)) ? :string : :datepicker,
+                                 :wrapper_html => {:class => 'date'},
+                                 :hint => hint_for(@lead, :purchase_decision_date) %>
+              <% end %>
+            </ol>
+          </fieldset>
+        </div>
+    <% end %>
 
     <script>
         var nestedFormsCount = <%= @lead.lead_translations.reject{ |lt| lt.locale == I18n.locale.to_s }.size %>;

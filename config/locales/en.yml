@@ -3171,6 +3171,10 @@ en:
       index:
         view:
           header: New lead
+          button_create: Create
+      create:
+        controller:
+          successful_created_notice: Lead has been added successfully.
     bulk_lead_share_by_email:
       new:
         view:
