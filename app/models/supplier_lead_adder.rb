@@ -19,9 +19,8 @@ class SupplierLeadAdder
   def lead_with_default_values
     processed_lead = lead
     processed_lead.attributes = lead_config
-    self.lead = processed_lead
+    @lead = processed_lead
   end
-
 
   def create_lead_purchase
     lead_purchase = LeadPurchase.create(lead_purchase_config)
@@ -29,27 +28,26 @@ class SupplierLeadAdder
   end
 
   def lead_purchase_config
-    {:lead => lead,
+    {:accessible_from => Time.now,
+     :lead => lead,
      :owner_id => current_user.id,
      :paid => true,
-     :accessible_from => Time.now,
      :purchased_by => current_user.id,
      :without_notifications => true}
   end
 
   def lead_config
-    {:creator => lead_creator,
-     :country_id => current_user.with_role.country.id,
-     :purchase_value => 0,
-     :price => 0,
+    {:country_id => current_user.with_role.country.id,
+     :creator => lead_creator,
      :currency => Currency.default_currency,
-     :sale_limit => 1,
+     :price => 0,
+     :published => true,
      :purchase_decision_date => Date.today,
-     :published => true}
+     :purchase_value => 0,
+     :sale_limit => 1}
   end
 
   def lead_creator
     User.find_by_email(Settings.default_lead_creator_email).with_role
   end
 end
-
