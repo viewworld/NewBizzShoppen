@@ -218,16 +218,14 @@ describe 'Critical Path Autobuy for category suppliers' do
 
     # I click My leads tab
     body_has_to(:have_link, 'My leads', :href => '/agents/leads')
-    get '/agents/leads'
-      # main_response = response
 
-      # # I select My company from Categories # AJAX request
-      # get '/categories.js'
-      # expect(response).to be_success
-      # body_has_to(:include, company_name)
+    # I select My company from Categories # verify only AJAX request
+    get '/categories.js'
+    expect(response).to be_success
+    body_has_to(:include, company_name)
 
-      # response = main_response
     # I press New lead
+    get '/agents/leads'
     expect(response.body).to have_link('New lead', :href => '#')
     get "/agents/leads/new?category_id=#{lead_category.id}"
     expect(response).to be_success
