@@ -28,8 +28,7 @@ describe 'Critical Path Autobuy for category suppliers' do
 
     # I sign in as admin
     post '/users/sign_in', {:user => {:email => admin.email, :password => 'secret'}}
-    expect(response).to redirect_to('/administration')
-    follow_redirect!
+    follow_with_redirect '/administration'
     expect(response).to be_success
 
     # I click Subscription plans subtab of Reports
@@ -97,8 +96,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     expect { post '/administration/subscription_plans', fields.merge(lines) }.to change(SubscriptionPlan, :count).by(1)
     subscription_plan = SubscriptionPlan.last
 
-    expect(response).to redirect_to('/administration/subscription_plans')
-    follow_redirect!
+    follow_with_redirect '/administration/subscription_plans'
     expect(response).to be_success
     has_flash 'Subscription plan was successfully created.'
 
@@ -153,12 +151,8 @@ describe 'Critical Path Autobuy for category suppliers' do
     end
 
     lines = { 'user_category_supplier[rpx_identifier]' => '1' }
-
     expect { post '/supplier_accounts', fields.merge(lines) }.to change(Subscription, :count).by(1)
-
-    expect(response).to redirect_to '/'
-    follow_redirect!
-
+    follow_with_redirect
     has_flash 'Your account has been successfully created! You are now signed in.'
 
     # I should be signed in as premiumsupplier@example.com
@@ -207,10 +201,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     # I should get email with confirmation link
     # I confirm my account with link from email
     expect { post '/agent_accounts', fields.merge(lines) }.to change(User::Agent, :count).by(1)
-
-    expect(response).to redirect_to '/'
-    follow_redirect!
-
+    follow_with_redirect
     has_flash 'Your account has been successfully created! You are now signed in.'
 
     # I should be signed in as agent@example.com
@@ -262,8 +253,7 @@ describe 'Critical Path Autobuy for category suppliers' do
 
     # I press Create
     expect { post '/agents/leads', fields.merge(lines) }.to change(Lead, :count).by(1)
-    expect(response).to redirect_to '/agents/leads'
-    follow_redirect!
+    follow_with_redirect '/agents/leads'
 
     # I log out
     logout '/agent_home'
@@ -285,8 +275,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     # I should be signed in as premiumsupplier@example.com
     # I sign in as premiumsupplier@example.com
     post '/users/sign_in', fields
-    expect(response).to redirect_to "/#{lead_category.cached_slug}"
-    follow_redirect!
+    follow_with_redirect "/#{lead_category.cached_slug}"
 
     body_has_to(:include, 'premiumsupplier@example.com')
     body_has_to(:have_link, 'My leads', :href => '/suppliers/lead_purchases')
@@ -310,8 +299,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     # I press Update all selected leads
     post '/bulk_action', attributes, { 'HTTP_REFERER' => '/suppliers/lead_purchases' }
 
-    expect(response).to redirect_to '/suppliers/lead_purchases'
-    follow_redirect!
+    follow_with_redirect '/suppliers/lead_purchases'
 
     has_flash 'Leads have been updated successfully!'
 
@@ -344,8 +332,7 @@ describe 'Critical Path Autobuy for category suppliers' do
 
     # I sign in as admin
     post '/users/sign_in', {:user => {:email => admin.email, :password => 'secret'}}
-    expect(response).to redirect_to('/administration')
-    follow_redirect!
+    follow_with_redirect '/administration'
 
     # I click Invoices subtab of Reports
     body_has_to(:have_link, 'Invoices', :href => '/administration/invoicing/invoices', :subtab => 'invoices')
@@ -359,8 +346,7 @@ describe 'Critical Path Autobuy for category suppliers' do
 
     expect { post('/administration/invoicing/invoices',
                   {'invoice[user_id]' => User.find_by_email('premiumsupplier@example.com').id, 'invoice[seller_id]' => Seller.last.id}) }.to change(Invoice, :count).by(1)
-    expect(response).to redirect_to("/administration/invoicing/invoices/#{Invoice.order(:id).last.id}/edit")
-    follow_redirect!
+    follow_with_redirect "/administration/invoicing/invoices/#{Invoice.order(:id).last.id}/edit"
 
     # I should see ‘Invoice was successfully created’
     has_flash 'Invoice was successfully created.'
@@ -384,8 +370,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     end
 
     post '/users/sign_in', fields
-    expect(response).to redirect_to "/#{lead_category.cached_slug}"
-    follow_redirect!
+    follow_with_redirect "/#{lead_category.cached_slug}"
 
     # I click Invoices tab
     body_has_to(:have_link, 'Invoices', :href => '/suppliers/invoices', :subtab => 'invoices')
