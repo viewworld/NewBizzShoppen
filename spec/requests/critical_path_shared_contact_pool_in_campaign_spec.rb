@@ -15,6 +15,7 @@ describe 'Critical Path Autobuy for category suppliers' do
   let(:campaign) { Campaign.find_by_name(campaign_name) }
   let(:campaign_id) { campaign.id }
   let(:subaccounts) { campaign.creator.subaccounts }
+  let!(:not_interested_result) { Result.make!(:final, :name => 'Not interested', :generic => true) }
 
   it 'shared contact pool in campaign' do
     # Admin can create a call centre which can create a new campaign and call centre agents
@@ -258,14 +259,15 @@ describe 'Critical Path Autobuy for category suppliers' do
     get "/callers/campaigns/#{campaign_id}/results"
 
     # # I check Not interested within Final results
-    # body_has_to(:have_unchecked_field, 'campaign_result_ids[]')
+    body_has_to(:include, 'Final results')
+    body_has_to(:have_unchecked_field, 'campaign_result_ids[]')
 
     # # I press Assign results type to campaign
-    # post "/callers/campaigns/#{campaign_id}/results/batch_assign", 'campaign_result_ids[]' => 3
-    # follow_with_redirect "/callers/campaigns/#{campaign_id}/edit"
+    post "/callers/campaigns/#{campaign_id}/results/batch_assign", 'campaign_result_ids[]' => not_interested_result.id
+    follow_with_redirect "/callers/campaigns/#{campaign_id}/edit"
 
     # # I log out
-    # logout
+    logout '/agent_home'
 
     #
     # Creation of final call result by agent Bob
