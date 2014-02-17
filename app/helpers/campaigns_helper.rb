@@ -11,7 +11,7 @@ module CampaignsHelper
     @hb = ApplicationHelper::HelperBlocks.new(:status_column, :tools, :bottom)
     block.call(@hb)
     options[:show_checkboxes] ||= false
-    options[:agent_work_screen] ||= false    
+    options[:agent_work_screen] ||= false
     render(:partial => '/callers/contacts/table', :locals => options.merge({:collection => collection}.merge(@hb.results)))
   end
 
@@ -33,7 +33,7 @@ module CampaignsHelper
   end
 
   def call_url(call_id)
-    if !call_id.blank? and (filename = `find public/system/calls/ -name *-#{call_id}.*`.strip) and !filename.blank?
+    if !call_id.blank? and (filename = find_call_file_by_call_id(call_id)) and !filename.blank?
       filename.split.first.gsub('public','')
     else
       nil
@@ -63,4 +63,15 @@ module CampaignsHelper
     (['all']+Campaign::STATES).map{|s| [s.humanize, s]}
   end
 
+  private
+
+  def find_call_file_by_call_id(call_id)
+    call_records.grep(/#{call_id}/).first
+  end
+
+  def call_records
+    Rails.cache.fetch('call_records', :expires_in => 1.hour) do
+      Dir['public/system/calls/*.*']
+    end
+  end
 end
