@@ -6,6 +6,9 @@ describe 'Critical Path Autobuy for category suppliers' do
   before do
     SubscriptionPlan.make!
     allow_any_instance_of(Campaign).to receive(:check_email_templates).and_return(true)
+    allow_any_instance_of(Campaign).to receive(:check_email_templates).and_return(true)
+    allow(Domain).to receive(:for_site_and_locale).and_return(double(:name_for_env => 'faircalls'))
+    Result.make!(:final, :name => 'Call back', :generic => true)
   end
 
   let(:call_centre_email) { 'call_centre_test@example.com' }
@@ -269,44 +272,70 @@ describe 'Critical Path Autobuy for category suppliers' do
     # # I log out
     logout '/agent_home'
 
-    #
-    # Creation of final call result by agent Bob
-    # I sign in as bob.brown@example.com
-    # I click Test campaign within first column of bottom campaigns sidebar
-    # I click New Result
-    # I click Create
-    # I log out
+    with_site 'faircalls'
+    User::CallCentreAgent.scoped.each_with_index do |call_centre_agent, idx|
+      Contact.order(:id).each_slice(User::CallCentreAgent.count).to_a[idx].each do |contact|
+        #
+        # Creation of final call result by agent
+        # I sign in as call_centre_agent
+        get '/'
+        expect(response).to render_template('supplier_home/guest')
 
-    #
-    # Creation of final call result by agent Alice
-    # I sign in as alice.smith@example.com
-    # I click Test campaign within first column of bottom campaigns sidebar
-    # I click New Result
-    # I click Create
-    # I log out
+        # I sign in as call_centre_test@example.com
+        post '/users/sign_in', {:user => {:email => call_centre_agent.email, :password => 'secret'}}
+        follow_with_redirect '/agent_home'
+        expect(response).to be_success
+        has_flash 'Signed in successfully.'
 
-    #
-    # Creation of final call result by agent Bob
-    # I sign in as bob.brown@example.com
-    # I click Test campaign within first column of bottom campaigns sidebar
-    # I click New Result
-    # I click Create
-    # I log out
+        # I click Test campaign within first column of bottom campaigns sidebar
+        body_has_to(:include, campaign.name)
+        body_has_to(:have_link, 'read more', :href => "/callers/campaigns/#{campaign_id}/agent_work_screen", :class => 'read_more')
+        get "/callers/campaigns/#{campaign_id}/agent_work_screen"
 
-    #
-    # Creation of final call result by agent Alice
-    # I sign in as alice.smith@example.com
-    # I click Test campaign within first column of bottom campaigns sidebar
-    # I click New Result
-    # I click Create
-    # I should see You have no contacts assigned
-    # I log out
+        # I click New Result
+        body_has_to(:have_link, 'New result', :href => 'javascript:void(0)', :onclick => %q($('#result_id').val($('#selected_result_id').val());$('#new_result_form').submit()))
+
+        xhr :get, "/callers/campaigns/#{campaign_id}/agent_work_screen/contacts/#{contact.id}/call_results/new?result_id=#{not_interested_result.id}"
+        expect(response).to be_success
+        body_has_to(:include, 'call_result[note]')
+
+        # I click Create
+        body_has_to(:include, 'Create')
+        puts '-' * 60
+        puts contact.id
+        puts '-' * 60
+        xhr :post, "/callers/campaigns/#{campaign_id}/agent_work_screen/contacts/#{contact.id}/call_results", 'call_result[result_id]' => not_interested_result.id
+        expect(response).to be_success
+        body_has_to(:include, "Not interested (#{call_centre_agent.full_name})")
+
+        # I log out
+        logout '/agent_home'
+      end
+    end
 
     #
     # No more contacts for agent Bob
     # I sign in as bob.brown@example.com
+    get '/'
+    expect(response).to render_template('supplier_home/guest')
+
+    # I sign in as call_centre_test@example.com
+    post '/users/sign_in', {:user => {:email => 'bob.brown@example.com', :password => 'secret'}}
+    follow_with_redirect '/agent_home'
+    expect(response).to be_success
+    has_flash 'Signed in successfully.'
+    body_has_to(:include, 'Completion: 100%')
+
     # I click Test campaigns within first column of bottom campaigns sidebar
+    body_has_to(:include, campaign.name)
+    body_has_to(:have_link, 'read more', :href => "/callers/campaigns/#{campaign_id}/agent_work_screen", :class => 'read_more')
+    get "/callers/campaigns/#{campaign_id}/agent_work_screen"
+
     # I should see You have no contacts assigned
+    body_has_to(:include, 'You have no contacts assigned')
+
     # I log out
+
+    logout '/agent_home'
   end
 end
