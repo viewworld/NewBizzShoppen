@@ -92,7 +92,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     body_include_fields fields
 
     # I press Save
-    expect { post '/administration/users?role=call_centre', fields }.to change(User, :count).by(1)
+    expect { post '/administration/users?role=call_centre', fields }.to change(User::CallCentre, :count).by(1)
     follow_with_redirect '/administration/users'
     has_flash 'User has been created successfuly'
 
@@ -145,7 +145,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     body_has_to(:have_button, 'Create')
 
     # I press Create
-    expect { post '/call_centres/call_centre_agents', fields.merge({'user_call_centre_agent[agreement_read]' => '1'}) }.to change(User, :count).by(1)
+    expect { post '/call_centres/call_centre_agents', fields.merge({'user_call_centre_agent[agreement_read]' => '1'}) }.to change(User::CallCentreAgent, :count).by(1)
     follow_with_redirect '/call_centres/call_centre_agents'
     has_flash 'Call centre agent has been created successfully!'
 
@@ -176,7 +176,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     body_has_to(:have_button, 'Create')
 
     # I press Create
-    expect { post '/call_centres/call_centre_agents', fields.merge({'user_call_centre_agent[agreement_read]' => '1'}) }.to change(User, :count).by(1)
+    expect { post '/call_centres/call_centre_agents', fields.merge({'user_call_centre_agent[agreement_read]' => '1'}) }.to change(User::CallCentreAgent, :count).by(1)
     follow_with_redirect '/call_centres/call_centre_agents'
     has_flash 'Call centre agent has been created successfully!'
 
@@ -231,7 +231,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     body_has_to(:have_link, 'Assign users to campaign', :href => 'javascript:void(0)', :onclick => "$('#campaign_user_form').submit();")
 
     # I press Assign agents to campaign
-    put "/callers/campaigns/#{campaign_id}/campaigns_users/bulk", 'campaign_user_ids[]' => subaccounts.map(&:id)
+    expect { put("/callers/campaigns/#{campaign_id}/campaigns_users/bulk", 'campaign_user_ids[]' => subaccounts.map(&:id)) }.to change(CampaignsUser, :count).by(1)
     follow_with_redirect "/callers/campaigns/#{campaign_id}/edit"
 
     # I repeat the following steps 4 times:
@@ -266,7 +266,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     body_has_to(:have_unchecked_field, 'campaign_result_ids[]')
 
     # # I press Assign results type to campaign
-    post "/callers/campaigns/#{campaign_id}/results/batch_assign", 'campaign_result_ids[]' => not_interested_result.id
+    expect { post("/callers/campaigns/#{campaign_id}/results/batch_assign", 'campaign_result_ids[]' => not_interested_result.id) }.to change(CampaignsResult, :count).by(1)
     follow_with_redirect "/callers/campaigns/#{campaign_id}/edit"
 
     # # I log out
@@ -301,10 +301,7 @@ describe 'Critical Path Autobuy for category suppliers' do
 
         # I click Create
         body_has_to(:include, 'Create')
-        puts '-' * 60
-        puts contact.id
-        puts '-' * 60
-        xhr :post, "/callers/campaigns/#{campaign_id}/agent_work_screen/contacts/#{contact.id}/call_results", 'call_result[result_id]' => not_interested_result.id
+        expect { xhr :post, "/callers/campaigns/#{campaign_id}/agent_work_screen/contacts/#{contact.id}/call_results", 'call_result[result_id]' => not_interested_result.id }.to change(CallResult, :count).by(1)
         expect(response).to be_success
         body_has_to(:include, "Not interested (#{call_centre_agent.full_name})")
 
@@ -335,7 +332,6 @@ describe 'Critical Path Autobuy for category suppliers' do
     body_has_to(:include, 'You have no contacts assigned')
 
     # I log out
-
     logout '/agent_home'
   end
 end
