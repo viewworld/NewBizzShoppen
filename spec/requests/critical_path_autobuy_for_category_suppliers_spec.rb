@@ -137,7 +137,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     body_include_fields fields
     lines = { 'user_category_supplier[rpx_identifier]' => '1' }
 
-    expect { post '/supplier_accounts', fields.merge(lines) }.to change(Subscription, :count).by(1)
+    expect { post '/supplier_accounts', fields.merge(lines) }.to change(User::CategorySupplier, :count).by(1)
     follow_with_redirect
     has_flash 'Your account has been successfully created! You are now signed in.'
 
