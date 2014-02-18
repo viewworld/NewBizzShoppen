@@ -3,6 +3,10 @@ require 'spec_helper'
 describe 'Member can  get deal created by category supplier' do
   include_context 'request specs context'
 
+  before do
+    allow_any_instance_of(Deal).to receive(:check_deal_request_details_email_template).and_return(true)
+  end
+
   let!(:default_deal_admin_email) do
     Settings.default_deal_admin_email = old_deal_admin_email
     Settings.find_by_var('default_deal_admin_email')
@@ -10,6 +14,8 @@ describe 'Member can  get deal created by category supplier' do
   let(:old_deal_admin_email) { 'admin@fairleads.com' }
   let(:deal_admin_field) { "settings[#{default_deal_admin_email.id}]" }
   let(:new_deal_admin_email) { 'defaultdealadmin@example.com' }
+  let(:premiumsupplier_email) { 'premiumsupplier@example.com' }
+  let(:subscription_plan) { SubscriptionPlan.first }
 
   it 'Category Supplier can sign in, creates a deal and then member signs up and get that deal which results in a new lead purchase for category supplier' do
     #
@@ -212,22 +218,99 @@ describe 'Member can  get deal created by category supplier' do
     #
     # Category Supplier signup & deal creation
     # I go to fairleads.com
+    get '/'
+    expect(response).to render_template('supplier_home/guest')
+
     # I click New category supplier account
-    # I fill in First name, Last name, Company name with ‘My Company’, Address line 1, Address line 2, City, Zip code, Email with premiumsupplier@example.com, Password, Password Confirmation
+    # I fill in First name, Last name, Company name with ‘My Company’, Address line 1, Address line 2,
+    # City, Zip code, Email with premiumsupplier@example.com, Password, Password Confirmation
     # I select Supplier premium from Subscriptions
     # I check Agree to T&C
+    get '/supplier_accounts/new'
+    expect(response).to be_success
+
+    fields = {'user_category_supplier[subscription_plan_id]' => subscription_plan.id,
+              'user_category_supplier[first_name]' => 'FirstName',
+              'user_category_supplier[last_name]' => 'LastName',
+              'user_category_supplier[company_name]' => company_name,
+              'user_category_supplier[address_attributes][address_line_1]' => 'AddressLine1',
+              'user_category_supplier[address_attributes][address_line_2]' => 'AddressLine2',
+              'user_category_supplier[address_attributes][address_line_3]' => 'City',
+              'user_category_supplier[address_attributes][zip_code]' => 'ZipCode',
+              'user_category_supplier[address_attributes][country_id]' => country.id,
+              'user_category_supplier[address_attributes][region_id]' => '',
+              'user_category_supplier[vat_number]' => '',
+              'user_category_supplier[phone]' => '',
+              'user_category_supplier[email]' => premiumsupplier_email,
+              'user_category_supplier[password]' => 'secret',
+              'user_category_supplier[password_confirmation]' => 'secret',
+              'user_category_supplier[time_zone]' => 'UTC',
+              'user_category_supplier[agreement_read]' => '0',
+              'user_category_supplier[agreement_read]' => '1',
+              'user_category_supplier[newsletter_on]' => '0',
+              'user_category_supplier[newsletter_on]' => '1'}
+
+    body_include_fields fields
+    lines = { 'user_category_supplier[rpx_identifier]' => '1' }
+
     # I press Create
+    expect { post '/supplier_accounts', fields.merge(lines) }.to change(User::CategorySupplier, :count).by(1)
+    follow_with_redirect
+    has_flash 'Your account has been successfully created! You are now signed in.'
+
     # I should be signed in as premiumsupplier@example.com
+    body_has_to(:include, premiumsupplier_email)
+
     # I click My deals tab
+    body_has_to(:have_link, 'My deals', :href => '/suppliers/deals', :additional_class => 'first', :tab => 'deals')
+    get '/suppliers/deals'
+
     # I click Create new deal
+    body_has_to(:have_link, 'Create new deal', :href => 'javascript:void(0)')
+    get '/suppliers/deals/new'
+
     # I select IT from categories
     # I fill in name with Awesome deal
     # I fill in detailed description with Awesome description
     # I check Premium deal
     # I fill in phone number with 2323232322
     # I check Published
+    body_has_to(:have_select, 'deal[category_id]', :with_options => ['IT'])
+
+    fields = {'deal[category_id]' => DealCategory.last.id,
+              'deal[header]' => 'Awesome deal',
+              'deal[hidden_description]' => '<p>Awesome description</p>',
+              'deal[deal_confirmation_page]' => '<p>Vi har sendt en mail til leverand&oslash;ren med dine kontaktinformationer. Du er ogs&aring; velkommen til at kontakte leverand&oslash;ren direkte, du skal huske at oplyse at du er medlem af fairdeals s&aring; du f&aring;r din rabat.</p>',
+              'deal[start_date]' => Date.today.to_s,
+              'deal[end_date]' => Date.today.to_s,
+              'deal[currency_id]' => currency.id,
+              'deal[max_auto_buy]' => '100',
+              'deal[group_deal]' => '0',
+              'deal[premium_deal]' => '1',
+              'deal[company_name]' => premiumsupplier_email,
+              'deal[contact_name]' => 'FirstName LastName',
+              'deal[email_address]' => premiumsupplier_email,
+              'deal[phone_number]' => '123123123',
+              'deal[address_line_1]' => 'ul. Black St 51',
+              'deal[address_line_2]' => '',
+              'deal[address_line_3]' => 'Bielsko-Biała',
+              'deal[zip_code]' => '43-300',
+              'deal[country_id]' => '2',
+              'deal[published]' => '1',
+              'deal[voucher_enabled]' => '0',
+              'deal[voucher_until_type]' => '0',
+              'deal[voucher_end_date]' => (Date.today + 2.years).to_s,
+              'deal[voucher_number_of_weeks]' => '1',
+              'deal[voucher_max_number]' => '1'}
+
     # I click Save
+    body_has_to(:have_button, 'deal_submit')
+    expect { post '/suppliers/deals', fields }.to change(Deal, :count).by(1)
+    follow_with_redirect '/suppliers/deals'
+    has_flash 'Deal has been successfully created.'
+
     # I log out
+    logout '/companyname'
 
     #
     # Member signup & deal purchase

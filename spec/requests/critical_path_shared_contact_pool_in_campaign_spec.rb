@@ -6,7 +6,6 @@ describe 'Critical Path Autobuy for category suppliers' do
   before do
     SubscriptionPlan.make!
     allow_any_instance_of(Campaign).to receive(:check_email_templates).and_return(true)
-    allow_any_instance_of(Campaign).to receive(:check_email_templates).and_return(true)
     allow(Domain).to receive(:for_site_and_locale).and_return(double(:name_for_env => 'faircalls'))
     Result.make!(:final, :name => 'Call back', :generic => true)
   end
