@@ -142,7 +142,7 @@
               <% end %>
 
               <%= form.input :voucher_how_to_redeem, :label => t("shared.deals.form.how_to_redeem_label"), :as => :ckeditor, :input_html => {:width => '350px', :height => '150px', :toolbar => "Lite"}, :wrapper_html => {:class => "text"} %>
-              <clb/>
+              <div class="clb"></div>
               <div style='height:84px'>
                 <%= form.input :voucher_until_type, :as => :radio, :collection => Deal.until_type_for_radio %>
               </div>
@@ -206,7 +206,7 @@
 
 <% if user_signed_in? and current_user.supplier? %>
     <% unless (deal.current_dcr and deal.current_dcr.active?) %>
-        <clb/>
+        <div class="clb"></div>
 
         <hl/>
         <div id="deal_templates">
@@ -233,13 +233,13 @@
               <h3><%= t("supplier.deals.form.selected_templates") %></h3>
               <%= select_tag "deal[deal_template_ids][]", options_for_select(([@template]+@deal.deal_templates).compact.uniq.map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
             </div>
-            <clb/>
+            <div class="clb"></div>
           </div>
         </div>
     <% end %>
 <% end %>
 
-<clb/>
+<div class="clb"></div>
 
 <div class="nested_locale_container"></div>
 <% counter = -1 %>
@@ -247,7 +247,7 @@
     <%= render :partial => "/shared/deals/deal_fields", :locals => { :f => builder, :counter => (counter += 1) } %>
 <% end %>
 
-<clb/>
+<div class="clb"></div>
 
 
 <div class="pdd_10 no_pdd_t" id="locale_picker_div">

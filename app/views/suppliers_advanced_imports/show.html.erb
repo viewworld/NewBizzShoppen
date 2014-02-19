@@ -12,7 +12,7 @@
 
                 <%= file_field_tag 'attachment', :accept => 'spreadsheet/ods,spreadsheet/doc,spreadsheet/xdoc', :class => "fltl" %>
 
-                <clb/>
+                <div class="clb"></div>
                 <%= check_box_tag "category_supplier_enabled", "1", false, :onclick => "show_hide_category_selection()" %>
                 <%= t("suppliers_advanced_import.show.view.category_suppliers_confirmation_checkbox") %><br/>
                 <span id="category_supplier_select_container" style="display: none">

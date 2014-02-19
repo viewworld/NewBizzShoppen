@@ -60,7 +60,7 @@
             <h3><%= t("surveys_management.surveys.form.selected_lists") %></h3>
             <%= select_tag "survey[newsletter_list_ids][]", options_for_select(@survey.newsletter_lists.map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
           </div>
-          <clb/>
+          <div class="clb"></div>
         </div>
       </div>
     </div>
@@ -94,7 +94,7 @@
             <h3><%= t("surveys_management.surveys.form.selected_campaigns") %></h3>
             <%= select_tag "survey[campaign_ids][]", options_for_select(@survey.campaigns.map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
           </div>
-          <clb/>
+          <div class="clb"></div>
         </div>
       </div>
 
@@ -124,7 +124,7 @@
             <h3><%= t("surveys_management.surveys.form.selected_categories") %></h3>
             <%= select_tag "survey[category_ids][]", options_for_select(@survey.categories.map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
           </div>
-          <clb/>
+          <div class="clb"></div>
         </div>
       </div>
 

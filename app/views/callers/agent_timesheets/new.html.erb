@@ -33,7 +33,7 @@
                       <%#= f.input :agents, :as => :select, :include_blank => false, :collection => (current_user.admin? ? User.with_agents.all : current_user.subaccounts), :multiple => true, :input_html => {:size => 6, :style => "height:140px; width:200px;"} %>
                     </ol>
                   </fieldset>
-                  <clb/>
+                  <div class="clb"></div>
                 </div>
                 <div class="column_right">
 
@@ -46,7 +46,7 @@
                       <%= f.input :display_cost, :as => :boolean %>
                     </ol>
                   </fieldset>
-                  <clb/>
+                  <div class="clb"></div>
 
 
                   <fieldset class="inputs labels_ta_r">
@@ -58,9 +58,9 @@
                     </ol>
                   </fieldset>
 
-                <clb/>
+                <div class="clb"></div>
                 </div>
-                <clb/>
+                <div class="clb"></div>
 
                 <h3><%= t("agent_timesheets.new.select_camapigns") %></h3>
 
@@ -83,7 +83,7 @@
                       <h3><%= t("agent_timesheets.new.campaigns_selection.selected_campaigns") %></h3>
                       <%= select_tag "search[campaigns][]", options_for_select(@search.campaigns.map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
                     </div>
-                    <clb/>
+                    <div class="clb"></div>
                   </div>
                 </div>
 
@@ -115,7 +115,7 @@
                       <%= select_tag "selected_agents", options_for_select(@search.agents.map { |c| [c.screen_name, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
                     </div>
 
-                    <clb/>
+                    <div class="clb"></div>
                   </div>
                 </div>
 

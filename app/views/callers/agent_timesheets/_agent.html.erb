@@ -14,7 +14,7 @@
       </ol>
     </fieldset>
 
-    <clb/>
+    <div class="clb"></div>
   </div>
 
     <div class="grid_700 fltl">
@@ -34,7 +34,7 @@
           <p><%= t("agent_timesheets.new.campaigns_selection.selected_campaigns") %></p>
           <%= select_tag "search[campaigns][]", options_for_select(@search.campaigns.map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
         </div>
-        <clb/>
+        <div class="clb"></div>
       </div>
     </div>
   </div>
@@ -49,7 +49,7 @@
   <%= f.input :display_hours, :as => :hidden, :input_html => { :value => true } %>
   <%= f.input :display_payout, :as => :hidden, :input_html => { :value => true } %>
 
-  <clb/>
+  <div class="clb"></div>
 
   <%= hidden_field_tag "search[agents][]", [current_user.id] %>
 

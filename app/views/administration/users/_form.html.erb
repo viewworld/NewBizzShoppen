@@ -138,7 +138,7 @@
 <hl/>
 
 <% if @user.new_record? %>
-    <clb/>
+    <div class="clb"></div>
 
     <div class="column_left">
         <div class="pdd_10 no_pdd_t">
@@ -152,7 +152,7 @@
     </div>
 <% end %>
 
-<clb/>
+<div class="clb"></div>
 
 <% if ['category_supplier'].include?(params[:role]) or @user.has_roles?(:category_supplier, :supplier) %>
     <hl/>
@@ -174,7 +174,7 @@
           <h3><%= t("administration.users.edit.view.selected_categories") %></h3>
           <%= select_tag "user_category_supplier[buying_category_ids][]", options_for_select(@user.buying_categories.map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
         </div>
-        <clb/>
+        <div class="clb"></div>
       </div>
     </div>
 <% end %>
@@ -199,7 +199,7 @@
           <h3><%= t("administration.users.edit.view.selected_unique_categories") %></h3>
           <%= select_tag "user_supplier[unique_category_ids][]", options_for_select(@user.unique_categories.map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
         </div>
-        <clb/>
+        <div class="clb"></div>
       </div>
     </div>
 
@@ -222,7 +222,7 @@
           <h3><%= t("administration.users.edit.view.selected_interests_categories") %></h3>
           <%= select_tag "user_supplier[category_ids][]", options_for_select((@user.categories-@user.unique_categories).map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
         </div>
-        <clb/>
+        <div class="clb"></div>
       </div>
     </div>
 <% end %>
@@ -248,7 +248,7 @@
         <%= select_tag "user_#{prefix}[unique_category_ids][]", options_for_select(@user.unique_categories.map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
       </div>
 
-      <clb/>
+      <div class="clb"></div>
     </div>
 <% end %>
 

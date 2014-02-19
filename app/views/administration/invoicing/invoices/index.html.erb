@@ -60,7 +60,7 @@
   </div>
 
   <% if @invoices.blank? %>
-      <clb/>
+      <div class="clb"></div>
       <br/>
       <%= blank_state_message %>
   <% else %>
@@ -80,7 +80,7 @@
         </div>
       </div>
 
-      <clb/>
+      <div class="clb"></div>
 
       <%= bulk_form do %>
           <table class="generic" cellspacing="0" cellpadding="0" id="invoices">

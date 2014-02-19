@@ -6,11 +6,6 @@
   </div>
 </def>
 
-<def tag="clb">
-  <div class="clb"></div>
-</def>
-
-
 <def tag="header" attrs="c,title,back,backurl,refresh">
   <div class="header_ribbon<%= c.nil? ? "" : " #{c}" %>">
     <h1>
@@ -132,7 +127,7 @@
       <div class="frm_fl"></div>
       <div class="frm_fr"></div>
       <div class="frm_fc">
-        <param:header/>        
+        <param:header/>
       </div>
     </div>
   </div>

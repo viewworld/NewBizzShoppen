@@ -66,7 +66,7 @@
   </div>
 </div>
 
-<clb/>
+<div class="clb"></div>
 
 <%= form.fields_for :subscription_plan_lines, @subscription_plan.subscription_plan_lines do |builder| %>
     <%= render :partial => "subscription_plan_line_fields", :locals => {:f => builder} %>
@@ -80,7 +80,7 @@
   <%= t("administration.subscription_plans.form.lines_per_billing_cycle") %>
 </div>
 
-<clb/>
+<div class="clb"></div>
 
 <script>
     var nestedFormsCount = <%= @subscription_plan.subscription_plan_lines.size %>;

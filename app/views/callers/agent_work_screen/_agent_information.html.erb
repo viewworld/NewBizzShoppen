@@ -34,6 +34,6 @@
             <%= t("agent_work_screen.index.agent_information.last_four_weeks") %> <%= AgentInformation.last_four_weeks(@agent).time_on_phone.to_f.as_hours_and_minutes %> (<%= TopAgent.time_on_phone_for(:four_weeks).as_hours_and_minutes %>)
         </span>
       </p>
-      <clb/>
+      <div class="clb"></div>
     </div>
 <% end %>

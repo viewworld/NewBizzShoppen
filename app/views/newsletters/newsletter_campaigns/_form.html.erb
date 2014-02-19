@@ -34,7 +34,7 @@
         <h3><%= t("newsletters.newsletter_campaigns.form.selected_lists") %></h3>
         <%= select_tag "newsletter_campaign[newsletter_list_ids][]", options_for_select(@newsletter_campaign.newsletter_lists.map { |c| [c.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
       </div>
-      <clb/>
+      <div class="clb"></div>
     </div>
   </div>
 </div>

@@ -27,6 +27,6 @@
         <%= form.input users_type == "customers" ? :customer_ids : :agent_ids, :as => :select, :required => false, :label => false, :include_blank => false, :collection => (users_type == "customers" ? @category.customers : @category.agents).map { |u| [unique_category_select_name(u), u.id] }, :input_html => {:id => "selected_#{users_type}", :multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
       </ol>
     </div>
-    <clb/>
+    <div class="clb"></div>
   </div>
 </li>

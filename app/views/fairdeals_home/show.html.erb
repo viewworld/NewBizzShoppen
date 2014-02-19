@@ -36,7 +36,7 @@
           <% array.each do |position| %>
               <% if @featured_deals[position] %>
                 <%= render :partial => 'secondary_deal', :locals => {:position => position, :featured => @featured_deals[position], :middle => nil} %>
-                <clb/>
+                <div class="clb"></div>
               <% end %>
           <% end %>
         </div>
@@ -53,7 +53,7 @@
   <div class="grid_280 fltr">
     <%= render :partial => "right_panel" %>
   </div>
-  <clb/>
+  <div class="clb"></div>
 
   <script>
       $(document).ready(function() {

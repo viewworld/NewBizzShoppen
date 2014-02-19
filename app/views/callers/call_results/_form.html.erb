@@ -77,7 +77,7 @@
                   <h3><%= t("administration.users.edit.view.selected_categories") %></h3>
                   <%= select_tag "call_result[buying_category_ids][]", options_for_select(call_result.buying_categories.map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
                 </div>
-                <clb/>
+                <div class="clb"></div>
               </div>
           </li>
           <% end %>
@@ -115,7 +115,7 @@
   </fieldset>
 </div>
 
-<clb/>
+<div class="clb"></div>
 
 <% if call_result.result.result_fields.present? %>
     <hl/>

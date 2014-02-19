@@ -67,7 +67,7 @@
                 <% end %>
               </span></p>
             </div>
-            <clb/>
+            <div class="clb"></div>
             <% timesheet.cweeks.each do |cweek| %>
               <%= render :partial => "callers/agent_timesheets/agent_time_sheet_table", :locals => {:agent => agent, :cweek => cweek, :agent_time_sheet => timesheet} %>
             <% end %>
