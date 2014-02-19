@@ -1,10 +1,12 @@
 require 'spec_helper'
 
-describe 'Member can  get deal created by category supplier' do
+describe 'Member can get deal created by category supplier' do
   include_context 'request specs context'
 
   before do
     allow_any_instance_of(Deal).to receive(:check_deal_request_details_email_template).and_return(true)
+    allow_any_instance_of(Lead).to receive(:send_email_with_deal_details_and_files).and_return(true)
+    create(:email_template, :uniq_id => 'blank_template')
   end
 
   let!(:default_deal_admin_email) do
@@ -16,6 +18,8 @@ describe 'Member can  get deal created by category supplier' do
   let(:new_deal_admin_email) { 'defaultdealadmin@example.com' }
   let(:premiumsupplier_email) { 'premiumsupplier@example.com' }
   let(:subscription_plan) { SubscriptionPlan.first }
+  let(:member_plan_name) { 'Member Premium' }
+  let(:member_plan) { SubscriptionPlan.find_by_name(member_plan_name) }
 
   it 'Category Supplier can sign in, creates a deal and then member signs up and get that deal which results in a new lead purchase for category supplier' do
     #
@@ -100,9 +104,8 @@ describe 'Member can  get deal created by category supplier' do
     # I select Member from Roles
     # I click New line
     # I fill in Name with ‘Member premium 5 weeks’, Price with 12
-    # I check Allow premium deals
 
-    fields = {'subscription_plan[name]' => 'Member Premium',
+    fields = {'subscription_plan[name]' => member_plan_name,
               'subscription_plan[subscription_text]' => '',
               'subscription_plan[subscription_period]' => '5',
               'subscription_plan[billing_cycle]' => '1',
@@ -112,15 +115,12 @@ describe 'Member can  get deal created by category supplier' do
               'subscription_plan[currency_id]' => currency.id,
               'subscription_plan[seller_id]' => seller.id,
               'subscription_plan[assigned_roles][]' => 'member',
-              'subscription_plan[is_active]' => '0',
               'subscription_plan[is_active]' => '1',
-              'subscription_plan[is_public]' => '0',
               'subscription_plan[is_public]' => '1',
-              'subscription_plan[can_be_upgraded]' => '0',
               'subscription_plan[can_be_upgraded]' => '1',
-              'subscription_plan[can_be_downgraded]' => '0',
               'subscription_plan[can_be_downgraded]' => '1',
-              'subscription_plan[premium_deals]' => '0',
+              # I check Allow premium deals
+              'subscription_plan[premium_deals]' => '1',
               'subscription_plan[free_deal_requests_in_free_period]' => '0',
               'subscription_plan[team_buyers]' => '0',
               'subscription_plan[big_buyer]' => '0',
@@ -245,9 +245,7 @@ describe 'Member can  get deal created by category supplier' do
               'user_category_supplier[password]' => 'secret',
               'user_category_supplier[password_confirmation]' => 'secret',
               'user_category_supplier[time_zone]' => 'UTC',
-              'user_category_supplier[agreement_read]' => '0',
               'user_category_supplier[agreement_read]' => '1',
-              'user_category_supplier[newsletter_on]' => '0',
               'user_category_supplier[newsletter_on]' => '1'}
 
     body_include_fields fields
@@ -315,20 +313,76 @@ describe 'Member can  get deal created by category supplier' do
     #
     # Member signup & deal purchase
     # I go to fairdeals.com
+    with_site('fairdeals')
+    get '/'
+
     # I click Get a free account now
-    # I fill in First name, Last name, Company name with ‘My Company2’, Address line 1, Address line 2, City, Zip code, Email with memberpremium@example.com, Password, Password Confirmation
+    body_has_to(:have_link, 'Get a free account now', :href => '/member_accounts/new')
+    get '/member_accounts/new'
+
+    # I fill in First name, Last name, Company name with ‘My Company2’, Address line 1, Address line 2, City,
+    # Zip code, Email with memberpremium@example.com, Password, Password Confirmation
     # I select Member premium from Subscriptions
     # I check Agree to T&C
+
+    fields = {'user_member[subscription_plan_id]' => member_plan.id,
+              'user_member[company_name]' => 'My Company2',
+              'user_member[first_name]' => 'FirstName2',
+              'user_member[last_name]' => 'LastName2',
+              'user_member[address_attributes][address_line_1]' => 'AddressLine2_1',
+              'user_member[address_attributes][address_line_2]' => 'AddressLine2_2',
+              'user_member[address_attributes][address_line_3]' => 'BB',
+              'user_member[address_attributes][zip_code]' => '43000',
+              'user_member[address_attributes][country_id]' => country.id,
+              'user_member[phone]' => '123123123123',
+              'user_member[email]' => 'memberpremium@example.com',
+              'user_member[password]' => 'secret',
+              'user_member[password_confirmation]' => 'secret',
+              'user_member[time_zone]' => 'UTC',
+              'user_member[agreement_read]' => '1',
+              'user_member[newsletter_on]' => '1'}
+
+    body_include_fields fields
+
     # I press Create
+    body_has_to(:have_button, 'user_member_submit')
+    expect { post '/member_accounts', fields.merge('user_member[rpx_identifier]' => 1) }.to change(User::Member, :count).by(1)
+
     # I should be signed in as memberpremium@example.com
+    follow_with_redirect
+    has_flash 'Your account has been successfully created! You are now signed in.'
+    body_has_to(:include, 'memberpremium@example.com')
+
     # I click Deals tab
+    body_has_to(:have_link, 'Deals', :href => '/deal_categories', :additional_class => 'first', :tab => 'browse_deals')
+    get '/deal_categories'
+
     # I click IT
+    body_has_to(:have_link, 'View deals', :href => '/categories/deals/it')
+    get '/categories/deals/it'
+
     # I should see Awesome deal
+    body_has_to(:include, 'Awesome deal')
+
     # I click View deal
-    # I should not see premiumsupplier2@example.com
+    body_has_to(:have_link, 'View deal', :href => '/deals/1-awesome-deal')
+    get '/deals/1-awesome-deal'
+
+    # I should not see premiumsupplier@example.com
+    body_has_to_not(:include, 'premiumsupplier@example.com')
+
     # I click Get deal
-    # I should see premiumsupplier2@example.com
+    body_has_to(:have_link, 'Get deal', :href => 'javascript:void(0)')
+    xhr :get, '/members/requests/new.js?deal_id=1'
+    expect { post '/members/requests.js?', {:deal_id => 1} }.to change(Lead, :count).by(1)
+    body_has_to(:include, '/deals/1-awesome-deal')
+    get '/deals/1-awesome-deal'
+
+    # I should see premiumsupplier@example.com
+    body_has_to(:include, premiumsupplier_email)
+
     # I log out
+    logout
 
     #
     # Category supplier’s new lead purchase
