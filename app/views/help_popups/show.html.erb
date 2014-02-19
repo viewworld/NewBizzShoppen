@@ -1,4 +1,4 @@
-<popup:>
+<%= content_for :popup do -%>
   <div class="c_help">
     <% if params[:modal_box] == "1" %>
         <%= bt_link_to nil, t("common.back_link"), "#", :onclick => "$.colorbox.close()", :class => "fltr" %>
@@ -7,7 +7,7 @@
     <h1><%= @article.title %></h1>
     <%= raw @article.content %>
   </div>
-</popup:>
+<% end %>
 
 <%= content_for :js do -%>
   <script type="javascript">
