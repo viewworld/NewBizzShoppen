@@ -29,11 +29,11 @@
 
 <% end %>
 
-<js:>
+<%= content_for :js do -%>
   <script type="text/javascript">
       setup_jquery_vars_popup_dialog();
       setup_jquery_deal_links_dialog();
       setup_ckeditor_for_field('email_template_email_template_signature_attributes_body');
       show_hide_custom_signature();
   </script>
-</js:>
+<% end %>

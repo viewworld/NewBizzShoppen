@@ -9,10 +9,10 @@
   </div>
 </popup:>
 
-<js:>
+<%= content_for :js do -%>
   <script type="javascript">
     jQuery(document).ready(function(){
         $('.datepicker').datepicker();
     })
   </script>
-</js:>
+<% end %>

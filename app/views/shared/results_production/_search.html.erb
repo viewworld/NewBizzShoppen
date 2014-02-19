@@ -88,7 +88,7 @@
       </div>
     </div>
 
-    <js:>
+    <%= content_for :js do -%>
         <script type="text/javascript">
           var generic_url = '<% campaign.is_a?(Array) ? callers_production_path : callers_campaign_path(campaign) %>';
 
@@ -117,4 +117,4 @@
           }
 
         </script>
-    </js:>
+    <% end %>

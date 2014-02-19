@@ -90,7 +90,7 @@
   <%= render :partial => "subscribers_list", :locals => { :newsletter_subscribers => @newsletter_subscribers, :show_checkboxes => true } %>
 <% end %>
 
-<js:>
+<%= content_for :js do -%>
   <script type="text/javascript">
     $('.show').hide();
 
@@ -114,4 +114,4 @@
       });
     });
   </script>
-</js:>
+<% end %>

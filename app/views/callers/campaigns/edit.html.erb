@@ -210,7 +210,7 @@
 
 <% end %>
 
-<js:>
+<%= content_for :js do -%>
   <script type="text/javascript">
     function edit_template(campaign_id)
     {
@@ -224,4 +224,4 @@
         window.location.href = "/callers/campaigns/" + campaign_id.toString() + "/agent_work_screen?other_user_id=" + selected_user.toString();
     }
   </script>
-</js:>
+<% end %>

@@ -31,7 +31,7 @@
 
 <% end %>
 
-<js:>
+<%= content_for :js do -%>
   <script type="text/javascript">
     function load_user_categories(){
         $('#categories_selection').html("<%= t("advanced_import.show.view.loading_categories") -%>");
@@ -46,4 +46,4 @@
         load_user_categories();
     <% end %>
   </script>
-</js:>
+<% end %>

@@ -99,7 +99,7 @@
 
 
 <% end %>
-<js:>
+<%= content_for :js do -%>
   <%= javascript_include_tag 'deal_comments' %>
 
   <script type="text/javascript">
@@ -109,4 +109,4 @@
           <% end %>
       })
   </script>
-</js:>
+<% end %>

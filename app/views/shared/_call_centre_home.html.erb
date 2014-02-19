@@ -157,7 +157,7 @@
 
 <% end %>
 
-<js:>
+<%= content_for :js do -%>
   <script type="text/javascript">
 
       $(function () {
@@ -220,5 +220,5 @@
       });
 
   </script>
-</js:>
+<% end %>
 

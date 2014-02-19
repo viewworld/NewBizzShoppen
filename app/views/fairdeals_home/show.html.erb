@@ -68,7 +68,7 @@
 
 <% end %>
 
-<js:>
+<%= content_for :js do -%>
   <script type="text/javascript">
 
       function validate_request_deal_form() {
@@ -93,4 +93,4 @@
       });
 
   </script>
-</js:>
+<% end %>

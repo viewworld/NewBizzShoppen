@@ -45,9 +45,9 @@
   </div>
 <% end %>
 
-<js:>
+<%= content_for :js do -%>
 <%= javascript_include_tag("deal_creation") %>
   <script type="text/javascript">
       setup_step(<%= @deal.creation_step.to_i -%>)
   </script>
-</js:>
+<% end %>

@@ -12,10 +12,10 @@
 
 <% end %>
 
-<js:>
+<%= content_for :js do -%>
     <script type="text/javascript">
         setup_jquery_dialog("call_result");
         setup_jquery_vars_popup_dialog();
         setup_jquery_deal_links_dialog();
     </script>
-</js:>
+<% end %>

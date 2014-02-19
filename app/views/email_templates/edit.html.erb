@@ -27,8 +27,8 @@
 
 <% end %>
 
-<js:>
+<%= content_for :js do -%>
   <script type="text/javascript">
       setup_jquery_vars_popup_dialog();
   </script>
-</js:>
+<% end %>

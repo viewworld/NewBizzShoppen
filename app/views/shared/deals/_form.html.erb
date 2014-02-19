@@ -266,7 +266,7 @@
 </div>
 <hl/>
 
-<js:>
+<%= content_for :js do -%>
   <%= javascript_include_tag 'jquery.counter-1.0.min.js' %>
   <script type="text/javascript">
       $(function() {
@@ -345,4 +345,4 @@
 
   </script>
   <%= javascript_include_tag 'lead_translation_functions.js' %>
-</js:>
+<% end %>

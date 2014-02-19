@@ -151,7 +151,7 @@
 
 <% end %>
 
-<js:>
+<%= content_for :js do -%>
   <script type="text/javascript">
     function duplicateModalBox(campaign_id){
         $('a.bt_duplicate').unbind('click').click(function(){
@@ -209,4 +209,4 @@
         checkClearWithContactsSelection();
     });
   </script>
-</js:>
+<% end %>

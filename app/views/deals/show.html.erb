@@ -241,7 +241,7 @@
 <% end %>
 
 <% unless Rails.env.test? %>
-  <js:>
+  <%= content_for :js do -%>
     <script type="text/javascript">
 
       <% if @deal.group_deal? %>
@@ -309,5 +309,5 @@
           $.get("/members/requests/new.js?deal_id=" + deal_id);
       }
     </script>
-  </js:>
+  <% end %>
 <% end %>

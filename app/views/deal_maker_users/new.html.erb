@@ -25,7 +25,7 @@
   <%= render :partial => "shared/email_template_popup/template_vars_popup", :locals => { :instance_name => "body_editor", :email_template => @template } %>
 <% end %>
 
-<js:>
+<%= content_for :js do -%>
     <script type="text/javascript">
     function fill_editor_with_template_values(){
      <%=
@@ -35,4 +35,4 @@
         setup_jquery_dialog("user");
         setup_jquery_vars_popup_dialog();
     </script>
-</js:>
+<% end %>

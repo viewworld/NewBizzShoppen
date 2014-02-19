@@ -29,7 +29,7 @@
 
 <% end %>
 
-<js:>
+<%= content_for :js do -%>
 <script type="text/javascript">
     $(function() {
         $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
@@ -39,4 +39,4 @@
         $('#search_new').attr('action', '<%= new_callers_campaign_advanced_export_path(@campaign) %>').submit();
     }
 </script>
-</js:>
+<% end %>

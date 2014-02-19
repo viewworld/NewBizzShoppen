@@ -151,7 +151,7 @@
 
 <% end %>
 
-<js:>
+<%= content_for :js do -%>
   <script type="text/javascript">
       <% if @selected_call_result %>
         $(document).ready(function() {
@@ -237,5 +237,5 @@
           select_deals_for_request($('#call_result_contact_subscription_plan_id option:selected').val(), $('#call_result_contact_requested_deal_ids').val(), 'call_result_contact_requested_deal_ids')
       }
   </script>
-</js:>
+<% end %>
 

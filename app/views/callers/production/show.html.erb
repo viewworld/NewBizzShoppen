@@ -21,10 +21,10 @@
   <% end %>
 <% end %>
 
-<js:>
+<%= content_for :js do -%>
 <script type="text/javascript">
     $(function() {
         $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
     });
 </script>
-</js:>
+<% end %>

@@ -94,7 +94,7 @@
 
 <div class="clb"></div>
 
-<js:>
+<%= content_for :js do -%>
   <script type="text/javascript">
       $(function() {
           $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
@@ -105,4 +105,4 @@
                   "owner_email=" + $('#newsletter_owner_email').val());
       }
   </script>
-</js:>
+<% end %>

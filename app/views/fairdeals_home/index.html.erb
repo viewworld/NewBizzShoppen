@@ -18,7 +18,7 @@
 
 <% end %>
 
-<js:>
+<%= content_for :js do -%>
   <script type="text/javascript">
       var PAGE = 6;
       var LAST_PAGE = <%= @last_page %>;
@@ -43,4 +43,4 @@
       $(document).ajaxStart(function(){$("#deal_loader").show()});
       $(document).ajaxStop(function(){$("#deal_loader").hide()});
   </script>
-</js:>
+<% end %>
