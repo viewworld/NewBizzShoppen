@@ -1,4 +1,4 @@
-<search-box:>
+<%= content_for :search-box do -%>
   <div class="search_box">
     <h2><%= t("common.search") %></h2>
 
@@ -26,7 +26,7 @@
       <% end %>
     </div>
   </div>
-</search-box:>
+<% end %>
 
 <%= content_for :column_mc do -%>
   <header>

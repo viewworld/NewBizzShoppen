@@ -1,4 +1,4 @@
-<search-box:>
+<%= content_for :search-box do -%>
   <%= javascript_include_tag :ckeditor, 'lead_purchases' %>
 
   <div class="search_box">
@@ -54,7 +54,7 @@
       <% end %>
     </div>
   </div>
-</search-box:>
+<% end %>
 
 <%= content_for :column_mc do -%>
 <header>

@@ -1,7 +1,7 @@
 <% if user_signed_in? and current_user.admin? %>
-<search-box:>
+<%= content_for :search-box do -%>
   <%= render :partial => "shared/categories/search", :locals => { :category_type => @category_type, :search => @search, :path => categories_path } %>
-</search-box:>
+<% end %>
 <% end %>
 
 <%= content_for :column_mc do -%>

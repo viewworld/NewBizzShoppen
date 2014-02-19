@@ -1,9 +1,9 @@
-<search-box:>
+<%= content_for :search-box do -%>
 <%= render :partial => "shared/results_production/search", :locals => { :search => @search, :campaign => @campaign,
                                                                         :agent_ids => @agent_ids, :all_results =>@all_results,
                                                                         :result_ids => @result_ids, :date_from => @date_from,
                                                                         :date_to => @date_to, :final => @final, :campaign_users => @campaign_users } %>
-</search-box:>
+<% end %>
 <%= content_for :column_mc do -%>
   <header back="true" backurl="javascript:history.back(-1)">
     <param:content>
