@@ -1,4 +1,4 @@
-<head:>
+<%= content_for :head do -%>
   <% if Rails.env != "test" %>
       <meta property="og:title" content="<%= @deal.header %>"/>
       <meta property="og:type" content="website"/>
@@ -12,7 +12,7 @@
   <%= stylesheet_link_tag "countdown" %>
   <%= javascript_include_tag "global_template_editor" %>
   <%= javascript_include_tag "global_field_validator" %>
-</head:>
+<% end %>
 
 <%= content_for :column_mc do -%>
 
