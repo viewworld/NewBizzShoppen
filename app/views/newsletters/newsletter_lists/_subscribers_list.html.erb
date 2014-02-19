@@ -39,11 +39,11 @@
         <td><%= newsletter_subscriber.name %></td>
         <td><%= newsletter_subscriber.newsletter_source_as_text %></td>
         <td class="tda ta_r">
-          <ul-actions>
+          <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
               <li>
                   <%= link_to t("newsletters.newsletter_lists.edit.view.subscribers.edit"), edit_newsletters_newsletter_list_newsletter_list_subscriber_path(@newsletter_list, newsletter_subscriber), :class => "default_action" %>
               </li>
-          </ul-actions>
+          </ul></div>
         </td>
         <td class="cr"></td>
       </tr>

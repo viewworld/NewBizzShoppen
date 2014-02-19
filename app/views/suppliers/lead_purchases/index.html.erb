@@ -184,7 +184,7 @@
                     <%= hidden_field_tag :confirmation_message, t("leads.index.add_to_cart_buyout_lead_confirm_msg"), :class => "default_action_confirmation_msg" %>
                 <% end %>
 
-                <ul-actions>
+                <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
                   <li>
                     <%= link_to t("lead_supplier.lead_purchases.index.view.download_csv_link"), suppliers_lead_purchase_path(lead_purchase, :format => :csv) %>
                   </li>
@@ -202,7 +202,7 @@
                         <%= link_to t("lead_supplier.lead_purchases.index.view.email_lead"), new_suppliers_lead_purchase_lead_email_path(lead_purchase) %>
                       </li>
                   <% end %>
-                </ul-actions>
+                </ul></div>
             <% end %>
 
 

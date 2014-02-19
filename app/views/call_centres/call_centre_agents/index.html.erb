@@ -75,12 +75,12 @@
                   <td><%= call_centre_agent.last_name %></td>
                   <td class="ta_r"><%= call_centre_agent.mobile_phone %></td>
                   <td class="tda ta_r">
-                    <ul-actions>
+                    <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
                       <li><%= link_to call_centre_agent.locked_at.blank? ? t("call_centre.call_centre_agents.index.view.lock") : t("call_centre.call_centre_agents.index.view.unlock"), call_centres_call_centre_agent_path(call_centre_agent, {"user_call_centre_agent".to_sym  => {:locked =>  call_centre_agent.locked_at.blank? ? "lock" : "unlock"}}), {:method => :put} %></li>
                       <li><%= link_to t("call_centre.call_centre_agents.index.view.edit"), edit_call_centres_call_centre_agent_path(call_centre_agent), :class => "default_action" %></li>
                       <li><%= link_to t("call_centre.call_centre_agents.index.view.delete"), call_centres_call_centre_agent_path(call_centre_agent), {:method => :delete, :confirm => t("call_centre.call_centre_agents.index.view.delete_confirmation_message")} %></li>
                       <li><%= link_to t("call_centre.call_centre_agents.index.view.view_leads"), call_centres_leads_path(:search => {:with_created_by => call_centre_agent.id}) %></li>
-                    </ul-actions>
+                    </ul></div>
                   </td>
                   <td class="cr"></td>
             <% end %>

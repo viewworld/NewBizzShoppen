@@ -21,7 +21,7 @@
 
       <% blocks.tools do |category| %>
           <% if user_signed_in? and current_user.admin? %>
-              <ul-actions>
+              <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
                 <li>
                   <%= link_to @category_type == "LeadCategory" ? t("categories.index.view.view_leads") : t("categories.index.view.view_deals"), "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}#{"?search[with_category]=#{category.id}" if category.is_a?(LeadCategory)}", :class => "#{'default_action' if !user_signed_in? and !current_user.admin?}" %>
                 </li>
@@ -35,7 +35,7 @@
                                 :confirm => I18n.t("common.confirmation")) %>
                 </li>
                 <% end %>
-              </ul-actions>
+              </ul></div>
           <% else %>
                <%= bt_link_to nil, @category_type == "LeadCategory" ? t("categories.index.view.view_leads") : t("categories.index.view.view_deals"), "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}#{"?search[with_category]=#{category.id}" if category.is_a?(LeadCategory)}", :class => "default_action" %>
           <% end %>

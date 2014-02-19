@@ -22,7 +22,7 @@
         <td class="cl"></td>
         <%= with_output_buffer { block_cells.call(object) } %>
         <td class="tda ta_r">
-            <ul-actions>
+            <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
               <% if link_to_show %>
                   <li><%= link_to t("views.generic_table.show"), link_to_show.is_a?(Array) ? send(*(link_to_show + Array(object))) :  link_scope+[object], :class => "#{'default_action' if default_action == :show}" %></li>
               <% end %>
@@ -35,7 +35,7 @@
               <% custom_links.each do |custom_link| %>
                   <li><%= link_to custom_link[:label], send(*(custom_link[:link] + Array(object))), :method => (custom_link[:method] || :get) %></li>
               <% end %>
-            </ul-actions>
+            </ul></div>
         </td>
         <td class="cr"></td>
       </tr>

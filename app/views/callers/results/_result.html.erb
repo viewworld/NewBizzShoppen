@@ -15,7 +15,7 @@
   <% end %>
   <td class="tda ta_r">
     <% if result.can_be_managed_by?(current_user) %>
-        <ul-actions>
+        <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
           <li>
             <%= link_to t("campaigns.index.edit"), url_for(:controller => "callers/results", :action => "edit", :id => result, :campaign_id => campaign), :class => "default_action" %>
           </li>
@@ -24,7 +24,7 @@
             <%= link_to t("campaigns.index.destroy"), url_for(:controller => "callers/results", :action => "destroy", :id => result, :campaign_id => campaign), :confirm => t("campaigns.index.destroy_confirmation"), :method => :delete %>
           </li>
           <% end %>
-        </ul-actions>
+        </ul></div>
     <% end %>
   </td>
   <td class="cr"></td>

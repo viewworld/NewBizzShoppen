@@ -90,11 +90,11 @@
             <td><%= format_date lead.created_at %></td>
 
             <td class="tda ta_r">
-              <ul-actions>
+              <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
                 <li>
                   <%= link_to t("member.leads.index.view.show"), deal_path(lead.deal), :class => "default_action" %>
                 </li>
-              </ul-actions>
+              </ul></div>
             </td>
             <td class="cr"></td>
           </tr>

@@ -12,8 +12,6 @@ module DERB
       #Change all injection tags to proper content_for declarations
       template.sub_injection_tags!
 
-      # require 'pry'
-      # binding.pry
       template.to_s
     end
   end

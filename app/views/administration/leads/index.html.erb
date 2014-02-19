@@ -97,14 +97,14 @@
   <% else %>
       <%= leads_table @leads, :show_checkboxes => true do |blocks| %>
           <% blocks.tools do |lead| %>
-            <ul-actions>
+            <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
               <li>
                 <%= link_to t("administration.leads.index.view.edit"), edit_administration_lead_path(lead), :class => "default_action" %>
               </li>
               <li>
                 <%= link_to t("administration.leads.index.view.delete"), administration_lead_path(lead), :method => :delete, :confirm => t("common.confirmation") %>
               </li>
-            </ul-actions>
+            </ul></div>
           <% end %>
           <% blocks.status_column do |lead| %>
               <%= status_or_status_change(lead) %>

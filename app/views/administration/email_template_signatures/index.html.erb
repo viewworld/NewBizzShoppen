@@ -35,10 +35,10 @@
           <td class="cl"></td>
           <td><%= email_template.name %></td>
           <td class="tda ta_r">
-            <ul-actions>
+            <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
                 <li><%= link_to t("administration.email_template_signatures.index.view.edit"), edit_administration_email_template_signature_path(email_template), :class => "default_action" %></li>
                 <li><%= link_to t("administration.email_template_signatures.index.view.destroy"), administration_email_template_signature_path(email_template), :confirm => t("common.confirmation"), :method => :delete %></li>
-            </ul-actions>
+            </ul></div>
           </td>
           <td class="cr"></td>
         </tr>

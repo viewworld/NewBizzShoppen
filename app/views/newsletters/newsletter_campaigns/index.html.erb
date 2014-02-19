@@ -77,7 +77,7 @@
           <td><%= newsletter_campaign.newsletter_lists.map(&:name) %></td>
           <td><%= t("models.newsletter_campaign.statuses.status#{newsletter_campaign.status}") %></td>
           <td class="tda ta_r">
-            <ul-actions>
+            <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
                 <li>
                     <%= link_to t("newsletters.newsletter_campaigns.index.view.sign_in_to_cm"),  "https://fairleads.createsend.com/login.aspx?ReturnUrl=%2f&username=#{newsletter_campaign.cm_username}&password=#{newsletter_campaign.cm_password}", :target => "_blank" %>
                 </li>
@@ -87,7 +87,7 @@
                 <li>
                     <%= link_to newsletter_campaign.is_archived? ? t("newsletters.newsletter_campaigns.index.view.retrieve") : t("newsletters.newsletter_campaigns.index.view.archive"), archive_newsletters_newsletter_campaign_path(newsletter_campaign), :method => :post %>
                 </li>
-            </ul-actions>
+            </ul></div>
           </td>
           <td class="cr"></td>
         </tr>

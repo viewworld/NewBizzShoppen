@@ -74,7 +74,7 @@
 
   <%= leads_agent_table @leads, :show_checkboxes => true do |blocks| %>
       <% blocks.tools do |lead| %>
-          <ul-actions>
+          <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
             <li>
               <%= link_to t("call_centre_agent.leads.index.view.edit"), edit_call_centre_agents_lead_path(lead), :class => "default_action" %>
             </li>
@@ -90,7 +90,7 @@
               <li>
                 <%= link_to t("call_centre_agent.leads.index.view.destroy"), call_centre_agents_lead_path(lead), :confirm => t("call_centre_agent.leads.index.view.destroy_confirmation"), :method => :delete %>
               </li>
-            </ul-actions>
+            </ul></div>
       <% end %>
       <% blocks.status_column do |lead| %>
           <% if current_user.can_publish_leads? %>

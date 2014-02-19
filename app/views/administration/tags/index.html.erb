@@ -70,7 +70,7 @@
               <td><%= tag.taggings.where("taggable_type ~ 'CampaignsResult'").count %></td>
               <td><%= tag.taggings.where("taggable_type ~ 'TagGroup'").count %></td>
               <td class="tda ta_r" id="country_actions_td_<%= tag.name.gsub(" ", "_") %>">
-                <ul-actions>
+                <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
                   <li>
                     <%= link_to t("administration.tags.index.view.edit"), edit_administration_tag_path(tag), :class => "default_action" %>
                   </li>
@@ -80,7 +80,7 @@
                   <li>
                     <%= link_to t("administration.tags.index.view.delete"), administration_tag_path(tag), {:method => :delete, :confirm => t("administration.tags.index.view.delete_confirmation_message")} %>
                   </li>
-                </ul-actions>
+                </ul></div>
               </td>
               <td class="cr"></td>
             </tr>

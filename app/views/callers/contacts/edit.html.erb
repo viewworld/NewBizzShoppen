@@ -36,14 +36,14 @@
 
   <%= call_results_table @call_results, :agent_work_screen => false, :crm => false do |blocks| %>
       <% blocks.tools do |call_result| %>
-          <ul-actions>
+          <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
             <li>
               <%= link_to t("call_results.table.edit_link"), edit_callers_contact_call_result_path(@contact, call_result), :class => "default_action" %>
             </li>
             <li>
               <%= link_to t("call_results.table.remove_link"), callers_contact_call_result_path(@contact, call_result), :confirm => t("call_results.table.remove_confirm"), :method => :delete %>
             </li>
-          </ul-actions>
+          </ul></div>
       <% end %>
   <% end %>
 <% end %>

@@ -7,7 +7,7 @@
   <td><%= contact.current_call_result_note %></td>
 
   <td class="tda ta_r">
-    <ul-actions>
+    <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
       <li>
         <%= link_to t("campaigns.edit.show_button"), url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => contact, :fast => "true"), :class => "default_action", :remote => true, :method => :get %>
       </li>
@@ -19,7 +19,7 @@
       <li>
         <%= link_to t("campaigns.edit.remove_button"), url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :destroy, :campaign_id => campaign, :id => contact), :confirm => t("campaigns.edit.remove_confirm"), :remote => true, :method => :delete %>
       </li>
-    </ul-actions>
+    </ul></div>
   </td>
 
   <td class="cr"></td>

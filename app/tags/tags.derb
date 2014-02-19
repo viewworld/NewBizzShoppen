@@ -1,11 +1,3 @@
-<def tag="lbuilder_layout">
-  <div class="clc" style="clear:both;">
-    <% %w(          t m b          ).each do |row_code| %>
-        <%= render :partial => "/layouts/row", :locals => {:row_code => row_code} %>
-    <% end %>
-  </div>
-</def>
-
 <def tag="header" attrs="c,title,back,backurl,refresh">
   <div class="header_ribbon<%= c.nil? ? "" : " #{c}" %>">
     <h1>
@@ -38,24 +30,6 @@
 
 
 
-<def tag="bt_back" attrs="li">
-  <% if li.nil? %>
-      <% bt_link_to nil, "Back", "history.go(-1)" %>
-  <% else %>
-      <li class="bt_back">
-        <% bt_link_to nil, "Back", "history.go(-1)" %>
-      </li>
-  <% end %>
-</def>
-
-
-
-<def tag="hl" attrs="pdd">
-  <div class="hl"<%= pdd.nil? ? "" : " style='padding: #{pdd}px 0'" %>></div>
-</def>
-
-
-
 <def tag="ibt" attrs="c,icon">
   <div class="bt<%= icon.nil? ? "" : " bt_icon" %><%= c.nil? ? "" : " #{c}" %>">
     <span>
@@ -66,18 +40,6 @@
     </span>
   </div>
 </def>
-
-
-
-<def tag="ul-actions">
-  <div class="td_actions">
-    <%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %>
-    <ul>
-      <param:content/>
-    </ul>
-  </div>
-</def>
-
 
 
 <def tag="frm" attrs="title,c,id">

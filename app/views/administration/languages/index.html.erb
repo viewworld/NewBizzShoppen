@@ -35,7 +35,7 @@
               <td><%= check_box_tag "locale_#{lang.id}_enabled", 1, lang.enabled?, :disabled => true %></td>
               <td class="tda ta_r" id="locales_actions_td_<%= lang.language.gsub(" ", "_") %>">
                 <% unless I18n.locale.to_s == lang.code %>
-                <ul-actions>
+                <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
                   <li>
                   <% if lang.enabled? %>
                     <%= link_to t("administration.languages.index.view.disable"), administration_language_path(lang, :language => {:enabled => false}), {:method => :put} %>
@@ -43,7 +43,7 @@
                     <%= link_to t("administration.languages.index.view.enable"), administration_language_path(lang, :language => {:enabled => true}), {:method => :put} %>
                   <% end %>
                   </li>
-                </ul-actions>
+                </ul></div>
                 <% end %>
               </td>
               <td class="cr"></td>

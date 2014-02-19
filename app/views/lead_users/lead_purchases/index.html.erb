@@ -87,7 +87,7 @@
               <% end %>
 
               <% blocks.tools do |lead_purchase| %>
-                  <ul-actions>
+                  <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
                     <li>
                       <%= link_to t("lead_user.lead_purchases.index.view.download_csv_link"), lead_users_lead_purchase_path(lead_purchase, :format => :csv) %>
                     </li>
@@ -102,7 +102,7 @@
                           <%= link_to t("lead_user.lead_purchases.index.view.email_lead"), new_lead_users_lead_purchase_lead_email_path(lead_purchase) %>
                         </li>
                     <% end %>
-                  </ul-actions>
+                  </ul></div>
                   <% if lead_purchase.lead.can_be_commented? %>
                     <%= link_to number_of_comments(lead_purchase.lead.comment_threads.roots.count), comments_lead_path(lead_purchase.lead) %><br />
                   <% end %>

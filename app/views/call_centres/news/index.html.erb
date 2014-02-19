@@ -76,7 +76,7 @@
               <td class="ta_r"><%= news.published_date ? news.published_date : '-' %></td>
               <td class="ta_r"><%= news.views_count %></td>
               <td class="tda ta_r">
-                <ul-actions>
+                <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
                   <li>
                     <%= link_to t("administration.news.index.view.edit_link"), edit_call_centres_news_path(news), :class => "default_action" %>
                   </li>
@@ -86,7 +86,7 @@
                   <li>
                     <%= link_to t("administration.news.index.view.delete_link"), call_centres_news_path(news), :method => :delete, :confirm => t("administration.news.index.view.delete_confirmation") %>
                   </li>
-                </ul-actions>
+                </ul></div>
               </td>
               <td class="cr"></td>
             </tr>

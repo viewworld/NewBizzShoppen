@@ -28,11 +28,11 @@
         <td><%= call_result.result %></td>
         <td></td>
         <td class="tda ta_r">
-          <ul-actions>
+          <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
             <li>
               <%= link_to t("call_results.table.edit_link"), edit_callers_contact_call_result_path(call_result.contact, call_result), :class => "default_action" %>
             </li>
-          </ul-actions>
+          </ul></div>
         </td>
         <td class="cr"></td>
       </tr>

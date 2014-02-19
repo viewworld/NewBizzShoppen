@@ -99,14 +99,14 @@
 
   <%= contacts_table @contacts, :show_checkboxes => true do |blocks| %>
       <% blocks.tools do |contact| %>
-          <ul-actions>
+          <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
             <li>
               <%= link_to t("campaigns.edit.edit_button"), edit_callers_campaign_contact_path(@campaign, contact), :class => "default_action" %>
             </li>
             <li>
               <%= link_to t("campaigns.edit.remove_button"), callers_campaign_contact_path(@campaign, contact), :confirm => t("campaigns.edit.remove_confirm"), :method => :delete %>
             </li>
-          </ul-actions>
+          </ul></div>
       <% end %>
   <% end %>
 

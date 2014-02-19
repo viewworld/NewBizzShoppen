@@ -10,7 +10,7 @@
     <%= as_currency(invoice.total(true), invoice.currency) %>
   </td>
   <td class="tda ta_r">
-    <ul-actions>
+    <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
       <li><%= link_to t("administration.invoices.index.view.show_invoice"), administration_invoicing_invoice_path(invoice) %></li>
       <li><%= link_to t("administration.invoices.index.view.edit_invoice"), edit_administration_invoicing_invoice_path(invoice), :class => "default_action" %></li>
       <li><%= link_to t("administration.invoices.index.view.remove_invoice"), administration_invoicing_invoice_path(invoice), :method => :delete, :confirm => t("administration.invoices.destroy.view.confirmation") %></li>
@@ -22,7 +22,7 @@
           <li><%= link_to t("administration.invoices.index.view.set_as_paid"), administration_invoicing_invoice_path(invoice.id, {:invoice_id => invoice.id, :invoice => {:paid_at => Time.now, :cash_flow => invoice.total}}), {:method => :put} %></li>
       <% end %>
       <li><%= link_to t("administration.invoices.index.view.add_transaction"), new_administration_invoicing_payment_transaction_path(:invoice_id => invoice.id) %></li>
-    </ul-actions>
+    </ul></div>
   </td>
   <td class="cr"></td>
 </tr>

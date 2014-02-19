@@ -56,7 +56,7 @@
 
   <%= campaigns_table @campaigns do |blocks| %>
       <% blocks.tools do |campaign| %>
-          <ul-actions>
+          <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
             <li>
               <%= link_to t("campaigns.table.materials_repository"), callers_campaign_materials_path(campaign) %>
             </li>
@@ -84,7 +84,7 @@
                   <%= link_to_function t("campaigns.index.clear"), "clearModalBox('#{campaign.id}')"%>
                 </li>
             <% end %>
-          </ul-actions>
+          </ul></div>
       <% end %>
   <% end %>
 
