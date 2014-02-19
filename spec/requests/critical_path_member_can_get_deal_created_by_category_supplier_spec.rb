@@ -387,9 +387,25 @@ describe 'Member can get deal created by category supplier' do
     #
     # Category supplier’s new lead purchase
     # I go to fairleads.com
+    with_site('fairleads')
+    get '/'
+
     # I sign in as premiumsupplier@example.com
+    post '/users/sign_in', {:user => {:email => premiumsupplier_email, :password => 'secret'}}
+    follow_with_redirect '/companyname'
+    expect(response).to be_success
+
     # I click My leads tab
+    body_has_to(:have_link, 'My leads', :href => '/suppliers/lead_purchases')
+    get '/suppliers/lead_purchases'
+
     # I should see A company is interested in Awesome deal
+
+    ['A company is interested in Awesome deal', 'memberpremium@example.com', 'FirstName2 LastName2', 'AddressLine2_1 AddressLine2_2 43000 BB'].each do |element|
+      body_has_to(:include, element)
+    end
+
     # I log out
+    logout '/companyname'
   end
 end
