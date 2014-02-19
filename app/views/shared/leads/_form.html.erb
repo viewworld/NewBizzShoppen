@@ -78,7 +78,7 @@
 
 <% unless @contact_managing %>
 
-    <hl/>
+    <div class="hl"></div>
 
     <div class="pdd_10 no_pdd_t">
       <fieldset class="inputs labels_ta_r labels_180">
@@ -152,11 +152,11 @@
         </ol>
       </fieldset>
     </div>
-    <hl/>
+    <div class="hl"></div>
 
     <% if @lead.category.present? and @lead.lead_templates.any? %>
         <%= render :partial => "/shared/leads/lead_template_fields", :locals => {:lead => @lead, :form => form} %>
-        <hl/>
+        <div class="hl"></div>
     <% end %>
 
     <% unless @settings["prompt_for_additional_language"].eql?("0") %>
@@ -182,7 +182,7 @@
                 </ol>
               </fieldset>
             </div>
-            <hl/>
+            <div class="hl"></div>
        <% end %>
     <% end %>
 

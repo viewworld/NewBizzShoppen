@@ -135,7 +135,7 @@
   </div>
 </div>
 
-<hl/>
+<div class="hl"></div>
 
 <% if @user.new_record? %>
     <div class="clb"></div>
@@ -155,7 +155,7 @@
 <div class="clb"></div>
 
 <% if ['category_supplier'].include?(params[:role]) or @user.has_roles?(:category_supplier, :supplier) %>
-    <hl/>
+    <div class="hl"></div>
     <div id="category_supplier_categories">
       <div class="pdd_10">
         <div class="grid_210 fltl">&nbsp;</div>
@@ -180,7 +180,7 @@
 <% end %>
 
 <% if (!['category_supplier'].include?(params[:role]) and !@user.has_role?(:category_supplier)) and (['supplier'].include?(params[:role]) or @user.has_roles?(:supplier)) %>
-    <hl/>
+    <div class="hl"></div>
     <div id="unique_categories">
       <div class="pdd_10">
         <div class="grid_210 fltl">&nbsp;</div>
@@ -229,7 +229,7 @@
 
 <% if (['agent', 'call_centre', 'call_centre_agent'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre, :call_centre_agent)) %>
     <% prefix = params[:role].blank? ? @user.role : params[:role] %>
-    <hl/>
+    <div class="hl"></div>
     <div class="pdd_10">
       <div class="grid_210 fltl">&nbsp;</div>
       <div class="grid_240 fltl">

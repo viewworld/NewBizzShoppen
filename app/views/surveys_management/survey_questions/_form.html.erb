@@ -36,7 +36,7 @@
 <% if @survey_question.is_of_type?(:select) %>
     <div class="nested_survey_options_container pdd_10 no_pdd_t"></div>
 
-    <hl/>
+    <div class="hl"></div>
     <div class="new_field">
       <%= bt_link_to :plus, t("shared.lead_templates.form.new_lead_template_field"), "javascript:void(0)", :onclick => "#{fields_for_survey_options_fields(form)}" %>
     </div>

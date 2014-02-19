@@ -35,7 +35,7 @@
       <%= render :partial => '/callers/chain_mail_types/chain_mail_item_form', :locals => { :f => chain_mail_item_form, :counter => (counter += 1) } %>
   <% end %>
 
-  <hl/>
+  <div class="hl"></div>
 
   <div class="pdd_20" style="padding-top:10px">
     <%= bt_link_to :plus, t("chain_mail_types.form.add_another_email"), "javascript:void(0)", :onclick => "add_new_item()" %>

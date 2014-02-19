@@ -6,7 +6,7 @@
   <% else %>
       <% threads.each do |thread| %>
           <%= render :partial => 'comments/shared/thread', :locals => {:thread => thread} %>
-          <hl/>
+          <div class="hl"></div>
       <% end %>
   <% end %>
 </div>

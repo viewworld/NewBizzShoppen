@@ -1,6 +1,6 @@
 <% div_chain_mail_item_html_id = f.object.new_record? ? "chain_mail_type_chain_mail_items_attributes_#{defined?(counter) ? counter.to_i : 0}" : f.object.id %>
 <div class="chain_mail_item" id="chain_mail_item_field_form_<%= div_chain_mail_item_html_id %>">
-  <hl/>
+  <div class="hl"></div>
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_100">
       <h2><%= t("chain_mail_types.form.chain_mail_at_position", :position => f.object.position) %></h2>

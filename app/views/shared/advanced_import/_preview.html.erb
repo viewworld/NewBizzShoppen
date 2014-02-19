@@ -15,7 +15,7 @@
                     <strong><%= field.include?("custom|") ? field.split("|")[1..2].join(" => ") : field.humanize %><%= ":" %></strong> <%= object[field] %>
                   </p>
               <% end %>
-              <hl/>
+              <div class="hl"></div>
               <div class="pdd_10 ta_c">
                 <%= index != 0 ? link_to_function(t("advanced_import.preview.view.first_object_button"), "$('#object_container_#{index}').hide();$('#object_container_0').show();") : t("advanced_import.preview.view.first_object_button") %>
                 <%= index != 0 ? link_to_function(t("advanced_import.preview.view.prev_object_button"), "$('#object_container_#{index}').hide();$('#object_container_#{index-1}').show();") : t("advanced_import.preview.view.prev_object_button") %>

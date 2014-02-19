@@ -118,12 +118,12 @@
 <div class="clb"></div>
 
 <% if call_result.result.result_fields.present? %>
-    <hl/>
+    <div class="hl"></div>
     <%= render :partial => "/shared/results/result_fields", :locals => {:contact => contact, :call_result => call_result, :form => form} %>
 <% end %>
 
 <% if call_result.result.upgrades_to_lead? %>
-    <hl/>
+    <div class="hl"></div>
     <div class="pdd_10">
       <%= render :partial => "/shared/results/add_result_lead_fields", :locals => {:call_result => call_result, :form => form} %>
     </div>
@@ -131,7 +131,7 @@
 
 <% @campaign = call_result.contact.campaign if @campaign.nil? %>
 <% if cr = call_result.result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id } and chain_mail_type = cr.chain_mail_type %>
-    <hl/>
+    <div class="hl"></div>
     <div class="pdd_10 no_pdd_t">
       <fieldset class="inputs labels_ta_r labels_200">
         <ol class="align_inputs">
