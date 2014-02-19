@@ -7,7 +7,7 @@
   </div>
 
   <% unless @user.rpx_identifier.blank? %>
-      <hl pdd="15"/>
+      <div class="hl" style="padding: 15px 0"></div>
       <div class="frm_tiny" style="margin-bottom:10px;">
         <div class="pdd_10">
           <%= render(:partial => "shared/accounts/rpx_message", :locals => {:user => @user}) %>

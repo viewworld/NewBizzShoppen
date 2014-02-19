@@ -9,7 +9,7 @@
         <% @objects_to_preview.each_with_index do |object, index| %>
             <div id='object_container_<%= index %>' class='object_preview' style="<%= "display:none" if index != 0 %> ">
               <h2><%= index+1 %>/<%= size %></h2>
-              <hl pdd="10"/>
+              <div class="hl" style="padding: 10px 0"></div>
               <% @model.import_fields.each do |field| %>
                   <p>
                     <strong><%= field.include?("custom|") ? field.split("|")[1..2].join(" => ") : field.humanize %><%= ":" %></strong> <%= object[field] %>

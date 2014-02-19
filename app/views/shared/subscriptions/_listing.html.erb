@@ -13,7 +13,7 @@
         <%= blurb(:blurb_subscription_select) %>
       </p>
 
-      <hl pdd="5"/>
+      <div class="hl" style="padding: 15px 0"></div>
 
       <div class="subscription_plans">
 
@@ -35,7 +35,7 @@
 <% end %>
 
 <% if current_user and current_user.has_active_subscription? %>
-    <hl pdd="10"/>
+    <div class="hl" style="padding: 10px 0"></div>
     <div id="current_subscription">
       <% if current_user.active_subscription.is_today_in_free_period? %>
           <p><%= image_tag("icons/hint.png") %><%= t("subscriptions.free_period_notification", :free_period_date => l(current_user.active_subscription.free_subscription_end_date, :format => :long)) %></p>
