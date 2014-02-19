@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <header back="true">
     <param:content>
@@ -10,4 +10,4 @@
                                                                :upload_url => :callers_campaign_materials_path, :delete_url => :callers_campaign_material_path,
                                                                :campaign => @campaign} %>
 
-</column-mc:>
+<% end %>

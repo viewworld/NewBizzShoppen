@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
   <header><%= t('administration.sellers.edit.view.header', :name => @seller.company_name) %></header>
 
@@ -17,4 +17,4 @@
         </param:actions>
       </frm>
   <% end %>
-</column-mc:>
+<% end %>

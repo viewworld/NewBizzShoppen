@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <div class="grid_680 fltl">
     <%= render :partial => 'group', :locals => {:deals => @deals} %>
@@ -16,7 +16,7 @@
       });
   </script>
 
-</column-mc:>
+<% end %>
 
 <js:>
   <script type="text/javascript">

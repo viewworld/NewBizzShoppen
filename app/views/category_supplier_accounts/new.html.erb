@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= render :partial => "shared/accounts/new_account_title", :locals => {:accounts_type => "category_supplier_accounts", :user => @user} %>
 
   <div class="pdd_5 no_pdd_b">
@@ -73,4 +73,4 @@
         </param:actions>
       </frm>
   <% end %>
-</column-mc:>
+<% end %>

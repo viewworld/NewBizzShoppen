@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <header><%= t("#{model_name}s_advanced_import.preview.view.header") %></header>
 
@@ -60,4 +60,4 @@
       <%= bt_link_to nil, t("advanced_import.preview.view.cancel_button"), "javascript:void(0)", :onclick => "$('#go_to_choose_objects_form').submit();", :class => "bt_grey fltr" %>
     </param:actions>
   </frm>
-</column-mc:>
+<% end %>

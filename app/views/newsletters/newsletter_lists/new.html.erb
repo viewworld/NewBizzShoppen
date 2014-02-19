@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= javascript_include_tag "jquery.autocomplete.min.js" %>
 
   <header back="true"><%= t("newsletters.newsletter_lists.new.view.header") %></header>
@@ -18,4 +18,4 @@
         </param:actions>
       </frm>
   <% end %>
-</column-mc:>
+<% end %>

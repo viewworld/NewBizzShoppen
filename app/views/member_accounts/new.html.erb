@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= render :partial => "shared/accounts/new_account_title", :locals => {:accounts_type => "member_accounts", :user => @user} %>
 
   <div class="pdd_5 no_pdd_b">
@@ -21,4 +21,4 @@
         select_subscription_radio_button('<%= @user.class.to_s.underscore.gsub('/', '_') -%>', <%= @user.subscription_plan_id -%>)
     });
   </script>
-</column-mc:>
+<% end %>

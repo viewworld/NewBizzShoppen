@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true"><%= t("notifications.views.index.header") %></header>
 
 <% if @notifications.blank? %>
@@ -40,4 +40,4 @@
     </tbody>
   </table>
 <% end %>
-</column-mc:>
+<% end %>

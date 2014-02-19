@@ -4,6 +4,6 @@
 </search-box:>
 <% end %>
 
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= render :partial => "shared/categories/categories" %>
-</column-mc:>
+<% end %>

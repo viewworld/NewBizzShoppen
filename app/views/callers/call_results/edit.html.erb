@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
   <%= javascript_include_tag "popup_email_template_editor" %>
   <%= render :partial => "callers/call_results/edit", :locals => {:path => [:callers, @contact, @call_result],
@@ -10,7 +10,7 @@
   <%= render :partial => "shared/email_template_popup/template_vars_popup", :locals => { :instance_name => "body_editor" } %>
   <%= render :partial => "shared/email_template_popup/template_deal_links", :locals => {:instance_name => "body_editor"} %>
 
-</column-mc:>
+<% end %>
 
 <js:>
     <script type="text/javascript">

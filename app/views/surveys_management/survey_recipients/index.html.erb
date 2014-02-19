@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true">
     <param:content>
       <%= t("surveys_management.survey_recipients.index.view.header", :survey_name => @survey.name) %>
@@ -66,4 +66,4 @@
         </tbody>
       </table>
   <% end %>
-</column-mc:>
+<% end %>

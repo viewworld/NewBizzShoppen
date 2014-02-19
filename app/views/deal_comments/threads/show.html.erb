@@ -1,5 +1,5 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true"><%= t("comments.threads.show.view.header", :title => @thread.title, :header => @thread.commentable.header) %></header>
     <%= render :partial => 'comments/shared/thread', :locals => {:thread => @thread} %>
 
-</column-mc:>
+<% end %>

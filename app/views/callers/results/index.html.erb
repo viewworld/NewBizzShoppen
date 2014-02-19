@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <% back_path = url_for(:controller => "callers/campaigns", :action => :edit, :id => @campaign) %>
 
@@ -49,4 +49,4 @@
   </div>
 
 
-</column-mc:>
+<% end %>

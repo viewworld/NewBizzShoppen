@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header><%= t("users.passwords.edit.view.header") %></header>
 
   <% if user = User.find_by_reset_password_token(params[:reset_password_token]) and user.contact.present? and user.sign_in_count == 0 %>
@@ -20,4 +20,4 @@
   <% end %>
 
   <%= render :partial => "devise/shared/links" %>
-</column-mc:>
+<% end %>

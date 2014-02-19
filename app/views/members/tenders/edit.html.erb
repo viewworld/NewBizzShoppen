@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true"><%= t("member.tenders.edit.view.title", :name => @lead.header) %><%= image_tag_for_locale %></header>
     <%= semantic_form_for [:members, @lead], :url => members_tender_path(@lead), :method => :put do |form| %>
       <frm title="#{@lead.header}">
@@ -24,4 +24,4 @@
         </param:actions>
       </frm>
     <% end %>
-</column-mc:>
+<% end %>

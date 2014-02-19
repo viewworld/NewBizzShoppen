@@ -9,7 +9,7 @@
 
 <%= render :partial => 'search' %>
 
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header>
     <param:content>
       <%= t("campaign_reports.index.header") %>
@@ -27,6 +27,6 @@
   <div class="reports_table_wrapper">
     <%= render(:text => @html).html_safe %>
   </div>
-</column-mc:>
+<% end %>
 
 <%= render :partial => 'js' %>

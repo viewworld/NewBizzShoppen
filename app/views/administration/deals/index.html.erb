@@ -1,5 +1,5 @@
 <%= render :partial => "shared/deals/filter", :locals => {:search => @search, :path => administration_deals_path} %>
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= render :partial => "shared/deals/actions", :locals => {:path => new_administration_deal_path} %>
 
    <%= deals_table @deals, :show_checkboxes => true do |blocks| %>
@@ -17,4 +17,4 @@
           <p id="comments_for_deal_<%= deal.id %>"></p>
       <% end %>
   <% end %>
-</column-mc:>
+<% end %>

@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header><%= t("my_profile.unlink.view.header") %></header>
 
   <%= semantic_form_for @user, :url => social_unlink_my_profile_path, :method => :put do |form| %>
@@ -23,4 +23,4 @@
         </param:actions>
       </frm>
   <% end %>
-</column-mc:>
+<% end %>

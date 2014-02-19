@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <h1><%= t("agent.leads.show.view.header", :lead_header => @lead.header) %></h1>
 
@@ -13,4 +13,4 @@
   </ul>
 
   <%= link_to t("agent.leads.show.view.view_all_leads_link"), agents_leads_path %>
-</column-mc:>
+<% end %>

@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true"><%= t('lead_supplier.leads.index.view.header') %></header>
 
   <%= semantic_form_for [:suppliers, @lead], :method => :post do |form| %>
@@ -16,4 +16,4 @@
         </param:actions>
       </frm>
   <% end %>
-</column-mc:>
+<% end %>

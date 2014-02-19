@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true" backurl="#{agent_home_path}">
 
     <param:content>
@@ -43,4 +43,4 @@
 
   <%= will_paginate @history, :previous_label => '&laquo;', :next_label => '&raquo;' %>
 
-</column-mc:>
+<% end %>

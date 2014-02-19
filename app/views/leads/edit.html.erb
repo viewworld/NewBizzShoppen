@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header><%= t("leads.certification.header") %><%= image_tag_for_locale %></header>
   <div class="pdd_5 no_pdd_b" style="width:800px">
     <p><%= blurb("blurb_certify_information") %></p>
@@ -22,4 +22,4 @@
         </param:actions>
       </frm>
   <% end %>
-</column-mc:>
+<% end %>

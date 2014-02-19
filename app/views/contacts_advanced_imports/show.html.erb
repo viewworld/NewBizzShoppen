@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <header><%= t("contacts_advanced_import.show.view.header") %></header>
   <% objects = Campaign.available_for_user(current_user).map { |c| [c.name.to_s, c.id] }.sort %>
@@ -27,4 +27,4 @@
       </frm>
   <% end %>
 
-</column-mc:>
+<% end %>

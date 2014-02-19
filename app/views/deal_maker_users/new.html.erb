@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
   <%= javascript_include_tag "popup_email_template_editor" %>
 
@@ -23,7 +23,7 @@
   <% @template = EmailTemplate.find_by_uniq_id("#{@user.is_a?(User::Member) ? 'member' : 'supplier'}_invitation") %>
   <%= render "shared/email_template_popup/template_editor" %>
   <%= render :partial => "shared/email_template_popup/template_vars_popup", :locals => { :instance_name => "body_editor", :email_template => @template } %>
-</column-mc:>
+<% end %>
 
 <js:>
     <script type="text/javascript">

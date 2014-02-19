@@ -34,7 +34,7 @@
     </div>
   </div>
 </search-box:>
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header><%= t("comments.threads.index.view.header") %></header>
 
 <% if @threads.blank? %>
@@ -83,4 +83,4 @@
     </tbody>
   </table>
 <% end %>
-</column-mc:>
+<% end %>

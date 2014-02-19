@@ -1,5 +1,5 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <%= render :partial => "shared/advanced_import/choose", :locals => {:model_name => "lead"} %>
 
-</column-mc:>
+<% end %>

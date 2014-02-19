@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header>
     <param:content>
     <%= t("surveys_management.survey_recipients.show.view.header", :survey_name => @survey.name, :email => @survey_recipient.email) %>
@@ -61,4 +61,4 @@
     <%= bt_link_to nil, t("surveys_management.survey_recipients.show.view.next"), surveys_management_survey_survey_recipient_path(@survey, @next) %>
   <% end %>
   </div>
-</column-mc:>
+<% end %>

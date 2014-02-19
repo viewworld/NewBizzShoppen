@@ -85,7 +85,7 @@
 </search-box:>
 
 
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="#{'true' if @search.with_created_by}">
     <param:content>
       <%= t("administration.leads.index.view.title") %>
@@ -116,7 +116,7 @@
           <% end %>
       <% end %>
   <% end %>
-</column-mc:>
+<% end %>
 
 <js:>
   <script type="text/javascript">

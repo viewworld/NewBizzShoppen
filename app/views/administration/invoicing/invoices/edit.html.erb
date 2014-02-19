@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <%= javascript_include_tag "jquery.field.min.js", "jquery.calculation.min.js", "invoice_calculations.js", "invoice_navigation.js" %>
 
@@ -161,4 +161,4 @@
       </frm>
   <% end %>
 
-</column-mc:>
+<% end %>

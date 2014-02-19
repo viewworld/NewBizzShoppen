@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <div <%= "style='display:none;'" unless @import %> id="import_container">
     <header back="true" backurl="#{edit_callers_campaign_path(@campaign)}">
@@ -92,4 +92,4 @@
     <% end %>
   </div>
 
-</column-mc:>
+<% end %>

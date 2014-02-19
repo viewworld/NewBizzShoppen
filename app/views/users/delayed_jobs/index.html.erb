@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true">
     <param:content>
       <%= t("agent_timesheets.new.scheduled_actions") %>
@@ -14,4 +14,4 @@
   </header>
 
   <%= render :partial => 'shared/delayed_jobs/user', :locals => {:user => current_user, :delayed_jobs => @delayed_jobs} %>
-</column-mc:>
+<% end %>

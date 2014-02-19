@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
   <header back="true"><%= t("lead_supplier.bulk_lead_share_by_email.new.view.header") %></header>
 
@@ -38,4 +38,4 @@
       </frm>
   <% end %>
 
-</column-mc:>
+<% end %>

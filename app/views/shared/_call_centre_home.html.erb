@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header>
     <param:content>
       <%= t("home.show.view.call_centre_header", :name => screen_name_with_company_name(current_user)) %>
@@ -155,7 +155,7 @@
     <div class="clb"></div>
   </div>
 
-</column-mc:>
+<% end %>
 
 <js:>
   <script type="text/javascript">

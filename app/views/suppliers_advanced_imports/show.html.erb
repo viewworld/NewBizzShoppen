@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <header><%= t("suppliers_advanced_import.show.view.header") %></header>
   <% objects = LeadCategory.without_locked.with_agent_unique(current_user).without_supplier_unique.all %>
@@ -53,4 +53,4 @@
 
   </script>
 
-</column-mc:>
+<% end %>

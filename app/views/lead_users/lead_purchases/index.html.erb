@@ -38,7 +38,7 @@
   </div>
 </search-box:>
 
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <header><%= t("lead_user.lead_purchases.index.view.header") %></header>
 
@@ -117,7 +117,7 @@
 
 
   <% end %>
-</column-mc:>
+<% end %>
 <js:>
   <script type="text/javascript">
       function save_owner_note(lead_purchase_id) {

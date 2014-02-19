@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
   <header back="true">
     <%= t('administration.hints.edit.view.header', :name => @article.title) %>
@@ -23,4 +23,4 @@
         </param:actions>
       </frm>
   <% end %>
-</column-mc:>
+<% end %>

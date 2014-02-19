@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header><%= t("devise.sessions.new.view.header") %></header>
 
   <% if @failed_rpx %>
@@ -77,4 +77,4 @@
   <% end %>
 
   <%= render :partial => "devise/shared/links" %>
-</column-mc:>
+<% end %>

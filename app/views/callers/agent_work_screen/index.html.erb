@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
   <%= javascript_include_tag "popup_email_template_editor" %>
   <%= javascript_include_tag "global_field_validator" %>
@@ -149,7 +149,7 @@
   <%= render :partial => "shared/remote_deal_requests/deals_selection", :locals => { :dest_field => "call_result_contact_requested_deal_ids" } %>
   <%= render :partial => "shared/remote_deal_requests/deals_additional_info" %>
 
-</column-mc:>
+<% end %>
 
 <js:>
   <script type="text/javascript">

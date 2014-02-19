@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true"><%= t('administration.news.show.view.header') %></header>
 
   <frm title="#{@news.title}">
@@ -12,4 +12,4 @@
     </param:content>
   </frm>
 
-</column-mc:>
+<% end %>

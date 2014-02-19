@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true"><%= t("supplier.subaccounts.edit.view.title", :name => @user.full_name) %> (<%= @user.role.to_s.humanize %>)</header>
   <%= semantic_form_for [:suppliers, @user], :url => suppliers_subaccount_path(@user), :method => :put do |form| %>
       <frm>
@@ -15,4 +15,4 @@
         </param:actions>
       </frm>
   <% end %>
-</column-mc:>
+<% end %>

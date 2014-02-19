@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <header back="true">
     <param:content>
@@ -9,4 +9,4 @@
   <%= render :partial => "shared/materials/form", :locals => { :material => @material, :materials => @materials, :is_default_enabled => false,
                                                                :upload_url => :deal_maker_materials_path, :delete_url => :deal_maker_material_path } %>
 
-</column-mc:>
+<% end %>

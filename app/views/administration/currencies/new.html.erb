@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true"><%= t("administration.currencies.new.view.header") %></header>
 
   <p><%= blurb("blurb_currencies") %></p>
@@ -18,4 +18,4 @@
         </param:actions>
       </frm>
   <% end %>
-</column-mc:>
+<% end %>

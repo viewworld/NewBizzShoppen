@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true"><%= t("call_centre.call_centre_agents.edit.view.title", :name => @call_centre_agent.full_name) %></header>
   <%= semantic_form_for @call_centre_agent, :url => call_centres_call_centre_agent_path(@call_centre_agent), :method => :put do |form| %>
       <frm>
@@ -19,4 +19,4 @@
         </param:actions>
       </frm>
   <% end %>
-</column-mc:>
+<% end %>

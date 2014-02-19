@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
 
   <header back="true"><%= t("administration.categories.edit.view.header", :category_name => @category.name) %><%= image_tag_for_locale %></header>
@@ -52,4 +52,4 @@
     }
     auto_buy();
   </script>
-</column-mc:>
+<% end %>

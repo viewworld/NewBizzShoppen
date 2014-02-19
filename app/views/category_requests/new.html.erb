@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header><%= t("category_requests.new.view.header") %></header>
   <%= form_for :email_template_preview, :url => category_requests_path do |f| %>
     <frm title="Contact Form">
@@ -48,4 +48,4 @@
       </param:actions>
     </frm>
   <% end %>
-</column-mc:>
+<% end %>

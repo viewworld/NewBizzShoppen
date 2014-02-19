@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header><%= t("supplier.restricted_categories.edit.view.header") %></header>
 
   <%= form_tag suppliers_restricted_categories_path, :method => :put do %>
@@ -15,4 +15,4 @@
       <%= submit_tag t("supplier.restricted_categories.edit.view.update_button") %>
   <% end %>
 
-</column-mc:>
+<% end %>

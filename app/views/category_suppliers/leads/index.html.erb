@@ -12,7 +12,7 @@
   </div>
 </search-box:>
 
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <header back="true"><%= leads_listing_header %><%= " #{t("leads.index.header_for")} #{@displayed_category.name}" if @displayed_category %></header>
 
@@ -67,4 +67,4 @@
           <% end %>
       <% end %>
   <% end %>
-</column-mc:>
+<% end %>

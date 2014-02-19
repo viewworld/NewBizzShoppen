@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true"><%= t("lead_user.contact_lead_by_email.new.view.header") %></header>
 
   <%= form_for @email_template_preview, :as => :email_template_preview, :url => lead_users_lead_purchase_lead_email_path() do |f| %>
@@ -33,4 +33,4 @@
       </frm>
   <% end %>
 
-</column-mc:>
+<% end %>

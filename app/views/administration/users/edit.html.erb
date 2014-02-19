@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true"><%= raw t("administration.users.edit.view.title_with_role", :role => @user.roles_as_text, :name => screen_name_with_company_name(@user)) %></header>
 
   <%= semantic_form_for @user, :url => administration_user_path, :method => :put do |form| %>
@@ -112,4 +112,4 @@
           <%= render :partial => "users_table", :locals => {:users => @user.subaccounts, :subaccounts_table => true} %>
       <% end %>
   <% end %>
-</column-mc:>
+<% end %>

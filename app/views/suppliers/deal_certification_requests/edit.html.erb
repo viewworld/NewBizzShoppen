@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true" backurl="#{suppliers_deal_certification_requests_path}"><%= t("supplier.deal_certification_requests.edit.view.title") %></header>
 
   <%= semantic_form_for [:suppliers, @deal], :method => :put, :url => suppliers_deal_certification_request_path(@deal) do |form| %>
@@ -17,4 +17,4 @@
       </frm>
   <% end %>
 
-</column-mc:>
+<% end %>

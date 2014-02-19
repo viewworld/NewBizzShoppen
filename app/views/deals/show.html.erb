@@ -14,7 +14,7 @@
   <%= javascript_include_tag "global_field_validator" %>
 </head:>
 
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <% requested_by_current_user = (user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user)) %>
 
@@ -238,7 +238,7 @@
     <% end %>
   <% end %>
 
-</column-mc:>
+<% end %>
 
 <% unless Rails.env.test? %>
   <js:>

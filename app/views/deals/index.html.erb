@@ -60,7 +60,7 @@
     </search-box:>
 <% end %>
 
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true" c="header_grey">
     <param:content>
       <% if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(@search.latest) %>
@@ -98,7 +98,7 @@
   <div class="clb"></div>
 
 
-</column-mc:>
+<% end %>
 <js:>
   <%= javascript_include_tag 'deal_comments' %>
 

@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <script type="text/javascript">
       $(function() {
@@ -91,4 +91,4 @@
       <%= hidden_field_tag :creator_id, @creator_id %>
   <% end %>
 
-</column-mc:>
+<% end %>

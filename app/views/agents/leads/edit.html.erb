@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true"><%= t("agent.leads.edit.view.title", :name => @lead.header) %><%= image_tag_for_locale %></header>
   <%= semantic_form_for [:agents, @lead], :method => :put do |form| %>
       <frm title="#{@lead.header}">
@@ -41,4 +41,4 @@
       </frm>
   <% end %>
 
-</column-mc:>
+<% end %>

@@ -1,6 +1,6 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true"><%= t("comments.threads.new.view.header", :header => @lead.header) %></header>
 
   <%= render :partial => "new" %>
-</column-mc:>
+<% end %>
 

@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
   <%= javascript_include_tag "popup_email_template_editor" %>
   <%= javascript_include_tag "email_template_signature" %>
@@ -27,7 +27,7 @@
   <%= render :partial => "shared/email_template_popup/template_vars_popup", :locals => { :instance_name => "email_template_body_editor", :email_template => @email_template } %>
   <%= render :partial => "shared/email_template_popup/template_deal_links", :locals => {:instance_name => "email_template_body_editor"} %>
 
-</column-mc:>
+<% end %>
 
 <js:>
   <script type="text/javascript">

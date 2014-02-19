@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= javascript_include_tag 'lead_template_functions.js' %>
   <header back="true"><%= @lead.deal.header %><%= image_tag_for_locale %></header>
   <%= semantic_form_for [:members, @lead], :method => :put do |form| %>
@@ -110,4 +110,4 @@
         </param:actions>
       </frm>
   <% end %>
-</column-mc:>
+<% end %>

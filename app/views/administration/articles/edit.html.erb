@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
   <header back="true">
     <%= t('administration.articles.edit.view.header', :name => @article.title) %><%= image_tag_for_locale %>
@@ -27,7 +27,7 @@
         </param:actions>
       </frm>
   <% end %>
-</column-mc:>
+<% end %>
 
 
 

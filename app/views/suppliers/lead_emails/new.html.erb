@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
   <header back="true"><%= t("lead_supplier.contact_lead_by_email.new.view.header") %></header>
 
@@ -36,4 +36,4 @@
 
   <% end %>
 
-</column-mc:>
+<% end %>

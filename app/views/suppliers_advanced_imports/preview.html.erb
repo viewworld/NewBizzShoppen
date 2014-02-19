@@ -1,5 +1,5 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <%= render :partial => "shared/advanced_import/preview", :locals => {:model_name => "supplier"} %>
 
-</column-mc:>
+<% end %>

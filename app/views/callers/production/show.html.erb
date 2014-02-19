@@ -5,7 +5,7 @@
                                                                         :date_to => @date_to, :final => @final, :campaign_users => @campaign_users, :all_campaigns => @all_campaigns } %>
 </search-box:>
 
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <header back="true" backurl="javascript:history.back(-1)"><%=  @campaign.is_a?(Array) ? t("production.show.view.header") : @campaign.name %></header>
 
@@ -19,7 +19,7 @@
   <% else %>
      <%= blank_state_message "Set the constraints and press Search button to view production report." %>
   <% end %>
-</column-mc:>
+<% end %>
 
 <js:>
 <script type="text/javascript">

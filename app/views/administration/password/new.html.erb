@@ -1,3 +1,3 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= render :partial => "shared/password/password_form", :locals => {:user => @user, :path => administration_user_password_path} %>
-</column-mc:>
+<% end %>

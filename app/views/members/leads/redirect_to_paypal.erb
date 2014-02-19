@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <script language="javascript">
       $(document).ready(function() {
           $('#submit_voucher').submit();
@@ -10,4 +10,4 @@
       <%= hidden_field_tag :cmd, "_s-xclick" %>
       <%= hidden_field_tag :encrypted, @voucher_number.paypal_encrypted(root_url, payment_notifications_url(:secret => APP_CONFIG[:paypal_secret])) %>
   <% end %>
-</column-mc:>
+<% end %>

@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
   <%= javascript_include_tag "popup_email_template_editor" %>
   <%= javascript_include_tag "email_template_signature" %>
@@ -19,4 +19,4 @@
         </param:actions>
       </frm>
   <% end %>
-</column-mc:>
+<% end %>

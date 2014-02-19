@@ -1,5 +1,5 @@
 <%= render :partial => "shared/deals/filter", :locals => {:search => @search, :path => suppliers_deals_path} %>
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= render :partial => "shared/deals/actions", :locals => {:path => new_suppliers_deal_path} %>
 
  <% unless current_user.can_create_deals? %>
@@ -25,4 +25,4 @@
           <% end %>
       <% end %>
   <% end %>
-</column-mc:>
+<% end %>

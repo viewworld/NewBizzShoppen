@@ -43,7 +43,7 @@
   </div>
 </search-box:>
 
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <header><%= t("supplier.lead_requests.index.view.header") %></header>
 
@@ -70,4 +70,4 @@
           <% end %>
       <% end %>
   <% end %>
-</column-mc:>
+<% end %>

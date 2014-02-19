@@ -7,7 +7,7 @@
   </style>
 </head:>
 
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true">
     <param:content>
       <%= t("agent_timesheets.index.header") %>
@@ -16,4 +16,4 @@
 
   <%= render(:text => AgentTimesheet::General.load(params[:id], current_user)).html_safe %>
 
-</column-mc:>
+<% end %>

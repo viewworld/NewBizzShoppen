@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= javascript_include_tag "result_dynamic_value" %>
   <header><%= t("results.edit.title") %>: <%= @result.name %></header>
   <%= semantic_form_for [:callers, @campaign, @result], :method => :post do |form| %>
@@ -14,7 +14,7 @@
         </param:actions>
       </frm>
   <% end %>
-</column-mc:>
+<% end %>
 <js:>
   <script type="text/javascript">
     enable_dynamic_value();

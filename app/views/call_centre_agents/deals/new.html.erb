@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true" backurl="#{call_centre_agents_deals_path}">
      <param:content>
         <%= t("call_centre_agent.deals.new.view.title") %>
@@ -43,7 +43,7 @@
         </frm>
     <% end %>
   </div>
-</column-mc:>
+<% end %>
 
 <js:>
 <%= javascript_include_tag("deal_creation") %>

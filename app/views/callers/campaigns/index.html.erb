@@ -25,7 +25,7 @@
   </div>
 </search-box:>
 
-<column-mc:>
+<%= content_for :column_mc do -%>
   <div class="ajax_flash_msg flash flash_notice" style="display:none;">
   </div>
 
@@ -149,7 +149,7 @@
     </div>
   </div>
 
-</column-mc:>
+<% end %>
 
 <js:>
   <script type="text/javascript">

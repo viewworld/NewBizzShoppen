@@ -32,7 +32,7 @@
   </div>
 </search-box:>
 
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header>
     <param:content>
       <%= t("softphone_listing.index.header") %>
@@ -88,4 +88,4 @@
     </tr>
   </table>
 
-</column-mc:>
+<% end %>

@@ -35,7 +35,7 @@
   </div>
 </search-box:>
 
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header><%= t("administration.payment_transactions.index.view.header") %></header>
 
   <% if @payment_transactions.blank?  %>     
@@ -90,4 +90,4 @@
         </tbody>
       </table>
   <% end %>
-</column-mc:>
+<% end %>

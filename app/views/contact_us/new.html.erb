@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header><%= t("contact_us.new.view.header") %></header>
 
   <% if user_signed_in? and current_user.agent? %>
@@ -8,4 +8,4 @@
   <% else %>
       <%= render :partial => 'guest' %>
   <% end %>
-</column-mc:>
+<% end %>

@@ -1,5 +1,5 @@
 <%= render :partial => "shared/deals/filter", :locals => {:search => @search, :path => call_centres_deals_path} %>
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= render :partial => "shared/deals/actions", :locals => {:path => new_call_centres_deal_path} %>
 
    <%= deals_table @deals, :show_checkboxes => true do |blocks| %>
@@ -17,4 +17,4 @@
           <p><%= render :partial => "/shared/deal_comments/deal_threads", :locals => { :deal => deal, :threads => deal.comment_threads.roots.order("created_at DESC") } %></p>
       <% end %>
   <% end %>
-</column-mc:>
+<% end %>

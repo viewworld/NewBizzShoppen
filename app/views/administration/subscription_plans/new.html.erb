@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true"><%= t("administration.subscription_plans.new.view.header") %></header>
 
   <%= semantic_form_for @subscription_plan, :url => administration_subscription_plans_path do |form| %>
@@ -16,4 +16,4 @@
         </param:actions>
       </frm>
   <% end %>
-</column-mc:>
+<% end %>

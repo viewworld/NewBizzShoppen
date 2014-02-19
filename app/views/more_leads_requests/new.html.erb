@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header><%= t("more_leads_requests.new.view.header", :category => @category.name) %></header>
   <%= form_for :email_template_preview, :url => category_more_leads_requests_path(@category) do |f| %>
     <frm title="#{t('more_leads_requests.new.view.form_title')}">
@@ -43,4 +43,4 @@
       </param:actions>
     </frm>
   <% end %>
-</column-mc:>
+<% end %>

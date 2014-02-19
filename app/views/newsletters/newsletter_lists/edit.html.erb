@@ -6,7 +6,7 @@
   ]
 %>
 
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= javascript_include_tag "jquery.autocomplete.min.js" %>
 
   <header back="true">
@@ -88,7 +88,7 @@
 
 
   <%= render :partial => "subscribers_list", :locals => { :newsletter_subscribers => @newsletter_subscribers, :show_checkboxes => true } %>
-</column-mc:>
+<% end %>
 
 <js:>
   <script type="text/javascript">

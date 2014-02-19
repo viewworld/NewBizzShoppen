@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= javascript_include_tag 'lead_template_functions.js' %>
   <header back="true"><%= @deal.header %><%= image_tag_for_locale %></header>
 
@@ -84,4 +84,4 @@
         </param:actions>
       </frm>
   <% end %>
-</column-mc:>
+<% end %>

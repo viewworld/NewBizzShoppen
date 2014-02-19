@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true"><%= t("newsletters.newsletter_list_subscribers.edit.view.header") %></header>
   <%= semantic_form_for @newsletter_list_subscriber, :url => newsletters_newsletter_list_newsletter_list_subscriber_path(@newsletter_list, @newsletter_list_subscriber) do |form| %>
       <frm>
@@ -15,4 +15,4 @@
         </param:actions>
       </frm>
   <% end %>
-</column-mc:>
+<% end %>

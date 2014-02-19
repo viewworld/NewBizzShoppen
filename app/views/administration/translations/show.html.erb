@@ -28,7 +28,7 @@
   </div>
 </search-box:>
 
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header>
     <param:content>
         <%= t("administration.translations.show.view.header") %>
@@ -83,4 +83,4 @@
         $('#search_new').submit();
     }
   </script>
-</column-mc:>
+<% end %>

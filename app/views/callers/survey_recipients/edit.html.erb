@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
 
 <%= render :partial => "edit", :locals => { :survey_recipient => @survey_recipient } %>
-</column-mc:>
+<% end %>

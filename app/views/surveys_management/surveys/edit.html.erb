@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
   <header back="true"><%= t("surveys_management.surveys.edit.view.header") %><%= image_tag_for_locale %></header>
 
@@ -22,4 +22,4 @@
         </param:actions>
       </frm>
   <% end %>
-</column-mc:>
+<% end %>

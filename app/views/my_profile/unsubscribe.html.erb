@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <% if current_user.member? %>
       <%= semantic_form_for @user, :url => my_profile_path, :method => :put do |form| %>
@@ -23,4 +23,4 @@
       <% end %>
   <% end %>
 
-</column-mc:>
+<% end %>

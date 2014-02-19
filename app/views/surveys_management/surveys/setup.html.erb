@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= javascript_include_tag "jquery.ui.nestedSortable" %>
   <%= javascript_include_tag "jquery.ui.nestedSortable.custom" %>
   <header back="true"><%= t("surveys_management.surveys.setup.view.header") %><%= image_tag_for_locale %></header>
@@ -16,4 +16,4 @@
         </param:actions>
       </frm>
   <% end %>
-</column-mc:>
+<% end %>

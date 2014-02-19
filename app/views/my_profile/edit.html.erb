@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header><%= (current_user.contact.present? and current_user.sign_in_count == 1) ?  t("my_profile.edit.view.header_contact_confirmation") : t("my_profile.edit.view.header") %></header>
 
   <% if SubscriptionPlan.valid_roles.include?(current_user.with_role.role) and current_user.parent.nil? %>
@@ -39,4 +39,4 @@
 
   <% end %>
 
-</column-mc:>
+<% end %>

@@ -39,7 +39,7 @@
   </div>
 </search-box:>
 
-<column-mc:>
+<%= content_for :column_mc do -%>
 
   <header><%= t("administration.invoices.index.view.header") %></header>
 
@@ -132,4 +132,4 @@
           </table>
       <% end %>
   <% end %>
-</column-mc:>
+<% end %>

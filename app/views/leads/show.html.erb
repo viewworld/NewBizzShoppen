@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <header back="true"><%= t("leads.show.view.header") %></header>
   <% if user_signed_in? and current_user.has_role?(:lead_supplier) and (lead_purchase = User::LeadSupplier.find(current_user.id).accessible_lead_purchases.where(:lead_id => @lead.id).first) %>
       <%= render :partial => "suppliers/lead_purchases/lead_details", :locals => { :lead_purchase => lead_purchase } %>
@@ -74,4 +74,4 @@
   </div>
   <div class="clb"></div>
   <% end %>
-</column-mc:>
+<% end %>

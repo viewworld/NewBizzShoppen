@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <h2><%= t("devise.registrations.edit_page_header", :user_name => resource_name.to_s.humanize) %></h2>
 
   <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:method => :put}) do |f| %>
@@ -25,4 +25,4 @@
     .</p>
 
   <%= link_to t("common.back_link"), :back %>
-</column-mc:>
+<% end %>

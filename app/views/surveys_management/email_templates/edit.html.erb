@@ -1,4 +1,4 @@
-<column-mc:>
+<%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
   <%= javascript_include_tag "popup_email_template_editor" %>
   <header back="true"><%= t("email_templates.edit.view.title", :name => @email_template.subject) %><%= image_tag_for_locale %></header>
@@ -21,7 +21,7 @@
 
   <%= hidden_field_tag :uniq_id, @email_template.uniq_id, {:id => "email_template_editor_uniq_id"} %>
   <%= render :partial => "shared/email_template_popup/template_vars_popup", :locals => { :instance_name => "email_template_body_editor", :email_template => @email_template } %>
-</column-mc:>
+<% end %>
 
 <js:>
   <script type="text/javascript">
