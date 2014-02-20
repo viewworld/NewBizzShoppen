@@ -1,4 +1,6 @@
 class Country < ActiveRecord::Base
+  HOUR_FORMAT = '%H:%M'
+
   has_many :country_interest
   has_many :abstract_leads
   has_many :leads
@@ -8,7 +10,7 @@ class Country < ActiveRecord::Base
   has_one :logo, :class_name => "Asset::CountryLogo", :as => :resource, :conditions => "asset_type = 'Asset::CountryLogo'", :dependent => :destroy
   has_one :email_template_signature, :as => :related
 
-  validates_presence_of :name
+  validates_presence_of :name, :work_start_at, :work_end_at
   validates_uniqueness_of :name
 
   liquid :email_template_signature, :email_template_signature_logo_url
@@ -76,6 +78,14 @@ class Country < ActiveRecord::Base
     country = Thread.current[:globalize_detailed_locale].blank? ? nil : where(:detailed_locale => Thread.current[:globalize_detailed_locale]).first
     country = where(:locale => I18n.locale.to_s).first unless country
     country
+  end
+
+  def work_start_at_value
+    work_start_at.strftime(HOUR_FORMAT)
+  end
+
+  def work_end_at_value
+    work_end_at.strftime(HOUR_FORMAT)
   end
 
   PHONE_CODES = [
