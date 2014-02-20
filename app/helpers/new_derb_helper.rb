@@ -1,4 +1,4 @@
-module DerbHelper
+module NewDerbHelper
   def ibt(opts = {}, &block)
     classes = %w(bt)
     classes << 'bt_icon' if opts[:icon]
