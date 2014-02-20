@@ -44,9 +44,9 @@
                     </p>
                   </li>
                   <li style="padding-top:15px;float:right">
-                    <ibt c="bt_green" icon="magnify" style="margin-top:20px;">
+                    <%= ibt(:class => 'bt_green', :icon => 'magnify') do %>
                       <%= submit_tag t("agent_home.show.view.agent_performance.filter") %>
-                    </ibt>
+                    <% end %>
                   </li>
                 </ol>
               </fieldset>
