@@ -24,9 +24,9 @@
           </div>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= button_to_function t("advanced_import.show.view.button"), "import_suppliers()", :name => "commit_create" %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

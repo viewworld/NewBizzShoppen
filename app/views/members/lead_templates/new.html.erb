@@ -6,12 +6,12 @@
           <%= render :partial => '/shared/lead_templates/form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="plus">
+          <%= ibt(:class => "fltri", :icon => "plus") do %>
             <%= form.submit t("member.lead_templates.new.view.button_create") %>
-          </ibt>
-          <ibt c="bt_grey fltri">
+          <% end %>
+          <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("member.lead_templates.new.view.button_cancel"), "history.go(-1)" %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

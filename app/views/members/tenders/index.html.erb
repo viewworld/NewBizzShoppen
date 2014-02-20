@@ -25,9 +25,9 @@
                 <%= f.label :without_outdated, t("member.tenders.index.view.search.filter_with_outdated") %>
               </li>
               <li class="commit">
-                <ibt c="bt_green" icon="magnify">
+                <%= ibt(:class => "bt_green", :icon => "magnify") do %>
                   <%= submit_tag t("member.tenders.index.view.search.search_button") %>
-                </ibt>
+                <% end %>
                 <p>
                   <%= bt_clear_filter %>
                 </p>

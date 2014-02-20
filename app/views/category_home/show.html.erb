@@ -64,9 +64,9 @@
                       <%= f.input :password, :label => raw(I18n.t("activerecord.attributes.user.password") + content_tag(:span, link_to(t("category_home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link")), :input_html => {:tabindex => 2}, :wrapper_html => {:class => "rltv"} %>
                       <%= f.input :remember_me, :as => :boolean, :required => false, :input_html => {:tabindex => 3} %>
                       <li class="commit">
-                        <ibt>
+                        <%= ibt do %>
                           <%= f.submit t("category_home.show.view.sign_in"), :tabindex => 4 %>
-                        </ibt>
+                        <% end %>
                       </li>
 
                     </ol>

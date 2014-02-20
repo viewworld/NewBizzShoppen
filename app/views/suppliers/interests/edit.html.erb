@@ -83,9 +83,9 @@
           </div>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= submit_tag t("supplier.interests.edit.view.button_update") %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

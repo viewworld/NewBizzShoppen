@@ -12,12 +12,12 @@
           <%= hidden_field_tag "confirmation", "agree" %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="remove">
+          <%= ibt(:class => "fltri", :icon => "remove") do %>
           <%= form.submit t("leads.certification.reject"), :onclick => "$('#confirmation').val('disagree');" %>
-          </ibt>
-          <ibt c="fltri" icon="save">
+          <% end %>
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("leads.certification.confirm") %>
-          </ibt>
+          <% end %>
 
         </param:actions>
       </frm>

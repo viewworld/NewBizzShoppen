@@ -21,9 +21,9 @@
                 <%= f.text_field :with_sale_date_before_and_including, :class => "formtastic-ui-datepicker" %>
               </li>
               <li class="commit">
-                <ibt c="bt_green" icon="magnify">
+                <%= ibt(:class => "bt_green", :icon => "magnify") do %>
                   <%= submit_tag t("administration.payment_transactions.index.view.search_button") %>
-                </ibt>
+                <% end %>
                 <p>
                   <%= bt_clear_filter %>
                 </p>

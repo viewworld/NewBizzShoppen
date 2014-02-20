@@ -7,12 +7,12 @@
     <%= f.input :title %>
     <%= f.input :body, :as => :text, :input_html => {:style => "width:380px;height: 100px;"} %>
     <li class="commit">
-      <ibt icon="save">
+      <%= ibt(:icon => "save") do %>
         <%= button_to_function t("comments.threads.edit.view.update_comment_button"), "validate_form('#edit_comment_#{comment.id}')"  %>
-      </ibt>
-      <ibt c="bt_grey">
+      <% end %>
+      <%= ibt(:class => "bt_grey") do %>
         <%= button_to_function t("common.cancel_link"), "$('#edit_comment_#{comment.id}').slideUp('slow');" %>
-      </ibt>
+      <% end %>
     </li>
   </ol>
 </fieldset>

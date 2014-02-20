@@ -25,9 +25,9 @@
                 <%= f.select :with_paid, options_for_with_paid, :include_blank => true %>
               </li>
               <li class="commit">
-                <ibt c="bt_green" icon="magnify">
+                <%= ibt(:class => "bt_green", :icon => "magnify") do %>
                   <%= submit_tag t("administration.invoices.index.view.search_button") %>
-                </ibt>
+                <% end %>
                 <p>
                   <%= bt_clear_filter %>
                 </p>
@@ -50,9 +50,9 @@
             <%= form.input :user_id, :collection => User.invoiceable.map { |u| ["#{u.company_name}, #{u.email}", u.id] }.sort, :include_blank => false %>
             <%= form.input :seller_id, :include_blank => false, :collection => Seller.order("company_name").all %>
             <li class="commit">
-              <ibt class="commit">
+              <%= ibt(:class => "commit") do %>
                 <%= form.submit t("administration.invoices.index.view.create_invoice") %>
-              </ibt>
+              <% end %>
             </li>
           </ol>
         </fieldset>

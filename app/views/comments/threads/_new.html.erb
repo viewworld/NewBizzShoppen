@@ -3,14 +3,14 @@
     <fieldset class="inputs labels_ta_r labels_80">
       <ol class="align_inputs">
         <li class="header">
-          <h3><%= t('comments.threads.show.view.start_new_thread') %></h3>          
+          <h3><%= t('comments.threads.show.view.start_new_thread') %></h3>
         </li>
         <%= f.input :title %>
         <%= f.input :body, :as => :text, :input_html => {:style => "width:380px;height: 100px;"} %>
         <li class="commit">
-          <ibt icon="plus">
+          <%= ibt(:icon => "plus") do %>
             <%= button_to_function t("comments.threads.show.view.create_comment_button"), "validate_form('#new_comment_#{lead.id}')" %>
-          </ibt>
+          <% end %>
         </li>
       </ol>
     </fieldset>

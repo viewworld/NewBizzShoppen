@@ -7,12 +7,12 @@
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.users.edit.view.button_update_user"), :onclick => "add_unique_to_interests();select_options_to_submit('user_supplier_category_ids_'); select_options_to_submit('user_#{params[:role]}_unique_category_ids_');select_options_to_submit('user_category_supplier_buying_category_ids_');" %>
-          </ibt>
-          <ibt c="bt_grey fltri">
+          <% end %>
+          <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
-          </ibt>          
+          <% end %>          
         </param:actions>
       </frm>
   <% end %>

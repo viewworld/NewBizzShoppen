@@ -15,9 +15,9 @@
                   <%= f.text_field :email %>
                 </li>
                 <li class="commit">
-                  <ibt>
+                  <%= ibt do %>
                     <%= f.submit t("devise.confirmations.resend_confirmation_link") %>
-                  </ibt>
+                  <% end %>
                 </li>
               </ol>
             </fieldset>

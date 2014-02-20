@@ -12,9 +12,9 @@
         <% if agent_work_screen %>
             <%= bt_link_to :save, t("call_results.edit.save_button"), "javascript:void(0)", :id => "commit_update_call_result", :class => "fltr" %>
         <% else %>
-            <ibt c="fltri" icon="save">
+            <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("call_results.edit.save_button"), :name => "commit_create", :onclick => "#{'serialize_materials_array_onsubmit(); ' if current_user.has_role?(:admin)}select_options_to_submit('call_result_buying_category_ids_')" %>
-            </ibt>
+            <% end %>
        <% end %>
         <%= bt_link_to(nil, t("call_results.edit.cancel_button"), back_path, :class => "bt_grey fltr") if back_path %>
       </param:actions>

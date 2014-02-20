@@ -11,12 +11,12 @@
         <%= f.input :title %>
         <%= f.input :body, :input_html => {:style => "width:380px;height: 100px;"} %>
         <li class="commit">
-          <ibt icon="plus">
+          <%= ibt(:icon => "plus") do %>
             <%= button_to_function t("comments.threads.show.view.create_comment_button"), "validate_form('#reply_#{comment_id}')" %>
-          </ibt>
-          <ibt c="bt_grey">
+          <% end %>
+          <%= ibt(:class => "bt_grey") do %>
             <%= button_to_function t("common.cancel_link"), "$('#reply_#{comment_id}').slideUp('slow');" %>
-          </ibt>
+          <% end %>
         </li>
       </ol>
     </fieldset>

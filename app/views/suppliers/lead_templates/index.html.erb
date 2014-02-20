@@ -18,9 +18,9 @@
                 <%= f.select :with_category, @categories, :include_blank => true %>
               </li>
               <li class="commit">
-                <ibt c="bt_green" icon="magnify">
+                <%= ibt(:class => "bt_green", :icon => "magnify") do %>
                   <%= submit_tag t("supplier.lead_templates.index.view.search_button") %>
-                </ibt>
+                <% end %>
                 <p>
                   <%= bt_clear_filter %>
                 </p>

@@ -15,9 +15,9 @@
             <%= text_field_tag "voucher_number", nil %>
           </li>
           <li class="commit">
-            <ibt>
+            <%= ibt do %>
               <%= submit_tag t("validate_voucher.show.validate_button") %>
-            </ibt>
+            <% end %>
           </li>
         </ol>
       </fieldset>

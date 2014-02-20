@@ -9,15 +9,15 @@
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("campaigns.email_templates.edit.view.button_update") %>
-          </ibt>
-          <ibt c="fltri" icon="mail">
+          <% end %>
+          <%= ibt(:class => "fltri", :icon => "mail") do %>
             <%= button_to_function t("email_templates.edit.view.test_send_email"), "test_send_email_prompt('#{test_send_email_email_template_path(@email_template, :deal_id => @deal.id)}')" %>
-          </ibt>
-          <ibt c="bt_grey fltri">
+          <% end %>
+          <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("email_templates.edit.view.button_cancel"), href(send("edit_#{current_user.role_to_deal_namespace}_deal_path".to_sym, @deal)) %>
-          </ibt>          
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

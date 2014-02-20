@@ -10,9 +10,9 @@
           <%= render :partial => 'shared/surveys/form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("surveys.show.view.button_update") %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

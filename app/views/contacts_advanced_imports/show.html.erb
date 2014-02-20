@@ -17,9 +17,9 @@
           </div>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= submit_tag t("advanced_import.show.view.button"), :name => "commit_create" %>
-          </ibt>
+          <% end %>
           <!--remove last import is done for campaign right now...-->
           <%#= bt_link_to(:remove, t("advanced_import.show.view.remove_last_import_button"), contacts_advanced_import_path, :method => :delete, :confirm => t("advanced_import.show.view.remove_last_import_button_confirm"), :class => "fltr") %>
           <!--unless @campaign.contacts.from_last_import.blank? -->

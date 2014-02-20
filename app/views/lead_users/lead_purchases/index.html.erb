@@ -24,9 +24,9 @@
                 <%= f.label :with_country, t("lead_user.lead_purchases.index.view.search.country_label") %>
                 <%= f.select :with_country, @countries, {:include_blank => true} %>
               <li class="commit">
-                <ibt c="bt_green" icon="magnify">
+                <%= ibt(:class => "bt_green", :icon => "magnify") do %>
                   <%= submit_tag t("lead_user.lead_purchases.index.view.search.search_button") %>
-                </ibt>
+                <% end %>
                 <p>
                   <%= bt_clear_filter %>
                 </p>

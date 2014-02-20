@@ -151,12 +151,12 @@
           <br/>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.invoices.edit.view.save_button") %>
-          </ibt>
-          <ibt c="fltri bt_grey">
+          <% end %>
+          <%= ibt(:class => "fltri bt_grey") do %>
             <%= button_to_function t("common.cancel_link"), "window.location='#{administration_invoicing_invoices_path}'" %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

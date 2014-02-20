@@ -10,12 +10,12 @@
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("deal_maker_users.new.view.button_create"), :onclick => "serialize_materials_array_onsubmit();" %>
-          </ibt>
-          <ibt c="bt_grey fltri">
+          <% end %>
+          <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("deal_maker_users.new.view.button_cancel"), "history.go(-1)" %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

@@ -12,12 +12,12 @@
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.categories.edit.view.button_update"), :onclick => "select_options_onsubmit();" %>
-          </ibt>
-          <ibt c="bt_grey fltri">
+          <% end %>
+          <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("administration.settings.edit.view.button_cancel"), href(categories_path) %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

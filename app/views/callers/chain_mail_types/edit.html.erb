@@ -23,12 +23,12 @@
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("views.button_update") %>
-          </ibt>
-          <ibt c="bt_grey fltri">
+          <% end %>
+          <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("views.button_cancel"), href(@campaign ? callers_campaign_chain_mail_types_path(@campaign) : callers_chain_mail_types_path) %>
-          </ibt>          
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

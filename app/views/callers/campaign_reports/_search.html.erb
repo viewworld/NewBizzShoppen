@@ -100,9 +100,9 @@
                   <%= select_tag :currency_id, options_for_select(Currency.active.map{|c| [c.name.to_s, c.id]}.sort, @search.currency_id) %>
                 </li>
                 <li class="commit pdd_10 no_pdd_l">
-                  <ibt c="bt_green" icon="magnify">
+                  <%= ibt(:class => "bt_green", :icon => "magnify") do %>
                     <%= submit_tag t("campaign_reports.index.search_button") %>
-                  </ibt>
+                  <% end %>
                 </li>
               </ol>
             </fieldset>

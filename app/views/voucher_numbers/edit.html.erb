@@ -36,9 +36,9 @@
              <td></td>
              <td><%= link_to t("voucher_numbers.edit.back_link"), @role == "admin" ? edit_administration_deal_path(@deal) : self.send("edit_#{@role.pluralize}_deal_path", @deal) %></td>
              <td colspan="3">
-               <ibt c="fltri" icon="save">
+               <%= ibt(:class => "fltri", :icon => "save") do %>
                  <%= f.submit t("voucher_numbers.edit.update_button") %>
-               </ibt>               
+               <% end %>
              </td>
           </tr>
           </tbody>

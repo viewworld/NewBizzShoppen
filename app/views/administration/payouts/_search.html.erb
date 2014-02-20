@@ -89,9 +89,9 @@
             <fieldset class="">
               <ol class="pdd_10">
                 <li class="commit pdd_10 no_pdd_l">
-                  <ibt c="bt_green" icon="magnify">
+                  <%= ibt(:class => "bt_green", :icon => "magnify") do %>
                     <%= submit_tag t("campaign_reports.index.search_button"), :onclick => "set_search_url();;" %>
-                  </ibt>
+                  <% end %>
                 </li>
               </ol>
             </fieldset>

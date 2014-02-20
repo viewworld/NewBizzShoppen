@@ -24,9 +24,9 @@
         <p class="ta_c pdd_5 no_pdd_b"><%= bt_link_to nil, t("newsletters.newsletter_campaigns.form.new_list"), new_newsletters_newsletter_list_path, :target => "_window" %></p>
 
         <div class="ta_c pdd_20 no_pdd_r no_pdd_b">
-          <ibt icon="save">
-              <%= form.submit t("newsletters.newsletter_campaigns.edit.view.button_update_and_sync"), :name => "commit_sync", :onclick => "select_options_to_submit('newsletter_campaign_newsletter_list_ids_')" %>
-          </ibt>
+          <%= ibt(:icon => "save") do %>
+            <%= form.submit t("newsletters.newsletter_campaigns.edit.view.button_update_and_sync"), :name => "commit_sync", :onclick => "select_options_to_submit('newsletter_campaign_newsletter_list_ids_')" %>
+          <% end %>
         </div>
       </div>
 

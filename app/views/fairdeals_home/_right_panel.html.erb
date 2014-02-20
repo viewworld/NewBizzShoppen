@@ -24,9 +24,9 @@
                 <%= f.input :password, :label => raw(I18n.t("activerecord.attributes.user.password") + content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link")), :input_html => {:tabindex => 2}, :wrapper_html => {:class => "rltv"} %>
                 <%= f.input :remember_me, :as => :boolean, :required => false, :input_html => {:tabindex => 3} %>
                 <li class="commit">
-                  <ibt>
+                  <%= ibt do %>
                     <%= f.submit t("home.show.view.sign_in"), :tabindex => 4 %>
-                  </ibt>
+                  <% end %>
                 </li>
               </ol>
             </fieldset>
@@ -83,9 +83,9 @@
             <%= recaptcha_tags(:ajax => true) %>
           </li>
           <li class="commit">
-            <ibt c="fltri">
+            <%= ibt(:class => "fltri") do %>
               <%= button_to_function t("fairdeals_home.show.view.deal_request.send_email_button"), "validate_request_deal_form()" %>
-            </ibt>
+            <% end %>
           </li>
         </ol>
       </fieldset>

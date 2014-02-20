@@ -16,19 +16,19 @@
         </param:content>
         <param:actions>
           <% if !@newsletter_campaign.sent? and !@newsletter_campaign.queued_for_sending? %>
-              <ibt c="fltri" icon="save">
+              <%= ibt(:class => "fltri", :icon => "save") do %>
                 <%= form.submit t("newsletters.newsletter_campaigns.edit.view.button_update_and_send"), :name => "commit_send_to_subscribers", :onclick => "select_options_to_submit('newsletter_campaign_newsletter_list_ids_')" %>
-              </ibt>
-              <ibt c="fltri" icon="save">
+              <% end %>
+              <%= ibt(:class => "fltri", :icon => "save") do %>
                 <%= form.submit t("newsletters.newsletter_campaigns.edit.view.button_update_and_send_as_draft"), :name => "commit_send_as_draft", :onclick => "select_options_to_submit('newsletter_campaign_newsletter_list_ids_')" %>
-              </ibt>
+              <% end %>
           <% end %>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("newsletters.newsletter_campaigns.edit.view.button_update"), :name => "commit", :onclick => "select_options_to_submit('newsletter_campaign_newsletter_list_ids_')" %>
-          </ibt>
-          <ibt c="bt_grey fltri">
+          <% end %>
+          <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("newsletters.newsletter_campaigns.edit.view.button_cancel"), "history.go(-1)" %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

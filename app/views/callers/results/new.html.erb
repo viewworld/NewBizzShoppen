@@ -7,9 +7,9 @@
           <%= render :partial => '/callers/results/form', :locals => {:form => form, :result => @result} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("campaigns.new.button_create"), :name => "commit_create" %>
-          </ibt>
+          <% end %>
           <%= bt_link_to nil, t("campaigns.new.button_cancel"), url_for(:controller => "callers/results", :action => :index, :campaign_id => @campaign), :class => "bt_grey fltr" %>
         </param:actions>
       </frm>

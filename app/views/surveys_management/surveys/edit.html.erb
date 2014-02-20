@@ -13,12 +13,12 @@
             <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("surveys_management.surveys.edit.view.button_update"), :onclick => "select_options_to_submit('survey_campaign_ids_');select_options_to_submit('survey_newsletter_list_ids_');select_options_to_submit('survey_category_ids_');" %>
-          </ibt>
-          <ibt c="bt_grey fltri">
+          <% end %>
+          <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("surveys_management.shared.cancel"), "history.go(-1)" %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

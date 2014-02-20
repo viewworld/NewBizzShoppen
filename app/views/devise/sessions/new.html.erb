@@ -58,9 +58,9 @@
                     </li>
                 <% end -%>
                 <li class="commit">
-                  <ibt>
+                  <%= ibt do %>
                     <%= f.submit "Sign in" %>
-                  </ibt>
+                  <% end %>
                   <% unless @failed_rpx %>
                       <% if session[:site] == "fairleads" %>
                         <p>or <%= link_to t("supplier_home.show.view.create_new_supplier_account"), new_supplier_account_path %></p>

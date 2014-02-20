@@ -17,9 +17,9 @@
                 <%= f.select :with_category, nested_set_options(@categories.all), :include_blank => true %>
               </li>
               <li class="commit">
-                <ibt c="bt_green" icon="magnify">
+                <%= ibt(:class => "bt_green", :icon => "magnify") do %>
                   <%= submit_tag t("member.leads.index.view.search_button") %>
-                </ibt>
+                <% end %>
                 <p>
                   <%= bt_clear_filter %>
                 </p>

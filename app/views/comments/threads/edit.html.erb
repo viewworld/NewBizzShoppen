@@ -16,9 +16,9 @@
             </div>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
              <%= f.commit_button t("comments.threads.edit.view.update_comment_button") %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
    <% end %>

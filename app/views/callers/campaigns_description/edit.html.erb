@@ -9,9 +9,9 @@
           <%= render :partial => '/callers/campaigns/form_description', :locals => {:form => form, :campaign => @campaign} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("campaigns_description.edit.button_update"), :name => "commit_create" %>
-          </ibt>
+          <% end %>
           <%= bt_link_to nil, t("campaigns_description.edit.button_cancel"), edit_callers_campaign_path(@campaign), :class => "bt_grey fltr" %>
         </param:actions>
       </frm>

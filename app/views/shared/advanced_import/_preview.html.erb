@@ -54,9 +54,9 @@
       </div>
     </param:content>
     <param:actions>
-      <ibt c="fltri">
+      <%= ibt(:class => "fltri") do %>
         <%= button_to_function t("advanced_import.preview.view.import_button"), "$('#import_objects_form').submit();", :class => "fltr" %>
-      </ibt>
+      <% end %>
       <%= bt_link_to nil, t("advanced_import.preview.view.cancel_button"), "javascript:void(0)", :onclick => "$('#go_to_choose_objects_form').submit();", :class => "bt_grey fltr" %>
     </param:actions>
   </frm>

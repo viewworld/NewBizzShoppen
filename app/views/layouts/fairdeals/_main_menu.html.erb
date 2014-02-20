@@ -13,8 +13,8 @@
   <%= form_for @search, :url => deals_path, :html => {:id => "deals_search_form"} do |f| %>
     <%= hidden_field_tag :show_all, params[:show_all] %>
     <%= f.text_field :with_keyword, :placeholder => t("layout.fairdeals.main_menu.search_keyword_placeholder") %>
-    <ibt c="bt_green" icon="magnify">
+    <%= ibt(:class => "bt_green", :icon => "magnify") do %>
       <%= submit_tag t("layout.fairdeals.main_menu.search"), :id => "search_new" %>
-    </ibt>
+    <% end %>
   <% end %>
 </div>

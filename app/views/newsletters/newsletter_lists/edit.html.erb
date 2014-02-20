@@ -32,18 +32,18 @@
             <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("newsletters.newsletter_lists.edit.view.button_update"), :onclick => "serialize_tag_groups_items();select_sourceable_items()" %>
-          </ibt>
-          <ibt c="bt_grey fltri">
+          <% end %>
+          <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("newsletters.newsletter_lists.edit.view.button_cancel"), "history.go(-1)" %>
-          </ibt>
-          <ibt c="fltri show" s="display:none;">
+          <% end %>
+          <%= ibt(:class => "fltri show" s="display:none;") do %>
             <%= link_to_function "Show", "$('.form_newsletter, .frm_foot_actions .bt').toggle('slow');" %>
-          </ibt>
-          <ibt c="fltri hide">
+          <% end %>
+          <%= ibt(:class => "fltri hide") do %>
             <%= link_to_function "Hide", "$('.form_newsletter, .frm_foot_actions .bt').toggle('slow');" %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

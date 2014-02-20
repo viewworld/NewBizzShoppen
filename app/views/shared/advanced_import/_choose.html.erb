@@ -71,9 +71,9 @@
       <div class="clb"></div>
     </param:content>
     <param:actions>
-      <ibt c="fltri">
+      <%= ibt(:class => "fltri") do %>
         <%= button_to_function t("advanced_import.choose.view.next_button"), "advanced_import_next_button('#{t("advanced_import.choose.view.warning_list_not_equal")}');" %>
-      </ibt>
+      <% end %>
       <%= bt_link_to nil, t("advanced_import.choose.view.cancel_button"), self.send("#{model_name}s_advanced_import_path"), :class => "bt_grey fltr" %>
     </param:actions>
   </frm>

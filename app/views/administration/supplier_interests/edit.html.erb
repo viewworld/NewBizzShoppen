@@ -54,12 +54,12 @@
         </param:content>
 
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.users.edit.view.button_update_user"), :onclick => "select_options_to_submit('user_supplier_category_ids_');" %>
-          </ibt>
-          <ibt c="bt_grey fltri">
+          <% end %>
+          <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("administration.users.edit.view.button_cancel"), "history.go(-1)" %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

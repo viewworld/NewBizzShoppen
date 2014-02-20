@@ -11,12 +11,12 @@
           <%= hidden_field_tag :category_type, @category_type %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="plus">
+          <%= ibt(:class => "fltri", :icon => "plus") do %>
             <%= form.submit t("administration.categories.new.view.button_create"), :onclick => "select_options_onsubmit();" %>
-          </ibt>
-          <ibt c="bt_grey fltri">
+          <% end %>
+          <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("administration.settings.edit.view.button_cancel"), href(categories_path) %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

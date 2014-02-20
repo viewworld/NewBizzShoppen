@@ -61,9 +61,9 @@
           <div class="clb"></div>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="plus">
+          <%= ibt(:class => "fltri", :icon => "plus") do %>
             <%= form.submit t("agent_accounts.new.view.button_create_account") %>
-          </ibt>
+          <% end %>
           <%= bt_link_to nil, t("shared.accounts.new_account_form.button_cancel"), root_path, :class => "bt_grey fltr" %>
         </param:actions>
       </frm>

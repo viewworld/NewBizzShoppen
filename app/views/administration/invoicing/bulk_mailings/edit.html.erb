@@ -32,12 +32,12 @@
           <%= render :partial => 'email_templates/form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.invoices.bulk_mailings.new.view.button_send") %>
-          </ibt>
-          <ibt c="bt_grey fltri">
+          <% end %>
+          <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("administration.invoices.bulk_mailings.new.view.button_cancel"), href(administration_invoicing_invoices_path) %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

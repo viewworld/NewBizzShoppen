@@ -26,9 +26,9 @@
         </div>
         </param:content>
         <param:actions>
-          <ibt c="fltri">
+          <%= ibt(:class => "fltri") do %>
             <%= submit_tag t("contact_us.new.view.send_email_button") %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
 

@@ -29,9 +29,9 @@
                 <%= f.select :with_role, [[t("administration.upcoming_invoices.index.view.search.role_supplier"),'lead_supplier'], [t("administration.upcoming_invoices.index.view.search.role_member"), 'member']].sort, :include_blank => true %>
               </li>
               <li class="commit">
-                <ibt c="bt_green" icon="magnify">
+                <%= ibt(:class => "bt_green", :icon => "magnify") do %>
                   <%= submit_tag t("administration.upcoming_invoices.index.view.search_button") %>
-                </ibt>
+                <% end %>
                 <p>
                   <%= bt_clear_filter %>
                 </p>

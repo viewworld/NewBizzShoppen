@@ -95,18 +95,18 @@
           </div>
         </param:content>
         <param:actions>
-          <ibt c="fltri">
+          <%= ibt(:class => "fltri") do %>
             <%= link_to_function "Print", "$('#report').printElement();" %>
-          </ibt>
-          <ibt c="fltri show">
+          <% end %>
+          <%= ibt(:class => "fltri show") do %>
             <%= link_to_function "Show", "$('#search_box, .frm_foot_actions .bt').toggle('slow');" %>
-          </ibt>
-          <ibt c="fltri hide">
+          <% end %>
+          <%= ibt(:class => "fltri hide") do %>
             <%= link_to_function "Hide", "$('#search_box, .frm_foot_actions .bt').toggle('slow');" %>
-          </ibt>
-          <ibt c="fltri generate">
+          <% end %>
+          <%= ibt(:class => "fltri generate") do %>
             <%= form.submit t("agent_timesheets.new.generate"), :onclick => "$('#search_agents option, #search_call_centres option').attr('selected', true);" %>
-          </ibt>
+          <% end %>
 
           <script>
           <% if @search.all_agents.any? %>

@@ -7,9 +7,9 @@
           <%= render :partial => 'form', :locals => { :form => form } %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.payment_transactions.edit.view.button_update") %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

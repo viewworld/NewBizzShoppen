@@ -15,9 +15,9 @@
               </div>
             </param:content>
             <param:actions>
-              <ibt c="fltri" icon="save">
+              <%= ibt(:class => "fltri", :icon => "save") do %>
                 <%= form.submit t("my_profile.edit.view.unsubscribe_and_close_account_submit") %>
-              </ibt>
+              <% end %>
             </param:actions>
           </frm>
       <% end %>

@@ -14,9 +14,9 @@
                             :label           => t("campaigns.filter.state_label"), :include_blank => false, :required => false %>
               </li>
               <li class="commit">
-                <ibt c="bt_green" icon="magnify">
+                <%= ibt(:class => "bt_green", :icon => "magnify") do %>
                   <%= submit_tag t("campaigns.filter.search_button") %>
-                </ibt>
+                <% end %>
               </li>
             </ol>
           </fieldset>

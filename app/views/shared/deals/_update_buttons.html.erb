@@ -1,9 +1,9 @@
-  <ibt c="fltri" icon="save">
+  <%= ibt(:class => "fltri", :icon => "save") do %>
     <%= form.submit t("#{role}.deals.edit.view.duplicate_button"), :name => "commit_duplicate", :onclick => "select_options_to_submit('deal_deal_template_ids_')" %>
-  </ibt>
-  <ibt c="fltri" icon="save">
+  <% end %>
+  <%= ibt(:class => "fltri", :icon => "save") do %>
     <%= form.submit t("#{role}.deals.edit.view.update_and_exit_button"), :name => "commit", :onclick => "select_options_to_submit('deal_deal_template_ids_')" %>
-  </ibt>
-  <ibt c="fltri" icon="save">
+  <% end %>
+  <%= ibt(:class => "fltri", :icon => "save") do %>
     <%= form.submit t("#{role}.deals.edit.view.update_button"), :name => "commit_stay", :onclick => "select_options_to_submit('deal_deal_template_ids_')" %>
-  </ibt>
+  <% end %>

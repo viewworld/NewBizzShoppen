@@ -7,12 +7,12 @@
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("views.button_create") %>
-          </ibt>
-          <ibt c="bt_grey fltri">
+          <% end %>
+          <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("administration.currencies.edit.view.button_cancel"), href(administration_softphone_servers_path) %>
-          </ibt>          
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

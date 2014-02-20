@@ -128,9 +128,9 @@
           <% end %>
         </param:content>
         <param:actions>
-          <ibt c="fltri">
+          <%= ibt(:class => "fltri") do %>
             <%= f.submit t("agent_timesheets.new.generate"), :onclick => "select_options_to_submit('search_campaigns_');select_options_to_submit('search_agents_');select_options_to_submit('search_call_centres_');" %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

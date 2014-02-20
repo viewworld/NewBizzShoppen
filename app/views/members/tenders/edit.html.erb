@@ -7,20 +7,20 @@
         </param:content>
         <param:actions>
           <% if @lead.can_be_certified? %>
-              <ibt c="fltri">
+              <%= ibt(:class => "fltri") do %>
                 <%= link_to t("member.tenders.edit.view.certify"), members_tender_certifications_path(@lead), :method => :post %>
-              </ibt>
+              <% end %>
           <% elsif @lead.can_be_recertified? %>
-              <ibt c="fltri">
+              <%= ibt(:class => "fltri") do %>
                 <%= link_to t("member.tenders.edit.view.recertify"), members_tender_certifications_path(@lead), :method => :post %>
-              </ibt>
+              <% end %>
           <% end %>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("member.tenders.edit.view.button_update") %>
-          </ibt>
-          <ibt c="bt_grey fltri">
+          <% end %>
+          <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("member.tenders.edit.view.button_cancel"), "history.go(-1)" %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
     <% end %>

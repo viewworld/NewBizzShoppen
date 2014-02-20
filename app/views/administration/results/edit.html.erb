@@ -6,9 +6,9 @@
           <%= render :partial => '/callers/results/form', :locals => {:form => form, :result => @result} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.results.edit.view.button_update"), :name => "commit_create" %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

@@ -28,11 +28,11 @@
   </div>
 </param:content>
 <param:actions>
-  <ibt c="fltri" icon="plus">
+  <%= ibt(:class => "fltri", :icon => "plus") do %>
     <%= submit_tag t("administration.settings.edit.view.button_update_settings"), :onclick => "if(confirm('#{t("administration.settings.edit.view.confirmation_update_message")}')){ this.form.submit(); } else {return false;}" %>
-  </ibt>
-  <ibt c="bt_grey fltri">
+  <% end %>
+  <%= ibt(:class => "bt_grey fltri") do %>
     <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
-  </ibt>
+  <% end %>
 </param:actions>
 </frm>

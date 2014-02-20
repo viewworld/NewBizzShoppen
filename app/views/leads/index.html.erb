@@ -57,14 +57,14 @@
                   <% blocks.bottom do %>
                       <% if current_user.has_role?(:supplier) or current_user.has_role?(:lead_supplier) %>
                           <%= hidden_field_tag :route_to, "/suppliers/bulk_cart_items" %>
-                          <ibt>
+                          <%= ibt do %>
                             <%= submit_tag current_user.big_buyer? ? t("leads.index.button_bulk_buy_leads") : t("leads.index.button_bulk_create_cart_item") %>
-                          </ibt>
+                          <% end %>
                       <% elsif current_user.has_role?(:lead_user) %>
                           <%= hidden_field_tag :route_to, "/lead_users/bulk_lead_requests" %>
-                          <ibt>
+                          <%= ibt do %>
                             <%= submit_tag t("leads.index.button_bulk_create_lead_request") %>
-                          </ibt>
+                          <% end %>
                       <% end %>
                   <% end %>
               <% end %>

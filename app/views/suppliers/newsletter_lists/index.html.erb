@@ -22,9 +22,9 @@
                         <%= text_field_tag :password, current_user.cm_password, :tabindex => 2, :disabled => true,:class => "rltv" %>
                     </li>
                     <li class="commit">
-                      <ibt>
+                      <%= ibt do %>
                         <%= submit_tag t("category_home.show.view.sign_in"), :tabindex => 3 %>
-                      </ibt>
+                      <% end %>
                     </li>
                   </ol>
                 </fieldset>

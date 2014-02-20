@@ -9,11 +9,10 @@
                         :label => t("materials.views.index.file"),
                         :required => true %>
             <li class="commit">
-              <ibt icon="save">
+              <%= ibt(:icon => "save") do %>
                 <%= f.submit t("materials.views.index.save_material") %>
-              </ibt>
+              <% end %>
             </li>
-
         <% end %>
     <% end %>
   </div>

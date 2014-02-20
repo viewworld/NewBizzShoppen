@@ -17,9 +17,9 @@
             <%= text_field_tag "voucher_number", @voucher_number, :style => "width:200px;background-color:#EEFFEE", :disabled => true; %>
           </li>
           <li class="commit">
-            <ibt>
+            <%= ibt do %>
               <%= submit_tag t("use_voucher.show.activate_button") %>
-            </ibt>
+            <% end %>
             <p>or <%= link_to t("use_voucher.show.back_link"), validate_voucher_path %></p>
           </li>
         </ol>

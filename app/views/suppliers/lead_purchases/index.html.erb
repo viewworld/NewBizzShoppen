@@ -42,9 +42,9 @@
                 <%= f.select :without_state, show_archived_values, {:include_blank => false} %>
               </li>
               <li class="commit">
-                <ibt c="bt_green" icon="magnify">
+                <%= ibt(:class => "bt_green", :icon => "magnify") do %>
                   <%= submit_tag t("lead_supplier.lead_purchases.index.view.search.search_button") %>
-                </ibt>
+                <% end %>
                 <p>
                   <%= bt_clear_filter %>
                 </p>

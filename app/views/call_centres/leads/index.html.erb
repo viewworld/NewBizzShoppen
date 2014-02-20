@@ -29,9 +29,9 @@
                 <%= f.label :without_outdated, t("call_centre.leads.index.view.search.filter_with_outdated") %>
               </li>
               <li class="commit">
-                <ibt c="bt_green" icon="magnify">
+                <%= ibt(:class => "bt_green", :icon => "magnify") do %>
                   <%= submit_tag t("call_centre.leads.index.view.search_button") %>
-                </ibt>
+                <% end %>
                 <p>
                   <%= bt_clear_filter %>
                 </p>

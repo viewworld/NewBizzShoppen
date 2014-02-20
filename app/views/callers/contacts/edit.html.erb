@@ -14,9 +14,9 @@
           <%= render :partial => '/shared/leads/form', :locals => {:form => form, :campaign => @campaign, :contact => @contact} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("contacts.edit.save_button"), :name => "commit_create" %>
-          </ibt>
+          <% end %>
           <%= bt_link_to nil, t("campaigns.new.button_cancel"), edit_callers_campaign_path(@campaign), :method => :get, :class => "bt_grey fltr" %>
         </param:actions>
       </frm>

@@ -10,12 +10,12 @@
           <%= render :partial => 'administration/email_templates/form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.email_templates.edit.view.button_update") %>
-          </ibt>
-          <ibt c="bt_grey fltri">
+          <% end %>
+          <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("administration.settings.edit.view.button_cancel"), href(edit_administration_category_path(@category)) %>
-          </ibt>          
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

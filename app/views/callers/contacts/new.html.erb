@@ -30,9 +30,9 @@
             </div>
           </param:content>
           <param:actions>
-            <ibt c="fltri" icon="save">
+            <%= ibt(:class => "fltri", :icon => "save") do %>
               <%= form.submit t("contacts.new.import_button"), :name => "commit_create" %>
-            </ibt>
+            <% end %>
             <%= bt_link_to nil, t("campaigns.new.button_cancel"), edit_callers_campaign_path(@campaign), :class => "bt_grey fltr" %>
           </param:actions>
         </frm>
@@ -51,9 +51,9 @@
             </div>
           </param:content>
           <param:actions>
-            <ibt c="fltri" icon="save">
+            <%= ibt(:class => "fltri", :icon => "save") do %>
               <%= submit_tag t("contacts.new.import_from_excel_button"), :name => "commit_create" %>
-            </ibt>
+            <% end %>
             <%= bt_link_to nil, t("campaigns.new.button_cancel"), edit_callers_campaign_path(@campaign), :class => "bt_grey fltr" %>
           </param:actions>
         </frm>
@@ -83,9 +83,9 @@
             <%= render :partial => '/shared/leads/form', :locals => {:form => form, :campaign => @campaign, :contact => @contact} %>
           </param:content>
           <param:actions>
-            <ibt c="fltri" icon="save">
+            <%= ibt(:class => "fltri", :icon => "save") do %>
               <%= form.submit t("contacts.new.create_button"), :name => "commit_create" %>
-            </ibt>
+            <% end %>
             <%= bt_link_to nil, t("campaigns.new.button_cancel"), edit_callers_campaign_path(@campaign), :class => "bt_grey fltr" %>
           </param:actions>
         </frm>

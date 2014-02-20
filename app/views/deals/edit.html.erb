@@ -9,12 +9,12 @@
           <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => []} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("supplier.deal_certification_requests.edit.view.reject"), :name => "commit_update", :onclick => "$('#accept').val('false');select_options_to_submit('deal_deal_template_ids_')" %>
-          </ibt>
-          <ibt c="fltri" icon="save">
+          <% end %>
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("supplier.deal_certification_requests.edit.view.certify"), :name => "commit_update", :onclick => "$('#accept').val('true');select_options_to_submit('deal_deal_template_ids_')" %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

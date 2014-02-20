@@ -14,12 +14,12 @@
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.hints.edit.view.button_save") %>
-          </ibt>
-          <ibt c="fltri bt_grey">
+          <% end %>
+          <%= ibt(:class => "fltri bt_grey") do %>
               <%= button_to_function t("common.cancel_link"), "history.go(-1)" %>
-            </ibt>
+            <% end %>
         </param:actions>
       </frm>
   <% end %>

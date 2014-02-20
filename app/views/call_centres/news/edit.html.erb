@@ -14,16 +14,16 @@
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.news.edit.view.button_save") %>
-          </ibt>
-          <ibt c="bt_grey fltri">
+          <% end %>
+          <%= ibt(:class => "bt_grey fltri") do %>
             <% if @news.just_created %>
                 <%= button_to_function t("common.cancel_link"), "$('#delete_news_form').submit();"  %>
             <% else %>
                 <%= button_to_function t("common.cancel_link"), "history.go(-1)"  %>
             <% end %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

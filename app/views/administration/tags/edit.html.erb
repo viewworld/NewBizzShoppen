@@ -7,12 +7,12 @@
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.tags.edit.view.button_update") %>
-          </ibt>
-          <ibt c="bt_grey fltri">
+          <% end %>
+          <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("administration.tags.edit.view.button_cancel"), "history.go(-1)" %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>
@@ -20,9 +20,9 @@
   <header><%= t("administration.tags.edit.view.tagged_objects", :name => @tag.name) %></header>
 
   <div class="fltr" style="margin: -20px 0 10px 0">
-      <ibt c="bt_green" icon="download">
+      <%= ibt(:class => "bt_green", :icon => "download") do %>
         <%= link_to_function t("administration.tags.edit.view.export"), 'submit_export()' %>
-      </ibt>
+      <% end %>
   </div>
 
   <table class="generic">
@@ -63,9 +63,9 @@
   </table>
 
   <div class="fltr" style="margin: 10px 0 0 0">
-    <ibt c="bt_green" icon="download">
+    <%= ibt(:class => "bt_green", :icon => "download") do %>
       <%= link_to_function t("administration.tags.edit.view.export"), 'submit_export()' %>
-    </ibt>
+    <% end %>
   </div>
 
   <div class="clb"></div>

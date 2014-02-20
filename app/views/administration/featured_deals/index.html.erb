@@ -21,12 +21,12 @@
           <div class="clb"></div><br/>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="plus">
+          <%= ibt(:class => "fltri", :icon => "plus") do %>
             <%= submit_tag t("administration.featured_deals.view.index.set_featured_deals") %>
-          </ibt>
-          <ibt c="bt_grey fltri">
+          <% end %>
+          <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("administration.featured_deals.view.index.cancel"), "history.go(-1)" %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

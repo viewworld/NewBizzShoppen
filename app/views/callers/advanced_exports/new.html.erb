@@ -62,9 +62,9 @@
         </param:content>
 
         <param:actions>
-          <ibt c="fltri">
+          <%= ibt(:class => "fltri") do %>
             <%= f.submit t("advanced_export.new.export") %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

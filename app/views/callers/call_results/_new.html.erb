@@ -2,7 +2,7 @@
     <header back="#{back_path}" backurl="#{back_path}"><%= t("call_results.new.title") %></header>
 <% else %>
     <% @agent_work_screen = agent_work_screen %>
-<% end %>    
+<% end %>
 
 <%= semantic_form_for path, :method => :post, :remote => agent_work_screen do |form| %>
     <frm title="Create new for #{@contact.company_name}">
@@ -11,9 +11,9 @@
         <%= render :partial => '/callers/call_results/form', :locals => {:form => form, :contact => @contact, :call_result => @call_result, :reload_path => reload_path, :agent_work_screen => agent_work_screen } %>
       </param:content>
       <param:actions>
-        <ibt icon="save" c="fltri">
-        <%= link_to t("call_results.new.save_button"), "javascript:void(0)", :id => "commit_create_result", :class => "fltr", :onclick => "#{'serialize_materials_array_onsubmit(); ' if current_user.has_role?(:admin)}select_options_to_submit('call_result_buying_category_ids_')" %>
-        </ibt>
+        <%= ibt(:icon => "save" :class => "fltri") do %>
+          <%= link_to t("call_results.new.save_button"), "javascript:void(0)", :id => "commit_create_result", :class => "fltr", :onclick => "#{'serialize_materials_array_onsubmit(); ' if current_user.has_role?(:admin)}select_options_to_submit('call_result_buying_category_ids_')" %>
+        <% end %>
         <%= bt_link_to(nil, t("call_results.edit.cancel_button"), back_path, :class => "bt_grey fltr") %>
       </param:actions>
     </frm>

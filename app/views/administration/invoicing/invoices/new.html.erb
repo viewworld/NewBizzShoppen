@@ -22,12 +22,12 @@
         </div>
       </param:content>
       <param:actions>
-        <ibt c="fltri" icon="save">
+        <%= ibt(:class => "fltri", :icon => "save") do %>
           <%= form.submit t("administration.invoices.new.view.button_create") %>
-        </ibt>
-        <ibt c="fltri bt_grey">
+        <% end %>
+        <%= ibt(:class => "fltri bt_grey") do %>
           <%= button_to_function t("common.cancel_link"), "window.location='#{administration_invoicing_upcoming_invoices_path}'" %>
-        </ibt>
+        <% end %>
       </param:actions>
     </frm>
   <% end %>

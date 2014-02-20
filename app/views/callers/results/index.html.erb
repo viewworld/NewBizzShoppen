@@ -41,9 +41,9 @@
 
 
   <div class="ibt_box">
-    <ibt c="fltri" icon="save">
+    <%= ibt(:class => "fltri", :icon => "save") do %>
       <%= button_to_function t("results.index.button_assign_result_types"), "$('#result_types_form').submit();" %>
-    </ibt>
+    <% end %>
     <%= bt_link_to nil, t("campaigns_users.index.button_cancel"), back_path, :class => "bt_grey fltr" %>
     <div class="clb"></div>
   </div>

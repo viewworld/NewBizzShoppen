@@ -7,21 +7,21 @@
           <%= render :partial => '/shared/leads/form', :locals => {:form => form, :lead => @lead} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="save">
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("call_centre_agent.leads.new.view.button_create_and_continue"), :name => "commit_continue" %>
-          </ibt>
-          <ibt c="fltri" icon="save">
+          <% end %>
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("call_centre_agent.leads.new.view.button_create_and_duplicate"), :name => "commit_duplicate" %>
-          </ibt>
-          <ibt c="fltri" icon="save">
+          <% end %>
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("call_centre_agent.leads.new.view.button_create_and_certify"), :name => "commit_certify" %>
-          </ibt>
-          <ibt c="fltri" icon="save">
+          <% end %>
+          <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("call_centre_agent.leads.new.view.button_create"), :name => "commit_create" %>
-          </ibt>
-          <ibt c="bt_grey fltri">
+          <% end %>
+          <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("call_centre_agent.leads.new.view.button_cancel"), "history.go(-1)" %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
   <% end %>

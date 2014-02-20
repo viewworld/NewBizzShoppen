@@ -28,9 +28,9 @@
           
         </param:content>
         <param:actions>
-          <ibt c="fltri" icon="mail">
+          <%= ibt(:class => "fltri", :icon => "mail") do %>
             <%= f.submit t("lead_supplier.contact_lead_by_email.new.view.send_email_button") %>
-          </ibt>
+          <% end %>
         </param:actions>
       </frm>
 
