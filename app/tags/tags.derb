@@ -27,21 +27,6 @@
   </div>
 </def>
 
-
-
-
-<def tag="ibt" attrs="c,icon">
-  <div class="bt<%= icon.nil? ? "" : " bt_icon" %><%= c.nil? ? "" : " #{c}" %>">
-    <span>
-      <param:content/>
-      <% unless icon.nil? %>
-        <%= image_tag("bt_icons/#{icon}.png") %>
-      <% end %>
-    </span>
-  </div>
-</def>
-
-
 <def tag="frm" attrs="title,c,id">
   <div class="frm<%= c.nil? ? "" : " #{c}" %>"<%= id.nil? ? "" : " id='#{id}'" %>>
     <div class="frm_head">
