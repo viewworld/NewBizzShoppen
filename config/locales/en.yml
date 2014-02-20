@@ -3614,6 +3614,14 @@ en:
           attributes:
             subscription_period:
               lines_must_divide_by_number_of_periods: "all prices for subscription plan lines must divide by number of subscription periods which is %{count}"
+        login_time_request:
+          attributes:
+            start_time:
+              bigger_then_end_time: must be prior to end time
+            whole_day_start_time:
+              bigger_then_whole_day_end_time: must be prior to whole day end time
+            whole_day_start_date:
+              bigger_then_whole_day_end_date: must be prior to whole day end date
         user:
           attributes:
             email:
@@ -4695,6 +4703,9 @@ en:
         hours: "Hours count"
         aasm_state: "State"
         log_type: "Log type"
+    create:
+      flash:
+        success: 'Login time request was successfully created.'
   agent_performance:
     show:
       view:

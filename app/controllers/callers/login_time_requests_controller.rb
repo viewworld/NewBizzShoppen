@@ -13,8 +13,12 @@ class Callers::LoginTimeRequestsController < Callers::CallerController
   end
 
   def create
-    create! do |success, failure|
-      success.html { redirect_to callers_login_time_requests_path }
+    login_time_request_generator = LoginTimeRequestGenerator.new(params[:login_time_request])
+    if login_time_request_generator.save
+      redirect_to callers_login_time_requests_path, :notice => I18n.t('login_time_requests.create.flash.success')
+    else
+      @login_time_request = login_time_request_generator.login_time_request
+      render :new
     end
   end
 
@@ -48,5 +52,4 @@ class Callers::LoginTimeRequestsController < Callers::CallerController
       resource.end_time ||= Time.now
     end
   end
-
 end
