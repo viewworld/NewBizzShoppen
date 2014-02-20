@@ -11,3 +11,8 @@ shared_context 'category supplier signed in' do
     sign_in category_supplier
   end
 end
+
+shared_context 'agent signed in' do
+  let(:agent) { create(:agent) }
+  before { sign_in agent }
+end
