@@ -38,8 +38,7 @@ class LoginTimeRequestGenerator
   def create_login_time_requests_for_whole_day
     date_range.each do |date|
       date_as_string = date.strftime(LoginTimeRequest::DATE_FORMAT)
-      LoginTimeRequest.create(config("#{date_as_string} #{whole_day_start_time}",
-                                     "#{date_as_string} #{whole_day_end_time}"))
+      LoginTimeRequest.create(config(date_as_string))
     end
     true
   end
@@ -48,11 +47,11 @@ class LoginTimeRequestGenerator
     (Date.parse(whole_day_start_date)..Date.parse(whole_day_end_date)).to_a
   end
 
-  def config(start_time, end_time)
+  def config(date_as_string)
     {:campaign_id => campaign_id,
      :creator_id => creator_id,
-     :end_time => Time.zone.parse(end_time),
-     :start_time => Time.zone.parse(start_time),
+     :end_time => Time.zone.parse("#{date_as_string} #{whole_day_end_time}"),
+     :start_time => Time.zone.parse("#{date_as_string} #{whole_day_start_time}"),
      :user_id => user_id,
      :whole_day => '0'}
   end

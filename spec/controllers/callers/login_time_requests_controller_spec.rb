@@ -31,7 +31,7 @@ describe Callers::LoginTimeRequestsController do
                             :whole_day => '0'} }
 
 
-        it { expect { call_request }.to change { LoginTimeRequest.count }.from(0).to(1) }
+        it { expect { call_request }.to change { LoginTimeRequest.count }.by(1) }
 
         context 'after request' do
           before { call_request }
@@ -50,7 +50,7 @@ describe Callers::LoginTimeRequestsController do
                             :whole_day_start_date => '20-02-2014',
                             :whole_day_start_time => '08:00'} }
 
-        it { expect { call_request }.to change { LoginTimeRequest.count }.from(0).to(2) }
+        it { expect { call_request }.to change { LoginTimeRequest.count }.by(2) }
 
         context 'after request' do
           before { call_request }

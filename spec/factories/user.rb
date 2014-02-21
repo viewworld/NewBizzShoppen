@@ -7,10 +7,10 @@ FactoryGirl.define do
     last_name { Faker::Name.last_name }
     agreement_read true
     skip_email_verification '1'
-    address {
+    address do
       country = FactoryGirl.create(:vat_rate).country
       FactoryGirl.create(:address, :country => country)
-    }
+    end
   end
 
   factory :agent, :class => User::Agent, :parent => :user do
