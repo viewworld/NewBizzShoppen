@@ -89,7 +89,7 @@
         <% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
             <%= form.input :certification_level, :as => :select, :collection => User::CERTIFICATION_LEVELS.map { |c| [t("models.lead.certification.lvl#{c}"), c] }, :selected => @user.read_attribute(:certification_level) %>
         <% end %>
-        <% if %w(agent call_centre_agnet).include?(params[:role]) or @user.has_any_role?(:agent, :call_centre_agent) %>
+        <% if %w(agent call_centre_agent).include?(params[:role]) or @user.has_any_role?(:agent, :call_centre_agent) %>
             <%= form.input :show_inactive_campaigns, :as => :boolean %>
         <% end %>
         <% if @user.vat_number.present? and (['lead_supplier', 'supplier', 'member'].include?(params[:role]) or @user.has_any_role?(:lead_supplier, :supplier, :member)) %>
