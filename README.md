@@ -102,6 +102,15 @@ export RUBY_HEAP_FREE_MIN=500000
 
 And reload the environment or `. ~/.bashrc`.
 
+#### Download database from production
+
+```
+ssh rails@fairleads.com # check proper directory, then from local terminal run (for example):
+scp rails@fairleads.com:/mnt/backup/backups/fairleads_db_backup/2014.01.20.00.00.02/fairleads_db_backup.tar backup_sql.tar
+chmod 0777 backup_sql.tar # the you will be able to unizp a file
+psql nbs_development < nbs_production.sql
+```
+
 ### Testing
 
 #### Running tests
