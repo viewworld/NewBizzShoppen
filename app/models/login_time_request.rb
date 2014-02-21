@@ -94,6 +94,6 @@ class LoginTimeRequest < ActiveRecord::Base
   private
 
   def whole_day_date_value(value)
-    value.try(:strftime, DATE_FORMAT) || Date.today.strftime(DATE_FORMAT)
+    (value ? Date.parse(value) : Date.today).strftime(DATE_FORMAT)
   end
 end
