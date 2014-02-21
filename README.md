@@ -168,6 +168,12 @@ cd /srv/nbs/staging/current
 RAILS_ENV=staging bundle exec rails c
 ```
 
+if you want to have all user's passwords set to 'secret' then run
+
+```
+User.all.each{|u| u.send(:secretize_password!)};nil
+```
+
 #### Deployment
 
 Deploy from **master** branch.
