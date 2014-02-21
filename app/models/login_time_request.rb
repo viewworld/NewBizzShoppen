@@ -1,8 +1,7 @@
 class LoginTimeRequest < ActiveRecord::Base
   DATE_FORMAT = '%d-%m-%Y'
 
-  attr_accessor :show_inactive_campaigns,
-                :whole_day,
+  attr_accessor :whole_day,
                 :whole_day_start_time,
                 :whole_day_end_time,
                 :whole_day_start_date,
