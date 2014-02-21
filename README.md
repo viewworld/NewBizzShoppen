@@ -219,6 +219,28 @@ cd /srv/nbs/staging/current
 ps aux | grep staging | grep mailcatcher | awk {'print $2'} | xargs kill -QUIT
 ```
 
+#### Import database from production
+
+```bash
+ssh rails@fairleads.com
+copy latest backup from
+
+cp /mnt/backup/backups/fairleads_db_backup/2014.02.21.00.00.03/fairleads_db_backup.tar ~/latest_backup.tar
+chmod 666 ~/latest_backup.tar
+gunzip fairleads_db_backup/databases/PostgreSQL/nbs_production.sql.gz (overwrite yes - y)
+
+createdb staging_2014_02_21
+psql -d staging_2014_02_21 < fairleads_db_backup/databases/PostgreSQL/nbs_production.sql
+
+vim /srv/nbs/staging/etc/database.yml -> replace current database to tmp_database
+```
+
+From local terminal
+
+```bash
+cap deploy #
+```
+
 ## Production
 
 Applications:
