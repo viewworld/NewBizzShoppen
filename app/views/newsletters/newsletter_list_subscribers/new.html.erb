@@ -1,5 +1,10 @@
 <%= content_for :column_mc do -%>
-  <header back="true"><%= t("newsletters.newsletter_list_subscribers.new.view.header") %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("newsletters.newsletter_list_subscribers.new.view.header") %>
+    <% end %>
+  <% end %>
+
   <%= semantic_form_for @newsletter_list_subscriber, :url => newsletters_newsletter_list_newsletter_list_subscribers_path do |form| %>
       <frm>
         <param:content>

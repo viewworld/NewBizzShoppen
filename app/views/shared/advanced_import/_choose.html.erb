@@ -1,12 +1,15 @@
 <%= content_for :column_mc do -%>
-
   <script type="text/javascript">
       $(function() {
           advanced_import_load_sortable_lists();
       });
   </script>
 
-  <header><%= t("#{model_name}s_advanced_import.choose.view.header") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("#{model_name}s_advanced_import.choose.view.header") %>
+    <% end %>
+  <% end %>
 
   <frm>
     <param:content>
@@ -78,7 +81,7 @@
     </param:actions>
   </frm>
 
-  <% form_tag self.send("preview_#{model_name}s_advanced_import_path"), :id => "go_to_browse_page_form", :method => :post, :multipart => true do %>
+  <%= form_tag self.send("preview_#{model_name}s_advanced_import_path"), :id => "go_to_browse_page_form", :method => :post, :multipart => true do %>
       <%= hidden_field_tag :object_field, nil %>
       <%= hidden_field_tag :spreadsheet_field, nil %>
       <%= hidden_field_tag :attachment, @attachment_file %>
@@ -90,5 +93,4 @@
       <% end %>
       <%= hidden_field_tag :creator_id, @creator_id %>
   <% end %>
-
 <% end %>

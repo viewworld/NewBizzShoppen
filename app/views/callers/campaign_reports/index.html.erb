@@ -10,19 +10,18 @@
 <%= render :partial => 'search' %>
 
 <%= content_for :column_mc do -%>
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("campaign_reports.index.your_queued_tasks") %>
-    </param:content>
-
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <li class="last">
           <%= bt_link_to nil, t("users.delayed_jobs.view_all"), users_delayed_jobs_path %>
         </li>
       </ul>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <%= render :partial => 'shared/delayed_jobs/user', :locals => {:user => current_user, :delayed_jobs => current_user.delayed_jobs.limit(5)} %>
 <% end %>

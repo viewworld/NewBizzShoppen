@@ -1,7 +1,11 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
   <%= javascript_include_tag "popup_email_template_editor" %>
-  <header back="true"><%= t("newsletters.newsletter_campaigns.edit.view.header", :name => @newsletter_campaign.name) %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("newsletters.newsletter_campaigns.edit.view.header", :name => @newsletter_campaign.name) %>
+    <% end %>
+  <% end %>
 
   <% if @newsletter_campaign.sent? or @newsletter_campaign.queued_for_sending? %>
       <div class="flash flash_notice">

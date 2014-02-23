@@ -1,22 +1,25 @@
 <%= content_for :column_mc do -%>
-  <header><%= t("users.passwords.edit.view.header") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("users.passwords.edit.view.header") %>
+    <% end %>
+  <% end %>
 
   <% if user = User.find_by_reset_password_token(params[:reset_password_token]) and user.contact.present? and user.sign_in_count == 0 %>
   <p><%= t("users.passwords.edit.view.contact_upgraded_to_category_supplier_info") %></p>
   <% end %>
 
-
   <%= form_for(resource, :as => resource_name, :url => user_password_path(resource_name), :html => {:method => :put}) do |f| %>
-      <%= devise_error_messages! %>
-      <%= f.hidden_field :reset_password_token %>
+    <%= devise_error_messages! %>
+    <%= f.hidden_field :reset_password_token %>
 
-      <p><%= f.label :password %><br/>
-        <%= f.password_field :password %></p>
+    <p><%= f.label :password %><br/>
+      <%= f.password_field :password %></p>
 
-      <p><%= f.label :password_confirmation %><br/>
-        <%= f.password_field :password_confirmation %></p>
+    <p><%= f.label :password_confirmation %><br/>
+      <%= f.password_field :password_confirmation %></p>
 
-      <p><%= f.submit t("devise.passwords.button_update") %></p>
+    <p><%= f.submit t("devise.passwords.button_update") %></p>
   <% end %>
 
   <%= render :partial => "devise/shared/links" %>

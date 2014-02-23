@@ -1,9 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header back="true">
-    <param:content>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
       <%= t("login_time_requests.new.header") %>
-    </param:content>
-  </header>
+    <% end %>
+  <% end %>
 
   <%= render :partial => 'form', :locals => { :resource => resource, :type => 'new' } %>
 
@@ -14,5 +14,4 @@
           $('.datetimepicker_date').datepicker({ dateFormat: 'dd-mm-yy' });
       });
   </script>
-
 <% end %>

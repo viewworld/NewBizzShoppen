@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header><%= t("administration.email_templates.index.view.title") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.email_templates.index.view.title") %>
+    <% end %>
+  <% end %>
 
   <table id="users_table" class="generic">
     <thead>

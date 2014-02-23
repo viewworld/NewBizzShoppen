@@ -3,44 +3,43 @@
     <h2><%= t("common.search") %></h2>
 
     <div class="search_content">
-
       <%= form_for @search, :url => administration_translation_path do |f| %>
-          <fieldset class="inputs_vertical">
-            <ol class="no_pdd">
-              <li class="string">
-                <%= f.label :with_keyword, t("administration.translations.show.view.search.with_keyword") %>
-                <%= f.text_field :with_keyword %>
-              </li>
-              <li class="commit">
-                <%= ibt(:class => "bt_green", :icon => "magnify") do %>
-                  <%= hidden_field_tag "lang_1", params[:lang_1] %>
-                  <%= hidden_field_tag "lang_2", params[:lang_2] %>
-                  <%= submit_tag t("administration.translations.show.view.search.search_button") %>
-                <% end %>
-                <p>
-                  <%= bt_clear_filter %>
-                </p>
-              </li>
-            </ol>
-          </fieldset>
+        <fieldset class="inputs_vertical">
+          <ol class="no_pdd">
+            <li class="string">
+              <%= f.label :with_keyword, t("administration.translations.show.view.search.with_keyword") %>
+              <%= f.text_field :with_keyword %>
+            </li>
+            <li class="commit">
+              <%= ibt(:class => "bt_green", :icon => "magnify") do %>
+                <%= hidden_field_tag "lang_1", params[:lang_1] %>
+                <%= hidden_field_tag "lang_2", params[:lang_2] %>
+                <%= submit_tag t("administration.translations.show.view.search.search_button") %>
+              <% end %>
+              <p>
+                <%= bt_clear_filter %>
+              </p>
+            </li>
+          </ol>
+        </fieldset>
       <% end %>
     </div>
   </div>
 <% end %>
 
 <%= content_for :column_mc do -%>
-  <header>
-    <param:content>
-        <%= t("administration.translations.show.view.header") %>
-    </param:content>
-    <param:actions>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.translations.show.view.header") %>
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <li class="last">
           <%= bt_link_to :remove, t("administration.translations.show.view.clear_cache"), administration_translation_cache_path, :method => :delete %>
         </li>
       </ul>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <table class="generic">
     <thead>

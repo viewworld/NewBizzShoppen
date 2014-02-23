@@ -2,7 +2,12 @@
   <%= javascript_include_tag :ckeditor %>
   <%= javascript_include_tag "popup_email_template_editor" %>
   <%= javascript_include_tag "email_template_signature" %>
-  <header back="true"><%= t("administration.email_templates.edit.view.title", :name => @email_template.subject) %><%= image_tag_for_locale %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.email_templates.edit.view.title", :name => @email_template.subject) %>
+      <%= image_tag_for_locale %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for [:administration, @email_template], :url => administration_email_template_path(@email_template), :method => :put do |form| %>
       <frm title="#{t('administration.email_templates.edit.view.edit')}">

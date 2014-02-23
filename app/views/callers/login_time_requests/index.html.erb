@@ -45,21 +45,18 @@
 <% end %>
 
 <%= content_for :column_mc do -%>
-  <header>
-
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("login_time_requests.new.header") %>
-    </param:content>
-
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <li class="last">
           <%= bt_link_to :plus, t("login_time_requests.new.new_login_time_request"), "javascript:void(0)", :onclick => "window.location = '#{new_callers_login_time_request_path}';" %>
         </li>
       </ul>
-    </param:actions>
-
-  </header>
+    <% end %>
+  <% end %>
 
   <table class="generic">
     <thead>

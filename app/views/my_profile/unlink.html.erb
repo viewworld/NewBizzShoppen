@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header><%= t("my_profile.unlink.view.header") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("my_profile.unlink.view.header") %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for @user, :url => social_unlink_my_profile_path, :method => :put do |form| %>
       <frm title="#{t('my_profile.unlink.view.form_title')}">

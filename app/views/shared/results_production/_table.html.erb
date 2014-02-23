@@ -12,7 +12,7 @@
     <tr>
       <th class="hl"></th>
       <th><%= t("campaigns.show.table.results") %></th>
-      <% headers.each do |header| %>
+      <%= headers.each do |header| %>
           <th class="ta_r pointer"><%= header %></th>
       <% end %>
       <th class="ta_r pointer"><%= t("campaigns.show.table.sum") %></th>

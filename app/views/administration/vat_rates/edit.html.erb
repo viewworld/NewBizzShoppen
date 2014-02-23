@@ -1,19 +1,23 @@
 <%= content_for :column_mc do -%>
-  <header back="true"><%= t('administration.vat_rates.edit.view.header', :name => @vat_rate.country.name) %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t('administration.vat_rates.edit.view.header', :name => @vat_rate.country.name) %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for @vat_rate, :as => :vat_rate, :url => administration_vat_rate_path(@vat_rate), :input_html => {:method => :put} do |form| %>
-      <frm>
-        <param:content>
-          <%= render :partial => 'form', :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
-          <%= ibt(:class => "fltri", :icon => "save") do %>
-            <%= form.submit t("administration.vat_rates.edit.view.button_save") %>
-          <% end %>
-          <%= ibt(:class => "fltri bt_grey") do %>
-            <%= button_to_function t("common.cancel_link"), href(edit_administration_setting_path) %>
-          <% end %>
-        </param:actions>
-      </frm>
+    <frm>
+      <param:content>
+        <%= render :partial => 'form', :locals => {:form => form} %>
+      </param:content>
+      <param:actions>
+        <%= ibt(:class => "fltri", :icon => "save") do %>
+          <%= form.submit t("administration.vat_rates.edit.view.button_save") %>
+        <% end %>
+        <%= ibt(:class => "fltri bt_grey") do %>
+          <%= button_to_function t("common.cancel_link"), href(edit_administration_setting_path) %>
+        <% end %>
+      </param:actions>
+    </frm>
   <% end %>
 <% end %>

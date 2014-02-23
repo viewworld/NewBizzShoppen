@@ -1,8 +1,11 @@
 <%= content_for :column_mc do -%>
-
   <%= javascript_include_tag "jquery.field.min.js", "jquery.calculation.min.js", "invoice_calculations.js", "invoice_navigation.js" %>
 
-  <header back="true"><%= t("administration.invoices.edit.view.header", :name => @invoice.customer_name) %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.invoices.edit.view.header", :name => @invoice.customer_name) %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for [:administration, :invoicing, @invoice] do |form| %>
       <frm title="#{t('administration.invoices.edit.view.save_changes')}">
@@ -160,5 +163,4 @@
         </param:actions>
       </frm>
   <% end %>
-
 <% end %>

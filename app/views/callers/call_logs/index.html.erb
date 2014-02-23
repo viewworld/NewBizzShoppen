@@ -1,57 +1,57 @@
 <%= content_for :column_mc do -%>
-  <header back="true">
-    <param:content>
-      Calls for campaign "<%= @campaign %>"
-    </param:content>
-  </header>
+   <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      Calls for campaign "<% @campaign %>"
+    <% end %>
+  <% end %>
 
   <% if @call_logs.empty? %>
-      <%= blank_state_message %>
+    <%= blank_state_message %>
   <% else %>
-      <table class="generic call_results">
-        <thead>
-        <tr>
-          <th class="hl"></th>
-          <th>Agent</th>
-          <th>Contact</th>
-          <th>Result</th>
-          <th>Duration</th>
-          <th>Created at</th>
-          <th>Listen</th>
-          <th>Download</th>
-          <th class="hr"></th>
-        </tr>
-        </thead>
-        <tbody>
-          <% @call_logs.each do |call_log| %>
-            <tr>
-              <td></td>
-              <td><%= call_log.caller_user.try(:email) %></td>
-              <td><%= call_log.contact %></td>
-              <td><%= call_log.call_result.try(:result) %></td>
-              <td><%= call_log.time_of_call %></td>
-              <td><%= format_date call_log.created_at, true %></td>
-              <td>
-                <% if this_call_url = call_url(call_log.call_id) %>
-                    <audio preload="none" src="<%= this_call_url %>" controls="controls"></td>
-                <% end %>
-              <td><%= link_to_call call_log.call_id %></td>
-              <td></td>
-            </tr>
-          <% end %>
-        </tbody>
-        <tfoot>
-            <td class="fl"></td>
-            <td colspan="7"></td>
-            <td class="fr"></td>
-        </tfoot>
-        <% if will_paginate @call_results %>
-            <tr class="pagination">
-              <td colspan="9" class="ta_c">
-                <%= will_paginate @call_logs, :previous_label => '&laquo;', :next_label => '&raquo;' %>
-              </td>
-            </tr>
+    <table class="generic call_results">
+      <thead>
+      <tr>
+        <th class="hl"></th>
+        <th>Agent</th>
+        <th>Contact</th>
+        <th>Result</th>
+        <th>Duration</th>
+        <th>Created at</th>
+        <th>Listen</th>
+        <th>Download</th>
+        <th class="hr"></th>
+      </tr>
+      </thead>
+      <tbody>
+        <% @call_logs.each do |call_log| %>
+          <tr>
+            <td></td>
+            <td><%= call_log.caller_user.try(:email) %></td>
+            <td><%= call_log.contact %></td>
+            <td><%= call_log.call_result.try(:result) %></td>
+            <td><%= call_log.time_of_call %></td>
+            <td><%= format_date call_log.created_at, true %></td>
+            <td>
+              <% if this_call_url = call_url(call_log.call_id) %>
+                  <audio preload="none" src="<%= this_call_url %>" controls="controls"></td>
+              <% end %>
+            <td><%= link_to_call call_log.call_id %></td>
+            <td></td>
+          </tr>
         <% end %>
-      </table>
+      </tbody>
+      <tfoot>
+          <td class="fl"></td>
+          <td colspan="7"></td>
+          <td class="fr"></td>
+      </tfoot>
+      <% if will_paginate @call_results %>
+          <tr class="pagination">
+            <td colspan="9" class="ta_c">
+              <%= will_paginate @call_logs, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+            </td>
+          </tr>
+      <% end %>
+    </table>
   <% end %>
 <% end %>

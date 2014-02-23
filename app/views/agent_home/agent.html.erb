@@ -1,34 +1,33 @@
 <%= content_for :column_mc do -%>
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <% if current_user and current_user.has_any_role?(:call_centre, :call_centre_agent) %>
-          <%= t("home.show.view.call_centre_header", :name => screen_name_with_company_name(current_user)) %>
+        <%= t("home.show.view.call_centre_header", :name => screen_name_with_company_name(current_user)) %>
       <% else %>
-          <%= t("agent_home.show.view.header") %>
+        <%= t("agent_home.show.view.header") %>
       <% end %>
-    </param:content>
-
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <%= form_tag self.send((user_signed_in? and !current_user.call_centre? and current_user.agent?) ? "new_#{current_user.role.to_s.pluralize}_lead_path" : "root_path"), :method => :get, :id => "form_new_lead" do %>
-      <% if user_signed_in? and !current_user.call_centre? and current_user.agent? %>
-      <span style="position:absolute;top: 5px; right: 450px;">
-        <%= select_tag :category_id, [], :style => "width:200px" %>
-      </span>
-      <% end %>
-      <ul class="header_actions">
-        <% if user_signed_in? %>
+        <% if user_signed_in? and !current_user.call_centre? and current_user.agent? %>
+          <span style="position:absolute;top: 5px; right: 450px;">
+            <%= select_tag :category_id, [], :style => "width:200px" %>
+          </span>
+        <% end %>
+        <ul class="header_actions">
+          <% if user_signed_in? %>
             <% if !current_user.call_centre? and current_user.agent? %>
-            <li>
-              <div class="hidden">
-                <%= submit_tag "New" %>
-              </div>
-              <%= bt_link_to :plus, t("agent_home.show.view.new_lead"), "#", :id => "new_lead_button" %>
-            </li>
+              <li>
+                <div class="hidden">
+                  <%= submit_tag "New" %>
+                </div>
+                <%= bt_link_to :plus, t("agent_home.show.view.new_lead"), "#", :id => "new_lead_button" %>
+              </li>
             <% end %>
             <% if current_user.deal_maker? %>
-            <li>
+              <li>
                 <%= bt_link_to :plus, t("agent_home.show.view.new_deal"), self.send("new_#{current_user.role.to_s.pluralize}_deal_path") %>
-            </li>
+              </li>
             <% end %>
             <li>
               <%= bt_link_to :plus, t("agent_home.show.view.request_login_time"), new_callers_login_time_request_path %>
@@ -36,21 +35,20 @@
             <li class="last">
 
               <%= bt_link_to :key, t("supplier_home.show.view.sign_out"), '/logout' %>
-          <% else %>
+            <% else %>
               <%= bt_link_to :user, t("agent_home.show.view.create_new_agent_account"), new_agent_account_path %>
-          <% end %>
-        </li>
-      </ul>
+            <% end %>
+          </li>
+        </ul>
       <% end %>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <div class="pdd_5">
     <div id="agent_information"></div>
   </div>
 
   <div class="pdd_5 no_pdd_b">
-
     <div>
       <% if current_user and current_user.has_any_role?(:call_centre, :call_centre_agent) %>
           <p><%= blurb("blurb_call_centre_home") %></p>
@@ -58,9 +56,7 @@
           <p><%= blurb("blurb_agent_home#{'_logged_in' if user_signed_in?}") %></p>
       <% end %>
     </div>
-
     <div class="clb"></div>
-
   </div>
 
   <div class="hl" style="padding: 15px 0"></div>
@@ -246,7 +242,7 @@
                 <%= render :partial => 'lead', :collection => @new_leads, :as => :lead %>
             <% else %>
                 <%= render :partial => 'shared/blank_data_li' %>
-            <% end %>         
+            <% end %>
           </ul>
         </param:content>
       </frm>
@@ -339,4 +335,3 @@
 
   </script>
 <% end %>
-

@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header back="true"><%= t("agent.leads.new.view.title") %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("agent.leads.new.view.title") %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for [:agents, @lead], :method => :post do |form| %>
       <frm title="#{t('agent.leads.new.view.form_title')}">

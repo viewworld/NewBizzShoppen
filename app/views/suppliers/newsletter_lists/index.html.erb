@@ -1,9 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header>
-      <param:content>
-        <%= t("newsletters.newsletter_lists.index.view.header") %>
-      </param:content>
-   </header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("newsletters.newsletter_lists.index.view.header") %>
+    <% end %>
+  <% end %>
 
   <div id="leads_summary">
     <div class="column_1to3 fltl" id="news">
@@ -79,7 +79,5 @@
       </div>
     </div>
     <div class="clb"></div>
+  <% end %>
   </div>
-
-
-<% end %>

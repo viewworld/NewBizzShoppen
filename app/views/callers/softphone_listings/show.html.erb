@@ -33,11 +33,11 @@
 <% end %>
 
 <%= content_for :column_mc do -%>
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("softphone_listing.index.header") %>
-    </param:content>
-  </header>
+    <% end %>
+  <% end %>
 
   <table class="generic">
     <thead>
@@ -87,5 +87,4 @@
       <td class="cr"></td>
     </tr>
   </table>
-
 <% end %>

@@ -1,17 +1,22 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag "result_dynamic_value" %>
-  <header><%= t("results.new.title") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("results.new.title") %>
+    <% end %>
+  <% end %>
+
   <%= semantic_form_for @result, :url => url_for(:controller => "callers/results", :action => :create, :campaign_id => @campaign, :id => @result), :method => :post do |form| %>
-      <frm title="Create new">
-        <param:content>
-          <%= render :partial => '/callers/results/form', :locals => {:form => form, :result => @result} %>
-        </param:content>
-        <param:actions>
-          <%= ibt(:class => "fltri", :icon => "save") do %>
-            <%= form.submit t("campaigns.new.button_create"), :name => "commit_create" %>
-          <% end %>
-          <%= bt_link_to nil, t("campaigns.new.button_cancel"), url_for(:controller => "callers/results", :action => :index, :campaign_id => @campaign), :class => "bt_grey fltr" %>
-        </param:actions>
-      </frm>
+    <frm title="Create new">
+      <param:content>
+        <%= render :partial => '/callers/results/form', :locals => {:form => form, :result => @result} %>
+      </param:content>
+      <param:actions>
+        <%= ibt(:class => "fltri", :icon => "save") do %>
+          <%= form.submit t("campaigns.new.button_create"), :name => "commit_create" %>
+        <% end %>
+        <%= bt_link_to nil, t("campaigns.new.button_cancel"), url_for(:controller => "callers/results", :action => :index, :campaign_id => @campaign), :class => "bt_grey fltr" %>
+      </param:actions>
+    </frm>
   <% end %>
 <% end %>

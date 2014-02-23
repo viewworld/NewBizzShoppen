@@ -10,19 +10,18 @@
 <%= render :partial => 'search' %>
 
 <%= content_for :column_mc do -%>
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("campaign_reports.index.header") %>
-    </param:content>
-
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <li class="last">
           <%= bt_link_to nil, t("campaign_reports.index.download_pdf"), callers_campaign_report_path(params[:id], :format => 'pdf') %>
         </li>
       </ul>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <div class="reports_table_wrapper">
     <%= render(:text => @html).html_safe %>

@@ -1,6 +1,9 @@
 <%= content_for :column_mc do -%>
-
-  <header back="true"><%= t("administration.invoices.show.view.header") %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.invoices.show.view.header") %>
+    <% end %>
+  <% end %>
 
   <div class="grid_550 ta_r fltr">
     <%= bt_link_to :printer, t("administration.invoices.show.view.print_invoice"), "javascript:void(0)", :onclick => '$("#invoice_container").printElement()' %>
@@ -16,10 +19,7 @@
 
   <div class="clb"></div>
 
-
   <div class="pdd_10">
-
-
     <div class="invoice_container" id="invoice_container">
         <style type="text/css">
             @import url("/stylesheets/invoice.css") print;
@@ -59,7 +59,5 @@
           </tbody>
         </table>
     <% end %>
-
   </div>
-
 <% end %>

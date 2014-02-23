@@ -1,35 +1,35 @@
 <%= content_for :column_mc do -%>
-  <header back="true" backurl="#{call_centres_deals_path}">
-    <param:content>
-        <%= t("call_centre.deals.edit.view.title") %>
-    </param:content>
-    <param:actions>
+  <%= header(:back => true, :backurl => call_centres_deals_path) do |section| %>
+    <% section.block_header do %>
+      <%= t("call_centre.deals.edit.view.title") %>
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <li>
-            <%= bt_link_to nil, t("call_centre.deals.edit.view.edit_deal_request_details_email_template"), edit_email_template_path(@deal.deal_request_details_email_template, :deal_id => @deal.id) %>
+          <%= bt_link_to nil, t("call_centre.deals.edit.view.edit_deal_request_details_email_template"), edit_email_template_path(@deal.deal_request_details_email_template, :deal_id => @deal.id) %>
         </li>
         <li class="last">
           <%= bt_link_to nil, t("call_centre.deals.edit.view.preview"), deal_path(@deal) %>
         </li>
       </ul>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <% unless @deal.enabled? %>
     <div class="flash flash_notice"><%= t("deals.common.max_auto_buy_limit_reached") %></div>
   <% end %>
 
   <%= semantic_form_for [:call_centres, @deal], :method => :put, :html => {:multipart => true} do |form| %>
-      <frm title="#{@deal.header}">
-        <param:content>
-          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal} %>
-          <%= render :partial => "shared/deals/assets_management", :locals => {:form => form, :path => "call_centres_deal_assets_path",
-                                                                               :remove_path => "call_centres_deal_asset_path"} %>
-        </param:content>
-        <param:actions>
-            <%= render :partial => "shared/deals/update_buttons", :locals => { :form => form, :role => "call_centre" } %>
-        </param:actions>
-      </frm>
+    <frm title="#{@deal.header}">
+      <param:content>
+        <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal} %>
+        <%= render :partial => "shared/deals/assets_management", :locals => {:form => form, :path => "call_centres_deal_assets_path",
+                                                                             :remove_path => "call_centres_deal_asset_path"} %>
+      </param:content>
+      <param:actions>
+          <%= render :partial => "shared/deals/update_buttons", :locals => { :form => form, :role => "call_centre" } %>
+      </param:actions>
+    </frm>
   <% end %>
 
   <%= render :partial => "shared/deals/leads_listing", :locals => { :deal => @deal } %>

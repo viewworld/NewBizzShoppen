@@ -1,5 +1,10 @@
 <%= content_for :column_mc do -%>
-  <header><%= @survey.name %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= @survey.name %>
+    <% end %>
+  <% end %>
+
   <% if @survey.thank_you_page.blank? %>
     <%= blank_state_message t("surveys.show.view.thank_you_msg") %>
   <% else %>

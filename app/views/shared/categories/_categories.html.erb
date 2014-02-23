@@ -1,46 +1,41 @@
-  <header>
-
-    <param:content>
-      <%= @category_type == "LeadCategory" ? t("categories.index.view.header") : t("deal_categories.index.view.header") %>
-    </param:content>
-
-    <param:actions>
-      <ul class="header_actions">
-          <% if user_signed_in? and current_user.has_role?(:admin) %>
-            <li class="last"><%= bt_link_to :plus, @category_type == "LeadCategory" ? t("administration.categories.index.view.new_category") : t("administration.categories.index.view.new_deal_category"), new_administration_category_path(:category_type => @category_type) %></li>
-          <% end %>
-           <% if @category_type == "LeadCategory" and (!user_signed_in? or (user_signed_in? and current_user.has_any_role?(:agent, :call_centre_agent, :member, :supplier, :lead_supplier))) %>
-            <li class="last"><%= bt_link_to :plus, t("layout.main_menu.shared.category_request"), new_category_request_path %></li>
-          <% end %>
-      </ul>
-    </param:actions>
-
-  </header>
-
-   <%= categories_listing @categories do |blocks| %>
-
-      <% blocks.tools do |category| %>
-          <% if user_signed_in? and current_user.admin? %>
-              <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
-                <li>
-                  <%= link_to @category_type == "LeadCategory" ? t("categories.index.view.view_leads") : t("categories.index.view.view_deals"), "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}#{"?search[with_category]=#{category.id}" if category.is_a?(LeadCategory)}", :class => "#{'default_action' if !user_signed_in? and !current_user.admin?}" %>
-                </li>
-                <li>
-                  <%= link_to(t("administration.categories.index.view.edit_link"), edit_administration_category_path(category), :class => "#{'default_action' if user_signed_in? and current_user.admin?}") %>
-                </li>
-                <% if category.is_empty? %>
-                <li>
-                  <%= link_to(t("administration.categories.index.view.destroy_link"), administration_category_path(category),
-                                :method  => :delete,
-                                :confirm => I18n.t("common.confirmation")) %>
-                </li>
-                <% end %>
-              </ul></div>
-          <% else %>
-               <%= bt_link_to nil, @category_type == "LeadCategory" ? t("categories.index.view.view_leads") : t("categories.index.view.view_deals"), "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}#{"?search[with_category]=#{category.id}" if category.is_a?(LeadCategory)}", :class => "default_action" %>
-          <% end %>
+<%= header do |section| %>
+  <% section.block_header do %>
+    <%= @category_type == "LeadCategory" ? t("categories.index.view.header") : t("deal_categories.index.view.header") %>
+  <% end %>
+  <% section.block_actions do %>
+    <ul class="header_actions">
+      <% if user_signed_in? and current_user.has_role?(:admin) %>
+        <li class="last"><%= bt_link_to :plus, @category_type == "LeadCategory" ? t("administration.categories.index.view.new_category") : t("administration.categories.index.view.new_deal_category"), new_administration_category_path(:category_type => @category_type) %></li>
       <% end %>
-   <% end %>
+      <% if @category_type == "LeadCategory" and (!user_signed_in? or (user_signed_in? and current_user.has_any_role?(:agent, :call_centre_agent, :member, :supplier, :lead_supplier))) %>
+        <li class="last"><%= bt_link_to :plus, t("layout.main_menu.shared.category_request"), new_category_request_path %></li>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>
 
+<%= categories_listing @categories do |blocks| %>
+  <% blocks.tools do |category| %>
+    <% if user_signed_in? and current_user.admin? %>
+      <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
+        <li>
+          <%= link_to @category_type == "LeadCategory" ? t("categories.index.view.view_leads") : t("categories.index.view.view_deals"), "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}#{"?search[with_category]=#{category.id}" if category.is_a?(LeadCategory)}", :class => "#{'default_action' if !user_signed_in? and !current_user.admin?}" %>
+        </li>
+        <li>
+          <%= link_to(t("administration.categories.index.view.edit_link"), edit_administration_category_path(category), :class => "#{'default_action' if user_signed_in? and current_user.admin?}") %>
+        </li>
+        <% if category.is_empty? %>
+        <li>
+          <%= link_to(t("administration.categories.index.view.destroy_link"), administration_category_path(category),
+                        :method  => :delete,
+                        :confirm => I18n.t("common.confirmation")) %>
+        </li>
+        <% end %>
+      </ul></div>
+    <% else %>
+         <%= bt_link_to nil, @category_type == "LeadCategory" ? t("categories.index.view.view_leads") : t("categories.index.view.view_deals"), "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}#{"?search[with_category]=#{category.id}" if category.is_a?(LeadCategory)}", :class => "default_action" %>
+    <% end %>
+  <% end %>
+<% end %>
 
-  <div class="clb"></div>
+<div class="clb"></div>

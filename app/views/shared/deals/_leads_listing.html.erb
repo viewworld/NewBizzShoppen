@@ -1,53 +1,57 @@
 <br />
-<header back=""><%= t("deals.common.leads_table.title") %></header>
+<%= header(:back => true) do |section| %>
+  <% section.block_header do %>
+    <%= t("deals.common.leads_table.title") %>
+  <% end %>
+<% end %>
 
 <% if deal.leads.empty? %>
-    <%= blank_state_message t("deals.common.leads_table.no_leads_created_yet_message") %>
+  <%= blank_state_message t("deals.common.leads_table.no_leads_created_yet_message") %>
 <% else %>
-    <table id="leads" class="generic">
-    <thead>
-    <tr>
-      <th class="hl"></th>
-      <th class="ta_l"><%= t("deals.common.leads_table.header") %></th>
-      <th class="ta_l"><%= t("deals.common.leads_table.date") %></th>
-      <th class="ta_l"><%= t("deals.common.leads_table.requested_by") %></th>
-      <th class="ta_l"><%= t("deals.common.leads_table.phone_number") %></th>
-      <th class="ta_l"><%= t("deals.common.leads_table.sold") %></th>
-        <th class="ta_r">
-          <%= t("lead_templates.table.actions") %>
-        </th>
-      <th class="hr"></th>
-    </tr>
-    </thead>
-    <tfoot>
-    <tr>
-    <td class="fl"></td>
-    <td colspan="6"></td>
-    <td class="fr"></td>
-    </tr>
-    </tfoot>
-    <tbody>
-      <% deal.leads.order("created_at DESC").each do |lead| %>
-        <tr id="lead_<%= lead.id %>" class="<%= cycle("odd", "even") %>">
-          <td class="cl"></td>
-          <td><%= lead.header %></td>
-          <td><%= format_date lead.created_at %></td>
-          <td><%= lead.requestee_screen_name %></td>
-          <td><%= lead.phone_number %></td>
-          <td><%= lead.lead_purchases.any? ? t("common.yes_label") : t("common.no_label") %></td>
+  <table id="leads" class="generic">
+  <thead>
+  <tr>
+    <th class="hl"></th>
+    <th class="ta_l"><%= t("deals.common.leads_table.header") %></th>
+    <th class="ta_l"><%= t("deals.common.leads_table.date") %></th>
+    <th class="ta_l"><%= t("deals.common.leads_table.requested_by") %></th>
+    <th class="ta_l"><%= t("deals.common.leads_table.phone_number") %></th>
+    <th class="ta_l"><%= t("deals.common.leads_table.sold") %></th>
+      <th class="ta_r">
+        <%= t("lead_templates.table.actions") %>
+      </th>
+    <th class="hr"></th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+  <td class="fl"></td>
+  <td colspan="6"></td>
+  <td class="fr"></td>
+  </tr>
+  </tfoot>
+  <tbody>
+    <% deal.leads.order("created_at DESC").each do |lead| %>
+      <tr id="lead_<%= lead.id %>" class="<%= cycle("odd", "even") %>">
+        <td class="cl"></td>
+        <td><%= lead.header %></td>
+        <td><%= format_date lead.created_at %></td>
+        <td><%= lead.requestee_screen_name %></td>
+        <td><%= lead.phone_number %></td>
+        <td><%= lead.lead_purchases.any? ? t("common.yes_label") : t("common.no_label") %></td>
 
-            <td class="tda ta_r">
-              <% if current_user.admin? %>
-                <%= bt_link_to nil, t("deals.common.leads_table.actions.edit"), edit_administration_lead_path(lead), :class => "default_action" %>
-              <% elsif current_user.supplier? and lead.bought_by_user?(current_user) %>
-                <%= bt_link_to nil, t("deals.common.leads_table.actions.view"), suppliers_lead_purchase_path(lead.lead_purchase_for(current_user)), :class => "default_action" %>
-              <% else %>
-                  <%= bt_link_to nil, t("deals.common.leads_table.actions.view"), lead_path(lead), :class => "default_action" %>
-              <% end %>
-            </td>
-          <td class="cr"></td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
+          <td class="tda ta_r">
+            <% if current_user.admin? %>
+              <%= bt_link_to nil, t("deals.common.leads_table.actions.edit"), edit_administration_lead_path(lead), :class => "default_action" %>
+            <% elsif current_user.supplier? and lead.bought_by_user?(current_user) %>
+              <%= bt_link_to nil, t("deals.common.leads_table.actions.view"), suppliers_lead_purchase_path(lead.lead_purchase_for(current_user)), :class => "default_action" %>
+            <% else %>
+                <%= bt_link_to nil, t("deals.common.leads_table.actions.view"), lead_path(lead), :class => "default_action" %>
+            <% end %>
+          </td>
+        <td class="cr"></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
 <% end %>

@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header back="true" backurl="#{callers_campaigns_path}"><%= t("campaigns.edit.title") %>: <%= @campaign.name %></header>
+  <%= header(:back => true, :backurl => callers_campaigns_path) do |section| %>
+    <% section.block_header do %>
+      <%= t("campaigns.edit.title") %>: <%= @campaign.name %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for [:callers, @campaign], :method => :put do |form| %>
       <frm title="Edit">
@@ -28,37 +32,35 @@
 
   <br/>
 
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("campaigns.edit.title_contacts") %>
-    </param:content>
-
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <%= form_tag administration_articles_path, :method => :post, :id => "form_new_article" do %>
-          <ul class="header_actions">
-            <li>
-              <%= bt_link_to :plus, t("campaigns.edit.button_create_contact"), new_callers_campaign_contact_path(@campaign) %>
-            </li>
-            <li>
-              <%= bt_link_to nil, t("campaigns.edit.production"), callers_production_path(:campaign_ids => [@campaign.id]) %>
-            </li>
-            <% if users_for_agent_work_screen = (current_user.admin? ? @campaign.users : [current_user]+@campaign.users.where(:id => current_user.subaccount_ids)) and !users_for_agent_work_screen.empty? %>
+        <ul class="header_actions">
+          <li>
+            <%= bt_link_to :plus, t("campaigns.edit.button_create_contact"), new_callers_campaign_contact_path(@campaign) %>
+          </li>
+          <li>
+            <%= bt_link_to nil, t("campaigns.edit.production"), callers_production_path(:campaign_ids => [@campaign.id]) %>
+          </li>
+          <% if users_for_agent_work_screen = (current_user.admin? ? @campaign.users : [current_user]+@campaign.users.where(:id => current_user.subaccount_ids)) and !users_for_agent_work_screen.empty? %>
             <li><%= select_tag :user_id, options_for_select([[t("campaigns.edit.agent_work_screen_as"), ""]] + users_for_agent_work_screen.sort_by(&:screen_name).map { |u| [u.screen_name, u.id] }, {:disabled => "", :selected => ""}), :onchange => "go_to_agent_work_screen_as_user(#{@campaign.id})" %></li>
-            <% end %>
-            <li>
-              <%= bt_link_to :users, t("campaigns.edit.button_import_contacts"), new_callers_campaign_contact_path(@campaign, :type => "import") %>
-            </li>
-            <li>
-              <%= bt_link_to :download, t("campaigns.edit.button_bulk_download_link"), "", :id => "export_contacts" %>
-            </li>
-            <li class="last">
-              <%= bt_link_to :pencil, t("campaigns.edit.button_manage_result_types"), callers_campaign_results_path(@campaign) %>
-            </li>
-
-          </ul>
+          <% end %>
+          <li>
+            <%= bt_link_to :users, t("campaigns.edit.button_import_contacts"), new_callers_campaign_contact_path(@campaign, :type => "import") %>
+          </li>
+          <li>
+            <%= bt_link_to :download, t("campaigns.edit.button_bulk_download_link"), "", :id => "export_contacts" %>
+          </li>
+          <li class="last">
+            <%= bt_link_to :pencil, t("campaigns.edit.button_manage_result_types"), callers_campaign_results_path(@campaign) %>
+          </li>
+        </ul>
       <% end %>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <div class="fltl">
     <%= bt_link_to_function nil, "Select unassigned", "$('input.cb_contact_id:not([data-agent-id]):not([data-completed])').each(function(){this.checked=!this.checked});" %>

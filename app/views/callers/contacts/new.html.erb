@@ -1,21 +1,19 @@
 <%= content_for :column_mc do -%>
-
   <div <%= "style='display:none;'" unless @import %> id="import_container">
-    <header back="true" backurl="#{edit_callers_campaign_path(@campaign)}">
-      <param:content>
+    <%= header(:back => true, :backurl => edit_callers_campaign_path(@campaign)) do |section| %>
+      <% section.block_header do %>
         <%= t("contacts.new.title_import") %>
-      </param:content>
-
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= form_tag administration_articles_path, :method => :post, :id => "form_new_article" do %>
-            <ul class="header_actions">
-              <li class="last">
-                <%= bt_link_to :plus, t("contacts.new.button_show_new_contact"), "javascript:void(0)", :onclick => "$('#import_container').toggle();$('#create_container').toggle();" %>
-              </li>
-            </ul>
+          <ul class="header_actions">
+            <li class="last">
+              <%= bt_link_to :plus, t("contacts.new.button_show_new_contact"), "javascript:void(0)", :onclick => "$('#import_container').toggle();$('#create_container').toggle();" %>
+            </li>
+          </ul>
         <% end %>
-      </param:actions>
-    </header>
+      <% end %>
+    <% end %>
 
     <%= semantic_form_for [:callers, @campaign, @contact], :method => :post do |form| %>
         <frm title="Create new">
@@ -38,58 +36,56 @@
         </frm>
     <% end %>
 
-      <%= form_tag import_xls_callers_campaign_contacts_path(@campaign), :method => :post, :multipart => true, :id => "contact_import_form" do %>
-        <frm title="#{t('contacts.new.title_import_from_excel')}">
-          <param:content>
-            <div class="pdd_10 no_pdd_t">
-              <fieldset class="inputs labels_ta_r labels_180">
-                <ol class="align_inputs">
-                  <%= file_field_tag 'attachment', :accept => 'spreadsheet/ods,spreadsheet/doc,spreadsheet/xdoc', :class => "fltl" %>
-                  <%= check_box_tag :unique_only %><%= t("contacts_advanced_import.show.view.unique_only") %>
-                </ol>
-              </fieldset>
-            </div>
-          </param:content>
-          <param:actions>
-            <%= ibt(:class => "fltri", :icon => "save") do %>
-              <%= submit_tag t("contacts.new.import_from_excel_button"), :name => "commit_create" %>
-            <% end %>
-            <%= bt_link_to nil, t("campaigns.new.button_cancel"), edit_callers_campaign_path(@campaign), :class => "bt_grey fltr" %>
-          </param:actions>
-        </frm>
-      <% end %>
-  </div>
-
-  <div <%= "style='display:none;'" if @import %> id="create_container">
-    <header back="true" backurl="#{edit_callers_campaign_path(@campaign)}">
-      <param:content>
-        <%= t("contacts.new.title_new_contact") %>
-      </param:content>
-
-      <param:actions>
-        <%= form_tag administration_articles_path, :method => :post, :id => "form_new_article" do %>
-            <ul class="header_actions">
-              <li class="last">
-                <%= bt_link_to :users, t("contacts.new.button_show_import_contacts"), "javascript:void(0)", :onclick => "$('#import_container').toggle();$('#create_container').toggle();" %>
-              </li>
-            </ul>
-        <% end %>
-      </param:actions>
-    </header>
-
-    <%= semantic_form_for [:callers, @campaign, @contact], :method => :post do |form| %>
-        <frm title="Create new">
-          <param:content>
-            <%= render :partial => '/shared/leads/form', :locals => {:form => form, :campaign => @campaign, :contact => @contact} %>
-          </param:content>
-          <param:actions>
-            <%= ibt(:class => "fltri", :icon => "save") do %>
-              <%= form.submit t("contacts.new.create_button"), :name => "commit_create" %>
-            <% end %>
-            <%= bt_link_to nil, t("campaigns.new.button_cancel"), edit_callers_campaign_path(@campaign), :class => "bt_grey fltr" %>
-          </param:actions>
-        </frm>
+    <%= form_tag import_xls_callers_campaign_contacts_path(@campaign), :method => :post, :multipart => true, :id => "contact_import_form" do %>
+      <frm title="#{t('contacts.new.title_import_from_excel')}">
+        <param:content>
+          <div class="pdd_10 no_pdd_t">
+            <fieldset class="inputs labels_ta_r labels_180">
+              <ol class="align_inputs">
+                <%= file_field_tag 'attachment', :accept => 'spreadsheet/ods,spreadsheet/doc,spreadsheet/xdoc', :class => "fltl" %>
+                <%= check_box_tag :unique_only %><%= t("contacts_advanced_import.show.view.unique_only") %>
+              </ol>
+            </fieldset>
+          </div>
+        </param:content>
+        <param:actions>
+          <%= ibt(:class => "fltri", :icon => "save") do %>
+            <%= submit_tag t("contacts.new.import_from_excel_button"), :name => "commit_create" %>
+          <% end %>
+          <%= bt_link_to nil, t("campaigns.new.button_cancel"), edit_callers_campaign_path(@campaign), :class => "bt_grey fltr" %>
+        </param:actions>
+      </frm>
     <% end %>
   </div>
 
+  <div <%= "style='display:none;'" if @import %> id="create_container">
+    <%= header(:back => true, :backurl => edit_callers_campaign_path(@campaign)) do |section| %>
+      <% section.block_header do %>
+        <%= t("contacts.new.title_new_contact") %>
+      <% end %>
+      <% section.block_actions do %>
+        <%= form_tag administration_articles_path, :method => :post, :id => "form_new_article" do %>
+          <ul class="header_actions">
+            <li class="last">
+              <%= bt_link_to :users, t("contacts.new.button_show_import_contacts"), "javascript:void(0)", :onclick => "$('#import_container').toggle();$('#create_container').toggle();" %>
+            </li>
+          </ul>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= semantic_form_for [:callers, @campaign, @contact], :method => :post do |form| %>
+      <frm title="Create new">
+        <param:content>
+          <%= render :partial => '/shared/leads/form', :locals => {:form => form, :campaign => @campaign, :contact => @contact} %>
+        </param:content>
+        <param:actions>
+          <%= ibt(:class => "fltri", :icon => "save") do %>
+            <%= form.submit t("contacts.new.create_button"), :name => "commit_create" %>
+          <% end %>
+          <%= bt_link_to nil, t("campaigns.new.button_cancel"), edit_callers_campaign_path(@campaign), :class => "bt_grey fltr" %>
+        </param:actions>
+      </frm>
+    <% end %>
+  </div>
 <% end %>

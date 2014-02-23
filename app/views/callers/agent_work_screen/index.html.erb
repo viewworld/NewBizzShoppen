@@ -33,16 +33,16 @@
 
   <div id="agent_information"></div>
 
-  <header back="true" backurl="#{callers_campaigns_path}">
-    <param:content>
+  <%= header(:back => true, :backurl => callers_campaigns_path) do |section| %>
+    <% section.block_header do %>
       <%= t("agent_work_screen.index.title") %> - <%= @campaign.name %>
-    </param:content>
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <div id="switch_campaign_form">
-        <%= render :partial => "callers/agent_work_screen/switch_campaign_form", :locals => @locals %>
+        <% render :partial => "callers/agent_work_screen/switch_campaign_form", :locals => @locals %>
       </div>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <div id="flashes">
     <div class="flash flash_notice" style="display:none">
@@ -82,21 +82,19 @@
 
     <br/>
 
-    <header>
-
-      <param:content>
+    <%= header do |section| %>
+      <% section.block_header do %>
         <div id="tab_change_header"><%= t('agent_work_screen.index.call_log') %></div>
-      </param:content>
-
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <ul id="tab_change_links" class="header_actions">
           <li>
             <%= bt_link_to nil, t("agent_work_screen.index.show_call_log_for_current_contact"), "javascript:void(0)", :onclick => "displayWorkScreenTab('#results_sheet', ['#{t('agent_work_screen.index.call_log')}','#{t('agent_work_screen.index.call_sheet')}','#{t('agent_work_screen.index.pending_calls')}','#{t('agent_work_screen.index.completed_contacts')}'])", :class => "bt_active", :id => "results_sheet_switch_link" %>
           </li>
           <% unless @campaign.shared_contact_pool? %>
-          <li>
-            <%= bt_link_to nil, t("agent_work_screen.index.show_current_call_sheet"), "javascript:void(0)", :onclick => "displayWorkScreenTab('#call_sheet', ['#{t('agent_work_screen.index.call_log')}','#{t('agent_work_screen.index.call_sheet')}','#{t('agent_work_screen.index.pending_calls')}','#{t('agent_work_screen.index.completed_contacts')}'])", :id => "call_sheet_switch_link" %>
-          </li>
+            <li>
+              <%= bt_link_to nil, t("agent_work_screen.index.show_current_call_sheet"), "javascript:void(0)", :onclick => "displayWorkScreenTab('#call_sheet', ['#{t('agent_work_screen.index.call_log')}','#{t('agent_work_screen.index.call_sheet')}','#{t('agent_work_screen.index.pending_calls')}','#{t('agent_work_screen.index.completed_contacts')}'])", :id => "call_sheet_switch_link" %>
+            </li>
           <% end %>
           <li>
             <%= bt_link_to nil, t("agent_work_screen.index.show_pending_calls"), "javascript:void(0)", :onclick => "displayWorkScreenTab('#pending_calls', ['#{t('agent_work_screen.index.call_log')}','#{t('agent_work_screen.index.call_sheet')}','#{t('agent_work_screen.index.pending_calls')}','#{t('agent_work_screen.index.completed_contacts')}'])", :id => "pending_calls_switch_link" %>
@@ -108,8 +106,8 @@
             <%= bt_link_to nil, t("agent_work_screen.index.show_my_results"), callers_production_path %>
           </li>
         </ul>
-      </param:actions>
-    </header>
+      <% end %>
+    <% end %>
 
     <div id="results_sheet">
       <%= render :partial => "callers/agent_work_screen/results_sheet", :locals => @locals %>

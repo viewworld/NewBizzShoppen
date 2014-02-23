@@ -1,5 +1,9 @@
 <% unless agent_work_screen %>
-    <header back="#{back_path}" backurl="#{back_path}"><%= t("call_results.new.title") %></header>
+  <%= header(:back => true, :backurl => back_path) do |section| %>
+    <% section.block_header do %>
+      <%= t("call_results.new.title") %>
+    <% end %>
+  <% end %>
 <% else %>
     <% @agent_work_screen = agent_work_screen %>
 <% end %>

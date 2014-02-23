@@ -1,18 +1,24 @@
 <%= content_for :column_mc do -%>
-  <header back="true"><%= t("call_centre.leads.edit.view.title", :name => @lead.header) %><%= image_tag_for_locale %></header>
-<%= semantic_form_for [:call_centres, @lead], :method => :put do |form| %>
-      <frm title="#{t('call_centre.leads.edit.view.created_by')} #{@lead.creator.company_name} - #{@lead.creator.email}">
-        <param:content>
-          <%= render :partial => '/shared/leads/form', :locals => { :form => form }  %>
-        </param:content>
-        <param:actions>
-          <%= ibt(:class => "fltri", :icon => "save") do %>
-            <%= form.submit t("call_centre.leads.edit.view.button_update") %>
-          <% end %>
-          <%= ibt(:class => "bt_grey fltri") do %>
-            <%= button_to_function t("call_centre.leads.edit.view.button_cancel"), "history.go(-1)" %>
-          <% end %>
-        </param:actions>
-      </frm>
-<% end %>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("call_centre.leads.edit.view.title", :name => @lead.header) %>
+      <%= image_tag_for_locale %>
+    <% end %>
+  <% end %>
+
+  <%= semantic_form_for [:call_centres, @lead], :method => :put do |form| %>
+    <frm title="#{t('call_centre.leads.edit.view.created_by')} #{@lead.creator.company_name} - #{@lead.creator.email}">
+      <param:content>
+        <%= render :partial => '/shared/leads/form', :locals => { :form => form }  %>
+      </param:content>
+      <param:actions>
+        <%= ibt(:class => "fltri", :icon => "save") do %>
+          <%= form.submit t("call_centre.leads.edit.view.button_update") %>
+        <% end %>
+        <%= ibt(:class => "bt_grey fltri") do %>
+          <%= button_to_function t("call_centre.leads.edit.view.button_cancel"), "history.go(-1)" %>
+        <% end %>
+      </param:actions>
+    </frm>
+  <% end %>
 <% end %>

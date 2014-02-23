@@ -1,18 +1,18 @@
 <%= content_for :column_mc do -%>
-  <header back="true" backurl="#{agents_deals_path}">
-     <param:content>
-        <%= t("agent.deals.new.view.title") %>
-     </param:content>
-      <param:actions>
-        <% if params[:deal_id] %>
-          <ul class="header_actions">
-            <li class="last">
-              <%= bt_link_to nil, t("agent.deals.new.view.change_supplier"), "#", :onclick => "setup_step(0)" %>
-            </li>
-          </ul>
-        <% end %>
-    </param:actions>
-  </header>
+  <%= header(:back => true, :backurl => agents_deals_path) do |section| %>
+    <% section.block_header do %>
+      <%= t("agent.deals.new.view.title") %>
+    <% end %>
+    <% section.block_actions do %>
+      <% if params[:deal_id] %>
+        <ul class="header_actions">
+          <li class="last">
+            <%= bt_link_to nil, t("agent.deals.new.view.change_supplier"), "#", :onclick => "setup_step(0)" %>
+          </li>
+        </ul>
+      <% end %>
+    <% end %>
+  <% end %>
 
   <div id="supplier_email_form">
     <%= label_tag :supplier_email, t("agent.deals.new.view.email") %>
@@ -28,19 +28,19 @@
 
   <div id="deal_form" style="display:none;">
     <%= semantic_form_for [:agents, @deal], :method => :post do |form| %>
-        <frm title="#{t('agent.deals.new.view.form_title')}">
-          <param:content>
-            <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal} %>
-          </param:content>
-          <param:actions>
-            <%= ibt(:class => "fltri", :icon => "save") do %>
-              <%= form.submit t("agent.deals.new.view.create_button"), :name => "commit_create", :onclick => "select_options_to_submit('deal_deal_template_ids_')" %>
-            <% end %>
-            <%= ibt(:class => "fltri bt_grey") do %>
-              <%= button_to_function t("common.cancel_link"), "history.go(-1)" %>
-            <% end %>
-          </param:actions>
-        </frm>
+      <frm title="#{t('agent.deals.new.view.form_title')}">
+        <param:content>
+          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal} %>
+        </param:content>
+        <param:actions>
+          <%= ibt(:class => "fltri", :icon => "save") do %>
+            <%= form.submit t("agent.deals.new.view.create_button"), :name => "commit_create", :onclick => "select_options_to_submit('deal_deal_template_ids_')" %>
+          <% end %>
+          <%= ibt(:class => "fltri bt_grey") do %>
+            <%= button_to_function t("common.cancel_link"), "history.go(-1)" %>
+          <% end %>
+        </param:actions>
+      </frm>
     <% end %>
   </div>
 <% end %>

@@ -14,7 +14,12 @@
 
 <%= content_for :column_mc do -%>
 
-  <header back="true"><%= leads_listing_header %><%= " #{t("leads.index.header_for")} #{@displayed_category.name}" if @displayed_category %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= leads_listing_header %>
+      <%= " #{t("leads.index.header_for")} #{@displayed_category.name}" if @displayed_category %>
+    <% end %>
+  <% end %>
 
   <% if @leads.empty? %>
       <%= blank_state_message %>

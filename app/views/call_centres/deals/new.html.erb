@@ -1,25 +1,25 @@
 <%= content_for :column_mc do -%>
-  <header back="true" backurl="#{call_centres_deals_path}">
-     <param:content>
-        <%= t("call_centre.deals.new.view.title") %>
-     </param:content>
-      <param:actions>
-        <% if params[:deal_id] %>
-          <ul class="header_actions">
-            <li class="last">
-              <%= bt_link_to nil, t("call_centre.deals.new.view.change_supplier"), "#", :onclick => "setup_step(0)" %>
-            </li>
-          </ul>
-        <% end %>
-    </param:actions>
-  </header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("call_centre.deals.new.view.title") %>
+    <% end %>
+    <% section.block_actions do %>
+      <% if params[:deal_id] %>
+        <ul class="header_actions">
+          <li class="last">
+            <%= bt_link_to nil, t("call_centre.deals.new.view.change_supplier"), "#", :onclick => "setup_step(0)" %>
+          </li>
+        </ul>
+      <% end %>
+    <% end %>
+  <% end %>
 
   <div id="supplier_email_form">
-  <%= label_tag :supplier_email, t("call_centre.deals.new.view.email") %>
-  <%= text_field_tag :supplier_email %>
-  <%= bt_link_to nil, t("call_centre.deals.new.view.check_supplier_email"), "javascript:void(0)", :onclick => "$('div#supplier_confirmation').hide();submit_query('check_email', 'call_centres')" %>
-  <%= t("call_centre.deals.new.view.or") %>
-  <%= bt_link_to nil, t("call_centre.deals.new.view.certify"), "javascript:void(0)", :onclick => "submit_query('certify', 'call_centres')" %>
+    <%= label_tag :supplier_email, t("call_centre.deals.new.view.email") %>
+    <%= text_field_tag :supplier_email %>
+    <%= bt_link_to nil, t("call_centre.deals.new.view.check_supplier_email"), "javascript:void(0)", :onclick => "$('div#supplier_confirmation').hide();submit_query('check_email', 'call_centres')" %>
+    <%= t("call_centre.deals.new.view.or") %>
+    <%= bt_link_to nil, t("call_centre.deals.new.view.certify"), "javascript:void(0)", :onclick => "submit_query('certify', 'call_centres')" %>
   </div>
   <div id="supplier_confirmation" style="margin-top:10px;display:none">
     <div id="supplier_info" style="margin-bottom: 10px"></div>
@@ -27,7 +27,7 @@
   </div>
 
   <div id="deal_form" style="display:none;">
-  <%= semantic_form_for [:call_centres, @deal], :method => :post do |form| %>
+    <%= semantic_form_for [:call_centres, @deal], :method => :post do |form| %>
       <frm title="#{t('call_centre.deals.new.view.form_title')}">
         <param:content>
           <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal} %>
@@ -41,13 +41,13 @@
           <% end %>
         </param:actions>
       </frm>
-  <% end %>
+    <% end %>
   </div>
 <% end %>
 
 <%= content_for :js do -%>
   <%= javascript_include_tag("deal_creation") %>
   <script type="text/javascript">
-      setup_step(<%= @deal.creation_step.to_i -%>)
+    setup_step(<%= @deal.creation_step.to_i -%>)
   </script>
 <% end %>

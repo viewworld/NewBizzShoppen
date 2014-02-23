@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header>testme deals</header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      testme deals
+    <% end %>
+  <% end %>
 
   <br/>
   <%= render :partial => "nested_lead_forms", :locals => {:remote => false, :nested_lead => @nested_lead, :user => @user } %>

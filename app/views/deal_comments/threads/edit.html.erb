@@ -1,25 +1,29 @@
 <%= content_for :column_mc do -%>
-  <header><%= t("comments.threads.edit.view.header", :header => @thread.commentable.header) %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("comments.threads.edit.view.header", :header => @thread.commentable.header) %>
+    <% end %>
+  <% end %>
 
-     <%= semantic_form_for :comment, @comment, :url => comments_thread_path(@comment), :html => {:method => :put} do |f| %>
-      <frm>
-        <param:header>
-        </param:header>
-        <param:content>
-            <div class="pdd_10 no_pdd_t">
-              <fieldset class="inputs labels_ta_r labels_240">
-                <ol class="align_inputs">
-                <%= f.input :title %>
-                <%= f.input :body %>
-                </ol>
-              </fieldset>
-            </div>
-        </param:content>
-        <param:actions>
-          <%= ibt(:class => "fltri", :icon => "save") do %>
-             <%= f.commit_button t("comments.threads.edit.view.update_comment_button") %>
-          <% end %>
-        </param:actions>
-      </frm>
-   <% end %>
+  <%= semantic_form_for :comment, @comment, :url => comments_thread_path(@comment), :html => {:method => :put} do |f| %>
+    <frm>
+      <param:header>
+      </param:header>
+      <param:content>
+          <div class="pdd_10 no_pdd_t">
+            <fieldset class="inputs labels_ta_r labels_240">
+              <ol class="align_inputs">
+              <%= f.input :title %>
+              <%= f.input :body %>
+              </ol>
+            </fieldset>
+          </div>
+      </param:content>
+      <param:actions>
+        <%= ibt(:class => "fltri", :icon => "save") do %>
+           <%= f.commit_button t("comments.threads.edit.view.update_comment_button") %>
+        <% end %>
+      </param:actions>
+    </frm>
+  <% end %>
 <% end %>

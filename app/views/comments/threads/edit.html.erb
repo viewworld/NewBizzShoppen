@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header><%= t("comments.threads.edit.view.header", :header => @thread.commentable.header) %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("comments.threads.edit.view.header", :header => @thread.commentable.header) %>
+    <% end %>
+  <% end %>
 
      <%= semantic_form_for :comment, @comment, :url => comments_thread_path(@comment), :html => {:method => :put} do |f| %>
       <frm>

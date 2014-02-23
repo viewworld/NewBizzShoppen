@@ -4,11 +4,12 @@
             @performance_campaigns.count > 0 and @agent_performance_all_campaigns.show_results?(search.active_results)  %>
 
         <div class="agent_performance" style="page-break-after: always;">
-          <header>
-            <param:content>
-              <%= agent.screen_name %>
-            </param:content>
-          </header>
+          <%= header do |section| %>
+            <% section.block_header do %>
+              <% agent.screen_name %>
+            <% end %>
+          <% end %>
+
           <div class="column_2to3 fltl" style="padding: 0 15px 0 0" class="agent_performance_table">
             <table class="generic" style="margin: 0px">
               <thead>

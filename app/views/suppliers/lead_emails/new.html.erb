@@ -1,39 +1,39 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
-  <header back="true"><%= t("lead_supplier.contact_lead_by_email.new.view.header") %></header>
-
-  <%= form_for @email_template_preview, :as => :email_template_preview, :url => suppliers_lead_purchase_lead_email_path() do |f| %>
-      <frm title="Email">
-        <param:content>
-
-          <div class="pdd_10 no_pdd_t">
-            <fieldset class="inputs labels_ta_r labels_240">
-              <ol>
-                <li class="string">
-                  <%= f.label :recipients, t("lead_supplier.contact_lead_by_email.new.view.recipient_label") %>
-                  <%= f.text_field :recipients, :readonly => true %>
-                </li>
-                <li class="string">
-                  <%= f.label :subject, t("lead_supplier.contact_lead_by_email.new.view.subject_label") %>
-                  <%= f.text_field :subject %>
-                </li>
-                <li class="text">
-
-                </li>
-              </ol>
-                  <%= f.label :body, t("lead_supplier.contact_lead_by_email.new.view.body_label") %>
-                  <%= f.cktext_area :body, :width => '1085px', :height => '300px', :toolbar => "Email"  %>
-            </fieldset>
-          </div>
-          
-        </param:content>
-        <param:actions>
-          <%= ibt(:class => "fltri", :icon => "mail") do %>
-            <%= f.submit t("lead_supplier.contact_lead_by_email.new.view.send_email_button") %>
-          <% end %>
-        </param:actions>
-      </frm>
-
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("lead_supplier.contact_lead_by_email.new.view.header") %>
+    <% end %>
   <% end %>
 
+  <%= form_for @email_template_preview, :as => :email_template_preview, :url => suppliers_lead_purchase_lead_email_path() do |f| %>
+    <frm title="Email">
+      <param:content>
+        <div class="pdd_10 no_pdd_t">
+          <fieldset class="inputs labels_ta_r labels_240">
+            <ol>
+              <li class="string">
+                <%= f.label :recipients, t("lead_supplier.contact_lead_by_email.new.view.recipient_label") %>
+                <%= f.text_field :recipients, :readonly => true %>
+              </li>
+              <li class="string">
+                <%= f.label :subject, t("lead_supplier.contact_lead_by_email.new.view.subject_label") %>
+                <%= f.text_field :subject %>
+              </li>
+              <li class="text">
+
+              </li>
+            </ol>
+                <%= f.label :body, t("lead_supplier.contact_lead_by_email.new.view.body_label") %>
+                <%= f.cktext_area :body, :width => '1085px', :height => '300px', :toolbar => "Email"  %>
+          </fieldset>
+        </div>
+      </param:content>
+      <param:actions>
+        <%= ibt(:class => "fltri", :icon => "mail") do %>
+          <%= f.submit t("lead_supplier.contact_lead_by_email.new.view.send_email_button") %>
+        <% end %>
+      </param:actions>
+    </frm>
+  <% end %>
 <% end %>

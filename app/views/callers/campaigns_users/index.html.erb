@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header back="true" backurl="#{edit_callers_campaign_path(@campaign)}"><%= t("campaigns_users.index.title") %></header>
+  <%= header(:back => true, :backurl => edit_callers_campaign_path(@campaign)) do |section| %>
+    <% section.block_header do %>
+      <%= t("campaigns_users.index.title") %>
+    <% end %>
+  <% end %>
 
   <table id="campaigns" class="generic">
     <thead>
@@ -22,35 +26,35 @@
     </tfoot>
     <tbody>
     <%= form_tag callers_campaign_campaigns_user_path(@campaign, "bulk"), :method => :put, :id => "campaign_user_form" do %>
-        <% @call_centres.each do |call_centre| %>
-            <tr>
-              <td class="cl"></td>
-              <td class="no_pdd_lr">
-                <%= check_box_tag "campaign_user_id_#{call_centre.id}", call_centre.id, @campaign.users.include?(call_centre), :name => "campaign_user_ids[]", :class => "cb_cu_#{call_centre.id}" %>
-              </td>
-              <td><%= call_centre.screen_name %>
-                <%= link_to_function "(select all in call centre)", "$.each($('.cb_cu_#{call_centre.id}'), function(index, val){$('#' + this.id).attr('checked', !$('#' + this.id).attr('checked'))})" if call_centre.has_role?(:call_centre) %>
-              </td>
-              <td><%#= call_centre.contacts.for_campaign(@campaign).count %></td>
-              <td><%#= call_centre.campaigns.size %></td>
-              <td class="ta_c"><%#= call_centre.contacts.count %></td>
-              <td class="cr"></td>
-            </tr>
-            <% call_centre.has_role?(:call_centre) && call_centre.subaccounts_without_locked.each do |cc_agent| %>
-                <% cc_agent = User::CallCentreAgent.find(cc_agent.id) %>
-                <tr>
-                  <td class="cl"></td>
-                  <td class="no_pdd_lr">
-                    <%= check_box_tag "campaign_user_id_#{cc_agent.id}", cc_agent.id, @campaign.users.include?(cc_agent), :name => "campaign_user_ids[]", :class => "cb_cu_#{call_centre.id}" %>
-                  </td>
-                  <td class="td_child_node"><%= cc_agent.full_name %></td>
-                  <td><%= cc_agent.contacts.for_campaign(@campaign).count %></td>
-                  <td><%= cc_agent.campaigns.size %></td>
-                  <td class="ta_c"><%= cc_agent.contacts.count %></td>
-                  <td class="cr"></td>
-                </tr>
-            <% end %>
+      <% @call_centres.each do |call_centre| %>
+        <tr>
+          <td class="cl"></td>
+          <td class="no_pdd_lr">
+            <%= check_box_tag "campaign_user_id_#{call_centre.id}", call_centre.id, @campaign.users.include?(call_centre), :name => "campaign_user_ids[]", :class => "cb_cu_#{call_centre.id}" %>
+          </td>
+          <td><%= call_centre.screen_name %>
+            <%= link_to_function "(select all in call centre)", "$.each($('.cb_cu_#{call_centre.id}'), function(index, val){$('#' + this.id).attr('checked', !$('#' + this.id).attr('checked'))})" if call_centre.has_role?(:call_centre) %>
+          </td>
+          <td><%#= call_centre.contacts.for_campaign(@campaign).count %></td>
+          <td><%#= call_centre.campaigns.size %></td>
+          <td class="ta_c"><%#= call_centre.contacts.count %></td>
+          <td class="cr"></td>
+        </tr>
+        <% call_centre.has_role?(:call_centre) && call_centre.subaccounts_without_locked.each do |cc_agent| %>
+          <% cc_agent = User::CallCentreAgent.find(cc_agent.id) %>
+          <tr>
+            <td class="cl"></td>
+            <td class="no_pdd_lr">
+              <%= check_box_tag "campaign_user_id_#{cc_agent.id}", cc_agent.id, @campaign.users.include?(cc_agent), :name => "campaign_user_ids[]", :class => "cb_cu_#{call_centre.id}" %>
+            </td>
+            <td class="td_child_node"><%= cc_agent.full_name %></td>
+            <td><%= cc_agent.contacts.for_campaign(@campaign).count %></td>
+            <td><%= cc_agent.campaigns.size %></td>
+            <td class="ta_c"><%= cc_agent.contacts.count %></td>
+            <td class="cr"></td>
+          </tr>
         <% end %>
+      <% end %>
     <% end %>
 
     <tr class="main_actions">
@@ -62,6 +66,4 @@
     </tr>
     </tbody>
   </table>
-
-
 <% end %>

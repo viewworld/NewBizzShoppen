@@ -1,31 +1,33 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
-  <header back="true">
-    <%= t('administration.news.edit.view.header', :name => @news.title) %><%= image_tag_for_locale %>
-  </header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t('administration.news.edit.view.header', :name => @news.title) %>
+      <%= image_tag_for_locale %>
+    <% end %>
+  <% end %>
 
   <%#= link_to t("common.back_link"), administration_news_index_path %>
   <%= form_for @news, :as => :news, :url => call_centres_news_path(@news), :html => {:method => :delete, :id => "delete_news_form"} do |form| %>
   <% end %>
 
   <%= semantic_form_for @news, :as => :news, :url => call_centres_news_path(@news), :html => {:method => :put} do |form| %>
-      <frm title="#{@news.title}" c="todo_delete">
-        <param:content>
-          <%= render :partial => 'form', :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
-          <%= ibt(:class => "fltri", :icon => "save") do %>
-            <%= form.submit t("administration.news.edit.view.button_save") %>
+    <frm title="#{@news.title}" c="todo_delete">
+      <param:content>
+        <%= render :partial => 'form', :locals => {:form => form} %>
+      </param:content>
+      <param:actions>
+        <%= ibt(:class => "fltri", :icon => "save") do %>
+          <%= form.submit t("administration.news.edit.view.button_save") %>
+        <% end %>
+        <%= ibt(:class => "bt_grey fltri") do %>
+          <% if @news.just_created %>
+              <%= button_to_function t("common.cancel_link"), "$('#delete_news_form').submit();"  %>
+          <% else %>
+              <%= button_to_function t("common.cancel_link"), "history.go(-1)"  %>
           <% end %>
-          <%= ibt(:class => "bt_grey fltri") do %>
-            <% if @news.just_created %>
-                <%= button_to_function t("common.cancel_link"), "$('#delete_news_form').submit();"  %>
-            <% else %>
-                <%= button_to_function t("common.cancel_link"), "history.go(-1)"  %>
-            <% end %>
-          <% end %>
-        </param:actions>
-      </frm>
+        <% end %>
+      </param:actions>
+    </frm>
   <% end %>
-
 <% end %>

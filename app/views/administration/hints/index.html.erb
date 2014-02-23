@@ -28,16 +28,11 @@
 <% end %>
 
 <%= content_for :column_mc do -%>
-
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("administration.hints.index.view.header") %>
-    </param:content>
-
-    <param:actions>
-
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <% if @hints.blank? %>
       <%= blank_state_message %>

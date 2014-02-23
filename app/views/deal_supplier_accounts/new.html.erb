@@ -1,28 +1,30 @@
 <%= content_for :column_mc do -%>
-
-  <header><%= t("deal_supplier_accounts.new.view.header") %></header>
-
-  <%= semantic_form_for @user, :url => deal_supplier_accounts_path do |form| %>
-      <frm title="#{t('deal_supplier_accounts.new.view.header')}" c="no_marg">
-        <param:content>
-          <div class="pdd_10 no_pdd_t">
-            <fieldset class="inputs labels_ta_r labels_200">
-              <ol>
-                <%= form.input :password, :hint => hint_for(@user, :password) %>
-                <%= form.input :password_confirmation, :hint => hint_for(@user, :password_confirmation) %>
-                <%= hidden_field_tag :id, params[:id] %>
-                <%= hidden_field_tag :token, params[:token] %>
-              </ol>
-            </fieldset>
-          </div>
-        </param:content>
-        <param:actions>
-          <%= ibt(:class => "fltri", :icon => "plus") do %>
-            <%= form.submit t("deal_supplier_accounts.new.view.button_create_account") %>
-          <% end %>
-          <%= bt_link_to nil, t("shared.accounts.new_account_form.button_cancel"), root_path, :class => "bt_grey fltr" %>
-        </param:actions>
-      </frm>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("deal_supplier_accounts.new.view.header") %>
+    <% end %>
   <% end %>
 
+  <%= semantic_form_for @user, :url => deal_supplier_accounts_path do |form| %>
+    <frm title="#{t('deal_supplier_accounts.new.view.header')}" c="no_marg">
+      <param:content>
+        <div class="pdd_10 no_pdd_t">
+          <fieldset class="inputs labels_ta_r labels_200">
+            <ol>
+              <%= form.input :password, :hint => hint_for(@user, :password) %>
+              <%= form.input :password_confirmation, :hint => hint_for(@user, :password_confirmation) %>
+              <%= hidden_field_tag :id, params[:id] %>
+              <%= hidden_field_tag :token, params[:token] %>
+            </ol>
+          </fieldset>
+        </div>
+      </param:content>
+      <param:actions>
+        <%= ibt(:class => "fltri", :icon => "plus") do %>
+          <%= form.submit t("deal_supplier_accounts.new.view.button_create_account") %>
+        <% end %>
+        <%= bt_link_to nil, t("shared.accounts.new_account_form.button_cancel"), root_path, :class => "bt_grey fltr" %>
+      </param:actions>
+    </frm>
+  <% end %>
 <% end %>

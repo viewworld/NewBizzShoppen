@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header><%= t("administration.featured_deals.view.index.header") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.featured_deals.view.index.header") %>
+    <% end %>
+  <% end %>
 
   <%= form_tag administration_featured_deals_path, :method => :post do %>
       <frm title="#{t('administration.featured_deals.view.index.title')}">
@@ -30,5 +34,4 @@
         </param:actions>
       </frm>
   <% end %>
-
 <% end %>

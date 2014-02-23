@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header><%= @survey.name %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= @survey.name %>
+    <% end %>
+  <% end %>
 
   <% unless @survey.welcome_page.blank? %>
     <%= @survey.welcome_page.html_safe %>

@@ -1,23 +1,20 @@
 <%= content_for :column_mc do -%>
-
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("supplier_home.show.view.header") %>
-    </param:content>
-
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <% if current_user.team_buyers? %>
-            <li><%= bt_link_to :users, t("supplier_home.show.view.add_team_member"), new_suppliers_subaccount_path(:role => "lead_user") %></li>
+          <li><%= bt_link_to :users, t("supplier_home.show.view.add_team_member"), new_suppliers_subaccount_path(:role => "lead_user") %></li>
         <% end %>
         <li class="last"><%= bt_link_to :key, t("supplier_home.show.view.sign_out"), '/logout' %></li>
       </ul>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <div class="pdd_5 no_pdd_b">
     <p><%= blurb("blurb_supplier_home#{'_logged_in' if user_signed_in?}") %></p>
-
   </div>
 
   <div class="hl" style="padding: 15px 0"></div>
@@ -77,7 +74,6 @@
     </div>
     <div class="clb"></div>
   </div>
-
 <% end %>
 
 <%= content_for :js do -%>
@@ -91,4 +87,3 @@
 
   </script>
 <% end %>
-

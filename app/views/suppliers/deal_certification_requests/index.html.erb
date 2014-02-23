@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header><%= t("supplier.deal_certification_requests.index.view.title") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("supplier.deal_certification_requests.index.view.title") %>
+    <% end %>
+  <% end %>
 
   <table id="deal_certification_requests_table" class="generic">
     <thead>

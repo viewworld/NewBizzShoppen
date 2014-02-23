@@ -1,14 +1,20 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
 
-  <header back="true"><%= t("administration.categories.edit.view.header", :category_name => @category.name) %><%= image_tag_for_locale %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.categories.edit.view.header", :category_name => @category.name) %>
+      <%= image_tag_for_locale %>
+    <% end %>
+  <% end %>
+
   <%= semantic_form_for @category, :as => :category, :url => administration_category_path(@category), :method => :post, :html => {:multipart => true} do |form| %>
       <frm title="">
         <param:header>
           <%= bt_link_to nil, t("administration.categories.edit.view.edit_email_template"), edit_administration_category_email_template_path(@category), :class => "fltr" %>
           <%= bt_link_to nil, t("administration.categories.edit.view.new_template"), new_administration_lead_template_path(:category_id => @category.id), :class => "fltr" %>
         </param:header>
-        <param:content>          
+        <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
@@ -24,7 +30,11 @@
 
   <% unless @category.lead_templates.empty? %>
       <br />
-      <header><%= t("administration.categories.edit.view.header_templates") %></header>
+      <%= header do |section| %>
+        <% section.block_header do %>
+          <%= t("administration.categories.edit.view.header_templates") %>
+        <% end %>
+      <% end %>
 
       <%= lead_templates_table @category.lead_templates, :show_checkboxes => false, :show_active_column => false, :paginate_table => false do |blocks| %>
           <% blocks.tools do |lead_template| %>
@@ -34,7 +44,7 @@
                 </li>
                 <li><%= link_to t("administration.categories.edit.view.duplicate_template"), new_administration_lead_template_path(:template_id => lead_template.id, :lead_template => {:category_id => @category.id}) %></li>
                 <li>
-                  <%= link_to t("administration.categories.edit.view.destroy_template"), administration_lead_template_path(lead_template), :method => :delete, :confirm => t("administration.categories.edit.view.destroy_template_confirmation_message") %>                  
+                  <%= link_to t("administration.categories.edit.view.destroy_template"), administration_lead_template_path(lead_template), :method => :delete, :confirm => t("administration.categories.edit.view.destroy_template_confirmation_message") %>
                 </li>
               </ul></div>
           <% end %>

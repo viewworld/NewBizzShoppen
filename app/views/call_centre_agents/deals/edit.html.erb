@@ -1,9 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header back="true" backurl="#{call_centre_agents_deals_path}">
-    <param:content>
-    <%= t("call_centre_agent.deals.edit.view.title") %>
-    </param:content>
-      <param:actions>
+  <%= header(:back => true, :backurl => call_centre_agents_deals_path) do |section| %>
+    <% section.block_header do %>
+      <%= t("call_centre_agent.deals.edit.view.title") %>
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <li>
           <% if current_user.deal_maker? %>
@@ -14,24 +14,24 @@
           <%= bt_link_to nil, t("call_centre_agent.deals.edit.view.preview"), deal_path(@deal) %>
         </li>
       </ul>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <% unless @deal.enabled? %>
     <div class="flash flash_notice"><%= t("deals.common.max_auto_buy_limit_reached") %></div>
   <% end %>
 
   <%= semantic_form_for [:call_centre_agents, @deal], :method => :put, :html => {:multipart => true} do |form| %>
-      <frm title="#{@deal.header}">
-        <param:content>
-          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal} %>
-          <%= render :partial => "shared/deals/assets_management", :locals => {:form => form, :path => "call_centre_agents_deal_assets_path",
-                                                                               :remove_path => "call_centre_agents_deal_asset_path"} %>
-        </param:content>
-        <param:actions>
-          <%= render :partial => "shared/deals/update_buttons", :locals => { :form => form, :role => "call_centre_agent" } %>
-        </param:actions>
-      </frm>
+    <frm title="#{@deal.header}">
+      <param:content>
+        <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal} %>
+        <%= render :partial => "shared/deals/assets_management", :locals => {:form => form, :path => "call_centre_agents_deal_assets_path",
+                                                                             :remove_path => "call_centre_agents_deal_asset_path"} %>
+      </param:content>
+      <param:actions>
+        <%= render :partial => "shared/deals/update_buttons", :locals => { :form => form, :role => "call_centre_agent" } %>
+      </param:actions>
+    </frm>
   <% end %>
 
   <%= render :partial => "shared/deals/leads_listing", :locals => { :deal => @deal } %>

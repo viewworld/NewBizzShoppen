@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header><%= t("devise.sessions.new.view.header") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("devise.sessions.new.view.header") %>
+    <% end %>
+  <% end %>
 
   <% if @failed_rpx %>
       <div class="grid_440 grid_c">
@@ -30,50 +34,50 @@
   <% end %>
 
   <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-      <div class="grid_440 grid_c">
-        <frm title="Type your email">
-          <div class="pdd_10">
-            <fieldset class="inputs labels_100 inputs_180 no_pdd">
-              <ol class="align_inputs no_pdd">
-                <%= render(:partial => "shared/accounts/social_login_for_sign_in") unless @failed_rpx %>
-              </ol>
-            </fieldset>
-            <fieldset class="inputs labels_100 inputs_280">
-              <ol class="align_inputs">
-                <li class="string">
-                  <%= f.label :email %>
-                  <%= f.text_field :email, :tabindex => 1 %>
-                </li>
-                <li class="password rltv">
-                  <label>
-                    <%= t("activerecord.attributes.user.password") %>
-                    <%= content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link") %>
-                  </label>
-                  <%= f.password_field :password, :tabindex => 1 %>
-                </li>
-                <% if devise_mapping.rememberable? -%>
-                    <li class="boolean">
-                      <%= f.check_box :remember_me %>
-                      <%= f.label :remember_me %>
-                    </li>
-                <% end -%>
-                <li class="commit">
-                  <%= ibt do %>
-                    <%= f.submit "Sign in" %>
-                  <% end %>
-                  <% unless @failed_rpx %>
-                      <% if session[:site] == "fairleads" %>
-                        <p>or <%= link_to t("supplier_home.show.view.create_new_supplier_account"), new_supplier_account_path %></p>
-                      <% else %>
-                        <p>or <%= link_to t("supplier_home.show.view.create_new_membership_account"), new_member_account_path %></p>
-                      <% end %>
-                  <% end %>
-                </li>
-              </ol>
-            </fieldset>
-          </div>
-        </frm>
-      </div>
+    <div class="grid_440 grid_c">
+      <frm title="Type your email">
+        <div class="pdd_10">
+          <fieldset class="inputs labels_100 inputs_180 no_pdd">
+            <ol class="align_inputs no_pdd">
+              <%= render(:partial => "shared/accounts/social_login_for_sign_in") unless @failed_rpx %>
+            </ol>
+          </fieldset>
+          <fieldset class="inputs labels_100 inputs_280">
+            <ol class="align_inputs">
+              <li class="string">
+                <%= f.label :email %>
+                <%= f.text_field :email, :tabindex => 1 %>
+              </li>
+              <li class="password rltv">
+                <label>
+                  <%= t("activerecord.attributes.user.password") %>
+                  <%= content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link") %>
+                </label>
+                <%= f.password_field :password, :tabindex => 1 %>
+              </li>
+              <% if devise_mapping.rememberable? -%>
+                  <li class="boolean">
+                    <%= f.check_box :remember_me %>
+                    <%= f.label :remember_me %>
+                  </li>
+              <% end -%>
+              <li class="commit">
+                <%= ibt do %>
+                  <%= f.submit "Sign in" %>
+                <% end %>
+                <% unless @failed_rpx %>
+                    <% if session[:site] == "fairleads" %>
+                      <p>or <%= link_to t("supplier_home.show.view.create_new_supplier_account"), new_supplier_account_path %></p>
+                    <% else %>
+                      <p>or <%= link_to t("supplier_home.show.view.create_new_membership_account"), new_member_account_path %></p>
+                    <% end %>
+                <% end %>
+              </li>
+            </ol>
+          </fieldset>
+        </div>
+      </frm>
+    </div>
   <% end %>
 
   <%= render :partial => "devise/shared/links" %>

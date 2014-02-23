@@ -1,16 +1,20 @@
 <%= content_for :column_mc do -%>
-  <header back="true"><%= t("administration.payment_transactions.edit.view.header", :number => @payment_transaction.invoice.id, :name => @payment_transaction.invoice.customer_name) %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.payment_transactions.edit.view.header", :number => @payment_transaction.invoice.id, :name => @payment_transaction.invoice.customer_name) %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for @payment_transaction, :url => administration_invoicing_payment_transaction_path(@payment_transaction), :as => :payment_transaction do |form| %>
-      <frm title="#{t('administration.payment_transactions.edit.view.edit')}">
-        <param:content>
-          <%= render :partial => 'form', :locals => { :form => form } %>
-        </param:content>
-        <param:actions>
-          <%= ibt(:class => "fltri", :icon => "save") do %>
-            <%= form.submit t("administration.payment_transactions.edit.view.button_update") %>
-          <% end %>
-        </param:actions>
-      </frm>
+    <frm title="#{t('administration.payment_transactions.edit.view.edit')}">
+      <param:content>
+        <%= render :partial => 'form', :locals => { :form => form } %>
+      </param:content>
+      <param:actions>
+        <%= ibt(:class => "fltri", :icon => "save") do %>
+          <%= form.submit t("administration.payment_transactions.edit.view.button_update") %>
+        <% end %>
+      </param:actions>
+    </frm>
   <% end %>
 <% end %>

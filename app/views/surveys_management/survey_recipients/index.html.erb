@@ -1,18 +1,16 @@
 <%= content_for :column_mc do -%>
-  <header back="true">
-    <param:content>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
       <%= t("surveys_management.survey_recipients.index.view.header", :survey_name => @survey.name) %>
-    </param:content>
-
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <li class="last"><%= bt_link_to :download, t('surveys_management.survey_recipients.index.view.export'),
-                                        surveys_management_survey_survey_recipients_export_path(@survey, :format => 'xls'),
-                                        :method => :post %></li>
+          surveys_management_survey_survey_recipients_export_path(@survey, :format => 'xls'),
+          :method => :post %></li>
       </ul>
-
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <% if @survey_recipients.blank? %>
       <%= blank_state_message %>

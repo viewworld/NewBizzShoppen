@@ -1,29 +1,23 @@
 <%= content_for :column_mc do -%>
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("paypal_unpaid_invoices.show.view.header", :number => @invoice.full_number) %>
-    </param:content>
+    <% end %>
+  <% end %>
 
-    <param:actions>
-    </param:actions>
-  </header>
-
-
-
-<div class="frm_tiny pdd_15 ta_c">
+  <div class="frm_tiny pdd_15 ta_c">
     <h2><%= t("paypal_unpaid_invoices.show.view.message", :number => @invoice.full_number) %></h2>
 
     <h2><%= t("paypal_unpaid_invoices.show.view.amount") %> <%= as_currency(@invoice.total(true), @invoice.currency) %></h2>
     <div class="pdd_10 grid_50 grid_c">
-    <%= form_tag APP_CONFIG[:paypal_url] do %>
+      <%= form_tag APP_CONFIG[:paypal_url] do %>
         <%= hidden_field_tag :cmd, "_s-xclick" %>
         <%= hidden_field_tag :encrypted, @invoice.paypal_encrypted(root_url, payment_notifications_url(:secret => APP_CONFIG[:paypal_secret])) %>
         <%= ibt(:class => "fltri") do %>
           <%= submit_tag t("paypal_unpaid_invoices.show.view.pay_invoice") %>
         <% end %>
-    <% end %>
+      <% end %>
     </div>
     <div class="clb"></div>
-
   </div>
 <% end %>

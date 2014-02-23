@@ -1,20 +1,19 @@
 <%= content_for :column_mc do -%>
 
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("administration.sellers.index.view.header") %>
-    </param:content>
-
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <%= form_tag new_administration_seller_path, :method => :get, :id => "form_new_seller" do %>
-          <ul class="header_actions">
-            <li class="last">
-              <%= bt_link_to :user, t("administration.sellers.index.view.add_seller"), "javascript:void(0)", :onclick => "$('#form_new_seller').submit()" %>
-            </li>
-          </ul>
+        <ul class="header_actions">
+          <li class="last">
+            <%= bt_link_to :user, t("administration.sellers.index.view.add_seller"), "javascript:void(0)", :onclick => "$('#form_new_seller').submit()" %>
+          </li>
+        </ul>
       <% end %>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <% unless @sellers.any? %>
       <%= blank_state_message :msg => t("administration.sellers.index.view.no_sellers_defined") %>

@@ -40,32 +40,34 @@
     </div>
   </div>
 <% end %>
+
 <%= content_for :column_mc do -%>
-  <header><%= t("lead_user.lead_requests.index.view.header") %></header>
-
-  <% if @lead_requests.blank? %>
-      <%= blank_state_message %>
-  <% else %>
-      <%= bulk_form do %>
-          <%= lead_requests_listing @lead_requests, :show_checkboxes => true do |blocks| %>
-
-              <% blocks.tools do |lead| %>
-                  <% if current_user %>
-                      <% if current_user.has_role?(:lead_user) %>
-                          <%= bt_link_to nil, t("lead_user.lead_requests.index.view.destroy_lead_request"), lead_users_lead_request_path(:id => lead.id), :method => :delete %>
-                      <% end %>
-                  <% end %>
-
-              <% end %>
-
-              <% if user_signed_in? && current_user.has_role?(:lead_user) %>
-                  <% blocks.bottom do %>
-                      <%= hidden_field_tag :route_to %>
-                      <%= bt_link_to :remove, t("lead_user.lead_requests.index.view.button_bulk_destroy_lead_request"), "javascript:void(0)", :onclick => "submitBulkForm('#{lead_users_bulk_lead_requests_path}#DELETE');" %>
-                  <% end %>
-              <% end %>
-          <% end %>
-      <% end %>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("lead_user.lead_requests.index.view.header") %>
+    <% end %>
   <% end %>
 
+  <% if @lead_requests.blank? %>
+    <%= blank_state_message %>
+  <% else %>
+    <%= bulk_form do %>
+      <%= lead_requests_listing @lead_requests, :show_checkboxes => true do |blocks| %>
+        <% blocks.tools do |lead| %>
+          <% if current_user %>
+            <% if current_user.has_role?(:lead_user) %>
+              <%= bt_link_to nil, t("lead_user.lead_requests.index.view.destroy_lead_request"), lead_users_lead_request_path(:id => lead.id), :method => :delete %>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <% if user_signed_in? && current_user.has_role?(:lead_user) %>
+          <% blocks.bottom do %>
+            <%= hidden_field_tag :route_to %>
+            <%= bt_link_to :remove, t("lead_user.lead_requests.index.view.button_bulk_destroy_lead_request"), "javascript:void(0)", :onclick => "submitBulkForm('#{lead_users_bulk_lead_requests_path}#DELETE');" %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
 <% end %>

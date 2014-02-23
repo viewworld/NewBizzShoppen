@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header back="true"><%= t('news.show.view.header') %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t('news.show.view.header') %>
+    <% end %>
+  <% end %>
 
   <frm title="#{@news.title}">
     <div class="pdd_10">

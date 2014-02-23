@@ -28,18 +28,16 @@
 <% end %>
 
 <%= content_for :column_mc do -%>
-  <header>
-     <param:content>
-       <%= t("administration.subscription_plans.index.view.header") %>
-     </param:content>
-
-     <param:actions>
-       <ul class="header_actions">
-         <li class="last"><%= bt_link_to :plus, t("administration.subscription_plans.index.view.new_subscription_plan"), new_administration_subscription_plan_path %></li>
-       </ul>
-
-     </param:actions>
-  </header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.subscription_plans.index.view.header") %>
+    <% end %>
+    <% section.block_actions do %>
+      <ul class="header_actions">
+        <li class="last"><%= bt_link_to :plus, t("administration.subscription_plans.index.view.new_subscription_plan"), new_administration_subscription_plan_path %></li>
+      </ul>
+    <% end %>
+  <% end %>
 
   <% if @subscription_plans.empty?  %>
       <%= blank_state_message %>

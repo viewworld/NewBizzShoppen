@@ -1,50 +1,50 @@
 <%= content_for :column_mc do -%>
-  <header back="true">
-    <param:content>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
       Call Results for campaign "<%= @campaign %>"
-    </param:content>
-  </header>
+    <% end %>
+  <% end %>
 
   <% if @call_results.empty? %>
-      <%= blank_state_message %>
+    <%= blank_state_message %>
   <% else %>
-      <table class="generic call_results">
-        <thead>
-        <tr>
-          <th class="hl"></th>
-          <th>Contact</th>
-          <th>Result</th>
-          <th>PayOut</th>
-          <th>Created at</th>
-          <th></th>
-          <th class="hr"></th>
-        </tr>
-        </thead>
-        <tbody>
-          <% @call_results.each do |call_result| %>
-            <tr>
-              <td></td>
-              <td><%= call_result.contact ? call_result.contact.contact_name : "[Contact deleted]" %></td>
-              <td><%= (call_result.contact and call_result.contact.leads.first) ? link_to(call_result.result.name, edit_agents_lead_path(call_result.contact.leads.first), :class => "default_action")  : call_result.result.name %> </td>
-              <td><%= as_currency(call_result.euro_payout, Currency.euro, 0) %></td>
-              <td><%= format_date call_result.created_at, true %></td>
-              <td><%= image_tag('icons/red_flag.png') if call_result.contact and call_result.contact.leads.first and call_result.contact.leads.first.has_unsatisfactory_rating %></td>
-              <td></td>
-            </tr>
-          <% end %>
-        </tbody>
-        <tfoot>
-            <td class="fl"></td>
-            <td colspan="5"></td>
-            <td class="fr"></td>
-        </tfoot>
-        <% if will_paginate @call_results %>
-            <tr class="pagination">
-              <td colspan="7" class="ta_c">
-                <%= will_paginate @call_results, :previous_label => '&laquo;', :next_label => '&raquo;' %>
-              </td>
-            </tr>
+    <table class="generic call_results">
+      <thead>
+      <tr>
+        <th class="hl"></th>
+        <th>Contact</th>
+        <th>Result</th>
+        <th>PayOut</th>
+        <th>Created at</th>
+        <th></th>
+        <th class="hr"></th>
+      </tr>
+      </thead>
+      <tbody>
+        <% @call_results.each do |call_result| %>
+          <tr>
+            <td></td>
+            <td><%= call_result.contact ? call_result.contact.contact_name : "[Contact deleted]" %></td>
+            <td><%= (call_result.contact and call_result.contact.leads.first) ? link_to(call_result.result.name, edit_agents_lead_path(call_result.contact.leads.first), :class => "default_action")  : call_result.result.name %> </td>
+            <td><%= as_currency(call_result.euro_payout, Currency.euro, 0) %></td>
+            <td><%= format_date call_result.created_at, true %></td>
+            <td><%= image_tag('icons/red_flag.png') if call_result.contact and call_result.contact.leads.first and call_result.contact.leads.first.has_unsatisfactory_rating %></td>
+            <td></td>
+          </tr>
         <% end %>
-      </table>
+      </tbody>
+      <tfoot>
+          <td class="fl"></td>
+          <td colspan="5"></td>
+          <td class="fr"></td>
+      </tfoot>
+      <% if will_paginate @call_results %>
+          <tr class="pagination">
+            <td colspan="7" class="ta_c">
+              <%= will_paginate @call_results, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+            </td>
+          </tr>
+      <% end %>
+    </table>
   <% end %>
 <% end %>

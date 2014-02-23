@@ -34,11 +34,11 @@
 <% end %>
 
 <%= content_for :column_mc do -%>
-  <header>
-      <param:content>
-        <%= t("administration.results.index.view.header") %>
-      </param:content>
-   </header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.results.index.view.header") %>
+    <% end %>
+  <% end %>
 
   <% if @results.blank? %>
       <%= blank_state_message %>

@@ -1,9 +1,13 @@
 <%= content_for :column_mc do -%>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("suppliers_advanced_import.show.view.header") %>
+    <% end %>
+  <% end %>
 
-  <header><%= t("suppliers_advanced_import.show.view.header") %></header>
   <% objects = LeadCategory.without_locked.with_agent_unique(current_user).without_supplier_unique.all %>
 
-  <% form_tag choose_suppliers_advanced_import_path, :method => :post, :multipart => true, :id => "advanced_import_form" do %>
+  <%= form_tag choose_suppliers_advanced_import_path, :method => :post, :multipart => true, :id => "advanced_import_form" do %>
       <frm title="#{t('suppliers_advanced_import.show.view.title')}">
         <param:content>
           <div class="pdd_10 no_pdd_t">
@@ -52,5 +56,4 @@
       }
 
   </script>
-
 <% end %>

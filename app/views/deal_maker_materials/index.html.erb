@@ -1,12 +1,10 @@
 <%= content_for :column_mc do -%>
-
-  <header back="true">
-    <param:content>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
       <%= t("materials.views.index.header", :campaign => @resource.full_name) %>
-    </param:content>
-  </header>
+    <% end %>
+  <% end %>
 
   <%= render :partial => "shared/materials/form", :locals => { :material => @material, :materials => @materials, :is_default_enabled => false,
                                                                :upload_url => :deal_maker_materials_path, :delete_url => :deal_maker_material_path } %>
-
 <% end %>

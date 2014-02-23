@@ -1,115 +1,123 @@
 <%= content_for :column_mc do -%>
-  <header back="true"><%= raw t("administration.users.edit.view.title_with_role", :role => @user.roles_as_text, :name => screen_name_with_company_name(@user)) %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <% raw t("administration.users.edit.view.title_with_role", :role => @user.roles_as_text, :name => screen_name_with_company_name(@user)) %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for @user, :url => administration_user_path, :method => :put do |form| %>
-      <frm title="">
-        <param:header>
-          <%= bt_link_to nil, t("administration.users.edit.view.view_user_debts"), administration_invoicing_upcoming_invoices_path(:search => {:with_keyword => @user.email}), :class => "fltr" %>
-          <%= bt_link_to nil, t("administration.users.edit.view.view_user_invoices"), administration_invoicing_invoices_path(:search => {:with_keyword => @user.email}), :class => "fltr" %>
-          <% if @user.active_subscription.present? and !@user.active_subscription.is_free? and !@user.active_subscription.cancelled? %>
-              <%= bt_link_to nil, t("administration.users.stop_subscription"), administration_user_path(@user, {"user_#{@user.role.to_s}".to_sym  => {:cancel_subscription => true}}), {:method => :put, :confirm => t("administration.users.index.view.delete_confirmation_message"), :class => "fltr"} %>
-          <% end %>
-          <% if @user.has_role?(:supplier) and !@user.has_role?(:category_supplier) %>
-              <%= bt_link_to nil, t("administration.users.edit.view.change_supplier_interests_link"), edit_administration_supplier_interest_path(@user), :class => "fltr" %>
-          <% end %>
-          <%= bt_link_to nil, t("administration.users.edit.view.change_password_link"), new_administration_user_password_path(@user), :class => "fltr" %>
-          <%= bt_link_to nil, t("administration.users.edit.view.reset_password_link"), administration_user_password_path(@user), :method => :delete, :class => "fltr" %>
-          <% if @user.has_role?(:call_centre_agent) %>
-              <%= bt_link_to nil, t("administration.users.edit.view.view_created_leads"), administration_leads_path(:search => {:with_created_by => @user}), :class => "fltr" %>
-          <% end %>
-          <% if @user.has_role?(:category_supplier) %>
-              <%= bt_link_to nil, t("administration.users.edit.view.change_to_regular_supplier"), administration_user_path(@user, "user_#{@user.role}" => {:roles_to_remove => [:category_supplier]}), :method => :put, :class => "fltr" %>
-          <% elsif @user.has_role?(:supplier) %>
-              <%= bt_link_to nil, t("administration.users.edit.view.change_to_category_supplier"), administration_user_path(@user, "user_#{@user.role}" => {:roles_to_add => [:category_supplier]}), :method => :put, :class => "fltr" %>
-          <% end %>
-          <% unless @user.id == current_user.id %>
-              <%= bt_link_to nil, @user.locked_at.blank? ? t("administration.users.index.view.lock") : t("administration.users.index.view.unlock"), (@user.locked_at.blank? ? lock_administration_user_path(@user) : unlock_administration_user_path(@user)), {:class => "fltr"} %>
-          <% end %>
-          <% if @user.newsletter_manager? %>
-              <%= bt_link_to nil, t("administration.users.index.view.go_to_campaign_monitor"), @user.link_to_campaign_monitor_account, {:target => "_blank", :class => "fltr"} %>
-          <% end %>
-        </param:header>
-        <param:content>
-          <%= render :partial => 'form', :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
-          <%= ibt(:class => "fltri", :icon => "save") do %>
-            <%= form.submit t("administration.users.edit.view.button_update_user"), :onclick => "add_unique_to_interests();select_options_to_submit('user_supplier_category_ids_');select_options_to_submit('user_#{@user.role}_unique_category_ids_');select_options_to_submit('user_category_supplier_buying_category_ids_'); " %>
-          <% end %>
-          <%= ibt(:class => "bt_grey fltri") do %>
-            <%= button_to_function t("administration.users.edit.view.button_cancel"), "history.go(-1)" %>
-          <% end %>
-        </param:actions>
-      </frm>
+    <frm title="">
+      <param:header>
+        <%= bt_link_to nil, t("administration.users.edit.view.view_user_debts"), administration_invoicing_upcoming_invoices_path(:search => {:with_keyword => @user.email}), :class => "fltr" %>
+        <%= bt_link_to nil, t("administration.users.edit.view.view_user_invoices"), administration_invoicing_invoices_path(:search => {:with_keyword => @user.email}), :class => "fltr" %>
+        <% if @user.active_subscription.present? and !@user.active_subscription.is_free? and !@user.active_subscription.cancelled? %>
+            <%= bt_link_to nil, t("administration.users.stop_subscription"), administration_user_path(@user, {"user_#{@user.role.to_s}".to_sym  => {:cancel_subscription => true}}), {:method => :put, :confirm => t("administration.users.index.view.delete_confirmation_message"), :class => "fltr"} %>
+        <% end %>
+        <% if @user.has_role?(:supplier) and !@user.has_role?(:category_supplier) %>
+            <%= bt_link_to nil, t("administration.users.edit.view.change_supplier_interests_link"), edit_administration_supplier_interest_path(@user), :class => "fltr" %>
+        <% end %>
+        <%= bt_link_to nil, t("administration.users.edit.view.change_password_link"), new_administration_user_password_path(@user), :class => "fltr" %>
+        <%= bt_link_to nil, t("administration.users.edit.view.reset_password_link"), administration_user_password_path(@user), :method => :delete, :class => "fltr" %>
+        <% if @user.has_role?(:call_centre_agent) %>
+            <%= bt_link_to nil, t("administration.users.edit.view.view_created_leads"), administration_leads_path(:search => {:with_created_by => @user}), :class => "fltr" %>
+        <% end %>
+        <% if @user.has_role?(:category_supplier) %>
+            <%= bt_link_to nil, t("administration.users.edit.view.change_to_regular_supplier"), administration_user_path(@user, "user_#{@user.role}" => {:roles_to_remove => [:category_supplier]}), :method => :put, :class => "fltr" %>
+        <% elsif @user.has_role?(:supplier) %>
+            <%= bt_link_to nil, t("administration.users.edit.view.change_to_category_supplier"), administration_user_path(@user, "user_#{@user.role}" => {:roles_to_add => [:category_supplier]}), :method => :put, :class => "fltr" %>
+        <% end %>
+        <% unless @user.id == current_user.id %>
+            <%= bt_link_to nil, @user.locked_at.blank? ? t("administration.users.index.view.lock") : t("administration.users.index.view.unlock"), (@user.locked_at.blank? ? lock_administration_user_path(@user) : unlock_administration_user_path(@user)), {:class => "fltr"} %>
+        <% end %>
+        <% if @user.newsletter_manager? %>
+            <%= bt_link_to nil, t("administration.users.index.view.go_to_campaign_monitor"), @user.link_to_campaign_monitor_account, {:target => "_blank", :class => "fltr"} %>
+        <% end %>
+      </param:header>
+      <param:content>
+        <%= render :partial => 'form', :locals => {:form => form} %>
+      </param:content>
+      <param:actions>
+        <%= ibt(:class => "fltri", :icon => "save") do %>
+          <%= form.submit t("administration.users.edit.view.button_update_user"), :onclick => "add_unique_to_interests();select_options_to_submit('user_supplier_category_ids_');select_options_to_submit('user_#{@user.role}_unique_category_ids_');select_options_to_submit('user_category_supplier_buying_category_ids_'); " %>
+        <% end %>
+        <%= ibt(:class => "bt_grey fltri") do %>
+          <%= button_to_function t("administration.users.edit.view.button_cancel"), "history.go(-1)" %>
+        <% end %>
+      </param:actions>
+    </frm>
   <% end %>
 
   <% if @user.active_subscription and !@user.new_record? %>
-      <frm title="#{t('administration.users.edit.view.subscription_management')}">
-        <param:content>
-          <div class="pdd_10">
-            <p><%= t("administration.users.edit.view.active_subscription") %> <%= @user.active_subscription.name %></p>
-            <% unless @user.active_subscription.is_free? %>
-                <p><%= t("administration.users.edit.view.active_subscription_period") %>: <%= "#{@user.active_subscription.start_date.to_s} - #{@user.active_subscription.end_date.to_s}, #{t("administration.users.edit.view.active_subscription_days_left", :number => @user.active_subscription.days_left)}" %></p>
-            <% end %>
+    <frm title="#{t('administration.users.edit.view.subscription_management')}">
+      <param:content>
+        <div class="pdd_10">
+          <p><%= t("administration.users.edit.view.active_subscription") %> <%= @user.active_subscription.name %></p>
+          <% unless @user.active_subscription.is_free? %>
+              <p><%= t("administration.users.edit.view.active_subscription_period") %>: <%= "#{@user.active_subscription.start_date.to_s} - #{@user.active_subscription.end_date.to_s}, #{t("administration.users.edit.view.active_subscription_days_left", :number => @user.active_subscription.days_left)}" %></p>
+          <% end %>
 
-            <% if !@user.can_upgrade_or_downgrade_subscription? %>
-                <p><%= t("administration.users.edit.view.cant_upgrade_nor_downgrade") %></p>
-            <% elsif !@user.can_upgrade_subscription? %>
-                <p><%= t("administration.users.edit.view.cant_upgrade") %></p>
-            <% elsif !@user.can_upgrade_subscription? %>
-                <p><%= t("administration.users.edit.view.cant_downgrade") %></p>
-            <% end %>
+          <% if !@user.can_upgrade_or_downgrade_subscription? %>
+              <p><%= t("administration.users.edit.view.cant_upgrade_nor_downgrade") %></p>
+          <% elsif !@user.can_upgrade_subscription? %>
+              <p><%= t("administration.users.edit.view.cant_upgrade") %></p>
+          <% elsif !@user.can_upgrade_subscription? %>
+              <p><%= t("administration.users.edit.view.cant_downgrade") %></p>
+          <% end %>
 
-            <% if @user.active_subscription.is_today_in_free_period? %>
-                <h3><%= t("administration.users.edit.view.in_free_period", :free_period_date => @user.active_subscription.free_subscription_end_date) %></h3>
-            <% end %>
+          <% if @user.active_subscription.is_today_in_free_period? %>
+              <h3><%= t("administration.users.edit.view.in_free_period", :free_period_date => @user.active_subscription.free_subscription_end_date) %></h3>
+          <% end %>
 
-            <% if next_subscription = @user.next_subscription %>
-                <p><%= t("administration.users.edit.view.next_subscription_plan", :next_plan_name => next_subscription.subscription_plan.name, :next_plan_active_from => next_subscription.start_date) %></p>
-            <% elsif @user.active_subscription.will_prolong? %>
-                <p><%= t("administration.users.edit.view.users_active_subscription_will_prolong", :prolong_date => @user.active_subscription.end_date + 1.day) %> <%= t("administration.users.edit.view.as_free_subscription") if @user.active_subscription.cancelled? %></p>
-            <% end %>
+          <% if next_subscription = @user.next_subscription %>
+              <p><%= t("administration.users.edit.view.next_subscription_plan", :next_plan_name => next_subscription.subscription_plan.name, :next_plan_active_from => next_subscription.start_date) %></p>
+          <% elsif @user.active_subscription.will_prolong? %>
+              <p><%= t("administration.users.edit.view.users_active_subscription_will_prolong", :prolong_date => @user.active_subscription.end_date + 1.day) %> <%= t("administration.users.edit.view.as_free_subscription") if @user.active_subscription.cancelled? %></p>
+          <% end %>
 
-            <br/>
+          <br/>
 
-            <h3><%= t("administration.users.edit.view.change_users_subscription") %></h3>
-            <% @available_subscriptions = SubscriptionPlan.active.without_paypal.exclude_current_plan(@user.active_subscription_plan).for_role(@user.with_role.role).ascend_by_billing_price %>
-            <% if @user.subscriptions.future.count > 0 %>
-                <%= t("administration.users.edit.view.remove_scheduled_subscriptions") %>
-                <%= semantic_form_for :subscription, :url => administration_user_change_subscription_plan_path(@user), :html => {:method => :delete} do |f| %>
-                    <%= f.inputs do %>
-                        <li class="commit no_marg">
-                          <%= ibt do %>
-                            <%= f.submit t("administration.users.edit.view.remove_scheduled") %>
-                          <% end %>
-                        </li>
-                    <% end %>
-                <% end %>
-            <% elsif @available_subscriptions.count.eql?(0) %>
-                <%= t("administration.users.edit.view.no_other_subscription_plans_for_user") %>
-            <% else %>
-                <%= semantic_form_for Subscription.new, :url => administration_user_change_subscription_plan_path(@user) do |f| %>
-                    <%= f.inputs do %>
-                        <%= f.input :subscription_plan_id, :collection => @available_subscriptions.map { |s| [s.name, s.id] }, :include_blank => false %>
-                        <%= f.input :start_date, :as => :datepicker, :input_html => {:value => (@user.active_subscription.end_date||Date.today)+1}, :wrapper_html => {:class => "date"} %>
-                        <li class="commit">
-                          <%= ibt do %>
-                            <%= f.submit t("administration.users.edit.view.change") %>
-                          <% end %>
-                        </li>
-                    <% end %>
-                <% end %>
-            <% end %>
-          </div>
-        </param:content>
-      </frm>
+          <h3><%= t("administration.users.edit.view.change_users_subscription") %></h3>
+          <% @available_subscriptions = SubscriptionPlan.active.without_paypal.exclude_current_plan(@user.active_subscription_plan).for_role(@user.with_role.role).ascend_by_billing_price %>
+          <% if @user.subscriptions.future.count > 0 %>
+              <%= t("administration.users.edit.view.remove_scheduled_subscriptions") %>
+              <%= semantic_form_for :subscription, :url => administration_user_change_subscription_plan_path(@user), :html => {:method => :delete} do |f| %>
+                  <%= f.inputs do %>
+                      <li class="commit no_marg">
+                        <%= ibt do %>
+                          <%= f.submit t("administration.users.edit.view.remove_scheduled") %>
+                        <% end %>
+                      </li>
+                  <% end %>
+              <% end %>
+          <% elsif @available_subscriptions.count.eql?(0) %>
+              <%= t("administration.users.edit.view.no_other_subscription_plans_for_user") %>
+          <% else %>
+              <%= semantic_form_for Subscription.new, :url => administration_user_change_subscription_plan_path(@user) do |f| %>
+                  <%= f.inputs do %>
+                      <%= f.input :subscription_plan_id, :collection => @available_subscriptions.map { |s| [s.name, s.id] }, :include_blank => false %>
+                      <%= f.input :start_date, :as => :datepicker, :input_html => {:value => (@user.active_subscription.end_date||Date.today)+1}, :wrapper_html => {:class => "date"} %>
+                      <li class="commit">
+                        <%= ibt do %>
+                          <%= f.submit t("administration.users.edit.view.change") %>
+                        <% end %>
+                      </li>
+                  <% end %>
+              <% end %>
+          <% end %>
+        </div>
+      </param:content>
+    </frm>
   <% end %>
 
   <% if @user.subaccounts.present? %>
-      <br/>
-      <header><%= t("administration.users.edit.view.subaccounts_list") %></header>
-      <%= bulk_form do %>
-          <%= render :partial => "users_table", :locals => {:users => @user.subaccounts, :subaccounts_table => true} %>
+    <br/>
+    <%= header do |section| %>
+      <% section.block_header do %>
+        <%= t("administration.users.edit.view.subaccounts_list") %>
       <% end %>
+    <% end %>
+    <%= bulk_form do %>
+        <%= render :partial => "users_table", :locals => {:users => @user.subaccounts, :subaccounts_table => true} %>
+    <% end %>
   <% end %>
 <% end %>

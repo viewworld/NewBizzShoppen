@@ -1,11 +1,15 @@
 <%= content_for :column_mc do -%>
-  <header><%= t("unconfirmed_paypal_subscriptions.show.view.header") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("unconfirmed_paypal_subscriptions.show.view.header") %>
+    <% end %>
+  <% end %>
 
   <div class="frm_tiny pdd_15 ta_c">
   <% if @paypal_recurring.checkout? %>
     <h2><%= t("unconfirmed_paypal_subscriptions.show.view.message", :subscription => current_user.active_subscription.name) %></h2>
     <p class="pdd_10 grid_c">
-      <%= bt_link_to nil, t("unconfirmed_paypal_subscriptions.show.view.button_confirm"), @paypal_recurring.checkout_url, :method => :get %>        
+      <%= bt_link_to nil, t("unconfirmed_paypal_subscriptions.show.view.button_confirm"), @paypal_recurring.checkout_url, :method => :get %>
     </p>
   <% else %>
     <h2><%= t("unconfirmed_paypal_subscriptions.show.view.message_failure", :subscription => current_user.active_subscription.name) %></h2>
@@ -14,5 +18,4 @@
   <% end %>
     <div class="clb"></div>
   </div>
-
 <% end %>

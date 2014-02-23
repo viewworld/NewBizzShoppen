@@ -1,11 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header back="true" backurl="#{agent_home_path}">
-
-    <param:content>
+  <%= header(:back => true, :backurl => agent_home_path) do |section| %>
+    <% section.block_header do %>
       <%= t("callers.history.view.header") %>
-    </param:content>
-
-  </header>
+    <% end %>
+  <% end %>
 
   <table class="generic leads_table">
     <thead>
@@ -42,5 +40,4 @@
   </table>
 
   <%= will_paginate @history, :previous_label => '&laquo;', :next_label => '&raquo;' %>
-
 <% end %>

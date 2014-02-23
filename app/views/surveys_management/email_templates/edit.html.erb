@@ -1,7 +1,13 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
   <%= javascript_include_tag "popup_email_template_editor" %>
-  <header back="true"><%= t("email_templates.edit.view.title", :name => @email_template.subject) %><%= image_tag_for_locale %></header>
+
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("email_templates.edit.view.title", :name => @email_template.subject) %>
+      <%= image_tag_for_locale %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for @email_template, :url => surveys_management_survey_email_template_path(@survey, @email_template), :method => :put do |form| %>
       <frm title="#{@email_template.subject}">

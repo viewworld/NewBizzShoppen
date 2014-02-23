@@ -1,5 +1,8 @@
 <%= content_for :column_mc do -%>
-  <header back="true"><%= t("comments.threads.show.view.header", :title => @thread.title, :header => @thread.commentable.header) %></header>
-    <%= render :partial => 'comments/shared/thread', :locals => {:thread => @thread} %>
-
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("comments.threads.show.view.header", :title => @thread.title, :header => @thread.commentable.header) %>
+    <% end %>
+  <% end %>
+  <%= render :partial => 'comments/shared/thread', :locals => {:thread => @thread} %>
 <% end %>

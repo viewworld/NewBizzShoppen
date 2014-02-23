@@ -1,9 +1,11 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
-  <header back="true">
-    <%= t('administration.hints.edit.view.header', :name => @article.title) %>
-    <%= image_tag("languages/flag_#{I18n.locale}.png") %>
-  </header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t('administration.hints.edit.view.header', :name => @article.title) %>
+      <% image_tag("languages/flag_#{I18n.locale}.png") %>
+    <% end %>
+  <% end %>
 
   <%= form_for @article, :as => :article, :url => administration_hint_path(@article), :html => {:method => :delete, :id => "delete_article_form"} do |form| %>
   <% end %>

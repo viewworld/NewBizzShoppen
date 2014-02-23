@@ -1,87 +1,92 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag 'lead_template_functions.js' %>
-  <header back="true"><%= @deal.header %><%= image_tag_for_locale %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= @deal.header %>
+      <%= image_tag_for_locale %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for [:members, @lead], :method => :post do |form| %>
-      <frm title="#{t('deals.new.view.frame_header')}" c="rltv">
-        <param:content>
-          <% if @deal.premium_deal? %>
-              <div class="splash splash_premium">
-            <span>
-              <%= t("deals.index.view.premium_deal_splash_label") %>
-            </span>
-              </div>
-          <% elsif @deal.group_deal? %>
-              <div class="splash splash_group">
-            <span>
-              <%= t("deals.index.view.group_deal_splash_label") %>
-            </span>
-              </div>
-          <% else %>
-              <div class="splash splash_fair">
-            <span>
-              <%= t("deals.index.view.fair_deal_splash_label") %>
-            </span>
-              </div>
-          <% end %>
-          <div class="column_left">
-            <div id="step_1">
-              <%= render :partial => "form1", :locals => {:form => form} %>
+    <frm title="#{t('deals.new.view.frame_header')}" c="rltv">
+      <param:content>
+        <% if @deal.premium_deal? %>
+            <div class="splash splash_premium">
+          <span>
+            <%= t("deals.index.view.premium_deal_splash_label") %>
+          </span>
             </div>
-            <%= hidden_field_tag :deal_id, params[:deal_id] %>
-            <div class="clb"></div>
-
-            <%= render :partial => "form2", :locals => {:form => form} %>
-          </div>
-          <div class="column_right">
-            <div class="pdd_10">
-
-              <div class="frm_ribbon_wrapper">
-                <div class="frm_ribbon_right">
-                    <% if @deal.general_discount? %>
-                        <p><%= t("deals.show.view.saving_label") %> <em><%= @deal.saving %></em></p>
-                    <% else %>
-                        <p><%= t("deals.show.view.price_label") %>: <em><%= as_currency(@deal.deal_price, @deal.currency) %></em>
-                        </p>
-
-                        <p><%= t("deals.show.view.discounted_price_label") %>:<em><%= as_currency(@deal.discounted_price, @deal.currency) %></em></p>
-
-                        <p><%= t("deals.show.view.saving_label") %> <%= @deal.saving %></p>
-                    <% end %>
-                </div>
-              </div>
-
-              <div class="element_description members_leads">
-                <h3><%= t("deals.show.view.detailed_description_label") %></h3>
-
-                <%= @deal.hidden_description.to_s.html_safe %>
-              </div>
-
-              <div class="element_description members_leads">
-                <h3><%= t("deals.show.view.fine_print_label") %></h3>
-
-                <%= @deal.fine_print.to_s.html_safe %>
-              </div>
-              <div class="company_frame">
-                <% if @deal.logo %>
-                    <p class="company_frame_logo"><%= image_tag(@deal.logo.url) %></p>
-                <% end %>
-                <p class="company_frame_name"><%= @deal.company_name %></p>
-                <%= @deal.company_description.to_s.html_safe %>
-              </div>
+        <% elsif @deal.group_deal? %>
+            <div class="splash splash_group">
+          <span>
+            <%= t("deals.index.view.group_deal_splash_label") %>
+          </span>
             </div>
+        <% else %>
+            <div class="splash splash_fair">
+          <span>
+            <%= t("deals.index.view.fair_deal_splash_label") %>
+          </span>
+            </div>
+        <% end %>
+        <div class="column_left">
+          <div id="step_1">
+            <%= render :partial => "form1", :locals => {:form => form} %>
           </div>
+          <%= hidden_field_tag :deal_id, params[:deal_id] %>
           <div class="clb"></div>
 
-        </param:content>
-        <param:actions>
-          <%= ibt(:class => "fltri", :icon => "save") do %>
-            <%= form.submit t("member.leads.new.view.button_create") %>
-          <% end %>
-          <%= ibt(:class => "bt_grey fltri") do %>
-            <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
-          <% end %>
-        </param:actions>
-      </frm>
+          <%= render :partial => "form2", :locals => {:form => form} %>
+        </div>
+        <div class="column_right">
+          <div class="pdd_10">
+
+            <div class="frm_ribbon_wrapper">
+              <div class="frm_ribbon_right">
+                  <% if @deal.general_discount? %>
+                      <p><%= t("deals.show.view.saving_label") %> <em><%= @deal.saving %></em></p>
+                  <% else %>
+                      <p><%= t("deals.show.view.price_label") %>: <em><%= as_currency(@deal.deal_price, @deal.currency) %></em>
+                      </p>
+
+                      <p><%= t("deals.show.view.discounted_price_label") %>:<em><%= as_currency(@deal.discounted_price, @deal.currency) %></em></p>
+
+                      <p><%= t("deals.show.view.saving_label") %> <%= @deal.saving %></p>
+                  <% end %>
+              </div>
+            </div>
+
+            <div class="element_description members_leads">
+              <h3><%= t("deals.show.view.detailed_description_label") %></h3>
+
+              <%= @deal.hidden_description.to_s.html_safe %>
+            </div>
+
+            <div class="element_description members_leads">
+              <h3><%= t("deals.show.view.fine_print_label") %></h3>
+
+              <%= @deal.fine_print.to_s.html_safe %>
+            </div>
+            <div class="company_frame">
+              <% if @deal.logo %>
+                  <p class="company_frame_logo"><%= image_tag(@deal.logo.url) %></p>
+              <% end %>
+              <p class="company_frame_name"><%= @deal.company_name %></p>
+              <%= @deal.company_description.to_s.html_safe %>
+            </div>
+          </div>
+        </div>
+        <div class="clb"></div>
+
+      </param:content>
+      <param:actions>
+        <%= ibt(:class => "fltri", :icon => "save") do %>
+          <%= form.submit t("member.leads.new.view.button_create") %>
+        <% end %>
+        <%= ibt(:class => "bt_grey fltri") do %>
+          <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
+        <% end %>
+      </param:actions>
+    </frm>
   <% end %>
 <% end %>

@@ -1,6 +1,10 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
-  <header><%= t('administration.sellers.new.view.header') %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t('administration.sellers.new.view.header') %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for @seller, :as => :seller, :url => administration_sellers_path, :input_html => {:method => :post} do |form| %>
       <frm>

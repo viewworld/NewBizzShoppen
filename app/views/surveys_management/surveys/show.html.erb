@@ -1,24 +1,28 @@
 <%= content_for :column_mc do -%>
-<header back="true"><%= @survey.name %> (<%= t("surveys_management.surveys.show.view.preview") %>)</header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= @survey.name %> (<%= t("surveys_management.surveys.show.view.preview") %>)
+    <% end %>
+  <% end %>
 
-<% unless @survey.welcome_page.blank? %>
-  <%= raw @survey.welcome_page %>
-<% end %>
+  <% unless @survey.welcome_page.blank? %>
+    <%= raw @survey.welcome_page %>
+  <% end %>
 
-<%= semantic_form_for @survey_recipient, :url => survey_recipient_path do |form| %>
-    <frm>
-      <param:content>
-        <%= render :partial => 'shared/surveys/form', :locals => {:form => form} %>
-      </param:content>
-      <param:actions>
-        <%= ibt(:class => "fltri", :icon => "save") do %>
-          <%= form.submit t("surveys.show.view.button_update"), :onclick => "return false;" %>
-        <% end %>
-      </param:actions>
-    </frm>
-<% end %>
+  <%= semantic_form_for @survey_recipient, :url => survey_recipient_path do |form| %>
+      <frm>
+        <param:content>
+          <%= render :partial => 'shared/surveys/form', :locals => {:form => form} %>
+        </param:content>
+        <param:actions>
+          <%= ibt(:class => "fltri", :icon => "save") do %>
+            <%= form.submit t("surveys.show.view.button_update"), :onclick => "return false;" %>
+          <% end %>
+        </param:actions>
+      </frm>
+  <% end %>
 
-<% unless @survey.thank_you_page.blank? %>
-  <%= raw @survey.thank_you_page %>
-<% end %>
+  <% unless @survey.thank_you_page.blank? %>
+    <%= raw @survey.thank_you_page %>
+  <% end %>
 <% end %>

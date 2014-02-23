@@ -1,6 +1,10 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag "result_dynamic_value" %>
-  <header><%= t("results.edit.title") %>: <%= @result.name %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("results.edit.title") %>: <%= @result.name %>
+    <% end %>
+  <% end %>
   <%= semantic_form_for [:callers, @campaign, @result], :method => :post do |form| %>
       <frm title="Update existing">
         <param:content>

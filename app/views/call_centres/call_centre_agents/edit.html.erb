@@ -1,22 +1,27 @@
 <%= content_for :column_mc do -%>
-  <header back="true"><%= t("call_centre.call_centre_agents.edit.view.title", :name => @call_centre_agent.full_name) %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("call_centre.call_centre_agents.edit.view.title", :name => @call_centre_agent.full_name) %>
+    <% end %>
+  <% end %>
+
   <%= semantic_form_for @call_centre_agent, :url => call_centres_call_centre_agent_path(@call_centre_agent), :method => :put do |form| %>
-      <frm>
-        <param:header>
-          <%= bt_link_to nil, t("call_centre.call_centre_agents.edit.view.change_password_link"), new_call_centres_call_centre_agent_password_path(@call_centre_agent), :class => "fltr" %>
-          <%= bt_link_to nil, t("call_centre.call_centre_agents.edit.view.reset_password_link"), call_centres_call_centre_agent_password_path(@call_centre_agent) , :method => :delete, :class => "fltr" %>
-        </param:header>
-        <param:content>
-          <%= render :partial => 'form', :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
-          <%= ibt(:class => "fltri", :icon => "save") do %>
-            <%= form.submit t("call_centre.call_centre_agents.edit.view.button_update") %>
-          <% end %>
-          <%= ibt(:class => "bt_grey fltri") do %>
-            <%= button_to_function t("call_centre.call_centre_agents.edit.view.button_cancel"), "history.go(-1)" %>
-          <% end %>
-        </param:actions>
-      </frm>
+    <frm>
+      <param:header>
+        <%= bt_link_to nil, t("call_centre.call_centre_agents.edit.view.change_password_link"), new_call_centres_call_centre_agent_password_path(@call_centre_agent), :class => "fltr" %>
+        <%= bt_link_to nil, t("call_centre.call_centre_agents.edit.view.reset_password_link"), call_centres_call_centre_agent_password_path(@call_centre_agent) , :method => :delete, :class => "fltr" %>
+      </param:header>
+      <param:content>
+        <%= render :partial => 'form', :locals => {:form => form} %>
+      </param:content>
+      <param:actions>
+        <%= ibt(:class => "fltri", :icon => "save") do %>
+          <%= form.submit t("call_centre.call_centre_agents.edit.view.button_update") %>
+        <% end %>
+        <%= ibt(:class => "bt_grey fltri") do %>
+          <%= button_to_function t("call_centre.call_centre_agents.edit.view.button_cancel"), "history.go(-1)" %>
+        <% end %>
+      </param:actions>
+    </frm>
   <% end %>
 <% end %>

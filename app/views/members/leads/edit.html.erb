@@ -1,6 +1,12 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag 'lead_template_functions.js' %>
-  <header back="true"><%= @lead.deal.header %><%= image_tag_for_locale %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= @lead.deal.header %>
+      <%= image_tag_for_locale %>
+    <% end %>
+  <% end %>
+
   <%= semantic_form_for [:members, @lead], :method => :put do |form| %>
       <frm title="Edit">
         <param:content>

@@ -34,8 +34,14 @@
     </div>
   </div>
 <% end %>
+
 <%= content_for :column_mc do -%>
-  <header><%= t("comments.threads.index.view.header") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("comments.threads.index.view.header") %>
+    <% end %>
+  <% end %>
+
 
 <% if @threads.blank? %>
     <%= blank_state_message %>

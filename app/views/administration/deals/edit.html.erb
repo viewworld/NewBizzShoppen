@@ -1,19 +1,19 @@
 <%= content_for :column_mc do -%>
-  <header back="true" backurl="#{administration_deals_path}">
-     <param:content>
-        <%= t('administration.deals.edit.view.title') %>
-     </param:content>
-      <param:actions>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t('administration.deals.edit.view.title') %>
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <li>
-            <%= bt_link_to nil, t("administration.deals.edit.view.edit_deal_request_details_email_template"), edit_email_template_path(@deal.deal_request_details_email_template, :deal_id => @deal.id) %>
+          <%= bt_link_to nil, t("administration.deals.edit.view.edit_deal_request_details_email_template"), edit_email_template_path(@deal.deal_request_details_email_template, :deal_id => @deal.id) %>
         </li>
         <li class="last">
           <%= bt_link_to nil, t("administration.deals.edit.view.preview"), deal_url(@deal, :host => Domain.for_site_and_locale(:fairdeals, I18n.locale).try(:name)), :target => "_blank" %>
         </li>
       </ul>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <% unless @deal.enabled? %>
     <div class="flash flash_notice"><%= t("deals.common.max_auto_buy_limit_reached") %></div>

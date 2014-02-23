@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header><%= t("password.edit.view.password_label") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("password.edit.view.password_label") %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for @user, :url => password_path, :method => :put do |form| %>
       <frm title="#{t('password.edit.view.form_title')}">

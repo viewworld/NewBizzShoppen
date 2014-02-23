@@ -1,11 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header back="true" backurl="#{agent_home_path}">
-
-    <param:content>
+  <%= header(:back => true, :backurl => agent_home_path) do |section| %>
+    <% section.block_header do %>
       <%= t("callers.communication.view.header") %>
-    </param:content>
-
-  </header>
+    <% end %>
+  <% end %>
 
   <table class="generic leads_table">
     <thead>
@@ -29,29 +27,28 @@
 
     <tbody>
     <% @communications.each do |communication| %>
-        <tr>
-          <td class="cl">
-          <td></td>
-          <td><%=communication.title %></td>
-          <td>
-            <% if communication.archived_email? %>
-                <%= t("agent_home.show.view.communication.email") %>: <%= communication.email %>
-                <br/>
-                <%= t("agent_home.show.view.communication.status") %>
-                : <%= t("models.archived_emails.status.status#{communication.status}") %>
-                <br/>
-            <% end %>
-            <%= t("agent_home.show.view.communication.date") %>: <%= format_date communication.created_at, true %>
-            <br/></td>
-          <td><%= link_to t("supplier_home.show.view.read_more_link"),
-                          communication.archived_email? ? callers_campaign_agent_work_screen_index_path(communication.related.contact.campaign, :selected_call_result_id => communication.related_id) :
-                                  send("#{current_user.role.to_s.pluralize}_leads_path".to_sym, :unfold_comment_id => communication.related_id, :search => {:with_keyword => communication.related.header, :without_inactive => "false", :without_outdated => "false"}), :class => "read_more" %></td>
-          <td class="cr">
-        </tr>
+      <tr>
+        <td class="cl">
+        <td></td>
+        <td><%=communication.title %></td>
+        <td>
+          <% if communication.archived_email? %>
+              <%= t("agent_home.show.view.communication.email") %>: <%= communication.email %>
+              <br/>
+              <%= t("agent_home.show.view.communication.status") %>
+              : <%= t("models.archived_emails.status.status#{communication.status}") %>
+              <br/>
+          <% end %>
+          <%= t("agent_home.show.view.communication.date") %>: <%= format_date communication.created_at, true %>
+          <br/></td>
+        <td><%= link_to t("supplier_home.show.view.read_more_link"),
+                        communication.archived_email? ? callers_campaign_agent_work_screen_index_path(communication.related.contact.campaign, :selected_call_result_id => communication.related_id) :
+                                send("#{current_user.role.to_s.pluralize}_leads_path".to_sym, :unfold_comment_id => communication.related_id, :search => {:with_keyword => communication.related.header, :without_inactive => "false", :without_outdated => "false"}), :class => "read_more" %></td>
+        <td class="cr">
+      </tr>
     <% end %>
     </tbody>
   </table>
 
   <%= will_paginate @communications, :previous_label => '&laquo;', :next_label => '&raquo;' %>
-
 <% end %>

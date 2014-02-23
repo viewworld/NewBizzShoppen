@@ -1,17 +1,21 @@
 <%= content_for :column_mc do -%>
-  <header back="true" backurl="#{callers_campaigns_path}"><%= t("campaigns.new.title") %></header>
+  <%= header(:back => true, :backurl => callers_campaigns_path) do |section| %>
+    <% section.block_header do %>
+      <%= t("campaigns.new.title") %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for [:callers, @campaign], :method => :post do |form| %>
-      <frm title="Create new">
-        <param:content>
-          <%= render :partial => '/callers/campaigns/form', :locals => {:form => form, :campaign => @campaign} %>
-        </param:content>
-        <param:actions>
-          <%= ibt(:class => "fltri", :icon => "save") do %>
-            <%= form.submit t("campaigns.new.button_create"), :name => "commit_create", :onclick => "select_options_to_submit('campaign_newsletter_list_ids_');" %>
-          <% end %>
-          <%= bt_link_to nil, t("campaigns.new.button_cancel"), callers_campaigns_path, :class => "bt_grey fltr" %>
-        </param:actions>
-      </frm>
+    <frm title="Create new">
+      <param:content>
+        <%= render :partial => '/callers/campaigns/form', :locals => {:form => form, :campaign => @campaign} %>
+      </param:content>
+      <param:actions>
+        <%= ibt(:class => "fltri", :icon => "save") do %>
+          <%= form.submit t("campaigns.new.button_create"), :name => "commit_create", :onclick => "select_options_to_submit('campaign_newsletter_list_ids_');" %>
+        <% end %>
+        <%= bt_link_to nil, t("campaigns.new.button_cancel"), callers_campaigns_path, :class => "bt_grey fltr" %>
+      </param:actions>
+    </frm>
   <% end %>
 <% end %>

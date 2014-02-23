@@ -1,41 +1,44 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
-  <header back="true"><%= t("lead_supplier.bulk_lead_share_by_email.new.view.header") %></header>
-
-  <%= form_for @email_template_preview, :as => :email_template_preview, :url => create_bulk_lead_share_by_email_path do |f| %>
-      <frm title="Email">
-        <param:content>
-
-          <div class="pdd_10 no_pdd_t">
-            <fieldset class="inputs labels_ta_r labels_240">
-              <ol>
-                <li class="string">
-                  <%= f.label :recipients, t("lead_supplier.bulk_lead_share_by_email.new.view.recipients_label") %>
-                  <%= f.text_field :recipients %>
-                  <p class="inline-hints"><%= hint_for("share_leads_by_email", :recipients) %></p>
-                </li>
-                <li class="string">
-                  <%= f.label :subject, t("lead_supplier.bulk_lead_share_by_email.new.view.subject_label") %>
-                  <%= f.text_field :subject %>
-                  <p class="inline-hints"><%= hint_for("share_leads_by_email", :subject) %></p>
-                </li>
-                <li class="text">
-
-                </li>
-              </ol>
-            </fieldset>
-             <%= f.label :body, t("lead_supplier.bulk_lead_share_by_email.new.view.body_label") %>
-             <%= f.cktext_area :body, :width => '1085px', :height => '300px', :toolbar => "Email"  %>
-             <p class="inline-hints"><%= hint_for("share_leads_by_email", :body) %></p>
-          </div>
-
-        </param:content>
-        <param:actions>
-          <%= ibt(:class => "fltri", :icon => "mail") do %>
-            <%= f.submit t("lead_supplier.bulk_lead_share_by_email.new.view.send_email_button") %>
-          <% end %>
-        </param:actions>
-      </frm>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("lead_supplier.bulk_lead_share_by_email.new.view.header") %>
+    <% end %>
   <% end %>
 
+  <%= form_for @email_template_preview, :as => :email_template_preview, :url => create_bulk_lead_share_by_email_path do |f| %>
+    <frm title="Email">
+      <param:content>
+
+        <div class="pdd_10 no_pdd_t">
+          <fieldset class="inputs labels_ta_r labels_240">
+            <ol>
+              <li class="string">
+                <%= f.label :recipients, t("lead_supplier.bulk_lead_share_by_email.new.view.recipients_label") %>
+                <%= f.text_field :recipients %>
+                <p class="inline-hints"><%= hint_for("share_leads_by_email", :recipients) %></p>
+              </li>
+              <li class="string">
+                <%= f.label :subject, t("lead_supplier.bulk_lead_share_by_email.new.view.subject_label") %>
+                <%= f.text_field :subject %>
+                <p class="inline-hints"><%= hint_for("share_leads_by_email", :subject) %></p>
+              </li>
+              <li class="text">
+
+              </li>
+            </ol>
+          </fieldset>
+           <%= f.label :body, t("lead_supplier.bulk_lead_share_by_email.new.view.body_label") %>
+           <%= f.cktext_area :body, :width => '1085px', :height => '300px', :toolbar => "Email"  %>
+           <p class="inline-hints"><%= hint_for("share_leads_by_email", :body) %></p>
+        </div>
+
+      </param:content>
+      <param:actions>
+        <%= ibt(:class => "fltri", :icon => "mail") do %>
+          <%= f.submit t("lead_supplier.bulk_lead_share_by_email.new.view.send_email_button") %>
+        <% end %>
+      </param:actions>
+    </frm>
+  <% end %>
 <% end %>

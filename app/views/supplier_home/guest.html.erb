@@ -1,18 +1,16 @@
 <%= content_for :column_mc do -%>
-
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("supplier_home.show.view.header") %>
-    </param:content>
-
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <li class="last">
           <%= bt_link_to :user, t("supplier_home.show.view.create_new_supplier_account"), new_supplier_account_path %>
         </li>
       </ul>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <div class="pdd_5 no_pdd_b">
     <% unless user_signed_in? %>
@@ -124,4 +122,3 @@
 
   </script>
 <% end %>
-

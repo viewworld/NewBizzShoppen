@@ -1,25 +1,30 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
   <%= javascript_include_tag "popup_email_template_editor" %>
-  <header back="true"><%= t("email_templates.edit.view.title", :name => @email_template.subject) %><%= image_tag_for_locale %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("email_templates.edit.view.title", :name => @email_template.subject) %>
+      <%= image_tag_for_locale %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for @email_template, :url => email_template_path(@email_template, :deal_id => @deal.id), :method => :put do |form| %>
-      <frm title="#{@email_template.subject}">
-        <param:content>
-          <%= render :partial => 'form', :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
-          <%= ibt(:class => "fltri", :icon => "save") do %>
-            <%= form.submit t("campaigns.email_templates.edit.view.button_update") %>
-          <% end %>
-          <%= ibt(:class => "fltri", :icon => "mail") do %>
-            <%= button_to_function t("email_templates.edit.view.test_send_email"), "test_send_email_prompt('#{test_send_email_email_template_path(@email_template, :deal_id => @deal.id)}')" %>
-          <% end %>
-          <%= ibt(:class => "bt_grey fltri") do %>
-            <%= button_to_function t("email_templates.edit.view.button_cancel"), href(send("edit_#{current_user.role_to_deal_namespace}_deal_path".to_sym, @deal)) %>
-          <% end %>
-        </param:actions>
-      </frm>
+    <frm title="#{@email_template.subject}">
+      <param:content>
+        <%= render :partial => 'form', :locals => {:form => form} %>
+      </param:content>
+      <param:actions>
+        <%= ibt(:class => "fltri", :icon => "save") do %>
+          <%= form.submit t("campaigns.email_templates.edit.view.button_update") %>
+        <% end %>
+        <%= ibt(:class => "fltri", :icon => "mail") do %>
+          <%= button_to_function t("email_templates.edit.view.test_send_email"), "test_send_email_prompt('#{test_send_email_email_template_path(@email_template, :deal_id => @deal.id)}')" %>
+        <% end %>
+        <%= ibt(:class => "bt_grey fltri") do %>
+          <%= button_to_function t("email_templates.edit.view.button_cancel"), href(send("edit_#{current_user.role_to_deal_namespace}_deal_path".to_sym, @deal)) %>
+        <% end %>
+      </param:actions>
+    </frm>
   <% end %>
 
   <%= hidden_field_tag :uniq_id, @email_template.uniq_id, {:id => "email_template_editor_uniq_id"} %>

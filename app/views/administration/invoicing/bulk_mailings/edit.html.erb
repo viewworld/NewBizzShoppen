@@ -1,6 +1,11 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
-  <header back="true"><%= t("administration.invoices.bulk_mailings.new.view.title", :name => @email_template.subject) %><%= image_tag_for_locale %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.invoices.bulk_mailings.new.view.title", :name => @email_template.subject) %>
+      <%= image_tag_for_locale %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for [:administration, @email_template], :url => administration_invoicing_bulk_mailings_path, :method => :put do |form| %>
       <frm title="">
@@ -41,5 +46,4 @@
         </param:actions>
       </frm>
   <% end %>
-
 <% end %>

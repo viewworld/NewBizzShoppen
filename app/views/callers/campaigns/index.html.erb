@@ -26,66 +26,63 @@
 <% end %>
 
 <%= content_for :column_mc do -%>
-  <div class="ajax_flash_msg flash flash_notice" style="display:none;">
-  </div>
+  <div class="ajax_flash_msg flash flash_notice" style="display:none;"></div>
 
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("campaigns.header.title") %>
-    </param:content>
-    <% if current_user.has_one_of_roles?(:call_centre, :admin) %>
-        <param:actions>
-              <%= form_tag new_callers_campaign_path, :method => :get, :id => "form_new_campaign" do %>
-                  <ul class="header_actions">
-                    <li>
-                      <div class="hidden">
-                        <%= submit_tag "New" %>
-                      </div>
-                      <%= bt_link_to :plus, t("campaigns.header.new_campaign_button"), "javascript:void", :onclick => "$('#form_new_campaign').submit()" %>
-                    </li>
-                    <li class="last">
-                      <%= bt_link_to nil, t("campaigns.header.my_results_global_button"), callers_production_path, :class => "fltr"  %>
-                    </li>
-                  </ul>
-              <% end %>
-        </param:actions>
     <% end %>
-
-  </header>
-
+    <% section.block_actions do %>
+      <% if current_user.has_one_of_roles?(:call_centre, :admin) %>
+        <%= form_tag new_callers_campaign_path, :method => :get, :id => "form_new_campaign" do %>
+          <ul class="header_actions">
+            <li>
+              <div class="hidden">
+                <%= submit_tag "New" %>
+              </div>
+              <%= bt_link_to :plus, t("campaigns.header.new_campaign_button"), "javascript:void", :onclick => "$('#form_new_campaign').submit()" %>
+            </li>
+            <li class="last">
+              <%= bt_link_to nil, t("campaigns.header.my_results_global_button"), callers_production_path, :class => "fltr"  %>
+            </li>
+          </ul>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
 
   <%= campaigns_table @campaigns do |blocks| %>
-      <% blocks.tools do |campaign| %>
-          <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
-            <li>
-              <%= link_to t("campaigns.table.materials_repository"), callers_campaign_materials_path(campaign) %>
-            </li>
-            <% if !current_user.has_role?(:admin) and (campaign.can_be_managed_by?(current_user) or campaign.has_user_as_member?(current_user))  %>
-                <li>
-                  <%= link_to t("campaigns.table.work_screen"), callers_campaign_agent_work_screen_index_path(campaign, :other_user_id => ( (current_user.call_centre? or current_user.admin?) ? current_user.id : nil)), :class => "default_action" %>
-                </li>
-            <% end %>
-            <% if current_user.has_one_of_roles?(:admin, :call_centre) and campaign.can_be_managed_by?(current_user) %>
-                <li>
-                  <%= link_to t("campaigns.index.edit"), edit_callers_campaign_path(campaign), :class => current_user.has_role?(:admin) ? "default_action" : "" %>
-                </li>
-                <li>
-                  <%= link_to t("campaigns.index.result"), callers_campaign_path(campaign) %>
-                </li>
-                <li>
-                  <%= link_to_function t("campaigns.index.destroy"), "destroyModalBox('#{campaign.id}')"%>
-                </li>
-            <% end %>
-            <% if current_user.admin? %>
-                <li>
-                  <%= link_to_function t("campaigns.index.duplicate"), "duplicateModalBox('#{campaign.id}')"%>
-                </li>
-                <li>
-                  <%= link_to_function t("campaigns.index.clear"), "clearModalBox('#{campaign.id}')"%>
-                </li>
-            <% end %>
-          </ul></div>
-      <% end %>
+    <% blocks.tools do |campaign| %>
+        <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
+          <li>
+            <%= link_to t("campaigns.table.materials_repository"), callers_campaign_materials_path(campaign) %>
+          </li>
+          <% if !current_user.has_role?(:admin) and (campaign.can_be_managed_by?(current_user) or campaign.has_user_as_member?(current_user))  %>
+              <li>
+                <%= link_to t("campaigns.table.work_screen"), callers_campaign_agent_work_screen_index_path(campaign, :other_user_id => ( (current_user.call_centre? or current_user.admin?) ? current_user.id : nil)), :class => "default_action" %>
+              </li>
+          <% end %>
+          <% if current_user.has_one_of_roles?(:admin, :call_centre) and campaign.can_be_managed_by?(current_user) %>
+              <li>
+                <%= link_to t("campaigns.index.edit"), edit_callers_campaign_path(campaign), :class => current_user.has_role?(:admin) ? "default_action" : "" %>
+              </li>
+              <li>
+                <%= link_to t("campaigns.index.result"), callers_campaign_path(campaign) %>
+              </li>
+              <li>
+                <%= link_to_function t("campaigns.index.destroy"), "destroyModalBox('#{campaign.id}')"%>
+              </li>
+          <% end %>
+          <% if current_user.admin? %>
+              <li>
+                <%= link_to_function t("campaigns.index.duplicate"), "duplicateModalBox('#{campaign.id}')"%>
+              </li>
+              <li>
+                <%= link_to_function t("campaigns.index.clear"), "clearModalBox('#{campaign.id}')"%>
+              </li>
+          <% end %>
+        </ul></div>
+    <% end %>
   <% end %>
 
   <div style="display:none;">

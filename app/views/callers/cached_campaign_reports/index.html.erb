@@ -1,7 +1,9 @@
 <%= content_for :column_mc do -%>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("campaign_reports.index.cached_reports") %>
+    <% end %>
+  <% end %>
 
-    <header back="true"><%= t("campaign_reports.index.cached_reports") %></header>
-
-    <%= render :partial => 'shared/cached_campaign_reports/list', :locals => {:cached_campaign_reports => @cached_campaign_reports} %>
-
+  <%= render :partial => 'shared/cached_campaign_reports/list', :locals => {:cached_campaign_reports => @cached_campaign_reports} %>
 <% end %>

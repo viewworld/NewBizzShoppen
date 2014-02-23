@@ -1,18 +1,18 @@
 <%= content_for :column_mc do -%>
-  <header back="true" backurl="#{administration_deals_path}">
-     <param:content>
-        <%= t("administration.deals.new.view.title") %>
-     </param:content>
-     <param:actions>
-        <% if params[:deal_id] %>
-          <ul class="header_actions">
-            <li class="last">
-              <%= bt_link_to nil, t("call_centre_agent.deals.new.view.change_supplier"), "#", :onclick => "setup_step(0)" %>
-            </li>
-          </ul>
-        <% end %>
-     </param:actions>
-  </header>
+  <%= header(:back => true, :backurl => administration_deals_path) do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.deals.new.view.title") %>
+    <% end %>
+    <% section.block_actions do %>
+      <% if params[:deal_id] %>
+        <ul class="header_actions">
+          <li class="last">
+            <%= bt_link_to nil, t("call_centre_agent.deals.new.view.change_supplier"), "#", :onclick => "setup_step(0)" %>
+          </li>
+        </ul>
+      <% end %>
+    <% end %>
+  <% end %>
 
   <div id="supplier_email_form">
     <%= label_tag :supplier_email, t("administration.deals.new.view.email") %>

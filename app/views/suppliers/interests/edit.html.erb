@@ -1,10 +1,15 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag 'jquery.checkboxtree.min' %>
-  <% if request.referer.to_s.include?("/my_profile") %>
-    <header back="true"><%= t("supplier.interests.edit.view.title") %></header>
-  <% else %>
-    <header><%= t("supplier.interests.edit.view.title") %></header>
+  <%= header(:back => request.referer.to_s.include?("/my_profile")) do |section| %>
+    <% section.block_header do %>
+      <% if request.referer.to_s.include?("/my_profile") %>
+        <%= t("supplier.interests.edit.view.title") %>
+      <% else %>
+        <%= t("supplier.interests.edit.view.title") %>
+      <% end %>
+    <% end %>
   <% end %>
+
   <%= form_tag suppliers_interests_path, :method => :put do %>
       <frm>
         <param:content>

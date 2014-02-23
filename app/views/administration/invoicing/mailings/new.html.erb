@@ -1,6 +1,10 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
-  <header><%= t("administration.invoices.mailing.new.view.title") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.invoices.mailing.new.view.title") %>
+    <% end %>
+  <% end %>
 
   <%= render :partial => 'new' %>
 <% end %>

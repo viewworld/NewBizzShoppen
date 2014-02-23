@@ -28,50 +28,49 @@
 <% end %>
 
 <%= content_for :column_mc do -%>
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("supplier.not_invoiced.index.view.header") %>
-    </param:content>
-
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <% if current_user.big_buyer? %>
-            <li><%= bt_link_to nil, t("supplier.invoices.index.view.pending_leads"), suppliers_not_invoiced_leads_path %></li>
+          <li><%= bt_link_to nil, t("supplier.invoices.index.view.pending_leads"), suppliers_not_invoiced_leads_path %></li>
         <% end %>
         <li><%= bt_link_to nil, t("supplier.invoices.index.view.due_invoices"), suppliers_invoices_path(:search => {:with_paid => 0}) %></li>
         <li class="last"><%= bt_link_to nil, t("supplier.invoices.index.view.paid_invoices"), suppliers_invoices_path(:search => {:with_paid => 1}) %></li>
       </ul>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <% unless @lead_purchases.any? %>
     <%= blank_state_message(t("supplier.not_invoiced.index.view.no_leads_to_display")) %>
   <% else %>
-      <table class="generic" cellspacing="0" cellpadding="0" id="not_invoiced_leads">
-        <thead>
-        <tr>
-        <th class="hl"></th>
-        <th><%= t("supplier.not_invoiced.index.view.lead_header") %></th>
-        <th class="ta_r"><%= t("supplier.not_invoiced.index.view.lead_price") %></th>
-        <th class="hr"></th>
-        </thead>
-        <tfoot>
-        <tr>
-          <td class="fl"></td>
-          <td colspan="2"></td>
-          <td class="fr"></td>
-        </tr>
-        </tfoot>
-        <tbody id="invoices_list">
-        <% @lead_purchases.each do |lp| %>
-            <tr class="<%= cycle("odd", "even") %>">
-              <td class="cl"></td>
-              <td><%= lp.lead.header %></td>
-              <td class="ta_r"><%= as_currency(lp.total, lp.lead.currency) %></td>
-              <td class="cr"></td>
-            </tr>
-        <% end %>
-        </tbody>
-      </table>
+    <table class="generic" cellspacing="0" cellpadding="0" id="not_invoiced_leads">
+      <thead>
+      <tr>
+      <th class="hl"></th>
+      <th><%= t("supplier.not_invoiced.index.view.lead_header") %></th>
+      <th class="ta_r"><%= t("supplier.not_invoiced.index.view.lead_price") %></th>
+      <th class="hr"></th>
+      </thead>
+      <tfoot>
+      <tr>
+        <td class="fl"></td>
+        <td colspan="2"></td>
+        <td class="fr"></td>
+      </tr>
+      </tfoot>
+      <tbody id="invoices_list">
+      <% @lead_purchases.each do |lp| %>
+          <tr class="<%= cycle("odd", "even") %>">
+            <td class="cl"></td>
+            <td><%= lp.lead.header %></td>
+            <td class="ta_r"><%= as_currency(lp.total, lp.lead.currency) %></td>
+            <td class="cr"></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
   <% end %>
 <% end %>

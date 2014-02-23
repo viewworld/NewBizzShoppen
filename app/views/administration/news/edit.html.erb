@@ -1,8 +1,11 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
-  <header back="true">
-    <%= t('administration.news.edit.view.header', :name => @news.title) %><%= image_tag_for_locale %>
-  </header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t('administration.news.edit.view.header', :name => @news.title) %>
+      <%= image_tag_for_locale %>
+    <% end %>
+  <% end %>
 
   <%#= link_to t("common.back_link"), administration_news_index_path %>
   <%= form_for @news, :as => :news, :url => administration_news_path(@news), :html => {:method => :delete, :id => "delete_news_form"} do |form| %>
@@ -27,5 +30,4 @@
         </param:actions>
       </frm>
   <% end %>
-
 <% end %>

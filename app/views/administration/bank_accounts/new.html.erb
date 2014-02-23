@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header><%= t('administration.bank_accounts.new.view.header') %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t('administration.bank_accounts.new.view.header') %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for @bank_account, :as => :bank_account, :url => administration_bank_accounts_path, :input_html => {:method => :post} do |form| %>
       <frm>

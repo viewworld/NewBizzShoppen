@@ -86,11 +86,11 @@
 
 
 <%= content_for :column_mc do -%>
-  <header back="#{'true' if @search.with_created_by}">
-    <param:content>
+  <%= header(:back => @search.with_created_by) do |section| %>
+    <% section.block_header do %>
       <%= t("administration.leads.index.view.title") %>
-    </param:content>
-  </header>
+    <% end %>
+  <% end %>
 
   <% if @leads.blank? %>
     <%= blank_state_message %>

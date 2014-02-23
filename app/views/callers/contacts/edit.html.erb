@@ -1,6 +1,9 @@
 <%= content_for :column_mc do -%>
-
-  <header back="true" backurl="#{edit_callers_campaign_path(@campaign)}"><%= t("contacts.edit.title") %></header>
+  <%= header(:back => true, :backurl => edit_callers_campaign_path(@campaign)) do |section| %>
+    <% section.block_header do %>
+      <%= t("contacts.edit.title") %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for [:callers, @campaign, @contact], :method => :put do |form| %>
       <frm title="Edit">
@@ -25,25 +28,29 @@
 
   <h3><%= t("contacts.edit.current_agent_label") %> <%= @contact.agent ? @contact.agent.full_name : "-" %></h3>
 
-  <header><%= t("contacts.edit.call_log_title") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("contacts.edit.call_log_title") %>
+    <% end %>
+  <% end %>
 
   <% if !@contact.completed? and @campaign.active? %>
-      <%= form_for CallResult.new, :url => new_callers_contact_call_result_path(@contact), :html => {:method => :get} do %>
-          <%= select_tag :result_id, options_for_select(@campaign.results_for_select) %>
-          <%= bt_link_to nil, t("call_results.edit.button_new_result"), "javascript:void(0)", :onclick => "$(this).parents('form').submit()" %>
-      <% end %>
+    <%= form_for CallResult.new, :url => new_callers_contact_call_result_path(@contact), :html => {:method => :get} do %>
+      <%= select_tag :result_id, options_for_select(@campaign.results_for_select) %>
+      <%= bt_link_to nil, t("call_results.edit.button_new_result"), "javascript:void(0)", :onclick => "$(this).parents('form').submit()" %>
+    <% end %>
   <% end %>
 
   <%= call_results_table @call_results, :agent_work_screen => false, :crm => false do |blocks| %>
-      <% blocks.tools do |call_result| %>
-          <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
-            <li>
-              <%= link_to t("call_results.table.edit_link"), edit_callers_contact_call_result_path(@contact, call_result), :class => "default_action" %>
-            </li>
-            <li>
-              <%= link_to t("call_results.table.remove_link"), callers_contact_call_result_path(@contact, call_result), :confirm => t("call_results.table.remove_confirm"), :method => :delete %>
-            </li>
-          </ul></div>
-      <% end %>
+    <% blocks.tools do |call_result| %>
+      <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
+        <li>
+          <%= link_to t("call_results.table.edit_link"), edit_callers_contact_call_result_path(@contact, call_result), :class => "default_action" %>
+        </li>
+        <li>
+          <%= link_to t("call_results.table.remove_link"), callers_contact_call_result_path(@contact, call_result), :confirm => t("call_results.table.remove_confirm"), :method => :delete %>
+        </li>
+      </ul></div>
+    <% end %>
   <% end %>
 <% end %>

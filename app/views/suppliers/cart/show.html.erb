@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header back="true"><%= t("supplier.cart.show.view.header") %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("supplier.cart.show.view.header") %>
+    <% end %>
+  <% end %>
 
   <table class="cart_table">
     <cols>

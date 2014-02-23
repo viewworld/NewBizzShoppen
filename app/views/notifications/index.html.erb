@@ -1,5 +1,10 @@
 <%= content_for :column_mc do -%>
-  <header back="true"><%= t("notifications.views.index.header") %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("notifications.views.index.header") %>
+    <% end %>
+  <% end %>
+
 
 <% if @notifications.blank? %>
     <%= blank_state_message %>

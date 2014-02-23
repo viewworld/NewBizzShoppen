@@ -1,22 +1,21 @@
 <%= content_for :column_mc do -%>
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t('supplier.subaccounts.index.view.title') %>
-    </param:content>
-
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <% unless current_user.auto_buy_enabled %>
-        <li>
-          <%= bt_link_to :user, t("supplier.subaccounts.index.view.new_lead_supplier"), new_suppliers_subaccount_path(:role => "lead_supplier") %>
-        </li>
+          <li>
+            <%= bt_link_to :user, t("supplier.subaccounts.index.view.new_lead_supplier"), new_suppliers_subaccount_path(:role => "lead_supplier") %>
+          </li>
         <% end %>
         <li class="last">
           <%= bt_link_to :user, t("supplier.subaccounts.index.view.new_lead_user"), new_suppliers_subaccount_path(:role => "lead_user") %>
         </li>
       </ul>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <% unless @users.any? %>
       <%= blank_state_message %>

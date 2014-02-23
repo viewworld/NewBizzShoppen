@@ -32,58 +32,56 @@
 <% end %>
 
 <%= content_for :column_mc do -%>
-
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("member.leads.index.view.header") %>
-    </param:content>
-  </header>
+    <% end %>
+  <% end %>
 
   <% if @leads.blank? %>
-      <%= blank_state_message %>
+    <%= blank_state_message %>
   <% else %>
-
     <table id="leads" class="generic">
       <thead>
-      <tr>
-        <th class="hl"></th>
-        <th><%= link_to t("leads.table.id"), order_for_scoped_search(:id) %></th>
-        <th><%= link_to t("leads.table.header"), order_for_scoped_search(:header) %></th>
-        <th><%= t("leads.table.company_logo") %></th>
-        <th><%= t("leads.table.company_name") %></th>
-        <th><%= t("leads.table.date") %></th>
-        <th class="ta_r"><%= t("leads.table.actions") %></th>
-        <th class="hr"></th>
-      </tr>
+        <tr>
+          <th class="hl"></th>
+          <th><%= link_to t("leads.table.id"), order_for_scoped_search(:id) %></th>
+          <th><%= link_to t("leads.table.header"), order_for_scoped_search(:header) %></th>
+          <th><%= t("leads.table.company_logo") %></th>
+          <th><%= t("leads.table.company_name") %></th>
+          <th><%= t("leads.table.date") %></th>
+          <th class="ta_r"><%= t("leads.table.actions") %></th>
+          <th class="hr"></th>
+        </tr>
       </thead>
       <tfoot>
-      <tr>
-        <td class="fl"></td>
-        <td colspan="6"></td>
-        <td class="fr"></td>
-      </tr>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="6"></td>
+          <td class="fr"></td>
+        </tr>
       </tfoot>
       <tbody>
-      <% @leads.each do |lead| %>
+        <% @leads.each do |lead| %>
           <tr id="lead_<%= lead.id %>" class="<%= cycle("odd", "even") %>">
             <td class="cl"></td>
             <td><%= lead.id %></td>
             <td>
               <div class="rltv" style="padding-bottom: 20px;">
-              <%= lead.header %>
-              <% if lead.can_be_commented? %>
-               <div class="row_tooltip_actions">
-               <%= link_to t("comments.shared.show_comments")+" (#{lead.comments_count_for(current_user)})", "#", :class => "toggle_row show_comments#{' toggle_row_unread' if lead.has_unread_comments_for_user?(current_user)}", :onclick => "mark_comments_as_read(#{lead.id}); mark_row_as_read('lead_#{lead.id}')" %>
-               <%= link_to t("comments.shared.hide_comments"), "#", :class => "toggle_row hide_comments", :style => "display:none" %>
-               </div>
-              <% end %>
-              <% if lead.creator == current_user or lead.creator.parent == current_user %>
-                <% if lead.lead_certification_requests.last %>
-                  <br/>
-                  <%= t("leads.listing.certification_status") %>: <%= lead.lead_certification_requests.last.current_status %>
-                <% end %>
-              <% end %>
+                <%= lead.header %>
+                <% if lead.can_be_commented? %>
+                  <div class="row_tooltip_actions">
+                    <%= link_to t("comments.shared.show_comments")+" (#{lead.comments_count_for(current_user)})", "#", :class => "toggle_row show_comments#{' toggle_row_unread' if lead.has_unread_comments_for_user?(current_user)}", :onclick => "mark_comments_as_read(#{lead.id}); mark_row_as_read('lead_#{lead.id}')" %>
+                    <%= link_to t("comments.shared.hide_comments"), "#", :class => "toggle_row hide_comments", :style => "display:none" %>
                   </div>
+                <% end %>
+                <% if lead.creator == current_user or lead.creator.parent == current_user %>
+                  <% if lead.lead_certification_requests.last %>
+                    <br/>
+                    <%= t("leads.listing.certification_status") %>: <%= lead.lead_certification_requests.last.current_status %>
+                  <% end %>
+                <% end %>
+              </div>
             </td>
             <td><%= image_tag lead.deal.logo.url(:thumb), :class => "thumb" if lead.deal and lead.deal.logo %></td>
             <td><%= lead.deal ? lead.deal.company_name : lead.company_name %></td>
@@ -91,9 +89,9 @@
 
             <td class="tda ta_r">
               <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
-                <li>
-                  <%= link_to t("member.leads.index.view.show"), deal_path(lead.deal), :class => "default_action" %>
-                </li>
+                  <li>
+                    <%= link_to t("member.leads.index.view.show"), deal_path(lead.deal), :class => "default_action" %>
+                  </li>
               </ul></div>
             </td>
             <td class="cr"></td>
@@ -113,15 +111,15 @@
 
 
 
-      <% end %>
+        <% end %>
 
-      <% if will_paginate %>
+        <% if will_paginate %>
           <tr class="pagination">
             <td colspan="9" class="ta_c">
               <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
             </td>
           </tr>
-      <% end %>
+        <% end %>
 
       </tbody>
     </table>

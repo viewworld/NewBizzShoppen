@@ -1,25 +1,31 @@
 <%= content_for :column_mc do -%>
-  <header><%= t("leads.certification.header") %><%= image_tag_for_locale %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("leads.certification.header") %>
+      <%= image_tag_for_locale %>
+    <% end %>
+  <% end %>
+
   <div class="pdd_5 no_pdd_b" style="width:800px">
     <p><%= blurb("blurb_certify_information") %></p>
   </div>
 
   <%= semantic_form_for @lead, :method => :put do |form| %>
-      <frm title="#{@lead.header}">
-        <param:content>
-          <%= render :partial => '/leads/form', :locals => {:form => form} %>
-          <%= hidden_field_tag "token", @lsr.token %>
-          <%= hidden_field_tag "confirmation", "agree" %>
-        </param:content>
-        <param:actions>
-          <%= ibt(:class => "fltri", :icon => "remove") do %>
-          <%= form.submit t("leads.certification.reject"), :onclick => "$('#confirmation').val('disagree');" %>
-          <% end %>
-          <%= ibt(:class => "fltri", :icon => "save") do %>
-            <%= form.submit t("leads.certification.confirm") %>
-          <% end %>
+    <frm title="#{@lead.header}">
+      <param:content>
+        <%= render :partial => '/leads/form', :locals => {:form => form} %>
+        <%= hidden_field_tag "token", @lsr.token %>
+        <%= hidden_field_tag "confirmation", "agree" %>
+      </param:content>
+      <param:actions>
+        <%= ibt(:class => "fltri", :icon => "remove") do %>
+        <%= form.submit t("leads.certification.reject"), :onclick => "$('#confirmation').val('disagree');" %>
+        <% end %>
+        <%= ibt(:class => "fltri", :icon => "save") do %>
+          <%= form.submit t("leads.certification.confirm") %>
+        <% end %>
 
-        </param:actions>
-      </frm>
+      </param:actions>
+    </frm>
   <% end %>
 <% end %>

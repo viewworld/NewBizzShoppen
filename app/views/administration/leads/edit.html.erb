@@ -1,19 +1,25 @@
 <%= content_for :column_mc do -%>
   <%= semantic_form_for [:administration, @lead], :method => :put do |form| %>
-      <header back="true"><%= t("administration.leads.edit.view.header", :lead_header => @lead.header) %><%= image_tag_for_locale %></header>
-      <frm title="#{t('administration.leads.edit.view.created_by')} #{@lead.creator.company_name} - #{@lead.creator.email}">
-        <param:content>
-          <%= render :partial => '/shared/leads/form', :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
-          <%= ibt(:class => "fltri", :icon => "save") do %>
-            <%= form.submit t("administration.leads.edit.view.button_update") %>
-          <% end %>
-          <%= ibt(:class => "bt_grey fltri") do %>
-            <%= button_to_function t("administration.leads.edit.view.button_cancel"), "history.go(-1)" %>
-          <% end %>
-        </param:actions>
-      </frm>
+    <%= header(:back => true) do |section| %>
+      <% section.block_header do %>
+        <%= t("administration.leads.edit.view.header", :lead_header => @lead.header) %>
+        <%= image_tag_for_locale %>
+      <% end %>
+    <% end %>
+
+    <frm title="#{t('administration.leads.edit.view.created_by')} #{@lead.creator.company_name} - #{@lead.creator.email}">
+      <param:content>
+        <%= render :partial => '/shared/leads/form', :locals => {:form => form} %>
+      </param:content>
+      <param:actions>
+        <%= ibt(:class => "fltri", :icon => "save") do %>
+          <%= form.submit t("administration.leads.edit.view.button_update") %>
+        <% end %>
+        <%= ibt(:class => "bt_grey fltri") do %>
+          <%= button_to_function t("administration.leads.edit.view.button_cancel"), "history.go(-1)" %>
+        <% end %>
+      </param:actions>
+    </frm>
   <% end %>
 
   <frm title="#{t('administration.leads.edit.view.rating_header')}" id="lead_rating">

@@ -29,23 +29,21 @@
 <% end %>
 
 <%= content_for :column_mc do -%>
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t('call_centre.call_centre_agents.index.view.title') %>
-    </param:content>
-
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <li class="last">
           <%= bt_link_to :user, t("call_centre.call_centre_agents.index.view.new_agent"), new_call_centres_call_centre_agent_path %>
         </li>
       </ul>
-    </param:actions>
-  </header>
-
+    <% end %>
+  <% end %>
 
   <% if @call_centre_agents.blank? %>
-      <%= blank_state_message %>
+    <%= blank_state_message %>
   <% else %>
       <%= t("call_centre.call_centre_agents.index.view.per_page_selection") %>
       <% [10, 25, 50, 0].each do |per_page| %>
@@ -113,5 +111,5 @@
             </tfoot>
           </table>
       <% end %>
-  <% end %>  
+  <% end %>
 <% end %>

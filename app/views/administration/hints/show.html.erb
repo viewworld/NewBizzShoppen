@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header back="true"><%= t('administration.hints.show.view.header') %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t('administration.hints.show.view.header') %>
+    <% end %>
+  <% end %>
 
   <frm title="#{@article.title}">
     <param:header>
@@ -11,5 +15,4 @@
       </div>
     </param:content>
   </frm>
-
 <% end %>

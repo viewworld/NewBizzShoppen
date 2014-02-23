@@ -2,22 +2,26 @@
   <%= javascript_include_tag :ckeditor %>
   <%= javascript_include_tag "popup_email_template_editor" %>
 
-  <header back="true"><%= t("deal_maker_users.new.view.new_account", :role => params[:user_type].humanize.downcase) %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("deal_maker_users.new.view.new_account", :role => params[:user_type].humanize.downcase) %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for @user, :url => deal_maker_users_path(:user_type => params[:user_type]), :as => :user do |form| %>
-      <frm>
-        <param:content>
-          <%= render :partial => 'form', :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
-          <%= ibt(:class => "fltri", :icon => "save") do %>
-            <%= form.submit t("deal_maker_users.new.view.button_create"), :onclick => "serialize_materials_array_onsubmit();" %>
-          <% end %>
-          <%= ibt(:class => "bt_grey fltri") do %>
-            <%= button_to_function t("deal_maker_users.new.view.button_cancel"), "history.go(-1)" %>
-          <% end %>
-        </param:actions>
-      </frm>
+    <frm>
+      <param:content>
+        <%= render :partial => 'form', :locals => {:form => form} %>
+      </param:content>
+      <param:actions>
+        <%= ibt(:class => "fltri", :icon => "save") do %>
+          <%= form.submit t("deal_maker_users.new.view.button_create"), :onclick => "serialize_materials_array_onsubmit();" %>
+        <% end %>
+        <%= ibt(:class => "bt_grey fltri") do %>
+          <%= button_to_function t("deal_maker_users.new.view.button_cancel"), "history.go(-1)" %>
+        <% end %>
+      </param:actions>
+    </frm>
   <% end %>
 
   <% @template = EmailTemplate.find_by_uniq_id("#{@user.is_a?(User::Member) ? 'member' : 'supplier'}_invitation") %>

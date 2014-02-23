@@ -1,6 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header back="true"><%= t("comments.threads.new.view.header", :header => @lead.header) %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("comments.threads.new.view.header", :header => @lead.header) %>
+    <% end %>
+  <% end %>
 
   <%= render :partial => "new" %>
 <% end %>
-

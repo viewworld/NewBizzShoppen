@@ -1,18 +1,21 @@
 <%= content_for :column_mc do -%>
-  <header><%= t("supplier.restricted_categories.edit.view.header") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("supplier.restricted_categories.edit.view.header") %>
+    <% end %>
+  <% end %>
 
   <%= form_tag suppliers_restricted_categories_path, :method => :put do %>
     <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
     <ul>
-    <% @categories.each_with_index do |category, index| %>
+      <% @categories.each_with_index do |category, index| %>
         <li>
           <%= check_box_tag("categories[]", category.id, Array(current_user.restricted_category_ids).include?(category.id), :id => "category_#{index}") %>
           <%= category.name %>
         </li>
-    <% end %>
+      <% end %>
     </ul>
 
-      <%= submit_tag t("supplier.restricted_categories.edit.view.update_button") %>
+    <%= submit_tag t("supplier.restricted_categories.edit.view.update_button") %>
   <% end %>
-
 <% end %>

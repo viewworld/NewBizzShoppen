@@ -40,28 +40,27 @@
 <% end %>
 
 <%= content_for :column_mc do -%>
-
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("member.tenders.index.view.title") %>
-    </param:content>
-
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <%= form_tag new_members_tender_path, :method => :get, :id => "form_new_lead" do %>
-          <span style="position:absolute;top: 5px; right: 110px;">
-            <%= select_tag :category_id, options_for_select(nested_set_options(@categories).sort, :selected => default_category_for_select(@categories), :disabled => @categories.select { |c| !c.can_publish_leads? }.map(&:id)) %>
-          </span>
-          <ul class="header_actions">
-            <li class="last">
-              <div class="hidden">
-                <%= submit_tag "New" %>
-              </div>
-              <%= bt_link_to :plus, t("member.tenders.index.view.new_tender"), "javascript:void", :onclick => "$('#form_new_lead').submit()" %>
-            </li>
-          </ul>
+        <span style="position:absolute;top: 5px; right: 110px;">
+          <%= select_tag :category_id, options_for_select(nested_set_options(@categories).sort, :selected => default_category_for_select(@categories), :disabled => @categories.select { |c| !c.can_publish_leads? }.map(&:id)) %>
+        </span>
+        <ul class="header_actions">
+          <li class="last">
+            <div class="hidden">
+              <%= submit_tag "New" %>
+            </div>
+            <%= bt_link_to :plus, t("member.tenders.index.view.new_tender"), "javascript:void", :onclick => "$('#form_new_lead').submit()" %>
+          </li>
+        </ul>
       <% end %>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
+
   <% @tenders = @leads %>
 
   <% if @leads.blank? %>

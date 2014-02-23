@@ -1,20 +1,31 @@
 <%= content_for :column_mc do -%>
-  <header><%= t("administration.settings.edit.view.title") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.settings.edit.view.title") %>
+    <% end %>
+  <% end %>
 
   <%= form_tag administration_setting_path, :method => :put do %>
-      <%= render :partial => "settings_form", :locals => { :settings => @settings.select { |s| !s.var.include?("contact_us") } }  %>
+    <%= render :partial => "settings_form", :locals => { :settings => @settings.select { |s| !s.var.include?("contact_us") } }  %>
   <% end %>
 
   <br/>
-  <header><%= t("administration.settings.edit.view.contacts_settings_title") %></header>
-
-  <%= form_tag administration_setting_path, :method => :put do %>
-      <%= render :partial => "settings_form", :locals => { :settings => @settings.select { |s| s.var.include?("contact_us") } } %>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.settings.edit.view.contacts_settings_title") %>
+    <% end %>
   <% end %>
 
+  <%= form_tag administration_setting_path, :method => :put do %>
+    <%= render :partial => "settings_form", :locals => { :settings => @settings.select { |s| s.var.include?("contact_us") } } %>
+  <% end %>
 
   <br/>
-  <header><%= t("administration.bank_accounts.index.view.header") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.bank_accounts.index.view.header") %>
+    <% end %>
+  <% end %>
 
   <% unless @bank_accounts.any? %>
       <%= blank_state_message(t("administration.bank_accounts.index.view.no_bank_accounts_defined")) %>
@@ -75,7 +86,11 @@
   <% end %>
 
   <br/>
-  <header><%= t("administration.vat_rates.index.view.header") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.vat_rates.index.view.header") %>
+    <% end %>
+  <% end %>
 
   <% unless @vat_rates.any? %>
       <%= blank_state_message(t("administration.vat_rates.index.view.no_rates_defined")) %>
@@ -123,7 +138,11 @@
   <% end %>
 
   <br/>
-  <header><%= t("administration.introduction_video.view.header") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.introduction_video.view.header") %>
+    <% end %>
+  <% end %>
 
   <% unless @youtube_introductions.any? %>
       <%= blank_state_message(t("administration.introduction_video.view.no_videos")) %>

@@ -1,44 +1,49 @@
 <%= content_for :column_mc do -%>
-  <header back="true"><%= t("agent.leads.edit.view.title", :name => @lead.header) %><%= image_tag_for_locale %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("agent.leads.edit.view.title", :name => @lead.header) %>
+      <%= image_tag_for_locale %>
+    <% end %>
+  <% end %>
+
   <%= semantic_form_for [:agents, @lead], :method => :put do |form| %>
-      <frm title="#{@lead.header}">
-        <param:content>
-          <%= render :partial => '/shared/leads/form', :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
-          <% if @lead.can_be_certified? %>
-              <%= ibt(:class => "fltri") do %>
-                <%= link_to t("agent.leads.index.view.certify"), agents_lead_certifications_path(@lead), :method => :post %>
-              <% end %>
-          <% elsif @lead.can_be_recertified? %>
-              <%= ibt(:class => "fltri") do %>
-                <%= link_to t("agent.leads.index.view.recertify"), agents_lead_certifications_path(@lead), :method => :post %>
-              <% end %>
-          <% end %>
-          <%= ibt(:class => "fltri", :icon => "save") do %>
-            <%= form.submit t("agent.leads.edit.view.button_update") %>
-          <% end %>
-          <%= ibt(:class => "bt_grey fltri") do %>
-            <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
-          <% end %>
-        </param:actions>
-      </frm>
+    <frm title="#{@lead.header}">
+      <param:content>
+        <%= render :partial => '/shared/leads/form', :locals => {:form => form} %>
+      </param:content>
+      <param:actions>
+        <% if @lead.can_be_certified? %>
+            <%= ibt(:class => "fltri") do %>
+              <%= link_to t("agent.leads.index.view.certify"), agents_lead_certifications_path(@lead), :method => :post %>
+            <% end %>
+        <% elsif @lead.can_be_recertified? %>
+            <%= ibt(:class => "fltri") do %>
+              <%= link_to t("agent.leads.index.view.recertify"), agents_lead_certifications_path(@lead), :method => :post %>
+            <% end %>
+        <% end %>
+        <%= ibt(:class => "fltri", :icon => "save") do %>
+          <%= form.submit t("agent.leads.edit.view.button_update") %>
+        <% end %>
+        <%= ibt(:class => "bt_grey fltri") do %>
+          <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
+        <% end %>
+      </param:actions>
+    </frm>
   <% end %>
 
   <% if @lead.lead_purchases.any? %>
-      <frm title="#{t('agent.leads.edit.view.rating_header')}" id="lead_rating">
-        <% @lead.lead_purchases.each do |lead_purchase| %>
-            <% unless lead_purchase.rating_level.nil? %>
-                <div class="rating_element">
-                  <h3><%= t("agent.leads.edit.view.rating_level") %>
-                    <span class="rating_level"><%= lead_purchase.rating_level_as_text %></span></h3>
+    <frm title="#{t('agent.leads.edit.view.rating_header')}" id="lead_rating">
+      <% @lead.lead_purchases.each do |lead_purchase| %>
+          <% unless lead_purchase.rating_level.nil? %>
+              <div class="rating_element">
+                <h3><%= t("agent.leads.edit.view.rating_level") %>
+                  <span class="rating_level"><%= lead_purchase.rating_level_as_text %></span></h3>
 
-                  <p><%#= t("agent.leads.edit.view.rating_reason") %><%= lead_purchase.rating_reason %></p>
-                </div>
-                <div class="hl"></div>
-            <% end %>
-        <% end %>
-      </frm>
+                <p><%#= t("agent.leads.edit.view.rating_reason") %><%= lead_purchase.rating_reason %></p>
+              </div>
+              <div class="hl"></div>
+          <% end %>
+      <% end %>
+    </frm>
   <% end %>
-
 <% end %>

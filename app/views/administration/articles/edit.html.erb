@@ -1,9 +1,10 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
-  <header back="true">
-    <%= t('administration.articles.edit.view.header', :name => @article.title) %><%= image_tag_for_locale %>
-  </header>
-
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t('administration.articles.edit.view.header', :name => @article.title) %><%= image_tag_for_locale %>
+    <% end %>
+  <% end %>
 
   <%= form_for @article, :as => :article, :url => administration_article_path(@article), :html => {:method => :delete, :id => "delete_article_form"} do |form| %>
   <% end %>
@@ -28,6 +29,3 @@
       </frm>
   <% end %>
 <% end %>
-
-
-

@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header><%= t("voucher_numbers.edit.header") %>: <%= @deal.header %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("voucher_numbers.edit.header") %>: <%= @deal.header %>
+    <% end %>
+  <% end %>
   <%= semantic_form_for  @deal, :as => :deal, :url => voucher_number_path(@deal), :html => {:method => :put} do |f| %>
         <table class="generic">
           <thead>

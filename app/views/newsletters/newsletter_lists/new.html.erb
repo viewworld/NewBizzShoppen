@@ -1,7 +1,11 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag "jquery.autocomplete.min.js" %>
 
-  <header back="true"><%= t("newsletters.newsletter_lists.new.view.header") %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("newsletters.newsletter_lists.new.view.header") %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for @newsletter_list, :remote => true, :url => newsletters_newsletter_lists_path do |form| %>
       <frm>

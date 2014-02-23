@@ -34,20 +34,19 @@
 <% end %>
 
 <%= content_for :column_mc do -%>
-  <header>
-      <param:content>
-        <%= t("newsletters.newsletter_campaigns.index.view.header") %>
-      </param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("newsletters.newsletter_campaigns.index.view.header") %>
+    <% end %>
+    <% section.block_actions do %>
+      <ul class="header_actions">
+        <li class="last"><%= bt_link_to :plus, t("newsletters.newsletter_campaigns.index.view.new_newsletter_campaign"), new_newsletters_newsletter_campaign_path %></li>
+      </ul>
+    <% end %>
+  <% end %>
 
-      <param:actions>
-        <ul class="header_actions">
-          <li class="last"><%= bt_link_to :plus, t("newsletters.newsletter_campaigns.index.view.new_newsletter_campaign"), new_newsletters_newsletter_campaign_path %></li>
-        </ul>
-
-      </param:actions>
-   </header>
   <% if @newsletter_campaigns.blank? %>
-      <%= blank_state_message %>
+    <%= blank_state_message %>
   <% else %>
   <table id="newsletter_lists_table" class="generic">
     <thead>

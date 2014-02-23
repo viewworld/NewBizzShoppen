@@ -5,62 +5,57 @@
     <h2><%= t("common.search") %></h2>
 
     <div class="search_content">
-
       <%= form_for @search, :url => suppliers_lead_templates_path do |f| %>
-          <fieldset class="inputs_vertical">
-            <ol class="no_pdd">
-              <li class="string">
-                <%= f.label :with_keyword, t("supplier.lead_templates.index.view.search.keyword_label") %>
-                <%= f.text_field :with_keyword %>
-              </li>
-              <li class="select">
-                <%= f.label t("supplier.lead_templates.index.view.search.category_label") %>
-                <%= f.select :with_category, @categories, :include_blank => true %>
-              </li>
-              <li class="commit">
-                <%= ibt(:class => "bt_green", :icon => "magnify") do %>
-                  <%= submit_tag t("supplier.lead_templates.index.view.search_button") %>
-                <% end %>
-                <p>
-                  <%= bt_clear_filter %>
-                </p>
-              </li>
-            </ol>
-          </fieldset>
+        <fieldset class="inputs_vertical">
+          <ol class="no_pdd">
+            <li class="string">
+              <%= f.label :with_keyword, t("supplier.lead_templates.index.view.search.keyword_label") %>
+              <%= f.text_field :with_keyword %>
+            </li>
+            <li class="select">
+              <%= f.label t("supplier.lead_templates.index.view.search.category_label") %>
+              <%= f.select :with_category, @categories, :include_blank => true %>
+            </li>
+            <li class="commit">
+              <%= ibt(:class => "bt_green", :icon => "magnify") do %>
+                <%= submit_tag t("supplier.lead_templates.index.view.search_button") %>
+              <% end %>
+              <p>
+                <%= bt_clear_filter %>
+              </p>
+            </li>
+          </ol>
+        </fieldset>
       <% end %>
     </div>
   </div>
 <% end %>
 
 <%= content_for :column_mc do -%>
-
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("supplier.lead_templates.index.view.header") %>
-    </param:content>
-    <param:actions>
-
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <li class="last">
           <%= bt_link_to :plus, t("supplier.lead_templates.index.view.new_template"), new_suppliers_lead_template_path %>
         </li>
       </ul>
-    </param:actions>
-  </header>
-
-  <% if @lead_templates.blank? %>
-      <%= blank_state_message %>
-  <% else %>
-      <%= lead_templates_table @lead_templates, :show_checkboxes => false, :show_active_column => true, :paginate_table => true do |blocks| %>
-          <% blocks.tools do |lead_template| %>
-              <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
-                <li><%= link_to t("agent.lead_templates.index.view.edit"), edit_suppliers_lead_template_path(lead_template), :class => "default_action" %></li>
-                <li><%= link_to t("agent.lead_templates.index.view.duplicate"), new_suppliers_lead_template_path(:template_id => lead_template.id) %></li>
-                <li><%= link_to t("agent.lead_templates.index.view.destroy"), suppliers_lead_template_path(lead_template), :method => :delete, :confirm => t("agent.lead_templates.index.view.destroy_template_confirmation_message") %></li>
-              </ul></div>
-          <% end %>
-      <% end %>
+    <% end %>
   <% end %>
 
-
+  <% if @lead_templates.blank? %>
+    <%= blank_state_message %>
+  <% else %>
+    <%= lead_templates_table @lead_templates, :show_checkboxes => false, :show_active_column => true, :paginate_table => true do |blocks| %>
+      <% blocks.tools do |lead_template| %>
+        <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
+            <li><%= link_to t("agent.lead_templates.index.view.edit"), edit_suppliers_lead_template_path(lead_template), :class => "default_action" %></li>
+            <li><%= link_to t("agent.lead_templates.index.view.duplicate"), new_suppliers_lead_template_path(:template_id => lead_template.id) %></li>
+            <li><%= link_to t("agent.lead_templates.index.view.destroy"), suppliers_lead_template_path(lead_template), :method => :delete, :confirm => t("agent.lead_templates.index.view.destroy_template_confirmation_message") %></li>
+        </ul></div>
+      <% end %>
+    <% end %>
+  <% end %>
 <% end %>

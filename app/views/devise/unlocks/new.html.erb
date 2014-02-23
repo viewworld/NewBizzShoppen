@@ -1,13 +1,17 @@
 <%= content_for :column_mc do -%>
-  <header><%= t("devise.unlocks.new.view.header") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("devise.unlocks.new.view.header") %>
+    <% end %>
+  <% end %>
 
   <%= form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => {:method => :post}) do |f| %>
-      <%= devise_error_messages! %>
+    <%= devise_error_messages! %>
 
-      <p><%= f.label :email %><br/>
-        <%= f.text_field :email %></p>
+    <p><%= f.label :email %><br/>
+      <%= f.text_field :email %></p>
 
-      <p><%= f.submit "Resend unlock instructions" %></p>
+    <p><%= f.submit "Resend unlock instructions" %></p>
   <% end %>
 
   <%= render :partial => "devise/shared/links" %>

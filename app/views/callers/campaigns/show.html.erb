@@ -5,19 +5,18 @@
                                                                         :date_to => @date_to, :final => @final, :campaign_users => @campaign_users } %>
 <% end %>
 <%= content_for :column_mc do -%>
-  <header back="true" backurl="javascript:history.back(-1)">
-    <param:content>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
       <%= @campaign.name %>
-    </param:content>
-
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <li class="last">
           <%= bt_link_to_function :invoice, t("campaigns.show.advanced_export"), "submit_advanced_export()" %>
         </li>
       </ul>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <div class="frm_tiny pdd_10">
 

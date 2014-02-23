@@ -33,22 +33,20 @@
 <% end %>
 
 <%= content_for :column_mc do -%>
-
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("administration.articles.index.view.header") %>
-    </param:content>
-
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <%= form_tag administration_articles_path, :method => :post, :id => "form_new_article" do %>
-          <ul class="header_actions">
-            <li class="last">
-              <%= bt_link_to :plus, t("administration.articles.index.view.new_article"), "javascript:void(0)", :onclick => "$('#form_new_article').submit()" %>
-            </li>
-          </ul>
+        <ul class="header_actions">
+          <li class="last">
+            <%= bt_link_to :plus, t("administration.articles.index.view.new_article"), "javascript:void(0)", :onclick => "$('#form_new_article').submit()" %>
+          </li>
+        </ul>
       <% end %>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <% if @articles.blank? %>
       <%= blank_state_message %>

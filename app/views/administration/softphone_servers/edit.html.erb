@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header back="true"><%= t("administration.softphone_servers.edit.view.header", :name => @softphone_server.name) %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.softphone_servers.edit.view.header", :name => @softphone_server.name) %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for @softphone_server, :url => administration_softphone_server_path do |form| %>
       <frm title="#{@softphone_server.name}">

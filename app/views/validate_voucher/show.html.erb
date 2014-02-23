@@ -1,5 +1,10 @@
 <%= content_for :column_mc do -%>
-  <header><%= t("validate_voucher.show.header") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("validate_voucher.show.header") %>
+    <% end %>
+  <% end %>
+
   <h3><%= t("validate_voucher.show.text") %></h3>
   <br/>
 

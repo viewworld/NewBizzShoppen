@@ -1,22 +1,20 @@
 <%= content_for :column_mc do -%>
-
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("member_home.show.view.header") %>
-    </param:content>
-
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <li class="last">
           <% if user_signed_in? %>
-              <%= bt_link_to :key, t("supplier_home.show.view.sign_out"), '/logout' %>
+            <%= bt_link_to :key, t("supplier_home.show.view.sign_out"), '/logout' %>
           <% else %>
-              <%= bt_link_to :user, t("member_home.show.view.create_new_member_account"), new_member_account_path %>
+            <%= bt_link_to :user, t("member_home.show.view.create_new_member_account"), new_member_account_path %>
           <% end %>
         </li>
       </ul>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <div class="pdd_5 no_pdd_b">
     <% unless user_signed_in? %>
@@ -138,4 +136,3 @@
 
   </script>
 <% end %>
-

@@ -1,66 +1,70 @@
 <%= content_for :column_mc do -%>
-  <header back="true"><%= raw t("administration.supplier_interests.edit.view.title", :name => screen_name_with_company_name(@user)) %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <% raw t("administration.supplier_interests.edit.view.title", :name => screen_name_with_company_name(@user)) %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for @user, :url => administration_supplier_interest_path, :method => :put do |form| %>
-      <frm title="">
-        <param:header>
-        </param:header>
-        <param:content>
+    <frm title="">
+      <param:header>
+      </param:header>
+      <param:content>
 
-        <div id="category_interests">
-          <div class="pdd_10">
-            <div class="grid_210 fltl">&nbsp;</div>
-            <div class="grid_240 fltl">
-              <h3><%= t("administration.users.edit.view.available_categories") %></h3>
-              <%= select_tag "all_categories_for_interests", options_for_select((LeadCategory.without_unique-@user.category_interests).map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
-            </div>
-
-            <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
-              <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("administration.categories.form.move_users_right"), "javascript:move_selected('all_categories_for_interests','user_supplier_category_ids_')", :id => "move_right" %></p>
-
-              <p class="ta_c"><%= bt_link_to nil, t("administration.categories.form.move_users_left"), "javascript:move_selected('user_supplier_category_ids_','all_categories_for_interests')", :id => "move_left" %></p>
-            </div>
-
-            <div class="grid_240 fltl">
-              <h3><%= t("administration.users.edit.view.selected_interests_categories") %></h3>
-              <%= select_tag "user_supplier[category_ids][]", options_for_select((@user.categories-@user.unique_categories).map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
-            </div>
-            <div class="clb"></div>
+      <div id="category_interests">
+        <div class="pdd_10">
+          <div class="grid_210 fltl">&nbsp;</div>
+          <div class="grid_240 fltl">
+            <h3><%= t("administration.users.edit.view.available_categories") %></h3>
+            <%= select_tag "all_categories_for_interests", options_for_select((LeadCategory.without_unique-@user.category_interests).map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
           </div>
-        </div>
 
-        <div id="country_interests">
-          <div class="pdd_10">
-            <div class="grid_210 fltl">&nbsp;</div>
-            <div class="grid_240 fltl">
-              <h3><%= t("administration.supplier_interests.edit.view.countries") %></h3>
-          <% @countries.each do |country| %>
-              <%= check_box_tag "user_supplier[country_ids][]", country.id, @user.countries.include?(country), :id => "country_#{country.id}" %>
-              <%= country.name %><br />
-          <% end %>
-            </div>
-            <div class="clb"></div>
+          <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
+            <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("administration.categories.form.move_users_right"), "javascript:move_selected('all_categories_for_interests','user_supplier_category_ids_')", :id => "move_right" %></p>
+
+            <p class="ta_c"><%= bt_link_to nil, t("administration.categories.form.move_users_left"), "javascript:move_selected('user_supplier_category_ids_','all_categories_for_interests')", :id => "move_left" %></p>
           </div>
+
+          <div class="grid_240 fltl">
+            <h3><%= t("administration.users.edit.view.selected_interests_categories") %></h3>
+            <%= select_tag "user_supplier[category_ids][]", options_for_select((@user.categories-@user.unique_categories).map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          </div>
+          <div class="clb"></div>
         </div>
+      </div>
 
-        <div class="pdd_10 no_pdd_t">
-          <fieldset class="inputs labels_ta_r">
-            <ol class="align_inputs">
-              <%= form.input :notify_about_new_leads %>
-            </ol>
-          </fieldset>
+      <div id="country_interests">
+        <div class="pdd_10">
+          <div class="grid_210 fltl">&nbsp;</div>
+          <div class="grid_240 fltl">
+            <h3><%= t("administration.supplier_interests.edit.view.countries") %></h3>
+        <% @countries.each do |country| %>
+            <%= check_box_tag "user_supplier[country_ids][]", country.id, @user.countries.include?(country), :id => "country_#{country.id}" %>
+            <%= country.name %><br />
+        <% end %>
+          </div>
+          <div class="clb"></div>
         </div>
+      </div>
 
-        </param:content>
+      <div class="pdd_10 no_pdd_t">
+        <fieldset class="inputs labels_ta_r">
+          <ol class="align_inputs">
+            <%= form.input :notify_about_new_leads %>
+          </ol>
+        </fieldset>
+      </div>
 
-        <param:actions>
-          <%= ibt(:class => "fltri", :icon => "save") do %>
-            <%= form.submit t("administration.users.edit.view.button_update_user"), :onclick => "select_options_to_submit('user_supplier_category_ids_');" %>
-          <% end %>
-          <%= ibt(:class => "bt_grey fltri") do %>
-            <%= button_to_function t("administration.users.edit.view.button_cancel"), "history.go(-1)" %>
-          <% end %>
-        </param:actions>
-      </frm>
+      </param:content>
+
+      <param:actions>
+        <%= ibt(:class => "fltri", :icon => "save") do %>
+          <%= form.submit t("administration.users.edit.view.button_update_user"), :onclick => "select_options_to_submit('user_supplier_category_ids_');" %>
+        <% end %>
+        <%= ibt(:class => "bt_grey fltri") do %>
+          <%= button_to_function t("administration.users.edit.view.button_cancel"), "history.go(-1)" %>
+        <% end %>
+      </param:actions>
+    </frm>
   <% end %>
 <% end %>

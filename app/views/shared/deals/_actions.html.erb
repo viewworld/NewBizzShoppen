@@ -1,19 +1,17 @@
-<header>
-  <param:content>
+<%= header do |section| %>
+  <% section.block_header do %>
     <%= t("deals.common.listing.view.header") %>
-  </param:content>
-  <% if current_user.can_create_deals? %>
-      <param:actions>
-        <%= form_tag path, :method => :get, :id => "form_new_deal" do %>
-            <ul class="header_actions">
-              <li class="last">
-                <div class="hidden">
-                  <%= submit_tag "New" %>
-                </div>
-                <%= bt_link_to :plus, t("deals.common.listing.view.new_deal"), "javascript:void(0)", :onclick => "$('#form_new_deal').submit()" %>
-              </li>
-            </ul>
-        <% end %>
-      </param:actions>
   <% end %>
-</header>
+  <% section.block_actions do %>
+    <%= form_tag path, :method => :get, :id => "form_new_deal" do %>
+      <ul class="header_actions">
+        <li class="last">
+          <div class="hidden">
+            <%= submit_tag "New" %>
+          </div>
+          <%= bt_link_to :plus, t("deals.common.listing.view.new_deal"), "javascript:void(0)", :onclick => "$('#form_new_deal').submit()" %>
+        </li>
+      </ul>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,10 +1,10 @@
 <%= content_for :column_mc do -%>
 
-  <header back="true">
-    <param:content>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
       <%= t("administration.email_bounces.index.view.header") %>
-    </param:content>
-  </header>
+    <% end %>
+  <% end %>
 
   <% if @email_bounces.blank? %>
       <%= blank_state_message %>

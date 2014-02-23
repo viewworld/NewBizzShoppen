@@ -1,5 +1,11 @@
 <%= content_for :column_mc do -%>
-  <header back="true"><%= t("administration.lead_templates.new.view.header", :category => @lead_template.category.name) %><%= image_tag_for_locale %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.lead_templates.new.view.header", :category => @lead_template.category.name) %>
+      <%= image_tag_for_locale %>
+    <% end %>
+  <% end %>
+
   <%= semantic_form_for [:administration, @lead_template], :method => :put, :html => {:multipart => true} do |form| %>
       <frm title="">
         <param:content>

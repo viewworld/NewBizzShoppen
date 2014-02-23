@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header back="true"><%= t('administration.sellers.show.view.header') %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t('administration.sellers.show.view.header') %>
+    <% end %>
+  <% end %>
 
   <frm title="#{@seller.company_name}">
     <param:header>

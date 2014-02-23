@@ -3,23 +3,22 @@
 <% end %>
 
 <%= content_for :column_mc do -%>
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("administration.payouts.index.view.header") %>
-    </param:content>
-
-    <% if @search.call_results.any? %>
-        <param:actions>
-          <ul class="header_actions">
-            <li class="last">
-              <%= select_tag "report_currency_id", options_for_select(Currency.active.all.map{|c| [c.name, c.id]}) %>
-              <%= bt_link_to_function nil, t("administration.payouts.index.view.pdf_by_agent"), "agents_pdf()" %>
-              <%= bt_link_to_function nil, t("administration.payouts.index.view.pdf_by_campaign"), "campaigns_pdf()" %>
-            </li>
-          </ul>
-        </param:actions>
     <% end %>
-  </header>
+    <% if @search.call_results.any? %>
+      <% section.block_actions do %>
+        <ul class="header_actions">
+          <li class="last">
+            <%= select_tag "report_currency_id", options_for_select(Currency.active.all.map{|c| [c.name, c.id]}) %>
+            <%= bt_link_to_function nil, t("administration.payouts.index.view.pdf_by_agent"), "agents_pdf()" %>
+            <%= bt_link_to_function nil, t("administration.payouts.index.view.pdf_by_campaign"), "campaigns_pdf()" %>
+          </li>
+        </ul>
+      <% end %>
+    <% end %>
+  <% end %>
 
   <% if @call_results.blank?  %>
       <%= blank_state_message %>
@@ -94,5 +93,4 @@
   <% end %>
 
   <%= render :partial => 'js' %>
-
 <% end %>

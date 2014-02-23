@@ -1,6 +1,10 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag :ckeditor %>
-  <header back="true"><%= t("administration.email_template_signatures.edit.view.header") %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= t("administration.email_template_signatures.edit.view.header") %>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for @email_template_signature, :url => administration_email_template_signature_path(@email_template_signature), :method => :put do |form| %>
       <frm title="">

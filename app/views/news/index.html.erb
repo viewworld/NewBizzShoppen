@@ -1,5 +1,9 @@
 <%= content_for :column_mc do -%>
-  <header back="true"><%= news_header %></header>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
+      <%= news_header %>
+    <% end %>
+  <% end %>
 
   <% if @news.blank? %>
       <%= blank_state_message %>

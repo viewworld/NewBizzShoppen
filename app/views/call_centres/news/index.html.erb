@@ -28,78 +28,75 @@
 <% end %>
 
 <%= content_for :column_mc do -%>
-
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("administration.news.index.view.header") %>
-    </param:content>
-
-    <param:actions>
-          <ul class="header_actions">
-            <li class="last">
-              <%= bt_link_to :plus, t("administration.news.index.view.new_news"), call_centres_news_index_path, :method => :post %>
-            </li>
-          </ul>
-    </param:actions>
-  </header>
-
-  <% if @news.blank? %>
-      <%= blank_state_message %>
-  <% else %>
-      <table id="news_table" class="generic">
-        <thead>
-        <tr>
-          <th class="hl"></th>
-          <th><%= link_to t("administration.news.index.view.id"), order_for_scoped_search(:id) %></th>
-          <th><%= link_to t("administration.news.index.view.title"), order_for_scoped_search(:title) %></th>
-          <th class="ta_r"><%= link_to t("administration.news.index.view.created_at"), order_for_scoped_search(:created_at) %></th>
-          <th class="ta_r"><%= link_to t("administration.news.index.view.published"), order_for_scoped_search(:published_date) %></th>
-          <th class="ta_r"><%= link_to t("administration.news.index.view.times_read"), order_for_scoped_search(:views_count) %></th>
-          <th class="ta_r"><%= t("administration.news.index.view.actions") %></th>
-          <th class="hr"></th>
-        </tr>
-        </thead>
-        <tfoot>
-        <tr>
-          <td class="fl"></td>
-          <td colspan="6"></td>
-          <td class="fr"></td>
-        </tr>
-        </tfoot>
-        <tbody>
-        <% @news.each do |news| %>
-            <tr class="<%= cycle("odd", "even") %>">
-              <td class="cl"></td>
-              <td><%= news.id %></td>
-              <td><%= news.title %></td>
-              <td class="ta_r"><%= news.created_at %></td>
-              <td class="ta_r"><%= news.published_date ? news.published_date : '-' %></td>
-              <td class="ta_r"><%= news.views_count %></td>
-              <td class="tda ta_r">
-                <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
-                  <li>
-                    <%= link_to t("administration.news.index.view.edit_link"), edit_call_centres_news_path(news), :class => "default_action" %>
-                  </li>
-                  <li>
-                    <%= link_to t("administration.news.index.view.show_link"), call_centres_news_path(news) %>
-                  </li>
-                  <li>
-                    <%= link_to t("administration.news.index.view.delete_link"), call_centres_news_path(news), :method => :delete, :confirm => t("administration.news.index.view.delete_confirmation") %>
-                  </li>
-                </ul></div>
-              </td>
-              <td class="cr"></td>
-            </tr>
-        <% end %>
-        <% if will_paginate %>
-            <tr class="pagination">
-              <td colspan="8" class="ta_c">
-                <%= will_paginate @news, :previous_label => '&laquo;', :next_label => '&raquo;' %>
-              </td>
-            </tr>
-        <% end %>
-        </tbody>
-      </table>
+    <% end %>
+    <% section.block_actions do %>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to :plus, t("administration.news.index.view.new_news"), call_centres_news_index_path, :method => :post %>
+        </li>
+      </ul>
+    <% end %>
   <% end %>
 
+  <% if @news.blank? %>
+    <%= blank_state_message %>
+  <% else %>
+    <table id="news_table" class="generic">
+      <thead>
+      <tr>
+        <th class="hl"></th>
+        <th><%= link_to t("administration.news.index.view.id"), order_for_scoped_search(:id) %></th>
+        <th><%= link_to t("administration.news.index.view.title"), order_for_scoped_search(:title) %></th>
+        <th class="ta_r"><%= link_to t("administration.news.index.view.created_at"), order_for_scoped_search(:created_at) %></th>
+        <th class="ta_r"><%= link_to t("administration.news.index.view.published"), order_for_scoped_search(:published_date) %></th>
+        <th class="ta_r"><%= link_to t("administration.news.index.view.times_read"), order_for_scoped_search(:views_count) %></th>
+        <th class="ta_r"><%= t("administration.news.index.view.actions") %></th>
+        <th class="hr"></th>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+        <td class="fl"></td>
+        <td colspan="6"></td>
+        <td class="fr"></td>
+      </tr>
+      </tfoot>
+      <tbody>
+      <% @news.each do |news| %>
+          <tr class="<%= cycle("odd", "even") %>">
+            <td class="cl"></td>
+            <td><%= news.id %></td>
+            <td><%= news.title %></td>
+            <td class="ta_r"><%= news.created_at %></td>
+            <td class="ta_r"><%= news.published_date ? news.published_date : '-' %></td>
+            <td class="ta_r"><%= news.views_count %></td>
+            <td class="tda ta_r">
+              <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
+                <li>
+                  <%= link_to t("administration.news.index.view.edit_link"), edit_call_centres_news_path(news), :class => "default_action" %>
+                </li>
+                <li>
+                  <%= link_to t("administration.news.index.view.show_link"), call_centres_news_path(news) %>
+                </li>
+                <li>
+                  <%= link_to t("administration.news.index.view.delete_link"), call_centres_news_path(news), :method => :delete, :confirm => t("administration.news.index.view.delete_confirmation") %>
+                </li>
+              </ul></div>
+            </td>
+            <td class="cr"></td>
+          </tr>
+      <% end %>
+      <% if will_paginate %>
+          <tr class="pagination">
+            <td colspan="8" class="ta_c">
+              <%= will_paginate @news, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
 <% end %>

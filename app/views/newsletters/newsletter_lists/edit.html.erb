@@ -9,12 +9,11 @@
 <%= content_for :column_mc do -%>
   <%= javascript_include_tag "jquery.autocomplete.min.js" %>
 
-  <header back="true">
-    <param:content>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
       <%= t("newsletters.newsletter_lists.edit.view.header") %>
-    </param:content>
-
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <li class="last">
           <%= bt_link_to :plus, t("newsletters.newsletter_lists.index.view.synchronize_sources"),  newsletters_newsletter_list_newsletter_synchronizations_path(@newsletter_list, :sources_synch => 1, :campaign_monitor_synch => 0), :method => :post %>
@@ -23,8 +22,8 @@
           <%= bt_link_to :plus, t("newsletters.newsletter_lists.index.view.import"),  subscribers_advanced_import_path(:newsletter_list_id => @newsletter_list.id) %>
         </li>
       </ul>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <%= semantic_form_for @newsletter_list, :remote => true, :url => newsletters_newsletter_list_path do |form| %>
       <frm title="#{header_text}">
@@ -52,20 +51,18 @@
      <%= render :partial => 'tagger_form', :locals => {:tagger => @tagger, :newsletter_list => @newsletter_list} %>
   </div>
 
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("newsletters.newsletter_lists.edit.view.title_subscribers") %>
-    </param:content>
-
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <li class="last">
           <%= bt_link_to :download, t("newsletters.newsletter_lists.edit.view.button_bulk_download_link"), "", :id => "export_subscribers" %>
         </li>
-
       </ul>
-    </param:actions>
-  </header>
+    <% end %>
+  <% end %>
 
   <div class="fltl">
     <%= bt_link_to_function nil, "Select / Unselect", "$('input.cb_newsletter_subscriber_id').each(function(){this.checked=!this.checked});" %>

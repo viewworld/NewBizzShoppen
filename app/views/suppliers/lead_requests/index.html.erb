@@ -44,8 +44,11 @@
 <% end %>
 
 <%= content_for :column_mc do -%>
-
-  <header><%= t("supplier.lead_requests.index.view.header") %></header>
+  <%= header do |section| %>
+    <% section.block_header do %>
+      <%= t("supplier.lead_requests.index.view.header") %>
+    <% end %>
+  <% end %>
 
   <% unless @lead_requests.any? %>
       <%= blank_state_message %>

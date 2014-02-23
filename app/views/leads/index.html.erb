@@ -4,10 +4,10 @@
     <div class="search_right"></div>
     <div class="fltr">
       <% if @category %>
-          <%= link_to I18n.t("leads.index.subscribe_to_rss"), "/categories/#{@category.cached_slug}?search[with_category]=#{@category.id}&format=rss#{"&user_token=#{current_user.rss_token}" if current_user}" %>
-          <% if current_user and current_user.can_save_category_interests? %>
-              <%= check_box_tag "subscribe_to_category", "subscribe", current_user.categories.include?(@category), :onclick => "$.ajax({type: 'POST',url: '#{category_interests_url(:category_id=>@category.id)}',data: '',success: function(data){eval(data);}});" %> <%= t("leads.index.subscribe_to_category_cb") %>
-          <% end %>
+        <%= link_to I18n.t("leads.index.subscribe_to_rss"), "/categories/#{@category.cached_slug}?search[with_category]=#{@category.id}&format=rss#{"&user_token=#{current_user.rss_token}" if current_user}" %>
+        <% if current_user and current_user.can_save_category_interests? %>
+          <%= check_box_tag "subscribe_to_category", "subscribe", current_user.categories.include?(@category), :onclick => "$.ajax({type: 'POST',url: '#{category_interests_url(:category_id=>@category.id)}',data: '',success: function(data){eval(data);}});" %> <%= t("leads.index.subscribe_to_category_cb") %>
+        <% end %>
       <% end %>
     </div>
 
@@ -15,61 +15,56 @@
 
     <div class="search_content">
       <%= form_for @search, :url => leads_path, :html => {:id => "leads_search_form"} do |f| %>
-          <%= render :partial => "/shared/leads/search_supplier_form", :locals => {:f => f} %>
+        <%= render :partial => "/shared/leads/search_supplier_form", :locals => {:f => f} %>
       <% end %>
     </div>
   </div>
 <% end %>
 
 <%= content_for :column_mc do -%>
-
-  <header back="true">
-
-    <param:content>
+  <%= header(:back => true) do |section| %>
+    <% section.block_header do %>
       <%= leads_listing_header %><%= " #{t("leads.index.header_for")} #{@category.name}" if @category %>
-    </param:content>
-
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <% if @category and @leads.empty? and (!user_signed_in? or (user_signed_in? and current_user.has_any_role?(:supplier, :lead_supplier))) %>
           <li class="last"><%= bt_link_to :plus, t("leads.index.request_more_leads"), new_category_more_leads_request_path(@category) %></li>
         <% end %>
       </ul>
-    </param:actions>
-
-  </header>
+    <% end %>
+  <% end %>
 
   <% unless blurb(:blurb_leads_listing).blank? %>
-      <div class="pdd_10 no_pdd_lr"><%= blurb(:blurb_leads_listing) %></div>
+    <div class="pdd_10 no_pdd_lr"><%= blurb(:blurb_leads_listing) %></div>
   <% end %>
 
   <% if @leads.empty? %>
-      <%= blank_state_message %>
+    <%= blank_state_message %>
   <% else %>
-      <%= form_tag bulk_action_path do %>
-          <%= leads_listing @leads, :show_checkboxes => (user_signed_in? and current_user.has_any_role?(:supplier, :lead_supplier, :lead_user)) do |blocks| %>
+    <%= form_tag bulk_action_path do %>
+      <%= leads_listing @leads, :show_checkboxes => (user_signed_in? and current_user.has_any_role?(:supplier, :lead_supplier, :lead_user)) do |blocks| %>
 
-              <% blocks.tools do |lead| %>
-                  <%= render :partial => "purchase_buttons", :locals => {:lead => lead} %>
+        <% blocks.tools do |lead| %>
+          <%= render :partial => "purchase_buttons", :locals => {:lead => lead} %>
+        <% end %>
+
+        <% if user_signed_in? && (current_user.has_role?(:supplier) || current_user.has_role?(:lead_user)) %>
+          <% blocks.bottom do %>
+            <% if current_user.has_role?(:supplier) or current_user.has_role?(:lead_supplier) %>
+              <%= hidden_field_tag :route_to, "/suppliers/bulk_cart_items" %>
+              <%= ibt do %>
+                <%= submit_tag current_user.big_buyer? ? t("leads.index.button_bulk_buy_leads") : t("leads.index.button_bulk_create_cart_item") %>
               <% end %>
-
-              <% if user_signed_in? && (current_user.has_role?(:supplier) || current_user.has_role?(:lead_user)) %>
-                  <% blocks.bottom do %>
-                      <% if current_user.has_role?(:supplier) or current_user.has_role?(:lead_supplier) %>
-                          <%= hidden_field_tag :route_to, "/suppliers/bulk_cart_items" %>
-                          <%= ibt do %>
-                            <%= submit_tag current_user.big_buyer? ? t("leads.index.button_bulk_buy_leads") : t("leads.index.button_bulk_create_cart_item") %>
-                          <% end %>
-                      <% elsif current_user.has_role?(:lead_user) %>
-                          <%= hidden_field_tag :route_to, "/lead_users/bulk_lead_requests" %>
-                          <%= ibt do %>
-                            <%= submit_tag t("leads.index.button_bulk_create_lead_request") %>
-                          <% end %>
-                      <% end %>
-                  <% end %>
+            <% elsif current_user.has_role?(:lead_user) %>
+              <%= hidden_field_tag :route_to, "/lead_users/bulk_lead_requests" %>
+              <%= ibt do %>
+                <%= submit_tag t("leads.index.button_bulk_create_lead_request") %>
               <% end %>
-
+            <% end %>
           <% end %>
+        <% end %>
       <% end %>
+    <% end %>
   <% end %>
 <% end %>

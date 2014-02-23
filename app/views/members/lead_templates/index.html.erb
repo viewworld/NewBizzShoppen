@@ -33,34 +33,30 @@
 <% end %>
 
 <%= content_for :column_mc do -%>
-
-  <header>
-    <param:content>
+  <%= header do |section| %>
+    <% section.block_header do %>
       <%= t("member.lead_templates.index.view.header") %>
-    </param:content>
-    <param:actions>
-
+    <% end %>
+    <% section.block_actions do %>
       <ul class="header_actions">
         <li class="last">
           <%= bt_link_to :plus, t("member.lead_templates.index.view.new_template"), new_members_lead_template_path(:lead_template => {:category_id => @search.with_category}) %>
         </li>
       </ul>
-    </param:actions>
-  </header>
-
-  <% if @lead_templates.blank? %>
-      <%= blank_state_message %>
-  <% else %>
-      <%= lead_templates_table @lead_templates, :show_checkboxes => false, :show_active_column => true, :paginate_table => true do |blocks| %>
-          <% blocks.tools do |lead_template| %>
-              <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
-                <li><%= link_to t("member.lead_templates.index.view.edit"), edit_members_lead_template_path(lead_template), :class => "default_action" %></li>
-                <li><%= link_to t("member.lead_templates.index.view.duplicate"), new_members_lead_template_path(:template_id => lead_template.id, :lead_template => {:category_id => @search.with_category}) %></li>
-                <li><%= link_to t("member.lead_templates.index.view.destroy"), members_lead_template_path(lead_template), :method => :delete, :confirm => t("member.lead_templates.index.view.destroy_template_confirmation_message") %></li>
-              </ul></div>
-          <% end %>
-      <% end %>
+    <% end %>
   <% end %>
 
-
+  <% if @lead_templates.blank? %>
+    <%= blank_state_message %>
+  <% else %>
+    <%= lead_templates_table @lead_templates, :show_checkboxes => false, :show_active_column => true, :paginate_table => true do |blocks| %>
+      <% blocks.tools do |lead_template| %>
+        <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
+            <li><%= link_to t("member.lead_templates.index.view.edit"), edit_members_lead_template_path(lead_template), :class => "default_action" %></li>
+            <li><%= link_to t("member.lead_templates.index.view.duplicate"), new_members_lead_template_path(:template_id => lead_template.id, :lead_template => {:category_id => @search.with_category}) %></li>
+            <li><%= link_to t("member.lead_templates.index.view.destroy"), members_lead_template_path(lead_template), :method => :delete, :confirm => t("member.lead_templates.index.view.destroy_template_confirmation_message") %></li>
+        </ul></div>
+      <% end %>
+    <% end %>
+  <% end %>
 <% end %>
