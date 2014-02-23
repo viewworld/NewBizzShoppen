@@ -17,12 +17,12 @@ class String
     self.scan(/(v=|embed\/)([a-zA-Z0-9\-_]+)/).flatten.last
   end
 
-  def truncate_words(length = 30, end_string = ' …')
+  def truncate_words(length = 30, end_string = '...')
     words = self.split()
     words[0..(length-1)].join(' ') + (words.length > length ? end_string : '')
   end
 
-  def truncate_letters(length = 100, end_string = ' …')
+  def truncate_letters(length = 100, end_string = '...')
     self.length <= length ? self : self[0..length-1] + end_string
   end
 end

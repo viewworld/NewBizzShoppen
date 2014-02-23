@@ -1,4 +1,4 @@
-require 'app/modules/role_change'
+require 'role_change'
 
 class User < ActiveRecord::Base
 

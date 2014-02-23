@@ -2897,7 +2897,7 @@ en:
             decision_date: Decision date
             state: State
             value: Value
-            estimate: %
+            estimate: '%'
             pipeline_value: Pipeline value
           download_as_pdf: Download as PDF
   categories:

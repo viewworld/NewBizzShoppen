@@ -12,6 +12,7 @@ module DERB
       #Change all injection tags to proper content_for declarations
       template.sub_injection_tags!
 
+      puts template
       template.to_s
     end
   end

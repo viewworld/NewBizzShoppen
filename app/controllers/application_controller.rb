@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   before_filter :prepare_search, :if => proc{session[:site]=="fairdeals"}
   before_filter :redirect_to_paypal_confirmation
 
-  layout proc { session[:layout] }
+  layout proc { |_| session[:layout] }
 
   def authorize_with_http_basic_for_staging
     if Rails.env.staging?
@@ -247,7 +247,4 @@ class ApplicationController < ActionController::Base
   def authorize_admin
     raise CanCan::AccessDenied unless current_user and current_user.has_role? :admin
   end
-
-
 end
-
