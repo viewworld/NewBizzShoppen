@@ -11,5 +11,10 @@ FactoryGirl.define do
     persist true
     resource nil
     custom_reply_to false
+
+    trait :global do
+      resource_id nil
+      resource_type nil
+    end
   end
 end
