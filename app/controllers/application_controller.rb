@@ -167,7 +167,7 @@ class ApplicationController < ActionController::Base
   def set_locale(locale_code=nil)
     @locales = Locale.enabled.all
     session[:locale_code] = locale_code || session[:locale_code] || I18n.locale.to_s
-    I18n.locale = @locales.map(&:code).include?(session[:locale_code]) ? session[:locale_code] : @locales.first.code
+    I18n.locale = @locales.map(&:code).include?(session[:locale_code]) ? session[:locale_code] : 'da'
     Thread.current[:globalize_detailed_locale] = ((user_signed_in? and current_user) and current_user.with_role.address.present?) ? current_user.with_role.address.country.detailed_locale : browser_locale
   end
 
