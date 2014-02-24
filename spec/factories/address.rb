@@ -6,4 +6,7 @@ FactoryGirl.define do
     zip_code { Faker::Address.zip_code }
     country { FactoryGirl.create(:country) }
   end
+
+  factory :bank_address, :class => Address::Bank, :parent => :address do
+  end
 end

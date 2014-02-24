@@ -102,6 +102,15 @@ export RUBY_HEAP_FREE_MIN=500000
 
 And reload the environment or `. ~/.bashrc`.
 
+#### Download database from production
+
+```
+ssh rails@fairleads.com # check proper directory, then from local terminal run (for example):
+scp rails@fairleads.com:/mnt/backup/backups/fairleads_db_backup/2014.01.20.00.00.02/fairleads_db_backup.tar backup_sql.tar
+chmod 0777 backup_sql.tar # the you will be able to unizp a file
+psql nbs_development < nbs_production.sql
+```
+
 ### Testing
 
 #### Running tests
@@ -166,6 +175,12 @@ Admin credentials:
 ssh rails@fairleads.com
 cd /srv/nbs/staging/current
 RAILS_ENV=staging bundle exec rails c
+```
+
+if you want to have all user's passwords set to 'secret' then run
+
+```
+User.all.each{|u| u.send(:secretize_password!)};nil
 ```
 
 #### Deployment

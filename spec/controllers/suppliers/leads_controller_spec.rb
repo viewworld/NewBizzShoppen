@@ -34,8 +34,8 @@ describe Suppliers::LeadsController do
                           :is_international => '0',
                           :zip_code => 'test'} }
 
-      it { expect { call_request }.to change { Lead.count }.from(0).to(1) }
-      it { expect { call_request }.to change { LeadPurchase.count }.from(0).to(1) }
+      it { expect { call_request }.to change { Lead.count }.by(1) }
+      it { expect { call_request }.to change { LeadPurchase.count }.by(1) }
 
       context 'after request' do
         before { call_request }

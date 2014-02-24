@@ -1,11 +1,26 @@
 class LoginTimeRequest < ActiveRecord::Base
+  DATE_FORMAT = '%d-%m-%Y'
 
-  attr_accessor :show_inactive_campaigns
+  attr_accessor :whole_day,
+                :whole_day_start_time,
+                :whole_day_end_time,
+                :whole_day_start_date,
+                :whole_day_end_date
 
-  validates_presence_of :campaign_id, :user_id, :creator_id, :start_time, :end_time
+  validates_presence_of :campaign_id, :user_id, :creator_id
+  validates_presence_of :start_time, :end_time, :unless => :whole_day?
+  validates_presence_of :whole_day_start_time,
+                        :whole_day_end_time,
+                        :whole_day_start_date,
+                        :whole_day_end_date, :if => :whole_day?
+
   validate do
-    if start_time >= end_time then
-      self.errors.add :start_time, "must be prior to end time"
+    i18n_scope = 'activerecord.errors.models.login_time_request.attributes'
+    if whole_day?
+      self.errors.add(:whole_day_start_time, I18n.t('whole_day_start_time.bigger_then_whole_day_end_time', :scope => i18n_scope)) if whole_day_start_time >= whole_day_end_time
+      self.errors.add(:whole_day_start_date, I18n.t('whole_day_start_date.bigger_then_whole_day_end_date', :scope => i18n_scope)) if whole_day_start_date > whole_day_end_date
+    else
+      self.errors.add(:start_time, I18n.t('start_time.bigger_then_end_time', :scope => i18n_scope)) if start_time >= end_time
     end
   end
 
@@ -18,11 +33,11 @@ class LoginTimeRequest < ActiveRecord::Base
   include ScopedSearch::Model
   include AASM
 
-  scope :with_campaign, lambda{ |campaign| where(:campaign_id => campaign.to_i) }
-  scope :with_user, lambda{ |user| where(:user_id => user.to_i) }
-  scope :with_time_from, lambda{ |time| where("start_time >= ?", Time.zone.parse(time)) }
-  scope :with_time_to, lambda{ |time| where("end_time <= ?", Time.zone.parse(time)) }
-  scope :with_state, lambda{ |state| where(:aasm_state => state) }
+  scope :with_campaign, lambda { |campaign| where(:campaign_id => campaign.to_i) }
+  scope :with_user, lambda { |user| where(:user_id => user.to_i) }
+  scope :with_time_from, lambda { |time| where('start_time >= ?', Time.zone.parse(time)) }
+  scope :with_time_to, lambda { |time| where('end_time <= ?', Time.zone.parse(time)) }
+  scope :with_state, lambda { |state| where(:aasm_state => state) }
 
   aasm_initial_state :new
 
@@ -55,5 +70,31 @@ class LoginTimeRequest < ActiveRecord::Base
 
   def can_be_managed_by?(current_user)
     current_user.admin? or (current_user.call_centre? and current_user.self_and_descendants.include?(current_user))
+  end
+
+  def whole_day_start_time_value(current_user)
+    current_user.country.work_start_at_value
+  end
+
+  def whole_day_end_time_value(current_user)
+    current_user.country.work_end_at_value
+  end
+
+  def whole_day_start_date_value
+    whole_day_date_value(whole_day_start_date)
+  end
+
+  def whole_day_end_date_value
+    whole_day_date_value(whole_day_end_date)
+  end
+
+  def whole_day?
+    whole_day == '1'
+  end
+
+  private
+
+  def whole_day_date_value(value)
+    (value ? Date.parse(value) : Date.today).strftime(DATE_FORMAT)
   end
 end

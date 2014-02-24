@@ -5,11 +5,13 @@
     </param:content>
   </header>
 
-  <%= render :partial => 'form', :locals => { :resource => resource } %>
+  <%= render :partial => 'form', :locals => { :resource => resource, :type => 'new' } %>
 
   <script>
       $(function() {
-          $(".datetimepicker").datetimepicker({ dateFormat: 'dd-mm-yy' });
+          $('.datetimepicker').datetimepicker({ dateFormat: 'dd-mm-yy' });
+          $('.datetimepicker_time').datetimepicker({ timeOnly: true });
+          $('.datetimepicker_date').datepicker({ dateFormat: 'dd-mm-yy' });
       });
   </script>
 

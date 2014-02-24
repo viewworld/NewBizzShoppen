@@ -5,10 +5,40 @@
 
           <fieldset class="inputs labels_ta_r">
             <ol class="align_inputs">
-              <%= f.input :start_time, :as => :string, :input_html => { :class => "datetimepicker", :value => l(resource.start_time) } %>
-              <%= f.input :end_time, :as => :string, :input_html => { :class => "datetimepicker" , :value => l(resource.end_time) } %>
+              <% if type == 'new' %>
+                  <%= f.input :whole_day, :as => :boolean, :onclick => 'wholeDayHandler()' %>
+              <% end %>
+              <div id='whole_day_off'>
+                <%= f.input :start_time, :as => :string,
+                            :input_html => {:readonly => :readonly,
+                                            :class => 'datetimepicker',
+                                            :value => l(resource.start_time)} %>
+                <%= f.input :end_time, :as => :string,
+                            :input_html => {:readonly => :readonly,
+                                            :class => 'datetimepicker',
+                                            :value => l(resource.end_time)} %>
+              </div>
+              <% if type == 'new' %>
+                  <div id='whole_day_on'>
+                    <%= f.input :whole_day_start_time, :as => :string,
+                                :input_html => {:readonly => :readonly,
+                                                :class => 'datetimepicker_time',
+                                                :value => resource.whole_day_start_time_value(current_user)} %>
+                    <%= f.input :whole_day_end_time, :as => :string,
+                                :input_html => {:readonly => :readonly,
+                                                :class => 'datetimepicker_time',
+                                                :value => resource.whole_day_end_time_value(current_user)} %>
+                    <%= f.input :whole_day_start_date, :as => :string,
+                                :input_html => {:readonly => :readonly,
+                                                :class => 'datetimepicker_date',
+                                                :value => resource.whole_day_start_date_value} %>
+                    <%= f.input :whole_day_end_date, :as => :string,
+                                :input_html => {:readonly => :readonly,
+                                                :class => 'datetimepicker_date',
+                                                :value => resource.whole_day_end_date_value} %>
+                  </div>
+              <% end %>
               <%= f.input :campaign_id, :collection => [], :include_blank => false %>
-              <%= f.input :show_inactive_campaigns, :as => :boolean %>
               <% if current_user.admin? %>
                   <%= f.input :user_id, :as => :select, :collection => User.with_any_role(:agent, :call_centre_agent).without_locked.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false %>
               <% elsif current_user.call_centre? %>
@@ -38,7 +68,7 @@
         $('#login_time_request_campaign_id option').remove();
 
         $.each(allCampaigns, function(idx, option) {
-            if (( (($.inArray(option[1], activeCampaignIds)) != -1) || ($('#login_time_request_show_inactive_campaigns').is(':checked') ) )) {
+            if (( (($.inArray(option[1], activeCampaignIds)) != -1) || <%= current_user.show_inactive_campaigns %> )) {
                 $('#login_time_request_campaign_id').
                         append($("<option></option>").
                         attr("value", option[1]).
@@ -49,10 +79,16 @@
 
     $(function(){
         fillCampaigns();
+        wholeDayHandler()
     });
 
-    $('#login_time_request_show_inactive_campaigns').change(function(){
-        fillCampaigns();
-    });
-
+    function wholeDayHandler(){
+        if ($('#login_time_request_whole_day').is(':checked')) {
+            $('#whole_day_on').show();
+            $('#whole_day_off').hide();
+        } else {
+            $('#whole_day_on').hide();
+            $('#whole_day_off').show();
+        }
+    }
 </script>

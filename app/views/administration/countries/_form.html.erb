@@ -5,6 +5,14 @@
         <%= form.input :name %>
         <%= form.input :locale %>
         <%= form.input :detailed_locale %>
+        <%= form.input :work_start_at, :as => :string,
+                       :input_html => {:readonly => :readonly,
+                                       :class => 'datetimepicker',
+                                       :value => @country.work_start_at_value} %>
+        <%= form.input :work_end_at, :as => :string,
+                       :input_html => {:readonly => :readonly,
+                                       :class => 'datetimepicker',
+                                       :value => @country.work_end_at_value} %>
         <%= form.fields_for :email_template_signature, @country.email_template_signature do |builder| %>
            <li><%= builder.text_area :body %></li>
         <% end %>
@@ -52,4 +60,8 @@
         }
 
     }
-</script>
+
+    $(function() {
+        $('.datetimepicker').datetimepicker({ timeOnly: true });
+    });
+ </script>

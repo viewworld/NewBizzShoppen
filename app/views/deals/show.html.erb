@@ -56,7 +56,7 @@
             </div>
         <% end %>
       </div>
-      
+
       <h4><%= t("deals.show.view.detailed_description_label") %></h4>
       <p><%= @deal.hidden_description.to_s.html_safe %></p>
 
@@ -74,7 +74,7 @@
             <% end %>
           </p>
       <% end %>
-      
+
       <% if requested_by_current_user and @deal.voucher_numbers.where(:user_id => current_user.id).first and @lead = @deal.leads.where(:requested_by => current_user.id).first %>
           <h4><%= t("member.leads.edit.view.voucher_label") %></h4>
           <p><%= link_to t("member.leads.edit.view.voucher_link"), pdf_members_lead_path(@lead) %></p>
@@ -228,83 +228,86 @@
 
   <div id="modal_for_share_deal_by_email" style="display:none;"></div>
 
-
-      <% cache("#{I18n.locale}_deals_show_#{@deal.id}_sign_up") do %>
+  <% unless Rails.env.test? %>
+    <% cache("#{I18n.locale}_deals_show_#{@deal.id}_sign_up") do %>
       <div id="modal_sign_in_or_sign_up_container_blinder" style="display:none;">
-          <div id="modal_sign_in_or_sign_up_container">
-              <%= render :partial => "sign_in/purchase_manager_form", :locals => {:deal => @deal, :user => User::Member.new, :url => member_accounts_path(:deal_request_id => @deal.id, :format => :js), :modal_box => true} %>
-          </div>
+        <div id="modal_sign_in_or_sign_up_container">
+          <%= render :partial => "sign_in/purchase_manager_form", :locals => {:deal => @deal, :user => User::Member.new, :url => member_accounts_path(:deal_request_id => @deal.id, :format => :js), :modal_box => true} %>
+        </div>
       </div>
-      <% end %>
+    <% end %>
+  <% end %>
 
 </column-mc:>
 
-<js:>
-  <script type="text/javascript">
+<% unless Rails.env.test? %>
+  <js:>
+    <script type="text/javascript">
 
-    <% if @deal.group_deal? %>
-      jQuery(document).ready(function() {
-          d = new Date();
-          seconds = (<%= @deal.end_date.to_i %> - parseInt(d.getTime() / 1000));
-          $('#countdown').countDown({
-              targetOffset: {
-                  'year':     0,
-                  'month':    0,
-                  'day':      0,
-                  'hour':     0,
-                  'min':      0,
-                  'sec':      seconds
-              },
-              omitWeeks: true
+      <% if @deal.group_deal? %>
+        jQuery(document).ready(function() {
+            d = new Date();
+            seconds = (<%= @deal.end_date.to_i %> - parseInt(d.getTime() / 1000));
+            $('#countdown').countDown({
+                targetOffset: {
+                    'year':     0,
+                    'month':    0,
+                    'day':      0,
+                    'hour':     0,
+                    'min':      0,
+                    'sec':      seconds
+                },
+                omitWeeks: true
+            });
+        });
+      <% end %>
+
+        jQuery(document).ready(function() {
+            $('a[rel=colorbox]').colorbox();
+        });
+
+        $('#modal_for_share_deal_by_email').dialog({
+            autoOpen: false,
+            width: 400,
+            title: '<%= t("deals.show.view.share_by_email_modal_title") %>',
+            modal: true,
+            position: ['center', 100],
+            buttons:
+            { "<%= t("deals.show.view.send_share_by_email_button") %>": function() {
+                if (validate_template_editor_fields("#modal_for_share_deal_by_email") == 0) {
+                    $('#form_share_deal_by_email').submit();
+                }
+            },
+                "<%= t("deals.show.view.cancel") %>": function() {
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+       function show_sign_up_or_sign_in_modal(){
+           $.colorbox({overlayClose: false, width: 980, height: false, inline: true, href:'#modal_sign_in_or_sign_up_container' });
+       }
+
+      function show_terms_and_conditions(){
+          $.colorbox({overlayClose: false, width: false, height: "100%", inline: false, href:'<%= article_path(Article::Cms::MainPageArticle.where(:key => "fairdeals_terms_conditions").first, :popup => true, :modal_box => "1") %>', onClosed:function(){show_sign_up_or_sign_in_modal()} });
+      }
+
+      $(document).ready(function() {
+          select_subscription_radio_button('user_member', <%= SubscriptionPlan.free.active.only_public.for_role(:member).first.id -%>);
+
+          $('.deal_images').cycle({
+            fx:     'fade',
+            timeout: 5000,
+            next: '.deal_images',
+            pause: 1,
+            width: 430,
+            fit: 1
           });
       });
-    <% end %>
 
-      jQuery(document).ready(function() {
-          $('a[rel=colorbox]').colorbox();
-      });
-
-      $('#modal_for_share_deal_by_email').dialog({
-          autoOpen: false,
-          width: 400,
-          title: '<%= t("deals.show.view.share_by_email_modal_title") %>',
-          modal: true,
-          position: ['center', 100],
-          buttons:
-          { "<%= t("deals.show.view.send_share_by_email_button") %>": function() {
-              if (validate_template_editor_fields("#modal_for_share_deal_by_email") == 0) {
-                  $('#form_share_deal_by_email').submit();
-              }
-          },
-              "<%= t("deals.show.view.cancel") %>": function() {
-                  $(this).dialog('close');
-              }
-          }
-      });
-
-     function show_sign_up_or_sign_in_modal(){
-         $.colorbox({overlayClose: false, width: 980, height: false, inline: true, href:'#modal_sign_in_or_sign_up_container' });
-     }
-
-    function show_terms_and_conditions(){
-        $.colorbox({overlayClose: false, width: false, height: "100%", inline: false, href:'<%= article_path(Article::Cms::MainPageArticle.where(:key => "fairdeals_terms_conditions").first, :popup => true, :modal_box => "1") %>', onClosed:function(){show_sign_up_or_sign_in_modal()} });
-    }
-
-    $(document).ready(function() {
-        select_subscription_radio_button('user_member', <%= SubscriptionPlan.free.active.only_public.for_role(:member).first.id -%>);
-
-        $('.deal_images').cycle({
-          fx:     'fade',
-          timeout: 5000,
-          next: '.deal_images',
-          pause: 1,
-          width: 430,
-          fit: 1
-        });
-    });
-
-    function remote_get_deal_for_member(deal_id){
-        $.get("/members/requests/new.js?deal_id=" + deal_id);
-    }
-  </script>
-</js:>
+      function remote_get_deal_for_member(deal_id){
+          $.get("/members/requests/new.js?deal_id=" + deal_id);
+      }
+    </script>
+  </js:>
+<% end %>
