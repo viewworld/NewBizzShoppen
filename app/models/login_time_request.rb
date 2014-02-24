@@ -15,11 +15,12 @@ class LoginTimeRequest < ActiveRecord::Base
                         :whole_day_end_date, :if => :whole_day?
 
   validate do
+    i18n_scope = 'activerecord.errors.models.login_time_request.attributes'
     if whole_day?
-      self.errors.add(:whole_day_start_time, I18n.t('activerecord.errors.models.login_time_request.attributes.whole_day_start_time.bigger_then_whole_day_end_time')) if whole_day_start_time >= whole_day_end_time
-      self.errors.add(:whole_day_start_date, I18n.t('activerecord.errors.models.login_time_request.attributes.whole_day_start_date.bigger_then_whole_day_end_date')) if whole_day_start_date > whole_day_end_date
+      self.errors.add(:whole_day_start_time, I18n.t('whole_day_start_time.bigger_then_whole_day_end_time', :scope => i18n_scope)) if whole_day_start_time >= whole_day_end_time
+      self.errors.add(:whole_day_start_date, I18n.t('whole_day_start_date.bigger_then_whole_day_end_date', :scope => i18n_scope)) if whole_day_start_date > whole_day_end_date
     else
-      self.errors.add(:start_time, I18n.t('activerecord.errors.models.login_time_request.attributes.start_time.bigger_then_end_time')) if start_time >= end_time
+      self.errors.add(:start_time, I18n.t('start_time.bigger_then_end_time', :scope => i18n_scope)) if start_time >= end_time
     end
   end
 
