@@ -314,11 +314,10 @@ describe 'Upgrade contact to lead after survey completion' do
     # I log out
     logout '/agent_home'
 
-
-    with_site 'erhvervsanalyse'
     #
     # Not logged in user fills out the survey by clicking link from email
     # I go to unique survey link from email
+    with_site 'erhvervsanalyse'
     get survey_recipient.survey_link
     expect(response).to be_success
 
@@ -338,13 +337,36 @@ describe 'Upgrade contact to lead after survey completion' do
 
     #
     # New lead created in Awesome leads category
-    # I go to fairleads.com
+    with_site 'fairleads'
+    get '/'
+    expect(response).to render_template('supplier_home/guest')
+
     # I sign in as admin
+    post '/users/sign_in', {:user => {:email => admin.email, :password => 'secret'}}
+    follow_with_redirect '/administration'
+
     # I click Categories tab
+    body_has_to(:have_link, 'Browse leads', :href => '/categories')
+    get '/categories'
+    expect(response).to be_success
+
     # I uncheck Unique
+    body_has_to(:have_checked_field, 'search_with_unique')
+
     # I click Search
+    body_has_to(:have_button, 'Search')
+    get '/categories', 'search[with_unique]' => false
+
     # I click Awesome leads
+    body_has_to(:include, 'Awesome leads')
     # I click View leads
+    body_has_to(:have_link, 'View leads', :href => '/categories/awesome-leads?search[with_category]=1')
+    get '/categories/awesome-leads?search[with_category]=1'
+
     # I should see My survey
+    body_has_to(:include, 'My Survey')
+
+    # I logout
+    logout
   end
 end
