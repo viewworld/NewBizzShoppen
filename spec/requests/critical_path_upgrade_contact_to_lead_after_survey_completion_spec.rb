@@ -14,6 +14,7 @@ describe 'Upgrade contact to lead after survey completion' do
   let(:campaign) { Campaign.last }
   let(:survey) { Survey.last }
   let!(:upgraded_to_lead_result) { Result.make!(:final, :name => 'Upgraded to lead', :generic => true) }
+  let(:survey_recipient) { SurveyRecipient.last }
 
   it 'Contact is upgraded to lead after the completion of survey created by call centre' do
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path-%22Upgrade-contact-to-lead-after-survey-completion%22
@@ -307,17 +308,33 @@ describe 'Upgrade contact to lead after survey completion' do
                 :'data-confirm' => %q(Are you sure to send My survey survey to 1 newsletter subscribers?),
                 :'data-method' => 'post',
                 :href => '/surveys_management/surveys/1/send_to_newsletters')
-    post '/surveys_management/surveys/1/send_to_newsletters'
+    expect { post '/surveys_management/surveys/1/send_to_newsletters' }.to change(ApplicationMailer.deliveries, :count).by(1)
     has_flash 'Survey has been queued for sending to newsletter lists'
 
     # I log out
     logout '/agent_home'
 
+
+    with_site 'erhvervsanalyse'
     #
     # Not logged in user fills out the survey by clicking link from email
     # I go to unique survey link from email
+    get survey_recipient.survey_link
+    expect(response).to be_success
+
     # I fill in What’s your name with John Doe
+    fields = { 'survey_recipient[survey_answers_attributes][0][value]' => 'John Doe' }
+    body_include_fields fields
+    body_has_to(:include, survey_recipient_path(survey_recipient.uuid))
+    body_has_to(:include, 'My Survey')
+
     # I click Submit
+    question_opts = { 'survey_recipient[survey_answers_attributes][0][survey_question_id]' => SurveyQuestion.last.id,
+                      'survey_recipient[survey_answers_attributes][0][question_type]' => 1 }
+    body_has_to(:have_button, 'survey_recipient_submit')
+    put survey_recipient_path(survey_recipient.uuid), fields.merge(question_opts)
+    body_has_to(:include, 'My Survey')
+    body_has_to(:include, 'Thank You for the answers!')
 
     #
     # New lead created in Awesome leads category
