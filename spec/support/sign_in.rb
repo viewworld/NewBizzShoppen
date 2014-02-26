@@ -16,3 +16,8 @@ shared_context 'agent signed in' do
   let(:agent) { create(:agent) }
   before { sign_in agent }
 end
+
+shared_context 'admin signed in' do
+  let(:admin) { create(:admin) }
+  before { sign_in admin }
+end
