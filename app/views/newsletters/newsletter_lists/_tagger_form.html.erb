@@ -1,0 +1,8 @@
+<div id="tagger_flash_message"></div>
+<%= semantic_form_for tagger,
+                      :url => newsletters_tag_subscriber_sources_path(:newsletter_list_id => newsletter_list.id),
+                      :remote => true do |form| %>
+    <%= form.input :tags %>
+    <%= form.input :type, :as => :radio, :collection => NewsletterListSubscriberTagger::TYPES %>
+    <%= form.submit 'Perform' %>
+<% end %>

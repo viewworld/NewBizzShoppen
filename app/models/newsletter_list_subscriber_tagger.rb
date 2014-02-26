@@ -1,8 +1,11 @@
 class NewsletterListSubscriberTagger
   include ActiveModel::Validations
+  include ActiveModel::Conversion
+  extend ActiveModel::Naming
+
   TYPES = %w(add remove)
 
-  validates :newsletter_list, :tags, :type, :presence => true
+  validates :newsletter_list, :tags, :presence => true
   validates :type, :inclusion => {:in => TYPES}
 
   attr_accessor :newsletter_list, :tags, :type
@@ -19,6 +22,10 @@ class NewsletterListSubscriberTagger
 
   def save
     valid? ? process_tags : false
+  end
+
+  def persisted?
+    false
   end
 
   private

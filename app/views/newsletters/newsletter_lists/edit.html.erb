@@ -48,6 +48,9 @@
       </frm>
   <% end %>
 
+  <div id="tagger_container">
+     <%= render :partial => 'tagger_form', :locals => {:tagger => @tagger, :newsletter_list => @newsletter_list} %>
+  </div>
 
   <header>
     <param:content>
