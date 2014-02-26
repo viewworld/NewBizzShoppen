@@ -3,7 +3,6 @@ require 'spec_helper'
 describe NewsletterListSubscriberTagger do
   it { should validate_presence_of(:newsletter_list) }
   it { should validate_presence_of(:tags) }
-  it { should validate_presence_of(:type) }
   it { should ensure_inclusion_of(:type).in_array(NewsletterListSubscriberTagger::TYPES) }
 
   context 'newsletter_list_subscriber exists' do
