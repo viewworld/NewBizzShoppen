@@ -10,7 +10,8 @@ class Newsletters::TagSubscriberSourcesController < Newsletters::NewslettersCont
   private
 
   def newsletter_list_subscriber_tagger_params
-    params[:newsletter_list_subscriber_tagger].merge({:newsletter_list => @newsletter_list})
+    params[:newsletter_list_subscriber_tagger].merge({:newsletter_list => @newsletter_list,
+                                                      :current_user => current_user})
   end
 
   def get_newsletter_list

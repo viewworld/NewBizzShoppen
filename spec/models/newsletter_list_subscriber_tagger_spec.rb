@@ -1,25 +1,21 @@
 require 'spec_helper'
 
 describe NewsletterListSubscriberTagger do
+  it { should validate_presence_of(:current_user) }
   it { should validate_presence_of(:newsletter_list) }
   it { should validate_presence_of(:tags) }
   it { should ensure_inclusion_of(:type).in_array(NewsletterListSubscriberTagger::TYPES) }
 
   context 'newsletter_list_subscriber exists' do
-    include_context 'email templates for campaign exists'
-    let!(:contact) { create(:contact) }
-    let!(:call_centre) { contact.campaign.creator }
-    let!(:newsletter_list) { create(:newsletter_list, :owner => call_centre) }
-    let!(:newsletter_list_subscriber) { create(:newsletter_list_subscriber,
-                                               :newsletter_list => newsletter_list,
-                                               :subscriber => contact) }
+    include_context 'newsletter list subscriber exists'
 
     describe '#save' do
       let(:subject) { NewsletterListSubscriberTagger.new(attributes) }
+      let(:perform) { subject.save }
 
       context 'valid attributes' do
-        let(:perform) { subject.save }
-        let(:attributes) { {:newsletter_list => newsletter_list,
+        let(:attributes) { {:current_user => call_centre,
+                            :newsletter_list => newsletter_list,
                             :tags => 'tag2, tag3',
                             :type => type} }
 
@@ -35,6 +31,7 @@ describe NewsletterListSubscriberTagger do
             end
 
             it { expect { perform }.to change { contact.reload.tag_list.sort }.from(%w(tag1)).to(%w(tag1 tag2 tag3)) }
+            it { expect { perform }.to change { ActionMailer::Base.deliveries.count }.by(1) }
           end
         end
 
@@ -50,6 +47,7 @@ describe NewsletterListSubscriberTagger do
             end
 
             it { expect { perform }.to change { contact.reload.tag_list.sort }.from(%w(tag1 tag2)).to(%w(tag1)) }
+            it { expect { perform }.to change { ActionMailer::Base.deliveries.count }.by(1) }
           end
         end
       end
@@ -58,6 +56,7 @@ describe NewsletterListSubscriberTagger do
         let(:attributes) { {} }
 
         its(:save) { should be_false }
+        it { expect { perform }.not_to change { ActionMailer::Base.deliveries.count } }
       end
     end
   end

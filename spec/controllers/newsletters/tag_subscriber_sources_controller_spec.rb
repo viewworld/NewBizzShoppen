@@ -5,13 +5,8 @@ describe Newsletters::TagSubscriberSourcesController do
   include_context 'admin signed in'
 
   describe '#create' do
-    include_context 'email templates for campaign exists'
-    let!(:contact) { create(:contact) }
-    let!(:call_centre) { contact.campaign.creator }
-    let!(:newsletter_list) { create(:newsletter_list, :owner => call_centre) }
-    let!(:newsletter_list_subscriber) { create(:newsletter_list_subscriber,
-                                               :newsletter_list => newsletter_list,
-                                               :subscriber => contact) }
+    include_context 'newsletter list subscriber exists'
+
     let(:call_request) { xhr :post,
                              :create,
                              :newsletter_list_id => newsletter_list.id,
