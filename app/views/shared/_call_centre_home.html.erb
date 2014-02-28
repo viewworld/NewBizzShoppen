@@ -109,10 +109,14 @@
 
       <% if current_user.admin? %>
           <% AgentPerformance::CALL_CENTRE_NAMES.each do |name| %>
-              <%= render :partial => 'shared/agent_performance_table', :locals => {:call_centre_name => name} %>
+              <%= render :partial => 'shared/agent_performance_table',
+                         :locals => {:call_centre_name => name,
+                                     :params => params} %>
           <% end %>
       <% else %>
-          <%= render :partial => 'shared/agent_performance_table', :locals => {:call_centre_name => nil} %>
+          <%= render :partial => 'shared/agent_performance_table',
+                     :locals => {:call_centre_name => nil,
+                                 :params => params} %>
       <% end %>
     </div>
 

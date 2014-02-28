@@ -3,6 +3,11 @@
   <tr>
     <th class="hl"></th>
     <th>
+      <%= bt_link_to :download, nil, agents_callers_agent_performance_path(:call_centre => call_centre_name,
+                                                                           :date_from => params[:date_from],
+                                                                           :date_to => params[:date_to],
+                                                                           :currency_id => params[:currency_id],
+                                                                           :format => :xls) %>
       <% if call_centre_name.nil? %>
           <%= t('admin_home.show.view.table.agent') %>
       <% else %>
