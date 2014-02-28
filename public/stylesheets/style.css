@@ -2338,9 +2338,6 @@ ol.survey_questions_container.sortable li .bt.bt_grey .branched-option {
     width: 65px;
 }
 
-
-
-
 /* --- campaings ----
 ------------------------------------------------------------------------------------ */
 
@@ -2351,4 +2348,31 @@ ol.survey_questions_container.sortable li .bt.bt_grey .branched-option {
 
 #surveys_newsletter_lists .grid_120 {
     margin-top: 30px;
+}
+
+#tagger_container .inputs {
+    margin-top: -47px;
+    position: absolute;
+}
+
+#tagger_container li {
+    clear: none;
+    float: left;
+    margin-right: 10px;
+}
+
+#tagger_container .radio fieldset {
+    float: left;
+}
+
+#tagger_container .radio .inline-errors {
+    padding-left: 0;
+}
+
+#newsletter_list_subscriber_tagger_tags_input label {
+    width: inherit;
+}
+
+#tagger_flash_message {
+    margin-top: 0;
 }
