@@ -3054,6 +3054,7 @@ en:
           time_on_phone: "P"
           rate: "Rate"
           agent: "Agent"
+          agent_with_name: "Agent (%{name})"
           payout: "PayOut"
           cost: "Cost"
           total: "Total"

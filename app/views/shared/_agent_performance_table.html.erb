@@ -1,0 +1,32 @@
+<table id='agent_performance_table<%= "_#{call_centre_name}" if call_centre_name %>' class="generic agents" style="width:100%;margin:auto;margin-top:10px;">
+  <thead>
+  <tr>
+    <th class="hl"></th>
+    <th>
+      <% if call_centre_name.nil? %>
+          <%= t('admin_home.show.view.table.agent') %>
+      <% else %>
+          <%= t('admin_home.show.view.table.agent_with_name', :name => call_centre_name.capitalize) %>
+      <% end %>
+    </th>
+    <th class="tar"><%= t('admin_home.show.view.table.calls') %></th>
+    <th class="tar"><%= t('admin_home.show.view.table.results') %></th>
+    <th class="tar"><%= t('admin_home.show.view.table.payout') %></th>
+    <th class="tar"><%= t('admin_home.show.view.table.value') %></th>
+    <th class="tar"><%= t('admin_home.show.view.table.hours') %></th>
+    <th class="tar"><%= t('admin_home.show.view.table.time_on_phone') %></th>
+    <th class="tar"><%= t('admin_home.show.view.table.rate') %></th>
+    <th class="hr"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td colspan="10"><%= image_tag 'global_loader.gif' %></td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <td class="fl"></td>
+  <td colspan="8"></td>
+  <td class="fr"></td>
+  </tfoot>
+</table>

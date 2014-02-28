@@ -1,4 +1,7 @@
 class AgentPerformance
+  CALL_CENTRE_NAMES = %w{copenhagen prague other}
+  CALL_CENTRE_PRAGUE_ID = 646
+  CALL_CENTRE_COPENHAGEN_ID = 8
 
   attr_accessor :date_from, :date_to, :user, :campaigns, :currency
 
@@ -69,7 +72,35 @@ class AgentPerformance
     end
   end
 
+  def self.performance_campaigns(current_user, call_centre)
+    if current_user.admin? && call_centre
+      campaigns_for_call_centre(current_user, call_centre)
+    else
+      campaigns_for_user(current_user)
+    end
+  end
+
   private
+
+  def self.campaigns_for_call_centre(current_user, call_centre)
+    if call_centre == 'other'
+      campaigns_for_user(current_user) - campaigns_for_user(prague_call_centre) - campaigns_for_user(copenhagen_call_centre)
+    else
+      campaigns_for_user(send("#{call_centre}_call_centre"))
+    end
+  end
+
+  def self.campaigns_for_user(user)
+    Campaign.active.available_for_user(user)
+  end
+
+  def self.prague_call_centre
+    User::CallCentre.find(CALL_CENTRE_PRAGUE_ID)
+  end
+
+  def self.copenhagen_call_centre
+    User::CallCentre.find(CALL_CENTRE_COPENHAGEN_ID)
+  end
 
   def jitter
     60*60*8 # 10 hours
