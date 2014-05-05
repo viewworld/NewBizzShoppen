@@ -3,7 +3,10 @@ module NewDerbHelper
     classes = %w(bt)
     classes << 'bt_icon' if opts[:icon]
     classes << opts[:class] if opts[:class]
-    content_tag(:div, :class => classes) do
+    div_opts = {:class => classes}
+    div_opts.merge(:style => opts[:style]) if opts[:style]
+
+    content_tag(:div, div_opts) do
       content_tag(:span) do
         capture(&block).tap do |html|
           html << image_tag("bt_icons/#{opts[:icon]}.png") if opts[:icon]
