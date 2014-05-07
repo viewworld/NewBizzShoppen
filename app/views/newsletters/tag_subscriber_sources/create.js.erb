@@ -1,0 +1,6 @@
+$("#tagger_container").html("<%= escape_javascript(render(:partial => 'newsletters/newsletter_lists/tagger_form',
+                                                          :locals => {:tagger => @tagger, :newsletter_list => @newsletter_list})) %>");
+<% if @result %>
+  $("#tagger_flash_message").html('<%= I18n.t('newsletters.tag_subscriber_sources.create.view.success') %>');
+  $("#tagger_flash_message").addClass('flash flash_notice')
+<% end %>

@@ -3054,6 +3054,7 @@ en:
           time_on_phone: "P"
           rate: "Rate"
           agent: "Agent"
+          agent_with_name: "Agent (%{name})"
           payout: "PayOut"
           cost: "Cost"
           total: "Total"
@@ -3700,6 +3701,11 @@ en:
       messages:
         blank: "can't be blank"
         invalid: "is invalid"
+      models:
+        newsletter_list_subscriber_tagger:
+          attributes:
+            type:
+              inclusion: has to be selected
 
   flash:
     change_subscription:
@@ -5253,6 +5259,10 @@ en:
           header: "Edit subscriber"
           button_update: "Save"
           button_cancel: "Cancel"
+    tag_subscriber_sources:
+      create:
+        view:
+          success: Tags are processed right now. You will be notified through email after completion.
   tags:
     common:
       assign_tags: "Assign tags"

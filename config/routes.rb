@@ -122,6 +122,7 @@ Nbs::Application.routes.draw do
       end
     end
 
+    resources :tag_subscriber_sources, :only => :create
     resources :newsletter_campaigns do
       collection do
         get 'lists_for_owner'

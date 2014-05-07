@@ -107,31 +107,17 @@
         </tfoot>
       </table>
 
-      <table class="generic agents" style="width:100%;margin:auto;margin-top:10px;">
-        <thead>
-        <tr>
-          <th class="hl"></th>
-          <th><%= t("admin_home.show.view.table.agent") %></th>
-          <th class="tar"><%= t("admin_home.show.view.table.calls") %></th>
-          <th class="tar"><%= t("admin_home.show.view.table.results") %></th>
-          <th class="tar"><%= t("admin_home.show.view.table.payout") %></th>
-          <th class="tar"><%= t("admin_home.show.view.table.value") %></th>
-          <th class="tar"><%= t("admin_home.show.view.table.hours") %></th>
-          <th class="tar"><%= t("admin_home.show.view.table.time_on_phone") %></th>
-          <th class="tar"><%= t("admin_home.show.view.table.rate") %></th>
-          <th class="hr"></th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr><td colspan="10"><%= image_tag "global_loader.gif" %></td></tr>
-        </tbody>
-        <tfoot>
-        <td class="fl"></td>
-        <td colspan="8"></td>
-        <td class="fr"></td>
-        </tfoot>
-      </table>
-
+      <% if current_user.admin? %>
+          <% AgentPerformance::CALL_CENTRE_NAMES.each do |name| %>
+              <%= render :partial => 'shared/agent_performance_table',
+                         :locals => {:call_centre_name => name,
+                                     :params => params} %>
+          <% end %>
+      <% else %>
+          <%= render :partial => 'shared/agent_performance_table',
+                     :locals => {:call_centre_name => nil,
+                                 :params => params} %>
+      <% end %>
     </div>
 
     <div class="column_1to3 fltl" id="performance_graph">
@@ -174,8 +160,14 @@
 <js:>
   <script type="text/javascript">
 
-      $(function(){
-          $('table.agents tbody').load('<%= agents_callers_agent_performance_path(:date_from => params[:date_from], :date_to => params[:date_to], :currency_id => params[:currency_id]) %>');
+      $(function () {
+          <% if current_user.admin? %>
+              <% AgentPerformance::CALL_CENTRE_NAMES.each do |name| %>
+                    $('table.agents#agent_performance_table_<%= name %> tbody').load('<%= agents_callers_agent_performance_path(:call_centre => name, :date_from => params[:date_from], :date_to => params[:date_to], :currency_id => params[:currency_id]) %>');
+              <% end %>
+          <% else %>
+              $('table.agents#agent_performance_table tbody').load('<%= agents_callers_agent_performance_path(:date_from => params[:date_from], :date_to => params[:date_to], :currency_id => params[:currency_id]) %>');
+          <% end %>
           $('#summary-tab tbody').load('<%= summary_callers_agent_performance_path(:date_from => params[:date_from], :date_to => params[:date_to], :currency_id => params[:currency_id]) %>');
       });
 
