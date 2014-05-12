@@ -510,7 +510,7 @@ class Campaign < ActiveRecord::Base
       contact.copy_attributes_to_newsletter_subscribers!
     end
     newsletter_lists.each do |newsletter_list|
-      contacts.where("leads.newsletter_list_id != (?)", newsletter_list.id).each do |contact|
+      contacts.where("leads.newsletter_list_id IS NULL OR leads.newsletter_list_id != (?)", newsletter_list.id).each do |contact|
         params = NewsletterListSubscriber.subscriber_attribute_params(contact)
         params[:company_phone_number] = nil if params[:company_phone_number] == "(missing phone)"
         params[:company_name] = nil if params[:company_name] == "(missing company name)"
