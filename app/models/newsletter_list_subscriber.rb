@@ -19,6 +19,8 @@ class NewsletterListSubscriber < ActiveRecord::Base
 
   alias_attribute :name, :contact_name
 
+  delegate :tag_list, :to => :taggable_subscriber
+
   scope :from_sources, where('subscriber_id IS NOT NULL AND subscriber_type IS NOT NULL')
   scope :for_newsletter_list, lambda { |newsletter_list| where(:newsletter_list_id => newsletter_list.id) }
 
@@ -47,6 +49,19 @@ class NewsletterListSubscriber < ActiveRecord::Base
 
   def newsletter_source_as_text
     newsletter_source.sourceable_as_text if newsletter_source
+  end
+
+  def taggable_subscriber
+    @_subscriber ||= if subscriber.is_a?(User)
+      subscriber.with_role
+    else
+      subscriber
+    end
+  end
+
+  def tag_list=(tags)
+    taggable_subscriber.tag_list << tags
+    taggable_subscriber.save
   end
 
 end
