@@ -475,7 +475,8 @@ class Campaign < ActiveRecord::Base
   end
 
   def should_perform_import_contacts_from_lists?
-    !!(import_contacts_from_lists_enabled? && !import_contacts_from_lists_queued && (import_contacts_from_lists_enabled_changed? || contacts_from_lists_modified))
+    !!(import_contacts_from_lists_enabled? && !import_contacts_from_lists_queued &&
+      (import_contacts_from_lists_enabled_changed? || contacts_from_lists_modified))
   end
 
   def perform_import_contacts_from_lists

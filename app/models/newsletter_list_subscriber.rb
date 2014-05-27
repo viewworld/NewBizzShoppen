@@ -63,5 +63,4 @@ class NewsletterListSubscriber < ActiveRecord::Base
     taggable_subscriber.tag_list << tags
     taggable_subscriber.save
   end
-
 end
