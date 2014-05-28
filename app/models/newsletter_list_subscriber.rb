@@ -14,7 +14,6 @@ class NewsletterListSubscriber < ActiveRecord::Base
   belongs_to :region
   belongs_to :newsletter_source
 
-  validates :email_address, :presence => true
   validates_uniqueness_of :subscriber_id, :scope => [:newsletter_list_id, :subscriber_type], :allow_blank => true
 
   alias_attribute :name, :contact_name
