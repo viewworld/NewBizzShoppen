@@ -41,6 +41,7 @@ class Campaign < ActiveRecord::Base
   scope :available_for_user, lambda { |user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin }
 
   attr_reader :contacts_from_lists_modified
+  attr_accessor :import_contacts_from_lists_queued
 
   before_save :set_euro_fixed_cost_value, :set_euro_production_value_per_hour
   before_save :set_creator_type, :if => :creator_id_changed?
@@ -474,11 +475,13 @@ class Campaign < ActiveRecord::Base
   end
 
   def should_perform_import_contacts_from_lists?
-    !!(import_contacts_from_lists_enabled? && (import_contacts_from_lists_enabled_changed? || contacts_from_lists_modified))
+    !!(import_contacts_from_lists_enabled? && !import_contacts_from_lists_queued &&
+      (import_contacts_from_lists_enabled_changed? || contacts_from_lists_modified))
   end
 
   def perform_import_contacts_from_lists
-    self.delay(:queue => "import_contacts_from_lists").import_contacts_from_lists!
+    self.delay(:queue => "import_contacts_from_lists_#{id}").import_contacts_from_lists!
+    self.import_contacts_from_lists_queued = true
   end
 
   def import_contacts_from_newsletter_lists!
@@ -506,6 +509,7 @@ class Campaign < ActiveRecord::Base
   end
 
   def export_contacts_to_lists!
+    return unless sync_with_campaign_source?
     contacts.each do |contact|
       contact.copy_attributes_to_newsletter_subscribers!
     end
