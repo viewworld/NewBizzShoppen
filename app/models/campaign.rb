@@ -39,6 +39,7 @@ class Campaign < ActiveRecord::Base
   scope :ascend_country, order("countries.name ASC").joins_on_country
   scope :descend_by_country, order("countries.name DESC").joins_on_country
   scope :available_for_user, lambda { |user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin }
+  scope :available_for_call_centre, lambda { |user| includes(:users).where("users.id IN (:user_ids) OR campaigns.creator_id = :user_id", {:user_id => user.id, :user_ids => user.subaccount_ids+[user.id]}) }
 
   attr_reader :contacts_from_lists_modified
   attr_accessor :import_contacts_from_lists_queued
