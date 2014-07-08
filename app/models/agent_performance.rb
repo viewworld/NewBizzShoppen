@@ -80,18 +80,32 @@ class AgentPerformance
     end
   end
 
+  def self.agents_for_campaigns_and_dates(call_centre, campaigns, date_from, date_to)
+    agents = User.select('DISTINCT(users.*)').joins(:user_session_logs).
+      where(:user_session_logs => {:campaign_id => campaigns, :end_date => date_from..date_to})
+    if call_centre == 'other'
+      agents.where('parent_id IS NULL OR parent_id NOT IN (?)', [CALL_CENTRE_COPENHAGEN_ID, CALL_CENTRE_PRAGUE_ID])
+    else
+      agents.where('parent_id IN (?)', [send("#{call_centre}_call_centre").id])
+    end
+  end
+
   private
 
   def self.campaigns_for_call_centre(current_user, call_centre)
     if call_centre == 'other'
-      campaigns_for_user(current_user) - campaigns_for_user(prague_call_centre) - campaigns_for_user(copenhagen_call_centre)
+      campaigns_for_user(current_user)
     else
       campaigns_for_user(send("#{call_centre}_call_centre"))
     end
   end
 
   def self.campaigns_for_user(user)
-    Campaign.active.available_for_user(user)
+    if user.call_centre?
+      Campaign.active.available_for_call_centre(user)
+    else
+      user.admin? ? Campaign.active : Campaign.active.available_for_user(user)
+    end
   end
 
   def self.prague_call_centre

@@ -17,9 +17,8 @@ class Callers::AgentPerformancesController < Callers::CallerController
     params[:date_to] ||= Date.today
     params[:currency_id] ||= Currency.dkk
     @performance_campaigns = AgentPerformance.performance_campaigns(current_user, params[:call_centre])
-    @agents = User.select('DISTINCT(users.*)').joins(:user_session_logs).
-        where(:user_session_logs => {:campaign_id => @performance_campaigns,
-                                     :end_date => params[:date_from]..params[:date_to]})
+    @agents = AgentPerformance.agents_for_campaigns_and_dates(params[:call_centre], @performance_campaigns,
+      params[:date_from], params[:date_to])
     respond_to do |format|
       format.xls {}
       format.html { render '/shared/call_centre_home/_agent_performance', :layout => false }
