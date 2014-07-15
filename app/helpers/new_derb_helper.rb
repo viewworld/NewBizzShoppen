@@ -20,7 +20,7 @@ module NewDerbHelper
     classes << opts[:class] if opts[:class]
     back = opts[:back]
     refresh = opts[:refresh]
-    content = content_tag(:div, :class => classes) do
+    content_tag(:div, :class => classes) do
       content_tag(:h1) do
         content_tag(:span) do
           capture_section(:block_header, &block)
@@ -49,6 +49,44 @@ module NewDerbHelper
         end
       end +
       capture_section(:block_actions, &block)
+    end
+  end
+
+  def frm(opts = {}, &block)
+    classes = %w(frm)
+    classes << opts[:class] if opts[:class]
+    title = opts[:title]
+    actions = opts[:actions]
+
+    content_tag(:div, :class => classes) do
+      content_tag(:div, :class => 'frm_head') do
+        content_tag(:div, :class => 'frm_hl') +
+          content_tag(:div, :class => 'frm_hr') +
+          content_tag(:div, :class => 'frm_hc') do
+            capture_section(:block_header, &block)
+            content_tag(:h2, title) if title
+          end
+      end +
+
+      content_tag(:div, :class => 'frm_content') do
+        capture_section(:block_content, &block)
+      end +
+
+      if actions
+        content_tag(:class => 'frm_foot_actions') do
+          content_tag(:div, :class => 'frm_fl') +
+            content_tag(:div, :class => 'frm_fr') +
+            content_tag(:div, :class => 'frm_fc') do
+              capture_section(:block_actions, &block)
+            end
+        end
+      else
+        content_tag(:class => 'frm_foot') do
+          content_tag(:div, :class => 'frm_fl') +
+            content_tag(:div, :class => 'frm_fr') +
+            content_tag(:div, :class => 'frm_fc')
+        end
+      end
     end
   end
 end
