@@ -1,32 +1,3 @@
-<def tag="header" attrs="c,title,back,backurl,refresh">
-  <div class="header_ribbon<%= c.nil? ? "" : " #{c}" %>">
-    <h1>
-      <span>
-        <param:content/>
-      </span>
-    </h1>
-    <% unless back.blank? %>
-        <ul class="header_actions">
-          <li class="bt_back">
-            <% if backurl.blank? %>
-                <%= bt_link_to nil, "Back", "javascript:void(0)", :onclick => "history.go(-1)", :class => "bt_grey_small" %>
-            <% else %>
-                <%= bt_link_to nil, "Back", backurl, :class => "bt_grey_small" %>
-            <% end %>
-          </li>
-        </ul>
-    <% end %>
-    <% unless refresh.blank? %>
-        <ul class="header_actions">
-          <li class="bt_refresh">
-            <%= bt_link_to nil, "Refresh", "javascript:location.reload(true)", :class => "bt_grey_small" %>
-          </li>
-        </ul>
-    <% end %>
-    <param:actions/>
-  </div>
-</def>
-
 <def tag="frm" attrs="title,c,id">
   <div class="frm<%= c.nil? ? "" : " #{c}" %>"<%= id.nil? ? "" : " id='#{id}'" %>>
     <div class="frm_head">
