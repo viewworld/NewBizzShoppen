@@ -279,7 +279,7 @@ GEM
       activesupport (= 3.0.20)
       bundler (~> 1.0)
       railties (= 3.0.20)
-    rails-multi_block_helpers (0.0.2)
+    rails-multi_block_helpers (0.0.3)
     railties (3.0.20)
       actionpack (= 3.0.20)
       activesupport (= 3.0.20)
@@ -433,7 +433,7 @@ DEPENDENCIES
   postmark-rails
   pry-rails (= 0.3.2)
   rails (= 3.0.20)
-  rails-multi_block_helpers (~> 0.0.2)
+  rails-multi_block_helpers (~> 0.0.3)
   railties
   rake (~> 0.8.7)
   recaptcha
