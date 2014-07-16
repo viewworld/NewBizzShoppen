@@ -60,10 +60,10 @@ module NewDerbHelper
 
     content_tag(:div, :class => classes) do
       content_tag(:div, :class => 'frm_head') do
-        content_tag(:div, :class => 'frm_hl') +
-          content_tag(:div, :class => 'frm_hr') +
-          content_tag(:div, :class => 'frm_hc') do
-            capture_section(:block_header, &block)
+        content_tag(:div, nil, :class => 'frm_hl') +
+          content_tag(:div, nil, :class => 'frm_hr') +
+          content_tag(:div, nil, :class => 'frm_hc') do
+            capture_section(:block_header, &block) +
             content_tag(:h2, title) if title
           end
       end +
@@ -74,17 +74,17 @@ module NewDerbHelper
 
       if actions
         content_tag(:class => 'frm_foot_actions') do
-          content_tag(:div, :class => 'frm_fl') +
-            content_tag(:div, :class => 'frm_fr') +
+          content_tag(:div, nil, :class => 'frm_fl') +
+            content_tag(:div, nil, :class => 'frm_fr') +
             content_tag(:div, :class => 'frm_fc') do
               capture_section(:block_actions, &block)
             end
         end
       else
         content_tag(:class => 'frm_foot') do
-          content_tag(:div, :class => 'frm_fl') +
-            content_tag(:div, :class => 'frm_fr') +
-            content_tag(:div, :class => 'frm_fc')
+          content_tag(:div, nil, :class => 'frm_fl') +
+            content_tag(:div, nil, :class => 'frm_fr') +
+            content_tag(:div, nil, :class => 'frm_fc')
         end
       end
     end

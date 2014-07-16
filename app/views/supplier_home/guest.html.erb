@@ -15,26 +15,26 @@
   <div class="pdd_5 no_pdd_b">
     <% unless user_signed_in? %>
         <div class="grid_360 fltr">
-          <frm title="#{t('agent_home.show.view.i_have_an_account')}" c="no_marg">
+          <%= frm(:class => 'no_marg', :title => t('agent_home.show.view.i_have_an_account')) do |section| %>
+            <% section.block_header {} %>
             <div class="pdd_10">
               <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
-                  <fieldset class="inputs labels_100 inputs_200 no_pdd">
-                    <ol class="align_inputs no_pdd">
-                      <%= render :partial => "shared/accounts/social_login_for_sign_in" %>
-                      <%= f.input :email, :input_html => {:tabindex => 1} %>
-                      <%= f.input :password, :label => raw(I18n.t("activerecord.attributes.user.password") + content_tag(:span, link_to(t("category_home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link")), :input_html => {:tabindex => 2}, :wrapper_html => {:class => "rltv"} %>
-                      <%= f.input :remember_me, :as => :boolean, :required => false, :input_html => {:tabindex => 3} %>
-                      <li class="commit">
-                        <%= ibt do %>
-                          <%= f.submit t("category_home.show.view.sign_in"), :tabindex => 4 %>
-                        <% end %>
-                      </li>
-                    </ol>
-                  </fieldset>
+                <fieldset class="inputs labels_100 inputs_200 no_pdd">
+                  <ol class="align_inputs no_pdd">
+                    <%= render :partial => "shared/accounts/social_login_for_sign_in" %>
+                    <%= f.input :email, :input_html => {:tabindex => 1} %>
+                    <%= f.input :password, :label => raw(I18n.t("activerecord.attributes.user.password") + content_tag(:span, link_to(t("category_home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link")), :input_html => {:tabindex => 2}, :wrapper_html => {:class => "rltv"} %>
+                    <%= f.input :remember_me, :as => :boolean, :required => false, :input_html => {:tabindex => 3} %>
+                    <li class="commit">
+                      <%= ibt do %>
+                        <%= f.submit t("category_home.show.view.sign_in"), :tabindex => 4 %>
+                      <% end %>
+                    </li>
+                  </ol>
+                </fieldset>
               <% end %>
             </div>
-          </frm>
-        </div>
+          <% end %>
     <% end %>
 
     <div class="<%= "grid_730 fltl" unless user_signed_in? %>">
@@ -48,11 +48,11 @@
 
   <div id="leads_summary">
     <div class="column_1to3 fltl" id="news">
-      <frm title="#{t('supplier_home.show.view.header_news')}" c="no_marg">
-        <param:header>
+      <%= frm(:class => 'no_marg', :title => t('supplier_home.show.view.header_news')) do |section| %>
+        <% section.block_header do %>
           <%= bt_link_to nil, t("supplier_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass => 'Supplier'}), :class => "fltr" %>
-        </param:header>
-        <param:content>
+        <% end %>
+        <% section.block_content do %>
           <ul class="solid_list">
             <% if @news.any? %>
                 <%= render :partial => 'news', :collection => @news, :as => :news %>
@@ -60,19 +60,19 @@
                 <%= render :partial => 'shared/blank_data_li' %>
             <% end %>
           </ul>
-        </param:content>
-      </frm>
+        <% end %>
+      <% end %>
     </div>
     <div class="column_1to3 fltl" style="padding: 0 15px" id="latest_deals">
-      <frm title="#{t('supplier_home.show.view.header_latest_deals')}" c="no_marg">
-        <param:header>
+      <%= frm(:class => 'no_marg', :title => t('supplier_home.show.view.header_latest_deals')) do |section| %>
+        <% section.block_header do %>
           <%= bt_link_to nil,
                          t('supplier_home.show.view.complete_list_link'),
                          deals_url(:protocol => 'http://', :host => fairdeals_host, :search => {:latest => true}),
                          :class => 'fltr',
                          :target => '_blank' %>
-        </param:header>
-        <param:content>
+        <% end %>
+        <% section.block_content do %>
           <ul class="solid_list">
             <% if @latest_deals.any? %>
                 <%= render :partial => 'deal', :collection => @latest_deals, :as => :deal %>
@@ -80,15 +80,15 @@
                 <%= render :partial => 'shared/blank_data_li' %>
             <% end %>
           </ul>
-        </param:content>
-      </frm>
+        <% end %>
+      <% end %>
     </div>
     <div class="column_1to3 fltl" id="latest_leads">
-      <frm title="#{t('supplier_home.show.view.header_latest_leads')}" c="no_marg">
-        <param:header>
+      <%= frm(:class => 'no_marg', :title => t('supplier_home.show.view.header_latest_leads')) do |section| %>
+        <% section.block_header do %>
           <%= bt_link_to nil, t("supplier_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
-        </param:header>
-        <param:content>
+        <% end %>
+        <% section.block_content do %>
           <ul class="solid_list">
             <% if @latest_leads.any? %>
                 <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
@@ -96,12 +96,11 @@
                 <%= render :partial => 'shared/blank_data_li' %>
             <% end %>
           </ul>
-        </param:content>
-      </frm>
+        <% end %>
+      <% end %>
     </div>
     <div class="clb"></div>
   </div>
-
 <% end %>
 
 <%= content_for :js do -%>
