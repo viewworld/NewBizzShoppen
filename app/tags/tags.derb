@@ -59,23 +59,3 @@
     <% end %>
   </div>
 </def>
-
-<def tag="frm-reverse" attrs="c,id">
-  <div class="frm_reverse<%= c.nil? ? "" : " #{c}" %>"<%= id.nil? ? "" : " id='#{id}'" %>>
-    <div class="frm_head">
-      <div class="frm_hl"></div>
-      <div class="frm_hr"></div>
-      <div class="frm_hc"></div>
-    </div>
-    <div class="frm_content">
-      <param:content/>
-    </div>
-    <div class="frm_foot">
-      <div class="frm_fl"></div>
-      <div class="frm_fr"></div>
-      <div class="frm_fc">
-        <param:header/>
-      </div>
-    </div>
-  </div>
-</def>

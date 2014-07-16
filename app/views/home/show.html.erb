@@ -1,129 +1,156 @@
 <%= content_for :column_mc do -%>
   <%= header do |section| %>
     <% section.block_header do %>
-      <%= t("home.show.view.header") %>
+      <%= t('home.show.view.header') %>
     <% end %>
   <% end %>
 
-  <div class="introduction">
+  <div class='introduction'>
     <% if youtube_introduction %>
-        <div class="youtube_thumb">
-          <%= link_to image_tag(youtube_introduction.image ? youtube_introduction.image.url : "https://img.youtube.com/vi/#{youtube_introduction.url.extract_youtube_video_id}/default.jpg", :class => "thumb"), "https://www.youtube.com/embed/#{youtube_introduction.url.extract_youtube_video_id}?autoplay=1&rel=0&border=0", :class => "introduction_video", :id => "introduction_video_link" %>
+        <div class='youtube_thumb'>
+          <%= link_to image_tag(youtube_introduction.image ? youtube_introduction.image.url : "https://img.youtube.com/vi/#{youtube_introduction.url.extract_youtube_video_id}/default.jpg", :class => 'thumb'), "https://www.youtube.com/embed/#{youtube_introduction.url.extract_youtube_video_id}?autoplay=1&rel=0&border=0", :class => 'introduction_video', :id => 'introduction_video_link' %>
         </div>
     <% end %>
-    <div class="intro_content">
-      <%= blurb("blurb_start_page_role_selection") %>
+    <div class='intro_content'>
+      <%= blurb('blurb_start_page_role_selection') %>
     </div>
-    <div class="clb"></div>
+    <div class='clb'></div>
   </div>
 
-  <div class="hl" style="padding: 15px 0"></div>
+  <div class='hl' style='padding: 15px 0'></div>
 
-  <div class="grid_250 fltl" style="margin-right: 10px" id="supplier_sign_up">
-    <frm-reverse c="home_cells">
-      <param:content>
-        <%= link_to image_tag("homepage/sales_manager.jpg"), supplier_home_path %>
-      </param:content>
-      <param:header>
-        <%= link_to t("home.show.view.supplier"), supplier_home_path %>
-      </param:header>
-    </frm-reverse>
+  <div class='grid_250 fltl' style='margin-right: 10px' id='supplier_sign_up'>
+    <div class='frm_reverse home_cells'>
+      <div class='frm_head'>
+        <div class='frm_hl'></div>
+        <div class='frm_hr'></div>
+        <div class='frm_hc'></div>
+      </div>
+      <div class='frm_content'>
+        <%= link_to image_tag('homepage/sales_manager.jpg'), supplier_home_path %>
+      </div>
+      <div class='frm_foot'>
+        <div class='frm_fl'></div>
+        <div class='frm_fr'></div>
+        <div class='frm_fc'>
+          <%= link_to t('home.show.view.supplier'), supplier_home_path %>
+        </div>
+      </div>
+    </div>
 
     <% if !user_signed_in? or (current_user and current_user.has_any_role?(:admin, :translator)) %>
-        <div class="frm_tiny frm_tip">
-          <span class="tip"></span>
+        <div class='frm_tiny frm_tip'>
+          <span class='tip'></span>
 
-          <p><%= t("home.show.view.supplier_sign_up_text") %>
-            , <%= link_to t("home.show.view.sign_up_here"), new_supplier_account_path %>.</p>
+          <p><%= t('home.show.view.supplier_sign_up_text') %>
+            , <%= link_to t('home.show.view.sign_up_here'), new_supplier_account_path %>.</p>
         </div>
     <% end %>
   </div>
 
-  <div class="grid_250 fltl" style="margin-right: 10px" id="member_sign_up">
-    <frm-reverse c="home_cells">
-      <param:content>
-        <%= link_to image_tag("homepage/purchase_manager.jpg"), member_home_path %>
-      </param:content>
-      <param:header>
-        <%= link_to t("home.show.view.member"), member_home_path %>
-      </param:header>
-    </frm-reverse>
+  <div class='grid_250 fltl' style='margin-right: 10px' id='member_sign_up'>
+
+    <div class='frm_reverse home_cells'>
+      <div class='frm_head'>
+        <div class='frm_hl'></div>
+        <div class='frm_hr'></div>
+        <div class='frm_hc'></div>
+      </div>
+      <div class='frm_content'>
+        <%= link_to image_tag('homepage/purchase_manager.jpg'), member_home_path %>
+      </div>
+      <div class='frm_foot'>
+        <div class='frm_fl'></div>
+        <div class='frm_fr'></div>
+        <div class='frm_fc'>
+          <%= link_to t('home.show.view.member'), member_home_path %>
+        </div>
+      </div>
+    </div>
 
     <% if !user_signed_in? or (current_user and current_user.has_any_role?(:admin, :translator)) %>
-        <div class="frm_tiny frm_tip">
-          <span class="tip"></span>
+        <div class='frm_tiny frm_tip'>
+          <span class='tip'></span>
 
-          <p><%= t("home.show.view.member_sign_up_text") %>
-            ,<br/><%= link_to t("home.show.view.sign_up_here"), new_member_account_path %>.
+          <p><%= t('home.show.view.member_sign_up_text') %>
+            ,<br/><%= link_to t('home.show.view.sign_up_here'), new_member_account_path %>.
           </p>
         </div>
     <% end %>
   </div>
 
-  <div class="grid_250 fltl" id="agent_sign_up">
-    <frm-reverse c="home_cells">
-      <param:content>
-        <%= link_to image_tag("homepage/agent.jpg"), agent_home_path %>
-      </param:content>
-      <param:header>
-        <%= link_to t("home.show.view.agent"), agent_home_path %>
-      </param:header>
-    </frm-reverse>
+  <div class='grid_250 fltl' id='agent_sign_up'>
+
+    <div class='frm_reverse home_cells'>
+      <div class='frm_head'>
+        <div class='frm_hl'></div>
+        <div class='frm_hr'></div>
+        <div class='frm_hc'></div>
+      </div>
+      <div class='frm_content'>
+        <%= link_to image_tag('homepage/agent.jpg'), agent_home_path %>
+      </div>
+      <div class='frm_foot'>
+        <div class='frm_fl'></div>
+        <div class='frm_fr'></div>
+        <div class='frm_fc'>
+          <%= link_to t('home.show.view.agent'), agent_home_path %>
+        </div>
+      </div>
+    </div>
 
     <% if !user_signed_in? or (current_user and current_user.has_any_role?(:admin, :translator)) %>
-        <div class="frm_tiny frm_tip">
-          <span class="tip"></span>
+        <div class='frm_tiny frm_tip'>
+          <span class='tip'></span>
 
-          <p><%= t("home.show.view.agent_sign_up_text") %>
-            ,<br/><%= link_to t("home.show.view.sign_up_here"), new_agent_account_path %>.</p>
+          <p><%= t('home.show.view.agent_sign_up_text') %>
+            ,<br/><%= link_to t('home.show.view.sign_up_here'), new_agent_account_path %>.</p>
         </div>
     <% end %>
-
   </div>
 
   <% unless user_signed_in? %>
-      <div class="grid_340 fltr">
-        <frm title="I have an account" c="no_marg">
-          <div class="pdd_10">
+      <div class='grid_340 fltr'>
+        <frm title='I have an account' c='no_marg'>
+          <div class='pdd_10'>
             <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
 
-                <fieldset class="inputs labels_100 inputs_180 no_pdd">
-                  <ol class="align_inputs no_pdd">
-                    <%= render :partial => "shared/accounts/social_login_for_sign_in" %>
+                <fieldset class='inputs labels_100 inputs_180 no_pdd'>
+                  <ol class='align_inputs no_pdd'>
+                    <%= render :partial => 'shared/accounts/social_login_for_sign_in' %>
                   </ol>
                 </fieldset>
 
-
-                <fieldset class="inputs labels_100 inputs_180 no_pdd">
-                  <ol class="align_inputs no_pdd">
+                <fieldset class='inputs labels_100 inputs_180 no_pdd'>
+                  <ol class='align_inputs no_pdd'>
 
                     <%= f.input :email, :input_html => {:tabindex => 1} %>
-                    <%= f.input :password, :label => raw(I18n.t("activerecord.attributes.user.password") + content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link")), :input_html => {:tabindex => 2}, :wrapper_html => {:class => "rltv"} %>
+                    <%= f.input :password, :label => raw(I18n.t('activerecord.attributes.user.password') + content_tag(:span, link_to(t('home.show.view.forgotten_password_link'), new_password_path(User)), :class => 'label_link')), :input_html => {:tabindex => 2}, :wrapper_html => {:class => 'rltv'} %>
                     <%= f.input :remember_me, :as => :boolean, :required => false, :input_html => {:tabindex => 3} %>
-                    <li class="commit">
+                    <li class='commit'>
                       <%= ibt do %>
-                        <%= f.submit t("home.show.view.sign_in"), :tabindex => 4 %>
+                        <%= f.submit t('home.show.view.sign_in'), :tabindex => 4 %>
                       <% end %>
                     </li>
                   </ol>
                 </fieldset>
             <% end %>
           </div>
-          <div class="hl"></div>
-          <div style="padding:5px 10px">
+          <div class='hl'></div>
+          <div style='padding:5px 10px'>
             <p>
-              <%= link_to t("home.show.view.resend_confirmation_instructions"), new_confirmation_path(User) %>
+              <%= link_to t('home.show.view.resend_confirmation_instructions'), new_confirmation_path(User) %>
             </p>
           </div>
         </frm>
       </div>
   <% end %>
 
-  <div class="clb"></div>
+  <div class='clb'></div>
 
-  <div class="hl" style="padding: 15px 0"></div>
+  <div class='hl' style='padding: 15px 0'></div>
 
-  <div class="home_categories_tree">
+  <div class='home_categories_tree'>
     <%= all_categories_tree(:roots => true, :category_label => lambda { |c| link_to "#{c.name}", "/#{c.cached_slug}" }) %>
   </div>
 
@@ -132,5 +159,4 @@
           $('.introduction_video').colorbox({iframe:true, innerWidth:560, innerHeight:349});
       });
   </script>
-
 <% end %>
