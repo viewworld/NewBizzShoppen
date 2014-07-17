@@ -21,7 +21,7 @@
 
   <div id="leads_summary">
     <div class="column_1to3 fltl" id="news">
-      <%= frm(:title => "#{t('supplier_home.show.view.header_news')}") do %>
+      <%= frm(:title => t('supplier_home.show.view.header_news')) do %>
         <% section.block_header do %>
           <%= bt_link_to nil, t("supplier_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass => 'Supplier'}), :class => "fltr" %>
         <% end %>
@@ -37,7 +37,7 @@
       <% end %>
     </div>
     <div class="column_1to3 fltl" style="padding: 0 15px" id="my_leads">
-      <%= frm(:title => "#{t('supplier_home.show.view.header_my_leads')}") do %>
+      <%= frm(:title => t('supplier_home.show.view.header_my_leads')) do %>
         <% section.block_header do %>
           <%= bt_link_to nil, t("supplier_home.show.view.complete_list_link"), current_user.has_role?(:supplier) ? suppliers_lead_purchases_path : lead_users_lead_purchases_path, :class => "fltr" %>
         <% end %>
@@ -53,7 +53,7 @@
       <% end %>
     </div>
     <div class="column_1to3 fltl" id="latest_leads">
-      <%= frm(:title => "#{t('supplier_home.show.view.header_latest_leads_in_my_categories')}") do %>
+      <%= frm(:title => t('supplier_home.show.view.header_latest_leads_in_my_categories')) do %>
         <% section.block_header do %>
           <% if current_user and current_user.has_role?(:supplier) and current_user.categories.blank? %>
               <%= bt_link_to nil, t("supplier_home.show.view.configure_interests_link"), edit_suppliers_interests_path, :class => "fltr" %>

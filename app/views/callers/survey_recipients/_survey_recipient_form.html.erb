@@ -1,5 +1,5 @@
 <%= semantic_form_for survey_recipient, :url => callers_survey_recipient_path(:id => survey_recipient.uuid), :remote => true do |form| %>
-    <%= frm(:title => "#{survey_recipient.survey.name}") do %>
+    <%= frm(:title => survey_recipient.survey.name) do %>
       <% section.block_content do %>
         <%= render :partial => 'shared/surveys/form', :locals => {:form => form} %>
       <% end %>

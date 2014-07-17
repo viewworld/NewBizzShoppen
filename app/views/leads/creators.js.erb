@@ -1,1 +1,1 @@
-$('#search_with_created_by').html("<%= escape_javascript(options_for_select([[]]+@creators.map { |u| ["#{u.screen_name}", u.id] }, @with_created_by)) %>");
+$('#search_with_created_by').html("<%= escape_javascript(options_for_select([[]]+@creators.map { |u| [u.screen_name, u.id] }, @with_created_by)) %>");

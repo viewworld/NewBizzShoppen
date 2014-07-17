@@ -18,7 +18,7 @@
   <% end %>
 
   <%= semantic_form_for @user, :url => supplier_accounts_path do |form| %>
-      <%= frm(:title => "#{t('shared.accounts.new_account_form.form_title')}", :class => "no_marg") do %>
+      <%= frm(:title => t('shared.accounts.new_account_form.form_title'), :class => "no_marg") do %>
         <% section.block_content do %>
           <div class="pdd_10">
             <%= render :partial => "shared/subscriptions/new_account", :locals => {:role => "category_supplier", :subscriptions_form => form} %>

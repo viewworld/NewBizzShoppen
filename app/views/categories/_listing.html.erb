@@ -36,7 +36,7 @@
         <td class="ta_c"><%= image_tag(category.image.url, :class => "thumb") if category.image %></td>
 
         <td>
-          <%#= link_to "#{category.name}", "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}?search[with_category]=#{category.id}", :class => "default_action", :style => "display:none" %>
+          <%#= link_to category.name, "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}?search[with_category]=#{category.id}", :class => "default_action", :style => "display:none" %>
           <h4>
             <%= category.name %>
             (<%= user_specific_category_counter(category) %>)
@@ -48,7 +48,7 @@
           <% end %>
 
           <p>
-            <%= category_tree_for_subcategories(category, {:category_label => lambda { |c| link_to "#{c.name}", "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{c.cached_slug}?search[with_category]=#{c.id}" },
+            <%= category_tree_for_subcategories(category, {:category_label => lambda { |c| link_to c.name, "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{c.cached_slug}?search[with_category]=#{c.id}" },
                               :ul_css_class => "vertical",
                               :after_category => lambda { |c|
                                   "<span class='total_leads'>(#{(c.is_a?(LeadCategory) ? c.leads_count_for_user(current_user) : c.deals_count_for_user(current_user)) == 0 ? t("layout.main_menu.shared.sold_out") : c.is_a?(LeadCategory) ? c.leads_count_for_user(current_user) : c.deals_count_for_user(current_user)})</span> #{category.is_a?(LeadCategory) ? link_to_view_lead_templates(c) : link_to_view_deal_templates(c)}" +

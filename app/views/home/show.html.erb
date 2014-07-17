@@ -151,7 +151,7 @@
   <div class='hl' style='padding: 15px 0'></div>
 
   <div class='home_categories_tree'>
-    <%= all_categories_tree(:roots => true, :category_label => lambda { |c| link_to "#{c.name}", "/#{c.cached_slug}" }) %>
+    <%= all_categories_tree(:roots => true, :category_label => lambda { |c| link_to c.name, "/#{c.cached_slug}" }) %>
   </div>
 
   <script>

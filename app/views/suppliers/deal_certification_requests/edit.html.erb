@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for [:suppliers, @deal], :method => :put, :url => suppliers_deal_certification_request_path(@deal) do |form| %>
-    <%= frm(:title => "#{@deal.header}") do %>
+    <%= frm(:title => @deal.header) do %>
       <% section.block_content do %>
         <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => []} %>
       <% end %>

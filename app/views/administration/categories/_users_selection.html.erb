@@ -1,4 +1,4 @@
-<% translation_prefix = "#{users_type == "customers" ? "suppliers" : "agents"}" %>
+<% translation_prefix = users_type == "customers" ? "suppliers" : "agents" %>
 <li id="users_selection_<%= users_type %>_div" style="<%= 'display:none' unless @category.send("is_#{users_type.singularize}_unique".to_sym) %>" class="select unique">
   <label>&nbsp;</label>
   <div class="fltl grid_720" style="padding-bottom:10px;">

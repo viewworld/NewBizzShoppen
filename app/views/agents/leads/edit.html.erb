@@ -7,7 +7,7 @@
   <% end %>
 
   <%= semantic_form_for [:agents, @lead], :method => :put do |form| %>
-    <%= frm(:title => "#{@lead.header}") do %>
+    <%= frm(:title => @lead.header) do %>
       <% section.block_content do %>
         <%= render :partial => '/shared/leads/form', :locals => {:form => form} %>
       <% end %>
@@ -32,7 +32,7 @@
   <% end %>
 
   <% if @lead.lead_purchases.any? %>
-    <%= frm(:title => "#{t('agent.leads.edit.view.rating_header')}", :id => "lead_rating") do %) do %>
+    <%= frm(:title => t('agent.leads.edit.view.rating_header'), :id => "lead_rating") do %) do %>
       <% @lead.lead_purchases.each do |lead_purchase| %>
           <% unless lead_purchase.rating_level.nil? %>
               <div class="rating_element">

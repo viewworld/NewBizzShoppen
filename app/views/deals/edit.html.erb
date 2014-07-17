@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for @deal, :method => :put, :url => deal_path(@deal) do |form| %>
-    <%= frm(:title => "#{@deal.header}") do %>
+    <%= frm(:title => @deal.header) do %>
       <% section.block_content do %>
         <%= hidden_field_tag :id, params[:id] %>
         <%= hidden_field_tag :token, params[:token] %>

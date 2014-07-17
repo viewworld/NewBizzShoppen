@@ -6,7 +6,7 @@
   <% end %>
 
   <%= form_tag choose_subscribers_advanced_import_path, :method => :post, :multipart => true, :id => "advanced_import_form" do %>
-    <%= frm(:title => "#{t('subscribers_advanced_import.show.view.title')}") do %>
+    <%= frm(:title => t('subscribers_advanced_import.show.view.title')) do %>
       <% section.block_content do %>
         <div class="pdd_10 no_pdd_t">
           <fieldset class="inputs labels_ta_r labels_180">

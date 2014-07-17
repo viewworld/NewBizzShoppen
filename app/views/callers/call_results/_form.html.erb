@@ -136,7 +136,7 @@
       <fieldset class="inputs labels_ta_r labels_200">
         <ol class="align_inputs">
           <li class="boolean">
-              <%= label_tag "call_result[chain_mail_type_id]", "#{t("call_results.new.chain_mail_enabled")}".html_safe %>
+              <%= label_tag "call_result[chain_mail_type_id]", t("call_results.new.chain_mail_enabled").html_safe %>
               <%= check_box_tag "call_result[chain_mail_type_id]", chain_mail_type.id, (call_result.chain_mail.present? or call_result.new_record?) %>
               <%= custom_error_for_object_and_field(call_result, :chain_mail) %>
           </li>

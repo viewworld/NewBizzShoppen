@@ -1,6 +1,6 @@
 <% if contact %>
     <%= semantic_form_for contact, :url => url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :update, :campaign_id => campaign, :id => contact), :html => { :method => :put }, :remote => true do |form| %>
-        <%= frm(:title => "#{contact.company_name}") do %>
+        <%= frm(:title => contact.company_name) do %>
             <% section.block_header do %>
               <div class="fltr ta_r">
                 <%= render :partial => "callers/agent_work_screen/results_actions", :locals => @locals %>
