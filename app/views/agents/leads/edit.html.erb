@@ -32,7 +32,7 @@
   <% end %>
 
   <% if @lead.lead_purchases.any? %>
-    <%= frm(:title => t('agent.leads.edit.view.rating_header'), :id => "lead_rating") do %) do %>
+    <%= frm(:title => t('agent.leads.edit.view.rating_header'), :id => "lead_rating") do %>
       <% @lead.lead_purchases.each do |lead_purchase| %>
           <% unless lead_purchase.rating_level.nil? %>
               <div class="rating_element">
