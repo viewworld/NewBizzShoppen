@@ -19,7 +19,7 @@
   <div class="pdd_5 no_pdd_b">
     <% unless user_signed_in? %>
         <div class="grid_360 fltr">
-          <%= frm(:title => "#{t('agent_home.show.view.i_have_an_account')}" :class => "no_marg") do %>
+          <%= frm(:title => "#{t('agent_home.show.view.i_have_an_account')}", :class => "no_marg") do %>
             <div class="pdd_10">
               <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
                   <fieldset class="inputs labels_100 inputs_200 no_pdd">
@@ -53,7 +53,7 @@
 
   <div id="leads_summary">
     <div class="column_1to3 fltl" id="news">
-      <%= frm(:title => "#{t('agent_home.show.view.header_news')}" :class => "no_marg") do %>
+      <%= frm(:title => "#{t('agent_home.show.view.header_news')}", :class => "no_marg") do %>
         <% section.block_header do %>
           <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass => "Agent"}), :class => "fltr" %>
         <% end %>
@@ -69,7 +69,7 @@
       <% end %>
     </div>
     <div class="column_1to3 fltl" style="padding: 0 15px" id="best_sellers">
-      <%= frm(:title => "#{t('agent_home.show.view.header_best_sellers')}" :class => "no_marg") do %>
+      <%= frm(:title => "#{t('agent_home.show.view.header_best_sellers')}", :class => "no_marg") do %>
         <% section.block_header do %>
           <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), leads_path(:search => {:bestsellers => true}), :class => "fltr" %>
         <% end %>
@@ -85,7 +85,7 @@
       <% end %>
     </div>
     <div class="column_1to3 fltl" id="latest_leads">
-      <%= frm(:title => "#{t('agent_home.show.view.header_latest_leads')}" :class => "no_marg") do %>
+      <%= frm(:title => "#{t('agent_home.show.view.header_latest_leads')}", :class => "no_marg") do %>
         <% section.block_header do %>
           <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
         <% end %>

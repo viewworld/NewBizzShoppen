@@ -25,7 +25,7 @@
 <% end %>
 
 <%= semantic_form_for user, :url => url, :remote => modal_box do |form| %>
-    <%= frm(:title => "#{t('member_accounts.new.view.header')}" :class => "no_marg") do %>
+    <%= frm(:title => "#{t('member_accounts.new.view.header')}", :class => "no_marg") do %>
       <% section.block_content do %>
         <div>
           <%= render :partial => "shared/subscriptions/new_account", :locals => {:role => "member", :subscriptions_form => form} %>

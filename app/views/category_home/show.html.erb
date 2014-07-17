@@ -35,7 +35,7 @@
 
   <div id="category_news">
     <div class="column_1to3 fltl" id="news" style="padding-right: 15px">
-      <%= frm(:title => "#{t('category_home.show.view.header_news')}" :class => "no_marg") do %>
+      <%= frm(:title => "#{t('category_home.show.view.header_news')}", :class => "no_marg") do %>
         <% section.block_header do %>
           <%= bt_link_to nil, t("category_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass => 'CategoryHome', :for_category => @home_category.id}), :class => "fltr" %>
         <% end %>
@@ -53,7 +53,7 @@
     </div>
     <% if !user_signed_in? %>
         <div class="column_1to3 fltl" style="padding-right: 15px" id="sign_up_sign_in">
-          <%= frm(:title => "#{t('category_home.show.view.i_have_an_account')}" :class => "no_marg") do %>
+          <%= frm(:title => "#{t('category_home.show.view.i_have_an_account')}", :class => "no_marg") do %>
             <div class="pdd_10">
               <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
                   <fieldset class="inputs labels_100 inputs_200 no_pdd">
@@ -81,7 +81,7 @@
           <% end %>
 
           <% unless @home_category.is_customer_unique? %>
-          <%= frm(:title => "#{t('category_home.show.view.i_want_to_register')}" :class => "10") do %>
+          <%= frm(:title => "#{t('category_home.show.view.i_want_to_register')}", :class => "10") do %>
             <div class="pdd_10">
               <%= bt_link_to :user, t("category_home.show.view.category_supplier_signup"), new_category_home_page_account_path %>
             </div>
@@ -90,7 +90,7 @@
         </div>
     <% elsif user_signed_in? and current_user.has_role? :category_supplier %>
         <div class="column_1to3 fltl" style="padding-right:15px" id="my_leads">
-          <%= frm(:title => "#{t('category_home.show.view.header_my_leads')}" :class => "no_marg") do %>
+          <%= frm(:title => "#{t('category_home.show.view.header_my_leads')}", :class => "no_marg") do %>
             <% section.block_header do %>
               <%= bt_link_to nil, t("category_home.show.view.complete_list_link"), current_user.has_role?(:supplier) ? suppliers_lead_purchases_path : lead_users_lead_purchases_path, :class => "fltr" %>
             <% end %>
@@ -110,7 +110,7 @@
     <div class="column_1to3 fltl" id="latest_leads">
 
       <% if @auto_buy_category %>
-          <%= frm(:title => "#{t('category_home.show.view.header_additional_information_label')}" :class => "no_marg") do %>
+          <%= frm(:title => "#{t('category_home.show.view.header_additional_information_label')}", :class => "no_marg") do %>
             <% section.block_content do %>
               <ul class="solid_list" style="padding:10px;width:340px;overflow:hidden;height:381px">
                 <%= @home_category.additional_information.to_s.html_safe %>
@@ -118,7 +118,7 @@
             <% end %>
           <% end %>
       <% else %>
-          <%= frm(:title => "#{t('category_home.show.view.header_latest_leads')}" :class => "no_marg") do %>
+          <%= frm(:title => "#{t('category_home.show.view.header_latest_leads')}", :class => "no_marg") do %>
             <% section.block_header do %>
               <%= bt_link_to nil, t("category_home.show.view.complete_list_link"), category_home_page_leads_path(@home_category.cached_slug, :search => {:latest => true}), :class => "fltr" %>
             <% end %>
