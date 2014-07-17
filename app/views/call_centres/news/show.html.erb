@@ -5,14 +5,14 @@
     <% end %>
   <% end %>
 
-  <frm title="#{@news.title}">
-    <param:header>
+  <%= frm(:title => "#{@news.title}") do %>
+    <% section.block_header do %>
       <%= bt_link_to nil, t("common.edit_link"), call_centres_news_path, :class => "fltr" %>
-    </param:header>
-    <param:content>
+    <% end %>
+    <% section.block_content do %>
       <div class="pdd_10">
         <%= raw @news.content %>
       </div>
-    </param:content>
-  </frm>
+    <% end %>
+  <% end %>
 <% end %>

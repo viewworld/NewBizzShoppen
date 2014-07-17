@@ -1,6 +1,6 @@
 <%= form_for @email_template_preview, :as => :email_template_preview, :url => administration_invoicing_invoice_mailings_path(@invoice) do |f| %>
     <frm>
-      <param:content>
+      <% section.block_content do %>
         <div class="pdd_10 no_pdd_t">
           <fieldset class="inputs labels_ta_r labels_220">
             <ol class="align_inputs">
@@ -24,14 +24,14 @@
           <%= f.cktext_area :body, :width => '1085px', :height => '300px', :toolbar => "Email"  %>
           <%= f.hidden_field :invoice_filename, :value => @email_template_preview.invoice_filename.basename %>
         </div>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "save") do %>
           <%= f.submit t("administration.invoices.mailing.new.view.send") %>
         <% end %>
         <%= ibt(:class => "bt_grey fltri") do %>
           <%= button_to_function t("administration.invoices.mailing.new.view.button_cancel"), href(administration_invoicing_invoices_path) %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
 <% end %>

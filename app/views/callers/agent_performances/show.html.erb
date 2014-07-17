@@ -6,8 +6,8 @@
   <% end %>
 
   <%= semantic_form_for @search, :url => callers_agent_performance_path, :as => :search, :html => {:method => :get} do |form| %>
-      <frm title="Search options">
-        <param:content>
+      <%= frm(:title => "Search options") do %>
+        <% section.block_content do %>
           <div class="pdd_10" id="search_box" style="<%= 'display:none;' if @search.all_agents.any? %>">
             <div class="column_left">
               <h3><%= t("agent_performance.show.view.time_period") %></h3>
@@ -93,8 +93,8 @@
             </div>
 
           </div>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri") do %>
             <%= link_to_function "Print", "$('#report').printElement();" %>
           <% end %>
@@ -115,8 +115,8 @@
             $('.show').hide();
           <% end %>
           </script>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 
   <div class="hl" style="padding: 15px 0"></div>

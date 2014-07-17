@@ -9,23 +9,23 @@
   <% end %>
 
   <%= semantic_form_for @category, :as => :category, :url => administration_category_path(@category), :method => :post, :html => {:multipart => true} do |form| %>
-      <frm title="">
-        <param:header>
+      <%= frm(:title => "") do %>
+        <% section.block_header do %>
           <%= bt_link_to nil, t("administration.categories.edit.view.edit_email_template"), edit_administration_category_email_template_path(@category), :class => "fltr" %>
           <%= bt_link_to nil, t("administration.categories.edit.view.new_template"), new_administration_lead_template_path(:category_id => @category.id), :class => "fltr" %>
-        </param:header>
-        <param:content>
+        <% end %>
+        <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.categories.edit.view.button_update"), :onclick => "select_options_onsubmit();" %>
           <% end %>
           <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("administration.settings.edit.view.button_cancel"), href(categories_path) %>
           <% end %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 
   <% unless @category.lead_templates.empty? %>

@@ -6,10 +6,10 @@
   <% end %>
 
   <%= semantic_form_for @user, :url => administration_supplier_interest_path, :method => :put do |form| %>
-    <frm title="">
-      <param:header>
-      </param:header>
-      <param:content>
+    <%= frm(:title => "") do %>
+      <% section.block_header do %>
+      <% end %>
+      <% section.block_content do %>
 
       <div id="category_interests">
         <div class="pdd_10">
@@ -55,16 +55,16 @@
         </fieldset>
       </div>
 
-      </param:content>
+      <% end %>
 
-      <param:actions>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "save") do %>
           <%= form.submit t("administration.users.edit.view.button_update_user"), :onclick => "select_options_to_submit('user_supplier_category_ids_');" %>
         <% end %>
         <%= ibt(:class => "bt_grey fltri") do %>
           <%= button_to_function t("administration.users.edit.view.button_cancel"), "history.go(-1)" %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

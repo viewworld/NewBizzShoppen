@@ -6,15 +6,15 @@
   <% end %>
 
   <%= semantic_form_for @payment_transaction, :url => administration_invoicing_payment_transaction_path(@payment_transaction), :as => :payment_transaction do |form| %>
-    <frm title="#{t('administration.payment_transactions.edit.view.edit')}">
-      <param:content>
+    <%= frm(:title => "#{t('administration.payment_transactions.edit.view.edit')}") do %>
+      <% section.block_content do %>
         <%= render :partial => 'form', :locals => { :form => form } %>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "save") do %>
           <%= form.submit t("administration.payment_transactions.edit.view.button_update") %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

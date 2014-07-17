@@ -6,19 +6,19 @@
   <% end %>
 
   <%= semantic_form_for @tag, :as => :tag, :url => administration_tag_path do |form| %>
-      <frm title="#{@tag.name}">
-        <param:content>
+      <%= frm(:title => "#{@tag.name}") do %>
+        <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.tags.edit.view.button_update") %>
           <% end %>
           <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("administration.tags.edit.view.button_cancel"), "history.go(-1)" %>
           <% end %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 
   <%= header do |section| %>

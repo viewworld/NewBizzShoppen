@@ -1,5 +1,5 @@
-<frm title="">
-<param:content>
+<%= frm(:title => "") do %>
+<% section.block_content do %>
   <div class="pdd_10 no_pdd_t">
     <% if settings.size > 10 %>
     <% settings_left, settings_right = settings.chunk(2) %>
@@ -26,13 +26,13 @@
     </div>
     <div class="clb"></div>
   </div>
-</param:content>
-<param:actions>
+<% end %>
+<% section.block_actions do %>
   <%= ibt(:class => "fltri", :icon => "plus") do %>
     <%= submit_tag t("administration.settings.edit.view.button_update_settings"), :onclick => "if(confirm('#{t("administration.settings.edit.view.confirmation_update_message")}')){ this.form.submit(); } else {return false;}" %>
   <% end %>
   <%= ibt(:class => "bt_grey fltri") do %>
     <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
   <% end %>
-</param:actions>
-</frm>
+<% end %>
+<% end %>

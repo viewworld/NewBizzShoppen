@@ -6,8 +6,8 @@
   <% end %>
 
   <%= semantic_form_for @user, :url => administration_user_path, :method => :put do |form| %>
-    <frm title="">
-      <param:header>
+    <%= frm(:title => "") do %>
+      <% section.block_header do %>
         <%= bt_link_to nil, t("administration.users.edit.view.view_user_debts"), administration_invoicing_upcoming_invoices_path(:search => {:with_keyword => @user.email}), :class => "fltr" %>
         <%= bt_link_to nil, t("administration.users.edit.view.view_user_invoices"), administration_invoicing_invoices_path(:search => {:with_keyword => @user.email}), :class => "fltr" %>
         <% if @user.active_subscription.present? and !@user.active_subscription.is_free? and !@user.active_subscription.cancelled? %>
@@ -32,24 +32,24 @@
         <% if @user.newsletter_manager? %>
             <%= bt_link_to nil, t("administration.users.index.view.go_to_campaign_monitor"), @user.link_to_campaign_monitor_account, {:target => "_blank", :class => "fltr"} %>
         <% end %>
-      </param:header>
-      <param:content>
+      <% end %>
+      <% section.block_content do %>
         <%= render :partial => 'form', :locals => {:form => form} %>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "save") do %>
           <%= form.submit t("administration.users.edit.view.button_update_user"), :onclick => "add_unique_to_interests();select_options_to_submit('user_supplier_category_ids_');select_options_to_submit('user_#{@user.role}_unique_category_ids_');select_options_to_submit('user_category_supplier_buying_category_ids_'); " %>
         <% end %>
         <%= ibt(:class => "bt_grey fltri") do %>
           <%= button_to_function t("administration.users.edit.view.button_cancel"), "history.go(-1)" %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 
   <% if @user.active_subscription and !@user.new_record? %>
-    <frm title="#{t('administration.users.edit.view.subscription_management')}">
-      <param:content>
+    <%= frm(:title => "#{t('administration.users.edit.view.subscription_management')}") do %>
+      <% section.block_content do %>
         <div class="pdd_10">
           <p><%= t("administration.users.edit.view.active_subscription") %> <%= @user.active_subscription.name %></p>
           <% unless @user.active_subscription.is_free? %>
@@ -105,8 +105,8 @@
               <% end %>
           <% end %>
         </div>
-      </param:content>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 
   <% if @user.subaccounts.present? %>

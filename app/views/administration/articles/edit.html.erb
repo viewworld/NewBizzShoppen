@@ -10,11 +10,11 @@
   <% end %>
 
   <%= semantic_form_for @article, :as => :article, :url => administration_article_path(@article), :input_html => {:method => :put} do |form| %>
-      <frm title="#{@article.title}">
-        <param:content>
+      <%= frm(:title => "#{@article.title}") do %>
+        <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.articles.edit.view.button_save") %>
           <% end %>
@@ -25,7 +25,7 @@
               <%= button_to_function t("common.cancel_link"), "history.go(-1)" %>
             <% end %>
             <% end %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 <% end %>

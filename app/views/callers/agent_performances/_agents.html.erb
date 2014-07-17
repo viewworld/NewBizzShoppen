@@ -53,14 +53,14 @@
 
 
           <div class="column_1to3 fltl" class="agent_performance_graph">
-            <frm title="#{t('agent_home.show.view.header_graph')}" c="no_marg">
-              <param:content>
+            <%= frm(:title => "#{t('agent_home.show.view.header_graph')}" :class => "no_marg") do %>
+              <% section.block_content do %>
                 <div style="padding:10px;">
                   <div id="agent_performance_graph_container_<%= agent.id %>" style="width: 350px; height:300px; padding:10px;"></div>
                   <img id="agent_<%= agent.id %>_plot"/>
                 </div>
-              </param:content>
-            </frm>
+              <% end %>
+            <% end %>
           </div>
           <div style="clear:both"></div>
         </div>

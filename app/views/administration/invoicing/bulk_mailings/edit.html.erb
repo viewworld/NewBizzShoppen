@@ -8,8 +8,8 @@
   <% end %>
 
   <%= semantic_form_for [:administration, @email_template], :url => administration_invoicing_bulk_mailings_path, :method => :put do |form| %>
-      <frm title="">
-        <param:content>
+      <%= frm(:title => "") do %>
+        <% section.block_content do %>
           <%= hidden_field_tag :invoice_ids, params[:invoice_ids].join(",") %>
           <div class="pdd_10 no_pdd_tb">
             <fieldset class="inputs labels_ta_r labels_100">
@@ -35,15 +35,15 @@
           </div>
 
           <%= render :partial => 'email_templates/form', :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.invoices.bulk_mailings.new.view.button_send") %>
           <% end %>
           <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("administration.invoices.bulk_mailings.new.view.button_cancel"), href(administration_invoicing_invoices_path) %>
           <% end %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 <% end %>

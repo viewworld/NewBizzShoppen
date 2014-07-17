@@ -1,7 +1,7 @@
     <div id="secondary_featured_deal_<%= position %>" class="secondary_featured_deal">
       <% if featured.present? %>
           <frm>
-            <param:header>
+            <% section.block_header do %>
               <!-- not cached content -->
               <%= ratings_for(featured, :force_static => !current_user_has_role?(:member)) %>
 
@@ -22,9 +22,9 @@
               </h2>
 
 
-            </param:header>
+            <% end %>
             <% cache("#{I18n.locale}_secondary_deal_#{featured.id}_part1") do %>
-              <param:content>
+              <% section.block_content do %>
               <div class="pdd_15">
                 <div class="deal_info">
                   <div class="deal_price">
@@ -57,10 +57,10 @@
 
               </div>
               <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(featured.slug), :class => 'default_action' %>
-            </param:content>
-          </frm>
+            <% end %>
+          <% end %>
           <% end %>
       <% elsif !defined?(skip_blank) %>
-          <frm c="no_marg"></frm>
+          c="no_marg"><% end %>
       <% end %>
     </div>

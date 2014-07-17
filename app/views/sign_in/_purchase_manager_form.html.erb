@@ -1,5 +1,5 @@
 <% if modal_box %>
-        <frm title="#{t('home.show.view.sign_in_form_title')}">
+        <%= frm(:title => "#{t('home.show.view.sign_in_form_title')}") do %>
           <div class="pdd_10">
             <%= semantic_form_for(:user, :url => session_path(:user, :deal_request_id => deal.id, :format => :js), :remote => true) do |f| %>
                 <fieldset class="inputs_vertical labels_90 inputs_130 no_pdd">
@@ -21,12 +21,12 @@
                 </fieldset>
             <% end %>
           </div>
-        </frm>
+        <% end %>
 <% end %>
 
 <%= semantic_form_for user, :url => url, :remote => modal_box do |form| %>
-    <frm title="#{t('member_accounts.new.view.header')}" c="no_marg">
-      <param:content>
+    <%= frm(:title => "#{t('member_accounts.new.view.header')}" :class => "no_marg") do %>
+      <% section.block_content do %>
         <div>
           <%= render :partial => "shared/subscriptions/new_account", :locals => {:role => "member", :subscriptions_form => form} %>
         </div>
@@ -75,8 +75,8 @@
         </div>
 
         <div class="clb"></div>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <div style="position: absolute;left: 142px;">
           <% unless modal_box %>
           <%= t("member_accounts.new.view.janrain_sign_up_label") %>
@@ -90,6 +90,6 @@
           <%= form.submit t("member_accounts.new.view.button_create_account") %>
         <% end %>
         <%= bt_link_to nil, t("shared.accounts.new_account_form.button_cancel"), modal_box ? "javascript:$.colorbox.close()" : root_path, :class => "bt_grey fltr" %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
 <% end %>

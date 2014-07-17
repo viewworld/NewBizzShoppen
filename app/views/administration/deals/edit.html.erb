@@ -20,16 +20,16 @@
   <% end %>
 
   <%= semantic_form_for [:administration, @deal], :method => :put, :html => {:multipart => true} do |form| %>
-      <frm title="#{@deal.header}">
-        <param:content>
+      <%= frm(:title => "#{@deal.header}") do %>
+        <% section.block_content do %>
           <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => DealCategory.without_locked.all} %>
           <%= render :partial => "shared/deals/assets_management", :locals => {:form => form, :path => "administration_deal_assets_path",
                                                                                :remove_path => "administration_deal_asset_path"} %>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
             <%= render :partial => "shared/deals/update_buttons", :locals => { :form => form, :role => "administration" } %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 
   <%= render :partial => "shared/deals/leads_listing", :locals => { :deal => @deal } %>

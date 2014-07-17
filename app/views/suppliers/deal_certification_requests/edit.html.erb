@@ -6,18 +6,18 @@
   <% end %>
 
   <%= semantic_form_for [:suppliers, @deal], :method => :put, :url => suppliers_deal_certification_request_path(@deal) do |form| %>
-    <frm title="#{@deal.header}">
-      <param:content>
+    <%= frm(:title => "#{@deal.header}") do %>
+      <% section.block_content do %>
         <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => []} %>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "save") do %>
           <%= form.submit t("supplier.deal_certification_requests.edit.view.reject"), :name => "commit_update", :onclick => "$('#accept').val('false');select_options_to_submit('deal_deal_template_ids_')" %>
         <% end %>
         <%= ibt(:class => "fltri", :icon => "save") do %>
           <%= form.submit t("supplier.deal_certification_requests.edit.view.certify"), :name => "commit_update", :onclick => "$('#accept').val('true');select_options_to_submit('deal_deal_template_ids_')" %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

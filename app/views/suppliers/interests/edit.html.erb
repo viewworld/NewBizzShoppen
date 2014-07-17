@@ -12,7 +12,7 @@
 
   <%= form_tag suppliers_interests_path, :method => :put do %>
       <frm>
-        <param:content>
+        <% section.block_content do %>
           <div class="pdd_10 no_pdd_tb">
             <% unless current_user.has_role?(:category_supplier) %>
                 <div class="column_right">
@@ -86,13 +86,13 @@
             <div class="clb"></div>
             <br/>
           </div>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= submit_tag t("supplier.interests.edit.view.button_update") %>
           <% end %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 
 

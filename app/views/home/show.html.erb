@@ -111,7 +111,7 @@
 
   <% unless user_signed_in? %>
       <div class='grid_340 fltr'>
-        <frm title='I have an account' c='no_marg'>
+        title='I have an account' c='no_marg'>
           <div class='pdd_10'>
             <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
 
@@ -142,7 +142,7 @@
               <%= link_to t('home.show.view.resend_confirmation_instructions'), new_confirmation_path(User) %>
             </p>
           </div>
-        </frm>
+        <% end %>
       </div>
   <% end %>
 

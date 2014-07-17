@@ -1,7 +1,7 @@
 <div id="call_result_form">
 <%= semantic_form_for @call_result, :url => update_dynamic_values_administration_payout_path(@call_result), :remote => true do |form| %>
-    <frm title="#{t('administration.payouts.edit_dynamic_values.view.header')}">
-      <param:content>
+    <%= frm(:title => "#{t('administration.payouts.edit_dynamic_values.view.header')}") do %>
+      <% section.block_content do %>
         <%= form.fields_for :call_result_fields, @call_result.call_result_fields do |builder| %>
             <fieldset class="inputs labels_ta_r">
               <ol>
@@ -14,15 +14,15 @@
               </ol>
             </fieldset>
         <% end %>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "save") do %>
           <%= form.submit t("administration.payouts.edit_dynamic_values.view.button_update") %>
         <% end %>
         <%= ibt(:class => "bt_grey fltri") do %>
           <%= button_to_function t("common.cancel_link"), "$.colorbox.close();" %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
 <% end %>
 </div>

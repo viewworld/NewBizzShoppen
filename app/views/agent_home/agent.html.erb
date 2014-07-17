@@ -64,8 +64,8 @@
   <% if user_signed_in? %>
   <div id="agent_performance">
     <div class="column_2to3 fltl" style="padding: 0 15px 0 0" id="agent_performance_table">
-      <frm title="#{t('agent_home.show.view.header_campaigns')}" c="no_marg">
-        <param:content>
+      <%= frm(:title => "#{t('agent_home.show.view.header_campaigns')}" :class => "no_marg") do %>
+        <% section.block_content do %>
           <%= form_tag '', :id => "performance_form", :method => :get do %>
               <fieldset class="inputs_vertical" style="width:95%;margin:auto;">
                 <ol class="no_pdd">
@@ -140,18 +140,18 @@
               <td class="fr"></td>
             </tfoot>
           </table>
-        </param:content>
-      </frm>
+        <% end %>
+      <% end %>
     </div>
 
     <div class="column_1to3 fltl" id="agent_performance_graph">
-      <frm title="#{t('agent_home.show.view.header_graph')}" c="no_marg">
-        <param:content>
+      <%= frm(:title => "#{t('agent_home.show.view.header_graph')}" :class => "no_marg") do %>
+        <% section.block_content do %>
           <div style="padding:10px">
             <div id="agent_performance_graph_container" style="height:<%= 136+(@performance_campaigns.count*34) %>px; padding:10px"></div>
           </div>
-        </param:content>
-      </frm>
+        <% end %>
+      <% end %>
     </div>
     <div class="clb"></div>
   </div>
@@ -160,11 +160,11 @@
 
   <div id="leads_summary">
     <div class="column_1to3 fltl" id="campaigns">
-      <frm title="#{t('agent_home.show.view.header_campaigns')}" c="no_marg">
-        <param:header>
+      <%= frm(:title => "#{t('agent_home.show.view.header_campaigns')}" :class => "no_marg") do %>
+        <% section.block_header do %>
           <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), callers_campaigns_path, :class => "fltr" %>
-        </param:header>
-        <param:content>
+        <% end %>
+        <% section.block_content do %>
           <ul class="solid_list row_4">
             <% if @campaigns.any? %>
                 <%= render :partial => 'campaigns', :collection => @campaigns.last(4), :as => :campaign %>
@@ -172,15 +172,15 @@
                 <%= render :partial => 'shared/blank_data_li' %>
             <% end %>
           </ul>
-        </param:content>
-      </frm>
+        <% end %>
+      <% end %>
     </div>
     <div class="column_1to3 fltl" style="padding: 0 15px" id="history">
-      <frm title="#{t('agent_home.show.view.header_history')}" c="no_marg">
-        <param:header>
+      <%= frm(:title => "#{t('agent_home.show.view.header_history')}" :class => "no_marg") do %>
+        <% section.block_header do %>
           <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), callers_history_path, :class => "fltr" %>
-        </param:header>
-        <param:content>
+        <% end %>
+        <% section.block_content do %>
           <ul class="solid_list row_4">
             <% if @call_results.any? %>
                 <%= render :partial => 'call_results', :collection => @call_results, :as => :call_result %>
@@ -188,15 +188,15 @@
                 <%= render :partial => 'shared/blank_data_li' %>
             <% end %>
           </ul>
-        </param:content>
-      </frm>
+        <% end %>
+      <% end %>
     </div>
     <div class="column_1to3 fltl" id="communication">
-      <frm title="#{t('agent_home.show.view.header_communication')}" c="no_marg">
-        <param:header>
+      <%= frm(:title => "#{t('agent_home.show.view.header_communication')}" :class => "no_marg") do %>
+        <% section.block_header do %>
           <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), callers_communication_path, :class => "fltr" %>
-        </param:header>
-        <param:content>
+        <% end %>
+        <% section.block_content do %>
           <ul class="solid_list row_4">
             <% if @communications.any? %>
                 <%= render :partial => 'communication', :collection => @communications, :as => :communication %>
@@ -204,8 +204,8 @@
                 <%= render :partial => 'shared/blank_data_li' %>
             <% end %>
           </ul>
-        </param:content>
-      </frm>
+        <% end %>
+      <% end %>
     </div>
     <div class="clb"></div>
    </div>
@@ -214,11 +214,11 @@
 
   <div id="leads_summary">
     <div class="column_1to3 fltl" id="news">
-      <frm title="#{t('agent_home.show.view.header_news')}" c="no_marg">
-        <param:header>
+      <%= frm(:title => "#{t('agent_home.show.view.header_news')}" :class => "no_marg") do %>
+        <% section.block_header do %>
           <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass => "Agent"}), :class => "fltr" %>
-        </param:header>
-        <param:content>
+        <% end %>
+        <% section.block_content do %>
           <ul class="solid_list">
             <% if @news.any? %>
                 <%= render :partial => 'news', :collection => @news, :as => :news %>
@@ -226,15 +226,15 @@
                 <%= render :partial => 'shared/blank_data_li' %>
             <% end %>
           </ul>
-        </param:content>
-      </frm>
+        <% end %>
+      <% end %>
     </div>
     <div class="column_1to3 fltl" style="padding: 0 15px" id="new_leads">
-      <frm title="#{@new_comments.any? ? t('agent_home.show.view.header_my_new_comments') : t('agent_home.show.view.header_my_new_leads')}" c="no_marg">
-        <param:header>
+      <%= frm(:title => "#{@new_comments.any? ? t('agent_home.show.view.header_my_new_comments') : t('agent_home.show.view.header_my_new_leads')}" :class => "no_marg") do %>
+        <% section.block_header do %>
           <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), agents_leads_path, :class => "fltr" %>
-        </param:header>
-        <param:content>
+        <% end %>
+        <% section.block_content do %>
           <ul class="solid_list">
             <% if @new_comments.any? %>
                 <%= render :partial => 'comment', :collection => @new_comments, :as => :comment %>
@@ -244,15 +244,15 @@
                 <%= render :partial => 'shared/blank_data_li' %>
             <% end %>
           </ul>
-        </param:content>
-      </frm>
+        <% end %>
+      <% end %>
     </div>
     <div class="column_1to3 fltl" id="sold_leads">
-      <frm title="#{t('agent_home.show.view.header_my_sold_leads')}" c="no_marg">
-        <param:header>
+      <%= frm(:title => "#{t('agent_home.show.view.header_my_sold_leads')}" :class => "no_marg") do %>
+        <% section.block_header do %>
           <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), agents_leads_path(:search => {:purchased => true, :without_inactive => false, :without_outdated => false}), :class => "fltr" %>
-        </param:header>
-        <param:content>
+        <% end %>
+        <% section.block_content do %>
           <ul class="solid_list">
             <% if @sold_leads.any? %>
                 <%= render :partial => 'lead', :collection => @sold_leads, :as => :lead %>
@@ -260,8 +260,8 @@
                 <%= render :partial => 'shared/blank_data_li' %>
             <% end %>
           </ul>
-        </param:content>
-      </frm>
+        <% end %>
+      <% end %>
     </div>
     <div class="clb"></div>
   </div>

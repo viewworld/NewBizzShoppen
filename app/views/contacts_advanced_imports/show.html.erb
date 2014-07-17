@@ -8,8 +8,8 @@
   <% objects = Campaign.available_for_user(current_user).map { |c| [c.name.to_s, c.id] }.sort %>
 
   <%= form_tag choose_contacts_advanced_import_path, :method => :post, :multipart => true, :id => "advanced_import_form" do %>
-    <frm title="#{t('contacts_advanced_import.show.view.title')}">
-      <param:content>
+    <%= frm(:title => "#{t('contacts_advanced_import.show.view.title')}") do %>
+      <% section.block_content do %>
         <div class="pdd_10 no_pdd_t">
           <fieldset class="inputs labels_ta_r labels_180">
             <ol class="align_inputs">
@@ -19,15 +19,15 @@
             </ol>
           </fieldset>
         </div>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "save") do %>
           <%= submit_tag t("advanced_import.show.view.button"), :name => "commit_create" %>
         <% end %>
         <!--remove last import is done for campaign right now...-->
         <%#= bt_link_to(:remove, t("advanced_import.show.view.remove_last_import_button"), contacts_advanced_import_path, :method => :delete, :confirm => t("advanced_import.show.view.remove_last_import_button_confirm"), :class => "fltr") %>
         <!--unless @campaign.contacts.from_last_import.blank? -->
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

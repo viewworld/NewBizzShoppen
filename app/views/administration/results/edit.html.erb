@@ -6,15 +6,15 @@
   <% end %>
 
   <%= semantic_form_for @result, :url => administration_result_path, :method => :post do |form| %>
-      <frm title="Update existing">
-        <param:content>
+      <%= frm(:title => "Update existing") do %>
+        <% section.block_content do %>
           <%= render :partial => '/callers/results/form', :locals => {:form => form, :result => @result} %>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.results.edit.view.button_update"), :name => "commit_create" %>
           <% end %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 <% end %>

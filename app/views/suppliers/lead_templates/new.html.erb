@@ -6,19 +6,19 @@
     <% end %>
   <% end %>
   <%= semantic_form_for [:suppliers, @lead_template], :method => :put do |form| %>
-    <frm title="">
-      <param:content>
+    <%= frm(:title => "") do %>
+      <% section.block_content do %>
         <%= render :partial => '/shared/lead_templates/form', :locals => {:form => form} %>
         <%= hidden_field_tag :deal_id, params[:deal_id] %>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "plus") do %>
           <%= form.submit t("supplier.lead_templates.new.view.button_create") %>
         <% end %>
         <%= ibt(:class => "bt_grey fltri") do %>
           <%= button_to_function t("supplier.lead_templates.new.view.button_cancel"), "history.go(-1)" %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

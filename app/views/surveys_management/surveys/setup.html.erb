@@ -11,15 +11,15 @@
 
   <%= semantic_form_for @survey, :url => surveys_management_survey_path(@survey) do |form| %>
       <frm>
-        <param:header>
+        <% section.block_header do %>
             <%= render :partial => "menu", :locals => { :action => params[:action] } %>
-        </param:header>
-        <param:content>
+        <% end %>
+        <% section.block_content do %>
             <%= render :partial => 'form_setup', :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
             <h2 align="right"><%= t("surveys_management.surveys.setup.view.save_info") %></h2>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 <% end %>

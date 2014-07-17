@@ -7,22 +7,22 @@
       <% end %>
     <% end %>
 
-    <frm title="#{t('administration.leads.edit.view.created_by')} #{@lead.creator.company_name} - #{@lead.creator.email}">
-      <param:content>
+    <%= frm(:title => "#{t('administration.leads.edit.view.created_by')} #{@lead.creator.company_name} - #{@lead.creator.email}") do %>
+      <% section.block_content do %>
         <%= render :partial => '/shared/leads/form', :locals => {:form => form} %>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "save") do %>
           <%= form.submit t("administration.leads.edit.view.button_update") %>
         <% end %>
         <%= ibt(:class => "bt_grey fltri") do %>
           <%= button_to_function t("administration.leads.edit.view.button_cancel"), "history.go(-1)" %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 
-  <frm title="#{t('administration.leads.edit.view.rating_header')}" id="lead_rating">
+  <%= frm(:title => "#{t('administration.leads.edit.view.rating_header')}" id="lead_rating") do %>
     <% @lead.lead_purchases.each do |lead_purchase| %>
         <% unless lead_purchase.rating_level.nil? %>
             <div class="rating_element">
@@ -34,5 +34,5 @@
             <div class="hl"></div>
         <% end %>
     <% end %>
-  </frm>
+  <% end %>
 <% end %>

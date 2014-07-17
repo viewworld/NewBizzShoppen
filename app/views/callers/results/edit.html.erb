@@ -6,17 +6,17 @@
     <% end %>
   <% end %>
   <%= semantic_form_for [:callers, @campaign, @result], :method => :post do |form| %>
-      <frm title="Update existing">
-        <param:content>
+      <%= frm(:title => "Update existing") do %>
+        <% section.block_content do %>
           <%= render :partial => '/callers/results/form', :locals => {:form => form, :result => @result} %>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("campaigns.edit.button_update"), :name => "commit_create" %>
           <% end %>
           <%= bt_link_to nil, t("campaigns.new.button_cancel"), url_for(:controller => "callers/results", :action => :index, :campaign_id => @campaign), :class => "bt_grey fltr" %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 <% end %>
 <%= content_for :js do -%>

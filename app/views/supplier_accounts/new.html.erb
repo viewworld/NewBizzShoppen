@@ -18,8 +18,8 @@
   <% end %>
 
   <%= semantic_form_for @user, :url => supplier_accounts_path do |form| %>
-      <frm title="#{t('shared.accounts.new_account_form.form_title')}" c="no_marg">
-        <param:content>
+      <%= frm(:title => "#{t('shared.accounts.new_account_form.form_title')}" :class => "no_marg") do %>
+        <% section.block_content do %>
           <div class="pdd_10">
             <%= render :partial => "shared/subscriptions/new_account", :locals => {:role => "category_supplier", :subscriptions_form => form} %>
           </div>
@@ -71,8 +71,8 @@
 
           <div class="clb"></div>
 
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <div style="position: absolute;left: 142px;">
             <%= t("member_accounts.new.view.janrain_sign_up_label") %>
             <% unless Rails.env.test? %>
@@ -84,8 +84,8 @@
             <%= form.submit t("supplier_accounts.new.view.button_create_account") %>
           <% end %>
           <%= bt_link_to nil, t("shared.accounts.new_account_form.button_cancel"), root_path, :class => "bt_grey fltr" %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 
   <script type="text/javascript">

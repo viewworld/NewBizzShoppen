@@ -5,11 +5,11 @@
     <% end %>
   <% end %>
 
-  <frm title="#{@bank_account.bank_name}">
-    <param:header>
+  <%= frm(:title => "#{@bank_account.bank_name}") do %>
+    <% section.block_header do %>
       <%= bt_link_to nil, t("common.edit_link"), edit_administration_bank_account_path(@bank_account), :class => "fltr" %>
-    </param:header>
-    <param:content>
+    <% end %>
+    <% section.block_content do %>
       <div class="pdd_10 lh_22">
         <div class="grid_1to3 fltl">
           <p>
@@ -86,7 +86,7 @@
         <h2><%= t("administration.bank_accounts.show.view.payment_conditions") %>:</h2>
         <p><%= @bank_account.payment_conditions %></p>
       </div>
-    </param:content>
-  </frm>
+    <% end %>
+  <% end %>
 
 <% end %>

@@ -17,18 +17,18 @@
   <% end %>
 
   <%= semantic_form_for @chain_mail_type, :as => :chain_mail_type, :url => (@campaign ? callers_campaign_chain_mail_type_path(@campaign, @chain_mail_type) : callers_chain_mail_type_path(@chain_mail_type)), :method => :put do |form| %>
-    <frm title="#{t('chain_mail_types.edit.title')}">
-      <param:content>
+    <%= frm(:title => "#{t('chain_mail_types.edit.title')}") do %>
+      <% section.block_content do %>
         <%= render :partial => 'form', :locals => {:form => form} %>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "save") do %>
           <%= form.submit t("views.button_update") %>
         <% end %>
         <%= ibt(:class => "bt_grey fltri") do %>
           <%= button_to_function t("views.button_cancel"), href(@campaign ? callers_campaign_chain_mail_types_path(@campaign) : callers_chain_mail_types_path) %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

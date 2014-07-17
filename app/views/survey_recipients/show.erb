@@ -10,14 +10,14 @@
   <% end %>
   <%= semantic_form_for @survey_recipient, :url => survey_recipient_path(:id => @survey_recipient.uuid) do |form| %>
       <frm>
-        <param:content>
+        <% section.block_content do %>
           <%= render :partial => 'shared/surveys/form', :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("surveys.show.view.button_update") %>
           <% end %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 <% end %>

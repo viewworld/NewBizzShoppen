@@ -1,6 +1,6 @@
 <%= form_for :email_template_preview, :url => contact_us_path do |f| %>
-  <frm title="#{t('contact_us.new.view.form_title')}">
-    <param:content>
+  <%= frm(:title => "#{t('contact_us.new.view.form_title')}") do %>
+    <% section.block_content do %>
     <div class="pdd_10 no_pdd_t">
 
       <%= blurb('blurb_supplier_contact_us') %>
@@ -21,11 +21,11 @@
         </ol>
       </fieldset>
     </div>
-    </param:content>
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <%= ibt(:class => "fltri") do %>
         <%= submit_tag t("contact_us.new.view.send_email_button") %>
       <% end %>
-    </param:actions>
-  </frm>
+    <% end %>
+  <% end %>
 <% end %>

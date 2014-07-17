@@ -35,7 +35,7 @@
 
   <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
     <div class="grid_440 grid_c">
-      <frm title="Type your email">
+      <%= frm(:title => "Type your email") do %>
         <div class="pdd_10">
           <fieldset class="inputs labels_100 inputs_180 no_pdd">
             <ol class="align_inputs no_pdd">
@@ -76,7 +76,7 @@
             </ol>
           </fieldset>
         </div>
-      </frm>
+      <% end %>
     </div>
   <% end %>
 

@@ -8,8 +8,8 @@
   <% end %>
 
   <%= semantic_form_for [:members, @lead], :method => :put do |form| %>
-      <frm title="Edit">
-        <param:content>
+      <%= frm(:title => "Edit") do %>
+        <% section.block_content do %>
           <div class="column_left">
             <div class="pdd_10 no_pdd_t">
               <fieldset class="inputs labels_ta_r labels_160">
@@ -105,15 +105,15 @@
               <%= render :partial => "form2", :locals => {:form => form} %>
           </div>
           <div class="clb"></div>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("member.leads.edit.view.button_update") %>
           <% end %>
           <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
           <% end %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 <% end %>

@@ -7,16 +7,16 @@
   <% end %>
 
   <%= semantic_form_for @result, :url => url_for(:controller => "callers/results", :action => :create, :campaign_id => @campaign, :id => @result), :method => :post do |form| %>
-    <frm title="Create new">
-      <param:content>
+    <%= frm(:title => "Create new") do %>
+      <% section.block_content do %>
         <%= render :partial => '/callers/results/form', :locals => {:form => form, :result => @result} %>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "save") do %>
           <%= form.submit t("campaigns.new.button_create"), :name => "commit_create" %>
         <% end %>
         <%= bt_link_to nil, t("campaigns.new.button_cancel"), url_for(:controller => "callers/results", :action => :index, :campaign_id => @campaign), :class => "bt_grey fltr" %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

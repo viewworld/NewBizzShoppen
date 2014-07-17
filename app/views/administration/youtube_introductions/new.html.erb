@@ -7,17 +7,17 @@
 
   <%= semantic_form_for @youtube_introduction, :as => :youtube_introduction, :url => administration_youtube_introductions_path, :html => {:method => :post, :multipart => true} do |form| %>
     <frm>
-      <param:content>
+      <% section.block_content do %>
         <%= render :partial => 'form', :locals => {:form => form} %>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "save") do %>
           <%= form.submit t("administration.introduction_video.new.view.button_create") %>
         <% end %>
         <%= ibt(:class => "fltri bt_grey") do %>
           <%= button_to_function t("common.cancel_link"), href(edit_administration_setting_path) %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

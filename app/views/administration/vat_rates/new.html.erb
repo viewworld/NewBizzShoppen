@@ -7,17 +7,17 @@
 
   <%= semantic_form_for @vat_rate, :as => :vat_rate, :url => administration_vat_rates_path, :input_html => {:method => :post} do |form| %>
     <frm>
-      <param:content>
+      <% section.block_content do %>
         <%= render :partial => 'form', :locals => {:form => form} %>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "save") do %>
           <%= form.submit t("administration.vat_rates.new.view.button_create") %>
         <% end %>
         <%= ibt(:class => "fltri bt_grey") do %>
           <%= button_to_function t("common.cancel_link"), href(edit_administration_setting_path) %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

@@ -12,7 +12,7 @@
   <% end %>
 
   <frm>
-    <param:content>
+    <% section.block_content do %>
       <div class="pdd_10">
         <div class="column_left">
           <p class="sortable_div_header"><%= t("#{model_name}s_advanced_import.choose.view.object_fields_label") %></p>
@@ -72,14 +72,14 @@
         </div>
       </div>
       <div class="clb"></div>
-    </param:content>
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <%= ibt(:class => "fltri") do %>
         <%= button_to_function t("advanced_import.choose.view.next_button"), "advanced_import_next_button('#{t("advanced_import.choose.view.warning_list_not_equal")}');" %>
       <% end %>
       <%= bt_link_to nil, t("advanced_import.choose.view.cancel_button"), self.send("#{model_name}s_advanced_import_path"), :class => "bt_grey fltr" %>
-    </param:actions>
-  </frm>
+    <% end %>
+  <% end %>
 
   <%= form_tag self.send("preview_#{model_name}s_advanced_import_path"), :id => "go_to_browse_page_form", :method => :post, :multipart => true do %>
       <%= hidden_field_tag :object_field, nil %>

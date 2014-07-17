@@ -8,8 +8,8 @@
   <% end %>
 
   <%= semantic_form_for [:members, @lead], :method => :post do |form| %>
-    <frm title="#{t('deals.new.view.frame_header')}" c="rltv">
-      <param:content>
+    <%= frm(:title => "#{t('deals.new.view.frame_header')}" :class => "rltv") do %>
+      <% section.block_content do %>
         <% if @deal.premium_deal? %>
             <div class="splash splash_premium">
           <span>
@@ -78,15 +78,15 @@
         </div>
         <div class="clb"></div>
 
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "save") do %>
           <%= form.submit t("member.leads.new.view.button_create") %>
         <% end %>
         <%= ibt(:class => "bt_grey fltri") do %>
           <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

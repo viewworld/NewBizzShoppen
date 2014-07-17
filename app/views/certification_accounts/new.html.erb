@@ -10,8 +10,8 @@
   <%= link_to t("certification_accounts.new.view.i_already_have_account"), root_path %>
 
   <%= semantic_form_for @user, :url => certification_accounts_path do |form| %>
-      <frm title="#{t('member_accounts.new.view.header')}" c="no_marg">
-        <param:content>
+      <%= frm(:title => "#{t('member_accounts.new.view.header')}" :class => "no_marg") do %>
+        <% section.block_content do %>
           <div class="column_left">
             <div class="pdd_10 no_pdd_t">
               <fieldset class="inputs labels_ta_r labels_200">
@@ -68,13 +68,13 @@
             </div>
           </div>
           <div class="clb"></div>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "plus") do %>
             <%= form.submit t("member_accounts.new.view.button_create_account") %>
           <% end %>
           <%= bt_link_to nil, t("shared.accounts.new_account_form.button_cancel"), root_path, :class => "bt_grey fltr" %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 <% end %>

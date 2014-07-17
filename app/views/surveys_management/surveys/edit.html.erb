@@ -9,22 +9,22 @@
 
   <%= semantic_form_for @survey, :url => surveys_management_survey_path(@survey) do |form| %>
     <frm>
-      <param:header>
+      <% section.block_header do %>
           <div id="survey_menu">
             <%= render :partial => "menu", :locals => { :action => params[:action] } %>
           </div>
-      </param:header>
-      <param:content>
+      <% end %>
+      <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "save") do %>
           <%= form.submit t("surveys_management.surveys.edit.view.button_update"), :onclick => "select_options_to_submit('survey_campaign_ids_');select_options_to_submit('survey_newsletter_list_ids_');select_options_to_submit('survey_category_ids_');" %>
         <% end %>
         <%= ibt(:class => "bt_grey fltri") do %>
           <%= button_to_function t("surveys_management.shared.cancel"), "history.go(-1)" %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

@@ -6,8 +6,8 @@
   <% end %>
 
   <%= semantic_form_for [:callers, @campaign], :method => :put do |form| %>
-      <frm title="Edit">
-        <param:header>
+      <%= frm(:title => "Edit") do %>
+        <% section.block_header do %>
           <%= bt_link_to nil, t("campaigns.edit.chain_mail_types"), callers_campaign_chain_mail_types_path(@campaign), :class => "fltr" %>
           <%= bt_link_to nil, t("campaigns.edit.materials_repository"), callers_campaign_materials_path(@campaign), :class => "fltr" %>
           <%= bt_link_to nil, t("campaigns.edit.description_and_briefing"), edit_callers_campaign_campaigns_description_path(@campaign), :class => "fltr" %>
@@ -17,17 +17,17 @@
           <%= bt_link_to nil, t("campaigns.edit.agent_assignment_button"), callers_campaign_campaigns_users_path(@campaign), :class => "fltr" %>
           <%= bt_link_to nil,  t("campaigns.edit.edit_template"),"javascript:void(0)", :onclick => "edit_template(#{@campaign.id})", :class => "fltr" %>
           <%= select_tag :email_template_id, options_for_select(@campaign.cloned_email_templates.map { |t| [t.name.to_s, t.id] }.sort), { :class => "fltr" } %>
-        </param:header>
-        <param:content>
+        <% end %>
+        <% section.block_content do %>
           <%= render :partial => '/callers/campaigns/form', :locals => {:form => form, :campaign => @campaign} %>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("campaigns.edit.button_update"), :name => "commit_create", :onclick => "select_options_to_submit('campaign_newsletter_list_ids_');" %>
           <% end %>
           <%= bt_link_to nil, t("campaigns.edit.button_cancel"), callers_campaigns_path, :class => "bt_grey fltr" %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 
   <br/>

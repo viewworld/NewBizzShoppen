@@ -28,19 +28,19 @@
 
   <div id="deal_form" style="display:none;">
     <%= semantic_form_for [:administration, @deal], :method => :post do |form| %>
-        <frm title="#{t('administration.deals.new.view.form_title')}">
-          <param:content>
+        <%= frm(:title => "#{t('administration.deals.new.view.form_title')}") do %>
+          <% section.block_content do %>
             <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => DealCategory.without_locked.all} %>
-          </param:content>
-          <param:actions>
+          <% end %>
+          <% section.block_actions do %>
             <%= ibt(:class => "fltri", :icon => "save") do %>
               <%= form.submit t("administration.deals.new.view.create_button"), :name => "commit_create", :onclick => "select_options_to_submit('deal_deal_template_ids_')" %>
             <% end %>
           <%= ibt(:class => "fltri bt_grey") do %>
             <%= button_to_function t("common.cancel_link"), "history.go(-1)" %>
           <% end %>
-          </param:actions>
-        </frm>
+          <% end %>
+        <% end %>
     <% end %>
   </div>
 <% end %>

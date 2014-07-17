@@ -6,8 +6,8 @@
   <% end %>
 
   <%= form_tag administration_featured_deals_path, :method => :post do %>
-      <frm title="#{t('administration.featured_deals.view.index.title')}">
-        <param:content>
+      <%= frm(:title => "#{t('administration.featured_deals.view.index.title')}") do %>
+        <% section.block_content do %>
           <div class="pdd_10 no_pdd_t">
             <div class="column_left">
               <fieldset class="inputs labels_170 labels_ta_r inputs_360">
@@ -23,15 +23,15 @@
             </div>
           </div>
           <div class="clb"></div><br/>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "plus") do %>
             <%= submit_tag t("administration.featured_deals.view.index.set_featured_deals") %>
           <% end %>
           <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("administration.featured_deals.view.index.cancel"), "history.go(-1)" %>
           <% end %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 <% end %>

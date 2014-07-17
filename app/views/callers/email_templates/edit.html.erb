@@ -10,11 +10,11 @@
   <% end %>
 
   <%= semantic_form_for [:callers, @campaign, @email_template], :url => callers_campaign_email_template_path(@campaign,@email_template), :method => :put do |form| %>
-    <frm title="Edit">
-      <param:content>
+    <%= frm(:title => "Edit") do %>
+      <% section.block_content do %>
         <%= render :partial => 'form', :locals => {:form => form} %>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "save") do %>
           <%= form.submit t("campaigns.email_templates.edit.view.button_update") %>
         <% end %>
@@ -24,8 +24,8 @@
         <%= ibt(:class => "bt_grey fltri") do %>
           <%= button_to_function t("administration.settings.edit.view.button_cancel"), href(edit_callers_campaign_path(@campaign)) %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 
   <%= hidden_field_tag :uniq_id, @email_template.uniq_id, {:id => "email_template_editor_uniq_id"} %>

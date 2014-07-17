@@ -7,18 +7,18 @@
   <% end %>
 
   <%= semantic_form_for @email_template_signature, :url => administration_email_template_signature_path(@email_template_signature), :method => :put do |form| %>
-      <frm title="">
-        <param:content>
+      <%= frm(:title => "") do %>
+        <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.email_template_signatures.edit.view.button_update") %>
           <% end %>
           <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("common.cancel_link"), "history.go(-1)" %>
           <% end %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 <% end %>

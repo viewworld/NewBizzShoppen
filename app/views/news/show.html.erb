@@ -5,9 +5,9 @@
     <% end %>
   <% end %>
 
-  <frm title="#{@news.title}">
+  <%= frm(:title => "#{@news.title}") do %>
     <div class="pdd_10">
       <%= raw @news.content %>
     </div>
-  </frm>
+  <% end %>
 <% end %>

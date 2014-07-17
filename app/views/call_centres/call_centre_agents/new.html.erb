@@ -7,7 +7,7 @@
 
   <%= semantic_form_for @call_centre_agent, :url => call_centres_call_centre_agents_path, :method => :post do |form| %>
     <frm>
-      <param:content>
+      <% section.block_content do %>
         <%= render :partial => 'form', :locals => {:form => form} %>
         <div class="hl"></div>
         <div class="pdd_10 no_pdd_t">
@@ -18,15 +18,15 @@
             </ol>
           </fieldset>
         </div>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "plus") do %>
           <%= form.submit t("call_centre.call_centre_agents.new.view.button_create") %>
         <% end %>
         <%= ibt(:class => "bt_grey fltri") do %>
           <%= button_to_function t("call_centre.call_centre_agents.new.view.button_cancel"), "history.go(-1)" %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

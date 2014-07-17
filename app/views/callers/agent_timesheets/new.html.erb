@@ -8,8 +8,8 @@
   <% all_campaigns = (current_user.admin? ? Campaign : Campaign.available_for_user(current_user)).reorder("name ASC") %>
 
   <%= semantic_form_for @search, :url => callers_agent_timesheets_path, :as => :search, :html => {:method => :post} do |f| %>
-      <frm title="#{t('agent_timesheets.new.set_constraints')}">
-        <param:content>
+      <%= frm(:title => "#{t('agent_timesheets.new.set_constraints')}") do %>
+        <% section.block_content do %>
           <% if current_user.agent? %>
             <%= render :partial => 'agent', :locals => { :f => f, :all_campaigns => all_campaigns } %>
           <% else %>
@@ -126,13 +126,13 @@
 
               </div>
           <% end %>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri") do %>
             <%= f.submit t("agent_timesheets.new.generate"), :onclick => "select_options_to_submit('search_campaigns_');select_options_to_submit('search_agents_');select_options_to_submit('search_call_centres_');" %>
           <% end %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 
   <% unless current_user.agent? %>

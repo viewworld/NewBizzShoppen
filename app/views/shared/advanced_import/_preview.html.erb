@@ -6,7 +6,7 @@
   <% end %>
 
   <frm>
-    <param:content>
+    <% section.block_content do %>
       <div class="pdd_10">
         <% size = @objects_to_preview.size %>
         <% @objects_to_preview.each_with_index do |object, index| %>
@@ -55,12 +55,12 @@
         <% end %>
 
       </div>
-    </param:content>
-    <param:actions>
+    <% end %>
+    <% section.block_actions do %>
       <%= ibt(:class => "fltri") do %>
         <%= button_to_function t("advanced_import.preview.view.import_button"), "$('#import_objects_form').submit();", :class => "fltr" %>
       <% end %>
       <%= bt_link_to nil, t("advanced_import.preview.view.cancel_button"), "javascript:void(0)", :onclick => "$('#go_to_choose_objects_form').submit();", :class => "bt_grey fltr" %>
-    </param:actions>
-  </frm>
+    <% end %>
+  <% end %>
 <% end %>

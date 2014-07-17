@@ -11,13 +11,13 @@
   </div>
 
   <%= semantic_form_for @lead, :method => :put do |form| %>
-    <frm title="#{@lead.header}">
-      <param:content>
+    <%= frm(:title => "#{@lead.header}") do %>
+      <% section.block_content do %>
         <%= render :partial => '/leads/form', :locals => {:form => form} %>
         <%= hidden_field_tag "token", @lsr.token %>
         <%= hidden_field_tag "confirmation", "agree" %>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "remove") do %>
         <%= form.submit t("leads.certification.reject"), :onclick => "$('#confirmation').val('disagree');" %>
         <% end %>
@@ -25,7 +25,7 @@
           <%= form.submit t("leads.certification.confirm") %>
         <% end %>
 
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

@@ -7,11 +7,11 @@
   <% end %>
 
   <%= semantic_form_for [:agents, @lead], :method => :put do |form| %>
-    <frm title="#{@lead.header}">
-      <param:content>
+    <%= frm(:title => "#{@lead.header}") do %>
+      <% section.block_content do %>
         <%= render :partial => '/shared/leads/form', :locals => {:form => form} %>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <% if @lead.can_be_certified? %>
             <%= ibt(:class => "fltri") do %>
               <%= link_to t("agent.leads.index.view.certify"), agents_lead_certifications_path(@lead), :method => :post %>
@@ -27,12 +27,12 @@
         <%= ibt(:class => "bt_grey fltri") do %>
           <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 
   <% if @lead.lead_purchases.any? %>
-    <frm title="#{t('agent.leads.edit.view.rating_header')}" id="lead_rating">
+    <%= frm(:title => "#{t('agent.leads.edit.view.rating_header')}" id="lead_rating") do %>
       <% @lead.lead_purchases.each do |lead_purchase| %>
           <% unless lead_purchase.rating_level.nil? %>
               <div class="rating_element">
@@ -44,6 +44,6 @@
               <div class="hl"></div>
           <% end %>
       <% end %>
-    </frm>
+    <% end %>
   <% end %>
 <% end %>

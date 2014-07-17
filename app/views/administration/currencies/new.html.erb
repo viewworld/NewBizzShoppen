@@ -8,18 +8,18 @@
   <p><%= blurb("blurb_currencies") %></p>
 
   <%= semantic_form_for @currency, :url => administration_currencies_path do |form| %>
-      <frm title="">
-        <param:content>
+      <%= frm(:title => "") do %>
+        <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.currencies.new.view.button_create_currency") %>
           <% end %>
           <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("administration.currencies.new.view.button_cancel"), href(administration_currencies_path) %>
           <% end %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 <% end %>

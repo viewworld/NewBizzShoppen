@@ -7,18 +7,18 @@
   <% end %>
 
   <%= semantic_form_for [:members, @lead_template], :method => :put do |form| %>
-    <frm title="">
-      <param:content>
+    <%= frm(:title => "") do %>
+      <% section.block_content do %>
         <%= render :partial => '/shared/lead_templates/form', :locals => {:form => form} %>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "plus") do %>
           <%= form.submit t("member.lead_templates.new.view.button_create") %>
         <% end %>
         <%= ibt(:class => "bt_grey fltri") do %>
           <%= button_to_function t("member.lead_templates.new.view.button_cancel"), "history.go(-1)" %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

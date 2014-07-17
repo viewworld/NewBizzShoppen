@@ -7,9 +7,9 @@
 
      <%= semantic_form_for :comment, @comment, :url => comments_thread_path(@comment), :html => {:method => :put} do |f| %>
       <frm>
-        <param:header>
-        </param:header>
-        <param:content>
+        <% section.block_header do %>
+        <% end %>
+        <% section.block_content do %>
             <div class="pdd_10 no_pdd_t">
               <fieldset class="inputs labels_ta_r labels_240">
                 <ol class="align_inputs">
@@ -18,12 +18,12 @@
                 </ol>
               </fieldset>
             </div>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
              <%= f.commit_button t("comments.threads.edit.view.update_comment_button") %>
           <% end %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
    <% end %>
 <% end %>

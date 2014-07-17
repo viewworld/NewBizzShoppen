@@ -7,8 +7,8 @@
   <% end %>
 
   <%= form_for @email_template_preview, :as => :email_template_preview, :url => suppliers_lead_purchase_lead_email_path() do |f| %>
-    <frm title="Email">
-      <param:content>
+    <%= frm(:title => "Email") do %>
+      <% section.block_content do %>
         <div class="pdd_10 no_pdd_t">
           <fieldset class="inputs labels_ta_r labels_240">
             <ol>
@@ -28,12 +28,12 @@
                 <%= f.cktext_area :body, :width => '1085px', :height => '300px', :toolbar => "Email"  %>
           </fieldset>
         </div>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "mail") do %>
           <%= f.submit t("lead_supplier.contact_lead_by_email.new.view.send_email_button") %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

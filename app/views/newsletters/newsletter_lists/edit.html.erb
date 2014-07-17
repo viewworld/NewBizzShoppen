@@ -26,11 +26,11 @@
   <% end %>
 
   <%= semantic_form_for @newsletter_list, :remote => true, :url => newsletters_newsletter_list_path do |form| %>
-      <frm title="#{header_text}">
-        <param:content>
+      <%= frm(:title => "#{header_text}") do %>
+        <% section.block_content do %>
             <%= render :partial => 'form', :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("newsletters.newsletter_lists.edit.view.button_update"), :onclick => "serialize_tag_groups_items();select_sourceable_items()" %>
           <% end %>
@@ -43,8 +43,8 @@
           <%= ibt(:class => "fltri hide") do %>
             <%= link_to_function "Hide", "$('.form_newsletter, .frm_foot_actions .bt').toggle('slow');" %>
           <% end %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 
   <div id="tagger_container">

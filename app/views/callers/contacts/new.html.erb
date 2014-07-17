@@ -16,8 +16,8 @@
     <% end %>
 
     <%= semantic_form_for [:callers, @campaign, @contact], :method => :post do |form| %>
-        <frm title="Create new">
-          <param:content>
+        <%= frm(:title => "Create new") do %>
+          <% section.block_content do %>
             <div class="pdd_10 no_pdd_t">
               <fieldset class="inputs labels_ta_r labels_180">
                 <ol class="align_inputs">
@@ -26,19 +26,19 @@
                 </ol>
               </fieldset>
             </div>
-          </param:content>
-          <param:actions>
+          <% end %>
+          <% section.block_actions do %>
             <%= ibt(:class => "fltri", :icon => "save") do %>
               <%= form.submit t("contacts.new.import_button"), :name => "commit_create" %>
             <% end %>
             <%= bt_link_to nil, t("campaigns.new.button_cancel"), edit_callers_campaign_path(@campaign), :class => "bt_grey fltr" %>
-          </param:actions>
-        </frm>
+          <% end %>
+        <% end %>
     <% end %>
 
     <%= form_tag import_xls_callers_campaign_contacts_path(@campaign), :method => :post, :multipart => true, :id => "contact_import_form" do %>
-      <frm title="#{t('contacts.new.title_import_from_excel')}">
-        <param:content>
+      <%= frm(:title => "#{t('contacts.new.title_import_from_excel')}") do %>
+        <% section.block_content do %>
           <div class="pdd_10 no_pdd_t">
             <fieldset class="inputs labels_ta_r labels_180">
               <ol class="align_inputs">
@@ -47,14 +47,14 @@
               </ol>
             </fieldset>
           </div>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= submit_tag t("contacts.new.import_from_excel_button"), :name => "commit_create" %>
           <% end %>
           <%= bt_link_to nil, t("campaigns.new.button_cancel"), edit_callers_campaign_path(@campaign), :class => "bt_grey fltr" %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
     <% end %>
   </div>
 
@@ -75,17 +75,17 @@
     <% end %>
 
     <%= semantic_form_for [:callers, @campaign, @contact], :method => :post do |form| %>
-      <frm title="Create new">
-        <param:content>
+      <%= frm(:title => "Create new") do %>
+        <% section.block_content do %>
           <%= render :partial => '/shared/leads/form', :locals => {:form => form, :campaign => @campaign, :contact => @contact} %>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("contacts.new.create_button"), :name => "commit_create" %>
           <% end %>
           <%= bt_link_to nil, t("campaigns.new.button_cancel"), edit_callers_campaign_path(@campaign), :class => "bt_grey fltr" %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
     <% end %>
   </div>
 <% end %>

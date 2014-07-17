@@ -7,18 +7,18 @@
   <% end %>
 
   <%= semantic_form_for [:member, @lead], :url => members_tenders_path,  :method => :post do |form| %>
-    <frm title="#{t('member.tenders.new.view.form_title')}">
-      <param:content>
+    <%= frm(:title => "#{t('member.tenders.new.view.form_title')}") do %>
+      <% section.block_content do %>
         <%= render :partial => '/shared/leads/form', :locals => {:form => form, :lead => @lead} %>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "save") do %>
           <%= form.submit t("member.tenders.new.view.button_create"), :name => "commit_create" %>
         <% end %>
         <%= ibt(:class => "bt_grey fltri") do %>
           <%= button_to_function t("member.tenders.new.view.button_cancel"), "history.go(-1)" %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

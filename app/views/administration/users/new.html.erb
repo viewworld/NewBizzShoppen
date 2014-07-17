@@ -7,17 +7,17 @@
 
   <%= semantic_form_for @user, :url => administration_users_path(:role => params[:role]) do |form| %>
     <frm>
-      <param:content>
+      <% section.block_content do %>
         <%= render :partial => 'form', :locals => {:form => form} %>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri", :icon => "save") do %>
           <%= form.submit t("administration.users.edit.view.button_update_user"), :onclick => "add_unique_to_interests();select_options_to_submit('user_supplier_category_ids_'); select_options_to_submit('user_#{params[:role]}_unique_category_ids_');select_options_to_submit('user_category_supplier_buying_category_ids_');" %>
         <% end %>
         <%= ibt(:class => "bt_grey fltri") do %>
           <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

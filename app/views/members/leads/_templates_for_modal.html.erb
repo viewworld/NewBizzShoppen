@@ -1,15 +1,15 @@
 <%= semantic_form_for lead, :url => url, :method => :post, :remote => true do |form| %>
-    <frm title="#{lead.deal.header}">
-        <param:content>
+    <%= frm(:title => "#{lead.deal.header}") do %>
+        <% section.block_content do %>
             <%= render :partial => "members/leads/form2", :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("member.leads.new.view.button_create") %>
           <% end %>
           <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("administration.settings.edit.view.button_cancel"), "javascript:$.colorbox.close()" %>
           <% end %>
-        </param:actions>
-    </frm>
+        <% end %>
+    <% end %>
 <% end %>

@@ -9,18 +9,18 @@
   <% end %>
 
   <%= semantic_form_for @country, :url => administration_country_path, :html => {:multipart => true} do |form| %>
-      <frm title="#{@country.name}">
-        <param:content>
+      <%= frm(:title => "#{@country.name}") do %>
+        <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.countries.edit.view.button_update_country") %>
           <% end %>
           <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("administration.countries.edit.view.button_cancel"), "history.go(-1)" %>
           <% end %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 <% end %>

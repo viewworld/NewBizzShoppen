@@ -1,6 +1,6 @@
 <%= semantic_form_for [:callers, resource] do |f| %>
-    <frm title="#{resource.new_record? ? t('login_time_requests.new.request_new') : t('login_time_requests.edit.request_edit')}">
-      <param:content>
+    <%= frm(:title => "#{resource.new_record? ? t('login_time_requests.new.request_new') : t('login_time_requests.edit.request_edit')}") do %>
+      <% section.block_content do %>
         <div class="pdd_10">
 
           <fieldset class="inputs labels_ta_r">
@@ -51,13 +51,13 @@
           </fieldset>
 
         </div>
-      </param:content>
-      <param:actions>
+      <% end %>
+      <% section.block_actions do %>
         <%= ibt(:class => "fltri") do %>
           <%= f.submit t("login_time_requests.new.save_request") %>
         <% end %>
-      </param:actions>
-    </frm>
+      <% end %>
+    <% end %>
 <% end %>
 
 <script>

@@ -10,21 +10,21 @@
 
   <%= semantic_form_for  @category, :as => :category, :url => administration_categories_path, :method => :put, :html => {:multipart => true} do |form| %>
       <frm>
-        <param:header>
-        </param:header>
-        <param:content>
+        <% section.block_header do %>
+        <% end %>
+        <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
           <%= hidden_field_tag :category_type, @category_type %>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "plus") do %>
             <%= form.submit t("administration.categories.new.view.button_create"), :onclick => "select_options_onsubmit();" %>
           <% end %>
           <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("administration.settings.edit.view.button_cancel"), href(categories_path) %>
           <% end %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 
   <% unless @category.lead_templates.empty? %>

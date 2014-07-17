@@ -87,8 +87,8 @@
 
   <div style="display:none;">
     <div id="duplicate_campaign_modal_box">
-      <frm title="#{t('campaigns.index.duplication_confirmation')}">
-        <param:content>
+      <%= frm(:title => "#{t('campaigns.index.duplication_confirmation')}") do %>
+        <% section.block_content do %>
           <div class="pdd_10 no_pdd_t">
             <fieldset class="inputs labels_ta_r labels_200">
               <%= check_box_tag :with_contacts, "1", true, :id => "duplicate_with_contacts", :onclick => "checkDuplicationWithContactsSelection()" %> <%= t("campaigns.index.copy_contacts") %>
@@ -99,17 +99,17 @@
               <br>
             </fieldset>
           </div>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= bt_link_to nil, t("campaigns.index.duplicate"), "javascript:;", :class => "bt_duplicate" %>
           <%= bt_link_to nil, t("common.cancel_link"), "javascript:$.colorbox.close()", :class => "bt_grey fltr" %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
     </div>
 
     <div id="clear_campaign_modal_box">
-      <frm title="#{t('campaigns.index.clear_confirmation')}">
-        <param:content>
+      <%= frm(:title => "#{t('campaigns.index.clear_confirmation')}") do %>
+        <% section.block_content do %>
           <div class="pdd_10 no_pdd_t">
             <fieldset class="inputs labels_ta_r labels_200">
               <%= check_box_tag :with_contacts, "1", true, :id => "clear_with_contacts", :onclick => "checkClearWithContactsSelection()" %> <%= t("campaigns.index.clear_contacts") %>
@@ -120,29 +120,29 @@
               <br>
             </fieldset>
           </div>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= bt_link_to nil, t("campaigns.index.clear"), "javascript:;", :class => "bt_clear" %>
           <%= bt_link_to nil, t("common.cancel_link"), "javascript:$.colorbox.close()", :class => "bt_grey fltr" %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
     </div>
 
     <div id="destroy_campaign_modal_box">
-      <frm title="#{t('campaigns.index.destroy_confirmation')}">
-        <param:content>
+      <%= frm(:title => "#{t('campaigns.index.destroy_confirmation')}") do %>
+        <% section.block_content do %>
           <div class="pdd_10 no_pdd_t">
             <fieldset class="inputs labels_ta_r labels_200">
               <%= check_box_tag :with_agent_time, "1", true, :id => "destroy_with_agent_time" %> <%= t("campaigns.index.destroy_agent_time") %>
               <br>
             </fieldset>
           </div>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= bt_link_to nil, t("campaigns.index.destroy"), "javascript:;", :class => "bt_destroy" %>
           <%= bt_link_to nil, t("common.cancel_link"), "javascript:$.colorbox.close()", :class => "bt_grey fltr" %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
     </div>
   </div>
 

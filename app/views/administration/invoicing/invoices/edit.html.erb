@@ -8,12 +8,12 @@
   <% end %>
 
   <%= semantic_form_for [:administration, :invoicing, @invoice] do |form| %>
-      <frm title="#{t('administration.invoices.edit.view.save_changes')}">
-        <param:header>
+      <%= frm(:title => "#{t('administration.invoices.edit.view.save_changes')}") do %>
+        <% section.block_header do %>
           <%= bt_link_to nil, t("administration.invoices.edit.view.save_changes"), "javascript:void(0)", :onclick => "$('##{dom_id(@invoice, :edit)}').submit()", :class => "fltr" %>
           <%= bt_link_to nil, t("administration.invoices.edit.view.show_invoice"), administration_invoicing_invoice_path(@invoice), :class => "fltr" %>
-        </param:header>
-        <param:content>
+        <% end %>
+        <% section.block_content do %>
           <div class="pdd_10 no_pdd_t">
 
 
@@ -152,15 +152,15 @@
 
           </div>
           <br/>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("administration.invoices.edit.view.save_button") %>
           <% end %>
           <%= ibt(:class => "fltri bt_grey") do %>
             <%= button_to_function t("common.cancel_link"), "window.location='#{administration_invoicing_invoices_path}'" %>
           <% end %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 <% end %>

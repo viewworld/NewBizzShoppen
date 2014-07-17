@@ -1,18 +1,18 @@
 <div id="question_form">
   <%= semantic_form_for @survey_question, :url => surveys_management_survey_survey_questions_path, :remote => true do |form| %>
-      <frm title="New #{t('surveys_management.shared.question_types.type'+@survey_question.question_type.to_s).downcase} #{t('surveys_management.shared.question').downcase}">
-        <param:content>
+      <%= frm(:title => "New #{t('surveys_management.shared.question_types.type'+@survey_question.question_type.to_s).downcase} #{t('surveys_management.shared.question').downcase}") do %>
+        <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
-        </param:content>
-        <param:actions>
+        <% end %>
+        <% section.block_actions do %>
           <%= ibt(:class => "fltri", :icon => "save") do %>
             <%= form.submit t("surveys_management.surveys.new.view.button_create") %>
           <% end %>
           <%= ibt(:class => "bt_grey fltri") do %>
             <%= button_to_function t("surveys_management.shared.cancel"), "$.colorbox.close()" %>
           <% end %>
-        </param:actions>
-      </frm>
+        <% end %>
+      <% end %>
   <% end %>
 </div>
 

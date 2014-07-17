@@ -1,20 +1,20 @@
 <% if contact %>
     <%= semantic_form_for contact, :url => url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :update, :campaign_id => campaign, :id => contact), :html => { :method => :put }, :remote => true do |form| %>
-        <frm title="#{contact.company_name}">
-            <param:header>
+        <%= frm(:title => "#{contact.company_name}") do %>
+            <% section.block_header do %>
               <div class="fltr ta_r">
                 <%= render :partial => "callers/agent_work_screen/results_actions", :locals => @locals %>
                 <%= contact.higher_contact ? bt_link_to(nil, t("contacts.edit.prev"), url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => contact.higher_contact, :fast => "true"), :remote => true, :id => "prev_contact") : "" %>
                 <%= contact.lower_contact ? bt_link_to(nil, t("contacts.edit.next"), url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => contact.lower_contact, :fast => "true"), :remote => true, :id => "next_contact") : "" %>
               </div>
-            </param:header>
-          <param:content>
+            <% end %>
+          <% section.block_content do %>
             <%= render :partial => '/shared/leads/form', :locals => {:form => form, :campaign => campaign, :contact => contact, :call_links => current_user.phone_enabled?} %>
-          </param:content>
-          <param:actions>
+          <% end %>
+          <% section.block_actions do %>
             <%= bt_link_to :save, t("contacts.edit.save_button"), "javascript:void(0)", :id => "commit_update_contact", :class => "fltr" %>
-          </param:actions>
-        </frm>
+          <% end %>
+        <% end %>
     <% end %>
 <% end %>
 
