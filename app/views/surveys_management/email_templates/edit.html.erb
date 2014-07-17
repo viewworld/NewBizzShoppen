@@ -10,7 +10,7 @@
   <% end %>
 
   <%= semantic_form_for @email_template, :url => surveys_management_survey_email_template_path(@survey, @email_template), :method => :put do |form| %>
-      <%= frm(:title => @email_template.subject) do %>
+      <%= frm(:title => @email_template.subject) do |section| %>
         <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
         <% end %>

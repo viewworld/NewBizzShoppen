@@ -12,7 +12,7 @@
   <% end %>
 
   <%= semantic_form_for @news, :as => :news, :url => administration_news_path(@news), :html => {:method => :put} do |form| %>
-      <%= frm(:title => @news.title, :class => "todo_delete") do %>
+      <%= frm(:title => @news.title, :class => "todo_delete") do |section| %>
         <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
         <% end %>

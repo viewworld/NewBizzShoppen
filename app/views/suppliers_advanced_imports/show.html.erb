@@ -8,7 +8,7 @@
   <% objects = LeadCategory.without_locked.with_agent_unique(current_user).without_supplier_unique.all %>
 
   <%= form_tag choose_suppliers_advanced_import_path, :method => :post, :multipart => true, :id => "advanced_import_form" do %>
-      <%= frm(:title => t('suppliers_advanced_import.show.view.title')) do %>
+      <%= frm(:title => t('suppliers_advanced_import.show.view.title')) do |section| %>
         <% section.block_content do %>
           <div class="pdd_10 no_pdd_t">
             <fieldset class="inputs labels_ta_r labels_180">

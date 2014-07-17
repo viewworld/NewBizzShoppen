@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for @user, :url => administration_supplier_interest_path, :method => :put do |form| %>
-    <%= frm(:title => "") do %>
+    <%= frm(:title => "") do |section| %>
       <% section.block_header do %>
       <% end %>
       <% section.block_content do %>

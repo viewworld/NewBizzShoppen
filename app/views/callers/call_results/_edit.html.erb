@@ -7,7 +7,7 @@
 <% end %>
 
 <%= semantic_form_for path, :method => :put, :remote => agent_work_screen do |form| %>
-  <%= frm(:title => "Edit") do %>
+  <%= frm(:title => "Edit") do |section| %>
     <% section.block_content do %>
       <%= hidden_field_tag :serialized_materials_array_field, params[:serialized_materials_array_field] %>
       <%= render :partial => '/callers/call_results/form', :locals => {:form => form, :contact => @contact, :call_result => @call_result, :reload_path => reload_path, :agent_work_screen => agent_work_screen} %>
@@ -26,7 +26,7 @@
 <% end %>
 
 <% if @call_result and @archived_email = @call_result.archived_email %>
-  <%= frm(:title => "#{@archived_email.subject} #{t('call_results.edit.email_sent_to')} #{@archived_email.to}") do %>
+  <%= frm(:title => "#{@archived_email.subject} #{t('call_results.edit.email_sent_to')} #{@archived_email.to}") do |section| %>
     <% section.block_content do %>
       <%= @archived_email.body.html_safe %>
     <% end %>

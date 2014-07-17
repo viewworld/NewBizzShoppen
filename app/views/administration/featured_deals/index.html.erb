@@ -6,7 +6,7 @@
   <% end %>
 
   <%= form_tag administration_featured_deals_path, :method => :post do %>
-      <%= frm(:title => t('administration.featured_deals.view.index.title')) do %>
+      <%= frm(:title => t('administration.featured_deals.view.index.title')) do |section| %>
         <% section.block_content do %>
           <div class="pdd_10 no_pdd_t">
             <div class="column_left">

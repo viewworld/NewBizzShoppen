@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for @search, :url => callers_agent_performance_path, :as => :search, :html => {:method => :get} do |form| %>
-      <%= frm(:title => "Search options") do %>
+      <%= frm(:title => "Search options") do |section| %>
         <% section.block_content do %>
           <div class="pdd_10" id="search_box" style="<%= 'display:none;' if @search.all_agents.any? %>">
             <div class="column_left">

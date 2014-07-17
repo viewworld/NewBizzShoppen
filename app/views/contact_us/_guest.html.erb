@@ -1,6 +1,6 @@
   <%= form_for :email_template_preview, :url => contact_us_path do |f| %>
 
-      <%= frm(:title => t('contact_us.new.view.form_title')) do %>
+      <%= frm(:title => t('contact_us.new.view.form_title')) do |section| %>
         <% section.block_content do %>
         <div class="pdd_10 no_pdd_t">
           <fieldset class="inputs labels_ta_r">

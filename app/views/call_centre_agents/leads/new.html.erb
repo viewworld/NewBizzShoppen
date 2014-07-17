@@ -7,7 +7,7 @@
   <% end %>
 
   <%= semantic_form_for [:call_centre_agents, @lead], :method => :post do |form| %>
-    <%= frm(:title => t('call_centre_agent.leads.new.view.form_title')) do %>
+    <%= frm(:title => t('call_centre_agent.leads.new.view.form_title')) do |section| %>
       <% section.block_content do %>
         <%= render :partial => '/shared/leads/form', :locals => {:form => form, :lead => @lead} %>
       <% end %>

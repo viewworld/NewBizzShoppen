@@ -11,7 +11,7 @@
   <% end %>
 
   <%= semantic_form_for @email_template, :url => administration_category_email_template_path(@category), :method => :put do |form| %>
-      <%= frm(:title => t('administration.email_templates.edit.view.edit')) do %>
+      <%= frm(:title => t('administration.email_templates.edit.view.edit')) do |section| %>
         <% section.block_content do %>
           <%= render :partial => 'administration/email_templates/form', :locals => {:form => form} %>
         <% end %>

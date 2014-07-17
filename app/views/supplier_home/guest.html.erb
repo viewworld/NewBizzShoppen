@@ -15,7 +15,7 @@
   <div class="pdd_5 no_pdd_b">
     <% unless user_signed_in? %>
         <div class="grid_360 fltr">
-          <%= frm(:class => 'no_marg', :title => t('agent_home.show.view.i_have_an_account')) do |section| %>
+          
             <% section.block_header %>
             <div class="pdd_10">
               <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
@@ -48,7 +48,7 @@
 
   <div id="leads_summary">
     <div class="column_1to3 fltl" id="news">
-      <%= frm(:class => 'no_marg', :title => t('supplier_home.show.view.header_news')) do |section| %>
+      
         <% section.block_header do %>
           <%= bt_link_to nil, t("supplier_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass => 'Supplier'}), :class => "fltr" %>
         <% end %>
@@ -64,7 +64,7 @@
       <% end %>
     </div>
     <div class="column_1to3 fltl" style="padding: 0 15px" id="latest_deals">
-      <%= frm(:class => 'no_marg', :title => t('supplier_home.show.view.header_latest_deals')) do |section| %>
+      
         <% section.block_header do %>
           <%= bt_link_to nil,
                          t('supplier_home.show.view.complete_list_link'),
@@ -84,7 +84,7 @@
       <% end %>
     </div>
     <div class="column_1to3 fltl" id="latest_leads">
-      <%= frm(:class => 'no_marg', :title => t('supplier_home.show.view.header_latest_leads')) do |section| %>
+      
         <% section.block_header do %>
           <%= bt_link_to nil, t("supplier_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
         <% end %>
