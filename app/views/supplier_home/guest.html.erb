@@ -14,9 +14,10 @@
 
   <div class="pdd_5 no_pdd_b">
     <% unless user_signed_in? %>
-        <div class="grid_360 fltr">
-          
-            <% section.block_header %>
+      <div class="grid_360 fltr">
+        <%= frm do |section| %>
+          <% section.block_content %>
+          <% section.block_header do %>
             <div class="pdd_10">
               <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
                 <fieldset class="inputs labels_100 inputs_200 no_pdd">
@@ -35,71 +36,73 @@
               <% end %>
             </div>
           <% end %>
+        <% end %>
+
+        <div class="<%= "grid_730 fltl" unless user_signed_in? %>">
+          <p><%= blurb("blurb_supplier_home") %></p>
+        </div>
+
+        <div class="clb"></div>
+      </div>
+
+      <div class="hl" style="padding: 15px 0"></div>
+
+      <div id="leads_summary">
+        <div class="column_1to3 fltl" id="news">
+          <%= frm do |section| %>
+            <% section.block_header do %>
+              <%= bt_link_to nil, t("supplier_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass => 'Supplier'}), :class => "fltr" %>
+            <% end %>
+            <% section.block_content do %>
+              <ul class="solid_list">
+                <% if @news.any? %>
+                  <%= render :partial => 'news', :collection => @news, :as => :news %>
+                <% else %>
+                  <%= render :partial => 'shared/blank_data_li' %>
+                <% end %>
+              </ul>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="column_1to3 fltl" style="padding: 0 15px" id="latest_deals">
+          <%= frm do |section| %>
+            <% section.block_header do %>
+              <%= bt_link_to nil,
+                t('supplier_home.show.view.complete_list_link'),
+                deals_url(:protocol => 'http://', :host => fairdeals_host, :search => {:latest => true}),
+                :class => 'fltr',
+                :target => '_blank' %>
+            <% end %>
+            <% section.block_content do %>
+              <ul class="solid_list">
+                <% if @latest_deals.any? %>
+                  <%= render :partial => 'deal', :collection => @latest_deals, :as => :deal %>
+                <% else %>
+                  <%= render :partial => 'shared/blank_data_li' %>
+                <% end %>
+              </ul>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="column_1to3 fltl" id="latest_leads">
+          <%= frm do |section| %>
+            <% section.block_header do %>
+              <%= bt_link_to nil, t("supplier_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
+            <% end %>
+            <% section.block_content do %>
+              <ul class="solid_list">
+                <% if @latest_leads.any? %>
+                  <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
+                <% else %>
+                  <%= render :partial => 'shared/blank_data_li' %>
+                <% end %>
+              </ul>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="clb"></div>
+      </div>
     <% end %>
-
-    <div class="<%= "grid_730 fltl" unless user_signed_in? %>">
-      <p><%= blurb("blurb_supplier_home") %></p>
-    </div>
-
-    <div class="clb"></div>
-  </div>
-
-  <div class="hl" style="padding: 15px 0"></div>
-
-  <div id="leads_summary">
-    <div class="column_1to3 fltl" id="news">
-      
-        <% section.block_header do %>
-          <%= bt_link_to nil, t("supplier_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass => 'Supplier'}), :class => "fltr" %>
-        <% end %>
-        <% section.block_content do %>
-          <ul class="solid_list">
-            <% if @news.any? %>
-                <%= render :partial => 'news', :collection => @news, :as => :news %>
-            <% else %>
-                <%= render :partial => 'shared/blank_data_li' %>
-            <% end %>
-          </ul>
-        <% end %>
-      <% end %>
-    </div>
-    <div class="column_1to3 fltl" style="padding: 0 15px" id="latest_deals">
-      
-        <% section.block_header do %>
-          <%= bt_link_to nil,
-                         t('supplier_home.show.view.complete_list_link'),
-                         deals_url(:protocol => 'http://', :host => fairdeals_host, :search => {:latest => true}),
-                         :class => 'fltr',
-                         :target => '_blank' %>
-        <% end %>
-        <% section.block_content do %>
-          <ul class="solid_list">
-            <% if @latest_deals.any? %>
-                <%= render :partial => 'deal', :collection => @latest_deals, :as => :deal %>
-            <% else %>
-                <%= render :partial => 'shared/blank_data_li' %>
-            <% end %>
-          </ul>
-        <% end %>
-      <% end %>
-    </div>
-    <div class="column_1to3 fltl" id="latest_leads">
-      
-        <% section.block_header do %>
-          <%= bt_link_to nil, t("supplier_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
-        <% end %>
-        <% section.block_content do %>
-          <ul class="solid_list">
-            <% if @latest_leads.any? %>
-                <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
-            <% else %>
-                <%= render :partial => 'shared/blank_data_li' %>
-            <% end %>
-          </ul>
-        <% end %>
-      <% end %>
-    </div>
-    <div class="clb"></div>
   </div>
 <% end %>
 
