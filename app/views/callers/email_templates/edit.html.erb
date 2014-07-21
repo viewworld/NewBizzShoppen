@@ -10,7 +10,7 @@
   <% end %>
 
   <%= semantic_form_for [:callers, @campaign, @email_template], :url => callers_campaign_email_template_path(@campaign,@email_template), :method => :put do |form| %>
-    <%= frm(:title => "Edit") do %>
+    <%= frm(:title => "Edit") do |section| %>
       <% section.block_content do %>
         <%= render :partial => 'form', :locals => {:form => form} %>
       <% end %>

@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for @youtube_introduction, :as => :youtube_introduction, :url => administration_youtube_introduction_path(@youtube_introduction), :html => {:method => :put, :multipart => true} do |form| %>
-    <frm>
+    <%= frm do |section| %>
       <% section.block_content do %>
         <%= render :partial => 'form', :locals => {:form => form} %>
       <% end %>

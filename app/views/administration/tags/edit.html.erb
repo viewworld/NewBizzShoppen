@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for @tag, :as => :tag, :url => administration_tag_path do |form| %>
-      <%= frm(:title => "#{@tag.name}") do %>
+      <%= frm(:title => "#{@tag.name}") do |section| %>
         <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
         <% end %>

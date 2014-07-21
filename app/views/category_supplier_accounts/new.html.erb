@@ -21,7 +21,7 @@
   </div>
 
   <%= semantic_form_for @user, :url => "/#{params[:slug]}/account" do |form| %>
-      <%= frm(:title => "#{t('category_supplier_accounts.new.view.form_title')}", :class => "no_marg") do %>
+      <%= frm(:title => "#{t('category_supplier_accounts.new.view.form_title')}", :class => "no_marg") do |section| %>
         <% section.block_content do %>
           <div class="column_left">
             <div class="pdd_10 no_pdd_t">

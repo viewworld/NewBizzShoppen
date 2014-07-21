@@ -7,7 +7,7 @@
   <% end %>
 
   <%= semantic_form_for @result, :url => url_for(:controller => "callers/results", :action => :create, :campaign_id => @campaign, :id => @result), :method => :post do |form| %>
-    <%= frm(:title => "Create new") do %>
+    <%= frm(:title => "Create new") do |section| %>
       <% section.block_content do %>
         <%= render :partial => '/callers/results/form', :locals => {:form => form, :result => @result} %>
       <% end %>

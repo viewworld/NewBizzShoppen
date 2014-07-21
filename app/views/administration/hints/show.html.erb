@@ -5,7 +5,7 @@
     <% end %>
   <% end %>
 
-  <%= frm(:title => "#{@article.title}") do %>
+  <%= frm(:title => "#{@article.title}") do |section| %>
     <% section.block_header do %>
       <%= bt_link_to nil, t("common.edit_link"), edit_administration_hint_path, :class => "fltr" %>
     <% end %>

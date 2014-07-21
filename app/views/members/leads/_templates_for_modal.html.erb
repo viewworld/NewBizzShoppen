@@ -1,5 +1,5 @@
 <%= semantic_form_for lead, :url => url, :method => :post, :remote => true do |form| %>
-    <%= frm(:title => "#{lead.deal.header}") do %>
+    <%= frm(:title => "#{lead.deal.header}") do |section| %>
         <% section.block_content do %>
             <%= render :partial => "members/leads/form2", :locals => {:form => form} %>
         <% end %>

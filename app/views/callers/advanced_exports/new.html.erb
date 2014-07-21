@@ -10,7 +10,7 @@
       <%= f.input :agent_ids, :as => :hidden %>
       <%= f.input :date_from, :as => :hidden %>
       <%= f.input :date_to, :as => :hidden %>
-      <%= frm(:title => "#{t('advanced_export.new.search')}") do %>
+      <%= frm(:title => "#{t('advanced_export.new.search')}") do |section| %>
         <% section.block_content do %>
           <div class="pdd_10 no_pdd_t">
             <div class="column_left">

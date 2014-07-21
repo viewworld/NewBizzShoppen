@@ -8,7 +8,7 @@
   <% end %>
 
   <%= semantic_form_for [:members, @lead], :method => :put do |form| %>
-      <%= frm(:title => "Edit") do %>
+      <%= frm(:title => "Edit") do |section| %>
         <% section.block_content do %>
           <div class="column_left">
             <div class="pdd_10 no_pdd_t">

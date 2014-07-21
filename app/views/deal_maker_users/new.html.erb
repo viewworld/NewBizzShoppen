@@ -9,7 +9,7 @@
   <% end %>
 
   <%= semantic_form_for @user, :url => deal_maker_users_path(:user_type => params[:user_type]), :as => :user do |form| %>
-    <frm>
+    <%= frm do |section| %>
       <% section.block_content do %>
         <%= render :partial => 'form', :locals => {:form => form} %>
       <% end %>

@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for @bank_account, :as => :bank_account, :url => administration_bank_account_path(@bank_account), :input_html => {:method => :put} do |form| %>
-      <%= frm(:title => "#{@bank_account.bank_name}") do %>
+      <%= frm(:title => "#{@bank_account.bank_name}") do |section| %>
         <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
         <% end %>

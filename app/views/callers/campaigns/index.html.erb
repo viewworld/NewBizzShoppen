@@ -87,7 +87,7 @@
 
   <div style="display:none;">
     <div id="duplicate_campaign_modal_box">
-      <%= frm(:title => "#{t('campaigns.index.duplication_confirmation')}") do %>
+      <%= frm(:title => "#{t('campaigns.index.duplication_confirmation')}") do |section| %>
         <% section.block_content do %>
           <div class="pdd_10 no_pdd_t">
             <fieldset class="inputs labels_ta_r labels_200">
@@ -108,7 +108,7 @@
     </div>
 
     <div id="clear_campaign_modal_box">
-      <%= frm(:title => "#{t('campaigns.index.clear_confirmation')}") do %>
+      <%= frm(:title => "#{t('campaigns.index.clear_confirmation')}") do |section| %>
         <% section.block_content do %>
           <div class="pdd_10 no_pdd_t">
             <fieldset class="inputs labels_ta_r labels_200">
@@ -129,7 +129,7 @@
     </div>
 
     <div id="destroy_campaign_modal_box">
-      <%= frm(:title => "#{t('campaigns.index.destroy_confirmation')}") do %>
+      <%= frm(:title => "#{t('campaigns.index.destroy_confirmation')}") do |section| %>
         <% section.block_content do %>
           <div class="pdd_10 no_pdd_t">
             <fieldset class="inputs labels_ta_r labels_200">

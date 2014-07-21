@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for @result, :url => administration_result_path, :method => :post do |form| %>
-      <%= frm(:title => "Update existing") do %>
+      <%= frm(:title => "Update existing") do |section| %>
         <% section.block_content do %>
           <%= render :partial => '/callers/results/form', :locals => {:form => form, :result => @result} %>
         <% end %>

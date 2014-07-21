@@ -10,7 +10,7 @@
   <% end %>
 
   <%= semantic_form_for @survey, :url => surveys_management_survey_path(@survey) do |form| %>
-      <frm>
+      <%= frm do |section| %>
         <% section.block_header do %>
             <%= render :partial => "menu", :locals => { :action => params[:action] } %>
         <% end %>

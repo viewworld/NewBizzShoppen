@@ -1,5 +1,5 @@
 <% if modal_box %>
-        <%= frm(:title => "#{t('home.show.view.sign_in_form_title')}") do %>
+        <%= frm(:title => "#{t('home.show.view.sign_in_form_title')}") do |section| %>
           <div class="pdd_10">
             <%= semantic_form_for(:user, :url => session_path(:user, :deal_request_id => deal.id, :format => :js), :remote => true) do |f| %>
                 <fieldset class="inputs_vertical labels_90 inputs_130 no_pdd">
@@ -25,7 +25,7 @@
 <% end %>
 
 <%= semantic_form_for user, :url => url, :remote => modal_box do |form| %>
-    <%= frm(:title => "#{t('member_accounts.new.view.header')}", :class => "no_marg") do %>
+    <%= frm(:title => "#{t('member_accounts.new.view.header')}", :class => "no_marg") do |section| %>
       <% section.block_content do %>
         <div>
           <%= render :partial => "shared/subscriptions/new_account", :locals => {:role => "member", :subscriptions_form => form} %>

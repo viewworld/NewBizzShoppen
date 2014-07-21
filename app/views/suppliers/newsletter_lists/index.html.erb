@@ -7,7 +7,7 @@
 
   <div id="leads_summary">
     <div class="column_1to3 fltl" id="news">
-      <%= frm(:title => "#{t('newsletters.newsletter_lists.index.view.login_info')}") do %>
+      <%= frm(:title => "#{t('newsletters.newsletter_lists.index.view.login_info')}") do |section| %>
         <% section.block_content do %>
           <div class="pdd_10">
             <%= form_tag current_user.link_to_campaign_monitor_account, :target => "_blank" do %>

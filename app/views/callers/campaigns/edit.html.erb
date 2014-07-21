@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for [:callers, @campaign], :method => :put do |form| %>
-      <%= frm(:title => "Edit") do %>
+      <%= frm(:title => "Edit") do |section| %>
         <% section.block_header do %>
           <%= bt_link_to nil, t("campaigns.edit.chain_mail_types"), callers_campaign_chain_mail_types_path(@campaign), :class => "fltr" %>
           <%= bt_link_to nil, t("campaigns.edit.materials_repository"), callers_campaign_materials_path(@campaign), :class => "fltr" %>

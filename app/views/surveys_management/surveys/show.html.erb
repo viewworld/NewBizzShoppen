@@ -10,7 +10,7 @@
   <% end %>
 
   <%= semantic_form_for @survey_recipient, :url => survey_recipient_path do |form| %>
-      <frm>
+      <%= frm do |section| %>
         <% section.block_content do %>
           <%= render :partial => 'shared/surveys/form', :locals => {:form => form} %>
         <% end %>

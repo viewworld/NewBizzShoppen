@@ -9,7 +9,7 @@
   <% end %>
 
   <%= semantic_form_for @email_template, :url => email_template_path(@email_template, :deal_id => @deal.id), :method => :put do |form| %>
-    <%= frm(:title => "#{@email_template.subject}") do %>
+    <%= frm(:title => "#{@email_template.subject}") do |section| %>
       <% section.block_content do %>
         <%= render :partial => 'form', :locals => {:form => form} %>
       <% end %>

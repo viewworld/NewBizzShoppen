@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for [:callers, @campaign, @contact], :method => :put do |form| %>
-      <%= frm(:title => "Edit") do %>
+      <%= frm(:title => "Edit") do |section| %>
         <% section.block_header do %>
           <div class="fltr">
             <%= @contact.lower_item_in_campaign_list ? bt_link_to(nil, t("contacts.edit.prev"), url_for(:controller => "callers/contacts", :action => :edit, :campaign_id => @campaign, :id => @contact.lower_item_in_campaign_list), :id => "prev_contact") : "" %>
