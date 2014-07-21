@@ -61,6 +61,7 @@ group :staging, :production do
 end
 
 group :development do
+  gem 'thin'
   gem 'nifty-generators'
   gem 'bullet'
   gem 'letter_opener'

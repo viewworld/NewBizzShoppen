@@ -454,6 +454,7 @@ DEPENDENCIES
   spreadsheet
   system-metrics
   test-unit
+  thin
   thor
   webmock
   whenever (~> 0.9.0)
