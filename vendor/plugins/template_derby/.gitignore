@@ -1,8 +1,0 @@
-.idea
-.idea/**/*
-log/*.log
-log/*.pid
-log/production.log
-nbproject
-nbproject/**/*
-/**/Thumbs.db
