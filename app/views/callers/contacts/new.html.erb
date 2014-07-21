@@ -37,7 +37,7 @@
     <% end %>
 
     <%= form_tag import_xls_callers_campaign_contacts_path(@campaign), :method => :post, :multipart => true, :id => "contact_import_form" do %>
-      <%= frm(:title => t('contacts.new.title_import_from_excel')) do %>
+      <%= frm(:title => "#{t('contacts.new.title_import_from_excel')}") do %>
         <% section.block_content do %>
           <div class="pdd_10 no_pdd_t">
             <fieldset class="inputs labels_ta_r labels_180">

@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for @tag, :as => :tag, :url => administration_tag_path do |form| %>
-      <%= frm(:title => @tag.name) do %>
+      <%= frm(:title => "#{@tag.name}") do %>
         <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
         <% end %>
@@ -48,7 +48,7 @@
           <% CallResult.where(:result_id => tagging.taggable_id).each do |call_result| %>
             <tr>
               <td></td>
-              <td><%= call_result.contact.company_name %></td>
+              <td><%= "#{call_result.contact.company_name}" %></td>
               <td><%= "#{call_result.class.name} - #{call_result.result_name}" %></td>
               <td></td>
             </tr>

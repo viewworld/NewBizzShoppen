@@ -11,7 +11,7 @@
   <%= custom_error_for_field(f, :value) %>
 </li>
 <li class="hidden">
-  <%= f.hidden_field :_destroy, :class => "destroy_hidden_field_lead_template_fields_#{f.object.lead_template_field.lead_template_id}", :value => 'true' if !f.object.lead_template_field.lead_template.is_mandatory and !f.object.lead_template_field.lead_template.is_filled_out_for(@lead), :id => "destroy_hidden_field_template_#{f.object.lead_template_field_id}" %>
+  <%= f.hidden_field :_destroy, :class => "destroy_hidden_field_lead_template_fields_#{f.object.lead_template_field.lead_template_id}", :value => "#{'true' if !f.object.lead_template_field.lead_template.is_mandatory and !f.object.lead_template_field.lead_template.is_filled_out_for(@lead)}", :id => "destroy_hidden_field_template_#{f.object.lead_template_field_id}" %>
   <%= f.hidden_field :lead_template_field_id, :value => f.object.lead_template_field.id %>
 </li>
 

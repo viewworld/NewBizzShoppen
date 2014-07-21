@@ -1,5 +1,5 @@
 <%= semantic_form_for [:callers, resource] do |f| %>
-    <%= frm(:title => resource.new_record? ? t('login_time_requests.new.request_new') : t('login_time_requests.edit.request_edit')) do %>
+    <%= frm(:title => "#{resource.new_record? ? t('login_time_requests.new.request_new') : t('login_time_requests.edit.request_edit')}") do %>
       <% section.block_content do %>
         <div class="pdd_10">
 

@@ -11,7 +11,7 @@
   </div>
 
   <%= semantic_form_for @lead, :method => :put do |form| %>
-    <%= frm(:title => @lead.header) do %>
+    <%= frm(:title => "#{@lead.header}") do %>
       <% section.block_content do %>
         <%= render :partial => '/leads/form', :locals => {:form => form} %>
         <%= hidden_field_tag "token", @lsr.token %>

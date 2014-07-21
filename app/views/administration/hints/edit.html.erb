@@ -11,7 +11,7 @@
   <% end %>
 
   <%= semantic_form_for @article, :as => :article, :url => administration_hint_path(@article), :input_html => {:method => :put} do |form| %>
-      <%= frm(:title => @article.title) do %>
+      <%= frm(:title => "#{@article.title}") do %>
         <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
         <% end %>

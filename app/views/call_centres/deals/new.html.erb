@@ -28,7 +28,7 @@
 
   <div id="deal_form" style="display:none;">
     <%= semantic_form_for [:call_centres, @deal], :method => :post do |form| %>
-      <%= frm(:title => t('call_centre.deals.new.view.form_title')) do %>
+      <%= frm(:title => "#{t('call_centre.deals.new.view.form_title')}") do %>
         <% section.block_content do %>
           <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal} %>
         <% end %>

@@ -9,7 +9,7 @@
   <% end %>
 
   <%= semantic_form_for @country, :url => administration_country_path, :html => {:multipart => true} do |form| %>
-      <%= frm(:title => @country.name) do %>
+      <%= frm(:title => "#{@country.name}") do %>
         <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
         <% end %>

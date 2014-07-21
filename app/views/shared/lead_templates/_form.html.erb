@@ -29,7 +29,7 @@
 
 <div class="hl"></div>
 <div class="pdd_20" style="padding-top:10px">
-  <%= bt_link_to :plus, t("shared.lead_templates.form.new_lead_template_field"), "javascript:void(0)", :onclick => fields_for_leads_template_fields(form) if @lead_template.new_record? or current_user.has_role?(:admin) or current_user == @lead_template.creator %>
+  <%= bt_link_to :plus, t("shared.lead_templates.form.new_lead_template_field"), "javascript:void(0)", :onclick => "#{fields_for_leads_template_fields(form)}" if @lead_template.new_record? or current_user.has_role?(:admin) or current_user == @lead_template.creator %>
 </div>
 
 

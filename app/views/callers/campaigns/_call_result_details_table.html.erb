@@ -60,7 +60,7 @@
 </table>
 
 <%= form_tag '', :method => :post, :id => "export_result_details_form" do %>
-    <%= hidden_field_tag :call_result_ids, params[:call_result_ids] %>
+    <%= hidden_field_tag :call_result_ids, "#{params[:call_result_ids]}" %>
 <% end %>
 
 <% call_results.each do |call_result| %>

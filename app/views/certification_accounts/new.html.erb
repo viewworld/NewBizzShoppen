@@ -10,7 +10,7 @@
   <%= link_to t("certification_accounts.new.view.i_already_have_account"), root_path %>
 
   <%= semantic_form_for @user, :url => certification_accounts_path do |form| %>
-      <%= frm(:title => t('member_accounts.new.view.header'), :class => "no_marg") do %>
+      <%= frm(:title => "#{t('member_accounts.new.view.header')}", :class => "no_marg") do %>
         <% section.block_content do %>
           <div class="column_left">
             <div class="pdd_10 no_pdd_t">

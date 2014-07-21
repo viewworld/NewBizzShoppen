@@ -3,6 +3,6 @@
 </div>
 <script type="text/javascript">
       $(function() {
-        $('#tags_selection_search').tagit({tagSource: "/tags.js", triggerKeys: ['enter', 'comma', 'tab'], select: true, initialTags: [<%= search.with_tags.to_a.map{ |w| %{w} }.join(",").html_safe %>]});
+        $('#tags_selection_search').tagit({tagSource: "/tags.js", triggerKeys: ['enter', 'comma', 'tab'], select: true, initialTags: [<%= search.with_tags.to_a.map{ |w| %{"#{w}"} }.join(",").html_safe %>]});
       })
 </script>

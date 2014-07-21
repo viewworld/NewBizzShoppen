@@ -48,7 +48,7 @@
   <% end %>
 
   <% if @user.active_subscription and !@user.new_record? %>
-    <%= frm(:title => t('administration.users.edit.view.subscription_management')) do %>
+    <%= frm(:title => "#{t('administration.users.edit.view.subscription_management')}") do %>
       <% section.block_content do %>
         <div class="pdd_10">
           <p><%= t("administration.users.edit.view.active_subscription") %> <%= @user.active_subscription.name %></p>

@@ -19,10 +19,10 @@
     <% if user_signed_in? and current_user.admin? %>
       <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
         <li>
-          <%= link_to @category_type == "LeadCategory" ? t("categories.index.view.view_leads") : t("categories.index.view.view_deals"), "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}#{"?search[with_category]=#{category.id}" if category.is_a?(LeadCategory)}", :class => 'default_action' if !user_signed_in? and !current_user.admin? %>
+          <%= link_to @category_type == "LeadCategory" ? t("categories.index.view.view_leads") : t("categories.index.view.view_deals"), "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}#{"?search[with_category]=#{category.id}" if category.is_a?(LeadCategory)}", :class => "#{'default_action' if !user_signed_in? and !current_user.admin?}" %>
         </li>
         <li>
-          <%= link_to(t("administration.categories.index.view.edit_link"), edit_administration_category_path(category), :class => 'default_action' if user_signed_in? and current_user.admin?) %>
+          <%= link_to(t("administration.categories.index.view.edit_link"), edit_administration_category_path(category), :class => "#{'default_action' if user_signed_in? and current_user.admin?}") %>
         </li>
         <% if category.is_empty? %>
         <li>

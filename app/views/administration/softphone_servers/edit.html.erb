@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for @softphone_server, :url => administration_softphone_server_path do |form| %>
-      <%= frm(:title => @softphone_server.name) do %>
+      <%= frm(:title => "#{@softphone_server.name}") do %>
         <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
         <% end %>

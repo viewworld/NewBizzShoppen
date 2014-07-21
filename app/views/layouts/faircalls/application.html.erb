@@ -92,7 +92,7 @@
 
       <% if user_signed_in? and current_user.active_subscription and current_user.active_subscription.cancelled_in_paypal? %>
           <div class="flash flash_alert">
-            <%= t("subscriptions.active_subscription_is_canceled_in_paypal", :link => link_to(t("comments.shared.here"), paypal_renew_my_profile_subscription_plan_path(current_user.active_subscription))).html_safe %>
+            <%= "#{t("subscriptions.active_subscription_is_canceled_in_paypal", :link => link_to(t("comments.shared.here"), paypal_renew_my_profile_subscription_plan_path(current_user.active_subscription)))}".html_safe %>
           </div>
       <% end %>
 

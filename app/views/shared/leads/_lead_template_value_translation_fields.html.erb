@@ -10,7 +10,7 @@
   <%= custom_error_for_field(f, :value) %>
 </li>
 <li class="hidden">
-  <%= f.hidden_field :_destroy, :value => 'true' if @lead.nil? or @lead.lead_translations.detect { |lt| lt.locale == f.object.locale }.nil?, :class => "destroy_hidden_field_template_value_tr_#{f.object.locale}" %>
+  <%= f.hidden_field :_destroy, :value => "#{'true' if @lead.nil? or @lead.lead_translations.detect { |lt| lt.locale == f.object.locale }.nil?}", :class => "destroy_hidden_field_template_value_tr_#{f.object.locale}" %>
   <%= f.hidden_field :lead_template_value_id, :value => f.object.lead_template_value_id %>
   <%= f.hidden_field :locale, :value => f.object.locale %>
 </li>

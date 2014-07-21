@@ -76,7 +76,7 @@
 
 <div class="hl"></div>
 <div class="pdd_20" style="padding-top:10px">
-  <%= bt_link_to :plus, t("administration.subscription_plans.form.new_line"), "javascript:void(0)", :onclick => fields_for_subscription_plan_line_fields(form) %>
+  <%= bt_link_to :plus, t("administration.subscription_plans.form.new_line"), "javascript:void(0)", :onclick => "#{fields_for_subscription_plan_line_fields(form)}" %>
   <%= t("administration.subscription_plans.form.lines_per_billing_cycle") %>
 </div>
 

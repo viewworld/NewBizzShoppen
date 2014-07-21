@@ -5,7 +5,7 @@
     <% end %>
   <% end %>
 
-  <%= frm(:title => @news.title) do %>
+  <%= frm(:title => "#{@news.title}") do %>
     <% section.block_header do %>
       <%= bt_link_to nil, t("common.edit_link"), call_centres_news_path, :class => "fltr" %>
     <% end %>
