@@ -7,7 +7,7 @@
   <% end %>
 
   <%= semantic_form_for @email_template_signature, :url => administration_email_template_signatures_path do |form| %>
-      <%= frm(:title => "") do |section| %>
+      <%= frm(:title => "") do %>
         <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
         <% end %>

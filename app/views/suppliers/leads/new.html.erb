@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for [:suppliers, @lead], :method => :post do |form| %>
-    <%= frm(:title => t('agent.leads.new.view.form_title')) do |section| %>
+    <%= frm(:title => t('agent.leads.new.view.form_title')) do %>
       <% section.block_content do %>
         <%= render :partial => '/shared/leads/form', :locals => {:form => form, :lead => @lead} %>
       <% end %>

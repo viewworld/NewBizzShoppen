@@ -14,7 +14,7 @@
 
   <div id="performance">
     <div class="column_2to3 fltl" style="padding: 0 15px 0 0" id="performance_table">
-      <%= frm(:title => t('admin_home.show.view.filters'), :class => "no_marg") do |section| %>
+      <%= frm(:title => t('admin_home.show.view.filters'), :class => "no_marg") do %>
         <% section.block_content do %>
           <%= form_tag '', :id => "performance_form", :method => :get do %>
               <fieldset class="inputs_vertical" style="width:95%;margin:auto;">
@@ -120,7 +120,7 @@
     </div>
 
     <div class="column_1to3 fltl" id="performance_graph">
-      <%= frm(:title => t('agent_home.show.view.header_graph'), :class => "no_marg") do |section| %>
+      <%= frm(:title => t('agent_home.show.view.header_graph'), :class => "no_marg") do %>
         <% section.block_content do %>
           <div style="padding:10px">
             <div id="performance_graph_container" style="height:300px; padding:10px"></div>

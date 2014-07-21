@@ -8,7 +8,7 @@
   <% end %>
 
   <%= semantic_form_for [:members, @lead], :method => :post do |form| %>
-    <%= frm(:title => t('deals.new.view.frame_header'), :class => "rltv") do |section| %>
+    <%= frm(:title => t('deals.new.view.frame_header'), :class => "rltv") do %>
       <% section.block_content do %>
         <% if @deal.premium_deal? %>
             <div class="splash splash_premium">

@@ -8,7 +8,7 @@
   <% end %>
 
   <%= semantic_form_for [:administration, @email_template], :url => administration_invoicing_bulk_mailings_path, :method => :put do |form| %>
-      <%= frm(:title => "") do |section| %>
+      <%= frm(:title => "") do %>
         <% section.block_content do %>
           <%= hidden_field_tag :invoice_ids, params[:invoice_ids].join(",") %>
           <div class="pdd_10 no_pdd_tb">

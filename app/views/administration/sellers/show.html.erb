@@ -5,7 +5,7 @@
     <% end %>
   <% end %>
 
-  <%= frm(:title => @seller.company_name) do |section| %>
+  <%= frm(:title => @seller.company_name) do %>
     <% section.block_header do %>
       <%= bt_link_to nil, t("common.edit_link"), edit_administration_seller_path(@seller), :class => "fltr" %>
     <% end %>

@@ -26,7 +26,7 @@
   <% end %>
 
   <%= semantic_form_for @newsletter_list, :remote => true, :url => newsletters_newsletter_list_path do |form| %>
-      <%= frm(:title => header_text) do |section| %>
+      <%= frm(:title => header_text) do %>
         <% section.block_content do %>
             <%= render :partial => 'form', :locals => {:form => form} %>
         <% end %>

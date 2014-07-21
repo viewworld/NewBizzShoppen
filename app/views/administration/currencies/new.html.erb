@@ -8,7 +8,7 @@
   <p><%= blurb("blurb_currencies") %></p>
 
   <%= semantic_form_for @currency, :url => administration_currencies_path do |form| %>
-      <%= frm(:title => "") do |section| %>
+      <%= frm(:title => "") do %>
         <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
         <% end %>

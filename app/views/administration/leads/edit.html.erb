@@ -7,7 +7,7 @@
       <% end %>
     <% end %>
 
-    <%= frm(:title => "#{t('administration.leads.edit.view.created_by')} #{@lead.creator.company_name} - #{@lead.creator.email}") do |section| %>
+    <%= frm(:title => "#{t('administration.leads.edit.view.created_by')} #{@lead.creator.company_name} - #{@lead.creator.email}") do %>
       <% section.block_content do %>
         <%= render :partial => '/shared/leads/form', :locals => {:form => form} %>
       <% end %>
@@ -22,7 +22,7 @@
     <% end %>
   <% end %>
 
-  <%= frm(:title => t('administration.leads.edit.view.rating_header'), :id => "lead_rating") do |section| %>
+  <%= frm(:title => t('administration.leads.edit.view.rating_header'), :id => "lead_rating") do %>
     <% @lead.lead_purchases.each do |lead_purchase| %>
         <% unless lead_purchase.rating_level.nil? %>
             <div class="rating_element">

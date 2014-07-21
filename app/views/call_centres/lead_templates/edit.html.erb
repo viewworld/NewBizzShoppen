@@ -7,7 +7,7 @@
   <% end %>
 
   <%= semantic_form_for [:call_centres, @lead_template], :method => :put do |form| %>
-      <%= frm(:title => "#{t('call_centre.lead_templates.edit.view.created_by')}: #{@lead_template.creator}") do |section| %>
+      <%= frm(:title => "#{t('call_centre.lead_templates.edit.view.created_by')}: #{@lead_template.creator}") do %>
         <% section.block_content do %>
           <%= render :partial => '/shared/lead_templates/form', :locals => {:form => form} %>
         <% end %>

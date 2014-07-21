@@ -8,7 +8,7 @@
   <% all_campaigns = (current_user.admin? ? Campaign : Campaign.available_for_user(current_user)).reorder("name ASC") %>
 
   <%= semantic_form_for @search, :url => callers_agent_timesheets_path, :as => :search, :html => {:method => :post} do |f| %>
-      <%= frm(:title => t('agent_timesheets.new.set_constraints')) do |section| %>
+      <%= frm(:title => t('agent_timesheets.new.set_constraints')) do %>
         <% section.block_content do %>
           <% if current_user.agent? %>
             <%= render :partial => 'agent', :locals => { :f => f, :all_campaigns => all_campaigns } %>

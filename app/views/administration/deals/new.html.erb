@@ -28,7 +28,7 @@
 
   <div id="deal_form" style="display:none;">
     <%= semantic_form_for [:administration, @deal], :method => :post do |form| %>
-        <%= frm(:title => t('administration.deals.new.view.form_title')) do |section| %>
+        <%= frm(:title => t('administration.deals.new.view.form_title')) do %>
           <% section.block_content do %>
             <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => DealCategory.without_locked.all} %>
           <% end %>

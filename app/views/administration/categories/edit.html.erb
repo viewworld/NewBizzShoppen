@@ -9,7 +9,7 @@
   <% end %>
 
   <%= semantic_form_for @category, :as => :category, :url => administration_category_path(@category), :method => :post, :html => {:multipart => true} do |form| %>
-      <%= frm(:title => "") do |section| %>
+      <%= frm(:title => "") do %>
         <% section.block_header do %>
           <%= bt_link_to nil, t("administration.categories.edit.view.edit_email_template"), edit_administration_category_email_template_path(@category), :class => "fltr" %>
           <%= bt_link_to nil, t("administration.categories.edit.view.new_template"), new_administration_lead_template_path(:category_id => @category.id), :class => "fltr" %>

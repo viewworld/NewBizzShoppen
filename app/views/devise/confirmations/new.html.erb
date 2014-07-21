@@ -10,7 +10,7 @@
   <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => {:method => :post}) do |f| %>
     <%= devise_error_messages! %>
     <div class="grid_440 grid_c">
-      <%= frm(:title => "Type your email") do |section| %>
+      <%= frm(:title => "Type your email") do %>
         <div class="pdd_10">
           <fieldset class="inputs labels_100 no_pdd">
             <ol class="align_inputs no_pdd">

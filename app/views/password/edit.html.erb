@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for @user, :url => password_path, :method => :put do |form| %>
-      <%= frm(:title => t('password.edit.view.form_title')) do |section| %>
+      <%= frm(:title => t('password.edit.view.form_title')) do %>
         <% section.block_content do %>
           <div class="pdd_10 no_pdd_t">
             <fieldset class="inputs labels_ta_r labels_240">

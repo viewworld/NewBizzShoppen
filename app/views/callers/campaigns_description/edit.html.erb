@@ -8,7 +8,7 @@
   <%= javascript_include_tag :ckeditor %>
 
   <%= semantic_form_for @campaign, :url => callers_campaign_campaigns_description_path(@campaign), :method => :post do |form| %>
-    <%= frm(:title => "") do |section| %>
+    <%= frm(:title => "") do %>
       <% section.block_content do %>
         <%= render :partial => '/callers/campaigns/form_description', :locals => {:form => form, :campaign => @campaign} %>
       <% end %>

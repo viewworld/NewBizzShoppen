@@ -6,7 +6,7 @@
   <% end %>
 
   <%= form_for @email_template_preview, :as => :email_template_preview, :url => lead_users_lead_purchase_lead_email_path() do |f| %>
-      <%= frm(:title => t('lead_user.contact_lead_by_email.new.view.form_title')) do |section| %>
+      <%= frm(:title => t('lead_user.contact_lead_by_email.new.view.form_title')) do %>
         <% section.block_content do %>
 
           <div class="pdd_10 no_pdd_t">

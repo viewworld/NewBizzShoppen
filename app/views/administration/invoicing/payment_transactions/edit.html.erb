@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for @payment_transaction, :url => administration_invoicing_payment_transaction_path(@payment_transaction), :as => :payment_transaction do |form| %>
-    <%= frm(:title => t('administration.payment_transactions.edit.view.edit')) do |section| %>
+    <%= frm(:title => t('administration.payment_transactions.edit.view.edit')) do %>
       <% section.block_content do %>
         <%= render :partial => 'form', :locals => { :form => form } %>
       <% end %>

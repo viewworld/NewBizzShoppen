@@ -1,6 +1,6 @@
 <div id="question_form">
   <%= semantic_form_for @survey_question, :url => surveys_management_survey_survey_questions_path, :remote => true do |form| %>
-      <%= frm(:title => "New #{t('surveys_management.shared.question_types.type'+@survey_question.question_type.to_s).downcase} #{t('surveys_management.shared.question').downcase}") do |section| %>
+      <%= frm(:title => "New #{t('surveys_management.shared.question_types.type'+@survey_question.question_type.to_s).downcase} #{t('surveys_management.shared.question').downcase}") do %>
         <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
         <% end %>

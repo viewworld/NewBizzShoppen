@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for @user, :url => administration_user_path, :method => :put do |form| %>
-    <%= frm(:title => "") do |section| %>
+    <%= frm(:title => "") do %>
       <% section.block_header do %>
         <%= bt_link_to nil, t("administration.users.edit.view.view_user_debts"), administration_invoicing_upcoming_invoices_path(:search => {:with_keyword => @user.email}), :class => "fltr" %>
         <%= bt_link_to nil, t("administration.users.edit.view.view_user_invoices"), administration_invoicing_invoices_path(:search => {:with_keyword => @user.email}), :class => "fltr" %>
@@ -48,7 +48,7 @@
   <% end %>
 
   <% if @user.active_subscription and !@user.new_record? %>
-    <%= frm(:title => t('administration.users.edit.view.subscription_management')) do |section| %>
+    <%= frm(:title => t('administration.users.edit.view.subscription_management')) do %>
       <% section.block_content do %>
         <div class="pdd_10">
           <p><%= t("administration.users.edit.view.active_subscription") %> <%= @user.active_subscription.name %></p>

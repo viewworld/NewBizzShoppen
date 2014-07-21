@@ -10,7 +10,7 @@
 
 <% unless user_signed_in? %>
 
-    <%= frm(:title => t('home.show.view.sign_in_form_title')) do |section| %>
+    <%= frm(:title => t('home.show.view.sign_in_form_title')) do %>
       <div class="pdd_10">
         <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
             <fieldset class="inputs labels_100 inputs_180 no_pdd">

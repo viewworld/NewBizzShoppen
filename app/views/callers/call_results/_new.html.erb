@@ -9,7 +9,7 @@
 <% end %>
 
 <%= semantic_form_for path, :method => :post, :remote => agent_work_screen do |form| %>
-    <%= frm(:title => "Create new for #{@contact.company_name}") do |section| %>
+    <%= frm(:title => "Create new for #{@contact.company_name}") do %>
       <% section.block_content do %>
         <%= hidden_field_tag :serialized_materials_array_field, params[:serialized_materials_array_field] %>
         <%= render :partial => '/callers/call_results/form', :locals => {:form => form, :contact => @contact, :call_result => @call_result, :reload_path => reload_path, :agent_work_screen => agent_work_screen } %>

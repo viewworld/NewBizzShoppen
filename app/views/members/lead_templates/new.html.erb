@@ -7,7 +7,7 @@
   <% end %>
 
   <%= semantic_form_for [:members, @lead_template], :method => :put do |form| %>
-    <%= frm(:title => "") do |section| %>
+    <%= frm(:title => "") do %>
       <% section.block_content do %>
         <%= render :partial => '/shared/lead_templates/form', :locals => {:form => form} %>
       <% end %>

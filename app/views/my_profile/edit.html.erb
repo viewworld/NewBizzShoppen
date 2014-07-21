@@ -6,7 +6,7 @@
   <% end %>
 
   <% if SubscriptionPlan.valid_roles.include?(current_user.with_role.role) and current_user.parent.nil? %>
-  <%= frm(:title => t('my_profile.edit.view.subscription_management')) do |section| %>
+  <%= frm(:title => t('my_profile.edit.view.subscription_management')) do %>
     <div class="pdd_10">
         <%= render :partial => "shared/subscriptions/listing", :locals => { :role => current_user.with_role.role, :form => form, :deal => @deal} %>
     </div>
@@ -14,7 +14,7 @@
   <% end %>
 
   <%= semantic_form_for @user, :url => my_profile_path, :method => :put do |form| %>
-      <%= frm(:title => t('my_profile.edit.view.edit_account')) do |section| %>
+      <%= frm(:title => t('my_profile.edit.view.edit_account')) do %>
         <% section.block_header do %>
           <%= bt_link_to nil, t("my_profile.edit.view.change_password"), password_path, :class => "fltr" %>
         <% end %>
@@ -33,7 +33,7 @@
   <% end %>
 
   <% if current_user.member? %>
-      <%= frm(:title => t('my_profile.edit.view.unsubscribe_and_close_account')) do |section| %>
+      <%= frm(:title => t('my_profile.edit.view.unsubscribe_and_close_account')) do %>
         <% section.block_content do %>
           <div class="pdd_10 ta_c">
             <%= bt_link_to nil, t('my_profile.edit.view.go_to_unsubscribe'), unsubscribe_my_profile_path %>
