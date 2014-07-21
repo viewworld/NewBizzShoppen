@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for @call_centre_agent, :url => call_centres_call_centre_agents_path, :method => :post do |form| %>
-    <frm>
+    <%= frm do |section| %>
       <% section.block_content do %>
         <%= render :partial => 'form', :locals => {:form => form} %>
         <div class="hl"></div>

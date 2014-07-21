@@ -8,7 +8,7 @@
   <div class="clb"></div>
 
   <%= semantic_form_for [:administration, :invoicing, @invoice] do |form| %>
-    <frm>
+    <%= frm do |section| %>
       <% section.block_content do %>
         <div class="pdd_10 no_pdd_t">
           <fieldset class="inputs labels_ta_r labels_220">

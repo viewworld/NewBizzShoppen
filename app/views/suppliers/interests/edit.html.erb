@@ -11,7 +11,7 @@
   <% end %>
 
   <%= form_tag suppliers_interests_path, :method => :put do %>
-      <frm>
+      <%= frm do |section| %>
         <% section.block_content do %>
           <div class="pdd_10 no_pdd_tb">
             <% unless current_user.has_role?(:category_supplier) %>

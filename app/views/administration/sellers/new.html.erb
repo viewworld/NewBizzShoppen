@@ -7,7 +7,7 @@
   <% end %>
 
   <%= semantic_form_for @seller, :as => :seller, :url => administration_sellers_path, :input_html => {:method => :post} do |form| %>
-      <frm>
+      <%= frm do |section| %>
         <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
         <% end %>
