@@ -64,7 +64,7 @@
       <% end %>
     </div>
     <div class="column_1to3 fltl" style="padding: 0 15px" id="latest_deals">
-
+      <%= frm(:class => 'no_marg', :title => t('supplier_home.show.view.header_latest_deals')) do |section| %>
         <% section.block_header do %>
           <%= bt_link_to nil,
                          t('supplier_home.show.view.complete_list_link'),
