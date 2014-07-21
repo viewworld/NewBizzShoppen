@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/bartlomiejdanek/rails-multi_block_helpers.git
+  revision: 9a9d0c45101f2217c02001115c1d4ce1e1f33dc0
+  specs:
+    rails-multi_block_helpers (0.0.4)
+
 PATH
   remote: vendor/gems/active_admin
   specs:
@@ -279,7 +285,6 @@ GEM
       activesupport (= 3.0.20)
       bundler (~> 1.0)
       railties (= 3.0.20)
-    rails-multi_block_helpers (0.0.3)
     railties (3.0.20)
       actionpack (= 3.0.20)
       activesupport (= 3.0.20)
@@ -433,7 +438,7 @@ DEPENDENCIES
   postmark-rails
   pry-rails (= 0.3.2)
   rails (= 3.0.20)
-  rails-multi_block_helpers (~> 0.0.3)
+  rails-multi_block_helpers!
   railties
   rake (~> 0.8.7)
   recaptcha
