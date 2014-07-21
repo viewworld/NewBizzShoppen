@@ -1,6 +1,6 @@
     <div id="secondary_featured_deal_<%= position %>" class="secondary_featured_deal">
       <% if featured.present? %>
-          <%= frm do |section| %>
+          <frm>
             <% section.block_header do %>
               <!-- not cached content -->
               <%= ratings_for(featured, :force_static => !current_user_has_role?(:member)) %>

@@ -9,7 +9,7 @@
   <% end %>
 
   <%= semantic_form_for  @category, :as => :category, :url => administration_categories_path, :method => :put, :html => {:multipart => true} do |form| %>
-      <%= frm do |section| %>
+      <frm>
         <% section.block_header do %>
         <% end %>
         <% section.block_content do %>

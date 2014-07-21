@@ -13,7 +13,7 @@
   <% end %>
 
   <%= semantic_form_for @subscription_plan, :url => administration_subscription_plan_path(@subscription_plan) do |form| %>
-    <%= frm do |section| %>
+    <frm>
       <% section.block_content do %>
         <%= render :partial => 'form', :locals => {:form => form} %>
       <% end %>

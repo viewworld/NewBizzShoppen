@@ -14,7 +14,7 @@
   <% end %>
 
   <%= semantic_form_for @newsletter_campaign, :url => newsletters_newsletter_campaign_path do |form| %>
-      <%= frm do |section| %>
+      <frm>
         <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
         <% end %>

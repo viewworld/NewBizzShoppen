@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for :comment, @comment, :url => comments_thread_path(@comment), :html => {:method => :put} do |f| %>
-    <%= frm do |section| %>
+    <frm>
       <% section.block_header do %>
       <% end %>
       <% section.block_content do %>

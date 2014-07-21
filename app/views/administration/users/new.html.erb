@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for @user, :url => administration_users_path(:role => params[:role]) do |form| %>
-    <%= frm do |section| %>
+    <frm>
       <% section.block_content do %>
         <%= render :partial => 'form', :locals => {:form => form} %>
       <% end %>

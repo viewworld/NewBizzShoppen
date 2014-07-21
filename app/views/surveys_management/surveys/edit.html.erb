@@ -8,7 +8,7 @@
   <% end %>
 
   <%= semantic_form_for @survey, :url => surveys_management_survey_path(@survey) do |form| %>
-    <%= frm do |section| %>
+    <frm>
       <% section.block_header do %>
           <div id="survey_menu">
             <%= render :partial => "menu", :locals => { :action => params[:action] } %>

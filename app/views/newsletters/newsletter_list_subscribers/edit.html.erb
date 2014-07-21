@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for @newsletter_list_subscriber, :url => newsletters_newsletter_list_newsletter_list_subscriber_path(@newsletter_list, @newsletter_list_subscriber) do |form| %>
-      <%= frm do |section| %>
+      <frm>
         <% section.block_content do %>
           <%= render :partial => 'form', :locals => {:form => form} %>
         <% end %>

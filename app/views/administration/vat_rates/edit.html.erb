@@ -6,7 +6,7 @@
   <% end %>
 
   <%= semantic_form_for @vat_rate, :as => :vat_rate, :url => administration_vat_rate_path(@vat_rate), :input_html => {:method => :put} do |form| %>
-    <%= frm do |section| %>
+    <frm>
       <% section.block_content do %>
         <%= render :partial => 'form', :locals => {:form => form} %>
       <% end %>
