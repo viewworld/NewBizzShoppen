@@ -72,11 +72,13 @@ module NewDerbHelper
         capture_section(:block_content, &block)
       end +
 
-      if rendered_actions = with_output_buffer { value = yield it_to(:block_actions) }
+      if actions
         content_tag(:class => 'frm_foot_actions') do
           content_tag(:div, nil, :class => 'frm_fl') +
             content_tag(:div, nil, :class => 'frm_fr') +
-            content_tag(:div, rendered_actions, :class => 'frm_fc')
+            content_tag(:div, :class => 'frm_fc') do
+              capture_section(:block_actions, &block)
+            end
         end
       else
         content_tag(:class => 'frm_foot') do
