@@ -18,11 +18,6 @@ PATH
       sass (>= 3.1.0)
 
 PATH
-  remote: vendor/gems/ajaxful-rating
-  specs:
-    ajaxful_rating (3.0.0.beta3)
-
-PATH
   remote: vendor/gems/jammit-s3
   specs:
     jammit-s3 (0.6.0.2)
@@ -86,6 +81,7 @@ GEM
     airbrake (3.1.15)
       builder
       multi_json
+    ajaxful_rating (3.0.0.beta3)
     arel (2.0.10)
     autotest (4.4.6)
       ZenTest (>= 4.4.1)
@@ -389,7 +385,7 @@ DEPENDENCIES
   acts_as_commentable_with_threading
   acts_as_list (~> 0.4.0)
   airbrake (~> 3.1.15)
-  ajaxful_rating!
+  ajaxful_rating (= 3.0.0.beta3)
   autotest
   autotest-rails
   aws-s3
