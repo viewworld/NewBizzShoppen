@@ -126,7 +126,7 @@ class Category < ActiveRecord::Base
 
   def seo_name(add_id = false)
     name_en = CategoryTranslation.first(:conditions => ["category_id = ? and locale = ?", self.id, "en"])
-    "#{add_id ? id : ''} #{name_en.blank? ? name : name_en.name}".parameterize
+    "#{add_id ? id : ''} #{name_en.blank? ? name : name_en.name}".to_url
   end
 
   def seo_name_with_id

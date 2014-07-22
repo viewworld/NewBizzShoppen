@@ -31,8 +31,8 @@ class LeadUsers::LeadPurchasesController < LeadUsers::LeadUserController
   def show
     @lead_purchase = current_user.accessible_lead_purchases.find(params[:id])
     super do |format|
-      format.csv { send_data @lead_purchase.to_csv, :filename => "lead-#{@lead_purchase.lead.header.parameterize}.csv" }
-      format.xls { send_data render_to_string, :filename => "lead-#{@lead_purchase.lead.header.parameterize}.xls" }
+      format.csv { send_data @lead_purchase.to_csv, :filename => "lead-#{@lead_purchase.lead.header.to_url}.csv" }
+      format.xls { send_data render_to_string, :filename => "lead-#{@lead_purchase.lead.header.to_url}.xls" }
       format.print {
         @print = @lead_purchase
         render :file => "/printouts/index.html.erb"
