@@ -32,8 +32,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <link rel="apple-touch-startup-image" href="/images/iOS/splash.png">
 
-  <head:/>
-
+  <%= yield :head %>
 </head>
 <body>
 
@@ -91,7 +90,7 @@
     <div class="content_left"></div>
     <div class="content_right"></div>
 
-    <search-box:/>
+    <%= yield :sarch_box %>
 
     <div class="pdd_10 no_pdd_t">
       <% unless notice.blank? %>
@@ -208,9 +207,9 @@
 </script>
 <% end %>
 
-<js:/>
+<%= yield :js %>
 
-<%=  render :partial => 'shared/subscriptions/conversion' %>
+<%= render :partial => 'shared/subscriptions/conversion' %>
 
 </body>
 </html>
