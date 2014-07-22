@@ -1,4 +1,0 @@
-#!/usr/bin/env ruby
-require 'jammit-s3'
-
-Jammit::S3CommandLine.new
