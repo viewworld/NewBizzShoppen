@@ -10,6 +10,7 @@ class AbstractLead < ActiveRecord::Base
   belongs_to :region
   belongs_to :category
   belongs_to :currency
+  belongs_to :payout_currency, :class_name => Currency
   belongs_to :deal
   belongs_to :requestee, :class_name => "User::Member", :foreign_key => :requested_by
   has_many :lead_translations, :foreign_key => :lead_id, :dependent => :destroy
