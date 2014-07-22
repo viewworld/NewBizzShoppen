@@ -52,6 +52,7 @@ gem 'activerecord-database-views'
 gem 'rubyzip', '0.9.9'
 gem 'rails-multi_block_helpers', :github => 'bartlomiejdanek/rails-multi_block_helpers'
 gem 'stringex', '~> 2.5.2'
+gem 'acts_as_list', '~> 0.4.0'
 
 group :staging do
   gem 'system-metrics'

@@ -38,6 +38,5 @@ module TabEngine
     def get_subtab
       @subtab
     end
-
   end
 end

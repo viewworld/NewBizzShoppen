@@ -1,5 +1,4 @@
 module TabsHelper
-
   def tab
     controller.tab
   end
@@ -23,5 +22,4 @@ module TabsHelper
       return subtab==t
     end
   end
-
 end
