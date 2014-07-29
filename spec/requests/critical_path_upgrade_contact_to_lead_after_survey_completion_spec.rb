@@ -1,4 +1,5 @@
-require 'spec_helper'
+# encoding: UTF-8
+# require 'spec_helper'
 
 describe 'Upgrade contact to lead after survey completion' do
   include_context 'request specs context'

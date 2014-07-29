@@ -1,6 +1,5 @@
 require 'machinist/active_record'
 require 'faker'
-require 'spec/support/overwrites/lorem'
 
 LeadCategory.blueprint do
   name { Faker::Lorem.words(2).to_s + rand.to_s }

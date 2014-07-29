@@ -6,11 +6,14 @@ FactoryGirl.define do
     bcc ''
     cc ''
     body { Faker::Lorem.sentences(4) }
-    template nil
     uniq_id { name }
     persist true
     resource nil
     custom_reply_to false
+
+    ignore do
+      template nil
+    end
 
     trait :global do
       resource_id nil

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'spec_helper'
 
 describe 'Member can get deal created by category supplier' do
