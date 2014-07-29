@@ -39,7 +39,7 @@ class AbstractLead < ActiveRecord::Base
   validate :check_category, :if => :process_for_lead_information?
 
   after_create :cache_creator_name
-  before_save :change_creator, :set_euro_price, :set_creator
+  before_save :change_creator, :set_euro_price, :set_euro_payout, :set_creator
   before_save :set_published_at
   before_validation :strip_email_address
 
@@ -63,6 +63,12 @@ class AbstractLead < ActiveRecord::Base
   def set_euro_price
     if price.to_i > 0 and currency.present? and price_changed?
       self.euro_price = currency.to_euro(price)
+    end
+  end
+
+  def set_euro_payout
+    if payout.to_i > 0 && currency.present? && payout_changed?
+      self.euro_payout = currency.to_euro(payout)
     end
   end
 
