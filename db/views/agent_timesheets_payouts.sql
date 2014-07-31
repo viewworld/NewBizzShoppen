@@ -18,7 +18,7 @@ HAVING sum(call_results.euro_payout) > 0::numeric
 UNION ALL
 
 SELECT call_results.creator_id AS user_id,
-   sum(call_results.euro_payout) AS payout,
+   sum(generated_leads.euro_payout) AS payout,
    call_results.created_at::date AS created_at,
    contacts.campaign_id,
        CASE
