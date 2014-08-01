@@ -56,15 +56,18 @@ module NewDerbHelper
     classes = %w(frm)
     classes << opts[:class] if opts[:class]
     title = opts[:title]
-    actions = opts[:actions]
 
     content_tag(:div, :class => classes) do
       content_tag(:div, :class => 'frm_head') do
         content_tag(:div, nil, :class => 'frm_hl') +
           content_tag(:div, nil, :class => 'frm_hr') +
           content_tag(:div, nil, :class => 'frm_hc') do
-            capture_section(:block_header, &block) +
-            content_tag(:h2, title) if title
+            section = capture_section(:block_header, &block)
+            if title
+              section << content_tag(:h2, title)
+            else
+              section
+            end
           end
       end +
 
@@ -73,13 +76,13 @@ module NewDerbHelper
       end +
 
       if rendered_actions = with_output_buffer { value = yield it_to(:block_actions) }
-        content_tag(:class => 'frm_foot_actions') do
+        content_tag(:div, :class => 'frm_foot_actions') do
           content_tag(:div, nil, :class => 'frm_fl') +
             content_tag(:div, nil, :class => 'frm_fr') +
             content_tag(:div, rendered_actions, :class => 'frm_fc')
         end
       else
-        content_tag(:class => 'frm_foot') do
+        content_tag(:div, :class => 'frm_foot') do
           content_tag(:div, nil, :class => 'frm_fl') +
             content_tag(:div, nil, :class => 'frm_fr') +
             content_tag(:div, nil, :class => 'frm_fc')

@@ -1,4 +1,4 @@
-<%= content_for 'search-box' do -%>
+<%= content_for :search_box do -%>
 <%= render :partial => "shared/results_production/search", :locals => { :search => @search, :campaign => @campaign,
                                                                         :agent_ids => @agent_ids, :all_results =>@all_results,
                                                                         :result_ids => @result_ids, :date_from => @date_from,

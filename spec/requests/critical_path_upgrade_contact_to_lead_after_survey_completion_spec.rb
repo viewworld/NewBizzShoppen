@@ -1,5 +1,5 @@
 # encoding: UTF-8
-# require 'spec_helper'
+require 'spec_helper'
 
 describe 'Upgrade contact to lead after survey completion' do
   include_context 'request specs context'
@@ -227,7 +227,7 @@ describe 'Upgrade contact to lead after survey completion' do
     get '/call_centres/call_centre_agents'
 
     # I click Create agent
-    body_has_to(:have_link, 'Create agent', '/call_centres/call_centre_agents/new')
+    body_has_to(:have_link, 'Create agent', :href => '/call_centres/call_centre_agents/new')
     get '/call_centres/call_centre_agents/new'
 
     # I fill in First name with Bob, Last name with Brown, Address line 1, city, Zip code,

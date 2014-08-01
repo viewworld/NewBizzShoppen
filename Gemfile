@@ -43,7 +43,6 @@ gem 'paypal-recurring', :path => 'vendor/gems/paypal-recurring'
 gem 'paypal_nvp'
 gem 'activeadmin', '~> 0.3.4'
 gem 'diff-lcs', :require => false
-gem 'cucumber_fm-core', '0.1', :require => 'cucumber_feature_manager'
 gem 'acts-as-taggable-on', '~> 2.2.2'
 gem 'createsend'
 gem 'recaptcha', :require => 'recaptcha/rails'
@@ -77,9 +76,6 @@ end
 group :test do
   gem 'database_cleaner', '1.2.0'
   gem 'capybara', '1.1.4'
-  gem 'cucumber', '0.10.0'
-  gem 'cucumber-rails', '0.3.2'
-  gem 'pickle'
   gem 'spork', '1.0.0rc4'
   gem 'mocha', '0.13.2', :require => false
   gem 'faker', '0.3.1'
