@@ -10,6 +10,7 @@ class AbstractLead < ActiveRecord::Base
   belongs_to :region
   belongs_to :category
   belongs_to :currency
+  belongs_to :payout_currency, :class_name => Currency
   belongs_to :deal
   belongs_to :requestee, :class_name => "User::Member", :foreign_key => :requested_by
   has_many :lead_translations, :foreign_key => :lead_id, :dependent => :destroy
@@ -38,7 +39,7 @@ class AbstractLead < ActiveRecord::Base
   validate :check_category, :if => :process_for_lead_information?
 
   after_create :cache_creator_name
-  before_save :change_creator, :set_euro_price, :set_creator
+  before_save :change_creator, :set_euro_price, :set_euro_payout, :set_creator
   before_save :set_published_at
   before_validation :strip_email_address
 
@@ -62,6 +63,12 @@ class AbstractLead < ActiveRecord::Base
   def set_euro_price
     if price.to_i > 0 and currency.present? and price_changed?
       self.euro_price = currency.to_euro(price)
+    end
+  end
+
+  def set_euro_payout
+    if payout.to_i > 0 && currency.present? && payout_changed?
+      self.euro_payout = currency.to_euro(payout)
     end
   end
 
@@ -173,8 +180,17 @@ class AbstractLead < ActiveRecord::Base
   end
 
   def based_on_deal(deal, user)
-    {:current_user => User.find_by_email(deal.deal_admin_email).with_role, :category => deal.lead_category, :sale_limit => 1, :price => deal.price.blank? ? 0 : deal.price,
-     :purchase_decision_date => deal.end_date+7, :currency => deal.currency, :published => true, :requestee => user, :deal_id => deal.id
+    {:current_user => User.find_by_email(deal.deal_admin_email).with_role,
+     :category => deal.lead_category,
+     :sale_limit => 1,
+     :price => deal.price.blank? ? 0 : deal.price,
+     :purchase_decision_date => deal.end_date + 7,
+     :currency => deal.currency,
+     :published => true,
+     :requestee => user,
+     :deal_id => deal.id,
+     :payout => deal.payout,
+     :euro_payout => deal.euro_payout
     }.each_pair do |key, value|
       self.send("#{key}=", value)
     end

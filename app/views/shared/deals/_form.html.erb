@@ -57,6 +57,11 @@
             <%= form.input :price, :as => :string, :label => t("shared.deals.form.price_label") %>
             <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false %>
         <% end %>
+
+        <% if user_signed_in? && current_user.admin? %>
+            <%= form.input :payout %>
+        <% end %>
+
         <%= form.input :max_auto_buy, :as => :string, :label => t("shared.deals.form.max_auto_buy_label") %>
         <%= form.input :deal_code %>
         <% if user_signed_in? and current_user.admin? %>
