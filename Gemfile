@@ -100,7 +100,6 @@ end
 group :test do
   gem 'database_cleaner', '1.2.0'
   gem 'capybara', '1.1.4'
-  gem 'spork', '1.0.0rc4'
   gem 'mocha', '0.13.2', :require => false
   gem 'faker', '0.3.1'
   gem 'machinist', '>= 2.0.0.beta1'
