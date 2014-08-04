@@ -23,8 +23,8 @@ gem 'acts_as_list', '~> 0.4.0'
 gem 'nested_set', '1.5.4'
 
 # requirements
-gem 'yajl-ruby', '1.1.0', :require => 'yajl'
-gem 'scoped-search', '0.7.1', :require => 'scoped_search'
+gem 'yajl-ruby', '1.1.0', require: 'yajl'
+gem 'scoped-search', '0.7.1', require: 'scoped_search'
 gem 'recaptcha', '0.3.5', require: 'recaptcha/rails'
 
 # s3
@@ -33,24 +33,24 @@ gem 'jammit-s3', '~> 0.6.0.2'
 
 # views
 gem 'ckeditor', '3.4.3.pre'
-gem 'will_paginate', '3.0.pre2', :branch => 'rails3'
+gem 'will_paginate', '3.0.pre2', branch: 'rails3'
 gem 'formtastic', '1.1.0'
-gem 'liquid'
+gem 'liquid', '2.2.2'
 gem 'ajaxful_rating', '3.0.0.beta3'
 
 # background jobs
 gem 'delayed_job_active_record', '~> 4.0.0'
 gem 'delayed_job', '>= 4.0.0'
-gem 'aasm'
-gem 'whenever', '~> 0.9.0', :require => false
+gem 'aasm', '2.3.1'
+gem 'whenever', '~> 0.9.0', require: false
 
 # uploads
 gem 'paperclip', '2.3.6'
 
 # api
 gem 'json_pure', '>= 1.4.6'
-gem 'google-spreadsheet-ruby'
-gem 'spreadsheet'
+gem 'google-spreadsheet-ruby', '0.1.5'
+gem 'spreadsheet', '0.6.5.5'
 
 # locales
 gem 'globalize3', '0.3.0'
@@ -58,11 +58,11 @@ gem 'i18n-active_record'
 
 # paypal
 gem 'paypal-recurring', :path => 'vendor/gems/paypal-recurring'
-gem 'paypal_nvp'
+gem 'paypal_nvp', '0.2.0'
 
 # mailing
-gem 'createsend'
-gem 'postmark-rails'
+gem 'createsend', '1.0.3'
+gem 'postmark-rails', '0.4.2'
 
 # utils
 gem 'thor'
