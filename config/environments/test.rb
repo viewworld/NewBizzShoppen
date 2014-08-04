@@ -27,14 +27,16 @@ Nbs::Application.configure do
 
   config.action_mailer.default_url_options             = {:host => 'localhost:3000'}
 
-  config.plugins                                       = [:e_template, :template_derby]
+  config.plugins                                       = [:e_template]
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper,
   # like if you have constraints or database-specific column types
   # config.active_record.schema_format = :sql
 
+  ActiveSupport::Deprecation.silenced = true
+
   # Print deprecation notices to the stderr
-  config.active_support.deprecation                    = :stderr
+  #config.active_support.deprecation                    = :stderr
 
   Machinist.configure do |config|
     config.cache_objects = false
