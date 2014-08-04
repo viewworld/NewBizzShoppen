@@ -1,98 +1,114 @@
 Nbs::Application.routes.draw do
 
-  resources :payment_notifications, :only => [:create] do
-    member do
-      post 'show'
-    end
+  resources :payment_notifications, only: :create do
+    member { post :show }
   end
 
   get "agent_home/show"
   get "supplier_home/show"
 
-  devise_for :users, :controllers => {:passwords => "users/passwords"}
-
-  devise_for :users do
-    get "login", :to => "devise/sessions#new"
-    get "logout", :to => "devise/sessions#destroy"
+  # --- Devise ---
+  devise_for :users, controllers: { passwords: "users/passwords" } do
+    get "login", to: "devise/sessions#new"
+    get "logout", to: "devise/sessions#destroy"
   end
 
-  match 'bulk_action' => 'bulk_actions#create', :as => :bulk_action
+  match 'bulk_action' => 'bulk_actions#create', as: :bulk_action
 
+  # --- Administration ---
   namespace :administration do
-    root :to => "homes#show"
+    root to: "homes#show"
+
     resources :users do
-      resource :password, :controller => 'password', :only => [:new, :update, :destroy]
+      resource :password, controller: 'password', only: [:new, :update, :destroy]
+
       member do
         get :sign_in_as
         get :lock
         get :unlock
       end
+
       resource :change_subscription_plan
     end
-    resource :bulk_users_update, :controller => "bulk_users_update", :only => [:update]
+
+    resource :bulk_users_update, controller: "bulk_users_update", only: :update
+
     resources :categories
-    resources :category_email_templates, :only => [:edit, :update]
-    resource :setting, :only => [:edit, :update]
-    resources :featured_deals, :only => [:index, :create]
+    resources :category_email_templates, only: [:edit, :update]
+
+    resource :setting, only: [:edit, :update]
+    resources :featured_deals, only: [:index, :create]
+
     resources :email_templates do
-      member do
-        post 'test_send_email'
-      end
+      member { post 'test_send_mail' }
     end
+
     resources :email_template_signatures
     resources :leads
+
     resources :deals do
-      resources :assets, :controller => "deal_assets", :only => [:create, :destroy]
+      resources :assets, controller: "deal_assets", only: [:create, :destroy]
     end
+
     resources :articles
     resources :news
     resources :hints
     resources :currencies
     resources :softphone_servers
+
     namespace :invoicing do
       resources :invoices do
         resources :invoice_lines
-        resource :cash_flow, :only => [:new, :create], :controller => "CashFlow"
-        resource :invoice_lines_payable, :only => :new, :controller => "InvoiceLinesPayable"
-        resources :mailings, :only => [:new, :create]
-        resource :seller, :only => [:update]
+        resource :cash_flow, only: [:new, :create], controller: "CashFlow"
+        resource :invoice_lines_payable, only: :new, controller: "InvoiceLinesPayable"
+        resources :mailings, only: [:new, :create]
+        resource :seller, only: :update
       end
-      resource :bulk_mailings, :controller => "bulk_mailings", :only => [:edit, :update]
-      resource :bulk_invoice_update, :controller => "bulk_invoice_update", :only => [:update]
-      resource :bulk_invoice_users, :controller => "bulk_invoice_users", :only => [:update]
-      resources :upcoming_invoices, :only => [:index]
+
+      resource :bulk_mailings, :controller => "bulk_mailings", only: [:edit, :update]
+      resource :bulk_invoice_update, :controller => "bulk_invoice_update", only: :update
+      resource :bulk_invoice_users, :controller => "bulk_invoice_users", only: :update
+      resources :upcoming_invoices, only: :index
       resources :payment_transactions
       resources :credit_notes
       resources :creditors
       resources :refunds
     end
+
     resources :bank_accounts
     resources :vat_rates
     resources :lead_templates
     resources :sellers
     resources :category_users
     resources :countries
+
     resource :translation do
       resource :cache
     end
-    resource :stats_recalculation, :controller => "stats_recalculation", :only => [:update]
-    resources :supplier_interests, :only => [:edit, :update]
+
+    resource :stats_recalculation, controller: "stats_recalculation", only: :update
+    resources :supplier_interests, only: [:edit, :update]
     resources :youtube_introductions
     resources :email_bounces
     resources :languages
+
     resources :subscription_plans do
-      collection do
-        get 'fetch_subscription_plans'
-      end
+      collection { get 'fetch_subscription_plans' }
     end
-    resources :paypal_notifications, :only => [:index, :show]
+
+    resources :paypal_notifications, only: [:index, :show]
+
     resources :tags do
+      member { post 'duplicate' }
       member do
         post 'duplicate'
       end
     end
-    match '/dashboard' => 'dashboard#index', :as => 'dashboard'
+
+    match '/dashboard' => 'dashboard#index', as: :dashboard
+
     resources :results
+
     resources :payouts do
       member do
         put 'call_result'
@@ -100,6 +116,7 @@ Nbs::Application.routes.draw do
         get 'edit_dynamic_values'
         put 'update_dynamic_values'
       end
+
       collection do
         get 'agents'
         get 'campaigns'
@@ -108,13 +125,14 @@ Nbs::Application.routes.draw do
   end
 
   namespace :newsletters do
-    root :to => "newsletter_lists#index"
+    root to: "newsletter_lists#index"
+
     resources :newsletter_lists do
       resources :newsletter_synchronizations
       resources :newsletter_list_subscribers
-      collection do
-        get 'sourceable_for_search'
-      end
+
+      collection { get 'sourceable_for_search' }
+
       member do
         post 'bulk_subscribers_export'
         post 'archive'
@@ -122,144 +140,163 @@ Nbs::Application.routes.draw do
       end
     end
 
-    resources :tag_subscriber_sources, :only => :create
+    resources :tag_subscriber_sources, only: :create
+
     resources :newsletter_campaigns do
-      collection do
-        get 'lists_for_owner'
-      end
-      member do
-        post 'archive'
-      end
+      collection { get 'lists_for_owner'}
+      member { post 'archive' }
     end
   end
 
   namespace :suppliers do
-    root :to => "lead_purchases#index"
+    root to: "lead_purchases#index"
+
     resources :cart_items
-    resources :deal_certification_requests, :only => [:index, :edit, :update]
+    resources :deal_certification_requests, only: [:index, :edit, :update]
+
     resources :deals do
-      resources :assets, :controller => "deal_assets", :only => [:create, :destroy]
+      resources :assets, controller: "deal_assets", only: [:create, :destroy]
     end
-    resource :cart, :only => [:show, :update, :destroy], :controller => 'cart'
+
+    resource :cart, only: [:show, :update, :destroy], controller: 'cart'
     resources :lead_purchases do
-      collection do
-        put :bulk_update
-      end
-      resource :lead_email, :only => [:new, :create]
+      collection { put :bulk_update }
+      resource :lead_email, only: [:new, :create]
     end
-    resource :bulk_cart_items, :controller => "bulk_cart_items", :only => [:create]
-    resources :pipeline_reports, :only => :index
-    resources :leads, :only => [:new, :create]
+
+    resource :bulk_cart_items, controller: "bulk_cart_items", only: :create
+    resources :pipeline_reports, only: :index
+    resources :leads, only: [:new, :create]
   end
-  match 'suppliers/bulk_lead_purchase_export' => 'suppliers/bulk_lead_purchase_export#create', :as => "bulk_lead_purchase_export"
-  match 'suppliers/bulk_lead_purchase_print' => 'suppliers/bulk_lead_purchase_print#create', :as => "bulk_lead_purchase_print"
-  match 'suppliers/bulk_lead_purchase_update' => 'suppliers/bulk_lead_purchase_update#create', :as => "bulk_lead_purchase_update"
-  match 'suppliers/bulk_lead_share_by_email' => 'suppliers/bulk_lead_share_by_email#new', :as => "bulk_lead_share_by_email"
-  match 'suppliers/create_bulk_lead_share_by_email' => 'suppliers/bulk_lead_share_by_email#create', :as => "create_bulk_lead_share_by_email"
+
+  match 'suppliers/bulk_lead_purchase_export' => 'suppliers/bulk_lead_purchase_export#create', as: "bulk_lead_purchase_export"
+  match 'suppliers/bulk_lead_purchase_print' => 'suppliers/bulk_lead_purchase_print#create', as: "bulk_lead_purchase_print"
+  match 'suppliers/bulk_lead_purchase_update' => 'suppliers/bulk_lead_purchase_update#create', as: "bulk_lead_purchase_update"
+  match 'suppliers/bulk_lead_share_by_email' => 'suppliers/bulk_lead_share_by_email#new', as: "bulk_lead_share_by_email"
+  match 'suppliers/create_bulk_lead_share_by_email' => 'suppliers/bulk_lead_share_by_email#create', as: "create_bulk_lead_share_by_email"
 
   namespace :call_centres do
-    root :to => "call_centre_agents#index"
+    root to: "call_centre_agents#index"
+
     resources :call_centre_agents do
-      resource :password, :controller => 'password', :only => [:new, :update, :destroy]
+      resource :password, controller: 'password', only: [:new, :update, :destroy]
     end
+
     resources :deals do
-      resources :assets, :controller => "deal_assets", :only => [:create, :destroy]
+      resources :assets, controller: "deal_assets", only: [:create, :destroy]
     end
-    resource :bulk_call_centre_agents_update, :controller => "bulk_call_centre_agents_update", :only => [:update]
+
+    resource :bulk_call_centre_agents_update, controller: "bulk_call_centre_agents_update", only: :update
     resources :leads
     resources :lead_templates
     resources :news
   end
 
   namespace :call_centre_agents do
-    root :to => "leads#index"
+    root to: "leads#index"
+
     resources :leads do
-      resources :certifications, :only => :create
+      resources :certifications, only: :create
     end
+
     resources :lead_templates
     resources :deals do
-      resources :assets, :controller => "deal_assets", :only => [:create, :destroy]
+      resources :assets, controller: "deal_assets", only: [:create, :destroy]
     end
   end
 
   namespace :lead_users do
-    root :to => "lead_purchases#index"
+    root to: "lead_purchases#index"
+
     resources :lead_purchases do
-      resource :lead_email, :only => [:new, :create]
+      resource :lead_email, only: [:new, :create]
     end
+
     resources :lead_requests
-    resource :bulk_lead_requests, :controller => "bulk_lead_requests", :only => [:create, :destroy]
-    resource :bulk_lead_purchase_update, :controller => "bulk_lead_purchase_update", :only => [:create]
-    resource :bulk_lead_purchase_export, :controller => "bulk_lead_purchase_export", :only => [:create]
-    resource :bulk_lead_purchase_print, :controller => "bulk_lead_purchase_print", :only => [:create]
+    resource :bulk_lead_requests, controller: "bulk_lead_requests", only: [:create, :destroy]
+    resource :bulk_lead_purchase_update, controller: "bulk_lead_purchase_update", only: :create
+    resource :bulk_lead_purchase_export, controller: "bulk_lead_purchase_export", only: :create
+    resource :bulk_lead_purchase_print, controller: "bulk_lead_purchase_print", only: :create
   end
 
   namespace :suppliers do
-    root :to => redirect("/suppliers/lead_purchases")
-    resource :interests, :only => [:edit, :update]
+    root to: redirect("/suppliers/lead_purchases")
+
+    resource :interests, only: [:edit, :update]
     resources :subaccounts
-    resources :lead_requests, :only => [:index, :update, :destroy]
-    resource :bulk_lead_requests, :controller => "bulk_lead_requests", :only => [:destroy, :update]
-    resource :bulk_subaccounts_update, :controller => "bulk_subaccounts_update", :only => [:update]
-    resources :not_invoiced_leads, :only => [:index]
-    resources :invoices, :only => [:show, :index]
+    resources :lead_requests, only: [:index, :update, :destroy]
+    resource :bulk_lead_requests, controller: "bulk_lead_requests", only: [:destroy, :update]
+    resource :bulk_subaccounts_update, controller: "bulk_subaccounts_update", only: :update
+    resources :not_invoiced_leads, only: :index
+    resources :invoices, only: [:show, :index]
     resources :lead_templates
+
     resources :newsletter_lists do
       resources :newsletter_synchronizations
     end
   end
 
   namespace :agents do
-    root :to => "leads#index"
+    root to: "leads#index"
     resources :lead_templates
+
     resources :leads do
-      resources :certifications, :only => :create
+      resources :certifications, only: :create
     end
+
     resources :deals do
-      resources :assets, :controller => "deal_assets", :only => [:create, :destroy]
+      resources :assets, controller: "deal_assets", only: [:create, :destroy]
     end
   end
 
   namespace :members do
-    root :to => "leads#index"
-    resources :leads, :path => :requests do
+    root to: "leads#index"
+
+    resources :leads, path: :requests do
       member do
         get 'redirect_to_paypal'
         get 'pdf'
       end
     end
-    resources :tenders, :path => :leads do
-      resources :certifications, :only => :create
+
+    resources :tenders, path: :leads do
+      resources :certifications, only: :create
     end
+
     resources :lead_templates
   end
 
   namespace :callers do
-    resources :chain_mail_types, :controller => "chain_mail_types" do
+    resources :chain_mail_types, controller: "chain_mail_types" do
       member do
         post :duplicate
       end
     end
+
     resources :chain_mail_items
     resources :chain_mail_materials
+
     resources :campaigns do
       resources :materials
+
       member do
         post 'result_details'
         post 'export_result_details'
         post 'duplicate'
         post 'clear'
       end
+
       collection do
         post 'results'
       end
-      resources :results, :except => :show do
-        collection do
-          post 'batch_assign'
-        end
+
+      resources :results, except: :show do
+        collection { post 'batch_assign' }
       end
-      resources :campaigns_users, :only => [:index, :update]
-      resource :campaigns_description, :controller => "campaigns_description", :only => [:show, :edit, :update]
+
+      resources :campaigns_users, only: [:index, :update]
+      resource :campaigns_description, controller: "campaigns_description", only: [:show, :edit, :update]
+
       resources :contacts do
         collection do
           post 'batch_remove'
@@ -271,78 +308,82 @@ Nbs::Application.routes.draw do
           post 'batch_send_survey'
         end
       end
-      resources :advanced_import, :only => [:create, :destroy] do
+
+      resources :advanced_import, only: [:create, :destroy] do
         collection do
           post 'choose'
           post 'preview'
         end
       end
-      resources :agent_work_screen, :only => :index
+
+      resources :agent_work_screen, only: :index
+
       namespace :agent_work_screen do
-        resources :contacts, :only => [:create, :show, :destroy, :update] do
-          collection do
-            get 'contacts_for_search'
-          end
-          resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
+        resources :contacts, only: [:create, :show, :destroy, :update] do
+          collection { get 'contacts_for_search' }
+          resources :call_results, only: [:new, :create, :edit, :update, :destroy]
         end
-        resource :call_sheet, :only => [:show]
-        resource :pending_call, :only => [:show]
-        resource :complete_contact, :only => [:show]
+        resource :call_sheet, only: :show
+        resource :pending_call, only: :show
+        resource :complete_contact, only: :show
       end
-      resources :email_templates, :only => [:edit, :update] do
-        member do
-          post 'test_send_email'
-        end
+
+      resources :email_templates, only: [:edit, :update] do
+        member { post 'test_send_email' }
       end
-      resources :chain_mail_types, :controller => "chain_mail_types" do
+
+      resources :chain_mail_types, controller: "chain_mail_types" do
         member do
           post :duplicate
         end
       end
+
       resources :call_results
       resources :call_logs
-      resource :advanced_export, :only => [:new, :create]
+      resource :advanced_export, only: [:new, :create]
+
       resources :agents do
         resources :contacts
       end
     end
 
-    resource :production, :controller => "production", :only => [:show] do
-      member do
-        get 'export'
-      end
+    resource :production, controller: "production", only: :show do
+      member { get 'export' }
     end
-    resource :history, :controller => "history", :only => [:show]
-    resource :communication, :controller => "communication", :only => [:show]
+
+    resource :history, controller: "history", only: :show
+    resource :communication, controller: "communication", only: :show
 
     resources :contacts do
-      resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
+      resources :call_results, only: [:new, :create, :edit, :update, :destroy]
     end
 
     resources :campaign_reports do
-      collection do
-        post 'load_agents'
-      end
+      collection { post 'load_agents' }
     end
 
-    resources :agent_timesheets, :only => [:index,:show,:destroy,:create,:new]
-    resources :cached_timesheets, :only => [:index]
-    resources :cached_campaign_reports, :only => [:index]
-    resource :agent_information, :only => [:show]
+    resources :agent_timesheets, only: [:index,:show,:destroy,:create,:new]
+    resources :cached_timesheets, only: :index
+    resources :cached_campaign_reports, only: :index
+
+    resource :agent_information, only: :show
     resource :agent_performance do
       member do
         get :summary
         get :agents
       end
     end
+
     resources :call_logs
     resource :softphone_listing
+
     resources :login_time_requests do
       member do
         put :approve
         put :reject
       end
     end
+
     resources :user_session_logs
     resources :survey_recipients
   end
@@ -352,25 +393,26 @@ Nbs::Application.routes.draw do
     resources :leads do
       resources :threads
     end
+
     resources :replies
-    resources :blocked_conversations, :only => [:create, :destroy]
-    resources :comment_readers, :only => [:create]
+    resources :blocked_conversations, only: [:create, :destroy]
+    resources :comment_readers, only: :create
   end
 
   namespace :deal_comments do
     resources :threads
-    resources :deals, :only => [:show] do
+
+    resources :deals, only: :show do
       resources :threads
     end
+
     resources :replies
-    resources :comment_readers, :only => [:create]
+    resources :comment_readers, only: :create
   end
 
   namespace :users do
     resources :delayed_jobs do
-      collection do
-        get :delete_all
-      end
+      collection { get :delete_all }
     end
   end
 
@@ -378,72 +420,69 @@ Nbs::Application.routes.draw do
     resource :login
   end
 
+  # FIXME: what the point of only: [] is?
   namespace :api do
-    resources :campaigns, :only => [] do
-      member do
-        get :contact
-      end
+    resources :campaigns, only: [] do
+      member { get :contact }
     end
   end
 
   resources :chain_mails
 
-  match 'supplier_home' => 'supplier_home#show', :as => "supplier_home"
-  match 'agent_home' => 'agent_home#show', :as => "agent_home"
-  match 'member_home' => 'member_home#show', :as => "member_home"
+  match 'supplier_home' => 'supplier_home#show', as: "supplier_home"
+  match 'agent_home' => 'agent_home#show', as: "agent_home"
+  match 'member_home' => 'member_home#show', as: "member_home"
 
-  resources :leads, :except => [:new, :create, :destroy] do
-    collection do
-      post :creators
-    end
+  resources :leads, except: [:new, :create, :destroy] do
+    collection { post :creators }
   end
 
-  resources :deals, :except => [:new, :create, :destroy] do
-    member do
-      post 'rate'
-    end
+  resources :deals, except: [:new, :create, :destroy] do
+    member { post :rate }
+
     collection do
       get 'show_all'
       get 'insert_rich_content'
     end
   end
 
-  resources :group_deals, :only => [:show]
+  resources :group_deals, only: :show
 
-  resources :categories, :only => [:index] do
-    resources :more_leads_requests, :only => [:new, :create]
+  resources :categories, only: :index do
+    resources :more_leads_requests, only: [:new, :create]
   end
-  resources :deal_categories, :only => [:index]
+
+  resources :deal_categories, only: :index
 
   match 'categories/:slag' => "leads#index"
-  match 'categories/deals/:slag' => "deals#index", :as => :deals_index
+  match 'categories/deals/:slag' => "deals#index", as: :deals_index
 
-  resources :voucher_numbers, :only => [:edit, :update]
-  resource :validate_voucher, :controller =>"validate_voucher", :only => [:show, :create]
-  resource :use_voucher, :controller =>"use_voucher", :only => [:show, :create]
+  resources :voucher_numbers, only: [:edit, :update]
+  resource :validate_voucher, controller: "validate_voucher", only: [:show, :create]
+  resource :use_voucher, controller: "use_voucher", only: [:show, :create]
 
-  resource :contacts_advanced_import, :only => [:create, :destroy, :show] do
+  resource :contacts_advanced_import, only: [:create, :destroy, :show] do
     collection do
       post 'choose'
       post 'preview'
     end
   end
 
-  resource :leads_advanced_import, :only => [:create, :show] do
+  resource :leads_advanced_import, only: [:create, :show] do
     collection do
       post 'choose'
       post 'preview'
     end
   end
 
-  resource :members_advanced_import, :only => [:create, :show] do
+  resource :members_advanced_import, only: [:create, :show] do
     collection do
       post 'choose'
       post 'preview'
     end
   end
 
-  resource :suppliers_advanced_import, :only => [:create, :show] do
+  resource :suppliers_advanced_import, only: [:create, :show] do
     collection do
       post 'choose'
       post 'preview'
@@ -457,18 +496,18 @@ Nbs::Application.routes.draw do
     end
   end
 
-  resources :agent_accounts, :only => [:new, :create]
-  resources :supplier_accounts, :only => [:new, :create]
-  resources :member_accounts, :only => [:new, :create]
-  resources :category_supplier_accounts, :only => [:new, :create]
-  resources :certification_accounts, :only => [:new, :create]
-  resources :deal_supplier_accounts, :only => [:new, :create]
+  resources :agent_accounts, only: [:new, :create]
+  resources :supplier_accounts, only: [:new, :create]
+  resources :member_accounts, only: [:new, :create]
+  resources :category_supplier_accounts, only: [:new, :create]
+  resources :certification_accounts, only: [:new, :create]
+  resources :deal_supplier_accounts, only: [:new, :create]
   resources :locales
   resources :phone_codes
   resources :regions
-  resources :category_requests, :only => [:new, :create]
-  resources :deal_requests, :only => [:create]
-  resources :category_interests, :only => [:create]
+  resources :category_requests, only: [:new, :create]
+  resources :deal_requests, only: [:create]
+  resources :category_interests, only: [:create]
 
   resources :news
   resources :articles
@@ -476,7 +515,7 @@ Nbs::Application.routes.draw do
   resources :login_keys
   resources :paypal_unpaid_invoices
 
-  resource :my_profile, :controller => "my_profile", :only => [:update] do
+  resource :my_profile, controller: "my_profile", only: [:update] do
     member do
       post 'social_link'
       put 'social_unlink'
@@ -484,10 +523,11 @@ Nbs::Application.routes.draw do
       put 'remove_category_supplier'
       get 'unsubscribe'
     end
+
+    # FIXME: only: [] again? what's the point?
     resources :subscription_plans, :only => [] do
-      collection do
-        get 'cancel'
-      end
+      collection { get :cancel }
+
       member do
         get 'upgrade'
         get 'downgrade'
@@ -499,41 +539,35 @@ Nbs::Application.routes.draw do
     end
   end
 
-  match 'my_profile' => 'my_profile#edit', :as => "my_profile"
+  match 'my_profile' => 'my_profile#edit', as: "my_profile"
 
-  resource :password, :controller => 'password', :only => [:update]
-  match 'password' => 'password#edit', :as => 'password'
-  match 'ckeditor/destroy/:id', :to => 'ckeditor#destroy'
+  resource :password, controller: 'password', only: :update
+  match 'password' => 'password#edit', as: 'password'
+  match 'ckeditor/destroy/:id', to: 'ckeditor#destroy'
 
-  resource :contact_us, :controller => "contact_us", :as => "contact_us", :only => [:new, :create]
-  resource :terms_and_conditions, :controller => "terms_and_conditions", :as => "terms_and_conditions", :only => [:show]
-  match 'contact_us' => 'contact_us#new', :as => 'contact_us'
+  resource :contact_us, controller: "contact_us", as: "contact_us", only: [:new, :create]
+  resource :terms_and_conditions, controller: "terms_and_conditions", as: "terms_and_conditions", only: :show
+  match 'contact_us' => 'contact_us#new', as: 'contact_us'
 
   resource :lead_templates
-
-  resource :user_session_log, :controller => "user_session_log", :only => [:create]
-
-  resource :share_deal_by_email, :controller => "share_deal_by_email", :only => [:new, :create]
+  resource :user_session_log, controller: "user_session_log", only: :create
+  resource :share_deal_by_email, controller: "share_deal_by_email", only: [:new, :create]
 
   resources :deal_maker_users
-
   resources :deal_maker_materials
-
   resources :remote_deal_requests
 
-  resources :notifications, :only => [:index, :update]
+  resources :notifications, only: [:index, :update]
 
-  resources :tags, :only => [:index, :create]
+  resources :tags, only: [:index, :create]
 
-  resources :email_templates, :only => [:edit, :update] do
-    member do
-      post 'test_send_email'
-    end
+  resources :email_templates, only: [:edit, :update] do
+    member { post 'test_send_email' }
   end
 
-  resource :unconfirmed_paypal_subscriptions, :only => [:show]
+  resource :unconfirmed_paypal_subscriptions, only: :show
 
-  match 'flashphoner.xml' => 'flashphoner/configs#show', :format => :xml
+  match 'flashphoner.xml' => 'flashphoner/configs#show', format: :xml
 
   constraints(Fairdeals) do
     match '/all_deals' => "fairdeals_home#index"
@@ -552,91 +586,34 @@ Nbs::Application.routes.draw do
 
   namespace :surveys_management do
     resources :surveys do
+      resources :survey_questions do
+        collection { post :sort }
+        member { put :remove_parent }
+      end
+
+      resources :survey_recipients
+      resource :survey_recipients_export, only: [:create, :show], controller: "survey_recipients_export"
+
       member do
         post :duplicate
-      end
-      resources :survey_questions do
-        collection do
-          post :sort
-        end
-        member do
-          put :remove_parent
-        end
-      end
-      resources :survey_recipients
-      resource :survey_recipients_export, :only => [:create, :show], :controller => "survey_recipients_export"
-      member do
         post :send_to_newsletters
         get :setup
       end
+
       resources :email_templates
     end
   end
 
-  resources :survey_recipients, :only => [:show, :update]
+  resources :survey_recipients, only: [:show, :update]
 
-  match ':slug' => 'category_home#show', :as => :category_home_page
-  match ':slug/account/new' => 'category_supplier_accounts#new', :as => :new_category_home_page_account
-  match ':slug/account' => 'category_supplier_accounts#create', :as => :category_home_page_account
-  match ':slug/leads' => 'category_suppliers/leads#index', :as => :category_home_page_leads
+  match ':slug' => 'category_home#show', as: :category_home_page
+  match ':slug/account/new' => 'category_supplier_accounts#new', as: :new_category_home_page_account
+  match ':slug/account' => 'category_supplier_accounts#create', as: :category_home_page_account
+  match ':slug/leads' => 'category_suppliers/leads#index', as: :category_home_page_leads
 
-  root :to => "supplier_home#show"
+  root to: "supplier_home#show"
 
-  if !File.basename($0) == "rake" && ARGV.grep(/db:/).any?
-    ActiveAdmin.routes(self)
-  end
-
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
-
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
+  # if !File.basename($0) == "rake" && ARGV.grep(/db:/).any?
+  #   ActiveAdmin.routes(self)
+  # end
 end
