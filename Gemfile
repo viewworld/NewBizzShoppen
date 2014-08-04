@@ -7,7 +7,7 @@ gem 'rails', '3.0.20'
 gem 'railties'
 
 # db
-gem 'pg'
+gem 'pg', '~> 0.17.1'
 
 # auth
 gem 'devise', '1.1.3'
@@ -113,13 +113,10 @@ group :test do
   gem 'shoulda-matchers', '~> 2.0.0'
   gem 'email_spec', '~> 1.5.0'
   gem 'factory_girl', '~> 2.6.4'
-  # CodeClimate isn't compatible with REE (Ruby 1.8.x) it requires 1.9 or newer
-  # gem 'codeclimate-test-reporter', '~> 0.3.0'
-  # gem 'simplecov', '~> 0.8.2'
 end
 
 gem 'capistrano', '2.15.5'
 gem 'capistrano-ext', '>= 1.2.1'
 gem 'rvm-capistrano'
-gem 'rake', '~> 0.8.7'
+gem 'rake', '~> 10.3.2'
 gem 'daemons', '~> 1.1.9'
