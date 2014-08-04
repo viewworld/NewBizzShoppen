@@ -41,7 +41,7 @@ gem 'ajaxful_rating', '3.0.0.beta3'
 gem 'postmark-rails'
 gem 'paypal-recurring', :path => 'vendor/gems/paypal-recurring'
 gem 'paypal_nvp'
-gem 'activeadmin', '~> 0.3.4'
+#gem 'activeadmin', '~> 0.3.4'
 gem 'diff-lcs', :require => false
 gem 'acts-as-taggable-on', '~> 2.2.2'
 gem 'createsend'
