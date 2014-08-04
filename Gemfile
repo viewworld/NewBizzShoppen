@@ -1,57 +1,81 @@
 source 'http://rubygems.org'
 ruby '1.9.3'
 
+# basics
 gem 'bundler'
-
 gem 'rails', '3.0.20'
 gem 'railties'
-gem 'yajl-ruby', '1.1.0', :require => 'yajl'
 
+# db
 gem 'pg'
+
+# auth
+gem 'devise', '1.1.3'
+gem 'devise_rpx_connectable'
+gem 'cancan'
+
+# models
 gem 'inherited_resources', '1.1.2'
+gem 'role_model', require: 'role_model'
+gem 'acts-as-taggable-on', '~> 2.2.2'
+gem 'acts_as_commentable_with_threading'
+gem 'acts_as_list', '~> 0.4.0'
+gem 'nested_set', '1.5.4'
+
+# requirements
+gem 'yajl-ruby', '1.1.0', :require => 'yajl'
+gem 'scoped-search', '0.7.1', :require => 'scoped_search'
+gem 'recaptcha', :require => 'recaptcha/rails'
+
+# s3
+gem 'aws-s3'
+gem 'jammit-s3', '~> 0.6.0.2'
+
+# views
+gem 'ckeditor', '3.4.3.pre'
 gem 'will_paginate', '3.0.pre2', :branch => 'rails3'
 gem 'formtastic', '1.1.0'
 gem 'liquid'
-gem 'devise', '1.1.3'
+gem 'ajaxful_rating', '3.0.0.beta3'
+
+# background jobs
 gem 'delayed_job_active_record', '~> 4.0.0'
 gem 'delayed_job', '>= 4.0.0'
 gem 'aasm'
-gem 'paperclip', '2.3.6'
-gem 'scoped-search', '0.7.1', :require => 'scoped_search'
-gem 'json_pure', '>= 1.4.6'
-gem 'globalize3', '0.3.0'
-gem 'role_model', :require => 'role_model'
-gem 'cancan'
-gem 'nested_set', '1.5.4'
-gem 'fastercsv'
-gem 'thor'
-gem 'spreadsheet'
-gem 'google-spreadsheet-ruby'
-gem 'roo'
-gem 'ckeditor', '3.4.3.pre'
-gem 'aws-s3'
-gem 'i18n-active_record'
 gem 'whenever', '~> 0.9.0', :require => false
-gem 'acts_as_commentable_with_threading'
-gem 'memcache-client'
-gem 'devise_rpx_connectable'
-gem 'ruby-hmac', '0.4.0'
-gem 'jammit-s3', '~> 0.6.0.2'
-gem 'ajaxful_rating', '3.0.0.beta3'
-gem 'postmark-rails'
+
+# uploads
+gem 'paperclip', '2.3.6'
+
+# api
+gem 'json_pure', '>= 1.4.6'
+gem 'google-spreadsheet-ruby'
+gem 'spreadsheet'
+
+# locales
+gem 'globalize3', '0.3.0'
+gem 'i18n-active_record'
+
+# paypal
 gem 'paypal-recurring', :path => 'vendor/gems/paypal-recurring'
 gem 'paypal_nvp'
-#gem 'activeadmin', '~> 0.3.4'
-gem 'diff-lcs', :require => false
-gem 'acts-as-taggable-on', '~> 2.2.2'
+
+# mailing
 gem 'createsend'
-gem 'recaptcha', :require => 'recaptcha/rails'
+gem 'postmark-rails'
+
+# utils
+gem 'fastercsv'
+gem 'thor'
+gem 'roo'
+gem 'memcache-client'
+gem 'ruby-hmac', '0.4.0'
+gem 'diff-lcs', :require => false
 gem 'newrelic_rpm'
 gem 'activerecord-database-views'
 gem 'rubyzip', '0.9.9'
 gem 'rails-multi_block_helpers', :github => 'bartlomiejdanek/rails-multi_block_helpers'
 gem 'stringex', '~> 2.5.2'
-gem 'acts_as_list', '~> 0.4.0'
 
 group :staging do
   gem 'system-metrics'
