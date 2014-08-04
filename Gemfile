@@ -15,17 +15,17 @@ gem 'devise_rpx_connectable', '0.2.2'
 gem 'cancan', '1.6.5'
 
 # models
-gem 'inherited_resources', '1.1.2'
+gem 'inherited_resources', '1.3.1'
 gem 'role_model', require: 'role_model'
 gem 'acts-as-taggable-on', '~> 2.2.2'
-gem 'acts_as_commentable_with_threading'
+gem 'acts_as_commentable_with_threading', '1.1.2'
 gem 'acts_as_list', '~> 0.4.0'
 gem 'nested_set', '1.5.4'
 
 # requirements
 gem 'yajl-ruby', '1.1.0', :require => 'yajl'
 gem 'scoped-search', '0.7.1', :require => 'scoped_search'
-gem 'recaptcha', :require => 'recaptcha/rails'
+gem 'recaptcha', '0.3.5', require: 'recaptcha/rails'
 
 # s3
 gem 'aws-s3'
