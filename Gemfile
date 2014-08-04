@@ -10,9 +10,9 @@ gem 'railties'
 gem 'pg', '~> 0.17.1'
 
 # auth
-gem 'devise', '1.1.3'
-gem 'devise_rpx_connectable'
-gem 'cancan'
+gem 'devise', '1.1.9'
+gem 'devise_rpx_connectable', '0.2.2'
+gem 'cancan', '1.6.5'
 
 # models
 gem 'inherited_resources', '1.1.2'
