@@ -65,7 +65,6 @@ gem 'createsend'
 gem 'postmark-rails'
 
 # utils
-gem 'fastercsv'
 gem 'thor'
 gem 'roo'
 gem 'memcache-client'
