@@ -143,7 +143,7 @@ class Lead < AbstractLead
     end
   end
 
-  def mass_assignment_authorizer
+  def mass_assignment_authorizer(role = :default)
     if self.current_user and current_user.can_publish_leads?
       self.class.protected_attributes.reject! { |a| BLACK_LISTED_ATTRIBUTES.include?(a.to_sym) }
       self.class.protected_attributes
