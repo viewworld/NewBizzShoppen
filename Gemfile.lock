@@ -12,7 +12,6 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
-    ZenTest (4.5.0)
     aasm (2.3.1)
       activerecord
     abstract (1.0.0)
@@ -57,10 +56,6 @@ GEM
       multi_json
     ajaxful_rating (3.0.0.beta3)
     arel (2.0.10)
-    autotest (4.4.6)
-      ZenTest (>= 4.4.1)
-    autotest-rails (4.1.0)
-      ZenTest
     awesome_nested_set (2.1.6)
       activerecord (>= 3.0.0)
     aws-s3 (0.6.2)
@@ -352,8 +347,6 @@ DEPENDENCIES
   acts_as_list (~> 0.4.0)
   airbrake (~> 3.1.15)
   ajaxful_rating (= 3.0.0.beta3)
-  autotest
-  autotest-rails
   aws-s3
   bullet (= 2.0.1)
   bundler (= 1.6.5)

@@ -107,15 +107,13 @@ end
 group :test do
   gem 'database_cleaner', '1.2.0'
   gem 'capybara', '1.1.4'
-  gem 'mocha', '0.13.2', :require => false
+  gem 'mocha', '0.13.2', require: false
   gem 'faker', '0.3.1'
   gem 'machinist', '>= 2.0.0.beta1'
-  gem 'fakeweb', :require => false
-  gem 'webmock', :require => false
+  gem 'fakeweb', require: false
+  gem 'webmock', require: false
   gem 'launchy', '2.1'
   gem 'rspec-rails', '2.14.1'
-  gem 'autotest-rails'
-  gem 'autotest'
   gem 'headless'
   gem 'test-unit'
   gem 'shoulda-matchers', '~> 2.0.0'
