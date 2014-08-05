@@ -2,9 +2,9 @@ source 'http://rubygems.org'
 ruby '1.9.3'
 
 # basics
-gem 'bundler'
+gem 'bundler', '1.6.5'
 gem 'rails', '3.0.20'
-gem 'railties'
+gem 'railties', '3.0.20'
 
 # db
 gem 'pg', '~> 0.17.1'
@@ -57,7 +57,7 @@ gem 'globalize3', '0.3.0'
 gem 'i18n-active_record'
 
 # paypal
-gem 'paypal-recurring', :path => 'vendor/gems/paypal-recurring'
+gem 'paypal-recurring', path: 'vendor/gems/paypal-recurring'
 gem 'paypal_nvp', '0.2.0'
 
 # mailing
@@ -65,20 +65,20 @@ gem 'createsend', '1.0.3'
 gem 'postmark-rails', '0.4.2'
 
 # utils
-gem 'thor'
-gem 'roo'
-gem 'memcache-client'
+gem 'thor', '0.14.6'
+gem 'roo', '1.9.5'
+gem 'memcache-client', '1.8.5'
 gem 'ruby-hmac', '0.4.0'
-gem 'diff-lcs', :require => false
-gem 'newrelic_rpm'
-gem 'activerecord-database-views'
+gem 'diff-lcs', require: false
+gem 'newrelic_rpm', '3.6.8.168'
+gem 'activerecord-database-views', '0.1.0'
 gem 'rubyzip', '0.9.9'
-gem 'rails-multi_block_helpers', :github => 'bartlomiejdanek/rails-multi_block_helpers'
+gem 'rails-multi_block_helpers', github: 'bartlomiejdanek/rails-multi_block_helpers'
 gem 'stringex', '~> 2.5.2'
 
 group :staging do
-  gem 'system-metrics'
-  gem 'mailcatcher'
+  gem 'system-metrics', '0.2.4'
+  gem 'mailcatcher', '0.2.4'
 end
 
 group :staging, :production do
@@ -86,14 +86,22 @@ group :staging, :production do
 end
 
 group :development do
-  gem 'thin'
-  gem 'nifty-generators'
-  gem 'bullet'
-  gem 'letter_opener'
+  gem 'thin', '~> 1.5.1'
+  gem 'nifty-generators', '0.4.6'
+  gem 'bullet', '2.0.1'
+  gem 'letter_opener', '0.0.2'
 end
 
 group :test, :development do
   gem 'pry-rails', '0.3.2'
+  gem 'pry', '0.9.12.6'
+  gem 'pry-debugger', '0.2.3'
+
+  #gem 'better_errors', '~> 1.1.0'
+  #gem 'binding_of_caller', '~> 0.7.2'
+  #gem 'quiet_assets', '~> 1.0.3'
+
+  gem 'factory_girl_rails', '~> 4.4.1'
 end
 
 group :test do
@@ -112,7 +120,6 @@ group :test do
   gem 'test-unit'
   gem 'shoulda-matchers', '~> 2.0.0'
   gem 'email_spec', '~> 1.5.0'
-  gem 'factory_girl', '~> 2.6.4'
 end
 
 gem 'capistrano', '2.15.5'
