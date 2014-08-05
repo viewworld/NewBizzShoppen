@@ -1,6 +1,7 @@
 require 'role_change'
 
 class User < ActiveRecord::Base
+  self.set_table_name "users"
 
   self.abstract_class = true
   ajaxful_rater
@@ -203,7 +204,7 @@ class User < ActiveRecord::Base
     true
   end
 
-  def mass_assignment_authorizer
+  def mass_assignment_authorizer(role = :default)
     if self.can_edit_payout_information
       self.class.protected_attributes.reject! { |a| BLACK_LISTED_ATTRIBUTES.include?(a.to_sym) }
       self.class.protected_attributes
