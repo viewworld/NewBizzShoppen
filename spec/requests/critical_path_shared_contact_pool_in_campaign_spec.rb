@@ -249,7 +249,8 @@ describe 'Critical Path Autobuy for category suppliers' do
                 'contact[direct_phone_number]' => "tel d-ph #{i}",
                 'contact[phone_number]' => "tel pn #{i}"}
       body_include_fields fields
-      body_has_to(:have_button, 'contact_submit')
+      
+      body_has_to(:have_button, 'Create')
 
       # I press Create
       expect { post "/callers/campaigns/#{campaign_id}/contacts", fields }.to change(Contact, :count).by(1)

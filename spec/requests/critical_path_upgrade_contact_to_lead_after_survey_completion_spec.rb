@@ -105,7 +105,7 @@ describe 'Upgrade contact to lead after survey completion' do
               'category[currency_id]' => currency.id}
 
     body_include_fields fields
-    body_has_to(:have_button, 'category_submit')
+    body_has_to(:have_button, 'Create')
 
     # I click Create
     expect { post('/administration/categories', fields) }.to change(Category, :count).by(1)
@@ -150,7 +150,7 @@ describe 'Upgrade contact to lead after survey completion' do
                'campaign[auto_dialer]' => '0' }
 
     body_include_fields fields
-    body_has_to(:have_button, 'campaign_submit')
+    body_has_to(:have_button, 'Create')
 
     # I click Create
     expect { post('/callers/campaigns', fields) }.to change(Campaign, :count).by(1)
@@ -181,7 +181,7 @@ describe 'Upgrade contact to lead after survey completion' do
     body_include_fields fields
 
     # I click Create
-    body_has_to(:have_button, 'contact_submit')
+    body_has_to(:have_button, 'Create')
     expect { post("/callers/campaigns/#{campaign.id}/contacts", fields) }.to change(Contact, :count).by(1)
     follow_with_redirect "/callers/campaigns/#{campaign.id}/edit"
     has_flash 'Contact was successfully created.'
@@ -247,7 +247,7 @@ describe 'Upgrade contact to lead after survey completion' do
     body_include_fields fields
 
     # I click Create agent
-    body_has_to(:have_button, 'user_call_centre_agent_submit')
+    body_has_to(:have_button, 'Create')
     expect { post('/call_centres/call_centre_agents', fields.merge('user_call_centre_agent[agreement_read]' => '1')) }.to change(User::CallCentreAgent, :count).by(1)
     has_flash 'Call centre agent has been created successfully!'
     follow_with_redirect '/call_centres/call_centre_agents'
@@ -279,7 +279,8 @@ describe 'Upgrade contact to lead after survey completion' do
                'survey[lead_creator_id]' => User::CallCentreAgent.last.id }
 
     body_include_fields fields
-    body_has_to(:have_button, 'survey_submit')
+    body_has_to(:have_button, 'Save')
+
 
     # I click Save
     put '/surveys_management/surveys/1', fields
@@ -331,7 +332,7 @@ describe 'Upgrade contact to lead after survey completion' do
     # I click Submit
     question_opts = { 'survey_recipient[survey_answers_attributes][0][survey_question_id]' => SurveyQuestion.last.id,
                       'survey_recipient[survey_answers_attributes][0][question_type]' => 1 }
-    body_has_to(:have_button, 'survey_recipient_submit')
+    body_has_to(:have_button, 'Submit')
     put survey_recipient_path(survey_recipient.uuid), fields.merge(question_opts)
     body_has_to(:include, 'My Survey')
     body_has_to(:include, 'Thank You for the answers!')
@@ -352,7 +353,8 @@ describe 'Upgrade contact to lead after survey completion' do
     expect(response).to be_success
 
     # I uncheck Unique
-    body_has_to(:have_checked_field, 'search_with_unique')
+    #
+    body_has_to_not(:have_checked_field, 'search_with_unique')
 
     # I click Search
     body_has_to(:have_button, 'Search')

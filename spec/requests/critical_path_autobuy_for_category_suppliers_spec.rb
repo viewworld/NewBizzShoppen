@@ -322,7 +322,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     body_has_to(:have_select, 'invoice[user_id]', :with_options => ["#{lead_category.name}, #{admin.email}"])
 
     # I press Create invoice
-    body_has_to(:have_button, 'invoice_submit')
+    body_has_to(:have_button, 'Create')
 
     expect { post('/administration/invoicing/invoices',
                   {'invoice[user_id]' => premiumsupplier.id, 'invoice[seller_id]' => last_seller.id}) }.to change(Invoice, :count).by(1)

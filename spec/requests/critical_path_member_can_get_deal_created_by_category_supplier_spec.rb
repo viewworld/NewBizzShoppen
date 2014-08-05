@@ -87,6 +87,8 @@ describe 'Member can get deal created by category supplier' do
     body_include_fields fields
     lines = {'subscription_plan[subscription_plan_lines_attributes][1391677822159][name]' => 'Supplier premium 5 weeks',
              'subscription_plan[subscription_plan_lines_attributes][1391677822159][price]' => '15'}
+
+
     body_has_to(:have_button, 'subscription_plan_submit')
 
     # I press Save
@@ -139,6 +141,7 @@ describe 'Member can get deal created by category supplier' do
     body_include_fields fields
     lines = {'subscription_plan[subscription_plan_lines_attributes][1391677822159][name]' => 'Supplier premium 5 weeks',
              'subscription_plan[subscription_plan_lines_attributes][1391677822159][price]' => '15'}
+
     body_has_to(:have_button, 'subscription_plan_submit')
 
     # I press Save
@@ -160,7 +163,8 @@ describe 'Member can get deal created by category supplier' do
     body_include_fields fields
 
     # I click Save
-    body_has_to(:have_button, 'category_submit')
+
+    body_has_to(:have_button, 'Save')
     expect { post '/administration/categories', fields.merge('category_type' => 'DealCategory') }.to change(DealCategory, :count).by(1)
     follow_with_redirect '/deal_categories'
     has_flash 'Category was successfully created.'
@@ -194,6 +198,7 @@ describe 'Member can get deal created by category supplier' do
     body_include_fields fields
 
     # I click Save
+
     body_has_to(:have_button, 'user_agent_submit')
     expect { post '/administration/users?role=agent', fields.merge('user_agent[agreement_read]' => '1') }.to change(User::Agent, :count).by(1)
     follow_with_redirect '/administration/users'
@@ -303,7 +308,8 @@ describe 'Member can get deal created by category supplier' do
               'deal[voucher_max_number]' => '1'}
 
     # I click Save
-    body_has_to(:have_button, 'deal_submit')
+
+    body_has_to(:have_button, 'Save')
     expect { post '/suppliers/deals', fields }.to change(Deal, :count).by(1)
     follow_with_redirect '/suppliers/deals'
     has_flash 'Deal has been successfully created.'
@@ -346,7 +352,8 @@ describe 'Member can get deal created by category supplier' do
     body_include_fields fields
 
     # I press Create
-    body_has_to(:have_button, 'user_member_submit')
+
+    body_has_to(:have_button, 'Create')
     expect { post '/member_accounts', fields.merge('user_member[rpx_identifier]' => 1) }.to change(User::Member, :count).by(1)
 
     # I should be signed in as memberpremium@example.com
