@@ -42,6 +42,10 @@ module Nbs
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding                                     = "utf-8"
 
+    # Assets pipeline
+    config.assets.enabled = true
+    config.assets.version = '1.0'
+
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters                            += [:password]
 
@@ -69,7 +73,7 @@ module Nbs
 
     require "#{config.root}/lib/currency_converter.rb"
 
-    require "#{config.root}/lib/i18n_utils.rb"    
+    require "#{config.root}/lib/i18n_utils.rb"
     require "#{config.root}/lib/string_utils.rb"
     config.after_initialize do
       I18nUtils.populate! if Rails.env == "development"
@@ -77,4 +81,3 @@ module Nbs
     end
   end
 end
-

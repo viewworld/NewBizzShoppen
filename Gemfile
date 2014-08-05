@@ -3,8 +3,7 @@ ruby '1.9.3'
 
 # basics
 gem 'bundler', '1.6.5'
-gem 'rails', '3.0.20'
-gem 'railties', '3.0.20'
+gem 'rails', '3.1.12'
 
 # db
 gem 'pg', '~> 0.17.1'
@@ -24,7 +23,6 @@ gem 'nested_set', '1.5.4'
 
 # requirements
 gem 'yajl-ruby', '1.1.0', require: 'yajl'
-gem 'scoped-search', '0.7.1', require: 'scoped_search'
 gem 'recaptcha', '0.3.5', require: 'recaptcha/rails'
 
 # s3
@@ -54,7 +52,7 @@ gem 'spreadsheet', '0.6.5.5'
 
 # locales
 gem 'globalize3', '0.3.0'
-gem 'i18n-active_record'
+gem 'i18n-active_record', git: 'git://github.com/svenfuchs/i18n-active_record.git', ref: "22b1f76", require: 'i18n/active_record'
 
 # paypal
 gem 'paypal-recurring', path: 'vendor/gems/paypal-recurring'

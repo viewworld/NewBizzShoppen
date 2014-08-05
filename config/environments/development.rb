@@ -38,18 +38,13 @@ Nbs::Application.configure do
   #                                      :authentication => 'plain',
   #                                      :enable_starttls_auto => true}
 
-#  config.after_initialize do
-#    Bullet.enable = true
-#    Bullet.alert = false
-#    Bullet.bullet_logger = true
-#    Bullet.console = true
-#    Bullet.rails_logger = false
-#    Bullet.disable_browser_cache = true
-#  end
+  config.assets.compress = false
+  config.assets.debug = true
+
+
   config.middleware.swap ActionDispatch::ParamsParser,
                          ActionDispatch::ParamsParser,
                          Mime::JSON => lambda { |body| Yajl.load(body).with_indifferent_access }
 end
 
 I18n.default_locale = :"en"
-
