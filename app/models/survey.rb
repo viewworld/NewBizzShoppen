@@ -14,7 +14,7 @@ class Survey < ActiveRecord::Base
 
   accepts_nested_attributes_for :survey_questions, :allow_destroy => true
 
-  validates_presence_of :name, :unless => Proc.new{|s| s.skip_validations}
+  validates_presence_of :name, :unless => Proc.new{ |s| s.skip_validations }
   validate :categories_and_lead_creator_present, :if => Proc.new{|n| n.upgrade_contacts_to_leads}
   validate :chain_mail_present_when_use_as_intro_enabled
 
@@ -47,7 +47,7 @@ class Survey < ActiveRecord::Base
       :include => [:survey_questions]
     )
     copy.name = "#{I18n.t('models.survey.duplication.copy_of')} #{copy.name}"
-    
+
     if copy.save
       copy
     else
@@ -136,7 +136,7 @@ class Survey < ActiveRecord::Base
     unless survey_newsletter_email_template
       global_template = EmailTemplate.global.where(:uniq_id => "survey_newsletter").first
       self.survey_newsletter_email_template = global_template.clone
-      global_template.translations.each do |translation|
+      global_template.translations.uniq.each do |translation|
         self.survey_newsletter_email_template.translations << translation.clone
       end
       self.save
