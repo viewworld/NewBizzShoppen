@@ -43,7 +43,7 @@ module Nbs
     config.encoding                                     = "utf-8"
 
     # Assets pipeline
-    config.assets.enabled = true
+    config.assets.enabled = false
     config.assets.version = '1.0'
 
     # Configure sensitive parameters which will be filtered from the log file.
