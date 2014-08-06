@@ -15,6 +15,7 @@
           <%= form.input :region_id, :as => :select, :collection => @newsletter_list_subscriber.country.present? ? @newsletter_list_subscriber.country.regions : [], :hint => hint_for(@newsletter_list_subscriber, :region_id) %>
           <%= form.input :company_vat_no, :hint => hint_for(@newsletter_list_subscriber, :company_vat_no) %>
           <%= form.input :company_ean_number, :hint => hint_for(@newsletter_list_subscriber, :company_ean_number) %>
+          <%= form.input :note %>
       </ol>
     </fieldset>
   </div>
