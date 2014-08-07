@@ -14,7 +14,4 @@ class Suppliers::NotInvoicedLeadsController < Suppliers::AdvancedSupplierControl
     @search = LeadPurchase.scoped_search(params[:search])
     @lead_purchases = @search.all
   end
-
-  public
-
 end
