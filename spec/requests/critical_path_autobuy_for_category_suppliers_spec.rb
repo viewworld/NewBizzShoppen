@@ -365,7 +365,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     body_has_to_not(:include, 'Lead Public Header')
 
     # I click Due invoices
-    body_has_to(:have_link, 'Due invoices', :href => '/suppliers/invoices?search[with_paid]=0')
+    body_has_to(:have_link, 'Due invoices', :href => '/suppliers/invoices?search%5Bwith_paid%5D=0')
     get '/suppliers/invoices?search[with_paid]=0'
     expect(response).to be_success
 
@@ -373,7 +373,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     body_has_to(:have_link, 'Show', :href => "/suppliers/invoices/#{last_invoice.id}")
 
     # I click Show
-    get "/suppliers/invoices/#{Invoice.last.id}"
+    get "/suppliers/invoices/#{last_invoice.id}"
     expect(response).to be_success
 
     # I should see My Test Lead
