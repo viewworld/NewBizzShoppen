@@ -1,4 +1,4 @@
-require "plugins/e_template/app/models/email_template.rb"
+require "plugins/e_template/app/models/email_template"
 class EmailTemplate < ActiveRecord::Base
   include EmailTemplateHelp
 
