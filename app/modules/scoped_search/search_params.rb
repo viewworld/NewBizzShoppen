@@ -28,12 +28,13 @@ module ScopedSearch
 
     def extract_params(params = {})
       return params if params.blank? || params.delete(:_direct)
-      search_params = if params.present?
-                        (opts[:search_key] ? params[opts[:search_key]] : params[:search]) || {}
-                      else
-                        {}
-                      end
-      search_params ? search_params.merge(params[:page] ? {:page => params[:page]} : {}) : {}
+
+      search_params = opts[:search_key] ? params[opts[:search_key]] : params[:search]
+      search_params ||= params
+
+      search_params.merge({ page: params[:page] }) if params[:page]
+
+      return search_params
     end
   end
 end

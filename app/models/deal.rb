@@ -73,6 +73,8 @@ class Deal < AbstractLead
 
   acts_as_taggable
 
+  with_keyword_fields :header, :description, :creator_name, :company_name
+
   def max_auto_buy_reached?
     leads.where("created_at >= ?", current_four_week_period_start_date).count >= max_auto_buy.to_i
   end

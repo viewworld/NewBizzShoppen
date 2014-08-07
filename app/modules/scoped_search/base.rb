@@ -71,7 +71,7 @@ module ScopedSearch
     end
 
     def per_page
-      @options[:per_page] || (@options[:current_user].respond_to?(:pagination_size) and @options[:current_user].pagination_size) || ::Metreno::Shared::PAGINATION_DEFAULT
+      @options[:per_page] || (@options[:current_user].respond_to?(:pagination_size) and @options[:current_user].pagination_size) || 25
     end
 
     def spawn_multi_params(attribute)
