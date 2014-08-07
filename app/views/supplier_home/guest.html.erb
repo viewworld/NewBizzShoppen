@@ -14,9 +14,9 @@
 
   <div class="pdd_5 no_pdd_b">
     <% unless user_signed_in? %>
-        <div class="grid_360 fltr">
-          <%= frm(:class => 'no_marg', :title => t('agent_home.show.view.i_have_an_account')) do |section| %>
-            <% section.block_header %>
+      <div class="grid_360 fltr">
+        <%= frm(:class => 'no_marg', :title => t('agent_home.show.view.i_have_an_account')) do |section| %>
+          <% section.block_content do %>
             <div class="pdd_10">
               <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
                 <fieldset class="inputs labels_100 inputs_200 no_pdd">
@@ -35,6 +35,8 @@
               <% end %>
             </div>
           <% end %>
+        <% end %>
+      </div>
     <% end %>
 
     <div class="<%= "grid_730 fltl" unless user_signed_in? %>">

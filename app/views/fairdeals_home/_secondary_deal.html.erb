@@ -29,13 +29,12 @@
             <div class="deal_info">
               <div class="deal_price">
 
-              <% end %>
 
               <%= group_deal_leads_created_and_missing(featured) %>
               <!-- end / not cached content -->
-
-              <% cache("#{I18n.locale}_secondary_deal_#{featured.id}_part2") do %>
               </div>
+              <% cache("#{I18n.locale}_secondary_deal_#{featured.id}_part2") do %>
+
 
               <div class="deal_description">
                 <%= image_tag featured.logo.url(:featured), :class => "logo" if featured.logo %>
@@ -58,6 +57,7 @@
           </div>
           <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(featured.slug), :class => 'default_action' %>
         <% end %>
+      <% end %>
       <% end %>
     <% end %>
   <% end %>
