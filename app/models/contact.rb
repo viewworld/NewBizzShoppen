@@ -13,10 +13,11 @@ class Contact < AbstractLead
   has_many :past_user_assignments, :through => :contact_past_user_assignments, :source => :user
   has_many :notifications, :as => :notifier
 
-  belongs_to :agent, :class_name => "User"
+  belongs_to :agent, :class_name => "User", inverse_of: :contact
   belongs_to :newsletter_list
   belongs_to :newsletter_list_subscriber
   validates_presence_of :company_name, :company_phone_number, :creator_id, :category_id, :country_id, :campaign_id
+  validates_presence_of :email_address, :contact_name
   validates_presence_of :price, :purchase_decision_date, :if => :process_for_lead_information?
 
   scope :with_keyword, lambda { |q| where("lower(leads.company_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
