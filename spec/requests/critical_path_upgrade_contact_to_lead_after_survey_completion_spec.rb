@@ -353,8 +353,7 @@ describe 'Upgrade contact to lead after survey completion' do
     expect(response).to be_success
 
     # I uncheck Unique
-    #
-    body_has_to_not(:have_checked_field, 'search_with_unique')
+    body_has_to(:have_checked_field, 'search_with_unique')
 
     # I click Search
     body_has_to(:have_button, 'Search')
