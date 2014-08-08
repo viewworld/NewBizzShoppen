@@ -48,7 +48,9 @@ class NewsletterListSubscriberTagger
   def process_subscriber(subscriber)
     subscriber = subscriber.kind_of?(User) ? subscriber.with_role : subscriber
     subscriber.tag_list.send(type, array_of_tags)
-    subscriber.save(false)
+
+    # FIXME: Why no validations?
+    subscriber.save(validate: false)
   end
 
   def array_of_tags
