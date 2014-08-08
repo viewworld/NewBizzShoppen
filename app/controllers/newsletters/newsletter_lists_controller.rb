@@ -81,7 +81,10 @@ class Newsletters::NewsletterListsController < Newsletters::NewslettersControlle
   def collection
     @search = NewsletterList.scoped_search(params[:search])
     @search.with_archived ||= 0
-    @search.created_or_owned_by = current_user unless current_user.admin?
+
+    # FIXME: created_or_owned_by is NewsletterList function, but NewsletterList.scoped_search returns instance of
+    # FIXME: ScopedSearch::Base. Do we want it to return callers' class?
+    # @search.created_or_owned_by = current_user unless current_user.admin?
     @newsletter_lists = @search.order("created_at DESC").paginate(:show_all => params[:show_all], :page => params[:page], :per_page => NewsletterList.per_page)
   end
 
