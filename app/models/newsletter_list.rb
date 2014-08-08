@@ -27,7 +27,6 @@ class NewsletterList < ActiveRecord::Base
   include CommonOwner
   include CommonNewsletter
   include AdvancedImport
-  #scope :created_or_owned_by, lambda { |user| where("creator_id = ? or owner_id = ?", user.id, user.id) }
 
   private
 
