@@ -345,9 +345,9 @@ class Deal < AbstractLead
   def check_deal_request_details_email_template
     unless deal_request_details_email_template
       global_template = EmailTemplate.global.where(:uniq_id => 'deal_request_details').first
-      self.deal_request_details_email_template = global_template.clone
+      self.deal_request_details_email_template = global_template.dup
       global_template.translations.each do |translation|
-        self.deal_request_details_email_template.translations << translation.clone
+        self.deal_request_details_email_template.translations << translation.dup
       end
       self.save
     end

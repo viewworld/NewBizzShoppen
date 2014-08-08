@@ -10,7 +10,7 @@ class Administration::PayoutsController < Administration::AdministrationControll
     params[:search][:created_at_from] = Date.today unless params[:search][:created_at_from].present?
     params[:search][:created_at_to] = Date.today unless params[:search][:created_at_to].present?
     params[:search][:with_creator] ||= []
-    params[:with_agent] = params[:search][:with_creator].clone
+    params[:with_agent] = params[:search][:with_creator].dup
     (params[:with_call_centre] ||= []).each do |call_centre|
       params[:search][:with_creator] << User::CallCentre.find(call_centre).children.map{|cc| cc.id.to_s}
     end

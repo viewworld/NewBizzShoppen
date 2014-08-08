@@ -168,7 +168,7 @@ class Subscription < ActiveRecord::Base
     end
     subscription.subscription_plan = subscription_plan.is_a?(Subscription) ? subscription_plan.subscription_plan : subscription_plan
     subscription_plan.subscription_plan_lines.each do |line|
-      subscription.subscription_plan_lines << line.clone
+      subscription.subscription_plan_lines << line.dup
     end
     subscription.apply_time_constraints(start_date ? start_date : Date.today)
     subscription.paypal_invoice_id = paypal_invoice_id

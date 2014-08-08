@@ -36,7 +36,7 @@ class ::User::Supplier < ::User
   end
 
   def check_and_correct_interests!
-    all_categories = categories.clone
+    all_categories = categories.dup
     categories.select { |c| c.parent_id.nil? }.each do |category|
       all_categories = all_categories - category.self_and_descendants
     end

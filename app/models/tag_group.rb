@@ -7,11 +7,11 @@ class TagGroup < ActiveRecord::Base
 
   def tagged_objects
     options = match_all? ?  {:match_all => true} : {:any => true}
-    Contact.tagged_with(tag_list, options.clone) +
-    Lead.tagged_with(tag_list, options.clone) +
-    User::Supplier.tagged_with(tag_list, options.clone) +
-    User::CategorySupplier.tagged_with(tag_list, options.clone) +
-    User::Member.tagged_with(tag_list, options.clone)
+    Contact.tagged_with(tag_list, options.dup) +
+    Lead.tagged_with(tag_list, options.dup) +
+    User::Supplier.tagged_with(tag_list, options.dup) +
+    User::CategorySupplier.tagged_with(tag_list, options.dup) +
+    User::Member.tagged_with(tag_list, options.dup)
   end
 
   def to_s

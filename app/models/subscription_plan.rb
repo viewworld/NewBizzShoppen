@@ -40,7 +40,7 @@ class SubscriptionPlan < ActiveRecord::Base
   after_save :check_email_templates
   before_save :clear_additional_features_for_member
   before_validation :set_billing_cycle
-  before_destroy :check_free_for_role  
+  before_destroy :check_free_for_role
 
   accepts_nested_attributes_for :subscription_plan_lines, :allow_destroy => true
 
@@ -68,19 +68,19 @@ class SubscriptionPlan < ActiveRecord::Base
     self.billing_cycle = subscription_period if billing_cycle.to_i.eql?(0)
     true
   end
-  
+
   def check_free_for_role
     assigned_roles.each do |role|
       return false if SubscriptionPlan.free.for_role(role).count.eql?(1)
     end
-  end  
+  end
 
   def check_email_templates
     unless invoice_email_template
       global_template = EmailTemplate.global.where(:uniq_id => 'invoice').first
-      self.invoice_email_template = global_template.clone
+      self.invoice_email_template = global_template.dup
       global_template.translations.each do |translation|
-        self.invoice_email_template.translations << translation.clone
+        self.invoice_email_template.translations << translation.dup
       end
       self.save
     end

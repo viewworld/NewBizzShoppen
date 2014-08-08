@@ -101,9 +101,9 @@ class Campaign < ActiveRecord::Base
     CLONED_TEMPLATES.each_pair do |template_clone_method, template_name|
       unless send(template_clone_method)
         global_template = EmailTemplate.global.where(:uniq_id => template_name).first
-        self.send("#{template_clone_method}=".to_sym, global_template.clone)
+        self.send("#{template_clone_method}=".to_sym, global_template.dup)
         global_template.translations.each do |translation|
-          self.send(template_clone_method).translations.send("<<".to_sym, translation.clone)
+          self.send(template_clone_method).translations.send("<<".to_sym, translation.dup)
         end
         self.save
       end

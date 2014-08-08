@@ -1,4 +1,4 @@
-module ScopedSearch
+app/models/user/supplier.rbmodule ScopedSearch
   module Helpers
     extend ActiveSupport::Concern
 
@@ -24,7 +24,7 @@ module ScopedSearch
       search_order = params[search_param].present? && params[search_param]["ascend_by_#{column}"].present? ? {"descend_by_#{column}" => true} : {"ascend_by_#{column}" => true}
 
       params[search_param] ||= {}
-      search_without_order = params[search_param].clone
+      search_without_order = params[search_param].dup
       search_without_order.delete_if { |k, v| k.to_s.starts_with?("ascend_by") || k.to_s.starts_with?("descend_by") }
 
       params.merge(search_param => search_without_order.merge(search_order))

@@ -135,9 +135,9 @@ class Survey < ActiveRecord::Base
   def check_email_template
     unless survey_newsletter_email_template
       global_template = EmailTemplate.global.where(:uniq_id => "survey_newsletter").first
-      self.survey_newsletter_email_template = global_template.clone
+      self.survey_newsletter_email_template = global_template.dup
       global_template.translations.uniq.each do |translation|
-        self.survey_newsletter_email_template.translations << translation.clone
+        self.survey_newsletter_email_template.translations << translation.dup
       end
       self.save
     end
