@@ -38,7 +38,7 @@ class Campaign < ActiveRecord::Base
   scope :descend_by_category, order("categories.name DESC").joins_on_category
   scope :ascend_country, order("countries.name ASC").joins_on_country
   scope :descend_by_country, order("countries.name DESC").joins_on_country
-  scope :available_for_user, lambda { |user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin }
+  scope :available_for_user, lambda { |user| joins(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin }
   scope :available_for_call_centre, lambda { |user| includes(:users).where("users.id IN (:user_ids) OR campaigns.creator_id = :user_id", {:user_id => user.id, :user_ids => user.subaccount_ids+[user.id]}) }
 
   attr_reader :contacts_from_lists_modified
@@ -210,13 +210,13 @@ class Campaign < ActiveRecord::Base
   end
 
   def fetch_contact_from_shared_contact_pool(agent)
-    contacts.unassigned.uncompleted.with_pending_result_type.not_pending_for(agent).reorder("result_values.value ASC").first ||
-        contacts.unassigned.uncompleted.without_pending_result_type.by_position_asc.first
+    contacts.unassigned.uncompleted.with_pending_result_type.not_pending_for(agent).reorder("result_values.value ASC").readonly(false).first ||
+        contacts.unassigned.uncompleted.without_pending_result_type.by_position_asc.readonly(false).first
   end
 
   def assinged_contact_from_shared_pool(agent)
-    agent.contacts.for_campaign(id).uncompleted.with_pending_result_type.not_pending_for(agent).reorder("result_values.value ASC").first ||
-        agent.contacts.for_campaign(id).uncompleted.without_pending_result_type.by_position_asc.first
+    agent.contacts.for_campaign(id).uncompleted.with_pending_result_type.not_pending_for(agent).reorder("result_values.value ASC").readonly(false).first ||
+        agent.contacts.for_campaign(id).uncompleted.without_pending_result_type.by_position_asc.readonly(false).first
   end
 
   def has_user_as_member?(user)
