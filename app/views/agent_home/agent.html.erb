@@ -113,7 +113,7 @@
               </tr>
             </thead>
             <tbody>
-              <% @performance_campaigns.to_a.each do |campaign| %>
+              <% @campaigns.to_a.each do |campaign| %>
                 <% agent_performance = AgentPerformance.new(params[:date_from], params[:date_to], current_user, campaign, params[:currency_id]) %>
                 <tr>
                   <td></td>
@@ -124,7 +124,7 @@
                   <td></td>
                 </tr>
               <% end %>
-              <% agent_performance = AgentPerformance.new(params[:date_from], params[:date_to], current_user, @performance_campaigns, params[:currency_id]) %>
+              <% agent_performance = AgentPerformance.new(params[:date_from], params[:date_to], current_user, @campaigns, params[:currency_id]) %>
               <tr style="font-weight: bold;">
                 <td></td>
                 <td></td>
@@ -148,7 +148,7 @@
       <%= frm(:title => "#{t('agent_home.show.view.header_graph')}", :class => "no_marg") do |section| %>
         <% section.block_content do %>
           <div style="padding:10px">
-            <div id="agent_performance_graph_container" style="height:<%= 136+(@performance_campaigns.count*34) %>px; padding:10px"></div>
+            <div id="agent_performance_graph_container" style="height:<%= 136+(@campaigns.count*34) %>px; padding:10px"></div>
           </div>
         <% end %>
       <% end %>
@@ -290,7 +290,7 @@
       });
 
       $(function () {
-          <% agent_performance = AgentPerformance.new(params[:date_from], params[:date_to], current_user, @performance_campaigns, params[:currency_id]) %>
+          <% agent_performance = AgentPerformance.new(params[:date_from], params[:date_to], current_user, @campaigns, params[:currency_id]) %>
           var performance_data = <%= agent_performance.flot_chart.to_json.html_safe %>;
 
           function euroFormatter(v, axis) {
