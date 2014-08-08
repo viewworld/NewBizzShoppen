@@ -1,4 +1,4 @@
-app/models/user/supplier.rbmodule ScopedSearch
+module ScopedSearch
   module Helpers
     extend ActiveSupport::Concern
 
