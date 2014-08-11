@@ -46,7 +46,7 @@ class Campaign < ActiveRecord::Base
 
   before_save :set_euro_fixed_cost_value, :set_euro_production_value_per_hour
   before_save :set_creator_type, :if => :creator_id_changed?
-  around_save :check_email_templates
+  before_save :check_email_templates
   after_save :correct_session_logs_if_cost_type_changed
   after_save :perform_import_contacts_from_lists, :if => :should_perform_import_contacts_from_lists?
 
@@ -101,8 +101,6 @@ class Campaign < ActiveRecord::Base
   def check_email_templates
     CLONED_TEMPLATES.each_pair do |template_clone_method, template_name|
       unless send(template_clone_method)
-        yield
-
         global_template = EmailTemplate.global.where(uniq_id: template_name).first
         global_template_duplicate = global_template.dup
 

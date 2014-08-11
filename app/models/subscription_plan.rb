@@ -37,7 +37,7 @@ class SubscriptionPlan < ActiveRecord::Base
   belongs_to :seller
   has_one :automatic_downgrade_subscription_plan, :class_name => "SubscriptionPlan", :foreign_key => "automatic_downgrade_subscription_plan_id"
 
-  after_save :check_email_templates
+  before_save :check_email_templates
   before_save :clear_additional_features_for_member
   before_validation :set_billing_cycle
   before_destroy :check_free_for_role
@@ -77,12 +77,17 @@ class SubscriptionPlan < ActiveRecord::Base
 
   def check_email_templates
     unless invoice_email_template
-      global_template = EmailTemplate.global.where(:uniq_id => 'invoice').first
-      self.invoice_email_template = global_template.dup
+      global_template = EmailTemplate.global.where(uniq_id: 'invoice').first
+      global_template_duplicate = global_template.dup
+
       global_template.translations.each do |translation|
-        self.invoice_email_template.translations << translation.dup
+        global_template_duplicate.translations << translation.dup
       end
-      self.save
+
+      global_template_duplicate.resource_type = self.class.name
+      global_template_duplicate.resource_id = self.id
+
+      self.invoice_email_template = global_template_duplicate
     end
   end
 
