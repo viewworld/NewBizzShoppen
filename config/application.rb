@@ -79,5 +79,7 @@ module Nbs
       I18nUtils.populate! if Rails.env == "development"
       I18nUtils.export_for_js!("common.js")
     end
+
+    I18n.enforce_available_locales = true
   end
 end
