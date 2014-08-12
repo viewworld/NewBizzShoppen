@@ -7,6 +7,7 @@ describe 'Critical Path Autobuy for category suppliers' do
   before do
     SubscriptionPlan.make!
     allow_any_instance_of(Campaign).to receive(:check_email_templates).and_return(true)
+    allow_any_instance_of(Campaign).to receive(:update_email_templates).and_return(true)
     allow(Domain).to receive(:for_site_and_locale).and_return(double(:name_for_env => 'faircalls'))
     Result.make!(:final, :name => 'Call back', :generic => true)
   end
@@ -249,7 +250,7 @@ describe 'Critical Path Autobuy for category suppliers' do
                 'contact[direct_phone_number]' => "tel d-ph #{i}",
                 'contact[phone_number]' => "tel pn #{i}"}
       body_include_fields fields
-      
+
       body_has_to(:have_button, 'Create')
 
       # I press Create

@@ -35,6 +35,17 @@ class EmailTemplate < ActiveRecord::Base
     uniq_id == "blank_template"
   end
 
+  def self.duplicate(uniq_id)
+    template = global.where(uniq_id: uniq_id).first
+    duplicate = template.dup
+
+    template.translations.each do |translation|
+      duplicate.translations << translation.dup
+    end
+
+    duplicate
+  end
+
   private
 
   #Template cannot be cached due to dynamic translations

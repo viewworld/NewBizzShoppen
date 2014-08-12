@@ -23,7 +23,7 @@ class Survey < ActiveRecord::Base
   before_create :set_uuid
   before_create :set_owner_from_creator, :unless => :owner
   before_destroy :can_be_destroyed
-  before_save :check_email_template
+  around_save :check_email_template
 
   scope :created_by, lambda { |creator| creator.has_any_role?(:category_supplier, :supplier) ? where("categories_surveys.category_id IN (?) OR creator_id = ? OR owner_id = ?", creator.unique_category_ids, creator.id, creator.id).joins("LEFT JOIN categories_surveys ON categories_surveys.survey_id = surveys.id") : created_or_owned_by(creator) }
 
@@ -133,18 +133,17 @@ class Survey < ActiveRecord::Base
   end
 
   def check_email_template
-    unless survey_newsletter_email_template
-      global_template = EmailTemplate.global.where(uniq_id: "survey_newsletter").first
-      global_template_duplicate = global_template.dup
+    if survey_newsletter_email_template
+      yield
+    else
+      template = EmailTemplate.duplicate("survey_newsletter")
 
-      global_template.translations.uniq.each do |translation|
-        global_template_duplicate.translations << translation.dup
-      end
+      survey_newsletter_email_template = template
+      yield
 
-      global_template_duplicate.resource_type = self.class.name
-      global_template_duplicate.resource_id = self.id
-
-      self.survey_newsletter_email_template = global_template_duplicate
+      template.resource_type = self.class.name
+      template.resource_id = self.id
+      template.save
     end
   end
 end

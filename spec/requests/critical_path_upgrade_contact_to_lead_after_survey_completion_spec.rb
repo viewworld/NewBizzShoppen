@@ -6,6 +6,7 @@ describe 'Upgrade contact to lead after survey completion' do
 
   before do
     allow_any_instance_of(Campaign).to receive(:check_email_templates).and_return(true)
+    allow_any_instance_of(Campaign).to receive(:update_email_templates).and_return(true)
     create(:email_template, :global, :uniq_id => 'survey_newsletter')
   end
 

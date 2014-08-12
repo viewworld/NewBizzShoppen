@@ -46,7 +46,10 @@ class Campaign < ActiveRecord::Base
 
   before_save :set_euro_fixed_cost_value, :set_euro_production_value_per_hour
   before_save :set_creator_type, :if => :creator_id_changed?
+
   before_save :check_email_templates
+  after_save :update_email_templates
+
   after_save :correct_session_logs_if_cost_type_changed
   after_save :perform_import_contacts_from_lists, :if => :should_perform_import_contacts_from_lists?
 
@@ -108,10 +111,18 @@ class Campaign < ActiveRecord::Base
           global_template_duplicate.translations << translation.dup
         end
 
-        global_template_duplicate.resource_type = self.class.name # "Campaign"
-        global_template_duplicate.resource_id = self.id
-
         self.send("#{template_clone_method}=".to_sym, global_template_duplicate)
+      end
+    end
+  end
+
+  def update_email_templates
+    CLONED_TEMPLATES.each_pair do |template_clone_method, template_name|
+      unless send(template_clone_method)
+        template = send(template_clone_method)
+        template.resource_type = self.class.name
+        template.resource_id = self.id
+        template.save
       end
     end
   end
