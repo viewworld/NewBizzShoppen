@@ -95,9 +95,9 @@ group :test, :development do
   gem 'pry', '0.9.12.6'
   gem 'pry-debugger', '0.2.3'
 
-  #gem 'better_errors', '~> 1.1.0'
-  #gem 'binding_of_caller', '~> 0.7.2'
-  #gem 'quiet_assets', '~> 1.0.3'
+  gem 'better_errors', '~> 1.1.0'
+  gem 'binding_of_caller', '~> 0.7.2'
+  gem 'quiet_assets', '~> 1.0.3'
 
   gem 'factory_girl_rails', '~> 4.4.1'
 end
