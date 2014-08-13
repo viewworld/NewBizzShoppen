@@ -8,7 +8,7 @@ Nbs::Application.configure do
         "<#{self.class.name} - tooooo long>"
       end
     end
-    [Callers::UserSessionLogsController, Warden::Proxy, ActionDispatch::RemoteIp::RemoteIpGetter].each do |klazz|
+    [Callers::UserSessionLogsController, Warden::Proxy].each do |klazz|
       klazz.send(:include, SmallInspect)
     end
   end
