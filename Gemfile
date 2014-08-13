@@ -3,13 +3,13 @@ ruby '1.9.3'
 
 # basics
 gem 'bundler', '1.6.5'
-gem 'rails', '3.1.12'
+gem 'rails', '3.2.19'
 
 # db
 gem 'pg', '~> 0.17.1'
 
 # auth
-gem 'devise', '1.1.9'
+gem 'devise', '1.4.9'
 gem 'devise_rpx_connectable', '0.2.2'
 gem 'cancan', '1.6.5'
 
@@ -19,7 +19,7 @@ gem 'role_model', require: 'role_model'
 gem 'acts-as-taggable-on', '~> 2.2.2'
 gem 'acts_as_commentable_with_threading', '1.1.2'
 gem 'acts_as_list', '~> 0.4.0'
-gem 'nested_set', '1.5.4'
+gem 'nested_set', '1.7.1'
 
 # requirements
 gem 'yajl-ruby', '1.1.0', require: 'yajl'
@@ -30,9 +30,9 @@ gem 'aws-s3'
 gem 'jammit-s3', '~> 0.6.0.2'
 
 # views
-gem 'ckeditor', '3.4.3.pre'
-gem 'will_paginate', '3.0.pre2', branch: 'rails3'
-gem 'formtastic', '1.1.0'
+gem 'ckeditor', '3.4.3'
+gem 'will_paginate', '3.0.7'
+gem 'formtastic', '2.0.2'
 gem 'liquid', '2.2.2'
 gem 'ajaxful_rating', '3.0.0.beta3'
 
@@ -43,7 +43,7 @@ gem 'aasm', '2.3.1'
 gem 'whenever', '~> 0.9.0', require: false
 
 # uploads
-gem 'paperclip', '2.3.6'
+gem 'paperclip', '2.3.16'
 
 # api
 gem 'json_pure', '>= 1.4.6'
