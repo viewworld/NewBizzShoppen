@@ -28,19 +28,19 @@ class Category < ActiveRecord::Base
 
   has_many :leads do
     def including_subcategories
-      Lead.where(:category_id => proxy_owner.self_and_descendants.map(&:id))
+      Lead.where(:category_id => proxy_association.owner.self_and_descendants.map(&:id))
     end
   end
 
   has_many :published_leads, :class_name => 'Lead', :conditions => ["published = ?", true] do
     def including_subcategories
-      Lead.where(:category_id => proxy_owner.self_and_descendants.map(&:id)).published_only
+      Lead.where(:category_id => proxy_association.owner.self_and_descendants.map(&:id)).published_only
     end
   end
 
   has_many :deals do
     def including_subcategories
-      Deal.where(:category_id => proxy_owner.self_and_descendants.map(&:id))
+      Deal.where(:category_id => proxy_association.owner.self_and_descendants.map(&:id))
     end
   end
 
