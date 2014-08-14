@@ -48,7 +48,6 @@
 # Specifies if labels/hints for input fields automatically be looked up using I18n.
 # Default value: false. Overridden for specific fields by setting value to true,
 # i.e. :label => true, or :hint => true (or opposite depending on initialized value)
-Formtastic::SemanticFormBuilder.i18n_lookups_by_default = true
 
 # You can add custom inputs or override parts of Formtastic by subclassing SemanticFormBuilder and
 # specifying that class here.  Defaults to SemanticFormBuilder.
@@ -83,23 +82,24 @@ module Formtastic
     end
   end
 end
-Formtastic::SemanticFormBuilder.send(:include, Formtastic::DatePicker)
-Formtastic::SemanticFormBuilder.send(:include, Formtastic::WeekPicker)
+
+Formtastic::FormBuilder.send(:include, Formtastic::DatePicker)
+Formtastic::FormBuilder.send(:include, Formtastic::WeekPicker)
 
 module Formtastic
-  class SemanticFormBuilder
-      def find_collection_for_column(column, options) #:nodoc:
-        collection = find_raw_collection_for_column(column, options)
-        options[:sort] ||= true
+  class FormBuilder
+    def find_collection_for_column(column, options) #:nodoc:
+      collection = find_raw_collection_for_column(column, options)
+      options[:sort] ||= true
 
-        # Return if we have an Array of strings, fixnums or arrays
-        return collection if (collection.instance_of?(Array) || collection.instance_of?(Range)) &&
-                             [Array, Fixnum, String, Symbol].include?(collection.first.class) &&
-                             !(options.include?(:label_method) || options.include?(:value_method))
+      # Return if we have an Array of strings, fixnums or arrays
+      return collection if (collection.instance_of?(Array) || collection.instance_of?(Range)) &&
+                           [Array, Fixnum, String, Symbol].include?(collection.first.class) &&
+                           !(options.include?(:label_method) || options.include?(:value_method))
 
-        label, value = detect_label_and_value_method!(collection, options)
-        collection = collection.sort_by(&label.to_sym) if options[:sort]
-        collection.map { |o| [send_or_call(label, o), send_or_call(value, o)] }
-      end
+      label, value = detect_label_and_value_method!(collection, options)
+      collection = collection.sort_by(&label.to_sym) if options[:sort]
+      collection.map { |o| [send_or_call(label, o), send_or_call(value, o)] }
+    end
   end
 end
