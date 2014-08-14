@@ -30,7 +30,7 @@ gem 'aws-s3'
 gem 'jammit-s3', '~> 0.6.0.2'
 
 # views
-gem 'ckeditor', '3.4.3'
+gem 'ckeditor', '3.7.3'
 gem 'will_paginate', '3.0.7'
 gem 'formtastic', '2.0.2'
 gem 'liquid', '2.2.2'

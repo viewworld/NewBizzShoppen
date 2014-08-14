@@ -613,6 +613,8 @@ Nbs::Application.routes.draw do
 
   root to: "supplier_home#show"
 
+  mount Ckeditor::Engine => '/ckeditor'
+
   # if !File.basename($0) == "rake" && ARGV.grep(/db:/).any?
   #   ActiveAdmin.routes(self)
   # end
