@@ -92,9 +92,13 @@
               <td><%= lead_purchase.owner.subscriber_type_as_text %></td>
               <td><%= lead_purchase.owner.has_role?(:supplier) ? t("administration.upcoming_invoices.index.view.search.role_supplier") : t("administration.upcoming_invoices.index.view.search.role_member") %></td>
               <td class="ta_r"><%= lead_purchase.not_invoiced_count %></td>
-              <td class="ta_r"><%= as_currency(lead_purchase.not_invoiced_sum, Currency.where(:id => lead_purchase.currency_id).first) %></td>
+              <td class="ta_r"><%= as_currency(lead_purchase.not_invoiced_sum, Currency.find(lead_purchase.currency_id)) %></td>
               <td class="tda ta_r">
+              <% if lead_purchase.owner.active_subscription %>
                 <%= bt_link_to nil, t("administration.upcoming_invoices.index.view.create_invoice"), administration_invoicing_invoices_path(:invoice => {:user_id => lead_purchase.owner_id, :currency_id => lead_purchase.currency_id, :seller_id => lead_purchase.owner.active_subscription.seller_id}), :method => :post, :class => "default_action" %>
+              <% else %>
+                No active subscription
+              <% end %>
               </td>
               <td class="cr"></td>
             </tr>
