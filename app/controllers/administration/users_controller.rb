@@ -12,7 +12,7 @@ class Administration::UsersController < Administration::AdministrationController
 
   def create
     @user = "User::#{params[:role].to_s.camelize}".constantize.new
-    @user.send(:attributes=, params["user_#{params[:role].to_s}".to_sym], false)
+    @user.send(:attributes=, params["user_#{params[:role].to_s}".to_sym])
     if @user.save
        if params[:user_category_supplier]
         @user.reload
@@ -66,17 +66,15 @@ class Administration::UsersController < Administration::AdministrationController
   def lock
     @user = User.find(params[:id]).with_role
     @user.locked = 'lock'
-    @user.save(false)
-    flash[:notice] = I18n.t("administration.users.locked")
-    redirect_to :back
+    @user.save(validate: false)
+    redirect_to :back, notice: t("administration.users.locked")
   end
 
   def unlock
     @user = User.find(params[:id]).with_role
     @user.locked = 'unlock'
-    @user.save(false)
-    flash[:notice] = I18n.t("administration.users.unlocked")
-    redirect_to :back
+    @user.save(validate: false)
+    redirect_to :back, notice: t("administration.users.unlocked")
   end
 
   protected
