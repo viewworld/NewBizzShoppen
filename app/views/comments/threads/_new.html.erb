@@ -1,5 +1,5 @@
 <div id="new_comment_div_<%= lead.id %>"></div>
-<%= semantic_remote_form_for Comment.new, :as => :comment, :url => comments_lead_threads_path(lead), :html => {:method => :post, :id => "new_comment_#{lead.id}"} do |f| %>
+<%= semantic_form_for Comment.new, remote: :true, :as => :comment, :url => comments_lead_threads_path(lead), :html => {:method => :post, :id => "new_comment_#{lead.id}"} do |f| %>
     <fieldset class="inputs labels_ta_r labels_80">
       <ol class="align_inputs">
         <li class="header">

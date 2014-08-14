@@ -1,4 +1,4 @@
-<%= semantic_remote_form_for comment, :as => :comment, :url => comments_thread_path(comment), :html => {:method => :put, :id => "edit_comment_#{comment.id}", :style => "display:none"} do |f| %>
+<%= semantic_form_for comment, remote: true, :as => :comment, :url => comments_thread_path(comment), :html => {:method => :put, :id => "edit_comment_#{comment.id}", :style => "display:none"} do |f| %>
  <fieldset class="inputs labels_ta_r labels_80">
   <ol class="align_inputs">
     <li class="header">
