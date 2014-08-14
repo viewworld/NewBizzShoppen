@@ -40,9 +40,9 @@
               <% end %>
               <%= f.input :campaign_id, :collection => [], :include_blank => false %>
               <% if current_user.admin? %>
-                  <%= f.input :user_id, :as => :select, :collection => User.with_any_role(:agent, :call_centre_agent).without_locked.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false %>
+                  <%= f.input :user_id, :as => :select, :collection => User.with_any_role([:agent, :call_centre_agent]).without_locked.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false %>
               <% elsif current_user.call_centre? %>
-                  <%= f.input :user_id, :as => :select, :collection => current_user.children.with_any_role(:agent, :call_centre_agent).without_locked.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false %>
+                  <%= f.input :user_id, :as => :select, :collection => current_user.children.with_any_role([:agent, :call_centre_agent]).without_locked.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false %>
               <% else %>
                   <%= f.input :user_id, :as => :hidden, :input_html => { :value => current_user.id } %>
               <% end %>
