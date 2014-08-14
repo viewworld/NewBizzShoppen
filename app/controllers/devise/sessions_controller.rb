@@ -57,7 +57,8 @@ class Devise::SessionsController < ApplicationController
 
   # GET /resource/sign_out
   def destroy
-    set_flash_message :notice, :signed_out if signed_in?(resource_name)
-    sign_out_and_redirect(resource_name)
+    flash[:notice] = set_flash_message :notice, :signed_out if signed_in?(resource_name)
+    sign_out(resource_name)
+    redirect_to root_path
   end
 end
