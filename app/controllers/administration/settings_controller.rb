@@ -7,7 +7,7 @@ class Administration::SettingsController < Administration::AdministrationControl
     @settings = Settings.order("var ASC")
     @bank_accounts_search = BankAccount.scoped_search(params[:bank_accounts])
     @bank_accounts_search.ascend_by_id = true unless params[:bank_accounts]
-    @bank_accounts = @bank_accounts_search.all.paginate :page => params[:page], :per_page => 20
+    @bank_accounts = @bank_accounts_search.all
     @vat_rates = VatRate.all
     @youtube_introductions = YoutubeIntroduction.all
   end

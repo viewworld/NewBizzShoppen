@@ -20,7 +20,7 @@ class Administration::SubscriptionPlansController < Administration::Administrati
       success.html { redirect_to administration_subscription_plans_path }
     end
   end
-  
+
   def destroy
     @subscription_plan = SubscriptionPlan.find(params[:id])
     if @subscription_plan.destroy
@@ -31,14 +31,14 @@ class Administration::SubscriptionPlansController < Administration::Administrati
 
     redirect_to :back
   end
-  
+
   def fetch_subscription_plans
     @subscription_plans = params[:assigned_roles].to_s == "null" ? [] :
                           SubscriptionPlan.without_paypal.for_roles(params[:assigned_roles].to_s.split(",")).where("id NOT in (?)", params[:id].to_i)
     respond_to do |format|
       format.js {  }
     end
-  end  
+  end
 
   protected
 
@@ -46,6 +46,6 @@ class Administration::SubscriptionPlansController < Administration::Administrati
     params[:search] ||= {}
 
     @search = SubscriptionPlan.scoped_search(params[:search])
-    @subscription_plans = @search.all.paginate :page => params[:page], :per_page => 20
+    @subscription_plans = @search.paginate :page => params[:page], :per_page => 20
   end
 end

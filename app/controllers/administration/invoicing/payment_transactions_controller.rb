@@ -32,6 +32,6 @@ class Administration::Invoicing::PaymentTransactionsController < Administration:
     params[:search][:with_invoices] = true
 
     @search = PaymentTransaction.scoped_search(params[:search])
-    @payment_transactions = @search.all.paginate :page => params[:page], :per_page => 20
+    @payment_transactions = @search.paginate :page => params[:page], :per_page => 20
   end
 end
