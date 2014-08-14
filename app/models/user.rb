@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
   include RoleChange
 
   devise :database_authenticatable, :registerable, :confirmable, :lockable, :token_authenticatable,
-         :recoverable, :rememberable, :trackable, :validatable, :timeoutable, :rpx_connectable
+         :recoverable, :rememberable, :trackable, :validatable, :timeoutable, :rpx_connectable, :encryptable
 
   # declare the valid roles -- do not change the order if you add more
   # roles later, always append them at the end!
