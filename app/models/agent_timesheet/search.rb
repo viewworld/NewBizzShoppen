@@ -1,5 +1,4 @@
 class AgentTimesheet::Search
-
   attr_accessor :start_date, :end_date, :show_weekends, :campaigns
 
   include AgentTimesheetCommon
@@ -9,5 +8,4 @@ class AgentTimesheet::Search
   def persisted?
     false
   end
-
 end
