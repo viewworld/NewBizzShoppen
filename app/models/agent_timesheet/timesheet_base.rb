@@ -12,11 +12,11 @@ module AgentTimesheet::TimesheetBase
     scope :for_dow, ->(dow) { where(dow: dow) }
     scope :for_year, ->(year) { where(year: year) }
     scope :for_campaign, ->(campaign) { where(campaign_id: campaign.id) }
-    scope :for_campaigns, ->(campaigns) { where(campaign_id: Array(campaign).map(&:to_i)) }
+    scope :for_campaigns, ->(campaigns) { where(campaign_id: Array(campaigns).map(&:to_i)) }
     scope :for_agent, ->(user) { where(user_id: user.id) }
     scope :for_agents, ->(users) { where(user_id: Array(users).map(&:to_i)) }
     scope :for_user, ->(user) { where(user_id: user.id) }
-    scope :for_users, -> (users) { where(user_id: users.to_a) }
+    scope :for_users, ->(users) { where(user_id: users.to_a) }
     scope :created_between, ->(start_date, end_date) { where("created_at::DATE BETWEEN ? and ?", start_date.to_date, end_date.to_date) }
   end
 end
