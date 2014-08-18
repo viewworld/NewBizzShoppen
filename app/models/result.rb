@@ -1,4 +1,5 @@
 class Result < ActiveRecord::Base
+  include ScopedSearch::Model
 
   serialize :settings
 
@@ -31,7 +32,6 @@ class Result < ActiveRecord::Base
   validate :check_is_global
   validate :check_survey_fields_quantity
 
-  include ScopedSearch::Model
 
   acts_as_taggable
 

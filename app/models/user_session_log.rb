@@ -1,4 +1,6 @@
 class UserSessionLog < ActiveRecord::Base
+  include ScopedSearch::Model
+  
   belongs_to :user
   belongs_to :campaign
   validates_presence_of :start_time, :end_time, :log_type, :user_id
@@ -37,7 +39,6 @@ class UserSessionLog < ActiveRecord::Base
   scope :with_time_from, lambda{ |time| where("start_time >= ?", Time.zone.parse(time)) }
   scope :with_time_to, lambda{ |time| where("end_time <= ?", Time.zone.parse(time)) }
 
-  include ScopedSearch::Model
 
   private
 

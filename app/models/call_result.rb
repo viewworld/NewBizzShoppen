@@ -1,4 +1,7 @@
 class CallResult < ActiveRecord::Base
+  include EmailTemplateEditor
+  include ScopedSearch::Model
+
   attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_2,
                 :contact_address_line_3, :contact_zip_code, :contact_country_id, :contact_phone_number,
                 :contact_company_name, :buying_category_ids, :result_id_changed, :user_not_charge_vat, :current_user, :contact_subscription_plan_id,
@@ -18,9 +21,6 @@ class CallResult < ActiveRecord::Base
   accepts_nested_attributes_for :result_values, :allow_destroy => true
   accepts_nested_attributes_for :contact
   accepts_nested_attributes_for :call_result_fields
-
-  include EmailTemplateEditor
-  include ScopedSearch::Model
 
   validates_presence_of :result_id, :creator_id, :contact_id
   validates_presence_of :contact_email_address, :if => Proc.new{|cr| cr.result.send_material? or cr.result.upgrades_to_any_user?}

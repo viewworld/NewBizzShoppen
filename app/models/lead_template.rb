@@ -1,4 +1,5 @@
 class LeadTemplate < ActiveRecord::Base
+  include ScopedSearch::Model
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
   belongs_to :category
   has_many :lead_template_fields, :dependent => :destroy, :order => "name"
@@ -9,7 +10,6 @@ class LeadTemplate < ActiveRecord::Base
   scope :with_category, lambda { |category_id| where("category_id = ?", category_id) }
   scope :with_category_and_its_ancestors, lambda { |category| where("lead_templates.category_id in (?)", category.self_and_ancestors.map(&:id)).joins(:category) }
 
-  include ScopedSearch::Model
 
   before_destroy :can_be_removed
 
