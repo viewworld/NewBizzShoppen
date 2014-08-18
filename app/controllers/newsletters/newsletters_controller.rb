@@ -1,8 +1,9 @@
 class Newsletters::NewslettersController < SecuredController
   def current_user
-    if user_signed_in?
-      @user ||= ::User::CallCentre.find_by_id(super.id)
-      @user ||= ::User::Admin.find_by_id(super.id)
+    user = super
+    if user
+      @user ||= ::User::CallCentre.find_by_id(user.id)
+      @user ||= ::User::Admin.find_by_id(user.id)
     end
   end
 
