@@ -5,77 +5,52 @@
     <% end %>
   <% end %>
 
-  <% if @failed_rpx %>
-      <div class="grid_440 grid_c">
-        <div class="frm_tiny">
-          <div class="pdd_10">
-            <p><%= t('devise.sessions.new.view.failed_rpx_label', :first_name => @first_name, :account_type => User.social_provider(@rpx_identifier)) %></p>
-
-            <p class="pdd_10 no_pdd_lr"><%= bt_link_to :user, t("devise.sessions.new.view.create_new_account"), "javascript:void(0)", :onclick => "$('#modal_for_new_account').dialog({autoOpen: false,minWidth: 450,buttons: { 'Cancel': function() {$(this).dialog('close');}}});$('#modal_for_new_account').dialog('open')" %></p>
-
-            <div id="modal_for_new_account" style="display:none">
-              <%= t("devise.sessions.new.view.modal_intro_label") %>
-              <br/>
-              <%= t("devise.sessions.new.view.modal_intro_label_2") %>
-              <br/><br/>
-
-              <%= link_to t("devise.sessions.new.view.modal_supplier_link"), new_supplier_account_path %> <%= t("devise.sessions.new.view.modal_supplier_label") %>
-              <br/>
-              <%= link_to t("devise.sessions.new.view.modal_member_link"), new_member_account_path %> <%= t("devise.sessions.new.view.modal_member_label") %>
-              <br/>
-              <%= link_to t("devise.sessions.new.view.modal_agent_link"), new_agent_account_path %> <%= t("devise.sessions.new.view.modal_agent_label") %>
-            </div>
-
-            <p><%= t('devise.sessions.new.view.failed_rpx_label_2') %></p>
-            <%= render(:partial => "shared/accounts/rpx_linked_in_note", :locals => {:link => false}) if User.social_provider(@rpx_identifier) == "Linked In" %>
-          </div>
-        </div>
-      </div>
-  <% end %>
-
   <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
     <div class="grid_440 grid_c">
       <%= frm(:title => "Type your email") do |section| %>
-        <div class="pdd_10">
-          <fieldset class="inputs labels_100 inputs_180 no_pdd">
-            <ol class="align_inputs no_pdd">
-              <%= render(:partial => "shared/accounts/social_login_for_sign_in") unless @failed_rpx %>
-            </ol>
-          </fieldset>
-          <fieldset class="inputs labels_100 inputs_280">
-            <ol class="align_inputs">
-              <li class="string">
-                <%= f.label :email %>
-                <%= f.text_field :email, :tabindex => 1 %>
-              </li>
-              <li class="password rltv">
-                <label>
-                  <%= t("activerecord.attributes.user.password") %>
-                  <%= content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link") %>
-                </label>
-                <%= f.password_field :password, :tabindex => 1 %>
-              </li>
-              <% if devise_mapping.rememberable? -%>
-                  <li class="boolean">
-                    <%= f.check_box :remember_me %>
-                    <%= f.label :remember_me %>
-                  </li>
-              <% end -%>
-              <li class="commit">
-                <%= ibt do %>
-                  <%= f.submit "Sign in" %>
-                <% end %>
-                <% unless @failed_rpx %>
-                    <% if session[:site] == "fairleads" %>
-                      <p>or <%= link_to t("supplier_home.show.view.create_new_supplier_account"), new_supplier_account_path %></p>
-                    <% else %>
-                      <p>or <%= link_to t("supplier_home.show.view.create_new_membership_account"), new_member_account_path %></p>
-                    <% end %>
-                <% end %>
-              </li>
-            </ol>
-          </fieldset>
-        </div>
+        <% section.block_content do %>
+          <div class="pdd_10">
+            <fieldset class="inputs labels_100 inputs_180 no_pdd">
+              <ol class="align_inputs no_pdd">
+                <%= render(:partial => "shared/accounts/social_login_for_sign_in") unless @failed_rpx %>
+              </ol>
+            </fieldset>
+
+            <fieldset class="inputs labels_100 inputs_280">
+              <ol class="align_inputs">
+                <li class="string">
+                  <%= f.label :email %>
+                  <%= f.text_field :email, :tabindex => 1 %>
+                </li>
+                <li class="password rltv">
+                  <label>
+                    <%= t("activerecord.attributes.user.password") %>
+                    <%= content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link") %>
+                  </label>
+                  <%= f.password_field :password, :tabindex => 1 %>
+                </li>
+                <% if devise_mapping.rememberable? -%>
+                    <li class="boolean">
+                      <%= f.check_box :remember_me %>
+                      <%= f.label :remember_me %>
+                    </li>
+                <% end -%>
+                <li class="commit">
+                  <%= ibt do %>
+                    <%= f.submit "Sign in" %>
+                  <% end %>
+                  <% unless @failed_rpx %>
+                      <% if session[:site] == "fairleads" %>
+                        <p>or <%= link_to t("supplier_home.show.view.create_new_supplier_account"), new_supplier_account_path %></p>
+                      <% else %>
+                        <p>or <%= link_to t("supplier_home.show.view.create_new_membership_account"), new_member_account_path %></p>
+                      <% end %>
+                  <% end %>
+                </li>
+              </ol>
+            </fieldset>
+          </div>
+        <% end %>
       <% end %>
     </div>
   <% end %>
