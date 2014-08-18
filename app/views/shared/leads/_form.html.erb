@@ -215,7 +215,7 @@
                   <%= form.input :purchase_decision_date, :as => :hidden %>
               <% else %>
                   <%= form.input :purchase_decision_date,
-                                 :as => (user_signed_in? and current_user.has_role?(:member)) ? :string : :datepicker,
+                                 :as => (user_signed_in? and current_user.has_role?(:member)) ? :string : :date_picker,
                                  :wrapper_html => {:class => 'date'},
                                  :hint => hint_for(@lead, :purchase_decision_date) %>
               <% end %>
