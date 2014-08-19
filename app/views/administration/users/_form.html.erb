@@ -31,6 +31,7 @@
         <% if ['lead_supplier', 'supplier', 'member'].include?(params[:role]) or @user.has_any_role?(:lead_supplier, :supplier, :member) %>
             <%= form.input :vat_number %>
         <% end %>
+        <%= form.input :note %>
         <% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
             <%= form.input :can_edit_payout_information %>
             <%= form.input :paypal_email %>

@@ -345,7 +345,8 @@ class CallResult < ActiveRecord::Base
                    :agreement_read => true, :company_name => contact.company_name, :phone => contact_phone_number,
                    :contact => contact, :vat_number => contact.company_vat_no,
                    :company_ean_number => contact.company_ean_number, :assign_free_subscription_plan => false, :subscription_plan_id => contact_subscription_plan_id,
-                   :newsletter_on => contact_newsletter_on}
+                   :newsletter_on => contact_newsletter_on,
+                   :note => contact.note}
 
     if ["category_supplier", "supplier"].include?(role)
       user_params.merge!(:not_charge_vat => user_not_charge_vat)
