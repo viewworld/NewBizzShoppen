@@ -1,5 +1,5 @@
 class LeadPurchaseBase < ActiveRecord::Base
-  set_table_name "lead_purchases"
+  self.table_name =  "lead_purchases"
 
   STATUSES = %w(not_contacted contacted meeting signed archived proposal).freeze
 

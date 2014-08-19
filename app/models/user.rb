@@ -1,7 +1,7 @@
 require 'role_change'
 
 class User < ActiveRecord::Base
-  self.set_table_name "users"
+  self.table_name =  "users"
 
   self.abstract_class = true
   ajaxful_rater

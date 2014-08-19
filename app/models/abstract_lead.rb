@@ -1,5 +1,5 @@
 class AbstractLead < ActiveRecord::Base
-  set_table_name "leads"
+  self.table_name =  "leads"
 
   translates :header, :description, :hidden_description, :fine_print, :company_description
 

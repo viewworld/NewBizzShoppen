@@ -1,5 +1,5 @@
 class Article < ActiveRecord::Base
-  set_table_name 'articles'
+  self.table_name =  'articles'
 
   attr_accessor :just_created
 

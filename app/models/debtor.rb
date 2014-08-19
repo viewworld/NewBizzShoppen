@@ -1,5 +1,5 @@
 class Debtor < ActiveRecord::Base
-  set_table_name "debtors"
+  self.table_name =  "debtors"
   include ScopedSearch::Model
   belongs_to :owner, :class_name => "User"
   belongs_to :currency
