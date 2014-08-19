@@ -41,9 +41,10 @@ class ApplicationController < ActionController::Base
 
   def redirect_to_correct_site
     if user_signed_in? and current_user and !is_current_user_on_correct_domain? and current_user.domain.present?
+      domain = current_user.domain
       key = current_user.generate_login_key!
       sign_out(current_user)
-      redirect_to "http://#{current_user.domain.name_for_env}/login_keys/?key=#{key}"
+      redirect_to "http://#{domain.name_for_env}/login_keys/?key=#{key}"
     end
   end
 
