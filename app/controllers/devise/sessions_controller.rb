@@ -12,10 +12,49 @@ class Devise::SessionsController < ApplicationController
 
   # POST /resource/sign_in
   def create
-    resource = warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#new")
+    resource =
+      if request.xhr?
+        warden.authenticate(scope: resource_name)
+      else
+        warden.authenticate(scope: resource_name, recall: "#{controller_path}#new")
+      end
+
     set_flash_message(:notice, :signed_in) if is_navigational_format?
-    sign_in(resource_name, resource)
-    respond_with resource, :location => after_sign_in_path_for(resource)
+
+    if resource
+      resource.chain_mails.update_all(last_login_at: Time.now)
+
+      if request.xhr?
+        @user = resource.with_role
+
+        if @deal = Deal.find_by_id(params[:deal_request_id])
+          @lead = Lead.new
+          @lead.based_on_deal(@deal, @user)
+        end
+      end
+    end
+
+    deal =
+      if params[:deal_request_id]
+        Deal.without_inactive.find_by_id(params[:deal_request_id])
+      else
+        nil
+      end
+
+    respond_to do |format|
+      format.html do
+        if deal
+          sign_in(resource_name, resource)
+          redirect_to deal_path(deal)
+        else
+          sign_in_and_redirect(resource_name, resource)
+        end
+      end
+
+      format.js do
+        sign_in(resource_name, resource) if resource
+      end
+    end
   end
 
   # DELETE /resource/sign_out
