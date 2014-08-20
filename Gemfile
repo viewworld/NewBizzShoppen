@@ -62,6 +62,9 @@ gem 'paypal_nvp', '0.2.0'
 gem 'createsend', '1.0.3'
 gem 'postmark-rails', '0.4.2'
 
+# controllers
+gem 'decent_exposure', '~> 2.3.2'
+
 # utils
 gem 'thor', '0.14.6'
 gem 'roo', '1.9.5'
