@@ -25,6 +25,8 @@ Nbs::Application.configure do
   #Required by Devise
   config.action_mailer.default_url_options = {:host => 'localhost:3000'}
 
+  config.active_record.mass_assignment_sanitizer = :strict
+
   # Enable serving of images, stylesheets, and javascripts from an asset server
   #config.action_controller.asset_host = "http://static-fairleads.s3.amazonaws.com"
 
