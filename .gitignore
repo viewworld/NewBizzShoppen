@@ -20,6 +20,7 @@
 /public/system/invoice_cache/*
 /public/javascripts/translations.js
 /public/system/agent_timesheets_cache/*
+/public/system/agent_performances/*
 /public/system/payouts/*
 /public/system/import_temp/*
 tags
