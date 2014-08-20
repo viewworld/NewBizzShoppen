@@ -177,6 +177,12 @@ class User < ActiveRecord::Base
 
   acts_as_taggable
 
+  def self.instantiate(record)
+    subject = super
+    casted_class = subject.send(:casted_class)
+    casted_class.abstract_class? ? subject : subject.becomes(casted_class)
+  end
+
   private
 
   def set_email_verification
