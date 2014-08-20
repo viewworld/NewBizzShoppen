@@ -1,7 +1,11 @@
 class Administration::AdministrationController < SecuredController
   def current_user
-    @admin ||= ::User::Admin.find_by_id(super.id)
-    @admin ||= User.find_by_id(super.id).with_role
+    user = super
+
+    if user
+      @admin ||= ::User::Admin.find_by_id(user.id)
+      @admin ||= User.find_by_id(user.id).with_role
+    end
   end
 
   private
