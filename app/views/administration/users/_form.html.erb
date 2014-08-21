@@ -2,53 +2,53 @@
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_200">
       <ol class="align_inputs">
-        <% if @user.has_any_role?(:admin, :supplier, :category_supplier, :call_centre, :member, :call_centre_agent, :agent) or ["admin", "supplier", "category_supplier", "call_centre", "member", "call_centre_agent", "agent"].include?((params[:role])) %>
+        <% if user.has_any_role?(:admin, :supplier, :category_supplier, :call_centre, :member, :call_centre_agent, :agent) or ["admin", "supplier", "category_supplier", "call_centre", "member", "call_centre_agent", "agent"].include?((params[:role])) %>
             <%= form.input :company_name %>
             <%= form.input :company_ean_number %>
         <% end %>
-        <% unless @user.has_role?(:call_centre) or ["call_centre"].include?((params[:role])) %>
+        <% unless user.has_role?(:call_centre) or ["call_centre"].include?((params[:role])) %>
             <%= form.input :first_name %>
             <%= form.input :last_name %>
         <% end %>
-        <% if @user.has_any_role?(:supplier, :member) or ["supplier", "member"].include?((params[:role])) %>
+        <% if user.has_any_role?(:supplier, :member) or ["supplier", "member"].include?((params[:role])) %>
             <%= form.input :title %>
         <% end %>
-        <% if defined? form.object.address and (form.object.parent.blank? or (@user.has_role?(:call_centre_agent) or ["call_centre_agent"].include?((params[:role])))) %>
+        <% if defined? form.object.address and (form.object.parent.blank? or (user.has_role?(:call_centre_agent) or ["call_centre_agent"].include?((params[:role])))) %>
             <%= form.fields_for :address do |address_form| %>
                 <%= address_form.input :address_line_1 %>
                 <%= address_form.input :address_line_2 %>
                 <%= address_form.input :address_line_3 %>
                 <%= address_form.input :zip_code %>
-                <%= address_form.input :country_id, :required => (@user.is_a?(User::Member) or @user.is_a?(User::Agent) or @user.is_a?(User::CallCentreAgent)), :as => :select, :collection => Country.all, :input_html => { :onchange => "refresh_regions_list('user_#{params[:role].present? ? params[:role] : form.object.role}_address_attributes');" } %>
+                <%= address_form.input :country_id, :required => (user.is_a?(User::Member) or user.is_a?(User::Agent) or user.is_a?(User::CallCentreAgent)), :as => :select, :collection => Country.all, :input_html => { :onchange => "refresh_regions_list('user_#{params[:role].present? ? params[:role] : form.object.role}_address_attributes');" } %>
                 <%= address_form.input :region_id, :as => :select, :collection => regions_collection_for(form.object.address.country) %>
             <% end %>
         <% end %>
         <%= form.input :time_zone, :wrapper_html => { :class => "select"}, :input_html => {:style => "width: 240px"} %>
         <%= form.input :api_key, :input_html => { :disabled => true } %>
-        <% if ['call_centre_agent'].include?(params[:role]) or @user.has_any_role?(:call_centre_agent) %>
+        <% if ['call_centre_agent'].include?(params[:role]) or user.has_any_role?(:call_centre_agent) %>
             <%= form.input :parent_id, :collection => User.without_locked.with_call_centres.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false, :label => t("administration.users.edit.view.parent_id") %>
         <% end %>
-        <% if ['lead_supplier', 'supplier', 'member'].include?(params[:role]) or @user.has_any_role?(:lead_supplier, :supplier, :member) %>
+        <% if ['lead_supplier', 'supplier', 'member'].include?(params[:role]) or user.has_any_role?(:lead_supplier, :supplier, :member) %>
             <%= form.input :vat_number %>
         <% end %>
         <%= form.input :note %>
-        <% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
+        <% if ['agent', 'call_centre'].include?(params[:role]) or user.has_any_role?(:agent, :call_centre) %>
             <%= form.input :can_edit_payout_information %>
             <%= form.input :paypal_email %>
             <%= form.input :bank_swift_number %>
             <%= form.input :bank_iban_number %>
-            <% if ['call_centre'].include?(params[:role]) or @user.has_any_role?(:call_centre) %>
+            <% if ['call_centre'].include?(params[:role]) or user.has_any_role?(:call_centre) %>
             <%= form.input :bank_name %>
                 <%= form.fields_for :bank_address do |address_form| %>
                     <%= address_form.input :address_line_1 %>
                     <%= address_form.input :address_line_2 %>
                     <%= address_form.input :address_line_3 %>
                     <%= address_form.input :zip_code %>
-                    <%= address_form.input :country_id, :as => :select, :collection => Country.all, :include_blank => true, :input_html => { :onchange => "refresh_regions_list('user_#{params[:role].blank? ? @user.role.to_s : params[:role]}_bank_address_attributes');" } %>
-                    <%= address_form.input :region_id, :as => :select, :collection => regions_collection_for(@user.bank_address.country) %>
+                    <%= address_form.input :country_id, :as => :select, :collection => Country.all, :include_blank => true, :input_html => { :onchange => "refresh_regions_list('user_#{params[:role].blank? ? user.role.to_s : params[:role]}_bank_address_attributes');" } %>
+                    <%= address_form.input :region_id, :as => :select, :collection => regions_collection_for(user.bank_address.country) %>
                 <% end %>
             <% end %>
-        <% elsif !form.object.new_record? and (['lead_supplier', 'supplier', 'category_supplier'].include?(params[:role]) or @user.has_any_role?(:lead_supplier, :supplier, :category_supplier)) %>
+        <% elsif !form.object.new_record? and (['lead_supplier', 'supplier', 'category_supplier'].include?(params[:role]) or user.has_any_role?(:lead_supplier, :supplier, :category_supplier)) %>
             <%= form.input :bank_account_id, :as => :select, :collection => BankAccount.all %>
         <% end %>
       </ol>
@@ -71,55 +71,55 @@
         <%= form.input :custom_3, :as => :string %>
         <%= form.input :custom_4, :as => :string %>
         <%= form.input :custom_5, :as => :string %>
-        <% if @user.big_buyer? %>
+        <% if user.big_buyer? %>
             <%= form.input :big_buyer_purchase_limit %>
         <% end %>
-        <% if ["supplier", "category_supplier", "member"].include?(params[:role]) and @user.new_record? %>
-            <%= form.input :subscription_plan_id, :as => :select, :collection => SubscriptionPlan.active.for_role(params[:role].present? ? params[:role].to_sym : @user.role).without_paypal, :include_blank => false %>
+        <% if ["supplier", "category_supplier", "member"].include?(params[:role]) and user.new_record? %>
+            <%= form.input :subscription_plan_id, :as => :select, :collection => SubscriptionPlan.active.for_role(params[:role].present? ? params[:role].to_sym : user.role).without_paypal, :include_blank => false %>
         <% end %>
 
         <%= form.input :agreement_read, :as => :hidden %>
         <%= form.input :newsletter_on %>
         <%= form.input :test_account %>
-        <% if ['supplier', 'category_supplier'].include?(params[:role]) or @user.has_any_role?(:supplier, :category_supplier) %>
+        <% if ['supplier', 'category_supplier'].include?(params[:role]) or user.has_any_role?(:supplier, :category_supplier) %>
             <%= form.input :big_buyer %>
             <%= form.input :newsletter_manager %>
             <%= form.input :chain_mails_enabled %>
             <%= form.input :surveys_enabled %>
         <% end %>
-        <% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
-            <%= form.input :certification_level, :as => :select, :collection => User::CERTIFICATION_LEVELS.map { |c| [t("models.lead.certification.lvl#{c}"), c] }, :selected => @user.read_attribute(:certification_level) %>
+        <% if ['agent', 'call_centre'].include?(params[:role]) or user.has_any_role?(:agent, :call_centre) %>
+            <%= form.input :certification_level, :as => :select, :collection => User::CERTIFICATION_LEVELS.map { |c| [t("models.lead.certification.lvl#{c}"), c] }, :selected => user.read_attribute(:certification_level) %>
         <% end %>
-        <% if %w(agent call_centre_agent).include?(params[:role]) || @user.has_any_role?(:agent, :call_centre_agent) %>
+        <% if %w(agent call_centre_agent).include?(params[:role]) || user.has_any_role?(:agent, :call_centre_agent) %>
             <%= form.input :show_inactive_campaigns, :as => :boolean %>
         <% end %>
-        <% if @user.vat_number.present? and (['lead_supplier', 'supplier', 'member'].include?(params[:role]) or @user.has_any_role?(:lead_supplier, :supplier, :member)) %>
+        <% if user.vat_number.present? and (['lead_supplier', 'supplier', 'member'].include?(params[:role]) or user.has_any_role?(:lead_supplier, :supplier, :member)) %>
             <%= form.input :not_charge_vat, :as => :boolean %>
         <% end %>
-        <% if @user.new_record? %>
+        <% if user.new_record? %>
             <%= form.input :skip_email_verification, :as => :boolean %>
         <% end %>
-        <% if ['agent', 'call_centre_agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre_agent, :call_centre) %>
+        <% if ['agent', 'call_centre_agent', 'call_centre'].include?(params[:role]) or user.has_any_role?(:agent, :call_centre_agent, :call_centre) %>
             <%= form.input :deal_maker_role_enabled, :as => :boolean %>
         <% end %>
-        <% if ['category_supplier'].include?(params[:role]) or @user.has_any_role?(:category_supplier) %>
+        <% if ['category_supplier'].include?(params[:role]) or user.has_any_role?(:category_supplier) %>
             <%= form.input :show_deals, :as => :boolean %>
             <%= form.input :dont_show_my_deals, :as => :boolean %>
             <%= form.input :auto_buy_enabled, :as => :boolean %>
         <% end %>
-        <% if %w(category_supplier supplier).include?(params[:role]) or @user.has_any_role?(:supplier, :category_supplier) %>
+        <% if %w(category_supplier supplier).include?(params[:role]) or user.has_any_role?(:supplier, :category_supplier) %>
            <%= form.input :pipeline_reports_enabled, :as => :boolean %>
         <% end %>
-        <% if ['agent', 'call_centre_agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:call_centre_agent, :call_centre, :agent) %>
+        <% if ['agent', 'call_centre_agent', 'call_centre'].include?(params[:role]) or user.has_any_role?(:call_centre_agent, :call_centre, :agent) %>
             <%= form.input :billing_rate %>
             <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => true %>
         <% end %>
-        <% if @user.persisted? and @user.newsletter_manager? %>
+        <% if user.persisted? and user.newsletter_manager? %>
             <b><%= t("administration.users.edit.view.campaign_monitor_credentials") %></b><br />
             <%= form.input :cm_username, :as => :string, :label => t("administration.users.edit.view.cm_username") %>
             <%= form.input :cm_password, :as => :string, :label => t("administration.users.edit.view.cm_password") %>
         <% end %>
-        <% if @user.persisted? and @user.agent? %>
+        <% if user.persisted? and user.agent? %>
             <b><%= t("administration.users.edit.view.softphone_type") %></b><br />
             <%= form.input :phone_type_id, :as => :select, :include_blank => false, :collection => User::PHONE_TYPES_WITH_LABELS %>
             <b><%= t("administration.users.edit.view.softphone_server") %></b><br />
@@ -131,14 +131,14 @@
         <% end %>
       </ol>
     </fieldset>
-      <%= render :partial => "/shared/tags/assigned_tags", :locals => { :object => @user } %>
+      <%= render :partial => "/shared/tags/assigned_tags", :locals => { :object => user } %>
 
   </div>
 </div>
 
 <div class="hl"></div>
 
-<% if @user.new_record? %>
+<% if user.new_record? %>
     <div class="clb"></div>
 
     <div class="column_left">
@@ -155,14 +155,14 @@
 
 <div class="clb"></div>
 
-<% if ['category_supplier'].include?(params[:role]) or @user.has_roles?(:category_supplier, :supplier) %>
+<% if ['category_supplier'].include?(params[:role]) or user.has_roles?(:category_supplier, :supplier) %>
     <div class="hl"></div>
     <div id="category_supplier_categories">
       <div class="pdd_10">
         <div class="grid_210 fltl">&nbsp;</div>
         <div class="grid_240 fltl">
           <h3><%= t("administration.users.edit.view.available_categories") %></h3>
-          <%= select_tag "all_categories", options_for_select((LeadCategory.roots.without_unique.without_auto_buy-@user.buying_categories).map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          <%= select_tag "all_categories", options_for_select((LeadCategory.roots.without_unique.without_auto_buy-user.buying_categories).map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
         </div>
 
         <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
@@ -173,21 +173,21 @@
 
         <div class="grid_240 fltl">
           <h3><%= t("administration.users.edit.view.selected_categories") %></h3>
-          <%= select_tag "user_category_supplier[buying_category_ids][]", options_for_select(@user.buying_categories.map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          <%= select_tag "user_category_supplier[buying_category_ids][]", options_for_select(user.buying_categories.map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
         </div>
         <div class="clb"></div>
       </div>
     </div>
 <% end %>
 
-<% if (!['category_supplier'].include?(params[:role]) and !@user.has_role?(:category_supplier)) and (['supplier'].include?(params[:role]) or @user.has_roles?(:supplier)) %>
+<% if (!['category_supplier'].include?(params[:role]) and !user.has_role?(:category_supplier)) and (['supplier'].include?(params[:role]) or user.has_roles?(:supplier)) %>
     <div class="hl"></div>
     <div id="unique_categories">
       <div class="pdd_10">
         <div class="grid_210 fltl">&nbsp;</div>
         <div class="grid_240 fltl">
           <h3><%= t("administration.users.edit.view.available_unique_categories") %></h3>
-          <%= select_tag "all_categories", options_for_select((LeadCategory.with_all_supplier_unique.without_auto_buy-@user.unique_categories).map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          <%= select_tag "all_categories", options_for_select((LeadCategory.with_all_supplier_unique.without_auto_buy-user.unique_categories).map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
         </div>
 
         <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
@@ -198,7 +198,7 @@
 
         <div class="grid_240 fltl">
           <h3><%= t("administration.users.edit.view.selected_unique_categories") %></h3>
-          <%= select_tag "user_supplier[unique_category_ids][]", options_for_select(@user.unique_categories.map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          <%= select_tag "user_supplier[unique_category_ids][]", options_for_select(user.unique_categories.map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
         </div>
         <div class="clb"></div>
       </div>
@@ -210,7 +210,7 @@
         <div class="grid_210 fltl">&nbsp;</div>
         <div class="grid_240 fltl">
           <h3><%= t("administration.users.edit.view.available_categories") %></h3>
-          <%= select_tag "all_categories_for_interests", options_for_select((LeadCategory.without_unique-@user.category_interests).map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          <%= select_tag "all_categories_for_interests", options_for_select((LeadCategory.without_unique-user.category_interests).map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
         </div>
 
         <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
@@ -221,21 +221,21 @@
 
         <div class="grid_240 fltl">
           <h3><%= t("administration.users.edit.view.selected_interests_categories") %></h3>
-          <%= select_tag "user_supplier[category_ids][]", options_for_select((@user.categories-@user.unique_categories).map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          <%= select_tag "user_supplier[category_ids][]", options_for_select((user.categories-user.unique_categories).map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
         </div>
         <div class="clb"></div>
       </div>
     </div>
 <% end %>
 
-<% if (['agent', 'call_centre', 'call_centre_agent'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre, :call_centre_agent)) %>
-    <% prefix = params[:role].blank? ? @user.role : params[:role] %>
+<% if (['agent', 'call_centre', 'call_centre_agent'].include?(params[:role]) or user.has_any_role?(:agent, :call_centre, :call_centre_agent)) %>
+    <% prefix = params[:role].blank? ? user.role : params[:role] %>
     <div class="hl"></div>
     <div class="pdd_10">
       <div class="grid_210 fltl">&nbsp;</div>
       <div class="grid_240 fltl">
         <h3><%= t("administration.users.edit.view.available_unique_categories") %></h3>
-        <%= select_tag "all_categories", options_for_select((LeadCategory.with_all_agent_unique-@user.unique_categories).map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+        <%= select_tag "all_categories", options_for_select((LeadCategory.with_all_agent_unique-user.unique_categories).map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
       </div>
 
       <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
@@ -246,7 +246,7 @@
 
       <div class="grid_240 fltl">
         <h3><%= t("administration.users.edit.view.selected_categories") %></h3>
-        <%= select_tag "user_#{prefix}[unique_category_ids][]", options_for_select(@user.unique_categories.map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+        <%= select_tag "user_#{prefix}[unique_category_ids][]", options_for_select(user.unique_categories.map { |c| [c.name.to_s, c.id] }.sort), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
       </div>
 
       <div class="clb"></div>

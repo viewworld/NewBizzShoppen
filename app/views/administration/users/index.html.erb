@@ -5,7 +5,7 @@
     <h2><%= t("common.search") %></h2>
 
     <div class="search_content">
-      <%= form_for @search, :url => administration_users_path do |f| %>
+      <%= form_for search, :url => administration_users_path do |f| %>
         <%= f.hidden_field :with_subaccounts %>
         <fieldset class="inputs_vertical">
           <ol class="no_pdd">
@@ -19,7 +19,7 @@
             </li>
             <li class="string">
               <label>Tags</label>
-              <%= render :partial => "shared/tags/search_with_tags", :locals => { :search => @search } %>
+              <%= render :partial => "shared/tags/search_with_tags", :locals => { :search => search } %>
             </li>
             <li class="commit">
               <%= ibt(:class => "bt_green", :icon => "magnify") do %>
@@ -39,10 +39,10 @@
 <%= content_for :column_mc do -%>
   <%= header do |section| %>
     <% section.block_header do %>
-      <% if @search.with_subaccounts.blank? %>
+      <% if search.with_subaccounts.blank? %>
         <%= t("administration.users.index.view.title") %>
       <% else %>
-        <% user = User.find(@search.with_subaccounts) %>
+        <% user = User.find(search.with_subaccounts) %>
         <%= t("administration.users.index.view.subaccounts_for_user", :user_name => user.full_name) %>
         <%= link_to t("administration.users.index.view.show_all_users"), administration_users_path %>
       <% end %>
@@ -64,11 +64,11 @@
     <% end %>
   <% end %>
 
-  <% if @users.blank? %>
+  <% if users.blank? %>
     <%= blank_state_message %>
   <% else %>
     <%= bulk_form do %>
-      <%= render :partial => "users_table", :locals => {:users => @users, :subaccounts_table => false} %>
+      <%= render :partial => "users_table", :locals => {:users => users, :subaccounts_table => false} %>
     <% end %>
   <% end %>
 <% end %>
