@@ -146,9 +146,7 @@ class User < ActiveRecord::Base
                :leads_rated_good_counter, :leads_rated_bad_counter, :leads_not_rated_counter, :leads_rating_avg, :certification,
                :revenue_counter, :leads_purchased_counter, :leads_volume_sold_counter, :leads_revenue_counter, :unpaid_leads_counter, :company_name
 
-  attr_protected :locked, :can_edit_payout_information, :paypal_email, :bank_swift_number, :bank_iban_number, :skip_email_verification, :cancel_subscription
-
-  attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :send_invitation, :auto_generate_password, :email_materials, :cancel_subscription, :subscription_plan_id, :assign_free_subscription_plan
+  attr_accessor  :locked, :can_edit_payout_information, :paypal_email, :bank_swift_number, :bank_iban_number, :skip_email_verification, :cancel_subscription, :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :send_invitation, :auto_generate_password, :email_materials, :cancel_subscription, :subscription_plan_id, :assign_free_subscription_plan
 
   alias_attribute :email_address, :email
   alias_attribute :phone_number, :phone
