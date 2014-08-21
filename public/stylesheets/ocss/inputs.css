@@ -70,7 +70,8 @@
 .inputs ol li.ckeditor label,
 .inputs ol li.email label,
 .inputs ol li.phone label,
-.inputs ol li.number label
+.inputs ol li.number label,
+.inputs ol li.url label
 {
 	display: block;
 	float: left;
@@ -91,7 +92,8 @@
 .inputs ol li.ckeditor label.wide,
 .inputs ol li.email label.wide,
 .inputs ol li.phone label.wide,
-.inputs ol li.number label.wide
+.inputs ol li.number label.wide,
+.inputs ol li.url label.wide
 {
 	display: block;
 	float: left;
@@ -158,7 +160,8 @@
 .inputs ol li.numeric input,
 .inputs ol li.email input,
 .inputs ol li.phone input,
-.inputs ol li.number input
+.inputs ol li.number input,
+.inputs ol li.url input
 {
 	width: 230px;
     float: left;
@@ -651,7 +654,8 @@ input.date.hasDatepicker
 .labels_ta_r ol li.file label,
 .labels_ta_r ol li.email label,
 .labels_ta_r ol li.phone label,
-.labels_ta_r ol li.number label
+.labels_ta_r ol li.number label,
+.labels_ta_r ol li.url label
 {
     text-align: right;
 }
