@@ -178,7 +178,7 @@ class User < ActiveRecord::Base
   def self.instantiate(record)
     subject = super
     casted_class = subject.send(:casted_class)
-    casted_class.abstract_class? ? subject : subject.becomes(casted_class)
+    casted_class.abstract_class? || casted_class == subject.class ? subject : subject.becomes(casted_class)
   end
 
   private
