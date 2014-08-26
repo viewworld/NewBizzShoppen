@@ -4,7 +4,7 @@ class SupplierHomeController < ApplicationController
   def show
     @news = Article::News::Supplier.published.latest.limit(3)
 
-    if user_signed_in? && current_user.has_role? :lead_supplier
+    if user_signed_in? && current_user.has_role?(:lead_supplier)
       supplier
     else
       guest
