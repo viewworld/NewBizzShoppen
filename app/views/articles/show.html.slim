@@ -1,0 +1,8 @@
+= content_for :column_mc do
+  = frm(title: @article.title) do |section|
+    - section.block_header do
+      = bt_link_to nil, t("common.edit_link"), edit_administration_article_path, class: "fltr" if current_user_has_role?(:admin)
+
+    - section.block_content do
+      .pdd_10
+        = raw @article.content
