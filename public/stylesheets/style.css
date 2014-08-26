@@ -999,23 +999,22 @@ h4
     -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
 }
 
-.search_box .search_left,
-.search_box .search_right
-{
-    position: absolute;
-    top: 0;
-    width: 16px;
-    height: 20px;
-    z-index: 1;
+.search_box:before, .search_box:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 16px;
+  height: 20px;
+  z-index: 1;
 }
 
-.search_box .search_left
+.search_box:before
 {
     background:  url(/images/bg_search_left.png) no-repeat 0 0;
     left: 0;
 }
 
-.search_box .search_right
+.search_box:after
 {
     background:  url(/images/bg_search_right.png) no-repeat 0 0;
     right: 0;
