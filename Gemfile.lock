@@ -346,7 +346,7 @@ GEM
     whenever (0.9.0)
       activesupport (>= 2.3.4)
       chronic (>= 0.6.3)
-    will_paginate (3.0.pre2)
+    will_paginate (3.0.7)
     xml-simple (1.1.0)
     xpath (0.1.4)
       nokogiri (~> 1.3)
@@ -428,5 +428,5 @@ DEPENDENCIES
   thor (= 0.14.6)
   webmock
   whenever (~> 0.9.0)
-  will_paginate (= 3.0.pre2)
+  will_paginate (= 3.0.7)
   yajl-ruby (= 1.1.0)

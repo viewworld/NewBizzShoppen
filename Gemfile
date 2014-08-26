@@ -31,7 +31,7 @@ gem 'jammit-s3', '~> 0.6.0.2'
 
 # views
 gem 'ckeditor', '3.4.3.pre'
-gem 'will_paginate', '3.0.pre2', branch: 'rails3'
+gem 'will_paginate', '3.0.7'
 gem 'formtastic', '1.1.0'
 gem 'liquid', '2.2.2'
 gem 'ajaxful_rating', '3.0.0.beta3'
