@@ -1,0 +1,28 @@
+= content_for :column_mc do
+  = javascript_include_tag :ckeditor
+  = header(back: true) do |section|
+    - section.block_header do
+      = t('administration.articles.edit.view.header', name: @article.title)
+      = image_tag_for_locale
+
+  = semantic_form_for @article, as: :article, url: administration_article_path(@article), input_html: { method: :put } do |form|
+    = frm(title: @article.title) do |section|
+      - section.block_content do
+        .pdd_10.no_pdd_t
+          fieldset.inputs.labels_100.labels_ta_r
+            ol
+              = form.input :title
+              = form.input :published
+              = form.input :content,
+                as: :ckeditor,
+                label: false,
+                input_html: { height: '300px',
+                              swf_params: { resource_type: @article.class.name,
+                                            resource_id: @article.id } }
+
+      - section.block_actions do
+        = ibt(class: "fltri", icon: "save") do
+          = form.submit t("administration.articles.edit.view.button_save")
+
+        = ibt(class: "fltri bt_grey") do
+          = button_to_function t("common.cancel_link"), @article.just_created ? "$('#delete_article_form').submit();" : "history.go(-1)"
