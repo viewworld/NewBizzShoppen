@@ -1,0 +1,43 @@
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t("supplier_home.show.view.header")
+    - section.block_actions do
+      .header_actions
+        li.last
+          = bt_link_to :user, t("supplier_home.show.view.create_new_supplier_account"), new_supplier_account_path
+
+  .pdd_5.no_pdd_b
+    div class=("grid_730 fltl" unless user_signed_in?)
+      p= blurb("blurb_supplier_home")
+
+    - unless user_signed_in?
+      .grid_360.fltr
+        = render 'login_form'
+
+    .clb
+
+  .hl
+
+  #leads_summary
+    = render  partial: 'summary_column',
+              locals: { object: :news, context: :news, collection: @news, path: news_index_path(search: { with_subclass: 'Supplier' }) }
+
+    = render  partial: 'summary_column',
+              locals: { object: :deal, context: :latest_deals, collection: @latest_deals, path: deals_url(protocol: 'http://', host: fairdeals_host, search: {latest: true}) }
+
+    = render  partial: 'summary_column',
+              locals: { object: :lead, context: :latest_leads, collection: @latest_leads, path: leads_path(search: {latest: true}) }
+
+    .clb
+
+= content_for :js do
+  javascript:
+    jQuery(document).ready(function() {
+      jQuery(".solid_list li:not(.no_data)").bind("click", function() {
+        if($(this).find('a.read_more').attr("target") == "_blank")
+          window.open($(this).find('a.read_more').attr("href"), "_blank")
+        else
+          window.location = $(this).find('a.read_more').attr("href");
+      });
+    });

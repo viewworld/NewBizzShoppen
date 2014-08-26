@@ -692,6 +692,10 @@ h4
     padding: 15px 0 0;
 }
 
+#latest_deals, #my_leads {
+  padding: 0 15px;
+}
+
 #content .content_left,
 #content .content_right
 {
@@ -1926,7 +1930,7 @@ span.cke_skin_kama
 .sortable_object_fields_class, .sortable_spreadsheet_fields_class
 {
     text-align: center;
-    list-style-type: none;    
+    list-style-type: none;
     padding: 0;
     margin: 0 5px 15px;
     float: left;
@@ -1965,7 +1969,7 @@ li.disabled
 
 .object_preview p
 {
-    padding: 2px 0;    
+    padding: 2px 0;
 }
 
 /* --- deal - assets list ---
@@ -2051,7 +2055,7 @@ li.disabled
     display: inline-block;
 
     background-color: #c43c35;
-    background-repeat: repeat-x;    
+    background-repeat: repeat-x;
     background-image: -moz-linear-gradient(top, #ff4136, #ee1b0c);
     background-image: -ms-linear-gradient(top, #ff4136, #ee1b0c);
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ff4136), color-stop(100%, #ee1b0c));
@@ -2288,7 +2292,7 @@ ol.survey_questions_container.sortable li .bt.bt_grey .branched-option {
 
 .inputs_vertical li.ui-menu-item:first-child {
     padding-left: 0;
-} 
+}
 
 .ui-menu .ui-menu-item a.ui-state-hover,
 .ui-menu .ui-menu-item a.ui-state-active {

@@ -1,0 +1,11 @@
+.column_1to3.fltl id=("#{context}")
+  = frm(title: t("supplier_home.show.view.header_#{context}")) do |section|
+    - section.block_header do
+      = bt_link_to nil, t("supplier_home.show.view.complete_list_link"), path, class: "fltr"
+
+    - section.block_content do
+      ul.solid_list
+        - if collection.any?
+          = render partial: "supplier_home/partials/#{object.to_s}", collection: collection, as: object
+        - else
+          = render partial: 'shared/blank_data_li'

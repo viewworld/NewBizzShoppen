@@ -1,0 +1,54 @@
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t("supplier_home.show.view.header")
+    - section.block_actions do
+      ul.header_actions
+        - if current_user.team_buyers?
+          li= bt_link_to :users, t("supplier_home.show.view.add_team_member"), new_suppliers_subaccount_path(role: "lead_user")
+        li.last= bt_link_to :key, t("supplier_home.show.view.sign_out"), '/logout'
+
+  .pdd_5.no_pdd_b
+    p= blurb("blurb_supplier_home# '_logged_in' if user_signed_in? ")
+
+  .hl
+
+  #leads_summary
+    = render  partial: 'summary_column',
+              locals: { object: :news, context: :news, collection: @news, path: news_index_path(search: { with_subclass: 'Supplier' }) }
+
+
+    / TODO: These needs refactoring too
+    #my_leads.column_1to3.fltl
+      = frm(title: "#{t('supplier_home.show.view.header_my_leads')}") do |section|
+        - section.block_header do
+          = bt_link_to nil, t("supplier_home.show.view.complete_list_link"), current_user.has_role?(:supplier) ? suppliers_lead_purchases_path : lead_users_lead_purchases_path, class: "fltr"
+        - section.block_content do
+          ul.solid_list
+            - if @my_leads.any?
+              = render partial: 'my_lead', collection: @my_leads, as: :lead
+            - else
+              = render partial: 'shared/blank_data_li'
+
+    #latest_leads.column_1to3.fltl
+      = frm(title: "#{t('supplier_home.show.view.header_latest_leads_in_my_categories')}") do |section|
+        - section.block_header do
+          - if current_user and current_user.has_role?(:supplier) and current_user.categories.blank?
+            = bt_link_to nil, t("supplier_home.show.view.configure_interests_link"), edit_suppliers_interests_path, class: "fltr"
+          - else
+            = bt_link_to nil, t("supplier_home.show.view.complete_list_link"), leads_path(search: {latest: true}), class: "fltr"
+        - section.block_content do
+          ul.solid_list
+            - if @latest_leads.any?
+              = render partial: 'supplier_home/partials/lead', collection: @latest_leads, as: :lead
+            - else
+              = render partial: 'shared/blank_data_li'
+    .clb
+
+= content_for :js do
+  javascript:
+    jQuery(document).ready(function() {
+      jQuery(".solid_list li").bind("click", function() {
+        window.location = $(this).find('a.read_more').attr("href");
+      });
+    });

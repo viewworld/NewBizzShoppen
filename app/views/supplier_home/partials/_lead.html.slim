@@ -1,0 +1,7 @@
+li
+  .lead_content
+    h4
+      = link_to_function lead.header, "void(0);"
+      = link_to_edit_lead(lead)
+    = st(lead.description)
+    = link_to t("supplier_home.show.view.read_more_link"), lead_path(lead), class: "read_more"

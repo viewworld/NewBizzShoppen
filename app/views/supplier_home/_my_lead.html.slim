@@ -1,0 +1,28 @@
+li
+  .lead_content
+    h4
+      = link_to lead.header, send((current_user.has_role?(:supplier) ? 'suppliers_lead_purchase_path' : 'lead_users_lead_purchase_path').to_sym, (lead.lead_purchases.detect{ |lp| lp.owner_id == current_user.id or lp.assignee_id == current_user.id }))
+      = link_to_edit_lead(lead)
+    p.element
+      span.label= t("lead_purchases.listing.company_name")
+      = lead.company_name
+
+    p.element
+      span.label= t("lead_purchases.listing.contact_name")
+      = lead.contact_name
+      
+    p.element
+      span.label= t("lead_purchases.listing.phone_number")
+      = lead.phone_number
+
+    p.element
+      span.label= t("lead_purchases.listing.email_address")
+      = mail_to lead.email_address, lead.email_address
+
+    h3= t("lead_purchases.listing.description_label")
+    p.element= lead.description
+
+    h3= t("lead_purchases.listing.hidden_description_label")
+    p.element= lead.hidden_description
+
+    = link_to t("supplier_home.show.view.read_more_link"), send((current_user.has_role?(:supplier) ? 'suppliers_lead_purchase_path' : 'lead_users_lead_purchase_path').to_sym, (lead.lead_purchases.detect{ |lp| lp.owner_id == current_user.id or lp.assignee_id == current_user.id })), class: "read_more"

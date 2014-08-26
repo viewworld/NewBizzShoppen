@@ -30,6 +30,8 @@ gem 'aws-s3'
 gem 'jammit-s3', '~> 0.6.0.2'
 
 # views
+gem 'slim', '~> 2.0.3'
+gem 'slim-rails', '~> 2.1.5'
 gem 'ckeditor', '3.4.3.pre'
 gem 'will_paginate', '3.0.7'
 gem 'formtastic', '1.1.0'
