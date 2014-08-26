@@ -30,7 +30,7 @@ class Administration::Invoicing::InvoicesController < Administration::Superadmin
   def collection
     @search = Invoice.scoped_search(params[:search])
     @search.descend_by_sale_date_and_number = true unless params[:search]
-    @invoices = @search.all.paginate :page => params[:page], :per_page => 20
+    @invoices = @search.paginate :page => params[:page], :per_page => 20
     @total_invoices = Invoice.count
     @total_paid_invoices = Invoice.total_paid.size
     @total_unpaid_invoices = Invoice.total_not_paid.size

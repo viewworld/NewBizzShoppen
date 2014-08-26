@@ -9,6 +9,6 @@ class Administration::Invoicing::CreditorsController < Administration::Superadmi
   def collection
     @search = CreditNote.scoped_search(params[:search])
     @search.with_type = "credit"
-    @credit_notes = @search.all.paginate :page => params[:page], :per_page => 20
+    @credit_notes = @search.paginate :page => params[:page], :per_page => 20
   end
 end

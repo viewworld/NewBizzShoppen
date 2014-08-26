@@ -46,6 +46,6 @@ class Administration::SubscriptionPlansController < Administration::Administrati
     params[:search] ||= {}
 
     @search = SubscriptionPlan.scoped_search(params[:search])
-    @subscription_plans = @search.all.paginate :page => params[:page], :per_page => 20
+    @subscription_plans = @search.paginate :page => params[:page], :per_page => 20
   end
 end

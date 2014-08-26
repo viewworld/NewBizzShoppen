@@ -15,7 +15,7 @@ class Suppliers::InvoicesController < Suppliers::AdvancedSupplierController
     @search = Invoice.scoped_search(params[:search])
     @search.for_user = current_user
     @search.descend_by_sale_date_and_number = true unless params[:search]
-    @invoices = @search.includes(:currency).all.paginate :page => params[:page], :per_page => 20
+    @invoices = @search.includes(:currency).paginate :page => params[:page], :per_page => 20
   end
 
 end

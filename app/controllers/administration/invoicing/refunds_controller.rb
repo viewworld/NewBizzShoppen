@@ -9,6 +9,6 @@ class Administration::Invoicing::RefundsController < Administration::SuperadminC
   def collection
     @search = CreditNote.scoped_search(params[:search])
     @search.with_type = "refund"
-    @credit_notes = @search.all.paginate :page => params[:page], :per_page => 20
+    @credit_notes = @search.paginate :page => params[:page], :per_page => 20
   end
 end
