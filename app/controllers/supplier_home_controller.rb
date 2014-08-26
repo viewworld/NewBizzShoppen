@@ -24,7 +24,7 @@ class SupplierHomeController < ApplicationController
 
     @my_leads = current_user.has_role?(:supplier) ? current_user.bought_leads.latest.limit(3) : current_user.assigned_leads.latest.limit(3)
 
-    render :sales_manager
+    render :supplier
   end
 
   def guest
