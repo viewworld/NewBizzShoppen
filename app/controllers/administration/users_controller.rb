@@ -66,7 +66,7 @@ class Administration::UsersController < Administration::AdministrationController
   def lock
     @user = User.find(params[:id]).with_role
     @user.locked = 'lock'
-    @user.save(false)
+    @user.save(validate: false)
     flash[:notice] = I18n.t("administration.users.locked")
     redirect_to :back
   end
@@ -74,7 +74,7 @@ class Administration::UsersController < Administration::AdministrationController
   def unlock
     @user = User.find(params[:id]).with_role
     @user.locked = 'unlock'
-    @user.save(false)
+    @user.save(validate: false)
     flash[:notice] = I18n.t("administration.users.unlocked")
     redirect_to :back
   end
