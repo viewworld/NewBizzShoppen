@@ -1,6 +1,9 @@
 class LoginTimeRequest < ActiveRecord::Base
   DATE_FORMAT = '%d-%m-%Y'
 
+  include ScopedSearch::Model
+  include AASM
+
   attr_accessor :whole_day,
                 :whole_day_start_time,
                 :whole_day_end_time,
@@ -29,9 +32,6 @@ class LoginTimeRequest < ActiveRecord::Base
   belongs_to :creator, :class_name => 'User'
   belongs_to :approver, :class_name => 'User'
   belongs_to :user_session_log, :dependent => :destroy
-
-  include ScopedSearch::Model
-  include AASM
 
   scope :with_campaign, lambda { |campaign| where(:campaign_id => campaign.to_i) }
   scope :with_user, lambda { |user| where(:user_id => user.to_i) }

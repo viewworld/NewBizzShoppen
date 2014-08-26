@@ -2,6 +2,8 @@ class ChainMailType < ActiveRecord::Base
   attr_accessor :skip_validations, :add_new_item
   serialize :execution_conditions
 
+  include ScopedSearch::Model
+
   has_many :chain_mail_items, :dependent => :destroy, :order => "position ASC"
   has_many :chain_mails
   has_many :call_results
@@ -26,8 +28,6 @@ class ChainMailType < ActiveRecord::Base
   scope :with_campaign, lambda{|c| where(:campaign_id => c.to_i)}
   scope :with_result, lambda{ |result| where(:result_id => result.id) }
   scope :for_user, lambda { |user| user.admin? ? where("true") : where(:creator_id => user.id) }
-
-  include ScopedSearch::Model
 
   scoped_order :id, :name
 
