@@ -86,7 +86,7 @@
       <% end %>
     </div>
     <div class="column_1to3 fltl" id="latest_leads">
-      <%= frm(:class => 'no_marg', :title => t('supplier_home.show.view.header_latest_deals')) do |section| %>
+      <%= frm(:class => 'no_marg', :title => t('supplier_home.show.view.header_latest_leads')) do |section| %>
         <% section.block_header do %>
           <%= bt_link_to nil, t("supplier_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
         <% end %>
