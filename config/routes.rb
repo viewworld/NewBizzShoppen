@@ -24,6 +24,7 @@ Nbs::Application.routes.draw do
     resources :category_email_templates, only: [:edit, :update]
     resources :currencies, except: :show
     resources :leads, only: [:index, :edit, :update]
+    resources :lead_templates, only: [:edit, :new, :update, :create]
     resources :news, except: :new
     resources :sellers
 
@@ -79,7 +80,6 @@ Nbs::Application.routes.draw do
     end
 
     resources :vat_rates
-    resources :lead_templates
     resources :category_users
     resources :countries
 
