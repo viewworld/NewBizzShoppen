@@ -19,14 +19,12 @@ Nbs::Application.routes.draw do
   namespace :administration do
     root to: "homes#show"
 
-    resources :articles
-    resources :bank_accounts
+    resources :articles, except: :new
+    resources :bank_accounts, except: :index
     resources :category_email_templates, only: [:edit, :update]
-
-    resources :currencies
-
-
-
+    resources :currencies, except: :show
+    resources :news, except: :new
+    resources :sellers
 
     resources :users do
       resource :password, controller: 'password', only: [:new, :update, :destroy]
@@ -58,7 +56,6 @@ Nbs::Application.routes.draw do
       resources :assets, controller: "deal_assets", only: [:create, :destroy]
     end
 
-    resources :news
     resources :hints
     resources :softphone_servers
 
@@ -83,7 +80,6 @@ Nbs::Application.routes.draw do
 
     resources :vat_rates
     resources :lead_templates
-    resources :sellers
     resources :category_users
     resources :countries
 
