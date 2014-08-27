@@ -1,40 +1,46 @@
 class Administration::CurrenciesController < Administration::AdministrationController
-  inherit_resources
-  actions :all, :except => [:show]
-
   set_tab "settings"
   set_subtab "currencies"
 
-  private
+  before_filter :set_currency, only: [:edit, :update, :destroy]
 
-  def collection
-    @currencies = Currency.order("active DESC, symbol ASC")
+  def index
+    @currencies = Currency.order("active DESC, symbol ASC").decorate
   end
 
-  public
+  def new
+    @currency = Currency.new
+  end
 
   def create
-    create! do |success,failure|
-      success.html { redirect_to administration_currencies_path }
-      failure.html { render :action => :new }
+    @currency = Currency.new(params[:currency])
+
+    if @currency.save
+      redirect_to administration_currencies_path
+    else
+      render :new
     end
   end
 
   def update
-    update! do |success,failure|
-      success.html { redirect_to administration_currencies_path }
-      failure.html { render :action => :edit }
+    if @currency.update_attributes(params[:currency])
+      redirect_to administration_currencies_path
+    else
+      render :edit
     end
   end
 
   def destroy
-    destroy! do |success,failure|
-      success.html { redirect_to administration_currencies_path }
-      failure.html {
-        flash[:alert] = @currency.errors[:base].join('<br/>')
-        redirect_to administration_currencies_path
-      }
+    if @currency.destroy
+      redirect_to administration_currencies_path
+    else
+      binding.pry
+      redirect_to administration_currencies_path, alert: @currency.errors[:base].join('<br/>')
     end
   end
 
+  private
+  def set_currency
+    @currency = Currency.find(params[:id])
+  end
 end

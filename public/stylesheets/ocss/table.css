@@ -3,36 +3,52 @@
 
 .generic
 {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse:collapse;
-    font-size: 12px;
+  width: 100%;
+  margin-top: 20px;
+  border-collapse:collapse;
+  font-size: 12px;
+}
+
+.generic {
+  padding: 0 10px;
 }
 
 .generic thead th
 {
 	height: 39px;
-    background: url(/images/table/table.png) repeat-x 0 -39px;
-    line-height: 14px;
-    vertical-align: middle;
-    text-align: left;
-    color:#555555;
-    font-size: 12px;
-    padding: 0 9px;
+  background: url(/images/table/table.png) repeat-x 0 -39px;
+  line-height: 14px;
+  vertical-align: middle;
+  text-align: left;
+  color:#555555;
+  font-size: 12px;
+  padding: 0 20px;
 }
 
-.generic thead th.hl
-{
-    background: url(/images/table/table.png) no-repeat 0 0;
-    width: 10px;
-    padding: 0 !important;
+.generic thead {
+  position: relative;
+  z-index: 1;
 }
 
-.generic thead th.hr
+.generic thead:before, .generic thead:after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 100%;
+  top: 0;
+  z-index: 0;
+}
+
+.generic thead:before
 {
-    background: url(/images/table/table.png) no-repeat right 0;
-    width: 10px;
-    padding: 0 !important;
+  background: url(/images/table/table.png) no-repeat 0 0;
+  left: 0;
+}
+
+.generic thead:after
+{
+  background: url(/images/table/table.png) no-repeat right 0;
+  right: 0;
 }
 
 .generic thead th a
@@ -49,16 +65,28 @@
     padding: 0;
 }
 
-.generic tfoot td.fl
-{
-    background: url(/images/table/table.png) no-repeat 0 -78px;
-    width: 10px;
+.generic tfoot {
+  position: relative;
 }
 
-.generic tfoot td.fr
+.generic tfoot:before, tfoot:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+  width: 10px;
+}
+
+.generic tfoot:before
 {
-    background: url(/images/table/table.png) no-repeat right -78px;
-    width: 10px;
+  background: url(/images/table/table.png) no-repeat 0 -78px;
+  left: 0;
+}
+
+.generic tfoot:after
+{
+  background: url(/images/table/table.png) no-repeat right -78px;
+  right: 0;
 }
 
 .generic tbody tr td
@@ -67,6 +95,10 @@
     border-bottom: 1px solid #e3e3e3;
     padding: 10px 7px;
     vertical-align: middle;
+}
+
+.generic tbody {
+  box-shadow: 1px 0 0 0 #ddd inset, -1px 0 0 0 #ddd inset;
 }
 
 .generic tbody tr td.cl
@@ -87,6 +119,7 @@
     padding: 0 !important;
 }
 
+.generic tbody tr:nth-child(even) td,
 .generic tbody tr.even td
 {
     background-color: #fafafa;
@@ -100,7 +133,7 @@
 
 .generic.small_padding tbody tr td
 {
-    padding: 10px 3px;
+    padding: 10px 7px;
 }
 
 .generic.small_padding tbody tr td.cl,
@@ -111,7 +144,7 @@
 
 .generic.small_padding thead th
 {
-    padding: 0 3px;
+    padding: 0 7px;
 }
 
 
@@ -131,7 +164,7 @@
 }
 
 .generic tbody tr.row_tooltip,
-.generic tbody tr.row_tooltip td .row_tooltip_content    
+.generic tbody tr.row_tooltip td .row_tooltip_content
 {
     display: none;
 }
@@ -141,7 +174,7 @@
     position: absolute;
     display: block;
     margin-top: -23px;
-    left: 580px; 
+    left: 580px;
 }
 
 #leads .row_tooltip_actions
@@ -178,7 +211,7 @@
     -webkit-box-shadow: 0 -1px 3px #ddd;
 
     text-decoration: none;
-    color: #666;    
+    color: #666;
 }
 
 .row_tooltip_actions a.toggle_row_unread
@@ -233,7 +266,7 @@ td.tda a.bt
     -webkit-border-radius: 5px;
     border-radius: 5px;
     display: none;
-    
+
     -moz-box-shadow: 0 0 2px #ccc;
     -webkit-box-shadow: 0 0 2px #ccc;
     box-shadow: 0 0 2px #ccc;
@@ -273,7 +306,7 @@ td.tda a.bt
     display: block;
     color: #333;
     text-decoration: none;
-    white-space: nowrap;    
+    white-space: nowrap;
 }
 
 .td_actions ul li:hover
@@ -308,7 +341,7 @@ td.tda a.bt
     background: url(/images/table/table.png) repeat-x 0 -99px #e3e3e3;
     border-bottom: 1px solid #d4d4d4;
     min-height: 32px;
-    padding: 0 10px 3px;                                                 
+    padding: 0 10px 3px;
 }
 
 .generic tbody tr.pagination td .show_all_link
@@ -327,7 +360,7 @@ td.tda a.bt
 
 .generic tbody tr.main_actions td
 {
-    background: url(/images/table/table.png) repeat-x 0 -99px #e4e4e4;    
+    background: url(/images/table/table.png) repeat-x 0 -99px #e4e4e4;
     border-bottom: 1px solid #d4d4d4;
 }
 
@@ -341,12 +374,12 @@ div.pagination
     text-align: center;
     float: right !ie7;
     margin-right: 500px !ie7;
-    line-height: 32px;    
+    line-height: 32px;
 }
 
 div.pagination a,
 div.pagination span,
-div.pagination em    
+div.pagination em
 {
     display: block !ie7;
     float: left !ie7;
@@ -382,7 +415,7 @@ div.pagination em
     border-color: #d3d3d3;
     border-top-color: #aaa;
 
-    color: #000;       
+    color: #000;
 }
 
 
@@ -458,8 +491,8 @@ div.pagination .disabled
     vertical-align: middle;
     padding: 4px;
     background: url(/images/table/table.png) repeat-x 0 -99px #e4e4e4;
-    border-bottom: 1px solid #d4d4d4;    
-    border-top: 1px solid #d4d4d4;    
+    border-bottom: 1px solid #d4d4d4;
+    border-top: 1px solid #d4d4d4;
 }
 
 .cart_table tbody tr td

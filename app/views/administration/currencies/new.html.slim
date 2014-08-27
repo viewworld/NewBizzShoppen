@@ -1,0 +1,9 @@
+= content_for :column_mc do
+  = header(back: true) do |section|
+    - section.block_header do
+      = t("administration.currencies.new.view.header")
+
+  p
+    = blurb("blurb_currencies")
+
+  = render partial: 'form', locals: { url: administration_currencies_path }

@@ -1,0 +1,46 @@
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t('administration.currencies.index.view.title')
+
+    - section.block_actions do
+      ul.header_actions
+        li.last
+          = bt_link_to :plus, t('administration.currencies.index.view.new_currency'), new_administration_currency_path
+
+  - if @currencies.blank?
+    = blank_state_message t('administration.currencies.index.view.no_currencies_defined')
+  - else
+    table#currencies_table.generic
+      thead
+        tr
+          th style='width:10px' = t('administration.currencies.index.view.table.name')
+          th= t('administration.currencies.index.view.table.symbol')
+          th= t('administration.currencies.index.view.table.format')
+          th= t('administration.currencies.index.view.table.exchange_rate')
+          th= t('administration.currencies.index.view.table.updated_at')
+          th= t('administration.currencies.index.view.table.unit_name')
+          th= t('administration.currencies.index.view.table.subunit_name')
+          th.ta_c= t('administration.currencies.index.view.table.active')
+          th.ta_c= t('administration.currencies.index.view.table.global_default')
+          th.ta_r= t('administration.currencies.index.view.actions')
+      tbody
+        - @currencies.each do |currency|
+          tr
+            td.ta_c= currency.name
+            td= currency.symbol
+            td= currency.format
+            td= currency.exchange_rate
+            td= currency.updated_at
+            td= currency.unit_name
+            td= currency.subunit_name
+            td.ta_c= translate_boolean(currency.active)
+            td.ta_c= translate_boolean(currency.global_default)
+            td.tda.ta_r
+              .td_actions
+                = bt_link_to :cog, nil, 'javascript:void(0)', class: 'bt_dropdown'
+                ul
+                  li= link_to t('administration.currencies.index.view.edit'), edit_administration_currency_path(currency), class: 'default_action'
+      tfoot
+        tr
+          td colspan='10'

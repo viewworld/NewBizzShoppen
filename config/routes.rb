@@ -19,6 +19,12 @@ Nbs::Application.routes.draw do
   namespace :administration do
     root to: "homes#show"
 
+
+    resources :currencies
+
+
+
+
     resources :users do
       resource :password, controller: 'password', only: [:new, :update, :destroy]
 
@@ -53,7 +59,6 @@ Nbs::Application.routes.draw do
     resources :articles
     resources :news
     resources :hints
-    resources :currencies
     resources :softphone_servers
 
     namespace :invoicing do
