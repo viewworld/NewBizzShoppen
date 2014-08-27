@@ -1,27 +1,38 @@
 class Administration::BankAccountsController < Administration::AdministrationController
-  inherit_resources
-
   set_tab "settings"
   set_subtab "global"
 
-  def update
-    update! do |success,failure|
-      success.html { redirect_to edit_administration_setting_path}
-      failure.html { render :action => :edit }
-    end
+  before_filter :set_bank_account, only: [:show, :edit, :update, :destroy]
+
+  def new
+    @bank_account = BankAccount.new
   end
 
   def create
-    create! do |success,failure|
-      success.html { redirect_to edit_administration_setting_path}
-      failure.html { render :action => :new }
+    @bank_account = BankAccount.new(params[:bank_account])
+
+    if @bank_account.save
+      redirect_to edit_administration_setting_path
+    else
+      render :new
+    end
+  end
+
+  def update
+    if @bank_account.update_attributes(params[:bank_account])
+      redirect_to edit_administration_setting_path
+    else
+      render :edit
     end
   end
 
   def destroy
-    destroy! do |format|
-      format.html { redirect_to edit_administration_setting_path }
-    end
+    @bank_account.destroy
+    redirect_to edit_administration_setting_path
   end
 
+  private
+  def set_bank_account
+    @bank_account = BankAccount.find(params[:id])
+  end
 end

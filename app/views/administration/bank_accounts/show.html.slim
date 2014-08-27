@@ -1,0 +1,89 @@
+= content_for :column_mc do
+  = header(back: true) do |section|
+    - section.block_header do
+      = t('administration.bank_accounts.show.view.header')
+
+  = frm(title: @bank_account.bank_name) do |section|
+    - section.block_header do
+      = bt_link_to nil, t('common.edit_link'), edit_administration_bank_account_path(@bank_account), class: 'fltr'
+
+    - section.block_content do
+      .pdd_10.lh_22
+        .grid_1to3.fltl
+          p
+            = "#{t('administration.bank_accounts.show.view.country')}:"
+            strong= @bank_account.country.name
+
+          p
+            = "#{t('administration.bank_accounts.show.view.bank_name')}:"
+            strong= @bank_account.bank_name
+
+        .grid_1to3.fltl
+          p
+            = "#{t('administration.bank_accounts.show.view.bank_address')}:"
+            strong= @bank_account.bank_address
+
+        .grid_1to3.fltl
+          p
+            = "#{t('administration.bank_accounts.show.view.country_default')}:"
+            strong= @bank_account.country_default
+
+          p
+            = "#{t('administration.bank_accounts.show.view.global_default')}:"
+            strong= @bank_account.global_default
+
+        .clb
+        .hl style=("padding: 15px 0")
+
+        p
+          = "#{t('administration.bank_accounts.show.view.country')}:"
+          = @bank_account.address.country.name
+
+        p
+          = "#{t('administration.bank_accounts.show.view.local_bank_number')}:"
+          strong= @bank_account.local_bank_number
+
+        p
+          = "#{t('administration.bank_accounts.show.view.address_line_1')}:"
+          = @bank_account.address.address_line_1
+
+        p
+          = "#{t('administration.bank_accounts.show.view.address_line_2')}:"
+          = @bank_account.address.address_line_2
+
+        p
+          = "#{t('administration.bank_accounts.show.view.address_line_3')}:"
+          = @bank_account.address.address_line_3
+
+        p
+          = "#{t('administration.bank_accounts.show.view.zip_code')}:"
+          = @bank_account.address.zip_code
+
+        p
+          = "#{t('administration.bank_accounts.show.view.iban_no')}:"
+          = @bank_account.iban_no
+
+        p
+          = "#{t('administration.bank_accounts.show.view.local_bank_number')}:"
+          = @bank_account.local_bank_number
+
+        p
+          = "#{t('administration.bank_accounts.show.view.swift')}:"
+          = @bank_account.swift
+
+        p
+          = "#{t('administration.bank_accounts.show.view.country_default')}:"
+          = @bank_account.country_default
+
+        p
+          = "#{t('administration.bank_accounts.show.view.global_default')}:"
+          = @bank_account.global_default
+
+        p
+          = "#{t('administration.bank_accounts.show.view.payment_conditions')}:"
+          = @bank_account.payment_conditions
+
+        .hl style=("padding: 15px 0")
+        h2
+          = "#{t('administration.bank_accounts.show.view.payment_conditions')}:"
+        p= @bank_account.payment_conditions
