@@ -19,6 +19,9 @@ Nbs::Application.routes.draw do
   namespace :administration do
     root to: "homes#show"
 
+    resources :articles
+    resources :bank_accounts
+    resources :category_email_templates, only: [:edit, :update]
 
     resources :currencies
 
@@ -40,7 +43,6 @@ Nbs::Application.routes.draw do
     resource :bulk_users_update, controller: "bulk_users_update", only: :update
 
     resources :categories
-    resources :category_email_templates, only: [:edit, :update]
 
     resource :setting, only: [:edit, :update]
     resources :featured_deals, only: [:index, :create]
@@ -56,7 +58,6 @@ Nbs::Application.routes.draw do
       resources :assets, controller: "deal_assets", only: [:create, :destroy]
     end
 
-    resources :articles
     resources :news
     resources :hints
     resources :softphone_servers
@@ -80,7 +81,6 @@ Nbs::Application.routes.draw do
       resources :refunds
     end
 
-    resources :bank_accounts
     resources :vat_rates
     resources :lead_templates
     resources :sellers

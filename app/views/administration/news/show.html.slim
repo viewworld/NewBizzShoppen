@@ -1,0 +1,11 @@
+= content_for :column_mc do
+  = header(back: true) do |section|
+    - section.block_header do
+      = t('administration.news.show.view.header')
+      
+  = frm(title: @news.title) do |section|
+    - section.block_header do
+      = bt_link_to nil, t("common.edit_link"), edit_administration_news_path, class: "fltr"
+    - section.block_content do
+      .pdd_10
+        = raw @news.content

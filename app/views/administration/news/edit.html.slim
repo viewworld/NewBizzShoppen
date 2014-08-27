@@ -1,0 +1,19 @@
+= content_for :column_mc do
+  = javascript_include_tag :ckeditor
+  = header(back: true) do |section|
+    - section.block_header do
+      = t('administration.news.edit.view.header', name: @news.title)
+      = image_tag_for_locale
+  = form_for @news, as: :news, url: administration_news_path(@news), html: {method: :delete, id: "delete_news_form"} do |form|
+  = semantic_form_for @news, as: :news, url: administration_news_path(@news), html: {method: :put} do |form|
+    = frm(title: @news.title, class: "todo_delete") do |section|
+      - section.block_content do
+        = render partial: 'form', locals: {form: form}
+      - section.block_actions do
+        = ibt(class: "fltri", icon: "save") do
+          = form.submit t("administration.news.edit.view.button_save")
+        = ibt(class: "bt_grey fltri") do
+          - if @news.just_created
+            = button_to_function t("common.cancel_link"), "$('#delete_news_form').submit();"
+          - else
+            = button_to_function t("common.cancel_link"), "history.go(-1)"

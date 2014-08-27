@@ -1,47 +1,42 @@
 class Administration::NewsController < Administration::AdministrationController
-  inherit_resources
-
   set_tab "content"
   set_subtab "news"
 
-  def edit
-    @news = Article.find(params[:id])
-    edit!
-  end
+  before_filter :set_article, only: [:show, :edit, :update, :destroy]
 
-  def update
-    @news = Article.find(params[:id])
-    @news.attributes = params[:news]
-    update!
+  def index
+    params[:search] ||= {}
+    params[:search][:with_subclass] ||= "Article::News"
+
+    @search = Article.scoped_search(params[:search])
+    @news = @search.paginate(show_all: params[:show_all], page: params[:page])
   end
 
   def create
-    @news = "Article::News::#{params[:subclass]}".constantize.new
-    create! do |success,failure|
-      success.html { render :action => :edit }
-      failure.html { redirect_to administration_news_index_path }
+    @news = "Article::News::#{params[:subclass].classify}".constantize.new
+
+    if @news.save
+      redirect_to edit_administration_news_path(@news)
+    else
+      redirect_to administration_news_index_path
     end
   end
 
-  def show
-    @news = Article.find(params[:id])
-    show!
+  def update
+    if @news.update_attributes(params[:article])
+      redirect_to administration_news_index_path
+    else
+      render :edit
+    end
   end
 
   def destroy
+    @news.destroy
+    redirect_to administration_news_index_path
+  end
+
+  private
+  def set_article
     @news = Article.find(params[:id])
-    super do |format|
-      format.html { redirect_to administration_news_index_path }
-    end
   end
-
-  protected
-
-  def collection
-    params[:search] ||= {}
-    params[:search][:with_subclass] = "Article::News" unless params[:search][:with_subclass].present?
-    @search = Article.scoped_search(params[:search])
-    @news = @search.paginate(:show_all => params[:show_all], :page => params[:page])
-  end
-
 end
