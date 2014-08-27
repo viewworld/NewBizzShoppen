@@ -3,52 +3,36 @@
 
 .generic
 {
-  width: 100%;
-  margin-top: 20px;
-  border-collapse:collapse;
-  font-size: 12px;
-}
-
-.generic {
-  padding: 0 10px;
+    width: 100%;
+    margin-top: 20px;
+    border-collapse:collapse;
+    font-size: 12px;
 }
 
 .generic thead th
 {
 	height: 39px;
-  background: url(/images/table/table.png) repeat-x 0 -39px;
-  line-height: 14px;
-  vertical-align: middle;
-  text-align: left;
-  color:#555555;
-  font-size: 12px;
-  padding: 0 20px;
+    background: url(/images/table/table.png) repeat-x 0 -39px;
+    line-height: 14px;
+    vertical-align: middle;
+    text-align: left;
+    color:#555555;
+    font-size: 12px;
+    padding: 0 9px;
 }
 
-.generic thead {
-  position: relative;
-  z-index: 1;
-}
-
-.generic thead:before, .generic thead:after {
-  content: "";
-  position: absolute;
-  width: 10px;
-  height: 100%;
-  top: 0;
-  z-index: 0;
-}
-
-.generic thead:before
+.generic thead th.hl
 {
-  background: url(/images/table/table.png) no-repeat 0 0;
-  left: 0;
+    background: url(/images/table/table.png) no-repeat 0 0;
+    width: 10px;
+    padding: 0 !important;
 }
 
-.generic thead:after
+.generic thead th.hr
 {
-  background: url(/images/table/table.png) no-repeat right 0;
-  right: 0;
+    background: url(/images/table/table.png) no-repeat right 0;
+    width: 10px;
+    padding: 0 !important;
 }
 
 .generic thead th a
@@ -65,28 +49,16 @@
     padding: 0;
 }
 
-.generic tfoot {
-  position: relative;
-}
-
-.generic tfoot:before, tfoot:after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  height: 100%;
-  width: 10px;
-}
-
-.generic tfoot:before
+.generic tfoot td.fl
 {
-  background: url(/images/table/table.png) no-repeat 0 -78px;
-  left: 0;
+    background: url(/images/table/table.png) no-repeat 0 -78px;
+    width: 10px;
 }
 
-.generic tfoot:after
+.generic tfoot td.fr
 {
-  background: url(/images/table/table.png) no-repeat right -78px;
-  right: 0;
+    background: url(/images/table/table.png) no-repeat right -78px;
+    width: 10px;
 }
 
 .generic tbody tr td
@@ -95,10 +67,6 @@
     border-bottom: 1px solid #e3e3e3;
     padding: 10px 7px;
     vertical-align: middle;
-}
-
-.generic tbody {
-  box-shadow: 1px 0 0 0 #ddd inset, -1px 0 0 0 #ddd inset;
 }
 
 .generic tbody tr td.cl
@@ -119,7 +87,6 @@
     padding: 0 !important;
 }
 
-.generic tbody tr:nth-child(even) td,
 .generic tbody tr.even td
 {
     background-color: #fafafa;
@@ -133,7 +100,7 @@
 
 .generic.small_padding tbody tr td
 {
-    padding: 10px 7px;
+    padding: 10px 3px;
 }
 
 .generic.small_padding tbody tr td.cl,
@@ -144,7 +111,7 @@
 
 .generic.small_padding thead th
 {
-    padding: 0 7px;
+    padding: 0 3px;
 }
 
 

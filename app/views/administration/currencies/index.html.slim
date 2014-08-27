@@ -14,6 +14,7 @@
     table#currencies_table.generic
       thead
         tr
+          th.hl
           th style='width:10px' = t('administration.currencies.index.view.table.name')
           th= t('administration.currencies.index.view.table.symbol')
           th= t('administration.currencies.index.view.table.format')
@@ -24,9 +25,11 @@
           th.ta_c= t('administration.currencies.index.view.table.active')
           th.ta_c= t('administration.currencies.index.view.table.global_default')
           th.ta_r= t('administration.currencies.index.view.actions')
+          th.hr
       tbody
         - @currencies.each do |currency|
           tr
+            td.cl
             td.ta_c= currency.name
             td= currency.symbol
             td= currency.format
@@ -41,6 +44,9 @@
                 = bt_link_to :cog, nil, 'javascript:void(0)', class: 'bt_dropdown'
                 ul
                   li= link_to t('administration.currencies.index.view.edit'), edit_administration_currency_path(currency), class: 'default_action'
+            td.cr
       tfoot
         tr
+          td.fl
           td colspan='10'
+          td.fr
