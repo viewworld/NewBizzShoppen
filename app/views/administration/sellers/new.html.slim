@@ -1,0 +1,7 @@
+= content_for :column_mc do
+  = javascript_include_tag :ckeditor
+  = header do |section|
+    - section.block_header do
+      = t('administration.sellers.new.view.header')
+
+  = render partial: 'form', locals: { url: administration_sellers_path }

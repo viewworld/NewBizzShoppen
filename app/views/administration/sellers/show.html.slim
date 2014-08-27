@@ -1,0 +1,54 @@
+= content_for :column_mc do
+  = header(back: true) do |section|
+    - section.block_header do
+      = t('administration.sellers.show.view.header')
+
+  = frm(title: @seller.company_name) do |section|
+    - section.block_header do
+      = bt_link_to nil, t('common.edit_link'), edit_administration_seller_path(@seller), class: 'fltr'
+
+    - section.block_content do
+      .pdd_10
+        h2
+          = "#{t('administration.sellers.show.view.company_name')}:"
+          strong= @seller.company_name
+        .hl style=('padding: 8px 0')
+        .grid_1to3.fltl
+          p
+            = "#{t('administration.sellers.show.view.first_name')}:"
+            strong= @seller.first_name
+          p
+            = "#{t('administration.sellers.show.view.last_name')}:"
+            strong= @seller.last_name
+          br/
+          p
+            = "#{t('administration.sellers.show.view.address_line_1')}:"
+            strong= @seller.address.address_line_1
+          p
+            = "#{t('administration.sellers.show.view.address_line_2')}:"
+            strong= @seller.address.address_line_2
+          p
+            = "#{t('administration.sellers.show.view.address_line_3')}:"
+            strong= @seller.address.address_line_3
+
+        .grid_1to3.fltl
+          p
+            = "#{t('administration.sellers.show.view.zip_code')}:"
+            strong= @seller.address.zip_code
+          p
+            = "#{t('administration.sellers.show.view.country')}:"
+            strong= @seller.address.country.name
+          p
+            = "#{t('administration.sellers.show.view.vat_no')}:"
+            strong= @seller.vat_no
+          br/
+          p
+            = "#{t('administration.sellers.show.view.default')}:"
+            = check_box_tag 'default', 1, @seller.default?, disabled: true
+
+        .grid_1to3.fltl
+          p
+            strong= "#{t('administration.sellers.show.view.note')}:"
+          p
+            = raw @seller.note
+        .clb
