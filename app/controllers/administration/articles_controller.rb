@@ -15,7 +15,7 @@ class Administration::ArticlesController < Administration::AdministrationControl
   end
 
   def create
-    @article = Article::Cms::MainPageArticle.new(params[:article])
+    @article = Article::Cms::MainPageArticle.new
 
     if @article.save
       redirect_to edit_administration_article_path(@article)
