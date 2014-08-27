@@ -23,6 +23,7 @@ Nbs::Application.routes.draw do
     resources :bank_accounts, except: :index
     resources :category_email_templates, only: [:edit, :update]
     resources :currencies, except: :show
+    resources :leads, only: [:index, :edit, :update]
     resources :news, except: :new
     resources :sellers
 
@@ -50,7 +51,6 @@ Nbs::Application.routes.draw do
     end
 
     resources :email_template_signatures
-    resources :leads
 
     resources :deals do
       resources :assets, controller: "deal_assets", only: [:create, :destroy]

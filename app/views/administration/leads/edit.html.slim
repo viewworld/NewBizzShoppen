@@ -1,0 +1,25 @@
+= content_for :column_mc do
+  = semantic_form_for [:administration, @lead], method: :put do |form|
+    = header(back: true) do |section|
+      - section.block_header do
+        = t("administration.leads.edit.view.header", lead_header: @lead.header)
+        = image_tag_for_locale
+
+    = frm(title: "#{t('administration.leads.edit.view.created_by')} #{@lead.creator.company_name} - #{@lead.creator.email}") do |section|
+      - section.block_content do
+        = render partial: '/shared/leads/form', locals: {form: form}
+      - section.block_actions do
+        = ibt(class: "fltri", icon: "save") do
+          = form.submit t("administration.leads.edit.view.button_update")
+        = ibt(class: "bt_grey fltri") do
+          = button_to_function t("administration.leads.edit.view.button_cancel"), "history.go(-1)"
+
+  = frm(title: t('administration.leads.edit.view.rating_header'), id: "lead_rating") do |section|
+    - @lead.lead_purchases.each do |lead_purchase|
+      - unless lead_purchase.rating_level.nil?
+        .rating_element
+          h3
+            = t("administration.leads.show.view.rating_level")
+            span.rating_level= lead_purchase.rating_level_as_text
+        = lead_purchase.rating_reason
+        .hl

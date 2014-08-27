@@ -1,0 +1,62 @@
+.search_box
+  h2= t("common.search")
+  .search_content
+    = form_for @search, url: administration_leads_path do |f|
+      fieldset.inputs_vertical
+        ol.no_pdd
+          li.string
+            = f.label :with_keyword, t("administration.leads.index.search.keyword_label")
+            = f.text_field :with_keyword, style: "width:140px"
+
+          li.select
+            = f.label :with_category, t("administration.leads.index.search.category_label")
+            = f.select :with_category, categories_for_select, include_blank: true
+
+          li.select
+            = f.label :with_status, t("administration.leads.index.search.status_label")
+            = f.select :with_status, statuses_for_select, include_blank: true
+
+          li.select
+            = f.label :with_creator_type, t("administration.leads.index.search.owner_type_label")
+            = f.select :with_creator_type, creator_types, include_blank: true
+
+          li.string.range
+            = f.hidden_field :price_from
+            = f.hidden_field :price_to
+            = f.label :price_from_to, t("administration.leads.index.search.price_range_label")
+            = text_field_tag :price_from_to, '', readonly: "readonly", id: "price_from_to", style: "width: 75px"
+            .range_container
+              #price_range.slider-range
+
+          li.string.range
+            = f.hidden_field :lead_purchases_counter_from
+            = f.hidden_field :lead_purchases_counter_to
+            = f.label :lead_purchases_counter_from, t("administration.leads.index.search.sold_range_label")
+            = text_field_tag :lead_purchases_counter_from_to, '', readonly: "readonly", id: "lead_purchases_counter_from_to", style: "width: 60px"
+            .range_container
+              #sold_range.slider-range
+
+          li.string.range
+            = f.hidden_field :purchase_value_from
+            = f.hidden_field :purchase_value_to
+            = f.label :purchase_value_from, t("administration.leads.index.search.value_range_label")
+            = text_field_tag :purchase_value_from_to, '', readonly: "readonly", id: "purchase_value_from_to"
+            .range_container
+              #value_range.slider-range
+
+          li.boolean
+            = f.check_box :purchased, {}, "true", "false"
+            = f.label :purchased, t("administration.leads.index.view.filter_purchased")
+
+          li.commit
+            = ibt(class: "bt_green", icon: "magnify") do
+              = f.hidden_field :with_created_by
+              = submit_tag t("administration.leads.index.view.search_button")
+            p
+              = bt_clear_filter
+
+      fieldset.inputs_vertical
+        ol.no_pdd
+          li.string
+            label.no_pdd_t Tags
+            = render partial: "shared/tags/search_with_tags", locals: { search: @search }
