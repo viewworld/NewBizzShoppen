@@ -3,11 +3,11 @@
     - section.block_header do
       = t("administration.lead_templates.new.view.header", category: @lead_template.category.name)
       = image_tag_for_locale
-      
-  = semantic_form_for [:administration, @lead_template], method: :put, html: {multipart: true} do |form|
+
+  = semantic_form_for [:administration, @lead_template], html: { multipart: true } do |form|
     = frm do |section|
       - section.block_content do
-        = render partial: '/shared/lead_templates/form', locals: {form: form}
+        = render partial: '/shared/lead_templates/form', locals: { form: form }
       - section.block_actions do
         = ibt(class: "fltri", icon: "plus") do
           = form.submit t("administration.lead_templates.new.view.button_create")

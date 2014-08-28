@@ -5,7 +5,7 @@
       = image_tag_for_locale
 
   = semantic_form_for [:administration, @lead_template], method: :put, html: { multipart: true } do |form|
-    = frm(title: "#{t('administration.lead_templates.edit.view.created_by')}: #{@lead_template.creator}") do |section|
+    = frm(title: @lead_template.admin_title) do |section|
       - section.block_content do
         = render partial: '/shared/lead_templates/form', locals: { form: form }
 

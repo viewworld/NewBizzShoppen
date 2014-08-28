@@ -25,7 +25,7 @@ Nbs::Application.routes.draw do
     resources :currencies, except: :show
     resources :languages, only: [:index, :update]
     resources :leads, only: [:index, :edit, :update]
-    resources :lead_templates, only: [:edit, :new, :update, :create]
+    resources :lead_templates, except: [:index, :show]
     resources :news, except: :new
     resources :sellers
 

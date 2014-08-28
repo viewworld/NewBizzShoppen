@@ -17,8 +17,7 @@ class LeadTemplate < ActiveRecord::Base
 
   accepts_nested_attributes_for :lead_template_fields, :allow_destroy => true
 
-  attr_accessor :current_user
-  attr_protected :name, :is_mandatory, :is_active
+  attr_accessor :current_user, :name, :is_mandatory, :is_active
   BLACK_LISTED_ATTRIBUTES = [:name, :is_mandatory, :is_active].freeze
 
   translates :name
