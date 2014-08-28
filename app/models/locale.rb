@@ -9,4 +9,7 @@ class Locale < ActiveRecord::Base
     code
   end
 
+  def pair
+    [language, code]
+  end
 end

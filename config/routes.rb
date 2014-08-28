@@ -28,6 +28,11 @@ Nbs::Application.routes.draw do
     resources :lead_templates, except: [:index, :show]
     resources :news, except: :new
     resources :sellers
+
+    resource :translation do
+      resource :cache
+    end
+
     resources :vat_rates
     resources :youtube_introductions, except: [:index, :show]
 
@@ -85,9 +90,6 @@ Nbs::Application.routes.draw do
     resources :category_users
     resources :countries
 
-    resource :translation do
-      resource :cache
-    end
 
     resource :stats_recalculation, controller: "stats_recalculation", only: :update
     resources :supplier_interests, only: [:edit, :update]

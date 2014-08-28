@@ -1,0 +1,30 @@
+= content_for :search_box do
+  = render 'search'
+
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t("administration.translations.show.view.header")
+    - section.block_actions do
+      ul.header_actions
+        li.last
+          = bt_link_to :remove, t("administration.translations.show.view.clear_cache"), administration_translation_cache_path, method: :delete
+
+  table.generic
+    thead
+      th= t("administration.translations.show.view.key")
+      - @languages.each_with_index do |lang,i|
+        th= select_tag "temp_lang_#{i+1}", options_for_select(@available_locales, lang.code), onchange: "fill_languages_and_submit()"
+
+    tbody
+      - @keys.each do |key|
+        tr
+          td id="td.#{locale}.#{key}"
+            = translation_key(key)
+
+          - @languages.each do |lang|
+            td
+              = text_field_tag "#{lang.code}.#{key}",
+                (@translations[key][lang.code] ? @translations[key][lang.code].first.value : ''), locale: lang.code, key: key, onblur: "update_translation(this)"
+
+  = render 'js'

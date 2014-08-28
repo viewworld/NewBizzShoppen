@@ -1,0 +1,17 @@
+.search_box
+  h2= t("common.search")
+  .search_content
+    = form_for @search, url: administration_translation_path do |f|
+      fieldset.inputs_vertical
+        ol.no_pdd
+          li.string
+            = f.label :with_keyword, t("administration.translations.show.view.search.with_keyword")
+            = f.text_field :with_keyword
+
+          li.commit
+            = ibt(class: "bt_green", icon: "magnify") do
+              = hidden_field_tag "lang_1", params[:lang_1]
+              = hidden_field_tag "lang_2", params[:lang_2]
+              = submit_tag t("administration.translations.show.view.search.search_button")
+            p
+              = bt_clear_filter

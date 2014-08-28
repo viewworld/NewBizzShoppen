@@ -1,0 +1,21 @@
+javascript:
+  function update_translation(field) {
+      field = $(field);
+      $.ajax({
+        type: 'PUT',
+        url: '/administration/translation',
+        data: 'locale='+field.attr('locale')+'&key='+field.attr('key')+'&value='+field.attr('value'),
+        success: function(data, textStatus, jqXHR) {
+            field.parent().effect('highlight')
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert(textStatus);
+        }
+      });
+  }
+
+  function fill_languages_and_submit() {
+      $('#lang_1').val($('#temp_lang_1').val());
+      $('#lang_2').val($('#temp_lang_2').val());
+      $('#search_new').submit();
+  }
