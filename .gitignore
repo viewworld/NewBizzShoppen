@@ -22,6 +22,6 @@
 /public/system/agent_timesheets_cache/*
 /public/system/payouts/*
 /public/system/import_temp/*
-tags
+/tags
 .DS_Store
 /tmp.html
