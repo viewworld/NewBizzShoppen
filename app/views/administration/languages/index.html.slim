@@ -1,0 +1,36 @@
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t("administration.languages.index.view.header")
+
+  - if @languages.blank?
+    = blank_state_message( t("administration.languages.index.view.no_languages_defined") )
+  - else
+    table#locales_table.generic
+      thead
+        tr
+          th.hl
+          th= t("administration.languages.index.view.language")
+          th= t("administration.languages.index.view.code")
+          th= t("administration.languages.index.view.enabled")
+          th.ta_r= t("administration.languages.index.view.actions")
+          th.hr
+      tfoot
+        tr
+          td.fl
+          td colspan="4"
+          td.fr
+      tbody
+        - @languages.each do |lang|
+          tr
+            td.cl
+            td= lang.language
+            td= lang.code
+            td= check_box_tag "locale_#{lang.id}_enabled", 1, lang.enabled?, disabled: true
+            td.tda.ta_r
+              - unless I18n.locale.to_s == lang.code
+                - if lang.enabled?
+                  = link_to t("administration.languages.index.view.disable"), administration_language_path(lang, language: { enabled: false }), { method: :put, class: 'warning' } 
+                - else
+                  = link_to t("administration.languages.index.view.enable"), administration_language_path(lang, language: { enabled: true }), { method: :put }
+            td.cr

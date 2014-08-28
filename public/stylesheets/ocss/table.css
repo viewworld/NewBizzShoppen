@@ -87,6 +87,7 @@
     padding: 0 !important;
 }
 
+.generic tbody tr:nth-child(even) td,
 .generic tbody tr.even td
 {
     background-color: #fafafa;
@@ -219,6 +220,28 @@
 {
     padding: 4px;
     min-width: 60px;
+}
+
+.generic tbody td.tda > a {
+  text-decoration: none;
+  background: linear-gradient(rgb(147, 202, 30), rgb(109, 176, 14)) rgb(147, 202, 30);
+  border-radius: 3px;
+  display: inline-block;
+  padding: 5px;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.2);
+}
+
+.generic tbody td.tda > a:hover {
+  background: linear-gradient(rgb(170, 223, 26), rgb(121, 188, 13));
+}
+
+.generic tbody td.tda > a.warning {
+  background: linear-gradient(rgb(223, 28, 28), rgb(178, 13, 13)) rgb(204, 28, 28);
+}
+
+.generic tbody td.tda > a.warning:hover {
+  background: linear-gradient(rgb(238, 18, 18), rgb(215, 15, 15)) rgb(219, 27, 27);
 }
 
 td.tda a.bt

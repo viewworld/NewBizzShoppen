@@ -23,6 +23,7 @@ Nbs::Application.routes.draw do
     resources :bank_accounts, except: :index
     resources :category_email_templates, only: [:edit, :update]
     resources :currencies, except: :show
+    resources :languages, only: [:index, :update]
     resources :leads, only: [:index, :edit, :update]
     resources :lead_templates, only: [:edit, :new, :update, :create]
     resources :news, except: :new
@@ -91,7 +92,6 @@ Nbs::Application.routes.draw do
     resources :supplier_interests, only: [:edit, :update]
     resources :youtube_introductions
     resources :email_bounces
-    resources :languages
 
     resources :subscription_plans do
       collection { get 'fetch_subscription_plans' }
