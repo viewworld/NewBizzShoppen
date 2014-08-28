@@ -5,7 +5,7 @@ class Administration::YoutubeIntroductionsController < Administration::Administr
   before_filter :set_youtube_introduction, only: [:edit, :update, :destroy]
 
   def new
-    @youtube_introduction = YoutubeIntroduction.new.decorate
+    @youtube_introduction = YoutubeIntroduction.new
   end
 
   def create
@@ -33,6 +33,6 @@ class Administration::YoutubeIntroductionsController < Administration::Administr
 
   private
   def set_youtube_introduction
-    @youtube_introduction = YoutubeIntroduction.find(params[:id]).decorate
+    @youtube_introduction = YoutubeIntroduction.find(params[:id])
   end
 end

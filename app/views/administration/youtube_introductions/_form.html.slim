@@ -1,4 +1,4 @@
-= semantic_form_for @youtube_introduction, url: url, html: { multipart: true } do |form|
+= semantic_form_for [:administration, @youtube_introduction], html: { multipart: true } do |form|
   = frm do |section|
     - section.block_content do
       .pdd_10.no_pdd_t
