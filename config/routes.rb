@@ -28,6 +28,7 @@ Nbs::Application.routes.draw do
     resources :lead_templates, except: [:index, :show]
     resources :news, except: :new
     resources :sellers
+    resources :vat_rates
     resources :youtube_introductions, except: [:index, :show]
 
     resources :users do
@@ -81,7 +82,6 @@ Nbs::Application.routes.draw do
       resources :refunds
     end
 
-    resources :vat_rates
     resources :category_users
     resources :countries
 
