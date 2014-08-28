@@ -5,7 +5,7 @@ class Administration::VatRatesController < Administration::AdministrationControl
   before_filter :set_vat_rate, only: [:edit, :update]
 
   def new
-    @vat_rate = VatRate.new
+    @vat_rate = VatRate.new(country: Country.new)
   end
 
   def create
@@ -28,6 +28,6 @@ class Administration::VatRatesController < Administration::AdministrationControl
 
   private
   def set_vat_rate
-    @vat_rate = VatRate.find(params[:id]).includes(:country)
+    @vat_rate = VatRate.find(params[:id])
   end
 end
