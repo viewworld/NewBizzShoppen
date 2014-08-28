@@ -5,9 +5,7 @@ class Administration::AdministrationController < SecuredController
   end
 
   private
-
   def authorize_user_for_namespace!
     authorize_role(:admin)
   end
-
 end

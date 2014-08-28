@@ -28,6 +28,7 @@ Nbs::Application.routes.draw do
     resources :lead_templates, except: [:index, :show]
     resources :news, except: :new
     resources :sellers
+    resources :youtube_introductions, except: [:index, :show]
 
     resources :users do
       resource :password, controller: 'password', only: [:new, :update, :destroy]
@@ -90,7 +91,6 @@ Nbs::Application.routes.draw do
 
     resource :stats_recalculation, controller: "stats_recalculation", only: :update
     resources :supplier_interests, only: [:edit, :update]
-    resources :youtube_introductions
     resources :email_bounces
 
     resources :subscription_plans do
