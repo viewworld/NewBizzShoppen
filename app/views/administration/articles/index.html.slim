@@ -30,7 +30,7 @@
           td.fr
       tbody
         - @articles.each do |article|
-          tr class=cycle("odd", "even")
+          tr
             td.cl
             td.ta_c= article.id
             td= article.show_type

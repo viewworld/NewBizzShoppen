@@ -765,6 +765,12 @@ h4
     top: 5px;
 }
 
+#news_subclass_select {
+  position:absolute;
+  top: 5px;
+  right: 110px;
+}
+
 .header_actions
 {
     float: right;

@@ -9,6 +9,7 @@ class Administration::LanguagesController < Administration::AdministrationContro
   def update
     @language = Locale.find(params[:id])
 
+    # FIXME: Add notifications
     if @language.update_attributes(params[:language])
       redirect_to administration_languages_path
     else

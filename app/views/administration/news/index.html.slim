@@ -12,7 +12,7 @@
             li.select
               = f.label :with_subclass, t("administration.leads.index.search.owner_type_label")
               = f.select :with_subclass, news_scope_for_select, include_blank: true
-              
+
             li.commit
               = ibt(class: "bt_green", icon: "magnify") do
                 = submit_tag t("administration.news.index.view.search_button")
@@ -25,7 +25,7 @@
       = t("administration.news.index.view.header")
     - section.block_actions do
       = form_tag administration_news_index_path, method: :post, id: "form_new_news" do
-        span style=("position:absolute;top: 5px; right: 110px;")
+        span#news_subclass_select
           = select_tag "subclass", options_for_select(news_scope_for_select), {}
         ul.header_actions
           li.last
@@ -52,7 +52,7 @@
           td.fr
       tbody
         - @news.each do |news|
-          tr class=cycle("odd", "even")
+          tr
             td.cl
             td= news.id
             td= news.title

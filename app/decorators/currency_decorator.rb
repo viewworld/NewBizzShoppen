@@ -10,6 +10,6 @@ class CurrencyDecorator < Draper::Decorator
   end
 
   def updated_at
-    l object.updated_at
+    l(object.updated_at)
   end
 end

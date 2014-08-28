@@ -34,7 +34,6 @@ class Administration::CurrenciesController < Administration::AdministrationContr
     if @currency.destroy
       redirect_to administration_currencies_path
     else
-      binding.pry
       redirect_to administration_currencies_path, alert: @currency.errors[:base].join('<br/>')
     end
   end

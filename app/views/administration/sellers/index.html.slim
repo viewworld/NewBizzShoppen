@@ -28,20 +28,20 @@
           td colspan="6"
           td.fr
       tbody
-        - @sellers.each do |s|
+        - @sellers.each do |seller|
           tr
             td.cl
-            td= s.address.country.name
-            td= s.company_name
-            td= s.first_name
-            td= s.last_name
-            td.ta_c= check_box_tag "default_# s.id ", 1, s.default?, disabled: true
+            td= seller.address.country.name
+            td= seller.company_name
+            td= seller.first_name
+            td= seller.last_name
+            td.ta_c= check_box_tag "default_#{seller.id}", 1, seller.default?, disabled: true
             td.tda.ta_r
               .td_actions
                 = bt_link_to :cog, nil, "javascript:void(0)", class: "bt_dropdown"
 
                 ul
-                  li= link_to t("administration.sellers.index.view.show"), administration_seller_path(s)
-                  li= link_to t("administration.sellers.index.view.edit"), edit_administration_seller_path(s), class: "default_action"
-                  li= link_to t("administration.sellers.index.view.delete"), administration_seller_path(s), method: :delete, confirmation: t("common.confirmation")
+                  li= link_to t("administration.sellers.index.view.show"), administration_seller_path(seller)
+                  li= link_to t("administration.sellers.index.view.edit"), edit_administration_seller_path(seller), class: "default_action"
+                  li= link_to t("administration.sellers.index.view.delete"), administration_seller_path(seller), method: :delete, confirmation: t("common.confirmation")
             td.cr
