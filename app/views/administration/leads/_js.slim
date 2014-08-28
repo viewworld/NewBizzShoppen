@@ -1,0 +1,56 @@
+javascript:
+  jQuery(document).ready(function()
+  {
+    $("#price_range").slider({
+      min:  Lead.minimum(:price) ,
+      max:  Lead.maximum(:price) ,
+      values: [  @search.minimum(:price) ,  @search.maximum(:price)  ],
+      slide: function(event, ui) {
+        $('#search_price_from').val(ui.values[ 0 ]);
+        $('#search_price_to').val(ui.values[ 1 ]);
+        $(this).parents().prev().val("$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ]);
+      }
+    });
+
+    $("#sold_range").slider({
+      min:  Lead.minimum(:lead_purchases_counter) ,
+      max:  Lead.maximum(:lead_purchases_counter) ,
+      values: [  @search.minimum(:lead_purchases_counter) ,  @search.maximum(:lead_purchases_counter)  ],
+      slide: function(event, ui) {
+        $('#search_lead_purchases_counter_from').val(ui.values[ 0 ]);
+        $('#search_lead_purchases_counter_to').val(ui.values[ 1 ]);
+        $(this).parents().prev().val(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
+      }
+    });
+
+    $("#value_range").slider({
+      min:  Lead.minimum(:purchase_value) ,
+      max:  Lead.maximum(:purchase_value) ,
+      values: [  @search.minimum(:purchase_value) ,  @search.maximum(:purchase_value)  ],
+      slide: function(event, ui) {
+        $('#search_purchase_value_from').val(ui.values[ 0 ]);
+        $('#search_purchase_value_to').val(ui.values[ 1 ]);
+        $(this).parents().prev().val("$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ]);
+      }
+    });
+  });
+
+  $(document).ready(function() {
+    if ($('#search_price_from').val() != "" && $('#search_price_to').val() != "")
+    {
+      $("#price_range").slider("option", "values", [parseInt($('#search_price_from').val()), parseInt($('#search_price_to').val())]);
+      $('#price_from_to').val("$" + $('#search_price_from').val() + " - $" + $('#search_price_to').val());
+    }
+
+    if ($('#search_lead_purchases_counter_from').val() != "" && $('#search_lead_purchases_counter_to').val() != "")
+    {
+      $("#sold_range").slider("option", "values", [parseInt($('#search_lead_purchases_counter_from').val()), parseInt($('#search_lead_purchases_counter_to').val())]);
+      $('#lead_purchases_counter_from_to').val($('#search_lead_purchases_counter_from').val() + " - " + $('#search_lead_purchases_counter_to').val());
+    }
+
+    if ($('#search_purchase_value_from').val() != "" && $('#search_purchase_value_to').val() != "")
+    {
+      $("#value_range").slider("option", "values", [parseInt($('#search_purchase_value_from').val()), parseInt($('#search_purchase_value_to').val())]);
+      $('#purchase_value_from_to').val($('#search_purchase_value_from').val() + " - " + $('#search_purchase_value_to').val());
+    }
+  });

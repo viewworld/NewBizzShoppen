@@ -1,5 +1,6 @@
 class Administration::LeadsController < Administration::AdministrationController
   set_tab "leads"
+  before_filter :set_lead, only: [:edit, :update]
 
   def index
     params[:search] ||= { descend_by_created_at: true }
@@ -8,12 +9,7 @@ class Administration::LeadsController < Administration::AdministrationController
     @leads = @search.paginate(show_all: params[:show_all], page: params[:page], per_page: Settings.default_leads_per_page)
   end
 
-  def edit
-    @lead = Lead.find(params[:id])
-  end
-
   def update
-    @lead = Lead.find(params[:id])
     @lead.current_user = current_user
 
     if @lead.update_attributes(params[:lead])
@@ -21,5 +17,10 @@ class Administration::LeadsController < Administration::AdministrationController
     else
       render :edit
     end
+  end
+
+  private
+  def set_lead
+    @lead = Lead.find(params[:id]).decorate
   end
 end

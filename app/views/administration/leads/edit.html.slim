@@ -5,7 +5,7 @@
         = t("administration.leads.edit.view.header", lead_header: @lead.header)
         = image_tag_for_locale
 
-    = frm(title: "#{t('administration.leads.edit.view.created_by')} #{@lead.creator.company_name} - #{@lead.creator.email}") do |section|
+    = frm(title: @lead.admin_title) do |section|
       - section.block_content do
         = render partial: '/shared/leads/form', locals: {form: form}
       - section.block_actions do
