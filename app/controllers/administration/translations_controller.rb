@@ -6,6 +6,7 @@ class Administration::TranslationsController < Administration::AdministrationCon
     params[:lang_1] ||= 'en'
     params[:lang_2] ||= 'da'
 
+    # FIXME: Refactoring this probably will need some change in db
     @available_locales = Locale.all.map(&:pair).sort
     @languages = Locale.where(code: [params[:lang_1], params[:lang_2]])
 
