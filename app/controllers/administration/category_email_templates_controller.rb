@@ -22,12 +22,8 @@ class Administration::CategoryEmailTemplatesController < Administration::Adminis
 
   def duplicate_global_email_template
     global_template = EmailTemplate.global.where(uniq_id: 'bought_lead_notification').first
+    attributes = global_template.attributes.slice("subject", "body", "from", "uniq_id")
 
-    @category.create_email_template(
-      subject: global_template.subject,
-      body: global_template.body,
-      from: global_template.from,
-      uniq_id: global_template.uniq_id
-    )
+    @category.create_email_template(attributes)
   end
 end
