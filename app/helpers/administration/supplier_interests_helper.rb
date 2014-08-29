@@ -1,4 +1,4 @@
-class SupplierInterestsHelper
+module Administration::SupplierInterestsHelper
   def all_categories_for_interests
     (LeadCategory.without_unique - @user.category_interests).map { |c| [c.name.to_s, c.id] }.sort
   end
