@@ -1,6 +1,4 @@
 class CurrencyDecorator < ApplicationDecorator
-  delegate_all
-
   def symbol
     object.symbol.html_safe
   end
