@@ -1,4 +1,4 @@
-class CurrencyDecorator < Draper::Decorator
+class CurrencyDecorator < ApplicationDecorator
   delegate_all
 
   def symbol

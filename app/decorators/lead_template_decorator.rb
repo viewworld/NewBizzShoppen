@@ -1,7 +1,7 @@
-class LeadTemplateDecorator < Draper::Decorator
+class LeadTemplateDecorator < ApplicationDecorator
   delegate_all
 
   def admin_title
-    "#{h.t('administration.lead_templates.edit.view.created_by')}: #{object.creator}"
+    "#{t('administration.lead_templates.edit.view.created_by')}: #{object.creator}"
   end
 end
