@@ -1,0 +1,74 @@
+= content_for :search_box do
+  .search_box
+    .search_left
+    .search_right
+    h2= t("common.search")
+    .search_content
+      = form_for @search, url: administration_tags_path do |f|
+        fieldset.inputs_vertical
+          ol.no_pdd
+            li.string
+              = f.label :with_keyword, t("administration.tags.index.search.keyword_label")
+              = f.text_field :with_keyword
+            li.commit
+              = ibt(class: "bt_green", icon: "magnify") do
+                = submit_tag t("administration.tags.index.view.search_button")
+              p
+                = bt_clear_filter
+
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t("administration.tags.index.view.title")
+
+
+  - if @tags.blank?
+    = blank_state_message
+  - else
+    table#tags_table.generic
+      thead
+        tr
+          th.hl
+          th.medium= t("administration.tags.index.view.table.name")
+          th.small= t("administration.tags.index.view.table.total")
+          th.small= t("administration.tags.index.view.table.leads_deals_contacts")
+          th.small= t("administration.tags.index.view.table.users")
+          th.small= t("administration.tags.index.view.table.results")
+          th.small= t("administration.tags.index.view.table.tag_group")
+          th.ta_r= t("administration.tags.index.view.table.actions")
+          th.hr
+      tfoot
+        tr
+          td.fl
+          td colspan="7"
+          td.fr
+      tbody
+        - @tags.each do |tag|
+          tr id="country#{tag.id}"
+            td.cl
+            td= tag.name
+            td
+              strong= tag.count_taggings_by_type(except: :result)
+            td= tag.count_taggings_by_type(only: :abstract_lead)
+            td= tag.count_taggings_by_type(only: :user)
+            td= tag.count_taggings_by_type(only: :campaigns_result)
+            td= tag.count_taggings_by_type(only: :tag_group)
+            td.tda.ta_r id="country_actions_td_#{tag.name_underscored}"
+              .td_actions
+                = bt_link_to :cog, nil, "javascript:void(0)", class: "bt_dropdown"
+                ul
+                  li= link_to t("administration.tags.index.view.edit"), edit_administration_tag_path(tag), class: "default_action"
+                  li= link_to t("administration.tags.index.view.duplicate"), duplicate_administration_tag_path(tag), onclick: "duplicate_tag('#{tag.id}')", method: :post, id: "duplicate_link_#{tag.id}"
+                  li= link_to t("administration.tags.index.view.delete"), administration_tag_path(tag), { method: :delete, confirm: t("administration.tags.index.view.delete_confirmation_message") }
+            td.cr
+
+        - if will_paginate
+          tr.pagination
+            td.ta_c colspan='9' class='ta_c'
+              = will_paginate @tags, previous_label: '&laquo;', next_label: '&raquo;'
+
+  javascript:
+    function duplicate_tag(tag) {
+      var name = prompt("#{t('administration.tags.index.enter_name')}:");
+      $('#duplicate_link_' + tag_id).attr('href', $('#duplicate_link_' + tag_id).attr('href') + '?name=' + name)
+    }

@@ -3,10 +3,10 @@
   <fieldset class="inputs labels_ta_r labels_200">
     <ol class="align_inputs">
       <%= form.input :name %>
-      <%= form.input :merge_with_tags, :as => :boolean, :onchange => "enable_merge()" %>
+      <%= form.input :merge_with_tags, as: :boolean, onchange: "enable_merge()" %>
 
       <div id="merge_with_others_container" style="display: none">
-        <%= form.input :merge_with_cleanup, :as => :boolean %>
+        <%= form.input :merge_with_cleanup, as: :boolean %>
         <div>
         <%= t("tags.common.assigned_tags_label") %>:
         <ul id="tags_selection" name="<%= "tag[merge_with_tag_names]" %>"></ul>

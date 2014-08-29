@@ -13,7 +13,7 @@
                     <Cell><Data ss:Type="String"><%= attr.humanize %></Data></Cell>
                 <% end %>
               </Row>
-              <% CallResult.where(:result_id => taggings.map(&:taggable_id)).each do |call_result| %>
+              <% CallResult.where(result_id: taggings.map(&:taggable_id)).each do |call_result| %>
                   <Row>
                     <% CallResult::CSV_ATTRS.each do |attr| %>
                       <Cell><Data ss:Type="String"><%= call_result.send(attr) %></Data></Cell>

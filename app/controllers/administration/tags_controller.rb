@@ -1,51 +1,45 @@
 class Administration::TagsController < Administration::AdministrationController
-  inherit_resources
   set_tab "settings"
   set_subtab "tags"
 
+  before_filter :set_tag, only: [:show, :edit, :update, :destroy, :duplicate]
+
+  def index
+    @search = Tag.scoped_search(params[:search])
+    @tags = @search.paginate(show_all: params[:show_all], page: params[:page], per_page: Tag.per_page).decorate
+  end
+
   def edit
-    @tag = ActsAsTaggableOn::Tag.find(params[:id])
+    @taggings = @tag.taggings.order("taggable_type").includes(:taggable)
+  end
+
+  def show
+    respond_to do |format|
+      format.csv { send_data render_to_string, filename: "tagged_with_#{@tag.name}.csv" }
+      format.xls { send_data render_to_string, filename: "tagged_with_#{@tag.name}.xls" }
+    end
   end
 
   def update
-    @tag = ActsAsTaggableOn::Tag.find(params[:id])
-    update! do |success, failure|
-      success.html { redirect_to administration_tags_path }
-      failure.html { render 'edit' }
+    if @tag.update_attributes(params[:tag])
+      redirect_to administration_tags_path
+    else
+      render :edit
     end
   end
 
   def destroy
-    @tag = ActsAsTaggableOn::Tag.find(params[:id])
-    destroy! do |success, fauilure|
-      success.html { redirect_to administration_tags_path }
-    end
+    @tag.destroy
+    redirect_to administration_tags_path
   end
 
   def duplicate
-    @tag = ActsAsTaggableOn::Tag.find(params[:id])
-    if @tag.duplicate!(params[:name])
-      flash[:notice] = I18n.t("administration.tags.duplicate.flash.notice_successful", :name => @tag.to_s, :new_name => params[:name])
-    else
-      flash[:notice] = I18n.t("administration.tags.duplicate.flash.notice_failure", :name => @tag.to_s, :new_name => params[:name])
-    end
-    respond_to do |format|
-      format.html { redirect_to administration_tags_path }
-    end
-  end
-
-  def show
-    @tag = ActsAsTaggableOn::Tag.find(params[:id])
-    respond_to do |wants|
-      wants.csv { send_data render_to_string, :filename => "tagged_with_#{@tag.name}.csv" }
-      wants.xls { send_data render_to_string, :filename => "tagged_with_#{@tag.name}.xls" }
-    end
+    notice_key = @tag.duplicate!(params[:name]) ? :notice_successful : :notice_failure
+    redirect_to administration_tags_path, notice: t(notice_key, scope: 'administration.tags.duplicate.flash', name: @tag.to_s, new_name: params[:name])
   end
 
   protected
-
-  def collection
-    @search = ActsAsTaggableOn::Tag.scoped_search(params[:search])
-    @tags = @search.paginate(:show_all => params[:show_all], :page => params[:page], :per_page => ActsAsTaggableOn::Tag.per_page)
+  def set_tag
+    @tag = ActsAsTaggableOn::Tag.find(params[:id])
   end
 end
