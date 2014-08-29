@@ -1,6 +1,5 @@
 class Administration::SupplierInterestsController < Administration::AdministrationController
-
-  before_filter :fetch_user
+  before_filter :set_user, only: [:edit, :update]
 
   def edit
     @countries = Country.all
@@ -9,19 +8,16 @@ class Administration::SupplierInterestsController < Administration::Administrati
   def update
     if @user.update_attributes(params[:user_supplier])
       @user.check_and_correct_interests!
-      flash[:notice] = I18n.t("flash.supplier_interests.update.notice")
-      redirect_to edit_administration_user_path(@user)
+      redirect_to edit_administration_user_path(@user), notice: t("flash.supplier_interests.update.notice")
     else
-      render :action => "edit"
+      render :edit
     end
   end
 
   private
 
-  def fetch_user
+  def set_user
     @user = User.find(params[:id]).with_role
-    unless @user.has_role?(:supplier)
-      redirect_to edit_administration_user_path(@user)
-    end
+    redirect_to edit_administration_user_path(@user) unless @user.has_role?(:supplier)
   end
 end

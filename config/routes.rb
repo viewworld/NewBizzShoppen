@@ -28,6 +28,11 @@ Nbs::Application.routes.draw do
     resources :lead_templates, except: [:index, :show]
     resources :news, except: :new
     resources :sellers
+    resources :supplier_interests, only: [:edit, :update]
+
+    resources :tags do
+      member { post 'duplicate' }
+    end
 
     resource :translation do
       resource :cache
@@ -35,6 +40,14 @@ Nbs::Application.routes.draw do
 
     resources :vat_rates
     resources :youtube_introductions, except: [:index, :show]
+
+
+
+
+
+
+
+
 
     resources :users do
       resource :password, controller: 'password', only: [:new, :update, :destroy]
@@ -92,7 +105,6 @@ Nbs::Application.routes.draw do
 
 
     resource :stats_recalculation, controller: "stats_recalculation", only: :update
-    resources :supplier_interests, only: [:edit, :update]
     resources :email_bounces
 
     resources :subscription_plans do
@@ -101,12 +113,6 @@ Nbs::Application.routes.draw do
 
     resources :paypal_notifications, only: [:index, :show]
 
-    resources :tags do
-      member { post 'duplicate' }
-      member do
-        post 'duplicate'
-      end
-    end
 
     match '/dashboard' => 'dashboard#index', as: :dashboard
 

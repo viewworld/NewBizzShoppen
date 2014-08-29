@@ -1,0 +1,47 @@
+<%= content_for :column_mc do -%>
+  = header(back: true) do |section|
+  - section.block_header do
+    - raw t("administration.supplier_interests.edit.view.title", name: screen_name_with_company_name(@user))
+
+  = semantic_form_for @user, url: administration_supplier_interest_path, method: :put do |form|
+    = frm do |section|
+      - section.block_header
+      - section.block_content do
+
+      #category_interests
+        .pdd_10
+          .grid_210.fltl &nbsp;
+          .grid_240.fltl
+            h3= t("administration.users.edit.view.available_categories")
+            = select_tag "all_categories_for_interests", options_for_select(all_categories_for_interests), { multiple: true, size: 10, style: "height:200px; width:250px;" }
+
+          .grid_160.fltl style=("margin-right: 10px;margin-top:10px;")
+            p.ta_c.pdd_5.no_pdd_lr= bt_link_to nil, t("administration.categories.form.move_users_right"), "javascript:move_selected('all_categories_for_interests','user_supplier_category_ids_')", id: "move_right"
+            p.ta_c= bt_link_to nil, t("administration.categories.form.move_users_left"), "javascript:move_selected('user_supplier_category_ids_','all_categories_for_interests')", id: "move_left"
+
+          .grid_240.fltl
+            h3= t("administration.users.edit.view.selected_interests_categories")
+            = select_tag "user_supplier[category_ids][]", options_for_select(user_supplier_categories), { multiple: true, size: 10, style: "height:200px; width:250px;" }
+          .clb
+
+      #country_interests
+        .pdd_10
+          .grid_210.fltl &nbsp;
+          .grid_240.fltl
+            h3= t("administration.supplier_interests.edit.view.countries")
+            - @countries.each do |country|
+              = check_box_tag "user_supplier[country_ids][]", country.id, @user.countries.include?(country), id: "country_#{country.id}"
+              = country.name
+              br/
+          .clb
+
+
+      .pdd_10.no_pdd_t
+        fieldset.inputs.labels_ta_r
+          ol.align_inputs
+            = form.input :notify_about_new_leads
+      - section.block_actions do
+        = ibt(class: "fltri", icon: "save") do
+          = form.submit t("administration.users.edit.view.button_update_user"), onclick: "select_options_to_submit('user_supplier_category_ids_');"
+        = ibt(class: "bt_grey fltri") do
+          = button_to_function t("administration.users.edit.view.button_cancel"), "history.go(-1)"
