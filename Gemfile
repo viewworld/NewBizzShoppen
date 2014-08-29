@@ -16,7 +16,7 @@ gem 'cancan', '1.6.5'
 # models
 gem 'inherited_resources', '1.3.1'
 gem 'role_model', require: 'role_model'
-gem 'acts-as-taggable-on', '~> 2.2.2'
+gem 'acts-as-taggable-on', '~> 3.3.0'
 gem 'acts_as_commentable_with_threading', '1.1.2'
 gem 'acts_as_list', '~> 0.4.0'
 gem 'nested_set', '1.5.4'
