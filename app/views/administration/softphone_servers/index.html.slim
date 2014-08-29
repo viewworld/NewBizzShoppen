@@ -1,0 +1,40 @@
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t("administration.softphone_servers.index.view.title")
+    - section.block_actions do
+      ul.header_actions
+        li.last
+          = bt_link_to :plus, t("administration.softphone_servers.index.view.new"), new_administration_softphone_server_path
+
+  - if @softphone_servers.blank?
+    = blank_state_message( t("administration.softphone_servers.index.view.blank_state") )
+  - else
+    table.generic
+      thead
+        tr
+          th.hl
+          th= t("administration.softphone_servers.index.view.table.name")
+          th= t("administration.softphone_servers.index.view.table.server_host")
+          th= t("administration.softphone_servers.index.view.table.server_port")
+          th= t("administration.softphone_servers.index.view.table.sip_domain")
+          th= t("administration.softphone_servers.index.view.table.sip_port")
+          th.ta_r= t("administration.softphone_servers.index.view.actions")
+          th.hr
+      tfoot
+        tr
+          td.fl
+          td colspan="6"
+          td.fr
+      tbody
+        - @softphone_servers.each do |softphone_server|
+          tr
+            td.cl
+            td= softphone_server.name
+            td= softphone_server.server_host
+            td= softphone_server.server_port
+            td= softphone_server.sip_domain
+            td= softphone_server.sip_port
+            td.tda.ta_r
+              = link_to t("administration.softphone_servers.index.view.edit"), edit_administration_softphone_server_path(softphone_server), class: "default_action"
+            td.cr
