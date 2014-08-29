@@ -1,0 +1,68 @@
+= content_for :search_box do
+  .search_box
+    h2= t("administration.subscription_plans.index.view.search_label")
+    .search_content
+      = form_for @search, url: administration_subscription_plans_path do |f|
+        fieldset.inputs_vertical
+          ol.no_pdd
+            li.string
+              = f.label :with_keyword, t("administration.subscription_plans.index.view.search.with_keyword")
+              = f.text_field :with_keyword
+
+            li.commit
+              = ibt(class: "bt_green", icon: "magnify") do
+                = submit_tag t("administration.subscription_plans.index.view.search_button")
+              p
+                = bt_clear_filter
+
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t("administration.subscription_plans.index.view.header")
+    - section.block_actions do
+      ul.header_actions
+        li.last= bt_link_to :plus, t("administration.subscription_plans.index.view.new_subscription_plan"), new_administration_subscription_plan_path
+
+  - if @subscription_plans.empty?
+    = blank_state_message
+  - else
+    table.generic
+      thead
+        tr
+          th.hl
+          th= t("administration.subscription_plans.index.view.name")
+          th= t("administration.subscription_plans.index.view.roles")
+          th= t("administration.subscription_plans.index.view.total_amount")
+          th= t("administration.subscription_plans.index.view.use_paypal")
+          th= t("administration.subscription_plans.index.view.is_active")
+          th= t("administration.subscription_plans.index.view.is_public")
+          th.ta_r= t("administration.subscription_plans.index.view.actions")
+          th.hr
+      tbody#invoices_list
+        - @subscription_plans.each do |subscription_plan|
+          tr
+            td.cl
+            td= subscription_plan.name
+            td= subscription_plan.roles_as_text
+            td= as_currency(subscription_plan.total_billing, subscription_plan.currency, 2)
+            td= subscription_plan.use_paypal?
+            td= subscription_plan.is_active?
+            td= subscription_plan.is_public?
+            td.tda.ta_r
+              .td_actions
+                = bt_link_to :cog, nil, "javascript:void(0)", class: "bt_dropdown"
+                ul
+                  li= link_to t("administration.subscription_plans.index.view.edit"), edit_administration_subscription_plan_path(subscription_plan), class: "default_action"
+                  li= link_to t("administration.subscription_plans.index.view.destroy"), administration_subscription_plan_path(subscription_plan), method: :delete, confirm: t("administration.subscription_plans.index.view.confirmation_msg")
+            td.cr
+
+        - if will_paginate
+          tr.pagination
+            td.ta_c colspan="9"
+              = will_paginate @subscription_plans
+
+      tfoot
+        tr
+          td.fl
+          td colspan="7"
+          td.fr

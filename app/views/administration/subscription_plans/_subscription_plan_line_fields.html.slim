@@ -1,0 +1,25 @@
+div id=("subscription_plan_line_field_form_#{f.object.new_record? ? 'subscription_plan_subscription_plan_lines_attributes_0' : f.object.id}")
+  .hl
+  .pdd_10.no_pdd_t
+    fieldset.inputs_vertical
+      ol
+        li class=("string required #{'error' if f.object.errors[:name].present?}")
+          label
+            = t("administration.subscription_plans.form.line_name")
+            abbr title="required" *
+          = f.text_field :name
+          = custom_error_for_field(f, :name)
+
+        li class=("string required #{'error' if f.object.errors[:price].present?}")
+          label
+            = t("administration.subscription_plans.form.line_price")
+            abbr title="required" *
+          = f.text_field :price, onkeyup: "sum_prices()"
+          = custom_error_for_field(f, :price)
+
+        li.hidden
+          - unless f.object.new_record?
+            = f.hidden_field :_destroy, id: "destroy_hidden_field_#{f.object.id}"
+
+        li.commit
+          = bt_link_to :remove, t("administration.subscription_plans.form.delete_line"), "javascript:void(0)", onclick: "remove_subscription_plan_line('#{f.object.new_record? ? 'subscription_plan_subscription_plan_lines_attributes_0' : f.object.id}', #{f.object.new_record? ? 'null' : f.object.id})"

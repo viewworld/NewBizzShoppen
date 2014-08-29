@@ -5434,3 +5434,8 @@ en:
     create:
       flash:
         success: "Import completed. %{counter} subscribers have been successfully imported"
+
+  will_paginate:
+    previous_label: "&laquo;"
+    next_label: "&raquo;"
+    page_gap: "&hellip;"

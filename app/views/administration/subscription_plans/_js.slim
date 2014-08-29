@@ -1,0 +1,87 @@
+javascript:
+  var nestedFormsCount = "#{@subscription_plan.subscription_plan_lines.size}"
+
+  function add_subscription_plan_line(link, content) {
+    var new_id = new Date().getTime();
+    content = content.replace(/subscription_plan_subscription_plan_lines_attributes_\d+/g, "subscription_plan_subscription_plan_lines_attributes_" + nestedFormsCount.toString());
+    content = content.replace(/subscription_plan\[subscription_plan_lines_attributes\]\[\d+\]/g, "subscription_plan[subscription_plan_lines_attributes][" + new_id.toString() + "]");
+    $('.nested_subscription_plan_lines_fields_container:last').append(content);
+    nestedFormsCount = nestedFormsCount + 1;
+    }
+
+  function remove_subscription_plan_line(id, record_id) {
+    nestedFormsCount = nestedFormsCount - 1;
+
+    if (record_id == null) {
+      $('#subscription_plan_line_field_form_' + id).remove();
+    } else {
+      $('#subscription_plan_line_field_form_' + id).hide();
+      $('#destroy_hidden_field_' + record_id.toString()).val('true')
+    }
+  }
+
+  function switch_roles(){
+    if($('#subscription_plan_assigned_roles').val() != null) {
+      if($.inArray("member", $('#subscription_plan_assigned_roles').val()) >= 0){
+        $('#additional_features').hide();
+        $('#additional_features_member').show();
+      } else {
+        $('#additional_features_member').hide();
+        $('#additional_features').show();
+      }
+    }
+  }
+
+  function switch_automatic_downgrading() {
+    if($('#subscription_plan_automatic_downgrading').attr('checked')) {
+      $('#automatic_downgrading_subscription_selection').show();
+    else
+      $('#automatic_downgrading_subscription_selection').hide();
+  }
+
+  function switch_use_paypal_features() {
+    if($('#subscription_plan_use_paypal').attr('checked')) {
+      $('#use_paypal_features').show();
+      $('#billing_period').hide();
+    } else {
+      $('#use_paypal_features').hide();
+      $('#billing_period').show();
+      $('#subscription_plan_automatic_downgrading').attr('checked', '');
+      switch_automatic_downgrading();
+    }
+  }
+
+  function load_subscription_plans() {
+    $.ajax({
+      type: "GET",
+      url: "<%= fetch_subscription_plans_administration_subscription_plans_path -%>.js",
+      data: "assigned_roles=" + $('#subscription_plan_assigned_roles').val() + "&id=" + '<%= @subscription_plan.new_record? ? '' : @subscription_plan.id -%>'
+    });
+  }
+
+  function enable_free_deals_in_free_period() {
+    if(jQuery.trim($('#subscription_plan_free_period').val()) == ""){
+      $('#subscription_plan_free_deals_in_free_period').attr("disabled", "true");
+      $('#subscription_plan_paypal_billing_at_start_false').attr("disabled", "true");
+      $('#subscription_plan_paypal_billing_at_start_true').attr("checked", "true");
+    }
+    else {
+      $('#subscription_plan_free_deals_in_free_period').attr("disabled", "");
+      $('#subscription_plan_paypal_billing_at_start_false').attr("disabled", "");
+    }
+  }
+
+  switch_roles();
+  switch_use_paypal_features();
+  switch_automatic_downgrading();
+  enable_free_deals_in_free_period()
+
+  function sum_prices() {
+    total = 0.0;
+    $('input[type=text][id*=_price]').each(function(index) {
+      val = parseFloat($(this).val());
+      total = total + (isNaN(val) ? 0 : val);
+    });
+
+    $('#total_billing').html("<strong>" + total.toString() + "</strong>");
+  }

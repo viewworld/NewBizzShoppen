@@ -1,0 +1,76 @@
+= javascript_include_tag :ckeditor
+
+.column_left
+  .pdd_10.no_pdd_t
+    fieldset.inputs.labels_ta_r.labels_200
+      ol.align_inputs
+        = form.input :name
+        = form.input :subscription_text, as: :ckeditor, input_html: { width: '320px', height: '150px', toolbar: "Lite" }, wrapper_html: { class: "text" }
+        = form.input :subscription_period
+        = form.input :billing_cycle
+        = form.input :lockup_period
+
+        span#billing_period
+          = form.input :billing_period
+
+        = form.input :free_period, input_html: { onkeyup: "enable_free_deals_in_free_period()"}
+        = form.input :currency_id, collection: currencies_for_select
+        = form.input :seller_id, collection: Seller.all, include_blank: false
+        = form.input :assigned_roles, collection: SubscriptionPlan::ROLES.map { |r| [r.to_s.humanize, r] }, include_blank: false, input_html: { onchange: "switch_roles();load_subscription_plans();", style: "height:100px", size: 5, multiple: true }
+        - if @subscription_plan.persisted?
+          li.string
+            = label_tag :total_billing
+
+            #total_billing.txt
+              strong= as_currency(@subscription_plan.total_billing, @subscription_plan.currency, 2)
+
+.column_right
+  .pdd_10.no_pdd_t
+    fieldset.inputs.labels_ta_r.labels_200
+      ol.align_inputs
+        = form.input :is_active, as: :boolean
+        = form.input :is_public, as: :boolean
+        = form.input :can_be_upgraded, as: :boolean
+        = form.input :can_be_downgraded, as: :boolean
+
+        span#additional_features_member
+          = form.input :premium_deals
+          = form.input :free_deal_requests_in_free_period
+
+        span#additional_features
+          = form.input :team_buyers, as: :boolean
+          = form.input :big_buyer, as: :boolean
+          = form.input :deal_maker, as: :boolean
+          = form.input :newsletter_manager
+          = form.input :chain_mails_enabled
+          = form.input :surveys_enabled
+          = form.input :pipeline_reports_enabled, as: :boolean
+          = form.input :free_deals_in_free_period
+
+        = form.input :use_paypal, as: :boolean, onclick: "switch_use_paypal_features()"
+
+        span#use_paypal_features
+          = form.input :paypal_retries
+          = form.input :automatic_downgrading, as: :boolean, onclick: "switch_automatic_downgrading()"
+
+          span#automatic_downgrading_subscription_selection
+            = form.input :automatic_downgrade_subscription_plan_id, as: :select,
+                          collection: downgrade_subscription_plans(@subscription_plan),
+                          required: true, include_blank: false
+
+          span#paypal_billing_at_start_selection
+            = form.input :paypal_billing_at_start, as: :radio, collection: paypal_billing_types
+
+.clb
+= form.fields_for :subscription_plan_lines, @subscription_plan.subscription_plan_lines do |builder|
+  = render partial: "subscription_plan_line_fields", locals: { f: builder }
+
+.nested_subscription_plan_lines_fields_container
+
+.hl
+
+.pdd_20 style="padding-top:10px"
+  = bt_link_to :plus, t("administration.subscription_plans.form.new_line"), "javascript:void(0)", onclick: "#{fields_for_subscription_plan_line_fields(form)}"
+  = t("administration.subscription_plans.form.lines_per_billing_cycle")
+
+.clb
