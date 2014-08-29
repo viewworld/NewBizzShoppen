@@ -143,7 +143,7 @@
         <% if will_paginate %>
             <tr class="pagination">
               <td colspan="<%= cols + 3 %>" class="ta_c">
-                <%= will_paginate @leads, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+                <%= will_paginate @leads %>
               </td>
             </tr>
         <% end %>

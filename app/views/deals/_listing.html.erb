@@ -13,7 +13,7 @@
     <% end %>
 
     <% if will_paginate %>
-        <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+        <%= will_paginate collection %>
     <% end %>
 
     <script type="text/javascript">
@@ -203,7 +203,7 @@
               </div>
           <% end %>
 
-          <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+          <%= will_paginate collection %>
         </td>
       </tr>
   <% end %>

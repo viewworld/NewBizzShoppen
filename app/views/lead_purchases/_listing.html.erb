@@ -181,7 +181,7 @@
             <%= label_tag "td_mark_all", "select all" %>
           </div>
       <% end %>
-      <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+      <%= will_paginate collection %>
     </td>
   </tr>
   <% if block_bottom %>

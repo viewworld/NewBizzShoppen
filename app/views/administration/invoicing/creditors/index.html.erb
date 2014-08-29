@@ -71,7 +71,7 @@
         <% if @credit_notes.total_pages > 1 %>
             <tr class="pagination">
               <td colspan="8" class="ta_c">
-                <%= will_paginate @credit_notes, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+                <%= will_paginate @credit_notes %>
               </td>
             </tr>
         <% else %>

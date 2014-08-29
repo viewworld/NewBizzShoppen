@@ -85,7 +85,7 @@
         <% if will_paginate %>
             <tr class="pagination">
               <td colspan="9" class="ta_c">
-                <%= will_paginate @payment_transactions, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+                <%= will_paginate @payment_transactions %>
               </td>
             </tr>
         <% end %>

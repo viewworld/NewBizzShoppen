@@ -84,7 +84,7 @@
         <% if will_paginate @call_results %>
             <tr class="pagination">
               <td colspan="12" class="ta_c">
-                <%= will_paginate @call_results, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+                <%= will_paginate @call_results %>
               </td>
             </tr>
         <% end %>

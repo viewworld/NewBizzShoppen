@@ -57,7 +57,7 @@
   <% if will_paginate collection %>
       <tr class="pagination">
         <td colspan="<%= cols + 2 %>" class="ta_c">
-          <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+          <%= will_paginate collection %>
         </td>
       </tr>
   <% end %>
