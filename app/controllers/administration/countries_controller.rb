@@ -1,33 +1,45 @@
 class Administration::CountriesController < Administration::AdministrationController
-  inherit_resources
   set_tab "settings"
   set_subtab "countries"
 
+  before_filter :set_country, only: [:edit, :update, :destroy]
+
+  def index
+    @countries = Country.all
+  end
+
+  def new
+    @country = Country.new
+  end
+
   def create
-    create! do |success,failure|
-      success.html { redirect_to administration_countries_path }
-      failure.html { render :action => :new }
+    @country = Country.new(params[:country])
+
+    if @country.save
+      redirect_to administration_countries_path
+    else
+      render :new
     end
   end
 
   def update
-    @country = Country.find(params[:id])
-    orig_locale = I18n.locale
-    I18n.locale = @country.locale
-    update! do |success,failure|
-      success.html { redirect_to administration_countries_path }
-      failure.html { render :action => :edit }
+    if @country.update_attributes(params[:country])
+      redirect_to administration_countries_path
+    else
+      render :edit
     end
-    I18n.locale = orig_locale
   end
 
   def destroy
-    destroy! do |success,failure|
-      success.html { redirect_to administration_countries_path }
-      failure.html {
-        flash[:alert] = @currency.errors[:base].join('<br/>')
-        redirect_to administration_countries_path
-      }
+    if @country.destroy
+      redirect_to administration_countries_path
+    else
+      redirect_to administration_countries_path, alert: @country.errors[:base].join('<br/>')
     end
+  end
+  
+  private
+  def set_country
+    @country = Country.find(params[:id])
   end
 end
