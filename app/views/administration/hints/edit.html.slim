@@ -1,0 +1,19 @@
+= content_for :column_mc do
+  = javascript_include_tag :ckeditor
+
+  = header(back: true) do |section|
+    - section.block_header do
+      = t('administration.hints.edit.view.header', name: @article.title)
+      - image_tag("languages/flag_#{I18n.locale}.png")
+
+  = form_for @article, as: :article, url: administration_hint_path(@article), html: {method: :delete, id: "delete_article_form"} do |form|
+
+  = semantic_form_for @article, as: :article, url: administration_hint_path(@article), input_html: {method: :put} do |form|
+    = frm(title: "#{@article.title}") do |section|
+      - section.block_content do
+        = render partial: 'form', locals: {form: form}
+      - section.block_actions do
+        = ibt(class: "fltri", icon: "save") do
+          = form.submit t("administration.hints.edit.view.button_save")
+        = ibt(class: "fltri bt_grey") do
+          = button_to_function t("common.cancel_link"), "history.go(-1)"
