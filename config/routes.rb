@@ -24,6 +24,7 @@ Nbs::Application.routes.draw do
     resources :category_email_templates, only: [:edit, :update]
     resources :countries, except: :show
     resources :currencies, except: :show
+    resources :featured_deals, only: [:index, :create]
     resources :hints, except: [:new, :create]
     resources :languages, only: [:index, :update]
     resources :leads, only: [:index, :edit, :update]
@@ -68,7 +69,6 @@ Nbs::Application.routes.draw do
     resources :categories
 
     resource :setting, only: [:edit, :update]
-    resources :featured_deals, only: [:index, :create]
 
     resources :email_templates do
       member { post 'test_send_mail' }

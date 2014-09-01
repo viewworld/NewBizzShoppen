@@ -1,0 +1,27 @@
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t("administration.featured_deals.view.index.header")
+
+  = form_tag administration_featured_deals_path do
+    .box
+      .box-header
+        h2= t('administration.featured_deals.view.index.title')
+
+      fieldset.box-content.inputs.labels_170.labels_ta_r.inputs_360
+        ol.align_inputs
+          - 5.times do |main_position|
+            li.select
+              = label_tag t("administration.featured_deals.view.index.main_position", { position: main_position + 1})
+              = select_tag "featured_deals[#{main_position}]", options_for_select(@deals_for_select, currently_selected_deal(main_position))
+
+          - 15.times do |position|
+            li.select
+              = label_tag t("administration.featured_deals.view.index.position", { position: position + 1 })
+              = select_tag "featured_deals[#{position + 5}]", options_for_select(@deals_for_select, currently_selected_deal(position + 5))
+
+      .box-footer
+        = ibt(class: "fltri", icon: "plus") do
+          = submit_tag t("administration.featured_deals.view.index.set_featured_deals")
+        = ibt(class: "bt_grey fltri") do
+          = button_to_function t("administration.featured_deals.view.index.cancel"), "history.go(-1)"
