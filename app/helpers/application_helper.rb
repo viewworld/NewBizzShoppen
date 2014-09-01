@@ -363,6 +363,10 @@ module ApplicationHelper
     result
   end
 
+  def translate_boolean(value)
+    value ? t("common.yes_label") : t("common.no_label")
+  end
+
   def fairdeals_host
     if Rails.env.production?
       'www.fairdeals.dk'
