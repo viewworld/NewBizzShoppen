@@ -3,4 +3,8 @@
     - section.block_header do
       = t("administration.softphone_servers.edit.view.header", name: @softphone_server.name)
 
-  = render 'form'
+  .box
+    .box-header
+      h2= t("administration.softphone_servers.edit.view.header", name: @softphone_server.name)
+
+    = render 'form'
