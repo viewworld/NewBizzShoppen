@@ -1,59 +1,47 @@
 class Administration::HintsController < Administration::AdministrationController
-  inherit_resources
   set_tab "content"
   set_subtab "hints"
 
-  before_filter :set_referer, :only => [:edit, :destroy]
+  before_filter :set_referer, only: [:edit, :destroy]
+  before_filter :set_article, only: [:edit, :update, :destroy]
 
-  def edit
-    @article = Article.find(params[:id])
-    if params[:add] == "1"
-      @article.published = true
-    end
-  end
+  def index
+    params[:search] ||= {}
+    params[:search][:with_subclass] = "Article::Cms::Hint" unless params[:search][:with_subclass].present?
 
-  def update
-    @article = Article.find(params[:id])
-    @article.attributes = params[:article]
-    if @article.save
-      if session[:hints_referer]
-        redirect_to session[:hints_referer]
-      else
-        redirect_to administration_hints_path
-      end
-    else
-      render :action => "edit"
-    end
+    @search = Article.scoped_search(params[:search])
+    @hints = @search.paginate(show_all: params[:show_all], page: params[:page])
   end
 
   def show
     @article = Article::Cms::Hint.find(params[:id])
   end
 
-  def destroy
-    @article = Article.find(params[:id])
-    @article.update_attribute(:published, false)
-    if session[:hints_referer]
-      redirect_to session[:hints_referer]
+  def edit
+    @article.published = true if params[:add] == "1"
+  end
+
+  def update
+    if @article.update_attributes(params[:article])
+      redirect_to session[:hints_referer] || administration_hints_path
     else
-      redirect_to administration_hints_path
+      render :edit
     end
   end
 
-  protected
+  def destroy
+    @article.update_attribute(:published, false)
+    redirect_to session[:hints_referer] || administration_hints_path
+  end
 
-  def collection
-    params[:search] ||= {}
-    params[:search][:with_subclass] = "Article::Cms::Hint" unless params[:search][:with_subclass].present?
-    @search = Article.scoped_search(params[:search])
-    @hints = @search.paginate(:show_all => params[:show_all], :page => params[:page])
+  private
+  def set_article
+    @article = Article.find(params[:id])
   end
 
   def set_referer
     session[:hints_referer] = request.referer
   end
-
-  private
 
   def authorize_user_for_namespace!
     authorize_role(:translator)

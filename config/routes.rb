@@ -24,6 +24,7 @@ Nbs::Application.routes.draw do
     resources :category_email_templates, only: [:edit, :update]
     resources :countries, except: :show
     resources :currencies, except: :show
+    resources :hints, except: [:new, :create]
     resources :languages, only: [:index, :update]
     resources :leads, only: [:index, :edit, :update]
     resources :lead_templates, except: [:index, :show]
@@ -79,7 +80,6 @@ Nbs::Application.routes.draw do
       resources :assets, controller: "deal_assets", only: [:create, :destroy]
     end
 
-    resources :hints
     resources :softphone_servers
 
     namespace :invoicing do

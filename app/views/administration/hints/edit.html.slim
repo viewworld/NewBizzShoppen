@@ -9,7 +9,7 @@
   = form_for @article, as: :article, url: administration_hint_path(@article), html: {method: :delete, id: "delete_article_form"} do |form|
 
   = semantic_form_for @article, as: :article, url: administration_hint_path(@article), input_html: {method: :put} do |form|
-    = frm(title: "#{@article.title}") do |section|
+    = frm(title: @article.title) do |section|
       - section.block_content do
         = render partial: 'form', locals: {form: form}
       - section.block_actions do
