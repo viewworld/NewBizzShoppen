@@ -1,0 +1,137 @@
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t("administration.settings.edit.view.title")
+  = form_tag administration_setting_path, method: :put do
+    = render partial: "settings_form", locals: { settings: @settings.select { |s| !s.var.include?("contact_us") } }
+  br/
+  = header do |section|
+    - section.block_header do
+      = t("administration.settings.edit.view.contacts_settings_title")
+  = form_tag administration_setting_path, method: :put do
+    = render partial: "settings_form", locals: { settings: @settings.select { |s| s.var.include?("contact_us") } }
+  br/
+  = header do |section|
+    - section.block_header do
+      = t("administration.bank_accounts.index.view.header")
+  - unless @bank_accounts.any?
+    = blank_state_message(t("administration.bank_accounts.index.view.no_bank_accounts_defined"))
+    p.pdd_10.ta_r.no_pdd_lr= bt_link_to nil, t("administration.bank_accounts.index.view.add_bank"), new_administration_bank_account_path
+  - else
+    table#bank_accounts.generic cellpadding="0" cellspacing="0"
+      thead
+        tr
+          th.hl
+          th= link_to t("administration.bank_accounts.index.view.id"), order_for_scoped_search(:id, :bank_accounts)
+          th= t("administration.bank_accounts.index.view.country")
+          th= t("administration.bank_accounts.index.view.bank_name")
+          th.ta_r= t("administration.bank_accounts.index.view.iban_no")
+          th.ta_r= t("administration.bank_accounts.index.view.local_bank_number")
+          th= t("administration.bank_accounts.index.view.swift")
+          th.ta_c= t("administration.bank_accounts.form.view.country_default")
+          th.ta_c= t("administration.bank_accounts.form.view.global_default")
+          th.ta_r= t("administration.bank_accounts.index.view.actions")
+          th.hr
+      tbody
+        - @bank_accounts.each do |ba|
+          tr
+            td.cl
+            td= ba.id
+            td= ba.address.country.name
+            td= ba.bank_name
+            td.ta_r= ba.iban_no
+            td.ta_r= ba.local_bank_number
+            td= ba.swift
+            td.ta_c= check_box_tag "country_default_# ba.id ", 1, ba.country_default?, disabled: true
+            td.ta_c= check_box_tag "global_default_# ba.id ", 1, ba.global_default?, disabled: true
+            td.tda.ta_r
+              .td_actions
+                = bt_link_to :cog, nil, "javascript:void(0)", class: "bt_dropdown"
+                ul
+                  li= link_to t("administration.bank_accounts.index.view.show"), administration_bank_account_path(ba)
+                  li= link_to t("administration.bank_accounts.index.view.edit"), edit_administration_bank_account_path(ba), class: "default_action"
+                  li= link_to t("administration.bank_accounts.index.view.delete"), administration_bank_account_path(ba), method: :delete, confirmation: t("common.confirmation")
+            td.cr
+        tr.main_actions
+          td.ta_r colspan="11"
+            = bt_link_to nil, t("administration.bank_accounts.index.view.add_bank"), new_administration_bank_account_path
+      tfoot
+        tr
+          td.fl
+          td colspan="9"
+          td.fr
+  br/
+  = header do |section|
+    - section.block_header do
+      = t("administration.vat_rates.index.view.header")
+  - unless @vat_rates.any?
+    = blank_state_message(t("administration.vat_rates.index.view.no_rates_defined"))
+    p.pdd_10.ta_r.no_pdd_lr= bt_link_to nil, t("administration.vat_rates.index.view.add_vat_rate"), new_administration_vat_rate_path
+  - else
+    table#vat_rates.generic cellpadding="0" cellspacing="0"
+      thead
+        tr
+          th.hl
+          th style=("width: 200px") = t("administration.vat_rates.index.view.country")
+          th.ta_r style=("width: 200px") = t("administration.vat_rates.index.view.rate")
+          th.ta_r= t("administration.vat_rates.index.view.actions")
+          th.hr
+      tbody
+        - @vat_rates.each do |vr|
+          tr
+            td.cl
+            td= vr.country.name
+            td.ta_r= number_to_percentage(vr.rate, precision: 2)
+            td.tda.ta_r
+              .td_actions
+                = bt_link_to :cog, nil, "javascript:void(0)", class: "bt_dropdown"
+                ul
+                  li= link_to t("administration.vat_rates.index.view.edit"), edit_administration_vat_rate_path(vr), class: "default_action"
+            td.cr
+        tr.main_actions
+          td.ta_r colspan="5"
+            = bt_link_to nil, t("administration.vat_rates.index.view.add_vat_rate"), new_administration_vat_rate_path
+      tfoot
+        tr
+          td.fl
+          td colspan="3"
+          td.fr
+  br/
+  = header do |section|
+    - section.block_header do
+      = t("administration.introduction_video.view.header")
+  - unless @youtube_introductions.any?
+    = blank_state_message(t("administration.introduction_video.view.no_videos"))
+    p.pdd_10.ta_r.no_pdd_lr= bt_link_to nil, t("administration.introduction_video.view.add_video"), new_administration_youtube_introduction_path
+  - else
+    table#vat_rates.generic cellpadding="0" cellspacing="0"
+      thead
+        tr
+          th.hl
+          th style=("width: 200px") = t("administration.introduction_video.view.url")
+          th.ta_r style=("width: 200px") = t("administration.introduction_video.view.locale")
+          th.ta_r style=("width: 200px") = t("administration.introduction_video.view.site")
+          th.ta_r= t("administration.introduction_video.view.actions")
+          th.hr
+      tbody
+        - @youtube_introductions.each do |yi|
+          tr
+            td.cl
+            td= link_to yi.url, yi.url, target: "_new"
+            td.ta_r= yi.locale_code
+            td.ta_r= yi.site
+            td.tda.ta_r
+              .td_actions
+                = bt_link_to :cog, nil, "javascript:void(0)", class: "bt_dropdown"
+                ul
+                  li= link_to t("administration.introduction_video.view.edit"), edit_administration_youtube_introduction_path(yi), class: "default_action"
+                  li= link_to t("administration.introduction_video.view.delete"), administration_youtube_introduction_path(yi), method: :delete
+            td.cr
+        tr.main_actions
+          td.ta_r colspan="6"
+            = bt_link_to nil, t("administration.introduction_video.view.add_video"), new_administration_youtube_introduction_path
+      tfoot
+        tr
+          td.fl
+          td colspan="4"
+          td.fr

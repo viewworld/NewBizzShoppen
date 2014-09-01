@@ -1,0 +1,23 @@
+= frm do |section|
+  - section.block_content do
+    .pdd_10.no_pdd_t
+      - if settings.size > 10
+        - settings_left, settings_right = settings.chunk(2)
+      - else
+        - settings_left, settings_right = [settings, []]
+      .column_left
+        fieldset.inputs.labels_240.labels_ta_r.inputs_180
+          ol.align_inputs
+            - settings_left.each_with_index do |setting, i|
+              = render partial: "setting", locals: {setting: setting, i: i}
+      .column_right
+        fieldset.inputs.labels_240.labels_ta_r.inputs_180
+          ol.align_inputs
+            - settings_right.each_with_index do |setting, i|
+              = render partial: "setting", locals: {setting: setting, i: i}
+      .clb
+  - section.block_actions do
+    = ibt(class: "fltri", icon: "plus") do
+      = submit_tag t("administration.settings.edit.view.button_update_settings"), onclick: "if(confirm('#{t("administration.settings.edit.view.confirmation_update_message")}')){ this.form.submit(); } else {return false;}"
+    = ibt(class: "bt_grey fltri") do
+      = button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)"
