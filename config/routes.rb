@@ -22,6 +22,7 @@ Nbs::Application.routes.draw do
     resources :articles, except: :new
     resources :bank_accounts, except: :index
     resources :category_email_templates, only: [:edit, :update]
+    resources :countries, except: :show
     resources :currencies, except: :show
     resources :languages, only: [:index, :update]
     resources :leads, only: [:index, :edit, :update]
@@ -101,7 +102,6 @@ Nbs::Application.routes.draw do
     end
 
     resources :category_users
-    resources :countries
 
 
     resource :stats_recalculation, controller: "stats_recalculation", only: :update
