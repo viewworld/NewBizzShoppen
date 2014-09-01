@@ -3,4 +3,4 @@
     - section.block_header do
       = t('administration.introduction_video.new.view.header')
 
-  = render 'form'
+  = render partial: 'form', locals: { header: t('administration.introduction_video.new.view.header') }

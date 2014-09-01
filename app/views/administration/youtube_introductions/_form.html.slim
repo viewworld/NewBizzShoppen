@@ -1,6 +1,9 @@
-= semantic_form_for [:administration, @youtube_introduction], html: { multipart: true } do |form|
-  = frm do |section|
-    - section.block_content do
+.box
+  .box-header
+    h2= header
+
+  = semantic_form_for [:administration, @youtube_introduction], html: { multipart: true } do |form|
+    .box-content
       .pdd_10.no_pdd_t
         fieldset.inputs.labels_ta_r.labels_240
           ol
@@ -16,7 +19,7 @@
             li.image
               = image_tag(@youtube_introduction.image.url, class: "thumb") if @youtube_introduction.image
 
-    - section.block_actions do
+    .box-footer
       = ibt(class: "fltri", icon: "save") do
         = form.submit t("administration.introduction_video.new.view.button_create")
       = ibt(class: "fltri bt_grey") do
