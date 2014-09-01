@@ -16,7 +16,7 @@ gem 'cancan', '1.6.5'
 # models
 gem 'inherited_resources', '1.3.1'
 gem 'role_model', '0.7.0', require: 'role_model'
-gem 'acts-as-taggable-on', '~> 3.3.0'
+gem 'acts-as-taggable-on', '~> 2.2.2'
 gem 'acts_as_commentable_with_threading', '1.1.2'
 gem 'acts_as_list', '~> 0.4.0'
 gem 'nested_set', '1.5.4'
@@ -118,7 +118,7 @@ group :test do
   gem 'capybara', '1.1.4'
   gem 'mocha', '0.13.2', require: false
   gem 'faker', '0.3.1'
-  gem 'machinist', '2.0'
+  gem 'machinist', '2.0.0.beta2'
   gem 'fakeweb', require: false
   gem 'webmock', '1.8.4', require: false
   gem 'launchy', '2.1'
