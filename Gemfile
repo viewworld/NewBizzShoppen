@@ -15,7 +15,7 @@ gem 'cancan', '1.6.5'
 
 # models
 gem 'inherited_resources', '1.3.1'
-gem 'role_model', require: 'role_model'
+gem 'role_model', '0.7.0', require: 'role_model'
 gem 'acts-as-taggable-on', '~> 3.3.0'
 gem 'acts_as_commentable_with_threading', '1.1.2'
 gem 'acts_as_list', '~> 0.4.0'
@@ -26,7 +26,7 @@ gem 'yajl-ruby', '1.1.0', require: 'yajl'
 gem 'recaptcha', '0.3.5', require: 'recaptcha/rails'
 
 # s3
-gem 'aws-s3'
+gem 'aws-s3', '0.6.2'
 gem 'jammit-s3', '~> 0.6.0.2'
 
 # views
@@ -40,22 +40,22 @@ gem 'ajaxful_rating', '3.0.0.beta3'
 gem 'draper', '~> 1.3.1'
 
 # background jobs
-gem 'delayed_job_active_record', '~> 4.0.0'
-gem 'delayed_job', '>= 4.0.0'
+gem 'delayed_job_active_record', '4.0.0'
+gem 'delayed_job', '4.0.0'
 gem 'aasm', '2.3.1'
-gem 'whenever', '~> 0.9.0', require: false
+gem 'whenever', '0.9.0', require: false
 
 # uploads
 gem 'paperclip', '2.3.6'
 
 # api
-gem 'json_pure', '>= 1.4.6'
+gem 'json_pure', '1.5.3'
 gem 'google-spreadsheet-ruby', '0.1.5'
 gem 'spreadsheet', '0.6.5.5'
 
 # locales
 gem 'globalize3', '0.3.0'
-gem 'i18n-active_record', git: 'git://github.com/svenfuchs/i18n-active_record.git', ref: "22b1f76", require: 'i18n/active_record'
+gem 'i18n-active_record', git: 'git://github.com/svenfuchs/i18n-active_record.git', ref: '22b1f76', require: 'i18n/active_record'
 
 # paypal
 gem 'paypal-recurring', path: 'vendor/gems/paypal-recurring'
@@ -83,7 +83,7 @@ group :staging do
 end
 
 group :staging, :production do
-  gem 'airbrake', '~> 3.1.15'
+  gem 'airbrake', '3.1.15'
 end
 
 group :development do
@@ -110,19 +110,19 @@ group :test do
   gem 'capybara', '1.1.4'
   gem 'mocha', '0.13.2', require: false
   gem 'faker', '0.3.1'
-  gem 'machinist', '>= 2.0.0.beta1'
+  gem 'machinist', '2.0'
   gem 'fakeweb', require: false
-  gem 'webmock', require: false
+  gem 'webmock', '1.8.4', require: false
   gem 'launchy', '2.1'
   gem 'rspec-rails', '2.14.1'
-  gem 'headless'
-  gem 'test-unit'
+  gem 'headless', '1.0.1'
+  gem 'test-unit', '2.3.0'
   gem 'shoulda-matchers', '~> 2.0.0'
   gem 'email_spec', '~> 1.5.0'
 end
 
 gem 'capistrano', '2.15.5'
 gem 'capistrano-ext', '>= 1.2.1'
-gem 'rvm-capistrano'
+gem 'rvm-capistrano', '1.2.7'
 gem 'rake', '~> 10.3.2'
 gem 'daemons', '~> 1.1.9'
