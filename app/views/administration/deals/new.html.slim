@@ -32,5 +32,6 @@
 
 = content_for :js do
   = javascript_include_tag("deal_creation")
+
   javascript:
-    | setup_step( @deal.creation_step.to_i )
+    setup_step( @deal.creation_step.to_i )
