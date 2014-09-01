@@ -77,6 +77,14 @@ gem 'rubyzip', '0.9.9'
 gem 'rails-multi_block_helpers', github: 'bartlomiejdanek/rails-multi_block_helpers'
 gem 'stringex', '~> 2.5.2'
 
+# assets
+group :assets do
+  gem 'sass-rails',   '3.1.5'
+  gem 'uglifier',     '~> 2.5.3'
+  gem 'csso-rails',   '~> 0.3.4'
+  gem 'bourbon',      '2.1.1'
+end
+
 group :staging do
   gem 'system-metrics', '0.2.4'
   gem 'mailcatcher', '0.2.4'
