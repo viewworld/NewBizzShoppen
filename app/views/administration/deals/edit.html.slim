@@ -1,0 +1,25 @@
+= content_for :column_mc do
+  = header(back: true) do |section|
+    - section.block_header do
+      = t('administration.deals.edit.view.title')
+
+    - section.block_actions do
+      ul.header_actions
+        li
+          = bt_link_to nil, t("administration.deals.edit.view.edit_deal_request_details_email_template"), edit_email_template_path(@deal.deal_request_details_email_template, deal_id: @deal.id)
+        li.last
+          = bt_link_to nil, t("administration.deals.edit.view.preview"), deal_url(@deal, host: Domain.for_site_and_locale(:fairdeals, I18n.locale).try(:name)), target: "_blank"
+
+  - unless @deal.enabled?
+    .flash.flash_notice= t("deals.common.max_auto_buy_limit_reached")
+
+  = semantic_form_for [:administration, @deal], method: :put, html: {multipart: true} do |form|
+    = frm(title: @deal.header) do |section|
+      - section.block_content do
+        = render partial: 'shared/deals/form', locals: {form: form, deal: @deal, categories: DealCategory.without_locked.all}
+        = render partial: "shared/deals/assets_management", locals: {form: form, path: "administration_deal_assets_path", \
+          remove_path: "administration_deal_asset_path"}                                                                  \
+      - section.block_actions do
+        = render partial: "shared/deals/update_buttons", locals: { form: form, role: "administration" }
+
+  = render partial: "shared/deals/leads_listing", locals: { deal: @deal }
