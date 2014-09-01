@@ -82,7 +82,6 @@ group :assets do
   gem 'sass-rails',   '3.1.5'
   gem 'uglifier',     '~> 2.5.3'
   gem 'csso-rails',   '~> 0.3.4'
-  gem 'bourbon',      '2.1.1'
 end
 
 group :staging do

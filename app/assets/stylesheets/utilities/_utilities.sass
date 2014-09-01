@@ -7,5 +7,7 @@
 .text-center
   text-align: center
 
-.clearfix
-  @include clearfix
+.clearfix:after
+  content: ""
+  display: table
+  clear: both
