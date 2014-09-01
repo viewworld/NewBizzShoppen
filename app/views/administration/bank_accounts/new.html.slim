@@ -3,8 +3,4 @@
     - section.block_header do
       = t('administration.bank_accounts.new.view.header')
 
-  .box
-    .box-header
-      h2= t('administration.bank_accounts.new.view.header')
-
-    = render 'form'
+  = render partial: 'form', locals: { header: t('administration.bank_accounts.new.view.header') }
