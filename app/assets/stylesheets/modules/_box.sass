@@ -1,0 +1,62 @@
+// FIXME: Drop IE8 support and change images to border-radius: 0 0 10px 10px in .box-footer, .box-header
+//        Thanks to that, we will be able to remove :before & :after for all elements
+
+.box
+  margin-top: 20px
+
+.box-content
+  background: #F5F5F5
+
+  border:
+    left: 1px solid #E3E3E3
+    right: 1px solid #E3E3E3
+
+.box-header, .box-footer
+  background: url(/assets/modules/box/grey.png) repeat-x
+
+  position: relative
+  margin: 0 10px
+  height: 38px
+
+  &:before, &:after
+    content: ""
+    background: url(/assets/modules/box/grey.png) repeat-x
+
+    position: absolute
+    top: 0
+
+    width: 10px
+    height: 100%
+
+  &:before
+    left: -10px
+
+  &:after
+    right: -10px
+
+.box-header
+  background-position: 0 -38px
+
+  &:before
+    background-position: 0 0
+
+  &:after
+    background-position: right 0
+
+  h1, h2, h3
+    line-height: 38px
+    color: #555
+    text-shadow: 1px 1px 0 #fff
+
+.box-footer
+  background-position: 0 -142px
+  padding-top: 8px
+
+  &:before
+    background-position: 0 -96px
+
+  &:after
+    background-position: right -96px
+
+  .bt
+    margin-left: 7px
