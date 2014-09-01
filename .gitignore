@@ -24,4 +24,5 @@
 /public/system/import_temp/*
 /tags
 .DS_Store
+/.sass-cache
 /tmp.html
