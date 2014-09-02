@@ -8,7 +8,7 @@ class Administration::SubscriptionPlansController < Administration::Administrati
 
   def index
     @search = SubscriptionPlan.scoped_search(params[:search] || {})
-    @subscription_plans = @search.paginate(page: params[:page], per_page: 5).decorate
+    @subscription_plans = @search.paginate(page: params[:page]).decorate
   end
 
   def new
