@@ -1,4 +1,4 @@
-class EmailBounceDecorator < ApplicationDecorator
+class ArchivedEmailDecorator < ApplicationDecorator
   def sender_email
     object.sender ? object.sender.email : t("administration.email_bounces.index.view.anonymous")
   end
