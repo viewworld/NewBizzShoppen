@@ -1,0 +1,17 @@
+= content_for :column_mc do
+  = header(back: true) do |section|
+    - section.block_header do
+      = t("administration.email_bounces.show.view.header")
+
+  .grid_800.pdd_10.no_pdd_r
+    .element_description
+      - email_bounce_public_attributes.each do |attribute|
+        h2= t(attribute, scope: 'administration.email_bounces.show.view')
+        p= @email_bounce.public_send(attribute)
+
+      - email_bounce_details_attributes.each do |attribute|
+        h2= t(attribute, scope: 'administration.email_bounces.show.view')
+        p= @email_bounce.bounce_details[attribute]
+
+      h2= t('administration.email_bounces.show.view.body')
+      p= @email_bounce.body.html_safe

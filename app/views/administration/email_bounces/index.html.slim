@@ -1,0 +1,37 @@
+= content_for :column_mc do
+  = header(back: true) do |section|
+    - section.block_header do
+      = t("administration.email_bounces.index.view.header")
+
+  - if @email_bounces.blank?
+    = blank_state_message
+  - else
+    table.generic
+      thead
+        tr
+          th.hl
+          th style=("width: 100px") = t("administration.email_bounces.index.view.email")
+          th= t("administration.email_bounces.index.view.sender")
+          th= t("administration.email_bounces.index.view.subject")
+          th style=("width: 140px") = t("administration.email_bounces.index.view.bounced_at")
+          th.ta_r= t("administration.email_bounces.index.view.actions")
+          th.hr
+      tfoot
+        tr
+          td.fl
+          td colspan="5"
+          td.fr
+      tbody
+        - @email_bounces.each do |email|
+          tr
+            td.cl
+            td.ta_c= email.to
+            td= email.sender_email
+            td= email.subject
+            td= email.sent_at
+            td.tda.ta_r
+              = link_to t("administration.email_bounces.index.view.details"), administration_email_bounce_path(email), class: "default_action"
+            td.cr
+        tr.pagination
+          td.ta_c colspan="7"
+            = will_paginate @email_bounces

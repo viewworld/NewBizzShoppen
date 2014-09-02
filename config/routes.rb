@@ -24,6 +24,7 @@ Nbs::Application.routes.draw do
     resources :category_email_templates, only: [:edit, :update]
     resources :countries, except: :show
     resources :currencies, except: :show
+    resources :email_bounces, only: [:index, :show, :create]
     resources :featured_deals, only: [:index, :create]
     resources :hints, except: [:new, :create]
     resources :languages, only: [:index, :update]
@@ -31,6 +32,7 @@ Nbs::Application.routes.draw do
     resources :lead_templates, except: [:index, :show]
     resources :news, except: :new
     resources :sellers
+    resources :softphone_servers, except: :show
     resources :supplier_interests, only: [:edit, :update]
 
     resources :tags do
@@ -43,14 +45,6 @@ Nbs::Application.routes.draw do
 
     resources :vat_rates
     resources :youtube_introductions, except: [:index, :show]
-
-
-
-
-
-
-
-
 
     resources :users do
       resource :password, controller: 'password', only: [:new, :update, :destroy]
@@ -80,7 +74,7 @@ Nbs::Application.routes.draw do
       resources :assets, controller: "deal_assets", only: [:create, :destroy]
     end
 
-    resources :softphone_servers
+
 
     namespace :invoicing do
       resources :invoices do
@@ -105,7 +99,6 @@ Nbs::Application.routes.draw do
 
 
     resource :stats_recalculation, controller: "stats_recalculation", only: :update
-    resources :email_bounces
 
     resources :subscription_plans do
       collection { get 'fetch_subscription_plans' }
