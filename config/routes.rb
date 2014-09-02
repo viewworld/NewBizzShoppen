@@ -24,20 +24,32 @@ Nbs::Application.routes.draw do
     resources :category_email_templates, only: [:edit, :update]
     resources :countries, except: :show
     resources :currencies, except: :show
+
+    resources :deals do
+      resources :assets, controller: "deal_assets", only: [:create, :destroy]
+    end
+
     resources :email_bounces, only: [:index, :show, :create]
     resources :email_template_signatures, except: :show
     resources :email_templates, only: [:index, :edit, :update] do
       member { post 'test_send_email' }
     end
+
     resources :featured_deals, only: [:index, :create]
     resources :hints, except: [:new, :create]
     resources :languages, only: [:index, :update]
     resources :leads, only: [:index, :edit, :update]
     resources :lead_templates, except: [:index, :show]
     resources :news, except: :new
+    resources :results
     resources :sellers
+    resource :setting, only: [:edit, :update]
     resources :softphone_servers, except: :show
     resources :supplier_interests, only: [:edit, :update]
+
+    resources :subscription_plans do
+      collection { get 'fetch_subscription_plans' }
+    end
 
     resources :tags do
       member { post 'duplicate' }
@@ -50,6 +62,9 @@ Nbs::Application.routes.draw do
     resources :vat_rates
     resources :youtube_introductions, except: [:index, :show]
 
+
+    # THESE BELOW ARE STILL TODO
+
     resources :users do
       resource :password, controller: 'password', only: [:new, :update, :destroy]
 
@@ -61,20 +76,10 @@ Nbs::Application.routes.draw do
 
       resource :change_subscription_plan
     end
-
     resource :bulk_users_update, controller: "bulk_users_update", only: :update
 
     resources :categories
-
-    resource :setting, only: [:edit, :update]
-
-
-
-    resources :deals do
-      resources :assets, controller: "deal_assets", only: [:create, :destroy]
-    end
-
-
+    resources :category_users
 
     namespace :invoicing do
       resources :invoices do
@@ -95,21 +100,8 @@ Nbs::Application.routes.draw do
       resources :refunds
     end
 
-    resources :category_users
-
-
     resource :stats_recalculation, controller: "stats_recalculation", only: :update
-
-    resources :subscription_plans do
-      collection { get 'fetch_subscription_plans' }
-    end
-
     resources :paypal_notifications, only: [:index, :show]
-
-
-    match '/dashboard' => 'dashboard#index', as: :dashboard
-
-    resources :results
 
     resources :payouts do
       member do
