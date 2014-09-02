@@ -1,0 +1,6 @@
+.pdd_10.no_pdd_t
+  fieldset.inputs.labels_ta_r.labels_100
+    ol
+      = form.input :name
+      = form.input :email_from, as: :select, collection: @emails
+      = form.input :body, label: false, as: :ckeditor, input_html: { toolbar: "EmailPopup" }

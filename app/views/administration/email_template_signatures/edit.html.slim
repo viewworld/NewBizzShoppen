@@ -1,0 +1,15 @@
+= content_for :column_mc do
+  = javascript_include_tag :ckeditor
+  = header(back: true) do |section|
+    - section.block_header do
+      = t("administration.email_template_signatures.edit.view.header")
+
+  = semantic_form_for @email_template_signature, url: administration_email_template_signature_path(@email_template_signature), method: :put do |form|
+    = frm do |section|
+      - section.block_content do
+        = render partial: 'form', locals: {form: form}
+      - section.block_actions do
+        = ibt(class: "fltri", icon: "save") do
+          = form.submit t("administration.email_template_signatures.edit.view.button_update")
+        = ibt(class: "bt_grey fltri") do
+          = button_to_function t("common.cancel_link"), "history.go(-1)"

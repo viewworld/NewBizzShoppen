@@ -1,0 +1,36 @@
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t("administration.email_template_signatures.index.view.title")
+    - section.block_actions do
+      ul.header_actions
+        li.last
+          = bt_link_to :plus, t("administration.email_template_signatures.index.view.new_signature"), new_administration_email_template_signature_path
+  table#users_table.generic
+    thead
+      tr
+        th.hl
+        th= t("administration.email_template_signatures.index.view.name_column")
+        th.ta_r= t("administration.email_template_signatures.index.view.actions_column")
+        th.hr
+    tfoot
+      tr
+        td.fl
+        td colspan="2"
+        td.fr
+    tbody
+      - @email_template_signatures.each do |email_template|
+        tr
+          td.cl
+          td= email_template.name
+          td.tda.ta_r
+            .td_actions
+              = bt_link_to :cog, nil, "javascript:void(0)", class: "bt_dropdown"
+              ul
+                li= link_to t("administration.email_template_signatures.index.view.edit"), edit_administration_email_template_signature_path(email_template), class: "default_action"
+                li= link_to t("administration.email_template_signatures.index.view.destroy"), administration_email_template_signature_path(email_template), confirm: t("common.confirmation"), method: :delete
+          td.cr
+      - if will_paginate
+        tr.pagination
+          td.ta_c colspan="5"
+            = will_paginate @email_template_signatures
