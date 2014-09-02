@@ -41,6 +41,7 @@ Nbs::Application.routes.draw do
     resources :leads, only: [:index, :edit, :update]
     resources :lead_templates, except: [:index, :show]
     resources :news, except: :new
+    resources :paypal_notifications, only: [:index, :show]
     resources :results
     resources :sellers
     resource :setting, only: [:edit, :update]
@@ -101,7 +102,6 @@ Nbs::Application.routes.draw do
     end
 
     resource :stats_recalculation, controller: "stats_recalculation", only: :update
-    resources :paypal_notifications, only: [:index, :show]
 
     resources :payouts do
       member do

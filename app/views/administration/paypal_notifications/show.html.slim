@@ -1,0 +1,40 @@
+= content_for :column_mc do
+  = header(back: true) do |section|
+    - section.block_header do
+      = t("administration.paypal_notifications.show.view.header")
+
+  .grid_800.pdd_10.no_pdd_r
+    .element_description
+      h3 Txn ID
+      p= @paypal_notification.transaction_id
+
+      h3 Txn status
+      p= @paypal_notification.status
+
+      - if @paypal_notification.is_a?(SubscriptionPaymentNotification)
+        h3 Profile ID
+        p= @paypal_notification.params["recurring_payment_id"] if @paypal_notification.params
+
+      h3 Txn type
+      p= @paypal_notification.params["txn_type"] if @paypal_notification.params
+
+      h3 Notification Type
+      p= @paypal_notification.type
+
+      h3 Buyer
+      p= @paypal_notification.buyer_id
+
+      h3 Created at
+      p= format_date @paypal_notification.created_at, true
+
+      - if @paypal_notification.params.is_a?(Hash)
+        hr/
+        b PARAMETERS
+        - @paypal_notification.params.keys.sort.each do |key|
+          p
+            b= "#{key}: "
+            = @paypal_notification.params[key]
+      hr
+      b ASSOCIATED RESPONSES
+      / FIXME: Where did this partial go? (not found even on master) Do we still use it?
+      /= render partial: '/administration/archived_paypal_responses/table', locals: {responses: @responses, collection: @collection}

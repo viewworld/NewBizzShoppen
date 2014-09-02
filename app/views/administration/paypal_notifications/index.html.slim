@@ -1,0 +1,60 @@
+= content_for :search_box do
+  .search_box
+    h2= t("common.search")
+    .search_content
+      = form_for @search, url: administration_paypal_notifications_path do |f|
+        fieldset.inputs_vertical
+          ol.no_pdd
+            li.string
+              = f.label :with_keyword, t("administration.leads.index.search.keyword_label")
+              = f.text_field :with_keyword, style: "width:140px"
+            li.commit
+              = ibt(class: "bt_green", icon: "magnify") do
+                = submit_tag t("administration.leads.index.view.search_button")
+              p
+                = bt_clear_filter
+
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t("administration.paypal_notifications.index.view.title")
+
+  - if @paypal_notifications.blank?
+    = blank_state_message
+  - else
+    table.generic
+      thead
+        tr
+          th.hl
+          th style="width:10px" = t("administration.paypal_notifications.index.view.table.txn_id")
+          th= t("administration.paypal_notifications.index.view.table.profile_id")
+          th= t("administration.paypal_notifications.index.view.table.txn_type")
+          th= t("administration.paypal_notifications.index.view.table.type")
+          th= t("administration.paypal_notifications.index.view.table.status")
+          th= t("administration.paypal_notifications.index.view.table.created_at")
+          th.ta_r= t("administration.currencies.index.view.actions")
+          th.hr
+      tfoot
+        tr
+          td.fl
+          td colspan="7"
+          td.fr
+      tbody
+        - @paypal_notifications.each do |paypal_notification|
+          tr
+            td.cl
+            td
+              - if paypal_notification.params && paypal_notification.params["recurring_payment_id"]
+                = link_to paypal_notification.params["recurring_payment_id"], administration_paypal_notifications_path(search: { with_keyword: paypal_notification.params["recurring_payment_id"]})
+            td= paypal_notification.transaction_id
+            td= paypal_notification.txn_type
+            td= paypal_notification.type
+            td= paypal_notification.status
+            td= paypal_notification.created_at
+            td.tda.ta_r
+              = link_to t("administration.paypal_notifications.index.view.show"), administration_paypal_notification_path(paypal_notification), class: "default_action"
+            td.cr
+
+        tr.pagination
+          td.ta_c colspan="9"
+            = will_paginate @paypal_notifications
