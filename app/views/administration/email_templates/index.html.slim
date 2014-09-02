@@ -1,0 +1,32 @@
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t("administration.email_templates.index.view.title")
+
+  table.generic
+    thead
+      tr
+        th.hl
+        th= t("administration.email_templates.index.view.unique_id_column")
+        th= t("administration.email_templates.index.view.subject_column")
+        th.ta_r= t("administration.email_templates.index.view.actions_column")
+        th.hr
+    tfoot
+      tr
+        td.fl
+        td colspan="3"
+        td.fr
+    tbody
+      - @email_templates.each do |email_template|
+        tr
+          td.cl
+          td= email_template.uniq_id
+          td= email_template.subject
+          td.tda.ta_r
+            = link_to t("administration.email_templates.index.view.edit"), edit_administration_email_template_path(email_template), class: "default_action"
+          td.cr
+
+      - if will_paginate
+        tr.pagination
+          td.ta_c colspan="5"
+            = will_paginate @email_templates

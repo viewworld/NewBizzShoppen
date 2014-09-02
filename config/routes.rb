@@ -25,6 +25,10 @@ Nbs::Application.routes.draw do
     resources :countries, except: :show
     resources :currencies, except: :show
     resources :email_bounces, only: [:index, :show, :create]
+    resources :email_template_signatures, except: :show
+    resources :email_templates, only: [:index, :edit, :update] do
+      member { post 'test_send_email' }
+    end
     resources :featured_deals, only: [:index, :create]
     resources :hints, except: [:new, :create]
     resources :languages, only: [:index, :update]
@@ -64,11 +68,7 @@ Nbs::Application.routes.draw do
 
     resource :setting, only: [:edit, :update]
 
-    resources :email_templates do
-      member { post 'test_send_mail' }
-    end
 
-    resources :email_template_signatures
 
     resources :deals do
       resources :assets, controller: "deal_assets", only: [:create, :destroy]

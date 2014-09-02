@@ -1,0 +1,14 @@
+.pdd_10.no_pdd_t
+  fieldset.inputs.labels_ta_r.labels_100
+    ol
+      = form.input :subject
+      = form.input :from
+      = form.input :bcc
+      = form.input :cc
+      = form.input :body, label: false, as: :ckeditor, input_html: { toolbar: "EmailPopup" }
+      = form.input :enable_custom_signature, as: :boolean, onclick: "show_hide_custom_signature()"
+
+      #custom_email_signature_div
+        = form.fields_for :email_template_signature, form.object.email_template_signature || EmailTemplateSignature.new(related: form.object) do |builder|
+          li= builder.text_area :body
+          li= builder.hidden_field :_destroy, id: "destroy_email_template_signature"
