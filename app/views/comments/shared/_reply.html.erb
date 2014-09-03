@@ -1,4 +1,4 @@
-<%= semantic_remote_form_for Comment.new(:title => "#{t("comments.threads.show.view.title_reply_prefix")} #{title}"), :as => :comment, :url => comments_replies_path, :html => {:id => "reply_#{comment_id}", :style => "display:none"} do |f| %>
+<%= semantic_form_for Comment.new(:title => "#{t("comments.threads.show.view.title_reply_prefix")} #{title}"), :remote => true, :as => :comment, :url => comments_replies_path, :html => {:id => "reply_#{comment_id}", :style => "display:none"} do |f| %>
 
     <fieldset class="inputs labels_ta_r labels_80">
       <ol class="align_inputs">
