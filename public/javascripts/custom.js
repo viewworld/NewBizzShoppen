@@ -129,6 +129,17 @@ function add_region(field_prefix_id, label, value) {
             text(label));
 }
 
+function getRegions(country) {
+  $.ajax({
+      type: "GET",
+      url: "/regions.json",
+      data: "country_id=" + country,
+      success: function(data) {
+        return data;
+      }
+  });
+}
+
 function refresh_regions_list(field_prefix_id) {
     $.ajax({
         type: "GET",

@@ -11,7 +11,7 @@
         = address_form.input :address_line_3
         = address_form.input :zip_code
         = address_form.association :country, collection: Country.all, include_blank: false, input_html: { class: 'refresh-region-list' }
-        = address_form.association :region, collection: regions_collection_for(@bank_account.address.country)
+        = address_form.association :region, collection: regions_collection_for(@bank_account.address.country), input_html: { class: 'region-list' }
       = f.input :iban_no
       = f.input :local_bank_number
       = f.input :swift
@@ -30,5 +30,5 @@
 
 javascript:
   $('.refresh-region-list').change(function() {
-    refresh_regions_list('bank_account_address_attributes');
+    loadRegionsToSelect('.region-list', $(this).val());
   });
