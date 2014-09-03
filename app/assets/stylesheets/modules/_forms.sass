@@ -1,9 +1,56 @@
-form
-  .inputs
-    padding: 10px
+// FIXME: Remove .simple_form after dropping formtastic and globalize box-sizing
 
-  .editor
+form.simple_form
+  &, input
+    font: 12px/16px Arial, Helvetica, Verdana, Tahoma, sans-serif
+
+  *
     box-sizing: border-box
 
+  label
+    text-align: right
+
+    display: inline-block
+    vertical-align: middle
+
+    width: 200px
+    margin: 0 10px 0 5px
+    line-height: 26px
+
+    &.text, &.boolean
+      text-align: left
+
+    &.boolean
+      margin: 0 10px
+
+  input
+    border-radius: 4px
+    border: 1px solid #D0D0D0
+    color: #656565
+
+    padding: 6px
+
+  textarea
     width: 100%
-    min-height: 300px
+    max-width: 100%
+    height: 150px
+
+  abbr
+    color: #F00
+
+  .form-inputs
+    padding: 10px 15px
+
+  .input
+    margin: 0 0 5px 0
+
+  .field_with_errors
+    input
+      border: 1px solid #e21717
+
+    .error
+      display: block
+      padding: 5px 0 10px
+      margin-left: 220px
+      
+      color: #e21717
