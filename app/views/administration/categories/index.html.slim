@@ -1,0 +1,11 @@
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t("administration.categories.index.view.header")
+    - section.block_actions do
+      ul.header_actions
+        li.last
+          = bt_link_to :plus, t("administration.categories.index.view.new_category"), new_administration_category_path
+
+  = all_categories_tree(category_label: lambda { |c| c.name }, after_category: after_category)
+  .clb

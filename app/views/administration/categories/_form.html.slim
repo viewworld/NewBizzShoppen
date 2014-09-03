@@ -1,0 +1,47 @@
+.column_left
+  .pdd_10.no_pdd_t
+    fieldset.inputs.labels_ta_r
+      ol.align_inputs
+        = form.input :name
+        - if @category_type == LeadCategory
+          li.select
+            = form.select :parent_id, categories_sorted_for_select(@category_type, :name), { include_blank: t("administration.categories.form.no_parent_category") }
+
+        = form.input :description, as: :text
+        = form.input :additional_information, as: :ckeditor, input_html: { toolbar: 'Lite', swf_params: { resource_type: @category.class.name, resource_id: @category.id }}, wrapper_html: {class: "text"}
+
+        = form.input :is_locked
+
+        - if @category_type == LeadCategory
+          - unless @category.is_company_unique?
+            = form.input :default_price
+            = form.input :currency_id, collection: currencies_for_select, include_blank: true
+          = form.input :buyout_enabled
+          = form.input :no_prices_for_team_members
+          = form.input :is_customer_unique, onclick: "show_hide_users_selection('customer')"
+          = render partial: "users_selection", locals: {users_type: "customers", form: form}
+          = form.input :is_agent_unique, onclick: "show_hide_users_selection('agent')"
+          = render partial: "users_selection", locals: {users_type: "agents", form: form}
+          = form.input :auto_buy
+
+.column_right
+  .pdd_10.no_pdd_t
+    fieldset.inputs.labels_ta_r
+      ol.align_inputs
+        = form.input :countries, as: :select, collection: Country.all.collect { |c| [c.name, c.id] }, multiple: true, input_html: {size: 6, style: "height:140px; width:200px;"}
+        = form.semantic_fields_for :image, @category.image || Asset::CategoryImage.new do |image|
+          = image.input :asset,
+            as: :file,
+            required: false,
+            label: t("administration.categories.edit.view.upload_image"),
+            name: "category[image_attributes][asset]"
+        li.string
+          - if @category.image
+            - if @category.image.persisted?
+              = image_tag(@category.image.url, class: "thumb") unless @category.image.nil?
+            - else
+              = custom_error_for_object(@category.image)
+        = form.input :remove_image, as: :boolean unless @category.image.nil?
+.clb
+
+= render 'js'

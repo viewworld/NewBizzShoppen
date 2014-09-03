@@ -21,6 +21,7 @@ Nbs::Application.routes.draw do
 
     resources :articles, except: :new
     resources :bank_accounts, except: :index
+    resources :categories, except: :show
     resources :category_email_templates, only: [:edit, :update]
     resources :countries, except: :show
     resources :currencies, except: :show
@@ -79,7 +80,6 @@ Nbs::Application.routes.draw do
     end
     resource :bulk_users_update, controller: "bulk_users_update", only: :update
 
-    resources :categories
     resources :category_users
 
     namespace :invoicing do
