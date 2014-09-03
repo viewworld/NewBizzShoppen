@@ -1,4 +1,7 @@
 class Asset < ActiveRecord::Base
+  include Ckeditor::Orm::ActiveRecord::AssetBase
+  include Ckeditor::Backend::Paperclip
+
   IMAGE_FILE_TYPES = %w(image/jpeg image/png image/gif image/pjpeg image/x-png)
   DOCUMENT_FILE_TYPES = %w(application/x-pdf application/txt text/plain application/msword application/pdf application/vnd.ms-excel application/vnd.oasis.opendocument.text application/vnd.oasis.opendocument.spreadsheet application/octet)
 

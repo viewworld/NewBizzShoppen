@@ -94,8 +94,9 @@ GEM
     childprocess (0.5.3)
       ffi (~> 1.0, >= 1.0.11)
     chronic (0.10.2)
-    ckeditor (3.4.3.pre)
-      mime-types (>= 1.16)
+    ckeditor (3.7.3)
+      mime-types
+      orm_adapter
     coderay (1.1.0)
     columnize (0.8.9)
     crack (0.4.2)
@@ -226,6 +227,7 @@ GEM
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     oauth (0.4.7)
+    orm_adapter (0.5.0)
     paper_trail (2.7.2)
       activerecord (~> 3.0)
       railties (~> 3.0)
@@ -401,7 +403,7 @@ DEPENDENCIES
   capistrano (= 2.15.5)
   capistrano-ext (>= 1.2.1)
   capybara (= 1.1.4)
-  ckeditor (= 3.4.3.pre)
+  ckeditor (= 3.7.3)
   createsend (= 1.0.3)
   csso-rails (~> 0.3.4)
   daemons (~> 1.1.9)

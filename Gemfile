@@ -32,7 +32,7 @@ gem 'jammit-s3', '~> 0.6.0.2'
 # views
 gem 'slim', '~> 2.0.3'
 gem 'slim-rails', '~> 2.1.5'
-gem 'ckeditor', '3.4.3.pre'
+gem 'ckeditor', '3.7.3'
 gem 'will_paginate', '3.0.7'
 gem 'formtastic', '1.1.0'
 gem 'liquid', '2.2.2'
