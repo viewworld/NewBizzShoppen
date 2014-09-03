@@ -9,7 +9,7 @@ class Administration::BankAccountsController < Administration::AdministrationCon
   end
 
   def create
-    @bank_account = BankAccount.new(params[:bank_account])
+    @bank_account = BankAccount.new(bank_account_params)
 
     if @bank_account.save
       redirect_to edit_administration_setting_path
@@ -19,7 +19,7 @@ class Administration::BankAccountsController < Administration::AdministrationCon
   end
 
   def update
-    if @bank_account.update_attributes(params[:bank_account])
+    if @bank_account.update_attributes(bank_account_params)
       redirect_to edit_administration_setting_path
     else
       render :edit
@@ -34,5 +34,13 @@ class Administration::BankAccountsController < Administration::AdministrationCon
   private
   def set_bank_account
     @bank_account = BankAccount.find(params[:id])
+  end
+
+  def bank_account_params
+    params.require(:bank_account).permit(
+      :bank_name, :iban_no, :local_bank_number, :swift,
+      :payment_conditions, :country_default, :global_default,
+      address_attributes: [:address_line_1, :address_line_2, :address_line_3, :zip_code, :country_id, :region_id]
+    )
   end
 end

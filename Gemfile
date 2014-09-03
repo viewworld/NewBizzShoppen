@@ -77,12 +77,12 @@ gem 'activerecord-database-views', '0.1.0'
 gem 'rubyzip', '0.9.9'
 gem 'rails-multi_block_helpers', github: 'bartlomiejdanek/rails-multi_block_helpers'
 gem 'stringex', '~> 2.5.2'
+gem 'strong_parameters', '~> 0.2.3'
 
-# assets
 group :assets do
-  gem 'sass-rails',   '3.1.5'
-  gem 'uglifier',     '~> 2.5.3'
-  gem 'csso-rails',   '~> 0.3.4'
+  gem 'sass-rails', '3.1.5'
+  gem 'uglifier', '~> 2.5.3'
+  gem 'csso-rails', '~> 0.3.4'
 end
 
 group :staging do
