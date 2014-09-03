@@ -79,7 +79,7 @@
             <h3><%= t("shared.leads.form.sales_information") %></h3>
           </li>
           <li class="string optional">
-            <%= form.input :purchase_decision_date, :as => :datepicker, :wrapper_html => {:class => "date"}, :hint => hint_for(@lead, :purchase_decision_date) %>
+            <%= form.input :purchase_decision_date, :as => :date_picker, :wrapper_html => {:class => "date"}, :hint => hint_for(@lead, :purchase_decision_date) %>
           </li>
         </ol>
       </fieldset>

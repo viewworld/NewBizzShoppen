@@ -95,7 +95,7 @@
               <%= semantic_form_for Subscription.new, :url => administration_user_change_subscription_plan_path(@user) do |f| %>
                   <%= f.inputs do %>
                       <%= f.input :subscription_plan_id, :collection => @available_subscriptions.map { |s| [s.name, s.id] }, :include_blank => false %>
-                      <%= f.input :start_date, :as => :datepicker, :input_html => {:value => (@user.active_subscription.end_date||Date.today)+1}, :wrapper_html => {:class => "date"} %>
+                      <%= f.input :start_date, :as => :date_picker, :input_html => {:value => (@user.active_subscription.end_date||Date.today)+1}, :wrapper_html => {:class => "date"} %>
                       <li class="commit">
                         <%= ibt do %>
                           <%= f.submit t("administration.users.edit.view.change") %>
