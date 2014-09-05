@@ -7,7 +7,7 @@ class Country < ActiveRecord::Base
   has_many :addresses
   has_many :regions, :order => "name"
   has_one :vat_rate, :dependent => :destroy
-  has_one :logo, :class_name => "Asset::CountryLogo", :as => :resource, :conditions => "asset_type = 'Asset::CountryLogo'", :dependent => :destroy
+  has_one :logo, :class_name => "Asset::CountryLogo", :as => :assetable, :conditions => "asset_type = 'Asset::CountryLogo'", :dependent => :destroy
   has_one :email_template_signature, :as => :related
 
   validates_presence_of :name, :work_start_at, :work_end_at

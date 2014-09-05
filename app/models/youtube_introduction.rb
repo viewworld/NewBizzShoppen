@@ -2,7 +2,7 @@ class YoutubeIntroduction < ActiveRecord::Base
 
   has_one :image,
           :class_name => "Asset::YoutubeImage",
-          :as         => :resource,
+          :as         => :assetable,
           :conditions => "asset_type = 'Asset::YoutubeImage'",
           :dependent  => :destroy
 

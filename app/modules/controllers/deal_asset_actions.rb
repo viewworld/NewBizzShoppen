@@ -12,8 +12,8 @@ module DealAssetActions
                nil
              end
     if @asset
-      @asset.resource_id = @deal.id
-      @asset.resource_type = "AbstractLead"
+      @asset.assetable_id = @deal.id
+      @asset.assetable_type = "AbstractLead"
       if @asset.save
         flash[:notice] = t("flash.deal_assets.create.success")
       else

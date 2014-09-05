@@ -52,8 +52,8 @@
                           :toolbar => "EmailPopup",
                           #:contentsCss => "/stylesheets/newsletter.css",
                           :swf_params => {
-                              :resource_type => @newsletter_campaign.class.name,
-                              :resource_id => @newsletter_campaign.id
+                              :assetable_type => @newsletter_campaign.class.name,
+                              :assetable_id => @newsletter_campaign.id
                               }
                           }
 

@@ -1,9 +1,13 @@
 class Ckeditor::AttachmentFile < ::Asset
-  has_attached_file :asset,
+  self.table_name = 'assets'
+
+  has_attached_file :data,
                     url: "/ckeditor/files/:id/:filename",
                     path: ":rails_root/public/ckeditor/files/:id/:filename"
 
-  validates_attachment_size :asset, less_than: 100.megabytes
+  validates_attachment_size :data, less_than: 100.megabytes
+  validates_attachment_presence :data
+
 
   def url_thumb
     @url_thumb ||= Ckeditor::Utils.filethumb(filename)

@@ -5,15 +5,15 @@ class CkeditorController < ApplicationController
   respond_to :html, :xml, :json
   layout "ckeditor"
 
-  # GET /ckeditor/images
-  def images
-    @images = Ckeditor::Picture.where(:resource_type => params[:resource_type], :assetable_id => params[:assetable_id]).order("id DESC")
+  # GET /ckeditor/pictures
+  def pictures
+    @images = Ckeditor::Picture.where(:assetable_type => params[:assetable_type], :assetable_id => params[:assetable_id]).order("id DESC")
     respond_with(@images)
   end
 
   # GET /ckeditor/files
-  def files
-    @files = Ckeditor::AttachmentFile.where(:resource_type => params[:resource_type], :assetable_id => params[:assetable_id]).order("id DESC")
+  def attachment_files
+    @files = Ckeditor::AttachmentFile.where(:assetable_type => params[:assetable_type], :assetable_id => params[:assetable_id]).order("id DESC")
     respond_with(@files)
   end
 

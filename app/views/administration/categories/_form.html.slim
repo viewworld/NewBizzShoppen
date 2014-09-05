@@ -8,7 +8,7 @@
             = form.select :parent_id, categories_sorted_for_select(@category_type, :name), { include_blank: t("administration.categories.form.no_parent_category") }
 
         = form.input :description, as: :text
-        = form.input :additional_information, as: :ckeditor, input_html: { toolbar: 'Lite', swf_params: { resource_type: @category.class.name, resource_id: @category.id }}, wrapper_html: {class: "text"}
+        = form.input :additional_information, as: :ckeditor, input_html: { toolbar: 'Lite', swf_params: { assetable_type: @category.class.name, assetable_id: @category.id }}, wrapper_html: {class: "text"}
 
         = form.input :is_locked
 

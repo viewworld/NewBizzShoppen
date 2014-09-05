@@ -1,4 +1,5 @@
 Nbs::Application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
 
   resources :payment_notifications, only: :create do
     member { post :show }
@@ -538,6 +539,9 @@ Nbs::Application.routes.draw do
   resource :password, controller: 'password', only: :update
   match 'password' => 'password#edit', as: 'password'
   match 'ckeditor/destroy/:id', to: 'ckeditor#destroy'
+
+  get "ckeditor/pictures" => "ckeditor#pictures"
+  get "ckeditor/attachment_files" => "ckeditor#attachment_files"
 
   resource :contact_us, controller: "contact_us", as: "contact_us", only: [:new, :create]
   resource :terms_and_conditions, controller: "terms_and_conditions", as: "terms_and_conditions", only: :show

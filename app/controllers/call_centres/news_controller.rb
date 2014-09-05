@@ -15,7 +15,7 @@ class CallCentres::NewsController < CallCentres::CallCentreController
   end
 
   def create
-    @news = "Article::News::CallCentre".constantize.new(:resource_id => current_user.id, :resource_type => "User::CallCentre")
+    @news = Article::News::CallCentre.new(:resource_id => current_user.id, :resource_type => "User::CallCentre")
     create! do |success,failure|
       success.html { render :action => :edit }
       failure.html { redirect_to call_centres_news_index_path }

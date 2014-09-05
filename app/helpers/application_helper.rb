@@ -1,5 +1,6 @@
 module ApplicationHelper
   include ScopedSearch::Helpers
+  include CkeditorHelper
 
   class HelperBlocks
     attr_accessor :results

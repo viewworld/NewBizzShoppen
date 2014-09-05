@@ -9,7 +9,7 @@ class Category < ActiveRecord::Base
   has_many :category_translations
   has_one :image,
           :class_name => "Asset::CategoryImage",
-          :as => :resource,
+          :as => :assetable,
           :conditions => "asset_type = 'Asset::CategoryImage'",
           :dependent => :destroy
   has_many :category_interests

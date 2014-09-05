@@ -9,8 +9,8 @@
                             :width => '1085px',
                             :height => '250px',
                             :swf_params => {
-                                :resource_type => @news.class.name,
-                                :resource_id => @news.id
+                                :assetable_type => @news.class.name,
+                                :assetable_id => @news.id
                                 }
                             } %>
       <%= form.input :published %>

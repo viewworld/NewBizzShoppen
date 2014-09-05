@@ -14,7 +14,7 @@
       ol
         = form.input :title
         = form.input :content, as: :ckeditor, label: false,
-                        input_html: { swf_params: { resource_type: @article.class.name, resource_id: @article.id } }
+                        input_html: { swf_params: { assetable_type: @article.class.name, assetable_id: @article.id } }
         = form.input :published
 
     .box-footer

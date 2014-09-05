@@ -35,12 +35,12 @@
             <% end %>
         <% end %>
         <%= form.input :header, :label => t("shared.deals.form.name_label") %>
-        <%= form.input :hidden_description, :label => t("shared.deals.form.detailed_description_label"), :as => :ckeditor, :input_html => {:width => '320px', :height => '150px', :toolbar => "Lite"}, :wrapper_html => {:class => "text"} %>
-        <%= form.input :fine_print, :label => t("shared.deals.form.fine_print_label"), :as => :ckeditor, :input_html => {:width => '320px', :height => '150px', :toolbar => "Lite"}, :wrapper_html => {:class => "text"} %>
-        <%= form.input :short_featured_description, :label => t("shared.deals.form.short_featured_description_label"), :as => :ckeditor, :input_html => {:width => '320px', :height => '150px', :toolbar => "Lite"}, :wrapper_html => {:class => "text"} %>
-        <%#= form.input :featured_description, :label => t("shared.deals.form.featured_description_label"), :as => :ckeditor, :input_html => {:width => '320px', :height => '150px', :toolbar => "Lite"}, :wrapper_html => {:class => "text"} %>
+        <%= form.input :hidden_description, :label => t("shared.deals.form.detailed_description_label"), :as => :ckeditor, :input_html => lite_ckeditor_params, :wrapper_html => {:class => "text"} %>
+        <%= form.input :fine_print, :label => t("shared.deals.form.fine_print_label"), :as => :ckeditor, :input_html => lite_ckeditor_params, :wrapper_html => {:class => "text"} %>
+        <%= form.input :short_featured_description, :label => t("shared.deals.form.short_featured_description_label"), :as => :ckeditor, :input_html => lite_ckeditor_params, :wrapper_html => {:class => "text"} %>
+        <%#= form.input :featured_description, :label => t("shared.deals.form.featured_description_label"), :as => :ckeditor, :input_html => lite_ckeditor_params, :wrapper_html => {:class => "text"} %>
         <% if user_signed_in? and current_user.deal_maker? %>
-        <%= form.input :deal_confirmation_page, :label => t("shared.deals.form.deal_confirmation_page"), :as => :ckeditor, :input_html => {:width => '320px', :height => '150px', :toolbar => "Lite"}, :wrapper_html => {:class => "text"} %>
+        <%= form.input :deal_confirmation_page, :label => t("shared.deals.form.deal_confirmation_page"), :as => :ckeditor, :input_html => lite_ckeditor_params, :wrapper_html => {:class => "text"} %>
         <% end %>
         <%= form.input :start_date, :as => :string,
                        :wrapper_html => {:class => "date"},
@@ -100,7 +100,7 @@
     <fieldset class="inputs labels_ta_r">
       <ol class="align_inputs">
         <%= form.input :company_name %>
-        <%= form.input :company_description, :label => t("shared.deals.form.company_description_label"), :as => :ckeditor, :input_html => {:width => '350px', :height => '150px', :toolbar => "Lite"}, :wrapper_html => {:class => "text"} %>
+        <%= form.input :company_description, :label => t("shared.deals.form.company_description_label"), :as => :ckeditor, :input_html => {:width => '350px', :height => '150px', :toolbar => "Lite", :customConfig => '/javascripts/ckeditor/config.js'}, :wrapper_html => {:class => "text"} %>
         <%= form.input :contact_name %>
         <%= form.input :email_address %>
         <%= form.input :phone_number %>
@@ -146,7 +146,7 @@
                   <% end %>
               <% end %>
 
-              <%= form.input :voucher_how_to_redeem, :label => t("shared.deals.form.how_to_redeem_label"), :as => :ckeditor, :input_html => {:width => '350px', :height => '150px', :toolbar => "Lite"}, :wrapper_html => {:class => "text"} %>
+              <%= form.input :voucher_how_to_redeem, :label => t("shared.deals.form.how_to_redeem_label"), :as => :ckeditor, :input_html => {:width => '350px', :height => '150px', :toolbar => "Lite", :customConfig => '/javascripts/ckeditor/config.js'}, :wrapper_html => {:class => "text"} %>
               <div class="clb"></div>
               <div style='height:84px'>
                 <%= form.input :voucher_until_type, :as => :radio, :collection => Deal.until_type_for_radio %>
@@ -199,7 +199,7 @@
             <% end %>
         <% end %>
         <% if user_signed_in? %>
-            <%= form.input :internal_note, :label => t("shared.deals.form.internal_note_label"), :as => :ckeditor, :input_html => {:width => '320px', :height => '150px', :toolbar => "Lite"}, :wrapper_html => {:class => "text"} %>
+            <%= form.input :internal_note, :label => t("shared.deals.form.internal_note_label"), :as => :ckeditor, :input_html => lite_ckeditor_params, :wrapper_html => {:class => "text"} %>
         <% end %>
       </ol>
     </fieldset>
