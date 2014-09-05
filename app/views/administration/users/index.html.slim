@@ -1,0 +1,26 @@
+= content_for :search_box do
+  = render 'search'
+
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      - if @search.with_subaccounts.blank?
+        = t("administration.users.index.view.title")
+      - else
+        - user = User.find(@search.with_subaccounts)
+        = t("administration.users.index.view.subaccounts_for_user", user_name: user.full_name)
+        = link_to t("administration.users.index.view.show_all_users"), administration_users_path
+    - section.block_actions do
+      = form_tag new_administration_user_path, method: :get, id: "form_new_user" do
+        span style=("position:absolute;top: 5px; right: 110px;")
+          = select_tag "role", options_for_select(User::BASIC_USER_ROLES_WITH_LABELS.sort), {}
+        ul.header_actions
+          li.last
+            .hidden
+              = submit_tag t("administration.users.index.view.new_user")
+            = bt_link_to :plus, t("administration.users.index.view.new_user"), "javascript:void", onclick: "$('#form_new_user').submit()"
+  - if @users.blank?
+    = blank_state_message
+  - else
+    = bulk_form do
+      = render "users_table", users: @users, subaccounts_table: false
