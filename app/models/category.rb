@@ -28,19 +28,19 @@ class Category < ActiveRecord::Base
 
   has_many :leads do
     def including_subcategories
-      Lead.where(:category_id => proxy_owner.self_and_descendants.map(&:id))
+      Lead.where(:category_id => proxy_owner.self_and_descendants.select(:id))
     end
   end
 
   has_many :published_leads, :class_name => 'Lead', :conditions => ["published = ?", true] do
     def including_subcategories
-      Lead.where(:category_id => proxy_owner.self_and_descendants.map(&:id)).published_only
+      Lead.where(:category_id => proxy_owner.self_and_descendants.select(:id)).published_only
     end
   end
 
   has_many :deals do
     def including_subcategories
-      Deal.where(:category_id => proxy_owner.self_and_descendants.map(&:id))
+      Deal.where(:category_id => proxy_owner.self_and_descendants.select(:id))
     end
   end
 
@@ -73,7 +73,7 @@ class Category < ActiveRecord::Base
   scope :with_supplier_unique, lambda { |supplier| where("(is_customer_unique = ? and category_customers.user_id is NULL) or (is_customer_unique = ? and category_customers.user_id = ?)", false, true, supplier.id).joins("LEFT JOIN category_customers ON categories.id=category_customers.category_id") }
   scope :with_agent_unique, lambda { |agent| select("DISTINCT(categories.id), categories.*").where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id = ?)#{' or (is_agent_unique = \'t\' and category_agents.user_id = ' + agent.parent_id.to_s + ')' if agent.has_role?(:call_centre_agent)}", false, true, agent.id).joins("LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
   scope :with_buying, lambda { |user| joins(:buying_users).where(:users => {:id => user.id}) }
-  scope :with_call_centre_unique, lambda { |call_centre| where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id IN (?))", false, true, [call_centre]+call_centre.subaccounts.map(&:id)).joins("LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
+  scope :with_call_centre_unique, lambda { |call_centre| where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id IN (?))", false, true, [call_centre]+call_centre.subaccounts.select(:id)).joins("LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
   scope :category_supplier_accessible_categories, lambda { |user| select("DISTINCT(categories.id), categories.*").joins("
     LEFT JOIN categories_users ON categories.id = categories_users.category_id
     LEFT JOIN users ON users.id = categories_users.user_id
@@ -152,7 +152,7 @@ class Category < ActiveRecord::Base
   end
 
   def refresh_leads_count_cache!
-    Category.find(self_and_ancestors.map(&:id)).each do |c|
+    Category.find(self_and_ancestors.select(:id)).each do |c|
       c.update_attribute(:total_leads_count, c.leads.including_subcategories.count)
     end
   end
@@ -167,7 +167,7 @@ class Category < ActiveRecord::Base
   end
 
   def refresh_published_leads_count_cache!
-    Category.find(self_and_ancestors.map(&:id)).each do |c|
+    Category.find(self_and_ancestors.select(:id)).each do |c|
       c.update_attribute(:published_leads_count, c.published_leads.including_subcategories.without_inactive.count)
     end
   end
