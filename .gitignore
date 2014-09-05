@@ -26,3 +26,5 @@
 .DS_Store
 /.sass-cache
 /tmp.html
+/public/ckeditor/files
+/public/ckeditor/images
