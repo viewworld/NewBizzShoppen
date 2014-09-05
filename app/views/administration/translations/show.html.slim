@@ -13,8 +13,8 @@
   table.generic
     thead
       th= t("administration.translations.show.view.key")
-      - @languages.each_with_index do |lang,i|
-        th= select_tag "temp_lang_#{i+1}", options_for_select(@available_locales, lang.code), onchange: "fill_languages_and_submit()"
+      - @locales.each_with_index do |locale, i|
+        th= select_tag "temp_lang_#{i+1}", options_for_select(@available_locales, locale.code), onchange: "fill_languages_and_submit()"
 
     tbody
       - @keys.each do |key|
@@ -22,9 +22,9 @@
           td id="td.#{locale}.#{key}"
             = translation_key(key)
 
-          - @languages.each do |lang|
+          - @locales.each do |locale|
             td
-              = text_field_tag "#{lang.code}.#{key}",
-                (@translations[key][lang.code] ? @translations[key][lang.code].first.value : ''), locale: lang.code, key: key, onblur: "update_translation(this)"
+              = text_field_tag "#{locale.code}.#{key}",
+                @translations[key][locale.code].try(:first).try(:value), locale: locale.code, key: key, onblur: "update_translation(this)"
 
   = render 'js'

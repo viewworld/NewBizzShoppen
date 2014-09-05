@@ -8,7 +8,7 @@ class Administration::TranslationsController < Administration::AdministrationCon
 
     # FIXME: Refactoring this probably will need some change in db
     @available_locales = Locale.all.map(&:pair).sort
-    @languages = Locale.where(code: [params[:lang_1], params[:lang_2]])
+    @locales = Locale.where(code: [params[:lang_1], params[:lang_2]])
 
     @search = Translation.scoped_search(params[:search])
     @search.without_proc = true
