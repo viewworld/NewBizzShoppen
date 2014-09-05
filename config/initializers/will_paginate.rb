@@ -5,7 +5,7 @@ module WillPaginate
 
       def paginate(options)
         show_all = options.delete(:show_all)
-        options[:per_page] = self.length if show_all
+        options[:per_page] = length if show_all
 
         old_paginate(options)
       end
