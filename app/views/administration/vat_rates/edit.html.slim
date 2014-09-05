@@ -3,19 +3,19 @@
     - section.block_header do
       = t('administration.vat_rates.edit.view.header', name: @vat_rate.country.name)
 
-  = semantic_form_for [:administration, @vat_rate] do |form|
-    = frm do |section|
-      - section.block_content do
-        .pdd_10.no_pdd_t
-          fieldset.inputs.labels_ta_r.labels_240
-            ol
-              = form.fields_for :country do |country_form|
-                = country_form.input :name, input_html: { disabled: true }
+  = simple_form_for [:administration, @vat_rate] do |f|
+    .box-header
+      h2= t('administration.vat_rates.edit.view.header', name: @vat_rate.country.name)
 
-              = form.input :rate
+    .box-content.form-inputs
+      = f.simple_fields_for :country do |country_form|
+        = country_form.input :name, input_html: { disabled: true }
 
-      - section.block_actions do
-        = ibt(class: "fltri", icon: "save") do
-          = form.submit t("administration.vat_rates.edit.view.button_save")
-        = ibt(class: "fltri bt_grey") do
-          = button_to_function t("common.cancel_link"), href(edit_administration_setting_path)
+      = f.input :rate
+
+    .box-footer
+      = ibt(class: "fltri", icon: "save") do
+        = f.button :submit, t("administration.vat_rates.edit.view.button_save")
+
+      = ibt(class: "fltri bt_grey") do
+        = button_to_function t("common.cancel_link"), href(edit_administration_setting_path)
