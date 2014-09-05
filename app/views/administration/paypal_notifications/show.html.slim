@@ -36,5 +36,5 @@
             = @paypal_notification.params[key]
       hr
       b ASSOCIATED RESPONSES
-      / FIXME: Where did this partial go? (not found even on master) Do we still use it?
+      / FIXME: It seems that this partial was a part of active_admin, fix will be introduces ASA' we bring back activeadmin (if necessary)
       /= render partial: '/administration/archived_paypal_responses/table', locals: {responses: @responses, collection: @collection}
