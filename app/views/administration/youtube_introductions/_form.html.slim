@@ -2,23 +2,22 @@
   .box-header
     h2= header
 
-  = semantic_form_for [:administration, @youtube_introduction], html: { multipart: true } do |form|
-    fieldset.box-content.inputs.labels_ta_r.labels_240
-      ol
-        = form.input :url
-        = form.input :locale_code, collection: enabled_locales, include_blank: false
-        = form.input :site, collection: available_sites, include_blank: false
-        = form.semantic_fields_for :image, @youtube_introduction.image || Asset::YoutubeImage.new do |image|
-          = image.input :asset,
-              required: false,
-              label: t("administration.categories.edit.view.upload_image"),
-              name: "youtube_introduction[image_attributes][asset]"
+  = simple_form_for [:administration, @youtube_introduction], html: { multipart: true } do |f|
+    .box-content.form-inputs.clearfix
+      .column_left
+        = f.input :url
+        = f.input :locale_code, collection: enabled_locales, include_blank: false
+        = f.input :site, collection: available_sites, include_blank: false
+        = f.simple_fields_for :image_attributes do |image_form|
+          = image_form.input :data, as: :file, required: false,
+                        label: t("administration.categories.edit.view.upload_image")
 
-        li.image
-          = image_tag(@youtube_introduction.image.url, class: "thumb") if @youtube_introduction.image
+      - if @youtube_introduction.image
+        .column_right.image
+          = image_tag @youtube_introduction.image.url(:thumb)
 
     .box-footer
       = ibt(class: "fltri", icon: "save") do
-        = form.submit t("administration.introduction_video.new.view.button_create")
+        = f.button :submit, t("administration.introduction_video.new.view.button_create")
       = ibt(class: "fltri bt_grey") do
         = button_to_function t("common.cancel_link"), href(edit_administration_setting_path)

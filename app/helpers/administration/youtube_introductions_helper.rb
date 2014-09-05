@@ -4,6 +4,6 @@ module Administration::YoutubeIntroductionsHelper
   end
 
   def available_sites
-    YoutubeIntroduction::SITES
+    ['fairleads', 'fairdeals']
   end
 end

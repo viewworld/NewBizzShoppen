@@ -9,7 +9,7 @@ class Administration::YoutubeIntroductionsController < Administration::Administr
   end
 
   def create
-    @youtube_introduction = YoutubeIntroduction.new(params[:youtube_introduction])
+    @youtube_introduction = YoutubeIntroduction.new(youtube_introduction_params)
 
     if @youtube_introduction.save
       redirect_to edit_administration_setting_path
@@ -19,7 +19,7 @@ class Administration::YoutubeIntroductionsController < Administration::Administr
   end
 
   def update
-    if @youtube_introduction.update_attributes(params[:youtube_introduction])
+    if @youtube_introduction.update_attributes(youtube_introduction_params)
       redirect_to edit_administration_setting_path
     else
       render :edit
@@ -34,5 +34,9 @@ class Administration::YoutubeIntroductionsController < Administration::Administr
   private
   def set_youtube_introduction
     @youtube_introduction = YoutubeIntroduction.find(params[:id])
+  end
+
+  def youtube_introduction_params
+    params.require(:youtube_introduction).permit(:url, :locale_code, :site, image_attributes: [:data])
   end
 end
