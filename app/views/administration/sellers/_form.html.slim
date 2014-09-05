@@ -1,38 +1,38 @@
-= semantic_form_for @seller, as: :seller, url: url do |form|
-  = frm do |section|
-    - section.block_content do
+= simple_form_for [:administration, @seller] do |f|
+  .box-header
+    h2= header
+
+  .box-content.form-inputs
+    .clearfix
       .column_left
-        .pdd_10.no_pdd_t
-          fieldset.inputs.labels_ta_r.labels_200
-            ol.align_inputs
-              = form.input :company_name, label: t("administration.sellers.form.company_name")
-              = form.input :first_name
-              = form.input :last_name
-              = form.fields_for :address do |address_form|
-                = address_form.input :address_line_1
-                = address_form.input :address_line_2
-                = address_form.input :address_line_3
-                = address_form.input :zip_code
-                = address_form.input :country_id, collection: Country.all, include_blank: false, input_html: { onchange: "refresh_regions_list('seller_address_attributes');" }
-                = address_form.input :region_id, as: :select, collection: regions_collection_for(@seller.address.country)
+        = f.input :company_name
+        = f.input :first_name
+        = f.input :last_name
+
+        = f.simple_fields_for :address do |address_form|
+          = address_form.input :address_line_1
+          = address_form.input :address_line_2
+          = address_form.input :address_line_3
+          = address_form.input :zip_code
+          = address_form.association :country, collection: Country.all, include_blank: false, input_html: { class: 'refresh-region-list' }
+          = address_form.association :region, collection: regions_collection_for(@seller.address.country), input_html: { class: 'region-list' }
 
       .column_right
-        .pdd_10.no_pdd_t
-          fieldset.inputs.labels_ta_r
-            ol.align_inputs
-              = form.input :bank_account_id, collection: BankAccount.all, include_blank: false
-              = form.input :vat_no
-              = form.input :default
+        = f.association :bank_account, collection: BankAccount.all, include_blank: false
+        = f.input :vat_no
+        = f.input :default
 
-      .clb
-      .hl
-      .pdd_10.no_pdd_t
-        fieldset.inputs.labels_ta_r.labels_240.no_pdd
-          ol.align_inputs.no_pdd
-            = form.input :note, as: :ckeditor, wrapper_html: { class: "ckeditor_label" }
+    .hl
+    = f.input :note, as: :ckeditor
 
-    - section.block_actions do
-      = ibt(class: "fltri", icon: "save") do
-        = form.submit t("administration.sellers.edit.view.button_update")
-      = ibt(class: "fltri bt_grey") do
-        = button_to_function t("common.cancel_link"), href(administration_sellers_path)
+  .box-footer
+    = ibt(class: "fltri", icon: "save") do
+      = f.button :submit, t("administration.sellers.edit.view.button_update")
+
+    = ibt(class: "fltri bt_grey") do
+      = button_to_function t("common.cancel_link"), href(administration_sellers_path)
+
+javascript:
+  $('.refresh-region-list').change(function() {
+    loadRegionsToSelect('.region-list', $(this).val());
+  });
