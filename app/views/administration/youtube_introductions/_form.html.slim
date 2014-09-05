@@ -1,23 +1,23 @@
-.box
+= simple_form_for [:administration, @youtube_introduction], html: { multipart: true } do |f|
   .box-header
     h2= header
 
-  = simple_form_for [:administration, @youtube_introduction], html: { multipart: true } do |f|
-    .box-content.form-inputs.clearfix
-      .column_left
-        = f.input :url
-        = f.input :locale_code, collection: enabled_locales, include_blank: false
-        = f.input :site, collection: available_sites, include_blank: false
-        = f.simple_fields_for :image_attributes do |image_form|
-          = image_form.input :data, as: :file, required: false,
-                        label: t("administration.categories.edit.view.upload_image")
+  .box-content.form-inputs.clearfix
+    .column_left
+      = f.input :url
+      = f.input :locale_code, collection: enabled_locales, include_blank: false
+      = f.input :site, collection: available_sites, include_blank: false
+      = f.simple_fields_for :image_attributes do |image_form|
+        = image_form.input :data, as: :file, required: false,
+                      label: t("administration.categories.edit.view.upload_image")
 
-      - if @youtube_introduction.image
-        .column_right.image
-          = image_tag @youtube_introduction.image.url(:thumb)
+    - if @youtube_introduction.image
+      .column_right.image
+        = image_tag @youtube_introduction.image.url(:thumb)
 
-    .box-footer
-      = ibt(class: "fltri", icon: "save") do
-        = f.button :submit, t("administration.introduction_video.new.view.button_create")
-      = ibt(class: "fltri bt_grey") do
-        = button_to_function t("common.cancel_link"), href(edit_administration_setting_path)
+  .box-footer
+    = ibt(class: "fltri", icon: "save") do
+      = f.button :submit, t("administration.introduction_video.new.view.button_create")
+
+    = ibt(class: "fltri bt_grey") do
+      = button_to_function t("common.cancel_link"), href(edit_administration_setting_path)
