@@ -37,13 +37,13 @@ class EmailTemplate < ActiveRecord::Base
 
   def self.duplicate(uniq_id)
     template = global.where(uniq_id: uniq_id).first
-    duplicate = template.dup
+    duplicated_template = template.dup
 
     template.translations.each do |translation|
-      duplicate.translations << translation.dup
+      duplicated_template.translations << translation.dup
     end
 
-    duplicate
+    duplicated_template
   end
 
   private

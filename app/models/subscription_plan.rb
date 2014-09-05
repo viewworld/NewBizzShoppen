@@ -84,9 +84,7 @@ class SubscriptionPlan < ActiveRecord::Base
       invoice_email_template = template
       yield
 
-      template.resource_type = self.class.name
-      template.resource_id = self.id
-      template.save
+      template.update_attributes(resource_type: self.class.name, resource_id: self.id)
     end
   end
 

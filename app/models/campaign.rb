@@ -118,11 +118,8 @@ class Campaign < ActiveRecord::Base
 
   def update_email_templates
     CLONED_TEMPLATES.each_pair do |template_clone_method, template_name|
-      unless send(template_clone_method)
-        template = send(template_clone_method)
-        template.resource_type = self.class.name
-        template.resource_id = self.id
-        template.save
+      unless template = send(template_clone_method)
+        template.update_attributes(resource_type: self.class.name, resource_id: self.id)
       end
     end
   end
