@@ -60,6 +60,6 @@ class Administration::CategoriesController < Administration::AdministrationContr
   end
 
   def category_params
-    params[@category_type.to_s.underscore.to_sym]
+    params[@category_type.to_s.underscore.to_sym] || params[:category]
   end
 end

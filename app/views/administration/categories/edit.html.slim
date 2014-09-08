@@ -5,7 +5,7 @@
       = t("administration.categories.edit.view.header", category_name: @category.name)
       = image_tag_for_locale
 
-  = semantic_form_for @category, as: :category, url: administration_category_path(@category), method: :post, html: {multipart: true} do |form|
+  = semantic_form_for @category, as: :category, url: administration_category_path(@category), html: {multipart: true} do |form|
     = frm(title: "") do |section|
       - section.block_header do
         = bt_link_to nil, t("administration.categories.edit.view.edit_email_template"), edit_administration_category_email_template_path(@category), class: "fltr"
