@@ -152,7 +152,7 @@ class Category < ActiveRecord::Base
   end
 
   def refresh_leads_count_cache!
-    Category.find(self_and_ancestors.select(:id)).each do |c|
+    Array(Category.find(self_and_ancestors.select(:id))).each do |c|
       c.update_attribute(:total_leads_count, c.leads.including_subcategories.count)
     end
   end
@@ -167,7 +167,7 @@ class Category < ActiveRecord::Base
   end
 
   def refresh_published_leads_count_cache!
-    Category.find(self_and_ancestors.select(:id)).each do |c|
+    Array(Category.find(self_and_ancestors.select(:id))).each do |c|
       c.update_attribute(:published_leads_count, c.published_leads.including_subcategories.without_inactive.count)
     end
   end
