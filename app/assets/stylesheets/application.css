@@ -1,8 +1,5 @@
 /*
  *= require_tree ./utilities
- *= require_tree ./lib
- *= require_tree ./base
- *= require_tree ./layout
  *= require_tree ./modules
  *= require_self
  */
