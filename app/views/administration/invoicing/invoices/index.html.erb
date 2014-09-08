@@ -45,18 +45,14 @@
   <% end %>
 
   <div class="fltl">
-    <%= semantic_form_for [:administration, :invoicing, Invoice.new] do |form| %>
-        <fieldset class="inputs_vertical">
-          <ol>
-            <%= form.input :user_id, :collection => User.invoiceable.map { |u| ["#{u.company_name}, #{u.email}", u.id] }.sort, :include_blank => false %>
-            <%= form.input :seller_id, :include_blank => false, :collection => Seller.order("company_name").all %>
-            <li class="commit">
-              <%= ibt(:class => "commit") do %>
-                <%= form.submit t("administration.invoices.index.view.create_invoice") %>
-              <% end %>
-            </li>
-          </ol>
-        </fieldset>
+    <%= simple_form_for [:administration, :invoicing, Invoice.new] do |form| %>
+      <div class='inputs_vertical'>
+        <%= form.association :user, collection: User.invoiceable.map { |u| ["#{u.company_name}, #{u.email}", u.id] }.sort, include_blank: false %>
+        <%= form.association :seller, collection: Seller.order('company_name').all, include_blank: false %>
+        <%= ibt(class: 'commit') do %>
+          <%= form.button :submit, t("administration.invoices.index.view.create_invoice") %>
+        <% end %>
+      </div>
     <% end %>
   </div>
 

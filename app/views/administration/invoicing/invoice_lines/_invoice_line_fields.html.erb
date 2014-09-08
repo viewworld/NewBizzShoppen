@@ -1,18 +1,18 @@
 <tr>
   <% if @invoice.paid? and (@invoice.credit_note.nil? or @invoice.credit_note.class.to_s == "Refund") %>
-      <td class="ta_c"><%= f.check_box :is_credited,:style => "width:auto;" %><%= f.errors_on :is_credited %></td>
+      <td class="ta_c"><%= f.check_box :is_credited,:style => "width:auto;" %></td>
   <% end %>
-  <td><%= f.text_field :name, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off", :style => "width: 210px" %><%= f.errors_on :name %></td>
-  <td><%= f.text_field :quantity, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off", :style => "width:30px" %><%= f.errors_on :quantity %></td>
+  <td><%= f.text_field :name, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off", :style => "width: 210px" %></td>
+  <td><%= f.text_field :quantity, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off", :style => "width:30px" %></td>
   <% if f.object.new_record? %>
-      <td><%= f.text_field :vat_rate, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off", :style => "width:35px", :value => @invoice.user.country_vat_rate %><%= f.errors_on :vat_rate %>&nbsp;%</td>
+      <td><%= f.text_field :vat_rate, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off", :style => "width:35px", :value => @invoice.user.country_vat_rate %>&nbsp;%</td>
   <% else %>
-      <td><%= f.text_field :vat_rate, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off", :style => "width:35px" %><%= f.errors_on :vat_rate %>&nbsp;%</td>
+      <td><%= f.text_field :vat_rate, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off", :style => "width:35px" %>&nbsp;%</td>
   <% end %>
-  <td><%= f.text_field :netto_price, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %><%= f.errors_on :netto_price %></td>
-  <td><%= f.text_field :netto_value, :readonly => true %><%= f.errors_on :netto_value %></td>
-  <td><%= f.text_field :vat_value, :readonly => true %><%= f.errors_on :vat_value %></td>
-  <td><%= f.text_field :brutto_value, :readonly => true %><%= f.errors_on :brutto_value %></td>
+  <td><%= f.text_field :netto_price, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %></td>
+  <td><%= f.text_field :netto_value, :readonly => true %></td>
+  <td><%= f.text_field :vat_value, :readonly => true %></td>
+  <td><%= f.text_field :brutto_value, :readonly => true %></td>
   <td></td>
   <td class="ta_r">
     <%= f.hidden_field :_destroy %>
