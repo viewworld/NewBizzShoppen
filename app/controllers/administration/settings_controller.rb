@@ -10,7 +10,7 @@ class Administration::SettingsController < Administration::AdministrationControl
   end
 
   def update
-    @settings = Settings.all
+    @settings = Settings.where({})
 
     params[:settings].each_pair do |id, value|
       @settings.detect { |s| s.id ==  id.to_i}.update_attribute(:value, value)
