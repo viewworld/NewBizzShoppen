@@ -7,7 +7,7 @@ class ChainMailType < ActiveRecord::Base
   has_many :chain_mail_items, :dependent => :destroy, :order => "position ASC"
   has_many :chain_mails
   has_many :call_results
-  has_many :materials, :class_name => "Asset::ChainMailMaterial", :as => :resource, :conditions => "asset_type = 'Asset::ChainMailMaterial'", :dependent => :destroy
+  has_many :materials, :class_name => "Asset::ChainMailMaterial", :as => :assetable, :dependent => :destroy
   has_many :survey_options
   belongs_to :campaign
   belongs_to :result

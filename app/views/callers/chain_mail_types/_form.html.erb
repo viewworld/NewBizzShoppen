@@ -24,7 +24,7 @@
           <%= select_tag "chain_mail_type[execution_conditions][conditions][]", options_for_select(@chain_mail_type.class::EXECUTION_CONDITIONS.sort, @chain_mail_type.execution_conditions["conditions"][1]), :include_blank => true %>
         </div>
       </li>
-      <%= form.errors_on :execution_conditions %>
+      <%#= form.errors_on :execution_conditions %>
 
       <%= form.input :email_template_signature, :collection => EmailTemplateSignature.custom.map { |ets| [ets.name, ets.id] } %>
     </ol>
@@ -40,8 +40,8 @@
   <div class="pdd_20" style="padding-top:10px">
     <%= bt_link_to :plus, t("chain_mail_types.form.add_another_email"), "javascript:void(0)", :onclick => "add_new_item()" %>
   </div>
-  
-  <%= form.errors_on :chain_mail_items %>
+
+  <%#= form.errors_on :chain_mail_items %>
 
   <div class="nested_chain_mail_items_fields_container"></div>
 
