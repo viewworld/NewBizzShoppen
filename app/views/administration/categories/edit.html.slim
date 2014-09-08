@@ -5,19 +5,7 @@
       = t("administration.categories.edit.view.header", category_name: @category.name)
       = image_tag_for_locale
 
-  = semantic_form_for @category, as: :category, url: administration_category_path(@category), html: {multipart: true} do |form|
-    = frm(title: "") do |section|
-      - section.block_header do
-        = bt_link_to nil, t("administration.categories.edit.view.edit_email_template"), edit_administration_category_email_template_path(@category), class: "fltr"
-        = bt_link_to nil, t("administration.categories.edit.view.new_template"), new_administration_lead_template_path(category_id: @category.id), class: "fltr"
-      - section.block_content do
-        = render partial: 'form', locals: {form: form}
-      - section.block_actions do
-        = ibt(class: "fltri", icon: "save") do
-          = form.submit t("administration.categories.edit.view.button_update"), onclick: "select_options_onsubmit();"
-        = ibt(class: "bt_grey fltri") do
-          = button_to_function t("administration.settings.edit.view.button_cancel"), href(categories_path)
-
+  = render 'form', header: '', url: administration_category_path(@category)
 
   - unless @category.lead_templates.empty?
     = header do |section|

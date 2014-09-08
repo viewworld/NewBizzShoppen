@@ -33,7 +33,7 @@
 
         <td class="cl"></td>
 
-        <td class="ta_c"><%= image_tag(category.image.url, :class => "thumb") if category.image %></td>
+        <td class="ta_c"><%= image_tag(category.image.url(:thumb)) if category.image %></td>
 
         <td>
           <%#= link_to "#{category.name}", "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}?search[with_category]=#{category.id}", :class => "default_action", :style => "display:none" %>

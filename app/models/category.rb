@@ -7,11 +7,7 @@ class Category < ActiveRecord::Base
   acts_as_nested_set
   has_many :lead_templates
   has_many :category_translations
-  has_one :image,
-          :class_name => "Asset::CategoryImage",
-          :as => :assetable,
-          :conditions => "asset_type = 'Asset::CategoryImage'",
-          :dependent => :destroy
+  has_one :image, as: :assetable, class_name: 'Asset::CategoryImage', dependent: :destroy
   has_many :category_interests
   has_many :supplier_subscribers, :through => :category_interests, :source => :user
   has_many :news, :as => :resource, :class_name => "Article::News::CategoryHome", :dependent => :destroy
