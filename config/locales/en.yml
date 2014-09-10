@@ -3318,6 +3318,7 @@ en:
         is_dynamic_value: "Value dynamically calculated"
         is_reported: "Is reported"
         is_success: "Is success"
+        create_deals: "Create deals"
     leads:
       form:
         country_local_label: Local

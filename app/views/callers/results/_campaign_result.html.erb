@@ -11,6 +11,10 @@
           <%#= f.check_box :is_success, :disabled => f.object.result.has_any_call_results?(campaign) %>
           <%= f.check_box :is_success %>
         </li>
+        <li class="boolean">
+          <%= f.label :create_deals, t('shared.results.form.create_deals') %>
+          <%= f.check_box :create_deals %>
+        </li>
         <li class="string">
           <%= f.label :payout %>
           <%= f.text_field :payout %>
