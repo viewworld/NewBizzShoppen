@@ -13,7 +13,8 @@ class Contact < AbstractLead
   has_many :past_user_assignments, :through => :contact_past_user_assignments, :source => :user
   has_many :notifications, :as => :notifier
 
-  belongs_to :agent, :class_name => "User"
+  belongs_to :agent, :class_name => User
+  belongs_to :user, :class_name => User
   belongs_to :newsletter_list
   belongs_to :newsletter_list_subscriber
   validates_presence_of :company_name, :company_phone_number, :creator_id, :category_id, :country_id, :campaign_id

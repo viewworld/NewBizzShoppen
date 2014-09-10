@@ -83,6 +83,11 @@ class CallResult < ActiveRecord::Base
   scope :empty, where("1=0")
   default_scope :order => 'call_results.created_at DESC'
 
+  def upgrades_to_member?
+    result.upgrades_to_member? ||
+      (campaign_result.create_deals? && !contact.user)
+  end
+
   def campaign_result
     contact ? CampaignsResult.where(:campaign_id => contact.campaign_id, :result_id => result_id).first : nil
   end
