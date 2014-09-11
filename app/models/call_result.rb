@@ -83,9 +83,12 @@ class CallResult < ActiveRecord::Base
   scope :empty, where("1=0")
   default_scope :order => 'call_results.created_at DESC'
 
+  def campaign_create_deals?
+    campaign_result.create_deals? && contact.user.nil?
+  end
+
   def upgrades_to_member?
-    result.upgrades_to_member? ||
-      (campaign_result.create_deals? && !contact.user)
+    result.upgrades_to_member? || campaign_create_deals?
   end
 
   def campaign_result
@@ -260,11 +263,14 @@ class CallResult < ActiveRecord::Base
 
   def process_side_effects
     process_result_tags
-    if result.generic?
-      send "process_for_#{result.label.to_s}"
-    else
-      result.final? ? process_for_final_result : process_for_call_log_result
-    end
+    side_effect_result = if result.generic?
+                           send "process_for_#{result.label.to_s}"
+                         else
+                           result.final? ? process_for_final_result : process_for_call_log_result
+                         end
+    reload
+    upgrade_to_user('member') if campaign_create_deals?
+    side_effect_result
   end
 
   def process_for_call_back
@@ -437,7 +443,7 @@ class CallResult < ActiveRecord::Base
                                            :email_template_id => template.id,
                                            :reply_to => template.custom_reply_to ? creator.email : nil
                                        },
-                                       assets_to_path_names(send_material_result_value.materials)).deliver!
+                                       assets_to_path_names(send_material_result_value.try(:materials))).deliver!
   end
 
   def set_last_call_result_in_contact

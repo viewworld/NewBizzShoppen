@@ -2,7 +2,7 @@
   <fieldset class="inputs labels_ta_r labels_200">
       <ol>
         <%= form.fields_for :result_values, call_result.all_result_values(call_result.result) do |builder| %>
-            <%= render :partial => "/shared/results/add_result_value_fields", :locals => {:f => builder, :contact => contact, :call_result => call_result} %>
+            <%= render '/shared/results/add_result_value_fields', :f => builder, :contact => contact, :call_result => call_result %>
         <% end %>
       </ol>
   </fieldset>

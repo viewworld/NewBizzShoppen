@@ -6,12 +6,11 @@
     when ResultField::DATETIME then
         'date time'
     when ResultField::MATERIAL then
-        'text'    
+        'text'
     else
         'string'
 end
 %>
-
 
 <li class="<%= css_class %>">
   <% abbr = f.object.result_field.is_mandatory ? content_tag(:abbr, "*").html_safe : '' -%>
@@ -35,7 +34,7 @@ end
   end
   %>
   <%= custom_error_for_field(f, :value) %>
-  <% if f.object.result_field.field_type.to_i == ResultField::MATERIAL %>
+  <% if f.object.result_field.field_type.to_i == ResultField::MATERIAL || call_result.campaign_create_deals? %>
       <div class="txt">
         <p id="material_<%= f.object.result_field.id %>_name">
           <% if f.object.value.blank? %>
