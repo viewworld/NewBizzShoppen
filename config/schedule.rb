@@ -13,40 +13,40 @@ if self.environment == 'production'
   hours = %w{1 1 2 2 3 3 5}
   ['recalculate_leads_average_ratings', 'refresh_subaccounts_counters', 'refresh_agent_counters', 'check_lead_certification_requests'].each_with_index do |thor_task, i|
     every 1.day, :at => "#{hours[i]}:#{i % 2 == 0 ? '00' : '30' } am", :roles => [:app] do
-      thor :task => thor_task
+      thor thor_task
     end
   end
 
   every 1.day, :at => '4:00 am' do
-    thor :task => :refresh_exchange_rates
+    thor :refresh_exchange_rates
   end
 
   every 1.day, :at => '8:00 pm' do
-    thor :task => :send_daily_lead_notifications
+    thor :send_daily_lead_notifications
   end
 
   every :sunday, :at => '8:00 pm' do
     command File.join(dir_pwd, 'RAILS_ENV=production thor nbs:send_daily_lead_notifications')
-    thor :task => :send_daily_lead_notifications
+    thor :send_daily_lead_notifications
   end
 
   every 1.day, :at => '0:00' do
-    thor :task => :prolong_subscriptions_daily
+    thor :prolong_subscriptions_daily
   end
 
   every 1.day, :at => '1:00 am' do
-    thor :task => :create_unpaid_invoices_for_unpaid_sub_periods
+    thor :create_unpaid_invoices_for_unpaid_sub_periods
   end
 
   every 8.hours do
-    thor :task => :synchronize_newsletter_lists
+    thor :synchronize_newsletter_lists
   end
 
   every 1.day, :at => '6:00' do
-    thor :task => :merge_regular_user_session_logs
+    thor :merge_regular_user_session_logs
   end
 
   every 1.day, :at => '2:00 am' do
-    thor :task => :import_contacts_from_newsletter_lists
+    thor :import_contacts_from_newsletter_lists
   end
 end
