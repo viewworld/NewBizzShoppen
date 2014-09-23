@@ -13,9 +13,9 @@ class CreateSoftphones < ActiveRecord::Migration
      User.with_role(:call_centre).where("coalesce(sip_username) != '' AND coalesce(sip_password) != ''") +
      User.with_role(:call_centre_agent).where("coalesce(sip_username) != '' AND coalesce(sip_password) != ''")).uniq.each do |user|
        user.softphones.create(:name => 'Custom',
-                              :sip_username => user.sip_username,
-                              :sip_password => user.sip_password,
-                              :softphone_server_id => user.softphone_server_id)
+                              :sip_username => user[:sip_username],
+                              :sip_password => user[:sip_password],
+                              :softphone_server_id => user[:softphone_server_id])
     end
   end
 
