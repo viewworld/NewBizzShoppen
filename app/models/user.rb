@@ -185,7 +185,7 @@ class User < ActiveRecord::Base
 
   accepts_nested_attributes_for :softphone
 
-  delegate :sip_username, :sip_password, :softphone_server, :to => :softphone
+  delegate :sip_username, :sip_password, :softphone_server, :to => :softphone, :allow_nil => true
 
   private
 
