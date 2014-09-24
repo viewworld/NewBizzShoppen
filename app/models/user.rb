@@ -66,6 +66,7 @@ class User < ActiveRecord::Base
   has_many :owned_lead_requests, :class_name => 'LeadRequest', :foreign_key => :owner_id
   has_many :invoices
   has_many :user_session_logs
+
   belongs_to :currency
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
   belongs_to :bank_account, :foreign_key => :bank_account_id, :primary_key => :id, :class_name => 'BankAccount'
@@ -76,6 +77,10 @@ class User < ActiveRecord::Base
   has_many :results,
            :as => :creator,
            :dependent => :destroy
+
+  has_many :lead_purchases,
+            foreign_key: 'owner_id'
+
   has_many :blocked_conversations, :foreign_key => "agent_id"
   has_many :comment_readers
   has_many :read_comments, :through => :comment_readers, :source => :comment
@@ -177,6 +182,11 @@ class User < ActiveRecord::Base
 
   acts_as_taggable
 
+  def lock!
+    self.locked_at = Time.now
+    self.save
+  end
+
   private
 
   def set_email_verification
@@ -229,7 +239,12 @@ class User < ActiveRecord::Base
   def handle_locking
     if locked
       self.locked_at = locked == "unlock" ? nil : Time.now
-      self.cancel_subscription = true if locked_at and active_subscription and !active_subscription.is_free?
+    end
+  end
+
+  def handle_cancel_subscription
+    if locked_at && active_subscription && !active_subscription.is_free?
+      cancel_subscription!
     end
   end
 
@@ -278,13 +293,6 @@ class User < ActiveRecord::Base
       new_password = generate_token(12)
       self.password = new_password
       self.password_confirmation = new_password
-    end
-  end
-
-  def handle_cancel_subscription
-    if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(cancel_subscription) and active_subscription
-      cancel_subscription!
-      self.cancel_subscription = nil
     end
   end
 
@@ -928,13 +936,21 @@ class User < ActiveRecord::Base
   end
 
   def cancel_subscription!
-    if active_subscription.may_cancel?
-      active_subscription.use_paypal? ? cancel_paypal(:cancel!, active_subscription.subscription_sub_periods.size) : cancel_regular(:cancel!)
-    elsif active_subscription.may_cancel_during_lockup?
-      active_subscription.use_paypal? ? cancel_paypal(:cancel_during_lockup!, active_subscription.subscription_sub_periods.size*2) : cancel_regular(:cancel_during_lockup!)
-    else
-      self.errors.add(:base, I18n.t("subscriptions.cant_be_canceled"))
-      false
+    if active_subscription
+      if active_subscription.may_cancel?
+        active_subscription.use_paypal? ? cancel_paypal(:cancel!, active_subscription.subscription_sub_periods.size) : cancel_regular(:cancel!)
+      elsif active_subscription.may_cancel_during_lockup?
+        active_subscription.use_paypal? ? cancel_paypal(:cancel_during_lockup!, active_subscription.subscription_sub_periods.size*2) : cancel_regular(:cancel_during_lockup!)
+      else
+        self.errors.add(:base, I18n.t("subscriptions.cant_be_canceled"))
+        false
+      end
+    end
+  end
+
+  def cancel_subscription_if_free!
+    if active_subscription && active_subscription.is_free?
+      cancel_subscription!
     end
   end
 
