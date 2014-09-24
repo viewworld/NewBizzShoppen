@@ -8,6 +8,6 @@ class CallCentres::BulkCallCentreAgentsUpdateController < CallCentres::CallCentr
       @users.update_all(locked_at: nil)
     end
 
-    redirect_to call_centres_call_centre_agents_path, notice: t("flash.bulk_call_centre_agents_update.update.notice")
+    redirect_to call_centres_call_centre_agents_path, notice: t('flash.bulk_call_centre_agents_update.update.notice')
   end
 end
