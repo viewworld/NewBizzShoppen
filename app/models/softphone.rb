@@ -4,8 +4,9 @@ class Softphone < ActiveRecord::Base
 
   scope :custom, where('user_id IS NOT NULL')
   scope :shared, where(:user_id => nil)
-
   scope :available, lambda { |user| where('user_id IS NULL OR user_id = ?', user) }
+
+  validates :name, :presence => true, :uniqueness => true
 
   def copy_attributes
     attributes.reject {|attr,_| !%w(sip_username sip_password softphone_server_id).include?(attr)}

@@ -1,0 +1,64 @@
+<%= content_for :column_mc do %>
+  <header>
+    <param:content>
+      <%= t("administration.shared_softphones.index.view.title") %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to :plus, t("administration.shared_softphones.index.view.new"), "javascript:void(0)", :onclick => "$('#form_new_shared_softphone').submit()" %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
+
+  <div class="hidden">
+    <%= form_tag new_administration_shared_softphone_path, :method => :get, :id => "form_new_shared_softphone" do %>
+        <%= submit_tag t("administration.shared_softphones.index.view.new") %>
+    <% end %>
+  </div>
+
+  <% if @shared_softphones.blank? %>
+      <%= blank_state_message( t("administration.shared_softphones.index.view.blank_state") ) %>
+  <% else %>
+      <table id="shared_softphones_table" class="generic">
+        <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= t("administration.shared_softphones.index.view.table.name") %></th>
+          <th><%= t("administration.shared_softphones.index.view.table.sip_username") %></th>
+          <th><%= t("administration.shared_softphones.index.view.table.softphone_server") %></th>
+          <th class="ta_r"><%= t("administration.shared_softphones.index.view.actions") %></th>
+          <th class="hr"></th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="7"></td>
+          <td class="fr"></td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <% @shared_softphones.each do |shared_softphone| %>
+            <tr id="shared_softphone_<%= shared_softphone.id %>" class="<%= cycle("odd", "even") %>">
+              <td class="cl"></td>
+              <td><%= shared_softphone.name %></td>
+              <td><%= shared_softphone.sip_username %></td>
+              <td><%= shared_softphone.softphone_server %></td>
+              <td class="tda ta_r">
+                <ul-actions>
+                  <li>
+                    <%= link_to t("administration.shared_softphones.index.view.edit"), edit_administration_shared_softphone_path(shared_softphone), :class => "default_action" %>
+                  </li>
+                </ul-actions>
+              </td>
+              <td class="cr"></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+
+  <% end %>
+<% end %>
