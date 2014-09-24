@@ -1,6 +1,6 @@
 class Administration::LanguagesController < Administration::AdministrationController
-  set_tab "settings"
-  set_subtab "languages"
+  set_tab 'settings'
+  set_subtab 'languages'
 
   def index
     @languages = Locale.all

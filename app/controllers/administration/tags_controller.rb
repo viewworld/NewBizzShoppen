@@ -1,6 +1,6 @@
 class Administration::TagsController < Administration::AdministrationController
-  set_tab "settings"
-  set_subtab "tags"
+  set_tab 'settings'
+  set_subtab 'tags'
 
   before_filter :set_tag, only: [:show, :edit, :update, :destroy, :duplicate]
 
@@ -10,7 +10,7 @@ class Administration::TagsController < Administration::AdministrationController
   end
 
   def edit
-    @taggings = @tag.taggings.order("taggable_type").includes(:taggable)
+    @taggings = @tag.taggings.order('taggable_type').includes(:taggable)
   end
 
   def show

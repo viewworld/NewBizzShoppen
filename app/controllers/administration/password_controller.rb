@@ -7,16 +7,16 @@ class Administration::PasswordController < Administration::AdministrationControl
     @user.password_confirmation = params[:user][:password_confirmation]
 
     if @user.save
-      redirect_to edit_administration_user_path(@user), notice: t("password.flashes.successfully_changed")
+      redirect_to edit_administration_user_path(@user), notice: t('password.flashes.successfully_changed')
     else
-      flash[:alert] = t("password.flashes.not_changed")
+      flash[:alert] = t('password.flashes.not_changed')
       render :new
     end
   end
 
   def destroy
     @user.send_reset_password_instructions
-    redirect_to edit_administration_user_path(@user), notice: t("administration.password.destroy.flash.password_reset_successful")
+    redirect_to edit_administration_user_path(@user), notice: t('administration.password.destroy.flash.password_reset_successful')
   end
 
   private

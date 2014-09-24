@@ -1,12 +1,12 @@
 class Administration::NewsController < Administration::AdministrationController
-  set_tab "content"
-  set_subtab "news"
+  set_tab 'content'
+  set_subtab 'news'
 
   before_filter :set_article, only: [:show, :edit, :update, :destroy]
 
   def index
     params[:search] ||= {}
-    params[:search][:with_subclass] ||= "Article::News"
+    params[:search][:with_subclass] ||= 'Article::News'
 
     @search = Article.scoped_search(params[:search])
     @news = @search.paginate(show_all: params[:show_all], page: params[:page])

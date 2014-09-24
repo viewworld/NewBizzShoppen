@@ -1,5 +1,5 @@
 class Administration::SellersController < Administration::AdministrationController
-  set_tab "sellers"
+  set_tab 'sellers'
 
   before_filter :set_seller, only: [:edit, :show, :update, :destroy]
 

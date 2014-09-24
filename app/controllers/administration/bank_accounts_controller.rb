@@ -1,6 +1,6 @@
 class Administration::BankAccountsController < Administration::AdministrationController
-  set_tab "settings"
-  set_subtab "global"
+  set_tab 'settings'
+  set_subtab 'global'
 
   before_filter :set_bank_account, only: [:show, :edit, :update, :destroy]
 

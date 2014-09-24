@@ -1,13 +1,13 @@
 class Administration::ResultsController < Administration::AdministrationController
-  set_tab "settings"
-  set_subtab "results"
+  set_tab 'settings'
+  set_subtab 'results'
 
   before_filter :set_result, only: [:edit, :update]
 
   def index
     @search = Result.scoped_search(params[:search])
     @search.with_archived ||= 0
-    @results = @search.order("name").paginate(show_all: params[:show_all], page: params[:page], per_page: Result.per_page)
+    @results = @search.order('name').paginate(show_all: params[:show_all], page: params[:page], per_page: Result.per_page)
   end
 
   def update

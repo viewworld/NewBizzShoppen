@@ -1,8 +1,8 @@
 class Administration::EmailTemplatesController < Administration::AdministrationController
   include EmailTemplatesActions
 
-  set_tab "settings"
-  set_subtab "email_templates"
+  set_tab 'settings'
+  set_subtab 'email_templates'
 
   before_filter :set_referer, only: :edit
   before_filter :set_email_template, only: [:edit, :update]

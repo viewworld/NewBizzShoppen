@@ -1,14 +1,14 @@
 class Administration::ArticlesController < Administration::AdministrationController
-  set_tab "content"
-  set_subtab "articles"
+  set_tab 'content'
+  set_subtab 'articles'
 
   before_filter :set_referer, only: :edit
   before_filter :set_article, only: [:show, :edit, :update, :destroy]
 
   def index
     params[:search] ||= {}
-    params[:search][:with_subclass] ||= "Article::Cms"
-    params[:search][:without_subclass] = "Article::Cms::Hint"
+    params[:search][:with_subclass] ||= 'Article::Cms'
+    params[:search][:without_subclass] = 'Article::Cms::Hint'
 
     @search = Article.scoped_search(params[:search])
     @articles = @search.paginate(show_all: params[:show_all], page: params[:page])

@@ -1,6 +1,6 @@
 class Administration::TranslationsController < Administration::AdministrationController
-  set_tab "content"
-  set_subtab "translations"
+  set_tab 'content'
+  set_subtab 'translations'
 
   def show
     params[:lang_1] ||= 'en'
@@ -13,7 +13,7 @@ class Administration::TranslationsController < Administration::AdministrationCon
     @search = Translation.scoped_search(params[:search])
     @search.without_proc = true
 
-    @translations = @search.order("key ASC").group_by(&:key)
+    @translations = @search.order('key ASC').group_by(&:key)
     @keys = @translations.keys
 
     @translations.each do |key, value|

@@ -1,13 +1,13 @@
 class Administration::HintsController < Administration::AdministrationController
-  set_tab "content"
-  set_subtab "hints"
+  set_tab 'content'
+  set_subtab 'hints'
 
   before_filter :set_referer, only: [:edit, :destroy]
   before_filter :set_article, only: [:edit, :update, :destroy]
 
   def index
     params[:search] ||= {}
-    params[:search][:with_subclass] = "Article::Cms::Hint" unless params[:search][:with_subclass].present?
+    params[:search][:with_subclass] = 'Article::Cms::Hint' unless params[:search][:with_subclass].present?
 
     @search = Article.scoped_search(params[:search])
     @hints = @search.paginate(show_all: params[:show_all], page: params[:page])
@@ -18,7 +18,7 @@ class Administration::HintsController < Administration::AdministrationController
   end
 
   def edit
-    @article.published = true if params[:add] == "1"
+    @article.published = true if params[:add] == '1'
   end
 
   def update

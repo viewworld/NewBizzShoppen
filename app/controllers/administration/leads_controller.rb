@@ -1,5 +1,5 @@
 class Administration::LeadsController < Administration::AdministrationController
-  set_tab "leads"
+  set_tab 'leads'
   before_filter :set_lead, only: [:edit, :update]
 
   def index

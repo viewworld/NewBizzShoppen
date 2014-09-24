@@ -1,6 +1,6 @@
 class Administration::VatRatesController < Administration::AdministrationController
-  set_tab "settings"
-  set_subtab "global"
+  set_tab 'settings'
+  set_subtab 'global'
 
   before_filter :set_vat_rate, only: [:edit, :update]
 

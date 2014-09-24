@@ -1,6 +1,6 @@
 class Administration::SoftphoneServersController < Administration::AdministrationController
-  set_tab "settings"
-  set_subtab "softphone_servers"
+  set_tab 'settings'
+  set_subtab 'softphone_servers'
 
   before_filter :set_softphone_server, only: [:edit, :update, :destroy]
 
@@ -14,7 +14,7 @@ class Administration::SoftphoneServersController < Administration::Administratio
 
   def create
     @softphone_server = SoftphoneServer.new(params[:softphone_server])
-    
+
     if @softphone_server.save
       redirect_to administration_softphone_servers_path
     else

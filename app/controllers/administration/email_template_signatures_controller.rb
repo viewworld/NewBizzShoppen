@@ -1,6 +1,6 @@
 class Administration::EmailTemplateSignaturesController < Administration::AdministrationController
-  set_tab "settings"
-  set_subtab "email_template_signatures"
+  set_tab 'settings'
+  set_subtab 'email_template_signatures'
 
   before_filter :set_email_collection, only: [:edit, :new]
   before_filter :set_email_template_signature, only: [:edit, :update, :destroy]

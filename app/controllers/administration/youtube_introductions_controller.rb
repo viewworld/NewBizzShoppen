@@ -1,6 +1,6 @@
 class Administration::YoutubeIntroductionsController < Administration::AdministrationController
-  set_tab "settings"
-  set_subtab "global"
+  set_tab 'settings'
+  set_subtab 'global'
 
   before_filter :set_youtube_introduction, only: [:edit, :update, :destroy]
 

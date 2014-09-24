@@ -1,5 +1,5 @@
 class Administration::LeadTemplatesController < Administration::AdministrationController
-  set_tab "browse_leads"
+  set_tab 'browse_leads'
 
   before_filter :set_lead_template, only: [:edit, :update, :destroy]
 
