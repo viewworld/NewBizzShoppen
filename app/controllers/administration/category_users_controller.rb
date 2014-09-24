@@ -1,7 +1,12 @@
 class Administration::CategoryUsersController < Administration::AdministrationController
-
   def index
-    @users = (params[:users_type] == "customers" ? User.with_suppliers : User.with_agents)
-    @users = @users.where("first_name like :query or last_name like :query or email like :query", { :query => "%#{params[:query]}%" }) if params[:query]
+    @users =
+      if params[:users_type] == 'customers'
+        User.with_suppliers
+      else
+        User.with_agents
+      end
+
+    @users = @users.where('first_name LIKE :query OR last_name LIKE :query OR email LIKE :query', { query: "%#{params[:query]}%" })
   end
 end
