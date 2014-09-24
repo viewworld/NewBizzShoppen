@@ -1,5 +1,5 @@
 class Administration::CategoryEmailTemplatesController < Administration::AdministrationController
-  set_tab "browse_leads"
+  set_tab 'browse_leads'
 
   before_filter :set_category, only: [:edit, :update]
 
@@ -22,7 +22,7 @@ class Administration::CategoryEmailTemplatesController < Administration::Adminis
 
   def duplicate_global_email_template
     global_template = EmailTemplate.global.where(uniq_id: 'bought_lead_notification').first
-    attributes = global_template.attributes.slice("subject", "body", "from", "uniq_id")
+    attributes = global_template.attributes.slice('subject', 'body', 'from', 'uniq_id')
 
     @category.create_email_template(attributes)
   end

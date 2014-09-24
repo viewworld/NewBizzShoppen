@@ -1,6 +1,6 @@
 class Administration::CountriesController < Administration::AdministrationController
-  set_tab "settings"
-  set_subtab "countries"
+  set_tab 'settings'
+  set_subtab 'countries'
 
   before_filter :set_country, only: [:edit, :update, :destroy]
 
@@ -37,7 +37,7 @@ class Administration::CountriesController < Administration::AdministrationContro
       redirect_to administration_countries_path, alert: @country.errors[:base].join('<br/>')
     end
   end
-  
+
   private
   def set_country
     @country = Country.find(params[:id])

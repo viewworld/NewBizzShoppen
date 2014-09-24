@@ -1,11 +1,11 @@
 class Administration::CurrenciesController < Administration::AdministrationController
-  set_tab "settings"
-  set_subtab "currencies"
+  set_tab 'settings'
+  set_subtab 'currencies'
 
   before_filter :set_currency, only: [:edit, :update, :destroy]
 
   def index
-    @currencies = Currency.order("active DESC, symbol ASC").decorate
+    @currencies = Currency.order('active DESC, symbol ASC').decorate
   end
 
   def new

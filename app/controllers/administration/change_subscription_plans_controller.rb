@@ -4,7 +4,7 @@ class Administration::ChangeSubscriptionPlansController < Administration::Admini
   def create
     @subscription = Subscription.new(params[:subscription])
     if @user.admin_change_subscription!(@subscription.subscription_plan, @subscription.start_date)
-      redirect_to :back, notice: t("flash.change_subscription.create.successful")
+      redirect_to :back, notice: t('flash.change_subscription.create.successful')
     else
       redirect_to :back, alert: @user.errors.full_messages
     end
@@ -12,7 +12,7 @@ class Administration::ChangeSubscriptionPlansController < Administration::Admini
 
   def destroy
     @user.subscriptions.future.destroy_all
-    redirect_to :back, notice: t("flash.change_subscription.create.successful")
+    redirect_to :back, notice: t('flash.change_subscription.create.successful')
   end
 
   private
