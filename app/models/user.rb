@@ -184,7 +184,12 @@ class User < ActiveRecord::Base
 
   def lock!
     self.locked_at = Time.now
-    self.save
+    self.save(validate: false)
+  end
+
+  def unlock!
+    self.locked_at = nil
+    self.save(validate: false )
   end
 
   private

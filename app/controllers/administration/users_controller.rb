@@ -1,90 +1,77 @@
 class Administration::UsersController < Administration::AdministrationController
-  inherit_resources
-  actions :all, :except => [:create, :update]
+  set_tab 'users'
 
-  set_tab "users"
+  before_filter :set_user, only: [:lock, :unlock, :update, :edit, :destroy, :sign_in_as]
+
+  def index
+    @total_users = User.count
+    @search = User.scoped_search(params[:search])
+    @users = @search.paginate(show_all: params[:show_all], page: params[:page])
+  end
 
   def new
-    @user = "User::#{params[:role].to_s.camelize}".constantize.new(:agreement_read => true,
-             :certification_level => ["agent", "call_centre_agent", "purchase_manager", "call_centre"].include?(params[:role]) ? User::BRONZE_CERTIFICATION : nil,
-             :subscription_plan_id => ["supplier", "category_supplier", "member"].include?(params[:role]) ? SubscriptionPlan.free.active.for_role(params[:role]).first.id : nil)
+    @user = "User::#{params[:role].to_s.camelize}".constantize.new(
+      agreement_read: true,
+      certification_level: ['agent', 'call_centre_agent', 'purchase_manager', 'call_centre'].include?(params[:role]) ? User::BRONZE_CERTIFICATION : nil,
+      subscription_plan_id: ['supplier', 'category_supplier', 'member'].include?(params[:role]) ? SubscriptionPlan.free.active.for_role(params[:role]).first.id : nil
+    )
   end
 
   def create
     @user = "User::#{params[:role].to_s.camelize}".constantize.new
-    @user.send(:attributes=, params["user_#{params[:role].to_s}".to_sym], false)
-    if @user.save
-       if params[:user_category_supplier]
-        @user.reload
+
+    if @user.save(user_params)
+      if user_params[:user_category_supplier]
         @user.update_attribute(:buying_category_ids, Array(params[:user_category_supplier][:buying_category_ids]) + Array(@user.deal_category_id))
-       end
-      flash[:notice] = t("administration.users.create.flash.user_creation_successful")
-      redirect_to administration_users_path
+      end
+
+      redirect_to administration_users_path, notice: t('administration.users.create.flash.user_creation_successful')
     else
-      render :action => 'new'
+      render :new
     end
   end
 
-  def edit
-    @user = "User::#{User.find(params[:id]).role.to_s.camelize}".constantize.find(params[:id])
-  end
-
   def update
-    @user = User.find(params[:id]).send(:casted_class).find(params[:id])
-    user_params_key = "user_#{@user.role.to_s}"
-    @user.send(:attributes=, params[user_params_key], false)
+    if @user.update_attributes(user_params)
+      flash[:notice] = t('administration.users.update.flash.user_update_successful')
 
-    if @user.save
-      flash[:notice] = t("administration.users.update.flash.user_update_successful")
-      if params[user_params_key] and params[user_params_key]["roles_to_add"] or params[user_params_key]["roles_to_remove"] or params[user_params_key]["locked"]
+      if user_params && user_params['roles_to_add'] || params['roles_to_remove'] || params['locked']
         redirect_to :back
       else
         redirect_to administration_users_path
       end
     else
       flash[:alert] = @user.errors[:base]
-      render :action => 'edit'
+      render :edit
     end
   end
 
   def destroy
-    @user = User.find(params[:id]).send(:casted_class).find(params[:id])
-    if @user.destroy
-      flash[:notice] = I18n.t("administration.users.destroy.flash.user_deletion_successful")
-    else
-      flash[:notice] = I18n.t("administration.users.destroy.flash.user_deletion_failure")
-    end
-    redirect_to administration_users_path
+    notice = @user.destroy ? :user_deletion_successful : :user_deletion_failure
+    redirect_to administration_users_path, notice: t(notice, scope: 'administration.users.destroy.flash')
   end
 
   def sign_in_as
-    user = User.find(params[:id])
-    sign_in(user) unless user.locked_at.present?
+    sign_in(@user) unless @user.locked_at?
     redirect_to root_path
   end
 
   def lock
-    @user = User.find(params[:id]).with_role
-    @user.locked = 'lock'
-    @user.save(validate: false)
-    flash[:notice] = I18n.t("administration.users.locked")
-    redirect_to :back
+    @user.lock!
+    redirect_to :back, notice: t('administration.users.locked')
   end
 
   def unlock
+    @user.unlock!
+    redirect_to :back, notice: t('administration.users.unlocked')
+  end
+
+  private
+  def set_user
     @user = User.find(params[:id]).with_role
-    @user.locked = 'unlock'
-    @user.save(validate: false)
-    flash[:notice] = I18n.t("administration.users.unlocked")
-    redirect_to :back
   end
 
-  protected
-
-  def collection
-    @total_users = User.count
-    @search = User.scoped_search(params[:search])
-    @users = @search.paginate(:show_all => params[:show_all], :page => params[:page])
+  def user_params
+    params.require("user_#{@user.role.to_s}").permit!
   end
-
 end
