@@ -1,7 +1,7 @@
 <%= content_for :column_mc do %>
   <header back="true"><%= t("administration.shared_softphones.new.view.header") %></header>
 
-  <%= semantic_form_for @shared_softphone, :url => administration_shared_softphones_path do |form| %>
+  <%= semantic_form_for @softphone, :url => administration_shared_softphones_path do |form| %>
       <frm title="">
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>

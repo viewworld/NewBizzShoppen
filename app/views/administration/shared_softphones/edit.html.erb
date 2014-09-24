@@ -1,8 +1,8 @@
 <%= content_for :column_mc do %>
-  <header back="true"><%= t("administration.shared_softphones.edit.view.header", :name => @shared_softphone.name) %></header>
+  <header back="true"><%= t("administration.shared_softphones.edit.view.header", :name => @softphone.name) %></header>
 
-  <%= semantic_form_for @shared_softphone, :url => administration_shared_softphone_path do |form| %>
-      <frm title="#{@shared_softphone.name}">
+  <%= semantic_form_for @softphone, :url => administration_shared_softphone_path do |form| %>
+      <frm title="#{@softphone.name}">
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
