@@ -19,4 +19,10 @@ class Administration::SharedSoftphonesController < Administration::Administratio
       failure.html { render :edit }
     end
   end
+
+  protected
+
+  def collection
+    @shared_softphones ||= end_of_association_chain.shared
+  end
 end
