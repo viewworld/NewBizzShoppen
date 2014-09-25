@@ -5,7 +5,7 @@
     </param:content>
   </header>
 
-  <%= semantic_form_for @advanced_export, :url => callers_campaign_advanced_export_path(@campaign, :format => :xls) do |f| %>
+  <%= semantic_form_for @advanced_export, :url => callers_campaign_advanced_export_path(@campaign, :format => :xlsx) do |f| %>
       <%= f.input :campaign_ids, :as => :hidden %>
       <%= f.input :agent_ids, :as => :hidden %>
       <%= f.input :date_from, :as => :hidden %>
