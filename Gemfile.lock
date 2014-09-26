@@ -108,6 +108,7 @@ GEM
     cssmin (1.0.3)
     csso-rails (0.3.4)
       execjs (>= 1)
+    daemon_controller (1.2.0)
     daemons (1.1.9)
     database_cleaner (1.2.0)
     debugger (1.6.8)
@@ -232,6 +233,10 @@ GEM
     paperclip (2.3.6)
       activerecord
       activesupport
+    passenger (4.0.52)
+      daemon_controller (>= 1.2.0)
+      rack
+      rake (>= 0.8.1)
     paypal_nvp (0.2.0)
     pg (0.17.1)
     polyglot (0.3.5)
@@ -443,6 +448,7 @@ DEPENDENCIES
   newrelic_rpm (= 3.6.8.168)
   nifty-generators (= 0.4.6)
   paperclip (= 2.3.6)
+  passenger (= 4.0.52)
   paypal-recurring!
   paypal_nvp (= 0.2.0)
   pg (~> 0.17.1)

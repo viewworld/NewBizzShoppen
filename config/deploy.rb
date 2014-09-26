@@ -10,7 +10,7 @@ set(:rvm_ruby_string) {"ree@nbs"}
 set :delayed_job_args, "-n 2"
 set :delayed_job_command, 'bundle exec script/delayed_job'
 
-set :stages, %w(staging production testing)
+set :stages, %w(staging production staging2)
 set :default_stage, "staging"
 set(:rails_env) {stage}
 

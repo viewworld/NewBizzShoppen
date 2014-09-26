@@ -92,6 +92,7 @@ end
 
 group :staging, :production do
   gem 'airbrake', '3.1.15'
+  gem 'passenger', '4.0.52'
 end
 
 group :development do
