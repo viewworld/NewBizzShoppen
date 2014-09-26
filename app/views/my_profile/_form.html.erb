@@ -13,7 +13,7 @@
           <% if current_user.shared_softphone_enabled? %>
             <%= form.input :shared_softphone_id, :as => :select, :collection => Softphone.available(current_user) %>
           <% end %>
-          <%= form.fields_for :softphone, current_user.softphone do |sf| %>
+          <%= form.fields_for :softphone, current_user.softphone || current_user.build_softphone do |sf| %>
             <%= sf.input :name %>
             <%= sf.input :sip_username %>
             <%= sf.input :sip_password %>

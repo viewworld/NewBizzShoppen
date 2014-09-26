@@ -17,6 +17,6 @@ class Softphone < ActiveRecord::Base
 
   def validates_name?
     fields = [sip_username, sip_password, softphone_server_id]
-    fields.any?(&:present?) || fields.all?(&:blank?)
+    fields.any?(&:present?) || new_record? && name.blank? && user_id.blank?
   end
 end
