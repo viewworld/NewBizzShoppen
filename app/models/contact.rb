@@ -12,8 +12,9 @@ class Contact < AbstractLead
   has_many :contact_past_user_assignments, :foreign_key => "contact_id", :dependent => :destroy
   has_many :past_user_assignments, :through => :contact_past_user_assignments, :source => :user
   has_many :notifications, :as => :notifier
+  has_one :user
 
-  belongs_to :agent, :class_name => "User", inverse_of: :contact
+  belongs_to :agent, class_name: "User", inverse_of: :contact
   belongs_to :newsletter_list
   belongs_to :newsletter_list_subscriber
   validates_presence_of :company_name, :company_phone_number, :creator_id, :category_id, :country_id, :campaign_id
@@ -55,7 +56,6 @@ class Contact < AbstractLead
   acts_as_taggable
 
   after_update :sync_with_campaign_sources
-
 
   class << self
 

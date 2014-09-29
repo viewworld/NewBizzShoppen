@@ -54,7 +54,8 @@ class User < ActiveRecord::Base
 
   # declare the valid roles -- do not change the order if you add more
   # roles later, always append them at the end!
-  roles :admin, :agent, :call_centre, :call_centre_agent, :supplier, :lead_supplier, :lead_user, :member, :category_supplier, :translator, :deal_maker, :superadmin
+  roles :admin, :agent, :call_centre, :call_centre_agent, :supplier, :lead_supplier, :lead_user, :member,
+    :category_supplier, :translator, :deal_maker, :superadmin
 
   validates_presence_of :email
   validates_presence_of :first_name, :last_name, :if => :validate_first_and_last_name?

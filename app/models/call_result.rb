@@ -23,12 +23,12 @@ class CallResult < ActiveRecord::Base
   accepts_nested_attributes_for :call_result_fields
 
   validates_presence_of :result_id, :creator_id, :contact_id
-  validates_presence_of :contact_email_address, :if => Proc.new{|cr| cr.result.send_material? or cr.result.upgrades_to_any_user?}
-  validates_format_of :contact_email_address, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :if => Proc.new{|cr| cr.result.send_material? or cr.result.upgrades_to_any_user?}
-  validates_presence_of :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_3, :contact_zip_code, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
-  validates_presence_of :contact_company_name, :contact_phone_number, :if => Proc.new { |cr| cr.result.upgrades_to_member? }
-  validate :validate_uniqueness_of_contact_email_address, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
-  validate :validate_upgraded_user, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
+  validates_presence_of :contact_email_address, :if => Proc.new { |cr| cr.result.send_material? || cr.result.upgrades_to_any_user? || cr.campaign_create_deals? }
+  validates_format_of :contact_email_address, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :if => Proc.new { |cr| cr.result.send_material? || cr.result.upgrades_to_any_user? || cr.campaign_create_deals?}
+  validates_presence_of :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_3, :contact_zip_code, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? || cr.campaign_create_deals? }
+  validates_presence_of :contact_company_name, :contact_phone_number, :if => Proc.new { |cr| cr.result.upgrades_to_member? || cr.campaign_create_deals? }
+  validate :validate_uniqueness_of_contact_email_address, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? || cr.campaign_create_deals? }
+  validate :validate_upgraded_user, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? || cr.campaign_create_deals? }
   validates_numericality_of :payout, :allow_blank => true
   validates_numericality_of :value, :allow_blank => true
 
@@ -82,6 +82,14 @@ class CallResult < ActiveRecord::Base
   scope :with_call_id, select("call_results.*, (select call_id from call_logs where state = 'TALK' and caller_id = call_results.creator_id and call_logs.created_at < call_results.created_at AND @EXTRACT(EPOCH FROM call_logs.created_at - call_results.created_at) < 3600 ORDER BY created_at DESC LIMIT 1) call_id")
   scope :empty, where("1=0")
   default_scope :order => 'call_results.created_at DESC'
+
+  def campaign_create_deals?
+    campaign_result.create_deals? && contact.user.nil?
+  end
+
+  def upgrades_to_member?
+    result.upgrades_to_member? || campaign_create_deals?
+  end
 
   def campaign_result
     contact ? CampaignsResult.where(:campaign_id => contact.campaign_id, :result_id => result_id).first : nil
@@ -255,11 +263,14 @@ class CallResult < ActiveRecord::Base
 
   def process_side_effects
     process_result_tags
-    if result.generic?
-      send "process_for_#{result.label.to_s}"
-    else
-      result.final? ? process_for_final_result : process_for_call_log_result
-    end
+    side_effect_result = if result.generic?
+                           send "process_for_#{result.label.to_s}"
+                         else
+                           result.final? ? process_for_final_result : process_for_call_log_result
+                         end
+    reload
+    upgrade_to_user('member') if campaign_create_deals?
+    side_effect_result
   end
 
   def process_for_call_back
@@ -345,7 +356,8 @@ class CallResult < ActiveRecord::Base
                    :agreement_read => true, :company_name => contact.company_name, :phone => contact_phone_number,
                    :contact => contact, :vat_number => contact.company_vat_no,
                    :company_ean_number => contact.company_ean_number, :assign_free_subscription_plan => false, :subscription_plan_id => contact_subscription_plan_id,
-                   :newsletter_on => contact_newsletter_on}
+                   :newsletter_on => contact_newsletter_on,
+                   :note => contact.note}
 
     if ["category_supplier", "supplier"].include?(role)
       user_params.merge!(:not_charge_vat => user_not_charge_vat)
@@ -431,7 +443,7 @@ class CallResult < ActiveRecord::Base
                                            :email_template_id => template.id,
                                            :reply_to => template.custom_reply_to ? creator.email : nil
                                        },
-                                       assets_to_path_names(send_material_result_value.materials)).deliver!
+                                       assets_to_path_names(send_material_result_value.try(:materials))).deliver!
   end
 
   def set_last_call_result_in_contact

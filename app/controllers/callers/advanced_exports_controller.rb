@@ -1,5 +1,5 @@
 class Callers::AdvancedExportsController < Callers::CallerController
-  set_tab "campaigns"
+  set_tab 'campaigns'
   include ::CampaignActions
 
   before_filter :set_campaign
@@ -10,18 +10,14 @@ class Callers::AdvancedExportsController < Callers::CallerController
   end
 
   def create
-    set_locals(params[:advanced_export])
-    @call_result_ids = CallResult.for_table_row(@date_from, @date_to, @results.map(&:id), @agent_ids, @campaign.is_a?(Array) ? @campaign.map(&:id) : @campaign.id).map{|hash| hash[:ids]}.flatten
-
-    respond_to do |wants|
-      wants.xls { send_data render_to_string, :filename => "call_result.xls" }
+    respond_to do |format|
+      format.xlsx { send_data CallersAdvancedExport.new(params, self, @campaign).perform }
     end
   end
 
   private
 
   def set_campaign
-    @campaign = Campaign.find(params[:campaign_id])
+    @campaign ||= Campaign.find(params[:campaign_id])
   end
-
 end
