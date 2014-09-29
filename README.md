@@ -152,6 +152,13 @@ Visit local [CruiseControl.rb](http://192.168.10.23:3333)
 
 ## Staging
 
+### Deployment
+
+```
+cap staging deploy
+cap deploy
+```
+
 Applications:
 
 - [fairleads.selleo.com](http://fairleads.selleo.com/)
@@ -168,6 +175,30 @@ Admin credentials:
 
 - username: aossowski@gmail.com
 - password: secret
+
+## Staging2 (Ruby 1.9.3)
+
+### Deployment
+
+```
+cap staging2 deploy
+```
+
+Applications:
+
+- [fairleads2.selleo.com](http://fairleads.selleo.com/)
+- [fairdeals2.selleo.com](http://fairdeals.selleo.com/)
+- [faircalls2.selleo.com](http://faircalls.selleo.com/)
+- [erhvervsanalyse2.selleo.com](http://erhvervsanalyse.selleo.com/)
+
+HTTP Basi Auth credentials:
+
+- username: fairleads
+- password: staging
+
+### Database
+
+It uses the same database like **Staging**.
 
 #### Rails Console
 
