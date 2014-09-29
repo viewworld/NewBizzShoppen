@@ -41,8 +41,8 @@ gem 'ajaxful_rating', '3.0.0.beta3'
 gem 'draper', '~> 1.3.1'
 
 # background jobs
-gem 'delayed_job_active_record', '4.0.0'
-gem 'delayed_job', '4.0.0'
+gem 'delayed_job_active_record', '4.0.2'
+gem 'delayed_job', '4.0.4'
 gem 'aasm', '2.3.1'
 gem 'whenever', '0.9.0', require: false
 
