@@ -1,0 +1,91 @@
+= content_for :search_box do
+  .search_box
+    h2= t("administration.upcoming_invoices.index.view.search_label")
+    .search_content
+      = form_for @search, url: administration_invoicing_upcoming_invoices_path do |f|
+        fieldset.inputs_vertical
+          ol.no_pdd
+            li.string
+              = f.label :with_keyword, t("administration.upcoming_invoices.index.view.search.with_keyword")
+              = f.text_field :with_keyword
+            li.date
+              = f.label :with_assigned_at_date_after_and_including, t("administration.upcoming_invoices.index.view.search.with_assigned_at_date_after_and_including")
+              = f.text_field :with_assigned_at_date_after_and_including, class: "formtastic-ui-datepicker"
+            li.date
+              = f.label :with_assigned_at_date_before_and_including, t("administration.upcoming_invoices.index.view.search.with_assigned_at_date_before_and_including")
+              = f.text_field :with_assigned_at_date_before_and_including, class: "formtastic-ui-datepicker"
+            li.select
+              = f.label :with_subscriber_type, t("administration.upcoming_invoices.index.view.search.with_subscriber_type")
+              = f.select :with_subscriber_type, User::SUBSCRIBER_TYPES.sort, include_blank: true
+            li.select
+              = f.label :with_role, t("administration.upcoming_invoices.index.view.search.with_role")
+              = f.select :with_role, [[t("administration.upcoming_invoices.index.view.search.role_supplier"),'lead_supplier'], [t("administration.upcoming_invoices.index.view.search.role_member"), 'member']].sort, include_blank: true
+            li.commit
+              = ibt(class: "bt_green", icon: "magnify") do
+                = submit_tag t("administration.upcoming_invoices.index.view.search_button")
+              p
+                = bt_clear_filter
+
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t("administration.upcoming_invoices.index.view.header")
+    - section.block_actions do
+      .frm_tiny.fltr
+        .pdd_10
+          = "#{t('administration.upcoming_invoices.index.view.total')}:"
+          strong= @lead_purchases_count
+
+  - if @lead_purchases.blank?
+    = blank_state_message
+  - else
+    = bulk_form do
+      table.generic
+        thead
+          tr
+            th.hl
+            th.no_pdd_lr.mini= check_box_tag "mark_all", 1, false, onclick: "mark_all_cbs_with_selector(this)"
+            th= t("administration.upcoming_invoices.index.view.supplier_first_name")
+            th= t("administration.upcoming_invoices.index.view.supplier_last_name")
+            th= t("administration.upcoming_invoices.index.view.supplier_type")
+            th= t("administration.upcoming_invoices.index.view.supplier_role")
+            th.ta_r= t("administration.upcoming_invoices.index.view.not_invoiced_count")
+            th.ta_r= t("administration.upcoming_invoices.index.view.not_invoiced_sum")
+            th
+            th.hr
+        tfoot
+          tr
+            td.fl
+            td colspan="8"
+            td.fr
+
+        tbody
+          - @lead_purchases.each do |lead_purchase|
+            tr
+              td.cl
+              td.no_pdd_lr= check_box_tag "debtors_ids[]", "#{lead_purchase.owner_id}:#{lead_purchase.currency_id}", false, {id: "debtors_id_checkbox_#{lead_purchase.owner_id}"}
+              td= lead_purchase.owner.first_name
+              td= lead_purchase.owner.last_name
+              td= lead_purchase.owner.subscriber_type_as_text
+              td= lead_purchase.owner.has_role?(:supplier) ? t("administration.upcoming_invoices.index.view.search.role_supplier") : t("administration.upcoming_invoices.index.view.search.role_member")
+              td.ta_r= lead_purchase.not_invoiced_count
+              td.ta_r= as_currency(lead_purchase.not_invoiced_sum, Currency.where(id: lead_purchase.currency_id).first)
+              td.tda.ta_r
+                - if lead_purchase.owner.active_subscription
+                  = link_to t("administration.upcoming_invoices.index.view.create_invoice"), administration_invoicing_invoices_path(invoice: {user_id: lead_purchase.owner_id, currency_id: lead_purchase.currency_id, seller_id: lead_purchase.owner.active_subscription.seller_id}), method: :post, class: "default_action"
+                - else
+                  = 'no active subscription'
+              td.cr
+
+          tr
+            td.fl
+            td.no_pdd_lr= check_box_tag "mark_all", 1, false, onclick: "mark_all_cbs_with_selector(this)"
+            td colspan='5'
+            td.ta_r
+              b= "#{t('administration.upcoming_invoices.index.view.total_in_euro')}:"
+              = as_currency(@total_euro_sum, Currency.euro)
+            td.ta_r= bt_link_to :invoice, t("administration.upcoming_invoices.index.view.invoice_selected"), "javascript:void(0)", onclick: "submitBulkForm('#{administration_invoicing_bulk_invoice_users_path}#PUT');"
+            td.fr
+
+
+      = hidden_field_tag :route_to
