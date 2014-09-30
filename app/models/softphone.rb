@@ -6,7 +6,7 @@ class Softphone < ActiveRecord::Base
   scope :shared, where(:user_id => nil)
   scope :available, lambda { |user| where('user_id IS NULL OR user_id = ?', user) }
 
-  validates :name, :presence => true, :if => lambda { self.is_a?(Softphone) ? validates_name? : true }
+  validates :name, :presence => true, :if => lambda { is_a?(Softphone) ? validates_name? : true }
   validates :name, :uniqueness => { :scope => :user_id }
 
   def copy_attributes
