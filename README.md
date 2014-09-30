@@ -186,10 +186,10 @@ cap staging2 deploy
 
 Applications:
 
-- [fairleads2.selleo.com](http://fairleads.selleo.com/)
-- [fairdeals2.selleo.com](http://fairdeals.selleo.com/)
-- [faircalls2.selleo.com](http://faircalls.selleo.com/)
-- [erhvervsanalyse2.selleo.com](http://erhvervsanalyse.selleo.com/)
+- [fairleads.staging.selleo.com](http://fairleads.staging.selleo.com/)
+- [fairdeals.staging.selleo.com](http://fairdeals.staging.selleo.com/)
+- [faircalls.staging.selleo.com](http://faircalls.staging.selleo.com/)
+- [erhvervsanalyse.staging.selleo.com](http://erhvervsanalyse.staging.selleo.com/)
 
 HTTP Basi Auth credentials:
 
