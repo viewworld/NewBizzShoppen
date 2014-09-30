@@ -107,6 +107,7 @@ GEM
       httparty (~> 0.8)
       json
     cssmin (1.0.3)
+    daemon_controller (1.2.0)
     daemons (1.1.9)
     database_cleaner (1.2.0)
     delayed_job (4.0.0)
@@ -229,6 +230,10 @@ GEM
     paperclip (2.3.6)
       activerecord
       activesupport
+    passenger (4.0.52)
+      daemon_controller (>= 1.2.0)
+      rack
+      rake (>= 0.8.1)
     paypal_nvp (0.2.0)
     pg (0.16.0)
     polyglot (0.3.3)
@@ -401,6 +406,7 @@ DEPENDENCIES
   newrelic_rpm
   nifty-generators
   paperclip (= 2.3.6)
+  passenger (~> 4.0.52)
   paypal-recurring!
   paypal_nvp
   pg

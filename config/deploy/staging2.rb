@@ -1,7 +1,7 @@
 set(:rvm_ruby_string) {'1.9.3@nbs'}
 set :deploy_to, "/srv/#{application}/staging2"
 set :rails_env, 'staging'
-set :branch, 'upgrade'
+set :branch, 'ruby-1.9.3'
 
 set :delayed_job_args, "-n 2 --pid-dir=#{shared_path}/tmp/pids"
 

@@ -59,6 +59,7 @@ group :staging do
 end
 
 group :staging, :production do
+  gem 'passenger', '~> 4.0.52'
   gem 'airbrake', '~> 3.1.15'
 end
 
