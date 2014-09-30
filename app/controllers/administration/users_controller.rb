@@ -18,9 +18,9 @@ class Administration::UsersController < Administration::AdministrationController
   end
 
   def create
-    @user = "User::#{params[:role].to_s.camelize}".constantize.new
+    @user = "User::#{params[:role].to_s.camelize}".constantize.new(user_params)
 
-    if @user.save(user_params)
+    if @user.save
       if user_params[:user_category_supplier]
         @user.update_attribute(:buying_category_ids, Array(params[:user_category_supplier][:buying_category_ids]) + Array(@user.deal_category_id))
       end
@@ -72,6 +72,6 @@ class Administration::UsersController < Administration::AdministrationController
   end
 
   def user_params
-    params.require("user_#{@user.role.to_s}").permit!
+    params.require("user_#{(@user ? @user.role : params[:role]).to_s }").permit!
   end
 end
