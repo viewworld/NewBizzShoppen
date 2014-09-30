@@ -1,0 +1,64 @@
+= content_for :search_box do
+  .search_box
+    h2= t("administration.payment_transactions.index.view.search_label")
+    .search_content
+      = form_for @search, url: administration_invoicing_payment_transactions_path do |f|
+        fieldset.inputs_vertical
+          ol.no_pdd
+            li.string
+              = f.label :with_keyword, t("administration.payment_transactions.index.view.search.with_keyword")
+              = f.text_field :with_keyword
+            li.date
+              = f.label :with_sale_date_after_and_including, t("administration.payment_transactions.index.view.search.with_sale_date_after_and_including")
+              = f.text_field :with_sale_date_after_and_including, class: "formtastic-ui-datepicker"
+            li.date
+              = f.label :with_sale_date_before_and_including, t("administration.payment_transactions.index.view.search.with_sale_date_before_and_including")
+              = f.text_field :with_sale_date_before_and_including, class: "formtastic-ui-datepicker"
+            li.commit
+              = ibt(class: "bt_green", icon: "magnify") do
+                = submit_tag t("administration.payment_transactions.index.view.search_button")
+              p
+                = bt_clear_filter
+
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t("administration.payment_transactions.index.view.header")
+  - if @payment_transactions.blank?
+    = blank_state_message
+  - else
+    table.generic cellpadding="0" cellspacing="0"
+      thead
+        tr
+          th.hl
+          th= t("administration.payment_transactions.index.view.transaction_type")
+          th= t("administration.payment_transactions.index.view.invoice_number")
+          th= t("administration.payment_transactions.index.view.supplier_name")
+          th= t("administration.payment_transactions.index.view.supplier_company_name")
+          th= t("administration.payment_transactions.index.view.supplier_address")
+          th.ta_r= t("administration.payment_transactions.index.view.amount")
+          th.ta_r= t("administration.payment_transactions.index.view.actions")
+          th.hr
+      tfoot
+        tr
+          td.fl
+          td colspan="7"
+          td.fr
+      tbody#invoices_list
+        - @payment_transactions.each do |payment_transaction|
+          tr
+            td.cl
+            td= payment_transaction.class.to_s == "PaypalTransaction" ? t("administration.payment_transactions.index.view.transaction_type_paypal") : t("administration.payment_transactions.index.view.transaction_type_manual")
+            td= payment_transaction.invoice.full_number
+            td= payment_transaction.invoice.customer_name
+            td= payment_transaction.invoice.user.company_name
+            td= payment_transaction.invoice.supplier_address
+            td.ta_r= as_currency(payment_transaction.amount, payment_transaction.invoice.currency)
+            td.tda.ta_r
+              - if payment_transaction.can_be_edited?
+                = bt_link_to nil, t("administration.payment_transactions.index.view.edit"), edit_administration_invoicing_payment_transaction_path(payment_transaction), class: "default_action"
+            td.cr
+        - if will_paginate
+          tr.pagination
+            td.ta_c colspan="9"
+              = will_paginate @payment_transactions

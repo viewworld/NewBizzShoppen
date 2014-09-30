@@ -1,0 +1,6 @@
+= content_for :column_mc do
+  = header(back: true) do |section|
+    - section.block_header do
+      = t("administration.payment_transactions.edit.view.header", number: @payment_transaction.invoice.id, name: @payment_transaction.invoice.customer_name)
+
+  = render 'form', title: t('administration.payment_transactions.edit.view.edit')

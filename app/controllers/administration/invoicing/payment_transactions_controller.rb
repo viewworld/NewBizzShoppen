@@ -1,37 +1,46 @@
 class Administration::Invoicing::PaymentTransactionsController < Administration::SuperadminController
-  inherit_resources
+  set_tab 'reports'
+  set_subtab 'payment_transactions'
 
-  set_tab "reports"
-  set_subtab "payment_transactions"
+  before_filter :set_payment_transaction, only: [:edit, :update]
 
-  def new
-    @payment_transaction = ManualTransaction.new(:invoice_id => params[:invoice_id])
-  end
-
-  def create
-    @payment_transaction = ManualTransaction.new(params[:manual_transaction])
-    create! do |success, failure|
-      success.html { redirect_to administration_invoicing_payment_transactions_path }
-      failure.html { render(:action => "new") }
-    end
-  end
-
-  def update
-#    @payment_transaction = ManualTransaction.find(params[:id])
-#    if @payment_transaction.update_attributes(params[:manual_transaction])
-    update! do |success, failure|
-      success.html { redirect_to administration_invoicing_payment_transactions_path }
-      failure.html { render(:action => "edit") }
-    end
-  end
-
-  protected
-
-  def collection
+  def index
     params[:search] ||= {}
     params[:search][:with_invoices] = true
 
     @search = PaymentTransaction.scoped_search(params[:search])
-    @payment_transactions = @search.paginate :page => params[:page], :per_page => 20
+    @payment_transactions = @search.paginate(page: params[:page], per_page: 20)
+  end
+
+  def new
+    @payment_transaction = ManualTransaction.new(invoice_id: params[:invoice_id])
+  end
+
+  def create
+    @payment_transaction = ManualTransaction.new(params[:manual_transaction])
+
+    if @payment_transaction.save
+      redirect_to administration_invoicing_payment_transactions_path
+    else
+      render :new
+    end
+  end
+
+  def update
+    if @payment_transaction.update_attributes(transaction_params)
+      redirect_to redirect_to administration_invoicing_payment_transactions_path
+    else
+      render :edit
+    end
+  end
+
+  private
+
+  def set_payment_transaction
+    @payment_transaction = ManualTransaction.find(params[:id])
+  end
+
+  def transaction_params
+    params[:manual_transaction]
   end
 end

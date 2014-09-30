@@ -1,0 +1,17 @@
+= semantic_form_for [:administration, :invoicing, @payment_transaction] do |form|
+  = frm(title: title) do |section|
+    - section.block_content do
+      .pdd_10.no_pdd_t
+        fieldset.inputs.labels_ta_r.labels_240
+          ol
+            = form.input :amount
+            = form.input :paid_at, as: :date_picker, wrapper_html: { class: "date" }
+            = form.input :invoice_id, as: :hidden
+    - section.block_actions do
+      = ibt(class: "fltri", icon: "save") do
+        - if @payment_transaction.new_record?
+          = form.submit t("administration.payment_transactions.new.view.button_create")
+        - else
+          = form.submit t("administration.payment_transactions.edit.view.button_update")
+      = ibt(class: "bt_grey fltri") do
+        = button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)"

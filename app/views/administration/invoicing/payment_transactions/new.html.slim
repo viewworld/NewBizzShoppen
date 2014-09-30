@@ -1,0 +1,6 @@
+= content_for :column_mc do
+  = header(back: true) do |section|
+    - section.block_header do
+      = t("administration.payment_transactions.new.view.header")
+
+  = render 'form'
