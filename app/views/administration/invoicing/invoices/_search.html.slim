@@ -1,0 +1,27 @@
+.search_box
+  h2= t('administration.invoices.index.view.search_label')
+  .search_content
+    = form_for @search, url: administration_invoicing_invoices_path do |f|
+      fieldset.inputs_vertical
+        ol.no_pdd
+          li.string
+            = f.label :with_keyword, t('administration.invoices.index.view.search.with_keyword')
+            = f.text_field :with_keyword
+
+          li.date
+            = f.label :with_sale_date_after_and_including, t('administration.invoices.index.view.search.with_sale_date_after_and_including')
+            = f.text_field :with_sale_date_after_and_including, class: 'formtastic-ui-datepicker'
+
+          li.date
+            = f.label :with_sale_date_before_and_including, t('administration.invoices.index.view.search.with_sale_date_before_and_including')
+            = f.text_field :with_sale_date_before_and_including, class: 'formtastic-ui-datepicker'
+
+          li.select
+            = f.label :with_paid, t('administration.invoices.index.view.search.payment_status')
+            = f.select :with_paid, options_for_with_paid, include_blank: true
+
+          li.commit
+            = ibt(class: 'bt_green', icon: 'magnify') do
+              = submit_tag t('administration.invoices.index.view.search_button')
+            p
+              = bt_clear_filter

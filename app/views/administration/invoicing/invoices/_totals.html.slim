@@ -1,0 +1,12 @@
+- if @invoice.paid? and (@invoice.credit_note.nil? or @invoice.credit_note.class.to_s == 'Refund')
+  td colspan='4'
+- else
+  td colspan='3'
+
+td#total_label.ta_r Total:
+td#total_netto_value 0.00
+td#total_vat_value 0.00
+td#total_brutto_value 0.00
+td
+td
+  = link_to_add_fields t('administration.invoices.edit.view.add_line'), form, :invoice_lines

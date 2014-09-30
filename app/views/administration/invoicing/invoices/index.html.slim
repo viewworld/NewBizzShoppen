@@ -1,0 +1,69 @@
+= content_for :search_box do
+  = render 'search'
+
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t("administration.invoices.index.view.header")
+
+  .clearfix
+    .fltl
+      = simple_form_for [:administration, :invoicing, Invoice.new] do |form|
+        .inputs_vertical
+          = form.association :user, collection: User.invoiceable.map { |u| ["#{u.company_name}, #{u.email}", u.id] }.sort, include_blank: false
+          = form.association :seller, collection: Seller.order('company_name').all, include_blank: false
+          = ibt(class: 'commit') do
+            = form.button :submit, t("administration.invoices.index.view.create_invoice")
+            
+    .fltr.frm_tiny.pdd_10
+      p
+        = "#{t('administration.invoices.index.view.total')}:"
+        strong= @total_invoices
+      p
+        = "#{t('administration.invoices.index.view.total_paid')}:"
+        strong.green= @total_paid_invoices
+      p
+        = "#{t('administration.invoices.index.view.total_unpaid')}:"
+        strong.red= @total_unpaid_invoices
+
+  - if @invoices.blank?
+    = blank_state_message
+  - else
+    = bulk_form do
+      table.table.generic
+        thead
+          tr
+            th.hl
+            th.mini= check_box_tag "mark_all", 1, false, onclick: "mark_all_cbs_with_selector(this)"
+            th= link_to t("administration.invoices.index.view.sale_date"), order_for_scoped_search(:sale_date)
+            th= link_to t("administration.invoices.index.view.invoice_number"), order_for_scoped_search(:number)
+            th= link_to t("administration.invoices.index.view.seller"), order_for_scoped_search(:seller_name)
+            th= link_to t("administration.invoices.index.view.supplier"), order_for_scoped_search(:supplier)
+            th.ta_c= link_to t("administration.invoices.index.view.status"), order_for_scoped_search(:paid_at)
+            th.medium.ta_r = link_to t("administration.invoices.index.view.total"), order_for_scoped_search(:total)
+            th.ta_r= t("administration.invoices.index.view.actions")
+            th.hr
+
+        tbody
+          = render @invoices
+
+          tr.pagination
+            td.ta_c colspan="10"
+              .td_select_all
+                = check_box_tag "mark_all", 1, false, onclick: "mark_all_cbs_with_selector(this)"
+                = label_tag "mark_all", "select all"
+              = will_paginate @invoices
+
+          tr.main_actions
+            td.cl
+            td.no_pdd_lr colspan="8"
+              = hidden_field_tag :route_to
+              = bt_link_to :chbox_selected, t("administration.invoices.index.view.bulk_set_as_paid"), "javascript:void(0)", onclick: "submitBulkForm('#{administration_invoicing_bulk_invoice_update_path}#PUT');"
+              = bt_link_to :mail, t("administration.invoices.index.view.send_invoice_to_selected"), "javascript:void(0)", onclick: "submitBulkForm('#{edit_administration_invoicing_bulk_mailings_path}#GET');"
+            td.cr
+
+        tfoot
+          tr
+            td.fl
+            td colspan="8"
+            td.fr

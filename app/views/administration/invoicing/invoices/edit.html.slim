@@ -1,0 +1,126 @@
+= content_for :column_mc do
+  = javascript_include_tag "jquery.field.min.js", "jquery.calculation.min.js", "invoice_calculations.js", "invoice_navigation.js"
+  = header(back: true) do |section|
+    - section.block_header do
+      = t("administration.invoices.edit.view.header", name: @invoice.customer_name)
+
+  = semantic_form_for [:administration, :invoicing, @invoice] do |form|
+    = frm(title: t('administration.invoices.edit.view.save_changes')) do |section|
+      - section.block_header do
+        = bt_link_to nil, t("administration.invoices.edit.view.save_changes"), "javascript:void(0)", onclick: "$('##{dom_id(@invoice, :edit)}').submit()", class: "fltr"
+        = bt_link_to nil, t("administration.invoices.edit.view.show_invoice"), administration_invoicing_invoice_path(@invoice), class: "fltr"
+      - section.block_content do
+        .pdd_10.no_pdd_t
+          fieldset.inputs.labels_ta_r.labels_220
+            ol.align_inputs
+              li.header
+                h3= t("administration.invoices.edit.view.form.general_information")
+              = form.input :number
+              = form.input :details, input_html: { style: 'width: 230px; height: 80px' }
+          .hl
+
+          .grid_500.fltl
+            fieldset.inputs.labels_ta_r.labels_220#supplier_information
+              ol.align_inputs
+                li.header
+                  h3= t("administration.invoices.edit.view.form.seller_information")
+
+                = form.input :seller_id,
+                               collection: Seller.all,
+                               include_blank: false,
+                               input_html: { onchange: "change_invoice_seller(#{@invoice.id},this.value);" }
+                = form.input :seller_name
+                = form.input :seller_vat_no
+                = form.input :seller_first_name
+                = form.input :seller_last_name
+                = form.fields_for :seller_address do |address_form|
+                  = address_form.input :address_line_1
+                  = address_form.input :address_line_2
+                  = address_form.input :address_line_3
+                  = address_form.input :zip_code
+                  = address_form.input :country_id, as: :select, collection: Country.all, include_blank: false, input_html: { onchange: "refresh_regions_list('invoice_seller_address_attributes');" }
+                  = address_form.input :region_id, as: :select, collection: regions_collection_for(@invoice.seller.address.country)
+
+          .grid_500.fltl
+            fieldset.inputs.labels_ta_r.labels_220#supplier_informations
+              ol.align_inputs
+                li.header
+                  h3= t("administration.invoices.edit.view.form.supplier_information")
+
+                = form.input :customer_company_name
+                = form.input :customer_name
+                = form.input :customer_vat_no
+                = form.fields_for :supplier_address do |address_form|
+                  = address_form.input :address_line_1
+                  = address_form.input :address_line_2
+                  = address_form.input :address_line_3
+                  = address_form.input :zip_code
+                  = address_form.input :country_id, as: :select, collection: Country.all, include_blank: false, input_html: { onchange: "refresh_regions_list('invoice_supplier_address_attributes');" }
+                  = address_form.input :region_id, as: :select, collection: regions_collection_for(@invoice.supplier_address.country)
+                = form.input :ean_number
+
+          .clb
+          .hl
+
+          fieldset.inputs.labels_ta_r.labels_220#payment_information
+            ol.align_inputs
+              li.header
+                h3= t("administration.invoices.edit.view.form.payment_information")
+
+              = form.input :bank_account_id, as: :select, collection: BankAccount.all
+              = form.input :creation_place
+              = form.input :creation_date,
+                             as: :date_picker,
+                             input_html: { id: "datepicker_creation_date"},
+                             wrapper_html: {class: "date"}
+              = form.input :sale_date,
+                             as: :date_picker,
+                             input_html: {id: "datepicker_sale_date"},
+                             wrapper_html: {class: "date"}
+              = form.input :payment_deadline_date,
+                             as: :date_picker,
+                             input_html: {id: "datepicker_payment_deadline_date"},
+                             wrapper_html: {class: "date"}
+              = form.input :payment_method,
+                             as: :select,
+                             collection: Invoice::PAYMENT_METHODS.map { |pm| [t("administration.invoices.common.view.#{pm}"), pm.to_s] },
+                             include_blank: false
+              = form.input :currency_id,
+                             include_blank: false, collection: Currency.all
+              = form.input :charge_vat
+              = form.input :vat_text_in_customer_country, as: :string
+
+          .hl
+
+          table.invoice_inline_inputs
+            thead
+              tr
+                - if @invoice.paid? && (@invoice.credit_note.nil? || @invoice.credit_note.class.to_s == "Refund")
+                  th.small= t("administration.invoices.edit.view.is_refunded")
+
+                th= t("administration.invoices.edit.view.name")
+                th= t("administration.invoices.edit.view.quantity")
+                th.small = t("administration.invoices.edit.view.vat_rate")
+                th= t("administration.invoices.edit.view.netto_price")
+                th= t("administration.invoices.edit.view.netto_value")
+                th= t("administration.invoices.edit.view.vat_value")
+                th= t("administration.invoices.edit.view.brutto_value")
+                th style=("width: 150px;")
+                th.small
+
+            tbody
+              = form.fields_for :invoice_lines do |invoice_line|
+                - unless invoice_line.object.new_record? && form.object.invoice_lines.count.eql?(1)
+                  = render "/administration/invoicing/invoice_lines/invoice_line_fields", f: invoice_line
+
+              tr.total
+                = render 'totals', form: form
+
+        br/
+      - section.block_actions do
+        = ibt(class: 'fltri', icon: 'save')
+          = form.submit t('administration.invoices.edit.view.save_button')
+
+        = ibt(class: 'fltri bt_grey')
+          = button_to_function t('common.cancel_link'), "window.location='#{administration_invoicing_invoices_path}'"
+          

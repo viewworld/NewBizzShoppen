@@ -1,0 +1,50 @@
+= content_for :column_mc do
+  = header(back: true) do |section|
+    - section.block_header do
+      = t('administration.invoices.show.view.header')
+
+  .clearfix
+    .grid_550.ta_r.fltr
+      = bt_link_to :printer, t("administration.invoices.show.view.print_invoice"), "javascript:void(0)", onclick: '$("#invoice_container").printElement()'
+      = bt_link_to :download, t("administration.invoices.show.view.download_pdf"), administration_invoicing_invoice_path(@invoice, format: :pdf)
+      = bt_link_to :chbox_selected, t("administration.invoices.index.view.set_as_paid"), administration_invoicing_invoice_path(@invoice.id, {invoice_id: @invoice.id, invoice: {paid_at: Time.now, cash_flow: @invoice.total}}), {method: :put} unless @invoice.paid?
+      = bt_link_to :mail, @invoice.sent? ? t("administration.invoices.show.view.resend") : t("administration.invoices.show.view.send"), new_administration_invoicing_invoice_mailing_path(@invoice), method: :get, confirm: send_invoice_warning(@invoice)
+      = bt_link_to :pencil, t("administration.invoices.show.view.edit_invoice"), edit_administration_invoicing_invoice_path(@invoice)
+
+    .grid_400.fltl
+      h2= "#{t('administration.invoices.show.view.status')}: #{@invoice.status.to_s.capitalize}"
+
+  .pdd_10
+    .invoice_container#invoice_container
+
+      / FIXME: No comment :(, will remove when refactoring SASS
+      css:
+        @import url('/stylesheets/invoice.css') print;
+
+      = render partial: 'shared/invoices/invoice_preview', locals: { version: :original, invoice: @invoice }
+
+    - unless @invoice.payment_transactions.empty?
+      h2= t("administration.invoices.show.view.payment_transactions.header")
+      table.generic
+        thead
+          tr
+            th.hl
+            th.medium= t("administration.invoices.show.view.payment_transactions.type")
+            th.huge= t("administration.invoices.show.view.payment_transactions.paid_at")
+            th= t("administration.invoices.show.view.payment_transactions.amount")
+            th.hr
+
+        tfoot
+          tr
+            td.fl
+            td colspan='3'
+            td.fr
+
+        tbody
+          - @invoice.payment_transactions.each do |payment_transaction|
+            tr
+              td.cl
+              td= payment_transaction.class.to_s == "PaypalTransaction" ? t("administration.invoices.show.view.payment_transactions.type_paypal") : t("administration.invoices.show.view.payment_transactions.type_manual")
+              td= payment_transaction.paid_at.strftime("%d-%m-%Y")
+              td= payment_transaction.amount
+              td.cr
