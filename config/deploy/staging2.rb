@@ -8,6 +8,14 @@ set :delayed_job_args, "-n 2 --pid-dir=#{shared_path}/tmp/pids"
 set :passenger_port, 9292
 set :passenger_cmd, 'bundle exec passenger'
 
+namespace :db do
+  task :db_config, except: { no_release: true }, role: :app do
+    run "cp -f #{shared_path}/etc/database.yml #{release_path}/config/database.yml"
+  end
+end
+
+after 'deploy:finalize_update', 'db:db_config'
+
 namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
     pid_file = "#{shared_path}/tmp/pids/passenger.#{passenger_port}.pid"
