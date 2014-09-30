@@ -48,7 +48,7 @@
             td= t("administration.refunds.index.view.type_#{credit_note.type_as_text}")
             td.ta_r= as_currency(credit_note.total, credit_note.invoice.currency)
             td.cr
-        - if @credit_notes.total_pages > 1
+        - if will_paginate
           tr.pagination
             td.ta_c colspan="8"
               = will_paginate @credit_notes
