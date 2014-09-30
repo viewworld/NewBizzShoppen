@@ -72,6 +72,6 @@ class Administration::UsersController < Administration::AdministrationController
   end
 
   def user_params
-    params.require("user_#{(@user ? @user.role : params[:role]).to_s }").permit!
+    params["user_#{(@user ? @user.role.to_s : params[:role]).to_s}"]
   end
 end

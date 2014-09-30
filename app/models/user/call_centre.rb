@@ -66,7 +66,7 @@ class ::User::CallCentre < ::User
   end
 
   def build_bank_address_object
-    if new_record? or !bank_address
+    if bank_address.nil? || (new_record? && bank_address.nil?)
       build_bank_address
     end
   end
