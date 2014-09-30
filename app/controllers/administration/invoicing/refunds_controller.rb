@@ -1,14 +1,10 @@
 class Administration::Invoicing::RefundsController < Administration::SuperadminController
-  inherit_resources
+  set_tab 'reports'
+  set_subtab 'refunds'
 
-  set_tab "reports"
-  set_subtab "refunds"
-
-  protected
-
-  def collection
+  def index
     @search = CreditNote.scoped_search(params[:search])
-    @search.with_type = "refund"
-    @credit_notes = @search.paginate :page => params[:page], :per_page => 20
+    @search.with_type = 'refund'
+    @credit_notes = @search.paginate(page: params[:page], per_page: 20)
   end
 end
