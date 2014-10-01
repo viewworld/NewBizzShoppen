@@ -83,25 +83,31 @@ class Result < ActiveRecord::Base
     name == "Call back private"
   end
 
+  def service_call?
+    name == 'Service call'
+  end
+
   def upgrades_to_user_role
     if upgrades_to_category_supplier?
       :category_supplier
     elsif upgrades_to_supplier?
       :supplier
-    elsif upgrades_to_member?
+    elsif upgrades_to_member? || service_call?
       :member
     end
   end
 
   def email_template_name_for_type
     if upgrades_to_member?
-      "upgrade_contact_to_member"
+      'upgrade_contact_to_member'
     elsif upgrades_to_supplier?
-      "upgrade_contact_to_buyer"
+      'upgrade_contact_to_buyer'
     elsif upgrades_to_category_supplier?
-      "upgrade_contact_to_category_buyer"
+      'upgrade_contact_to_category_buyer'
     elsif send_material?
-      "result_send_material"
+      'result_send_material'
+    elsif service_call?
+      'service_call'
     end
   end
 

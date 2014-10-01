@@ -48,6 +48,7 @@ Nbs::Application.routes.draw do
     resources :news
     resources :hints
     resources :currencies
+    resources :shared_softphones
     resources :softphone_servers
     namespace :invoicing do
       resources :invoices do
