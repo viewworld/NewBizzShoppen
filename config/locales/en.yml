@@ -152,7 +152,8 @@ en:
         login_time_requests: "Time request"
         login_time: "Login time"
         surveys: "Surveys"
-        softphone_servers: "Softphones"
+        softphone_servers: "Softphone servers"
+        shared_softphones: "Shared softphones"
         softphone_listing: "Soft. listing"
         email_template_signatures: "Signatures"
       agent:
@@ -1500,6 +1501,25 @@ en:
       new:
         view:
             header: "New server"
+    shared_softphones:
+      index:
+        view:
+          title: "Shared softphones"
+          new: "New shared softphone"
+          blank_state: "No shared softphones defined"
+          actions: "Actions"
+          edit: "Edit"
+          table:
+            id: "ID"
+            name: "Name"
+            server_host: "SIP username"
+            server_port: "Softphone server"
+      edit:
+        view:
+            header: "Editing softphone: %{name}"
+      new:
+        view:
+            header: "New shared softphone"
     currencies:
       index:
         view:

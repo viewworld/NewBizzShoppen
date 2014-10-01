@@ -347,6 +347,9 @@ class CallResult < ActiveRecord::Base
     process_for_call_back
   end
 
+  def process_for_service_call
+  end
+
   def prepare_user(role)
     user_params = {:email => contact_email_address, :first_name => contact_first_name,
                    :last_name => contact_last_name,
@@ -421,7 +424,11 @@ class CallResult < ActiveRecord::Base
 
   def deliver_email_for_upgraded_user(user, password)
     role = user.role_to_campaign_template_name
-    template = contact.campaign.send("upgrade_contact_to_#{role}_email_template".to_sym) || EmailTemplate.global.where(:uniq_id => "upgrade_contact_to_#{role}").first
+    template = if result.service_call?
+                contact.campaign.service_call_email_template
+               else
+                 contact.campaign.send("upgrade_contact_to_#{role}_email_template".to_sym) || EmailTemplate.global.where(:uniq_id => "upgrade_contact_to_#{role}").first
+               end
     template = customize_email_template(template)
     template.preview = true
 

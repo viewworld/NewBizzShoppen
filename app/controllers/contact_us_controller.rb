@@ -1,4 +1,5 @@
 class ContactUsController < ApplicationController
+  include ActionView::Helpers::SanitizeHelper
 
   def new
     @email_template_preview = ContactUsTemplatePreview.new(:contact_us, user_signed_in? ? current_user.email : "")
@@ -6,9 +7,9 @@ class ContactUsController < ApplicationController
 
   def create
     params[:email_template_preview].tap do |email_params|
-      @email_template_preview = ContactUsTemplatePreview.new(:contact_us, email_params[:email_from])
-      @email_template_preview.subject = email_params[:subject]
-      @email_template_preview.body = email_params[:body]
+      @email_template_preview = ContactUsTemplatePreview.new(:contact_us, sanitize(email_params[:email_from]))
+      @email_template_preview.subject = sanitize(email_params[:subject])
+      @email_template_preview.body = sanitize(email_params[:body])
     end
 
       if @email_template_preview.valid?

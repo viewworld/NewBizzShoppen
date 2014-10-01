@@ -103,6 +103,8 @@ class User < ActiveRecord::Base
   has_many :surveys, :as => :creator
   has_many :survey_recipients, :as => :recipient, :dependent => :destroy
   belongs_to :pipeline_report_currency, :class_name => 'Currency'
+  has_many :softphones
+  belongs_to :softphone
 
   alias_method :parent, :user
 
@@ -154,7 +156,9 @@ class User < ActiveRecord::Base
 
   attr_protected :locked, :can_edit_payout_information, :paypal_email, :bank_swift_number, :bank_iban_number, :skip_email_verification, :cancel_subscription
 
-  attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :send_invitation, :auto_generate_password, :email_materials, :cancel_subscription, :subscription_plan_id, :assign_free_subscription_plan
+  attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :send_invitation,
+                :auto_generate_password, :email_materials, :cancel_subscription, :subscription_plan_id,
+                :assign_free_subscription_plan, :shared_softphone_id
 
   alias_attribute :email_address, :email
   alias_attribute :phone_number, :phone
@@ -175,6 +179,8 @@ class User < ActiveRecord::Base
   before_create :generate_login_key
   before_create :generate_api_key
 
+  before_save :process_shared_softphone!, :if => lambda { shared_softphone_id.present? }
+
   check_associations_before_destroy :leads, :lead_purchases, :lead_templates, :assigned_lead_purchases, :lead_requests, :leads_in_cart, :deals, :requested_deals, :campaigns, :contacts, :call_results, :subaccounts, :invoices
 
   liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_supplier_category_home_url,
@@ -182,6 +188,10 @@ class User < ActiveRecord::Base
   require 'digest/sha1'
 
   acts_as_taggable
+
+  accepts_nested_attributes_for :softphone
+
+  delegate :sip_username, :sip_password, :softphone_server, to: :softphone, allow_nil: true
 
   def lock!
     self.locked_at = Time.now
@@ -194,6 +204,13 @@ class User < ActiveRecord::Base
   end
 
   private
+
+  def process_shared_softphone!
+    shared_softphone = Softphone.find(shared_softphone_id)
+    user_softphone = Softphone.where(shared_softphone.copy_attributes).where(:user_id => self).try(:first)
+    user_softphone = create_softphone(shared_softphone.copy_attributes.merge(:user_id => self.id)) unless user_softphone
+    self.softphone_id = user_softphone.id
+  end
 
   def set_email_verification
     if new_record?
