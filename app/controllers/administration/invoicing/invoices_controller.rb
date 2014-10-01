@@ -25,7 +25,7 @@ class Administration::Invoicing::InvoicesController < Administration::Superadmin
     @invoice = Invoice.new(invoice_params)
 
     if @invoice.save
-      redirect_to edit_administration_invoicing_invoice_path(@invoice)
+      redirect_to edit_administration_invoicing_invoice_path(@invoice), notice: t("flash.actions.create.notice", resource_name: Invoice)
     else
       render :new
     end

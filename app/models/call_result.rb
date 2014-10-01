@@ -84,7 +84,7 @@ class CallResult < ActiveRecord::Base
   default_scope :order => 'call_results.created_at DESC'
 
   def campaign_create_deals?
-    campaign_result.create_deals? && contact.user.nil?
+    !campaign_result.nil? && campaign_result.create_deals? && contact.user.nil?
   end
 
   def upgrades_to_member?

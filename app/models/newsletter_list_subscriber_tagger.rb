@@ -31,7 +31,7 @@ class NewsletterListSubscriberTagger
   end
 
   def persisted?
-    false
+    true
   end
 
   private

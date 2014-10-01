@@ -18,7 +18,8 @@ class Administration::UsersController < Administration::AdministrationController
   end
 
   def create
-    @user = "User::#{params[:role].to_s.camelize}".constantize.new(user_params)
+    @user = "User::#{params[:role].to_s.camelize}".constantize.new
+    @user.send(:attributes=, params["user_#{params[:role].to_s}".to_sym], false)
 
     if @user.save
       if user_params[:user_category_supplier]
