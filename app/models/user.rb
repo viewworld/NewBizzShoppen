@@ -173,8 +173,6 @@ class User < ActiveRecord::Base
   before_create :generate_login_key
   before_create :generate_api_key
 
-  before_save :process_shared_softphone!, :if => lambda { shared_softphone_id.present? }
-
   check_associations_before_destroy :leads, :lead_purchases, :lead_templates, :assigned_lead_purchases, :lead_requests, :leads_in_cart, :deals, :requested_deals, :campaigns, :contacts, :call_results, :subaccounts, :invoices
 
   liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_supplier_category_home_url,
@@ -183,18 +181,14 @@ class User < ActiveRecord::Base
 
   acts_as_taggable
 
-  accepts_nested_attributes_for :softphone
+  accepts_nested_attributes_for :softphone, :reject_if => proc { |attrs|
+    required_keys = %w(name sip_username sip_password softphone_server_id)
+    attrs.select {|k,_| required_keys.include?(k)}.map(&:last).all?(&:blank?) || attrs.keys.count == 1
+  }
 
   delegate :sip_username, :sip_password, :softphone_server, :to => :softphone, :allow_nil => true
 
   private
-
-  def process_shared_softphone!
-    shared_softphone = Softphone.find(shared_softphone_id)
-    user_softphone = Softphone.where(shared_softphone.copy_attributes).where(:user_id => self).try(:first)
-    user_softphone = create_softphone(shared_softphone.copy_attributes.merge(:user_id => self.id)) unless user_softphone
-    self.softphone_id = user_softphone.id
-  end
 
   def set_email_verification
     if new_record?

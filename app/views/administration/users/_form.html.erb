@@ -121,22 +121,22 @@
         <% end %>
         <% if @user.persisted? and @user.agent? %>
           <%= form.input :shared_softphone_enabled %>
-          <%= form.input :shared_softphone_id, :as => :select, :collection => Softphone.shared %>
-          <b><%= t("administration.users.edit.view.softphone_type") %></b><br />
+          <%= form.input :softphone_id, :as => :select, :collection => Softphone.shared %>
           <%= form.input :phone_type_id, :as => :select, :include_blank => false, :collection => User::PHONE_TYPES_WITH_LABELS %>
-          <%= form.input :softphone_id, :as => :hidden %>
-          <%= form.fields_for :softphone, @user.softphone || @user.build_softphone do |sf| %>
-            <%= sf.input :name %>
-            <%= sf.input :sip_username %>
-            <%= sf.input :sip_password, :as => :string %>
-            <%= sf.input :softphone_server %>
-            <%= sf.input :user_id, :as => :hidden, :value => @user.id %>
-          <% end %>
+          <span class='softphone_settings' style="<%= 'display: none;' if form.object.softphone.try(:shared?) %>">
+            <b><%= t("administration.users.edit.view.softphone_type") %></b><br />
+            <%= form.fields_for :softphone, (@user.softphone.try(:shared?) || @user.softphone.nil?) ? @user.build_softphone : @user.softphone do |sf| %>
+              <%= sf.input :name %>
+              <%= sf.input :sip_username %>
+              <%= sf.input :sip_password, :as => :string %>
+              <%= sf.input :softphone_server %>
+              <%= sf.input :user_id, :as => :hidden, :value => @user.id %>
+            <% end %>
+          </span>
         <% end %>
       </ol>
     </fieldset>
       <%= render :partial => "/shared/tags/assigned_tags", :locals => { :object => @user } %>
-
   </div>
 </div>
 
@@ -267,4 +267,18 @@
                     text($(this).text()));
         });
     }
+
+    $(document).ready(function() {
+      var softphoneSettings;
+      $('#user_agent_shared_softphone_enabled').change(function(){
+        softphoneSettings = $('.softphone_settings');
+        if (this.checked) {
+          softphoneSettings.hide();
+          $('.softphone_settings').find('input').attr('disabled', 'disabled');
+        } else {
+          softphoneSettings.show();
+          $('.softphone_settings').find('input').removeAttr('disabled');
+        }
+      })
+    })
 </script>

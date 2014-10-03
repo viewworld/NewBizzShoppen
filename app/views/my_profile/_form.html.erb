@@ -11,13 +11,13 @@
         <%= form.input :company_ean_number, :hint => hint_for("my_profile", :company_ean_number) %>
         <% if current_user.agent? %>
           <% if current_user.shared_softphone_enabled? %>
-            <%= form.input :shared_softphone_id, :as => :select, :collection => Softphone.available(current_user) %>
+            <%= form.input :softphone_id, :as => :select, :collection => Softphone.available(current_user) %>
           <% end %>
           <%= form.fields_for :softphone, current_user.softphone || current_user.build_softphone do |sf| %>
-            <%= sf.input :name %>
-            <%= sf.input :sip_username %>
-            <%= sf.input :sip_password %>
-            <%= sf.input :softphone_server %>
+            <%= sf.input :name, :input_html => {:disabled => current_user.softphone.shared?} %>
+            <%= sf.input :sip_username, :input_html => {:disabled => current_user.softphone.shared?} %>
+            <%= sf.input :sip_password, :input_html => {:disabled => current_user.softphone.shared?} %>
+            <%= sf.input :softphone_server, :input_html => {:disabled => current_user.softphone.shared?} %>
           <% end %>
         <% end %>
       </ol>
