@@ -52,6 +52,9 @@
                   <li>
                     <%= link_to t("administration.shared_softphones.index.view.edit"), edit_administration_shared_softphone_path(shared_softphone), :class => "default_action" %>
                   </li>
+                  <li>
+                    <%= link_to t("administration.shared_softphones.index.view.delete"), administration_shared_softphone_path(shared_softphone), :method => :delete %>
+                  </li>
                 </ul-actions>
               </td>
               <td class="cr"></td>
