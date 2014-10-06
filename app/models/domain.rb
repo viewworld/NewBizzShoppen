@@ -9,6 +9,10 @@ class Domain < ActiveRecord::Base
   scope :for_site, lambda { |site| where(:site => site.to_s) }
   scope :with_default, where(:default => true)
 
+  def self.for_fairdeals
+    for_site('fairdeals')
+  end
+
   def self.for_site_and_locale(site,locale)
     Domain.where(:site => site, :locale => locale).first || Domain.where(:site => site).with_default.first
   end
