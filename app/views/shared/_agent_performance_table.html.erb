@@ -11,7 +11,7 @@
       <% if call_centre_name.nil? %>
           <%= t('admin_home.show.view.table.agent') %>
       <% else %>
-          <%= t('admin_home.show.view.table.agent_with_name', :name => call_centre_name.capitalize) %>
+          <%= t('admin_home.show.view.table.agent_with_name', :name => call_centre_name.capitalize.to_ascii) %>
       <% end %>
     </th>
     <th class="tar"><%= t('admin_home.show.view.table.calls') %></th>

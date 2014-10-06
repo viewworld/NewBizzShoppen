@@ -377,4 +377,8 @@ module ApplicationHelper
       'fairdeals.dk:3000'
     end
   end
+
+  def fairdeals?
+    request.env['SERVER_NAME'] =~ /fairdeals/i
+  end
 end

@@ -21,14 +21,22 @@ module Rack
     end
 
     def find_locale(env)
-      @env_locale = (env['rack.session'][:locale_code] ||
-        env['HTTP_HOST'].to_s[/fairdeals\.(\w{2,4})/,1] ||
-        env['HTTP_HOST'].to_s[/faircalls\.(\w{2,4})/,1] ||
-        env['HTTP_ACCEPT_LANGUAGE'].to_s[/^([a-z]{2})/]).to_s
+      if get_domain_locale('fairdeals', env) == 'cz'
+        'cz'
+      else
+        env['rack.session'][:locale_code] ||
+          get_domain_locale('fairdeals', env) ||
+          get_domain_locale('faircalls', env) ||
+          env['HTTP_ACCEPT_LANGUAGE'].to_s[/^([a-z]{2})/]
+      end
+    end
+
+    def get_domain_locale(domain, env)
+      env['HTTP_HOST'].to_s[/#{domain}\.(\w{2,4})/,1]
     end
 
     def dictionary
-      {'eu' => 'en', 'com' => 'en', 'dk' => 'da'}
+      {'eu' => 'en', 'com' => 'en', 'dk' => 'da', 'cz' => 'cs'}
     end
   end
 end

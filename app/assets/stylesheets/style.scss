@@ -2379,3 +2379,7 @@ ol.survey_questions_container.sortable li .bt.bt_grey .branched-option {
 select[disabled], input[disabled] {
   opacity: 0.5;
 }
+
+select[multiple] {
+  height: auto;
+}

@@ -16,7 +16,7 @@ class FairdealsHomeController < ApplicationController
 
   def show
     @featured_deals = FeaturedDeal.with_active_deals(Date.today)
-    @primary_deal = Deal.where(:id => params[:id]).first || @featured_deals[0]
+    @primary_deal = (Deal.where(:id => params[:id]) || @featured_deals).first
   end
 
   def index
@@ -31,5 +31,4 @@ class FairdealsHomeController < ApplicationController
     end
     respond_with @deals
   end
-
 end
