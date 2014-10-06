@@ -13,6 +13,10 @@ class Softphone < ActiveRecord::Base
     attributes.reject {|attr,_| !%w(sip_username sip_password softphone_server_id).include?(attr)}
   end
 
+  def shared?
+    user_id.nil?
+  end
+
   private
 
   def validates_name?
