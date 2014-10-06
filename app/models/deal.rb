@@ -35,6 +35,13 @@ class Deal < AbstractLead
   scope :with_id_and_header, select("id, header")
   scope :with_tags, lambda { |tag_names| tagged_with(tag_names) }
 
+  scope :with_locale, lambda {
+    select('DISTINCT(leads.*)').
+    joins('JOIN lead_translations ON lead_translations.lead_id = leads.id').
+      joins('LEFT JOIN domains_deals ON domains_deals.deal_id = leads.id').
+      joins('LEFT JOIN domains ON domains.id = domains_deals.domain_id').
+      where("(lead_translations.locale = '#{I18n.locale}') OR (domains.locale = '#{I18n.locale}')") }
+
   scoped_order :header, :end_date, :published, :created_at, :company_name
 
   validates_presence_of :start_date, :end_date, :email_address
