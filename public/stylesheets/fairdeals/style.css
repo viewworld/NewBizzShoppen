@@ -1,6 +1,6 @@
 .ui-widget
 {
-    font-family: Arial, Helvetica, Verdana, Tahoma, sans-serif !important;    
+    font-family: Arial, Helvetica, Verdana, Tahoma, sans-serif !important;
 }
 
 
@@ -45,7 +45,7 @@ body
     -moz-border-radius: 16px;
     -webkit-border-radius: 16px;
     border-radius: 16px;
-    
+
     -moz-box-shadow: 0 0 10px #999;
     -webkit-box-shadow: 0 0 10px #999;
     box-shadow: 0 0 10px #999;
@@ -120,7 +120,7 @@ p
 #user_menu
 {
     background: url(/images/fairdeals/bg_nav.png) no-repeat top left;
-    height: 56px;    
+    height: 56px;
     position: relative;
     z-index: 1000;
 }
@@ -163,12 +163,12 @@ p
 
 #user_menu ul.nav li a:hover
 {
-    background-position: 0 -72px;    
+    background-position: 0 -72px;
 }
 
 #user_menu ul.nav li a:hover span
 {
-    background-position: right -108px;    
+    background-position: right -108px;
 }
 
 #user_menu ul.nav li.active a
@@ -180,7 +180,7 @@ p
 {
     background-position: right -182px;
     height: 38px;
-    line-height: 38px;    
+    line-height: 38px;
 }
 
 #user_menu ul.nav li.has_child
@@ -194,9 +194,9 @@ p
     padding-right: 35px;
 }
 
-#user_menu ul.nav li.has_child a:hover span    
+#user_menu ul.nav li.has_child a:hover span
 {
-    background-position: right -256px;    
+    background-position: right -256px;
 }
 
 #user_menu ul.nav li.has_child:hover ul.subnav
@@ -225,7 +225,7 @@ p
 
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-    border-radius: 5px; 
+    border-radius: 5px;
 }
 
 #user_menu ul.subnav li
@@ -318,7 +318,7 @@ p
     background: #598E00;
     border-color: #4c6c0e;
     border-bottom-color: #2c4900;
-    
+
     -moz-box-shadow: 0 -3px 10px #2C4900 inset;
     -webkit-box-shadow: 0 -3px 10px #2C4900 inset;
     box-shadow: 0 -3px 10px #2C4900 inset;
@@ -366,10 +366,9 @@ p
     color: #ddd;
     text-decoration: none;
     display: inline-block;
-    padding: 0 10px 0 14px;    
+    padding: 0 10px 0 14px;
     height: 30px;
     line-height: 30px;
-    background: url(/images/bg_user_panel_separator.png) repeat-y 0 0;
 }
 
 #user_panel a.sl:hover
@@ -404,7 +403,7 @@ p
 
 .langs_dropdown li a.lang_selected img
 {
-    margin-top: 9px;    
+    margin-top: 9px;
 }
 
 .langs_dropdown li #langs_list
@@ -422,7 +421,7 @@ p
     border: 1px solid #131313;
     border-top: none;
     padding-top: 6px;
-    background: #2e2e34;    
+    background: #2e2e34;
 }
 
 .langs_dropdown li:hover #langs_list li
@@ -485,7 +484,7 @@ p
     float: left;
     padding: 7px 6px;
     border-color: #69ac00;
-    border-bottom-color: #609d00;    
+    border-bottom-color: #609d00;
 
     -moz-box-shadow: 0 1px 0 rgba(255,255,255,.4);
     -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.4);
@@ -494,7 +493,7 @@ p
 
 .nav_search .bt
 {
-    float: right;    
+    float: right;
 }
 
 .nav_search .bt span
@@ -594,15 +593,15 @@ h1
 }
 
 .header_actions li a.bt:hover,
-.header_actions li a.bt.bt_active    
+.header_actions li a.bt.bt_active
 {
-    background-position: 0 -620px;    
+    background-position: 0 -620px;
 }
 
 .header_actions li a.bt:hover span,
-.header_actions li a.bt.bt_active:hover span    
+.header_actions li a.bt.bt_active:hover span
 {
-    background-position: 0 -646px;    
+    background-position: 0 -646px;
 }
 
 .header_actions li:first-child a.bt
@@ -640,9 +639,9 @@ h1
 }
 
 .header_actions li.last a.bt:hover span,
-.header_actions li.last a.bt.bt_active span    
+.header_actions li.last a.bt.bt_active span
 {
-    background-position: right -318px;    
+    background-position: right -318px;
 }
 
 .header_actions li.bt_back
@@ -660,7 +659,7 @@ h1
 --------------------------------------------------------------------------------- */
 
 #footer
-{    
+{
     height: 18px;
     background: url(/images/fairdeals/bg_dark.png) repeat 0 0 transparent;
     padding: 10px 0;
@@ -715,7 +714,7 @@ h1
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-    
+
     font-weight: bold;
     margin: 0 0 15px;
     padding: 12px;
@@ -758,7 +757,7 @@ h1
     box-shadow: 0 1px 0 #ff9a9a inset;
 
     color: #fff;
-    text-shadow: 1px 1px 0 #8e0000;    
+    text-shadow: 1px 1px 0 #8e0000;
 }
 
 
@@ -856,7 +855,7 @@ input:focus, textarea:focus, select:focus
     font-weight: bold;
 
     display: inline !ie7;
-    zoom: 1 !ie7;    
+    zoom: 1 !ie7;
 }
 
 .home_categories_tree .categories_tree li.categories_node
@@ -901,7 +900,7 @@ input:focus, textarea:focus, select:focus
 
 .subcategory_btn
 {
-    font-size: 12px;    
+    font-size: 12px;
     line-height: normal;
     padding: 5px 0 0;
     font-weight: bold;
@@ -989,7 +988,7 @@ a.bt:hover,
 }
 
 a.bt:hover span,
-.tda_hover a.bt span    
+.tda_hover a.bt span
 {
     background-position: right -90px;
 }
@@ -1021,7 +1020,7 @@ a.bt_dropdown span
 a.bt_dropdown:hover span,
 .tda_hover a.bt span
 {
-    background-position: right -370px;    
+    background-position: right -370px;
 }
 
 
@@ -1167,7 +1166,7 @@ div.bt span a
     height: 30px;
     line-height: 30px;
 
-    padding: 0 10px 0;    
+    padding: 0 10px 0;
     font-weight: bold;
     font-size: 11px;
     color: #fff;
@@ -1191,7 +1190,7 @@ div.bt:hover span
 
 
 div.bt_icon span input,
-div.bt_icon span a    
+div.bt_icon span a
 {
     padding: 0 10px 0 28px !important;
     position: relative;
@@ -1247,12 +1246,12 @@ div.bt_green span input
 
 div.bt_green:hover
 {
-    background-position: 0 -456px;    
+    background-position: 0 -456px;
 }
 
 div.bt_green:hover span
 {
-    background-position: right -486px;    
+    background-position: right -486px;
 }
 
 
@@ -1336,7 +1335,7 @@ span.cke_skin_kama
 
 .homepage_actions a.bt
 {
-    margin-top: 7px;    
+    margin-top: 7px;
 }
 
 .homepage_actions a.bt:first-child
@@ -1353,7 +1352,7 @@ span.cke_skin_kama
 .news h2
 {
     font-size: 18px;
-    margin-bottom: 20px;    
+    margin-bottom: 20px;
 }
 
 
@@ -1379,7 +1378,7 @@ span.cke_skin_kama
 
 .news_content h4 a
 {
-    border-bottom: 1px solid #ddd;    
+    border-bottom: 1px solid #ddd;
 }
 
 .news_content h4 a:hover
@@ -1460,7 +1459,7 @@ span.cke_skin_kama
 
 .primary_deal .frm_head h2
 {
-    font-size: 18px;    
+    font-size: 18px;
 }
 
 .primary_deal .frm_content
@@ -1473,10 +1472,10 @@ span.cke_skin_kama
 {
     display: none;
     width: 170px;
-    float: left;        
+    float: left;
     padding-left: 35px;
     padding-bottom: 20px;
-    text-align: center;      
+    text-align: center;
 }
 
 .primary_deal .deal_info .ajaxful-rating-wrapper
@@ -1780,7 +1779,7 @@ a.toggle_comments
 
 .other_deals .frm
 {
-    margin-bottom: 17px;    
+    margin-bottom: 17px;
 }
 
 .other_deals .frm_head

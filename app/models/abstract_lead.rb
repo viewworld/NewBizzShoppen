@@ -240,5 +240,4 @@ class AbstractLead < ActiveRecord::Base
     self.sale_limit = 1 if sale_limit.blank?
     self.purchase_decision_date = Date.today + 1.year if purchase_decision_date.blank?
   end
-
 end

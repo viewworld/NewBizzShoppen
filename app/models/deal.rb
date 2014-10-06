@@ -19,6 +19,8 @@ class Deal < AbstractLead
   has_many :featured_deals
   has_many :voucher_numbers
   has_and_belongs_to_many :deal_templates, :class_name => "LeadTemplate", :join_table => "leads_lead_templates", :foreign_key => "lead_id", :association_foreign_key => "lead_template_id"
+  has_many :domains_deals
+  has_many :domains, :through => :domains_deals
   belongs_to :lead_category, :class_name => "Category", :foreign_key => "lead_category_id"
   belongs_to :deal_admin, :class_name => "User", :foreign_key => "deal_admin_email", :primary_key => "email"
 
@@ -344,7 +346,7 @@ class Deal < AbstractLead
     unless deal_request_details_email_template
       global_template = EmailTemplate.global.where(:uniq_id => 'deal_request_details').first
       self.deal_request_details_email_template = global_template.clone
-      global_template.translations.each do |translation|
+      global_template.ranslations.each do |translation|
         self.deal_request_details_email_template.translations << translation.clone
       end
       self.save
