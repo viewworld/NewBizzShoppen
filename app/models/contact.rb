@@ -150,16 +150,32 @@ class Contact < AbstractLead
   end
 
   def upgrade_to_lead!
-    lead = self.deep_clone!({:with_callbacks => true, :include => [:lead_purchases, :lead_translations, {:lead_template_values => :lead_template_value_translations}]})
-    lead.update_attribute :type, "Lead"
-
     utl_cr = call_results.select { |cr| cr.result.name == "Upgraded to lead" }.sort { |cr1,cr2| cr1.created_at<=>cr2.created_at  }.last
-    new_lead = Lead.find(lead.id)
-    new_lead.creator = utl_cr.creator.admin? ? User.find(new_lead.agent_id).with_role : utl_cr.creator
-    new_lead.save
-    new_lead.update_attribute(:contact_id, self.id)
-    new_lead.update_attribute(:published, false)
-    new_lead.update_attribute(:published, true)
+
+    self.class.amoeba do
+      propagate # calls save on cloned elements
+      include_field [:lead_purchases, :lead_translations, :lead_template_values]
+      clone [:lead_purchases, :lead_translations, :lead_template_values]
+    end
+
+    lead = self.amoeba_dup.becomes(Lead)
+    lead.type = "Lead"
+    lead.creator = utl_cr.creator.admin? ? User.find(new_lead.agent_id).with_role : utl_cr.creator
+    lead.contact_id = self.id
+
+    # Required to call send_instant_notification_to_subscribers callback on lead
+    lead.save # callbacki sa odpalane
+
+    lead.update_attribute(:published, false)
+    lead.update_attribute(:published, true)
+
+    # DEEP CLONE
+    # elemeny w include sa duplikowane takze
+    # with_callbacks = false wylacza elementy ktore maja unless: :save_without_callbacks
+    # without_callbacks = true -> unless: :save_without_callbacks, tylko do oznaczonyc
+    # without_callbacks => true == with_callbacks => false
+    #lead = self.deep_clone!({:with_callbacks => true, :include => [:lead_purchases, :lead_translations, {:lead_template_values => :lead_template_value_translations}]})
+    #lead.type = "Lead"
 
     campaign_result = CampaignsResult.where(:result_id => utl_cr.result.id, :campaign_id => self.campaign_id).first
     if campaign_result.settings["prompt_for_decision_date"].eql?("0")

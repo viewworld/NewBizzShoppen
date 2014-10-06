@@ -64,6 +64,8 @@ GEM
       builder
       multi_json
     ajaxful_rating (3.0.0.beta3)
+    amoeba (2.0.0)
+      activerecord (>= 3.0)
     arel (2.2.3)
     awesome_nested_set (2.1.6)
       activerecord (>= 3.0.0)
@@ -412,6 +414,7 @@ DEPENDENCIES
   acts_as_list (~> 0.4.0)
   airbrake (= 3.1.15)
   ajaxful_rating (= 3.0.0.beta3)
+  amoeba (= 2.0.0)
   aws-s3 (= 0.6.2)
   axlsx (= 1.3.6)
   bullet (= 2.0.1)

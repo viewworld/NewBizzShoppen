@@ -78,6 +78,7 @@ gem 'rubyzip', '0.9.9'
 gem 'rails-multi_block_helpers', github: 'bartlomiejdanek/rails-multi_block_helpers'
 gem 'stringex', '~> 2.5.2'
 gem 'strong_parameters', '~> 0.2.3'
+gem 'amoeba', '2.0.0'
 
 group :assets do
   gem 'sass-rails', '3.1.5'

@@ -14,6 +14,10 @@ class LeadTemplateValue < ActiveRecord::Base
 
   before_create :duplicate_field_type
 
+  amoeba do
+    enable
+  end
+
   def duplicate_field_type
     self.field_type = lead_template_field.field_type
   end
