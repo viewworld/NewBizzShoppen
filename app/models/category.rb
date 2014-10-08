@@ -81,6 +81,14 @@ class Category < ActiveRecord::Base
   scope :with_unique, where("is_customer_unique IS true or is_agent_unique IS true")
   scope :with_locked, where("is_locked IS true")
   scope :with_public, where("auto_buy IS false AND is_customer_unique IS false AND is_agent_unique IS false")
+  scope :with_locale, lambda {
+    select('DISTINCT(categories.*)').
+    joins(:deals).
+    joins('JOIN lead_translations ON lead_translations.lead_id = leads.id').
+    joins('JOIN domains_deals ON domains_deals.deal_id = leads.id').
+    joins('JOIN domains ON domains.id = domains_deals.domain_id').
+    where("(lead_translations.locale = '#{I18n.locale}') OR (domains.locale = '#{I18n.locale}')") }
+
   before_destroy :check_if_category_is_empty
   before_destroy :mark_articles_to_destroy
 
