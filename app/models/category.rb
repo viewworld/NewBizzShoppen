@@ -82,7 +82,8 @@ class Category < ActiveRecord::Base
   scope :with_locked, where("is_locked IS true")
   scope :with_public, where("auto_buy IS false AND is_customer_unique IS false AND is_agent_unique IS false")
   scope :with_locale, lambda {
-    select('DISTINCT(categories.*)').
+    # FIXME it crashes when query goes with with_agent_unique scope
+    # select('DISTINCT(categories.*)').
     joins(:deals).
     joins('JOIN lead_translations ON lead_translations.lead_id = leads.id').
     joins('JOIN domains_deals ON domains_deals.deal_id = leads.id').
