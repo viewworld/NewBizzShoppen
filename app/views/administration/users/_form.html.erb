@@ -123,9 +123,9 @@
           <%= form.input :shared_softphone_enabled %>
           <%= form.input :softphone_id, :as => :select, :collection => Softphone.shared %>
           <%= form.input :phone_type_id, :as => :select, :include_blank => false, :collection => User::PHONE_TYPES_WITH_LABELS %>
-          <span class='softphone_settings' style="<%= 'display: none;' if form.object.softphone.try(:shared?) %>">
+          <span class='softphone_settings' style="<%= 'display: none;' if form.object.softphone_shared? %>">
             <b><%= t("administration.users.edit.view.softphone_type") %></b><br />
-            <%= form.fields_for :softphone, (@user.softphone.nil? || @user.softphone.shared?) ? @user.build_softphone : @user.softphone do |sf| %>
+            <%= form.fields_for :softphone, (@user.softphone.nil? || @user.softphone_shared?) ? @user.build_softphone : @user.softphone do |sf| %>
               <%= sf.input :name %>
               <%= sf.input :sip_username %>
               <%= sf.input :sip_password, :as => :string %>

@@ -14,10 +14,10 @@
             <%= form.input :softphone_id, :as => :select, :collection => Softphone.available(current_user) %>
           <% end %>
           <%= form.fields_for :softphone, current_user.softphone || current_user.build_softphone do |sf| %>
-            <%= sf.input :name, :input_html => {:disabled => current_user.softphone.try(:shared?)} %>
-            <%= sf.input :sip_username, :input_html => {:disabled => current_user.softphone.try(:shared?)} %>
-            <%= sf.input :sip_password, :input_html => {:disabled => current_user.softphone.try(:shared?)} %>
-            <%= sf.input :softphone_server, :input_html => {:disabled => current_user.softphone.try(:shared?)} %>
+            <%= sf.input :name, :input_html => {:disabled => current_user.softphone_shared?} %>
+            <%= sf.input :sip_username, :input_html => {:disabled => current_user.softphone_shared?} %>
+            <%= sf.input :sip_password, :input_html => {:disabled => current_user.softphone_shared?} %>
+            <%= sf.input :softphone_server, :input_html => {:disabled => current_user.softphone_shared?} %>
           <% end %>
         <% end %>
       </ol>
