@@ -83,9 +83,7 @@ class CallResult < ActiveRecord::Base
   scope :empty, where("1=0")
   default_scope :order => 'call_results.created_at DESC'
 
-  def campaign_create_deals?
-    campaign_result.try(:create_deals?) && contact.user.nil?
-  end
+  delegate :create_deals?, :to => :campaign_result, :allow_nil => true, :prefix => :campaign
 
   def upgrades_to_member?
     result.upgrades_to_member? || campaign_create_deals?
@@ -213,13 +211,19 @@ class CallResult < ActiveRecord::Base
   private
 
   def validate_uniqueness_of_contact_email_address
-    unless User.where("email = ?", contact_email_address).empty?
+    if User.find_by_email(contact_email_address) != contact.user
       self.errors.add(:contact_email_address, I18n.t("models.call_result.not_unique_email_address"))
     end
   end
 
+  def upgrades_to_user_role
+    user_role = result.upgrades_to_user_role
+    user_role = 'member' if user_role.blank? && campaign_create_deals?
+    user_role
+  end
+
   def validate_upgraded_user
-    if self.errors.empty? and user = prepare_user(result.upgrades_to_user_role.to_s).first and !user.valid?
+    if self.errors.empty? and user = prepare_user(upgrades_to_user_role).first and !user.valid?
       self.errors.add(:upgraded_user, user.errors.to_a.uniq)
       return false
     end
@@ -351,6 +355,10 @@ class CallResult < ActiveRecord::Base
   end
 
   def prepare_user(role)
+    if existing_user = User::Member.find_by_email(contact_email_address)
+      return [existing_user, nil]
+    end
+
     user_params = {:email => contact_email_address, :first_name => contact_first_name,
                    :last_name => contact_last_name,
                    :address_attributes => { :address_line_1 => contact_address_line_1, :zip_code => contact_zip_code,
