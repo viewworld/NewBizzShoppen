@@ -2,8 +2,8 @@ class Administration::SoftphoneServersController < Administration::Administratio
   inherit_resources
   actions :all, :except => [:show]
 
-  set_tab "settings"
-  set_subtab "softphone_servers"
+  set_tab 'settings'
+  set_subtab 'softphone_servers'
 
   public
 
@@ -23,12 +23,11 @@ class Administration::SoftphoneServersController < Administration::Administratio
 
   def destroy
     destroy! do |success,failure|
-      success.html { redirect_to administration_currencies_path }
+      success.html { redirect_to administration_softphone_servers_path }
       failure.html {
         flash[:alert] = @softphone_server.errors[:base].join('<br/>')
         redirect_to administration_softphone_servers_path
       }
     end
   end
-
 end
