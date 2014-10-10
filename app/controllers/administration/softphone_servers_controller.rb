@@ -1,7 +1,6 @@
 class Administration::SoftphoneServersController < Administration::AdministrationController
   set_tab 'settings'
   set_subtab 'softphone_servers'
-
   before_filter :set_softphone_server, only: [:edit, :update, :destroy]
 
   def index
