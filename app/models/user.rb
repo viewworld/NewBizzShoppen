@@ -187,6 +187,7 @@ class User < ActiveRecord::Base
   }
 
   delegate :sip_username, :sip_password, :softphone_server, :to => :softphone, :allow_nil => true
+  delegate :shared?, :to => :softphone, :allow_nil => true, :prefix => true
 
   private
 
