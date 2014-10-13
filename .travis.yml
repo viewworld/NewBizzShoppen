@@ -3,7 +3,6 @@ bundler_args: --without development --deployment
 cache: bundler
 env:
   - TEST_SUITE=unit
-#  - TEST_SUITE=acceptance
 rvm:
   - ree
 before_install:
@@ -15,8 +14,6 @@ before_script:
   - export RAILS_ENV=test
   - cp -f config/travis/database.yml config/database.yml
   - bundle exec rake db:drop db:create db:migrate
-#  - bundle exec thor nbs:seed
-#  - bundle exec thor nbs:t
   - bundle exec rake tests:suite:prepare:$TEST_SUITE
   - export RUBY_HEAP_MIN_SLOTS=1000000
   - export RUBY_HEAP_SLOTS_INCREMENT=1000000
@@ -28,6 +25,7 @@ branches:
   only:
     - master
     - staging
+    - upgrade
 notifications:
   hipchat:
     rooms:
@@ -35,6 +33,3 @@ notifications:
     template:
       - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message} (<a href="%{build_url}">Details</a>/<a href="%{compare_url}">Change view</a>)'
     format: html
-# addons:
-#   code_climate:
-#     repo_token: '2818a47955f9881e1c00f6c2cbd45149c161e125e0a8c6d6f9356487a89c8fcf'
