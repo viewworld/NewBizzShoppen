@@ -164,18 +164,10 @@ class Contact < AbstractLead
     lead.contact_id = self.id
 
     # Required to call send_instant_notification_to_subscribers callback on lead
-    lead.save # callbacki sa odpalane
+    lead.save
 
     lead.update_attribute(:published, false)
     lead.update_attribute(:published, true)
-
-    # DEEP CLONE
-    # elemeny w include sa duplikowane takze
-    # with_callbacks = false wylacza elementy ktore maja unless: :save_without_callbacks
-    # without_callbacks = true -> unless: :save_without_callbacks, tylko do oznaczonyc
-    # without_callbacks => true == with_callbacks => false
-    #lead = self.deep_clone!({:with_callbacks => true, :include => [:lead_purchases, :lead_translations, {:lead_template_values => :lead_template_value_translations}]})
-    #lead.type = "Lead"
 
     campaign_result = CampaignsResult.where(:result_id => utl_cr.result.id, :campaign_id => self.campaign_id).first
     if campaign_result.settings["prompt_for_decision_date"].eql?("0")
