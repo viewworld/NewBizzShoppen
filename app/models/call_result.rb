@@ -5,7 +5,8 @@ class CallResult < ActiveRecord::Base
   attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_2,
                 :contact_address_line_3, :contact_zip_code, :contact_country_id, :contact_phone_number,
                 :contact_company_name, :buying_category_ids, :result_id_changed, :user_not_charge_vat, :current_user, :contact_subscription_plan_id,
-                :contact_newsletter_on, :contact_requested_deal_ids, :upgraded_user, :chain_mail_type_id, :survey_recipient
+                :contact_newsletter_on, :contact_requested_deal_ids, :upgraded_user, :chain_mail_type_id, :survey_recipient,
+                :save_without_callbacks
 
   CSV_ATTRS = %w{ result_name }
 
@@ -82,6 +83,15 @@ class CallResult < ActiveRecord::Base
   scope :with_call_id, select("call_results.*, (select call_id from call_logs where state = 'TALK' and caller_id = call_results.creator_id and call_logs.created_at < call_results.created_at AND @EXTRACT(EPOCH FROM call_logs.created_at - call_results.created_at) < 3600 ORDER BY created_at DESC LIMIT 1) call_id")
   scope :empty, where("1=0")
   default_scope :order => 'call_results.created_at DESC'
+
+  amoeba do
+    enable
+  end
+
+  def save_without_callbacks!
+    save_without_callback = true
+    save!
+  end
 
   def campaign_create_deals?
     !campaign_result.nil? && campaign_result.create_deals? && contact.user.nil?

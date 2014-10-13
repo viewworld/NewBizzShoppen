@@ -6,11 +6,16 @@ class ResultValue < ActiveRecord::Base
   validates_presence_of :value, :if => Proc.new { |rv| rv.result_field.is_mandatory }
   validate :value_format
 
+  attr_accessor :contact_email_address, :save_without_callbacks
   before_create :duplicate_field_type, :unless => :save_without_callbacks
-  attr_accessor :contact_email_address
 
   scope :for_result_field, lambda {|result_field| where(:result_field_id => result_field)}
   scope :dates, where(:field_type => ResultField::DATETIME.to_s)
+
+  def save_without_callbacks!
+    save_without_callbacks = true
+    save!
+  end
 
   def duplicate_field_type
     self.field_type = result_field.field_type

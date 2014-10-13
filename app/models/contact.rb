@@ -276,9 +276,23 @@ class Contact < AbstractLead
   end
 
   def copy_to_campaign!(other_campaign)
-    new_contact = self.deep_clone!(:with_callbacks => false, :include => [:call_results => [:call_log, :result_values, :archived_email]])
+    self.class.amoeba do
+      include_field :call_results
+      clone :call_results
+    end
+
+    new_contact = self.amoeba_dup
     new_contact.campaign = other_campaign
     new_contact.save
+
+    new_contact.call_results.each do |call_result|
+      call_result.save_without_callbacks!
+
+      call_result.archived_email.try(:save)
+      call_result.call_log.try(:save)
+      call_result.result_values.each(&:save_without_callbacks!)
+    end
+
     new_contact
   end
 
