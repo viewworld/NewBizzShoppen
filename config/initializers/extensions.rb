@@ -91,9 +91,16 @@ class ActsAsTaggableOn::Tag < ActiveRecord::Base
 
   def duplicate!(_name)
     if can_be_duplicated?(_name)
-      tag_copy = self.deep_clone!(:with_callbacks => true, :include => [:taggings])
+      self.class.amoeba do
+        propagate
+        include_field :taggings
+        clone :taggings
+      end
+
+      tag_copy = self.amoeba_dup
       tag_copy.name = _name
       tag_copy.save
+
       tag_copy
     else
       false
