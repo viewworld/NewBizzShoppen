@@ -158,7 +158,8 @@ class Contact < AbstractLead
       clone [:lead_purchases, :lead_translations, :lead_template_values]
     end
 
-    lead = self.amoeba_dup.becomes(Lead)
+    lead = self.amoeba_dup
+    lead.becomes(Lead)
     lead.type = "Lead"
     lead.creator = utl_cr.creator.admin? ? User.find(new_lead.agent_id).with_role : utl_cr.creator
     lead.contact_id = self.id
