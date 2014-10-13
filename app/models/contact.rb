@@ -159,13 +159,13 @@ class Contact < AbstractLead
     end
 
     lead = self.amoeba_dup
-    lead.becomes(Lead)
     lead.type = "Lead"
+
     lead.creator = utl_cr.creator.admin? ? User.find(new_lead.agent_id).with_role : utl_cr.creator
     lead.contact_id = self.id
 
     # Required to call send_instant_notification_to_subscribers callback on lead
-    lead.save
+    lead.save(validate: false)
 
     lead.update_attribute(:published, false)
     lead.update_attribute(:published, true)
