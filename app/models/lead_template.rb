@@ -57,7 +57,13 @@ class LeadTemplate < ActiveRecord::Base
 
       template.lead_template_fields.each do |field|
         if with_values
-          lead_template_field = field.deep_clone({:include => [:lead_template_field_translations] })
+          field.class.amoeba do
+            propagate
+            include_field :lead_template_field_translations
+            clone :lead_template_field_translations
+          end
+
+          lead_template_field = field.amoeba_dup
           lead_template_field.lead_template_field_translations.each { |ltft| ltft.lead_template_field = lead_template_field }
         else
           lead_template_field = LeadTemplateField.new
@@ -68,7 +74,13 @@ class LeadTemplate < ActiveRecord::Base
         self.lead_template_fields << lead_template_field
         if with_values
           if lt_value = field.lead_template_values.detect { |ltv| ltv.lead_id == lead.id }
-            lt_value_new = lt_value.deep_clone({:include => [:lead_template_value_translations]})
+            lt_value.class.amoeba do
+              propagate
+              include_field :lead_template_value_translations
+              clone :lead_template_value_translations
+            end
+
+            lt_value_new = lt_value.amoeba_dup
             lt_value_new.lead_template_value_translations.each { |ltvt| ltvt.lead_template_value = lt_value_new }
             lt_value_new.attributes = {:lead_template_field => lead_template_field, :lead => lead, :value => lt_value.value}
             lead_template_field.lead_template_values << lt_value_new

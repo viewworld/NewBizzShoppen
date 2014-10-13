@@ -42,10 +42,13 @@ class Survey < ActiveRecord::Base
   end
 
   def duplicate!
-    copy = deep_clone(
-      :with_callbacks => false,
-      :include => [:survey_questions]
-    )
+    self.class.amoeba do
+      propagate
+      include_field :survey_questions
+      clone :survey_questions
+    end
+
+    copy = self.amoeba_dup
     copy.name = "#{I18n.t('models.survey.duplication.copy_of')} #{copy.name}"
 
     if copy.save
