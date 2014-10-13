@@ -1,5 +1,5 @@
 <%= header(:back => true) do |section| %>
   <% section.block_header do %>
-    <%= user.rpx_identifier.blank? ? t("#{accounts_type}.new.view.title") : t("#{accounts_type}.new.view.rpx_title", :full_name => user.full_name, :account_type => User.social_provider(user.rpx_identifier)) %>
+    <%= t("#{accounts_type}.new.view.title") %>
   <% end %>
 <% end %>

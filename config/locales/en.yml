@@ -2622,6 +2622,7 @@ en:
         rpx_title: "You are creating member Manager account as %{full_name} using %{account_type} account"
         janrain_sign_up_label: "Or use Facebook, LinedIn or Google to sing in in the future:"
         i_already_have_account: "I already have an account!"
+        please_enter_password: Please enter a password to log in the future:
   member_accounts:
     new:
       view:

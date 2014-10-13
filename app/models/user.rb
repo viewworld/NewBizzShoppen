@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
   include RoleChange
 
   devise :database_authenticatable, :registerable, :confirmable, :lockable, :token_authenticatable,
-         :recoverable, :rememberable, :trackable, :validatable, :timeoutable, :rpx_connectable
+         :recoverable, :rememberable, :trackable, :validatable, :timeoutable
 
   # declare the valid roles -- do not change the order if you add more
   # roles later, always append them at the end!
@@ -183,7 +183,7 @@ class User < ActiveRecord::Base
 
   check_associations_before_destroy :leads, :lead_purchases, :lead_templates, :assigned_lead_purchases, :lead_requests, :leads_in_cart, :deals, :requested_deals, :campaigns, :contacts, :call_results, :subaccounts, :invoices
 
-  liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_supplier_category_home_url,
+  liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :category_supplier_category_home_url,
          :screen_name, :first_name, :last_name, :home_page_url, :autologin_link, :unsubscribe_link
   require 'digest/sha1'
 
@@ -717,48 +717,8 @@ class User < ActiveRecord::Base
     true
   end
 
-  def set_fields_for_rpx(data)
-    self.email = data['verifiedEmail'] if self.email.blank?
-    self.first_name = data['name']['givenName'] if self.first_name.blank?
-    self.last_name = data['name']['familyName'] if self.last_name.blank?
-    self.rpx_identifier = data['identifier']
-    self.newsletter_on = true
-    new_radnom_password = generate_token(12)
-    self.password = new_radnom_password
-    self.password_confirmation = new_radnom_password
-    self.skip_email_verification = "1"
-  end
-
   def can_publish_leads?
     false
-  end
-
-  def self.social_provider(rpx_identifier)
-    return nil if rpx_identifier.blank?
-    return "Google" if rpx_identifier.include?("www.google.com")
-    return "Facebook" if rpx_identifier.include?("www.facebook.com")
-    "Linked In" if rpx_identifier.include?("www.linkedin.com")
-  end
-
-  def social_provider_name
-    if rpx_identifier
-      User.social_provider(rpx_identifier)
-    else
-      I18n.t("models.user.not_linked_to_social_provider")
-    end
-  end
-
-  def social_provider_ico
-    case User.social_provider(rpx_identifier)
-      when "Google"
-        "icons/google_icon.png"
-      when "Facebook"
-        "icons/fb_icon.png"
-      when "Linked In"
-        "icons/in_icon.png"
-      else
-        nil
-    end
   end
 
   def deliver_lead_notification

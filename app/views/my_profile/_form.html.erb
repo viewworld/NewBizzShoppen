@@ -97,19 +97,3 @@
     </div>
     <div class="clb"></div>
 <% end %>
-
-<% if current_user.rpx_identifier.blank? %>
-    <div class="profile_social">
-      <%= t('my_profile.edit.view.social_link_label') %>
-      <% unless Rails.env.test? %>
-          <%= link_to_rpx image_tag("icons/social_login.png"), social_link_my_profile_url %>
-          <%= javascript_include_rpx social_link_my_profile_url %>
-      <% end %>
-    </div>
-<% else %>
-    <div class="profile_social">
-      <%= image_tag(current_user.social_provider_ico, :class => "ico") if current_user.social_provider_ico %>
-      <%= t("my_profile.edit.view.social_unlink_label", :account_type =>  User.social_provider(current_user.rpx_identifier)) %> <%= link_to t("my_profile.edit.view.social_unlink_link"), unlink_my_profile_path %>
-    </div>
-<% end %>
-

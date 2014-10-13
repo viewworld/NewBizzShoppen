@@ -2,8 +2,6 @@ class CategorySupplierAccountsController < SignInController
 
   def new
     @user = User::CategorySupplier.new(:newsletter_on => true, :buying_categories => [@home_category], :time_zone => "UTC")
-    data = session[:rpx_data]
-    @user.set_fields_for_rpx(data) unless data.blank?
   end
 
   def create

@@ -14,11 +14,6 @@
       <% section.block_content do %>
         <div class="pdd_10">
           <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
-              <fieldset class="inputs labels_100 inputs_180 no_pdd">
-                <ol class="align_inputs no_pdd">
-                  <%= render :partial => "shared/accounts/social_login_for_sign_in" %>
-                </ol>
-              </fieldset>
               <fieldset class="inputs labels_90 inputs_130 no_pdd">
                 <ol class="align_inputs no_pdd">
                   <%= f.input :email, :input_html => {:tabindex => 1} %>

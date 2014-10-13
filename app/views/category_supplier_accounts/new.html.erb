@@ -7,19 +7,6 @@
 
   <div class="hl" style="padding: 15px 0"></div>
 
-  <div class="frm_tiny" style="margin-bottom:10px;">
-    <div class="pdd_10">
-      <p><%= t("member_accounts.new.view.janrain_sign_up_label") %>
-        <% unless Rails.env.test? %>
-            <%= link_to_rpx image_tag("icons/social_login.png"), "http#{"s" if RAILS_ENV == "production"}://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/#{params[:slug]}/account" %>
-            <%= javascript_include_rpx "http#{"s" if RAILS_ENV == "production"}://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/#{params[:slug]}/account" %>
-        <% end %>
-      </p>
-
-      <%= render(:partial => "shared/accounts/rpx_message", :locals => {:user => @user}) unless @user.rpx_identifier.blank? %>
-    </div>
-  </div>
-
   <%= semantic_form_for @user, :url => "/#{params[:slug]}/account" do |form| %>
       <%= frm(:title => "#{t('category_supplier_accounts.new.view.form_title')}", :class => "no_marg") do |section| %>
         <% section.block_content do %>
@@ -51,8 +38,8 @@
                 <ol class="align_inputs">
                   <%= form.input :phone %>
                   <%= form.input :email %>
-                  <%= form.input :password, :as => @user.rpx_identifier.blank? ? :password : :hidden %>
-                  <%= form.input :password_confirmation, :as => @user.rpx_identifier.blank? ? :password : :hidden %>
+                  <%= form.input :password, as: :password %>
+                  <%= form.input :password_confirmation, as: :password %>
                   <%= form.input :time_zone, :wrapper_html => {:class => "select"}, :input_html => {:style => "width: 240px"} %>
                   <%= form.input :agreement_read, :as => :boolean, :label => "#{t("common.agree_to")} #{link_to_main_page_article('terms_conditions', {:popup => true}, {:id => 'agreement_modal_box'})}".html_safe, :required => true %>
                   <%= form.input :newsletter_on, :as => :boolean %>

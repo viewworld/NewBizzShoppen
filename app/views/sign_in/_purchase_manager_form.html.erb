@@ -4,7 +4,6 @@
             <%= semantic_form_for(:user, :url => session_path(:user, :deal_request_id => deal.id, :format => :js), :remote => true) do |f| %>
                 <fieldset class="inputs_vertical labels_90 inputs_130 no_pdd">
                   <ol class="align_inputs no_pdd">
-                    <li> <%= render :partial => "shared/accounts/social_login_for_sign_in", :locals => { :deal_request_id => deal.id } %></li>
                     <%= f.input :email, :input_html => {:tabindex => 1} %>
                     <%= f.input :password,
                                 :label => raw(I18n.t('activerecord.attributes.user.password') +
@@ -59,8 +58,8 @@
                 <%= form.input :phone, :hint => hint_for(user, :phone) %>
                 <%= form.input :direct_phone_number, :hint => hint_for(user, :direct_phone_number) %>
                 <%= form.input :email, :hint => hint_for(user, :email) %>
-                <%= form.input :password, :hint => hint_for(user, :password), :as => user.rpx_identifier.blank? ? :password : :hidden %>
-                <%= form.input :password_confirmation, :hint => hint_for(user, :password_confirmation), :as => user.rpx_identifier.blank? ? :password : :hidden, :required => true %>
+                <%= form.input :password, hint: hint_for(user, :password), as: :password %>
+                <%= form.input :password_confirmation, hint: hint_for(user, :password_confirmation), as: :password, required: true %>
                 <% unless I18n.locale == :da %>
                     <%= form.input :time_zone, :wrapper_html => {:class => "select"}, :input_html => {:style => "width: 240px"} %>
                 <% else %>
@@ -68,7 +67,6 @@
                 <% end %>
                 <%= form.input :agreement_read, :as => :boolean, :hint => hint_for(user, :agreement_read), :label => "#{t("common.agree_to")} #{modal_box ? link_to_function(Article::Cms::MainPageArticle.where(:key => "terms_conditions").first.title, "javascript:show_terms_and_conditions();") : link_to_main_page_article('terms_conditions', {:popup => true}, {:id => 'agreement_modal_box'})}".html_safe, :required => true %>
                 <%= form.input :newsletter_on, :as => :boolean, :hint => hint_for(user, :newsletter_on) %>
-                <%= form.input :rpx_identifier, :as => :hidden %>
               </ol>
             </fieldset>
           </div>
@@ -77,15 +75,6 @@
         <div class="clb"></div>
       <% end %>
       <% section.block_actions do %>
-        <div style="position: absolute;left: 142px;">
-          <% unless modal_box %>
-          <%= t("member_accounts.new.view.janrain_sign_up_label") %>
-              <% unless Rails.env.test? %>
-                  <%= link_to_rpx image_tag("icons/social_login.png"), member_accounts_url %>
-                  <%= javascript_include_rpx member_accounts_url %>
-              <% end %>
-          <% end %>
-        </div>
         <%= ibt(:class => "fltri", :icon => "plus") do %>
           <%= form.submit t("member_accounts.new.view.button_create_account") %>
         <% end %>

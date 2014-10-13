@@ -1,3 +1,0 @@
-<!--<p><%#= t("shared.accounts.rpx_message.failed_rpx_label", :first_name => user.first_name, :account_type => User.social_provider(user.rpx_identifier)) %></p>-->
-<!--<p><%#= t("shared.accounts.rpx_message.failed_rpx_label_2") %></p>-->
-<%= render(:partial => "shared/accounts/rpx_linked_in_note", :locals => {:link => true}) if User.social_provider(user.rpx_identifier) == "Linked In" %>

@@ -16,21 +16,14 @@
             <div class="pdd_10 no_pdd_t">
               <fieldset class="inputs labels_ta_r labels_200">
                 <ol>
-
-                  <% if @user.rpx_identifier.blank? %>
-                      Please enter a password to log in the furture:<br/><br/>
-                  <% else %>
-
-                  <% end %>
-
+                  <%= t('certification_accounts.new.view.please_enter_password') %><br/><br/>
                   <%= form.input :company_name, :as => :hidden %>
                   <%= form.input :first_name, :as => :hidden %>
                   <%= form.input :last_name, :as => :hidden %>
                   <%= form.input :phone, :as => :hidden %>
-                  <%= form.input :password, :hint => hint_for(@user, :password), :as => @user.rpx_identifier.blank? ? :password : :hidden %>
-                  <%= form.input :password_confirmation, :hint => hint_for(@user, :password_confirmation), :as => @user.rpx_identifier.blank? ? :password : :hidden %>
+                  <%= form.input :password, hint: hint_for(@user, :password), as: :password %>
+                  <%= form.input :password_confirmation, hint: hint_for(@user, :password_confirmation), as: :password %>
                   <%= form.input :email %>
-                  <%#= form.input :time_zone, :wrapper_html => { :class => "select"}, :input_html => {:style => "width: 240px"} %>
                   <%= form.input :agreement_read, :as => :boolean, :hint => hint_for(@user, :agreement_read), :label => "#{t("common.agree_to")} #{link_to_main_page_article('terms_conditions', {:popup => true}, {:id => 'agreement_modal_box'})}".html_safe, :required => true %>
                   <%= form.fields_for :address do |address_form| %>
                       <%= address_form.input :address_line_1, :as => :hidden %>
@@ -40,31 +33,8 @@
                       <%= address_form.input :country_id, :as => :hidden %>
                       <%= address_form.input :region_id, :as => :hidden %>
                   <% end %>
-                  <%= form.input :rpx_identifier, :as => :hidden %>
                 </ol>
               </fieldset>
-
-              <% if @user.rpx_identifier.blank? %>
-                  <fieldset class="inputs labels_100 no_pdd" style="margin-top:-5px;">
-                    <ol class="no_pdd">
-                      <li class="string social_login">
-                        <!--<label>-->
-
-                        <br/><%= t("certification_accounts.new.view.janrain_sign_up_label") %>
-                        <br/><br/>
-                        <!--</label>-->
-
-                        <div class="txt">
-                          <% unless Rails.env.test? %>
-                              <%= link_to_rpx image_tag("icons/social_login.png"), certification_accounts_url %>
-                              <%= javascript_include_rpx certification_accounts_url %>
-                          <% end %>
-                        </div>
-                      </li>
-                    </ol>
-                  </fieldset>
-              <% end %>
-
             </div>
           </div>
           <div class="clb"></div>

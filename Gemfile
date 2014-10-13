@@ -11,7 +11,6 @@ gem 'pg', '~> 0.17.1'
 
 # auth
 gem 'devise', '1.1.9'
-gem 'devise_rpx_connectable', '0.2.2'
 gem 'cancan', '1.6.5'
 
 # models
