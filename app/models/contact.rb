@@ -57,6 +57,11 @@ class Contact < AbstractLead
 
   after_update :sync_with_campaign_sources
 
+  amoeba do
+    include_field [:contact_past_user_assignments, :lead_template_values, :translations]
+    clone [:contact_past_user_assignments, :lead_template_values, :translations]
+  end
+
   class << self
 
     def batch_remove(ids)
