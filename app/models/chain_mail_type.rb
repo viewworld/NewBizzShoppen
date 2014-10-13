@@ -66,6 +66,10 @@ class ChainMailType < ActiveRecord::Base
     self.execution_conditions["operator"] = (execution_conditions["operator"].blank? ? nil : execution_conditions["operator"].to_i)
   end
 
+  amoeba do
+    enable
+  end
+
   def self.purge_drafts!
     where("active IS FALSE and name is null").destroy_all
   end

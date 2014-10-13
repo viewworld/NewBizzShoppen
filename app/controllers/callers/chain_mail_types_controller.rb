@@ -69,13 +69,22 @@ class Callers::ChainMailTypesController < Callers::CallerController
   end
 
   def duplicate
-    _copy = resource.deep_clone :with_callbacks => false, :include => [:chain_mail_items]
-    _copy.name = "(Copy of) #{_copy.name}"
-    if _copy.save
+    resource.class.amoeba do
+      propagate
+
+      include_field :chain_mail_items
+      clone :chain_mail_items
+      prepend name: "(Copy of) "
+    end
+
+    copy = resource.amoeba_dup
+
+    if copy.save
       flash[:notice] = t("chain_mail_types.update.flash.duplicated")
     else
-      flash[:alert] = "#{t("chain_mail_types.update.flash.not_duplicated")}#{_copy.errors.full_messages.join(', ')}"
+      flash[:alert] = "#{t("chain_mail_types.update.flash.not_duplicated")}#{copy.errors.full_messages.join(', ')}"
     end
+    
     redirect_to :back
   end
 
