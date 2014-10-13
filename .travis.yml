@@ -4,7 +4,7 @@ cache: bundler
 env:
   - TEST_SUITE=unit
 rvm:
-  - ree
+  - 1.9.3
 before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
