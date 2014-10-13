@@ -121,7 +121,7 @@
         <% end %>
         <% if @user.persisted? and @user.agent? %>
           <%= form.input :shared_softphone_enabled %>
-          <%= form.input :softphone_id, :as => :select, :collection => Softphone.shared %>
+          <%= form.input :softphone_id, :as => :select, :collection => Softphone.shared, :input_html => {:disabled => !@user.softphone_shared?} %>
           <%= form.input :phone_type_id, :as => :select, :include_blank => false, :collection => User::PHONE_TYPES_WITH_LABELS %>
           <span class='softphone_settings' style="<%= 'display: none;' if form.object.softphone_shared? %>">
             <b><%= t("administration.users.edit.view.softphone_type") %></b><br />
@@ -270,14 +270,16 @@
 
     $(document).ready(function() {
       var softphoneSettings;
-      $('#user_agent_shared_softphone_enabled').change(function(){
+      $('input[id*=shared_softphone_enabled]').change(function(){
         softphoneSettings = $('.softphone_settings');
         if (this.checked) {
           softphoneSettings.hide();
           $('.softphone_settings').find('input').attr('disabled', 'disabled');
+          $('#user_call_centre_agent_softphone_id').removeAttr('disabled');
         } else {
           softphoneSettings.show();
           $('.softphone_settings').find('input').removeAttr('disabled');
+          $('#user_call_centre_agent_softphone_id').attr('disabled', 'disabled');
         }
       })
     })
