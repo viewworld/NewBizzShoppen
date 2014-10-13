@@ -192,6 +192,7 @@ GEM
       addressable (~> 2.2.6)
     letter_opener (0.0.2)
       launchy
+    libv8 (3.16.14.7)
     liquid (2.2.2)
     machinist (2.0.0.beta2)
     mail (2.4.4)
@@ -293,6 +294,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     recaptcha (0.3.5)
+    ref (1.0.5)
     request_store (1.0.8)
     responders (0.9.3)
       railties (~> 3.1)
@@ -374,6 +376,9 @@ GEM
       rails (>= 3.0.0, < 4.0)
     temple (0.6.8)
     test-unit (2.3.0)
+    therubyracer (0.12.1)
+      libv8 (~> 3.16.14.0)
+      ref
     thin (1.5.1)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -486,6 +491,7 @@ DEPENDENCIES
   strong_parameters (~> 0.2.3)
   system-metrics (= 0.2.4)
   test-unit (= 2.3.0)
+  therubyracer (>= 0.12.1)
   thin (~> 1.5.1)
   thor (= 0.14.6)
   uglifier (~> 2.5.3)

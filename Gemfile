@@ -4,6 +4,7 @@ ruby '1.9.3'
 # basics
 gem 'bundler', '1.6.5'
 gem 'rails', '3.1.12'
+gem 'therubyracer', '>= 0.12.1', platforms: :ruby
 
 # db
 gem 'pg', '~> 0.17.1'
