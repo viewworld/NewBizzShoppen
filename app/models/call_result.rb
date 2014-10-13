@@ -218,8 +218,14 @@ class CallResult < ActiveRecord::Base
     end
   end
 
+  def upgrades_to_user_role
+    user_role = result.upgrades_to_user_role.to_s
+    user_role = 'member' if user_role.blank? && campaign_create_deals?
+    user_role
+  end
+
   def validate_upgraded_user
-    if self.errors.empty? and user = prepare_user(result.upgrades_to_user_role.to_s).first and !user.valid?
+    if self.errors.empty? and user = prepare_user(upgrades_to_user_role).first and !user.valid?
       self.errors.add(:upgraded_user, user.errors.to_a.uniq)
       return false
     end
