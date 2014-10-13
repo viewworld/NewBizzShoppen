@@ -15,6 +15,10 @@ class EmailTemplate < ActiveRecord::Base
 
   scope :global, where("resource_type IS NULL and resource_id IS NULL")
 
+  amoeba do
+    enable
+  end
+
   def can_be_managed_by?(user)
     user.admin? or (user.call_centre? and (resource.creator == user or resource.users.include?(user)))
   end

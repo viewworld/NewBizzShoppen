@@ -12,6 +12,11 @@ class ResultValue < ActiveRecord::Base
   scope :for_result_field, lambda {|result_field| where(:result_field_id => result_field)}
   scope :dates, where(:field_type => ResultField::DATETIME.to_s)
 
+  amoeba do
+    include_field [:result_values, :archived_email]
+    clone [:result_values, :archived_email]
+  end
+
   def save_without_callbacks!
     save_without_callbacks = true
     save!

@@ -108,21 +108,22 @@ class Campaign < ActiveRecord::Base
   def check_email_templates
     CLONED_TEMPLATES.each_pair do |template_clone_method, template_name|
       unless send(template_clone_method)
-        global_template = EmailTemplate.global.where(uniq_id: template_name).first
-        global_template_duplicate = global_template.dup
+        if global_template = EmailTemplate.global.where(uniq_id: template_name).first
+          global_template_duplicate = global_template.dup
 
-        global_template.translations.each do |translation|
-          global_template_duplicate.translations << translation.dup
+          global_template.translations.each do |translation|
+            global_template_duplicate.translations << translation.dup
+          end
+
+          self.send("#{template_clone_method}=".to_sym, global_template_duplicate)
         end
-
-        self.send("#{template_clone_method}=".to_sym, global_template_duplicate)
       end
     end
   end
 
   def update_email_templates
     CLONED_TEMPLATES.each_pair do |template_clone_method, template_name|
-      unless template = send(template_clone_method)
+      if template = send(template_clone_method)
         template.update_attributes(resource_type: self.class.name, resource_id: self.id)
       end
     end
@@ -362,12 +363,8 @@ class Campaign < ActiveRecord::Base
     campaign = ActiveRecord::Base.transaction do
       options = { :with_contacts => true, :with_call_results => true, :with_agent_time => true, :user_to_notify => nil }.merge(options)
 
-      clone_config = [:campaigns_results,
-                      {:send_material_email_template => :translations},
-                      {:upgrade_contact_to_buyer_email_template => :translations},
-                      {:upgrade_contact_to_category_buyer_email_template => :translations},
-                      {:upgrade_contact_to_member_email_template => :translations},
-                      {:service_call_email_template => :translations}]
+      clone_config = [:campaigns_results, :send_material_email_template, :upgrade_contact_to_buyer_email_template, :upgrade_contact_to_category_buyer_email_template,
+        :upgrade_contact_to_member_email_template]
 
       if options[:with_agent_time]
         clone_config << :user_session_logs
@@ -376,24 +373,41 @@ class Campaign < ActiveRecord::Base
       if options[:with_contacts]
         if options[:with_call_results]
           clone_config << :call_logs
-          clone_config << {:contacts => [{:call_results => [:result_values, :archived_email]}, :contact_past_user_assignments, {:lead_template_values => :lead_template_value_translations}, :translations]}
+
+          Contact.amoeba do
+            # TODO: include :call_results,
+            include_field [:contact_past_user_assignments, :lead_template_values, :translations]
+            clone [:contact_past_user_assignments, :lead_template_values, :translations]
+          end
         else
-          clone_config << {:contacts => [{:lead_template_values => :lead_template_value_translations}, :translations]}
+          Contact.amoeba do
+            include_field [:lead_template_values, :translations]
+            clone [:lead_template_values, :translations]
+          end
         end
+
+        clone_config << :contacts
       end
 
-      campaign = self.deep_clone!(:with_callbacks => false, :include => clone_config)
+      self.class.amoeba do
+        propagate
+        include_field clone_config
+        clone clone_config
+      end
+
+      campaign = self.amoeba_dup
 
       campaign.users = users
       campaign.name = "Copy of #{name} #{Time.now.strftime("%d-%m-%Y %H:%M:%S")}"
-      campaign.save
+      campaign.save(validate: false)
 
       results = ResultValue.where("field_type::INT = ? and leads.campaign_id = ?", ResultField::MATERIAL, campaign.id).
         joins("INNER JOIN call_results on call_results.id=result_values.call_result_id INNER JOIN leads ON call_results.contact_id=leads.id").
         readonly(false)
 
+      # FIXME: Requires fixed CKEDITOR
       materials.each do |material|
-        _material = material.clone
+        _material = material.dup
         _material.save
         _material.asset = material.asset
         _material.save
@@ -418,7 +432,7 @@ class Campaign < ActiveRecord::Base
 
     campaign
   end
-  handle_asynchronously :duplicate!, :queue => 'duplications'
+  # handle_asynchronously :duplicate!, :queue => 'duplications'
 
   def clear!(options={})
     ActiveRecord::Base.transaction do
