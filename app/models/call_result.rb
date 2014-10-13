@@ -231,7 +231,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def upgrades_to_user_role
-    user_role = result.upgrades_to_user_role
+    user_role = result.upgrades_to_user_role.to_s
     user_role = 'member' if user_role.blank? && campaign_create_deals?
     user_role
   end
