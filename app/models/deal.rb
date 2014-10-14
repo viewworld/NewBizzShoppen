@@ -37,10 +37,9 @@ class Deal < AbstractLead
 
   scope :with_locale, lambda {
     select('DISTINCT(leads.*)').
-    joins('JOIN lead_translations ON lead_translations.lead_id = leads.id').
-      joins('LEFT JOIN domains_deals ON domains_deals.deal_id = leads.id').
-      joins('LEFT JOIN domains ON domains.id = domains_deals.domain_id').
-      where("(lead_translations.locale = '#{I18n.locale}') OR (domains.locale = '#{I18n.locale}')") }
+    joins('LEFT JOIN domains_deals ON domains_deals.deal_id = leads.id').
+    joins('LEFT JOIN domains ON domains.id = domains_deals.domain_id').
+    where("domains.locale = '#{I18n.locale}'") }
 
   scoped_order :header, :end_date, :published, :created_at, :company_name
 

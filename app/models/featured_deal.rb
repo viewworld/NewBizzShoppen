@@ -5,10 +5,9 @@ class FeaturedDeal < ActiveRecord::Base
   validates_presence_of :position
 
   scope :with_locale, lambda {
-    joins('JOIN lead_translations ON lead_translations.lead_id = leads.id').
       joins('LEFT JOIN domains_deals ON domains_deals.deal_id = leads.id').
       joins('LEFT JOIN domains ON domains.id = domains_deals.domain_id').
-      where("(lead_translations.locale = '#{I18n.locale}') OR (domains.locale = '#{I18n.locale}')") }
+      where("domains.locale = '#{I18n.locale}'") }
 
   scope :with_active_deals, lambda { |date|
     select('leads.*').
