@@ -271,9 +271,6 @@ en:
       new:
         view:
           header: "Sign in"
-          failed_rpx_label: "Hi %{first_name}! We have no fairleads account associated to your %{account_type} profile, do you want to create a new fairleds account and link it to this %{account_type} account?"
-          failed_rpx_label_2: "or do you want to log in using another account?"
-          link_this_account_link: "link this account"
           create_new_account: "Create new account"
           modal_intro_label: "Thank you for linking, now lets set up your account"
           modal_intro_label_2: "Please chose account type:"
@@ -2611,7 +2608,6 @@ en:
     new:
       view:
         title: "Freelancer Agent signup"
-        rpx_title: "You are creating Freelancer Agent account as %{full_name} using %{account_type} account"
         button_create_account: "Create my account"
         janrain_sign_up_label: "Sign up using:"
 
@@ -2619,15 +2615,13 @@ en:
     new:
       view:
         title: "Member Manager signup"
-        rpx_title: "You are creating member Manager account as %{full_name} using %{account_type} account"
         janrain_sign_up_label: "Or use Facebook, LinedIn or Google to sing in in the future:"
         i_already_have_account: "I already have an account!"
-        please_enter_password: Please enter a password to log in the future:
+        please_enter_password: "Please enter a password to log in the future:"
   member_accounts:
     new:
       view:
         title: "Member Manager signup"
-        rpx_title: "You are creating member Manager account as %{full_name} using %{account_type} account"
         header: "Create new account"
         janrain_sign_up_label: "Sign up using:"
         button_create_account: "Create my account"
@@ -2936,7 +2930,6 @@ en:
     new:
       view:
         title: "Supplier signup"
-        rpx_title: "You are creating Supplier account as %{full_name} using %{account_type} account"
         button_create_account: "Create"
         enable_team_suppliers: "Enable team suppliers"
         company_name: "Company"
@@ -2947,7 +2940,6 @@ en:
       view:
         title: "Category supplier signup"
         form_title: "Create new account"
-        rpx_title: "You are creating Category Supplier account as %{full_name} using %{account_type} account"
         button_create_account: "Create"
         enable_team_suppliers: "Enable team suppliers"
         company_name: "Company"
@@ -3310,12 +3302,6 @@ en:
 
   shared:
     accounts:
-      rpx_linked_in_note:
-        note: "Note: If you already have an fairleads account and you want to link it with this LinkedIn account, then you should log in and use social link function from My Profile Page."
-        link: "Go to log in page"
-      rpx_message:
-        failed_rpx_label: "Hi %{first_name}! We have no fairleads account associated to your %{account_type} profile, do you want to create a new fairleds account and link it to this %{account_type} account?"
-        failed_rpx_label_2: "If yes, then just fill up the form below."
       new_account_form:
         form_title: "Create new account"
         button_cancel: Cancel
@@ -3410,7 +3396,6 @@ en:
     user:
       payout_validation_message: "can only be between 0 and 100"
       agreement_read_validation_message: "You have to accept the agreement"
-      not_linked_to_social_provider: "not linked"
       subscription_plan_not_specified: "Subscription plan has not been chosen."
     lead:
       hotness:
