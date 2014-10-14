@@ -85,10 +85,9 @@ class Category < ActiveRecord::Base
     # FIXME it crashes when query goes with with_agent_unique scope
     # select('DISTINCT(categories.*)').
     joins(:deals).
-    joins('JOIN lead_translations ON lead_translations.lead_id = leads.id').
     joins('JOIN domains_deals ON domains_deals.deal_id = leads.id').
     joins('JOIN domains ON domains.id = domains_deals.domain_id').
-    where("(lead_translations.locale = '#{I18n.locale}') OR (domains.locale = '#{I18n.locale}')") }
+    where("domains.locale = '#{I18n.locale}'") }
 
   before_destroy :check_if_category_is_empty
   before_destroy :mark_articles_to_destroy
