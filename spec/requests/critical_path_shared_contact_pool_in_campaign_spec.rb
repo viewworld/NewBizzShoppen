@@ -284,10 +284,8 @@ describe 'Critical Path Autobuy for category suppliers' do
         expect(response).to render_template('supplier_home/guest')
 
         # I sign in as call_centre_test@example.com
-        post '/users/sign_in', {:user => {:email => call_centre_agent.email, :password => 'secret'}}
-        follow_with_redirect '/agent_home'
-        expect(response).to be_success
-        has_flash 'Signed in successfully.'
+        login_as(call_centre_agent, scope: :user)
+        get '/'
 
         # I click Test campaign within first column of bottom campaigns sidebar
         body_has_to(:include, campaign.name)
@@ -308,7 +306,7 @@ describe 'Critical Path Autobuy for category suppliers' do
         body_has_to(:include, "Not interested (#{call_centre_agent.full_name})")
 
         # I log out
-        logout '/agent_home'
+        logout
       end
     end
 
