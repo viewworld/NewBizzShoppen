@@ -119,8 +119,6 @@ psql nbs_development < nbs_production.sql
 
 ```
 RAILS_ENV=test bundle exec rake db:drop db:create db:migrate
-RAILS_ENV=test bundle exec thor nbs:seed
-RAILS_ENV=test bundle exec thor nbs:t
 ```
 
 * To run unit tests suite, run `rspec spec`
