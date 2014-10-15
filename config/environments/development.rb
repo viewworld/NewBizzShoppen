@@ -45,5 +45,3 @@ Nbs::Application.configure do
                          ActionDispatch::ParamsParser,
                          Mime::JSON => lambda { |body| Yajl.load(body).with_indifferent_access }
 end
-
-I18n.default_locale = :"en"
