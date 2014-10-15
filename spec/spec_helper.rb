@@ -35,4 +35,8 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
+
+  config.before(type: :controller) do
+    request.env['HTTP_REFERER'] = '/'
+  end
 end
