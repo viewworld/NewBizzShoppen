@@ -21,3 +21,10 @@ shared_context 'admin signed in' do
   let(:admin) { create(:admin) }
   before { sign_in admin }
 end
+
+def confirm_and_sign_in(email)
+  user = User.where(email: email).first
+  raise 'not found!' if user.blank?
+  user.confirm!
+  login_as(user, scope: :user)
+end
