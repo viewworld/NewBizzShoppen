@@ -272,7 +272,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     follow_with_redirect "/callers/campaigns/#{campaign_id}/edit"
 
     # # I log out
-    logout '/agent_home'
+    logout
 
     with_site 'faircalls'
     User::CallCentreAgent.scoped.each_with_index do |call_centre_agent, idx|
