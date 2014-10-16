@@ -116,7 +116,7 @@ Nbs::Application.routes.draw do
       resource :bulk_invoice_users, :controller => "bulk_invoice_users", only: :update
       resources :payment_transactions
       resources :credit_notes
-      resources :creditors
+      resources :creditors, only: :index
 
       resources :refunds, only: :index
       resources :upcoming_invoices, only: :index

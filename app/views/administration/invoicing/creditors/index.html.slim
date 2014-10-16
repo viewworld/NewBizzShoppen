@@ -1,0 +1,56 @@
+= content_for :search_box do
+  .search_box
+    h2= t("administration.creditors.index.view.search_label")
+    .search_content
+      = form_for @search, url: administration_invoicing_creditors_path do |f|
+        fieldset.inputs_vertical
+          ol.no_pdd
+            li.string
+              = f.label :with_keyword, t("administration.creditors.index.view.search.with_keyword")
+              = f.text_field :with_keyword
+            li.commit
+              = ibt(class: "bt_green", icon: "magnify") do
+                = submit_tag t("administration.creditors.index.view.search_button")
+              p
+                = bt_clear_filter
+
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t("administration.creditors.index.view.header")
+
+  - if @credit_notes.blank?
+    = blank_state_message
+  - else
+    table.generic
+      thead
+        tr
+          th.hl
+          th= t("administration.creditors.index.view.number")
+          th= t("administration.creditors.index.view.supplier_first_name")
+          th= t("administration.creditors.index.view.supplier_last_name")
+          th= t("administration.creditors.index.view.supplier_screen_name")
+          th= t("administration.creditors.index.view.type")
+          th= t("administration.creditors.index.view.total_value")
+          th.hr
+      tfoot
+        tr
+          td.fl
+          td colspan="6"
+          td.fr
+      tbody#invoices_list
+        - @credit_notes.each do |credit_note|
+          tr
+            td.cl
+            td= credit_note.full_number
+            td= credit_note.supplier.first_name
+            td= credit_note.supplier.last_name
+            td= credit_note.supplier.screen_name
+            td= t("administration.creditors.index.view.type_#{credit_note.type_as_text}")
+            td.ta_r= as_currency(credit_note.total, credit_note.invoice.currency)
+            td.cr
+
+        - if @credit_notes.total_pages > 1
+          tr.pagination
+            td.ta_c colspan="8"
+              = will_paginate @credit_notes
