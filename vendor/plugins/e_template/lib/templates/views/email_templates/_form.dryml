@@ -1,8 +1,0 @@
-<% form_for email_template do |f| %>
-  <%= render :partial => "form_fields", :locals => {:f => f} %>    
-  <block>
-    <fltr><%= f.submit "Save template", :class => "grey_bt" %></fltr>
-    <fltr>&nbsp;or&nbsp;&nbsp;</fltr>
-    <fltr><%= link_to "Cancel", email_templates_path %></fltr>
-  </block>
-<% end %>

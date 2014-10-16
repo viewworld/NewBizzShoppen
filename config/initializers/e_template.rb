@@ -9,7 +9,7 @@ module ETemplate
         self.class.const_get("LIQUID_METHODS").call(self)
       end
     end
-    
+
     module ClassMethods
       def liquid *args
         _lambda = lambda do |obj|
@@ -23,3 +23,5 @@ module ETemplate
     end
   end
 end
+
+ActiveRecord::Base.send :include, ETemplate::MethodDelegator
