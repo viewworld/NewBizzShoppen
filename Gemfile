@@ -60,6 +60,7 @@ gem 'globalize3', '0.3.0'
 gem 'i18n-active_record', git: 'git://github.com/svenfuchs/i18n-active_record.git', ref: '22b1f76', require: 'i18n/active_record'
 
 # paypal
+gem 'paypal-recurring', path: 'lib/gems/paypal-recurring'
 gem 'paypal_nvp', '0.2.0'
 
 # mailing
@@ -85,31 +86,6 @@ group :assets do
   gem 'uglifier', '~> 2.5.3'
   gem 'csso-rails', '~> 0.3.4'
 end
-
-gem 'jquery-rails'
-
-gem 'gherkin', '2.3.5'
-gem 'liquid'
-gem 'delayed_job_active_record', '~> 4.0.0'
-gem 'delayed_job', '>= 4.0.0'
-gem 'yajl-ruby', '1.1.0', :require => 'yajl'
-gem 'aasm'
-gem 'scoped-search', git: "git://github.com/stevo/scoped-search.git", :require => 'scoped_search'
-gem 'nested_set', '1.5.4'
-gem 'thor'
-gem 'roo'
-gem 'aws-s3'
-gem 'whenever', '~> 0.9.0', :require => false
-gem 'memcache-client'
-gem 'ruby-hmac', '0.4.0'
-gem 'postmark-rails'
-gem 'paypal-recurring', :path => 'vendor/gems/paypal-recurring'
-gem 'paypal_nvp'
-gem 'diff-lcs', :require => false
-gem 'cucumber_fm-core', '0.1', :require => 'cucumber_feature_manager'
-gem 'createsend'
-gem 'newrelic_rpm'
-gem 'activerecord-database-views'
 
 gem 'axlsx', '1.3.6'
 gem 'htmlentities', '4.3.1' # you can bump the version only when FL will be run on 1.9.3 or newer
