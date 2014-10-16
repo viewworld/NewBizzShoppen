@@ -195,7 +195,16 @@ class Category < ActiveRecord::Base
     end
   end
 
+  def name_locales
+    @name_locales ||= translations.where('name IS NOT NULL').select(:locale).map(&:locale)
+  end
+
   public
+
+  def name
+    I18n.with_locale { read_attribute(:name, :locale => I18n.locale) } ||
+      read_attribute(:name, :locale => name_locales.first)
+  end
 
   def blurb_key
     "blurb_category_home_page_#{id}"
