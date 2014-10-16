@@ -61,34 +61,6 @@ class ApplicationController < ActionController::Base
         UserSessionLog.close_all_campaign_logs_for_user(current_user)
       end
     end
-
-    #if user_signed_in? and !["UserSessionLogController", "NotificationsController", "Callers::AgentInformationsController"].include?(self.class.to_s)
-    #  UserSessionLog.update_end_time(session[:current_usl_global], Settings.logout_time.to_i) if session[:current_usl_global].present?
-    #
-    #  other_user_id = params[:other_user_id] || session[:other_user_id]
-    #  logged_as_other_user = ( (current_user and (current_user.admin? or current_user.call_centre?)) and (other_user_id and (other_user_id.to_i != current_user.id)) )
-    #  if (self.class.name.match(/::AgentWorkScreen/) or ["Callers::CampaignsDescriptionController"].include?(self.class.to_s)) and params[:campaign_id] and !logged_as_other_user
-    #    if active_usl = UserSessionLog.active_for_user_and_campaign(current_user, params[:campaign_id])
-    #      session[:current_usl_campaigns] = active_usl.id
-    #      UserSessionLog.update_end_time(session[:current_usl_campaigns], Settings.logout_time.to_i)
-    #    else
-    #      campaign = Campaign.find(params[:campaign_id])
-    #      usl_campaign = UserSessionLog.create(:user_id => current_user.id, :start_time => Time.now,
-    #                                           :end_time => (Time.now + Settings.logout_time.to_i.minutes),
-    #                                           :log_type => UserSessionLog::TYPE_CAMPAIGN,
-    #                                           :euro_billing_rate => campaign.cost_type == Campaign::AGENT_BILLING_RATE_COST ? current_user.euro_billing_rate :
-    #                                               campaign.cost_type == Campaign::FIXED_HOURLY_RATE_COST ? campaign.euro_fixed_cost_value : nil,
-    #                                           :campaign_id => params[:campaign_id])
-    #      session[:current_usl_campaigns] = usl_campaign.id
-    #    end
-    #  else
-    #    unless session[:current_usl_campaigns].blank?
-    #      UserSessionLog.close_all_campaign_logs_for_user(current_user)
-    #      session[:current_usl_campaigns] = nil
-    #    end
-    #  end
-    #end
-
   end
 
   #Always cast default role class if outside of any namespace
@@ -168,7 +140,15 @@ class ApplicationController < ActionController::Base
     @locales = Locale.enabled.all
     session[:locale_code] = locale_code || session[:locale_code] || I18n.locale.to_s
     I18n.locale = @locales.map(&:code).include?(session[:locale_code]) ? session[:locale_code] : 'da'
-    Thread.current[:globalize_detailed_locale] = ((user_signed_in? and current_user) and current_user.with_role.address.present?) ? current_user.with_role.address.country.detailed_locale : browser_locale
+    set_globalize_detailed_locale
+  end
+
+  def set_globalize_detailed_locale
+    Thread.current[:globalize_detailed_locale] = if user_signed_in? && current_user && current_user.with_role.address.present?
+                                                   current_user.with_role.address.country.detailed_locale
+                                                 else
+                                                   browser_locale
+                                                 end
   end
 
   def locale
@@ -178,7 +158,6 @@ class ApplicationController < ActionController::Base
   def browser_locale
     accept_lang = request.env['HTTP_ACCEPT_LANGUAGE'] || ""
     (accept_lang.scan(/^([a-z]{2})-([a-z]{2})/).first.blank? ? accept_lang.scan(/^([a-z]{2})/) : accept_lang.scan(/^([a-z]{2})-([a-z]{2})/)).flatten.last
-
   end
 
   def set_user_time_zone

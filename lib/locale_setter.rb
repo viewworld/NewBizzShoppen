@@ -21,11 +21,10 @@ module Rack
     end
 
     def find_locale(env)
-      @env_locale ||=
-        (env['rack.session'][:locale_code] ||
-         env['HTTP_HOST'].to_s[/fairdeals\.(\w{2,4})/,1] ||
-         env['HTTP_HOST'].to_s[/faircalls\.(\w{2,4})/,1] ||
-         env['HTTP_ACCEPT_LANGUAGE'].to_s[/^([a-z]{2})/]).to_s
+      @env_locale = (env['rack.session'][:locale_code] ||
+        env['HTTP_HOST'].to_s[/fairdeals\.(\w{2,4})/,1] ||
+        env['HTTP_HOST'].to_s[/faircalls\.(\w{2,4})/,1] ||
+        env['HTTP_ACCEPT_LANGUAGE'].to_s[/^([a-z]{2})/]).to_s
     end
 
     def dictionary
