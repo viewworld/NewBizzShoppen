@@ -1,0 +1,24 @@
+= content_for :column_mc do
+  = header(back: true) do |section|
+    - section.block_header do
+      = t('users.passwords.new.view.header')
+
+  = form_for(resource, as: resource_name, url: user_password_path(resource_name), html: {method: :post}) do |form|
+    = devise_error_messages!
+
+    = frm(title: t('users.passwords.new.view.form_title')) do |section|
+      - section.block_content do
+        .grid_440.grid_c
+          .pdd_10
+            fieldset.inputs.labels_100.no_pdd
+              ol.align_inputs.no_pdd
+                li.string
+                  = form.label :email
+                  = form.text_field :email
+
+                  span.fltl style="line-height: 28px; padding-left: 5px"
+                    = help_popup(t("common.help_link"), 'reset_password')
+
+                li.commit
+                  = ibt do
+                    = form.submit t("devise.passwords.button_create")
