@@ -12,11 +12,6 @@ GIT
     i18n-active_record (0.0.2)
       i18n (>= 0.5.0)
 
-PATH
-  remote: vendor/gems/paypal-recurring
-  specs:
-    paypal-recurring (0.1.6)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -464,7 +459,6 @@ DEPENDENCIES
   nifty-generators (= 0.4.6)
   paperclip (= 2.3.6)
   passenger (= 4.0.52)
-  paypal-recurring!
   paypal_nvp (= 0.2.0)
   pg (~> 0.17.1)
   postmark-rails (= 0.4.2)
