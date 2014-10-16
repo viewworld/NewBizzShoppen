@@ -21,6 +21,7 @@ class Campaign < ActiveRecord::Base
   has_many :user_session_logs, :dependent => :destroy
   has_many :chain_mail_types, :dependent => :nullify
   has_many :call_logs
+  has_many :category_translations, :through => :category
 
   validates_uniqueness_of :name
   validates_presence_of :name, :category_id, :country_id, :cost_type, :state
@@ -33,10 +34,10 @@ class Campaign < ActiveRecord::Base
 
   default_scope where(:deleted_at => nil)
   scoped_order :name, :state
-  scope :joins_on_category, joins("INNER JOIN categories ON campaigns.category_id=categories.id")
+  scope :joins_on_category, joins(:category).joins(:category_translations)
   scope :joins_on_country, joins("INNER JOIN countries ON campaigns.country_id=countries.id")
-  scope :ascend_by_category, order("categories.name ASC").joins_on_category
-  scope :descend_by_category, order("categories.name DESC").joins_on_category
+  scope :ascend_by_category, order("category_translations.name ASC").joins_on_category
+  scope :descend_by_category, order("category_translations.name DESC").joins_on_category
   scope :ascend_country, order("countries.name ASC").joins_on_country
   scope :descend_by_country, order("countries.name DESC").joins_on_country
   scope :available_for_user, lambda { |user| joins(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin }

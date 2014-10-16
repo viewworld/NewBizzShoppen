@@ -25,6 +25,7 @@ class Lead < AbstractLead
   has_many :lead_purchases
   has_many :lead_template_values
   has_many :comment_threads, :class_name => "Comment", :foreign_key => :commentable_id, :conditions => {:commentable_type => 'AbstractLead'}
+  has_many :category_translations, :through => :category
 
   validates_presence_of :price, :purchase_decision_date, :sale_limit, :category_id
   validates_inclusion_of :sale_limit, :in => 0..10, :if => :process_for_lead_information?
@@ -79,8 +80,8 @@ class Lead < AbstractLead
 
   scope :ascend_by_source, order("CASE when deal_id is not null THEN 0 ELSE 1 END, creator_name")
   scope :descend_by_source, order("CASE when deal_id is not null THEN 0 ELSE 1 END DESC, creator_name DESC")
-  scope :ascend_by_category, joins(:category).order("categories.name")
-  scope :descend_by_category, joins(:category).order("categories.name DESC")
+  scope :ascend_by_category, joins(:category).joins(:category_translations).order('category_translations.name ASC')
+  scope :descend_by_category, joins(:category).joins(:category_translations).order('category_translations.name DESC')
 
   scope :descend_by_leads_id, order("leads.id DESC")
   scope :with_tags, lambda { |tag_names| tagged_with(tag_names) }

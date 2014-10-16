@@ -1,5 +1,5 @@
 <% if current_user %>
-    <% categories = LeadCategory.without_locked.with_agent_unique(current_user) %>
+    <% categories = LeadCategory.with_agent_unique(current_user).without_locked %>
     <% options =  options_for_select(nested_set_options(categories), :selected => default_category_for_select(categories), :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id)) %>
     $('#category_id').append("<%= escape_javascript(options) %>");
 <% end %>

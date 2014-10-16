@@ -90,7 +90,7 @@
                              current_user.has_role?(:call_centre) ? LeadCategory.without_locked.with_call_centre_unique(current_user).all :
                                      current_user.has_role?(:member) ? LeadCategory.without_locked.with_agent_unique(current_user).without_supplier_unique.all :
                                              current_user.has_role?(:supplier) ? current_user.with_role.parent_accessible_categories.all :
-                                             LeadCategory.without_locked.with_agent_unique(current_user).all %>
+                                             LeadCategory.with_agent_unique(current_user).without_locked.all %>
           <%= form.input :category_id,
                          :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id),
                          :collection => nested_set_options(categories),
