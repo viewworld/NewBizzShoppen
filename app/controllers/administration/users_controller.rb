@@ -73,6 +73,6 @@ class Administration::UsersController < Administration::AdministrationController
   end
 
   def user_params
-    params["user_#{(@user ? @user.role.to_s : params[:role]).to_s}"]
+    params["user_#{(@user ? @user.role : params[:role])}"]
   end
 end

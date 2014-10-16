@@ -89,7 +89,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def save_without_callbacks!
-    save_without_callback = true
+    self.save_without_callback = true
     save!
   end
 
