@@ -57,15 +57,16 @@ class Category < ActiveRecord::Base
 
   check_associations_before_destroy :customers, :agents, :countries, :leads, :deals, :campaigns, :lead_templates, :supplier_subscribers, :buying_users
 
+  scope :with_translations, joins(:category_translations)
   scope :without_locked_and_not_published, where("is_locked = ? or (is_locked = ? and published_leads_count > 0)", false, true)
   scope :within_accessible, lambda { |supplier| where("categories.id IN (?)", supplier.accessible_categories_ids) }
-  scope :without_locked, where("is_locked = ?", false).order("name")
-  scope :with_leads, where("total_leads_count > 0").order("name")
-  scope :with_lead_request_owner, lambda { |owner| select("DISTINCT(name), categories.*").where("lead_purchases.requested_by IS NOT NULL and lead_purchases.owner_id = ?", owner.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
-  scope :with_lead_request_requested_by, lambda { |requested_by| select("DISTINCT(name), categories.*").where("lead_purchases.requested_by = ?", requested_by.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
-  scope :with_lead_purchase_owner, lambda { |owner| select("DISTINCT(name), categories.*").where("lead_purchases.requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL", owner.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
-  scope :with_lead_purchase_assignee, lambda { |assignee| select("DISTINCT(name), categories.*").where("lead_purchases.assignee_id = ? and accessible_from IS NOT NULL", assignee.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
-  scope :with_lead_templates_created_by, lambda { |creator| select("DISTINCT(categories.name), categories.*").where("lead_templates.creator_id = ?", creator.id).joins(:lead_templates) }
+  scope :without_locked, with_translations.where("is_locked = ?", false).order('category_translations.name').select('category_translations.name')
+  scope :with_leads, with_translations.select('category_translations.name').where("total_leads_count > 0").order('category_translations.name')
+  scope :with_lead_request_owner, lambda { |owner| with_translations.select("DISTINCT(category_translations.name), categories.*").where("lead_purchases.requested_by IS NOT NULL and lead_purchases.owner_id = ?", owner.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
+  scope :with_lead_request_requested_by, lambda { |requested_by| with_translations.select("DISTINCT(category_translations.name), categories.*").where("lead_purchases.requested_by = ?", requested_by.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
+  scope :with_lead_purchase_owner, lambda { |owner| with_translations.select("DISTINCT(category_translations.name), categories.*").where("lead_purchases.requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL", owner.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
+  scope :with_lead_purchase_assignee, lambda { |assignee| with_translations.select("DISTINCT(category_translations.name), categories.*").where("lead_purchases.assignee_id = ? and accessible_from IS NOT NULL", assignee.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
+  scope :with_lead_templates_created_by, lambda { |creator| with_translations.joins(:lead_templates).select("DISTINCT(category_translations.name), categories.*").where("lead_templates.creator_id = ?", creator.id) }
   scope :without_unique, where("is_customer_unique = ? and is_agent_unique = ?", false, false)
   scope :with_all_supplier_unique, where("is_customer_unique = ?", true)
   scope :without_supplier_unique, where("is_customer_unique = ?", false)
@@ -81,7 +82,7 @@ class Category < ActiveRecord::Base
   ").where("(categories.is_customer_unique = 't' and category_customers.user_id = :user_id) OR (categories_users.user_id = :user_id)", {:user_id => user.id}) }
   scope :with_comment_threads, select("DISTINCT(categories.id), categories.*").joins("INNER JOIN leads ON leads.category_id=categories.id INNER JOIN comments ON comments.commentable_id=leads.id")
   scope :without_auto_buy, where(:auto_buy => false)
-  scope :with_keyword, lambda { |keyword| where("lower(name) like ?", "%#{keyword.to_s.downcase}%") }
+  scope :with_keyword, lambda { |keyword| with_translations.where("lower(category_translations.name) like ?", "%#{keyword.to_s.downcase}%") }
   scope :with_unique, where("is_customer_unique IS true or is_agent_unique IS true")
   scope :with_locked, where("is_locked IS true")
   scope :with_public, where("auto_buy IS false AND is_customer_unique IS false AND is_agent_unique IS false")

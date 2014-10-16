@@ -12,7 +12,7 @@ class CategoriesController < ApplicationController
     end
 
     @search = @category_type.constantize.scoped_search(params[:search])
-    @categories = @search.roots_for(current_user).order("name")
+    @categories = @search.roots_for(current_user).with_translations.select('category_translations.name, categories.*').order('category_translations.name')
   end
 
   private

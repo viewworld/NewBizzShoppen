@@ -121,7 +121,7 @@ class ApplicationController < ActionController::Base
         root_path
       elsif resource.has_role? :category_supplier
         if resource.with_role.parent_accessible_categories_without_auto_buy.first
-          category_home_page_path(resource.with_role.parent_accessible_categories_without_auto_buy.order("categories.name").first.cached_slug)
+          category_home_page_path(resource.with_role.parent_accessible_categories_without_auto_buy.order("category_translations.name").select('category_translations.name').first.cached_slug)
         elsif resource.with_role.parent_accessible_categories.first
           category_home_page_path(resource.with_role.parent_accessible_categories.first.cached_slug)
         else
@@ -208,7 +208,7 @@ class ApplicationController < ActionController::Base
                        elsif requested_category
                          redirect_to category_home_page_path(current_user.with_role.parent_buying_categories.first.cached_slug)
                        elsif current_user.has_role?(:category_supplier)
-                         if home_category = current_user.with_role.parent_accessible_categories_without_auto_buy.order("categories.name").first and home_category
+                         if home_category = current_user.with_role.parent_accessible_categories_without_auto_buy.order("category_translations.name").select('category_translations.name').first and home_category
                            home_category
                          else
                            current_user.with_role.parent_accessible_categories.first
