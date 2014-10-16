@@ -3,6 +3,10 @@ require 'role_change'
 class User < ActiveRecord::Base
   self.set_table_name "users"
 
+  include RoleModel
+  include ScopedSearch::Model
+  include RoleChange
+
   self.abstract_class = true
   ajaxful_rater
   include EmailTemplateEditor
@@ -44,10 +48,6 @@ class User < ActiveRecord::Base
   MIZU = 2
   PHONE_TYPES = [FLASHPHONER, MIZU]
   PHONE_TYPES_WITH_LABELS = [['Flashphoner', FLASHPHONER], ['Mizu', MIZU]]
-
-  include RoleModel
-  include ScopedSearch::Model
-  include RoleChange
 
   devise :database_authenticatable, :registerable, :confirmable, :lockable, :token_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable, :timeoutable, :rpx_connectable
