@@ -248,7 +248,7 @@ class Deal < AbstractLead
   end
 
   def slug
-    "#{id}#{ '-' + header unless header.blank?}".to_url
+    "#{id}#{ '-' + header unless header.blank?}".parameterize
   end
 
   def current_four_week_period_start_date
