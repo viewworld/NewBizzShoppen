@@ -14,9 +14,9 @@ class Members::LeadsController < Members::MemberController
 
   def collection
     if current_user
-      @categories = current_user.has_accessible_categories? ? LeadCategory.with_leads.within_accessible(current_user).without_locked : current_user.has_role?(:supplier) ? LeadCategory.with_leads.without_locked.with_supplier_unique(current_user) : LeadCategory.with_leads.without_locked.with_agent_unique(current_user)
+      @categories = current_user.has_accessible_categories? ? LeadCategory.within_accessible(current_user).with_leads.without_locked : current_user.has_role?(:supplier) ? LeadCategory.with_supplier_unique(current_user).with_leads.without_locked : LeadCategory.with_agent_unique(current_user).with_leads.without_locked
     else
-      @categories = LeadCategory.with_leads.without_locked_and_not_published.without_unique
+      @categories = LeadCategory.without_unique.with_leads.without_locked_and_not_published
     end
 
     params[:search] ||= {}
