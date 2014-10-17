@@ -435,7 +435,6 @@ Nbs::Application.routes.draw do
     resource :login
   end
 
-  # FIXME: what the point of only: [] is?
   namespace :api do
     resources :campaigns, only: [] do
       member { get :contact }
@@ -539,7 +538,6 @@ Nbs::Application.routes.draw do
       get 'unsubscribe'
     end
 
-    # FIXME: only: [] again? what's the point?
     resources :subscription_plans, :only => [] do
       collection { get :cancel }
 
