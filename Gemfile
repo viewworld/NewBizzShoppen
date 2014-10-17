@@ -27,7 +27,7 @@ gem 'yajl-ruby', '1.1.0', require: 'yajl'
 gem 'recaptcha', '0.3.5', require: 'recaptcha/rails'
 
 # s3
-gem 'aws-s3', '0.6.2'
+gem 'aws-s3', '0.6.3', require: 'aws/s3'
 gem 'jammit-s3', '~> 0.6.0.2'
 
 # views
@@ -83,7 +83,6 @@ gem 'amoeba', '2.0.0'
 group :assets do
   gem 'sass-rails', '3.1.5'
   gem 'uglifier', '~> 2.5.3'
-  gem 'csso-rails', '~> 0.3.4'
 end
 
 gem 'jquery-rails'
