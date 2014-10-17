@@ -43,13 +43,13 @@
             td
               | Tag group:
               - tagging.taggable.tags.each do |tag|
-                span= tag
+                div= tag
             td
             td
         - else
           tr
             td
-            td= tagging.taggable
+            td= "#{tagging.taggable} (#{tagging.taggable.id})"
             td= tagging.taggable.class.name
             td
     tfoot

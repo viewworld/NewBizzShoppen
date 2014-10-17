@@ -55,7 +55,7 @@ Nbs::Application.routes.draw do
     end
 
     resources :tags do
-      member { post 'duplicate' }
+      member { get 'duplicate' }
     end
 
     resource :translation do

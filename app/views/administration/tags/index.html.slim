@@ -44,7 +44,7 @@
           td.fr
       tbody
         - @tags.each do |tag|
-          tr id="country#{tag.id}"
+          tr
             td.cl
             td= tag.name
             td
@@ -53,12 +53,12 @@
             td= tag.count_taggings_by_type(only: :user)
             td= tag.count_taggings_by_type(only: :campaigns_result)
             td= tag.count_taggings_by_type(only: :tag_group)
-            td.tda.ta_r id="country_actions_td_#{tag.name_underscored}"
+            td.tda.ta_r
               .td_actions
                 = bt_link_to :cog, nil, "javascript:void(0)", class: "bt_dropdown"
                 ul
                   li= link_to t("administration.tags.index.view.edit"), edit_administration_tag_path(tag), class: "default_action"
-                  li= link_to t("administration.tags.index.view.duplicate"), duplicate_administration_tag_path(tag), onclick: "duplicate_tag('#{tag.id}')", method: :post, id: "duplicate_link_#{tag.id}"
+                  li= link_to t("administration.tags.index.view.duplicate"), duplicate_administration_tag_path(tag), class: 'duplicate'
                   li= link_to t("administration.tags.index.view.delete"), administration_tag_path(tag), { method: :delete, confirm: t("administration.tags.index.view.delete_confirmation_message") }
             td.cr
 
@@ -67,8 +67,12 @@
             td.ta_c colspan='9'
               = will_paginate @tags
 
-  javascript:
-    function duplicate_tag(tag) {
-      var name = prompt("#{t('administration.tags.index.enter_name')}:");
-      $('#duplicate_link_' + tag_id).attr('href', $('#duplicate_link_' + tag_id).attr('href') + '?name=' + name)
-    }
+    javascript:
+      $(".duplicate").bind('click', function(e) {
+        e.preventDefault();
+        var text = "#{strip_tags(t('administration.tags.index.view.enter_name'))}:";
+        var name = prompt(text);
+
+        // TODO: Clicking a link, ajax + json would be much nicer, will replace in future
+        window.location.href = $(this).attr('href') + "?name=" + name
+      });
