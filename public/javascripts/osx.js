@@ -45,7 +45,7 @@ var OSX = {
 		$("#osx-modal-content").modal({
 			overlayId: 'osx-overlay',
 			containerId: 'osx-container',
-			closeHTML: '<a href="#" class="bt_close"><img src="/images/icons/close.png" /></a>',
+			closeHTML: '<a href="#" class="bt_close"><%= image_tag "icons/close.png" %></a>',
 			minHeight:80,
 			opacity:65, 
 			position:['100px',],
