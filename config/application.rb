@@ -2,9 +2,12 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
-# If you have a Gemfile, require the gems listed there, including any gems
-# you've limited to :test, :development, or :production.
-Bundler.require(:default, Rails.env) if defined?(Bundler)
+if defined?(Bundler)
+  # If you precompile assets before deploying to production, use this line
+  Bundler.require(*Rails.groups(assets: %w(development test ci)))
+  # If you want your assets lazily compiled in production, use this line
+  # Bundler.require(:default, :assets, Rails.env)
+end
 
 module Nbs
   class Application < Rails::Application
@@ -14,10 +17,6 @@ module Nbs
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
-    config.autoload_paths                               += %W(#{config.root}/models/user)
-    config.autoload_paths                               += ["#{config.root}/app/observers"]
-    config.autoload_paths                               += ["#{config.root}/app/modules/controllers"]
-    config.autoload_paths                               += ["#{config.root}/app/sweepers"]
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -65,8 +64,6 @@ module Nbs
     config.middleware.use "BulkProcess"
 
     require "#{config.root}/app/modules/custom_redirect.rb"
-
-    config.autoload_paths += %W( #{config.root}/app/models/ckeditor )
 
     require "#{config.root}/lib/settings.rb"
     require "#{config.root}/lib/column_path.rb"
