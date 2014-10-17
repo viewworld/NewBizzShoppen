@@ -103,6 +103,10 @@ class CallResult < ActiveRecord::Base
     result.upgrades_to_member? || campaign_create_deals?
   end
 
+  def campaign_create_deals?
+    campaign_result.create_deals? && User.find_by_email(contact.email_address).nil?
+  end
+
   def campaign_result
     contact ? CampaignsResult.where(:campaign_id => contact.campaign_id, :result_id => result_id).first : nil
   end
