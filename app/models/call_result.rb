@@ -83,12 +83,14 @@ class CallResult < ActiveRecord::Base
   scope :empty, where("1=0")
   default_scope :order => 'call_results.created_at DESC'
 
+  delegate :create_deals?, :to => :campaign_result, :allow_nil => true
+
   def upgrades_to_member?
-    result.upgrades_to_member? || campaign_create_deals?
+    result.upgrades_to_member? || create_deals?
   end
 
   def campaign_create_deals?
-    campaign_result.create_deals? && User.find_by_email(contact.email_address).nil?
+    create_deals? && User.find_by_email(contact.email_address).nil?
   end
 
   def campaign_result

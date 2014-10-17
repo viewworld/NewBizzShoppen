@@ -86,7 +86,7 @@
             </li>
           <% end %>
       <% end %>
-      <% if call_result.result.upgrades_to_category_supplier? || call_result.result.send_material? || call_result.campaign_create_deals? %>
+      <% if call_result.result.upgrades_to_category_supplier? || call_result.result.send_material? || call_result.create_deals? %>
           <% [:subject, :from, :bcc, :cc, :body].each do |field| %>
               <%= form.input "email_template_#{field}", :as => :hidden %>
           <% end %>
