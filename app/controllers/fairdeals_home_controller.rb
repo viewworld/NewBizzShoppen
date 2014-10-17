@@ -15,13 +15,13 @@ class FairdealsHomeController < ApplicationController
   public
 
   def show
-    @featured_deals = FeaturedDeal.with_active_deals(Date.today)
-    @primary_deal = Deal.where(:id => params[:id]).first || @featured_deals[0]
+    @featured_deals = FeaturedDeal.with_active_deals(Date.today).with_locale
+    @primary_deal = Deal.where(:id => params[:id]).first || @featured_deals.first
   end
 
   def index
     @per_page = 3
-    @deals = Deal.without_inactive.published_only.order("end_date ASC")
+    @deals = Deal.without_inactive.published_only.order("end_date ASC").with_locale
     @last_page = (@deals.count.to_f / @per_page).ceil
 
     @deals = if request.xhr?
@@ -31,5 +31,4 @@ class FairdealsHomeController < ApplicationController
     end
     respond_with @deals
   end
-
 end

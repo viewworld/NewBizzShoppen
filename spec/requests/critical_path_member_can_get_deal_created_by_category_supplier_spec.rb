@@ -13,6 +13,7 @@ describe 'Member can get deal created by category supplier' do
     Settings.default_deal_admin_email = old_deal_admin_email
     Settings.find_by_var('default_deal_admin_email')
   end
+  let(:fairdeals_domain) { create(:domain, :english, :site => 'fairdeals') }
   let(:old_deal_admin_email) { 'admin@fairleads.com' }
   let(:deal_admin_field) { "settings[#{default_deal_admin_email.id}]" }
   let(:new_deal_admin_email) { 'defaultdealadmin@example.com' }
@@ -299,6 +300,7 @@ describe 'Member can get deal created by category supplier' do
               'deal[voucher_until_type]' => '0',
               'deal[voucher_end_date]' => (Date.today + 2.years).to_s,
               'deal[voucher_number_of_weeks]' => '1',
+              'deal[domain_ids]' => [fairdeals_domain.id],
               'deal[voucher_max_number]' => '1'}
 
     # I click Save

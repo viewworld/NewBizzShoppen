@@ -19,6 +19,7 @@ class Suppliers::DealsController < Suppliers::BasicSupplierController
       current_user.decrement_free_deals_in_free_period!
       @deal.reload
       @deal.deal_template_ids = params[:deal][:deal_template_ids]
+      @deal.domain_ids = params[:deal][:domain_ids]
       @deal.save
       success(t("flash.deals.create.notice"))
     else

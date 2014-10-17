@@ -89,6 +89,7 @@
                   </span>
                 </li>
             <% end %>
+            <%= form.input :domains, :as => :select, :collection => Domain.for_fairdeals %>
         <% end %>
       </ol>
     </fieldset>

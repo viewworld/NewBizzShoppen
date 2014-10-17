@@ -23,7 +23,7 @@
   <link rel="apple-touch-icon" sizes="114x114" href="/images/iOS/touch-icon-iphone4.png"/>
 
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">  
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
   <head:/>
 
@@ -40,14 +40,14 @@
   <div id="top">
 
     <div id="user_panel">
-      <%= render '/layouts/locale_selection' %>
+      <%= render '/layouts/locale_selection' unless fairdeals? %>
       <% if user_signed_in? %>
           <% unless current_user.hide_profile_page? %>
-              <%= link_to t("layout.my_profile_link"), my_profile_path, :class => "sl" %>
+              <%= link_to t("layout.my_profile_link"), my_profile_path, :class => 'sl' %>
           <% end %>
-          <%= link_to t("layout.logout_link", :user_email => current_user.email), '/logout', :class => "sl" %>
+          <%= link_to t("layout.logout_link", :user_email => current_user.email), '/logout' %>
       <% else %>
-          <%= link_to t("layout.login_link"), url_to_role_specific_home_page, :class => "sl" %>
+          <%= link_to t("layout.login_link"), url_to_role_specific_home_page, :class => 'sl' %>
       <% end %>
     </div>
 
