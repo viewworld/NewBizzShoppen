@@ -60,7 +60,6 @@ gem 'globalize3', '0.3.0'
 gem 'i18n-active_record', git: 'git://github.com/svenfuchs/i18n-active_record.git', ref: '22b1f76', require: 'i18n/active_record'
 
 # paypal
-gem 'paypal-recurring', path: 'lib/gems/paypal-recurring'
 gem 'paypal_nvp', '0.2.0'
 
 # mailing
