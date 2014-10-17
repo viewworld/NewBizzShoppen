@@ -52,12 +52,6 @@ module Nbs
     #require "notification_responder"
     #config.middleware.use "Rack::NotificationResponder"
 
-    # asset pipeline
-    config.assets.enabled = true
-    config.assets.version = '1.0'
-
-    config.assets.precompile += %w( fairdeals.css fairdeals_thin.css fairdeals.js )
-
     require "locale_setter"
     config.middleware.use "Rack::LocaleSetter"
 

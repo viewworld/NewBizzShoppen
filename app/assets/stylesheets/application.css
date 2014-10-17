@@ -1,23 +1,5 @@
 /*
  *= require_tree ./utilities
  *= require_tree ./modules
- *= require ./lib/ocss/reset.css
- *= require ./lib/ocss/helpers.css
- *= require ./lib/ocss/columns.css
- *= require ./lib/ocss/frm.css
- *= require ./lib/ocss/table.css
- *= require ./lib/ocss/inputs.css
- *= require ./lib/style.css
- *= require ./lib/jquery-ui-1.8.5.custom.css
- *= require ./lib/colorbox.css
- *= require ./lib/invoice.css
- *= require ./lib/invoice_lines_edit.css
- *= require ./lib/jquery.checkboxtree.min.css
- *= require ./lib/jquery.autocomplete.css
- *= require ./lib/ajaxful_rating.css
- *= require ./lib/shared/shared.css
- *= require ./lib/jquery.gritter.css
- *= require ./lib/tagit.css
- *= require ./lib/mediaelement.css
  *= require_self
  */
