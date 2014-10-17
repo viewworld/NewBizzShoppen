@@ -38,7 +38,7 @@ class Administration::TagsController < Administration::AdministrationController
     redirect_to administration_tags_path, notice: t(notice_key, scope: 'administration.tags.duplicate.flash', name: @tag.to_s, new_name: params[:name])
   end
 
-  protected
+  private
   def set_tag
     @tag = ActsAsTaggableOn::Tag.find(params[:id])
   end
