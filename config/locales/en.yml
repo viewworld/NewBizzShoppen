@@ -1509,6 +1509,7 @@ en:
           blank_state: "No shared softphones defined"
           actions: "Actions"
           edit: "Edit"
+          delete: "Delete"
           table:
             id: "ID"
             name: "Name"

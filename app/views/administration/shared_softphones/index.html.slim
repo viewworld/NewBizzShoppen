@@ -1,0 +1,45 @@
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t("administration.shared_softphones.index.view.title")
+
+    - section.block_actions do
+      ul.header_actions
+        li.last
+          = bt_link_to :plus, t("administration.shared_softphones.index.view.new"), "javascript:void(0)", onclick: "$('#form_new_shared_softphone').submit()"
+
+  .hidden
+    = form_tag new_administration_shared_softphone_path, method: :get, id: "form_new_shared_softphone" do
+      = submit_tag t("administration.shared_softphones.index.view.new")
+
+  - if @shared_softphones.blank?
+    = blank_state_message t("administration.shared_softphones.index.view.blank_state")
+  - else
+    table.generic
+      thead
+        tr
+          th.hl
+          th= t("administration.shared_softphones.index.view.table.name")
+          th= t("administration.shared_softphones.index.view.table.sip_username")
+          th= t("administration.shared_softphones.index.view.table.softphone_server")
+          th.ta_r= t("administration.shared_softphones.index.view.actions")
+          th.hr
+      tfoot
+        td.fl
+        td colspan='4'
+        td.fr
+      tbody
+        - @shared_softphones.each do |shared_softphone|
+          tr
+            td.cl
+            td= shared_softphone.name
+            td= shared_softphone.sip_username
+            td= shared_softphone.softphone_server
+            td.tda.ta_r
+              .td_actions
+                = bt_link_to :cog, nil, "javascript:void(0)", class: "bt_dropdown"
+
+                ul
+                  li= link_to t("administration.shared_softphones.index.view.edit"), edit_administration_shared_softphone_path(shared_softphone), class: "default_action"
+                  li= link_to t("administration.shared_softphones.index.view.delete"), administration_shared_softphone_path(shared_softphone), method: :delete, confirmation: t("common.confirmation")
+            td.cr

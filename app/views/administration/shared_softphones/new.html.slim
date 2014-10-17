@@ -1,0 +1,6 @@
+= content_for :column_mc do
+  = header(back: true) do |section|
+    - section.block_header do
+      = t("administration.shared_softphones.new.view.header")
+
+  = render 'form'
