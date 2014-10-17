@@ -86,9 +86,6 @@ group :assets do
   gem 'csso-rails', '~> 0.3.4'
 end
 
-gem 'axlsx', '1.3.6'
-gem 'htmlentities', '4.3.1' # you can bump the version only when FL will be run on 1.9.3 or newer
-
 group :staging do
   gem 'system-metrics', '0.2.4'
   gem 'mailcatcher', '0.2.4'
