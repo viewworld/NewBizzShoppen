@@ -2,7 +2,7 @@
   fieldset.inputs.labels_ta_r.labels_200
     ol.align_inputs
       = form.input :name
-      = form.input :merge_with_tags, as: :boolean, onchange: "enable_merge()"
+      = form.input :merge_with_tags, as: :boolean, onchange: "enable_merge()", checked: false
 
       #merge_with_others_container style=("display: none")
         = form.input :merge_with_cleanup, as: :boolean
@@ -15,9 +15,9 @@ javascript:
     $('#tags_selection').tagit({tagSource: "/tags.js", triggerKeys: ['enter', 'comma', 'tab'], select: true});
   });
 
-  function enable_merge(){
-    if($("#tag_merge_with_tags").attr('checked'))
+  $("#tag_merge_with_tags").change(function() {
+    if (this.checked)
       $("#merge_with_others_container").show();
     else
       $("#merge_with_others_container").hide();
-  }
+  });

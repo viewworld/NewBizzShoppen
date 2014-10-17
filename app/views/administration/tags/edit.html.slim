@@ -31,12 +31,21 @@
     tbody
       - @taggings.each do |tagging|
         - if tagging.taggable.is_a?(Result)
-          - taggable.call_results.each do |call_result|
+          - tagging.taggable.call_results.each do |call_result|
             tr
               td
               td= call_result.contact.company_name
               td= "#{call_result.class.name} - #{call_result.result_name}"
               td
+        - elsif tagging.taggable.is_a?(TagGroup)
+          tr
+            td
+            td
+              | Tag group:
+              - tagging.taggable.tags.each do |tag|
+                span= tag
+            td
+            td
         - else
           tr
             td

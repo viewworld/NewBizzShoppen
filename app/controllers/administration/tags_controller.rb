@@ -21,7 +21,7 @@ class Administration::TagsController < Administration::AdministrationController
   end
 
   def update
-    if @tag.update_attributes(params[:tag])
+    if @tag.update_attributes(tag_params)
       redirect_to administration_tags_path
     else
       render :edit
@@ -40,6 +40,10 @@ class Administration::TagsController < Administration::AdministrationController
 
   private
   def set_tag
-    @tag = ActsAsTaggableOn::Tag.find(params[:id])
+    @tag = Tag.find(params[:id])
+  end
+
+  def tag_params
+    params.require(:tag).permit(:name, :merge_with_tags, :merge_with_cleanup, merge_with_tag_names: [])
   end
 end
