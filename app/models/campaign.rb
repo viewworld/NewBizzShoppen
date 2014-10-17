@@ -432,7 +432,7 @@ class Campaign < ActiveRecord::Base
 
     campaign
   end
-  # handle_asynchronously :duplicate!, :queue => 'duplications'
+  handle_asynchronously :duplicate!, queue: 'duplications'
 
   def clear!(options={})
     ActiveRecord::Base.transaction do
