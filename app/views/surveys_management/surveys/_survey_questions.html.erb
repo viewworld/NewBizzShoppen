@@ -2,10 +2,10 @@
     <li class="draggable_question survey_question<%= ' ui-nestedSortable-no-nesting' unless survey_question.question_type == 4 and survey_question.is_branched? %>" data-id="<%= survey_question.id %>" data-qtype="<%= survey_question.question_type %>">
       <div class="labels bt bt_grey bt_icon">
         <span>
-          <p><%= image_tag("/bt_icons/#{survey_question.question_type}.png") %><%= truncate(survey_question.title.presence || t("surveys_management.shared.question_types.type#{survey_question.question_type}"), :length => 120) %></p>
+          <p><%= image_tag("bt_icons/#{survey_question.question_type}.png") %><%= truncate(survey_question.title.presence || t("surveys_management.shared.question_types.type#{survey_question.question_type}"), :length => 120) %></p>
           <div class="bt_group">
-            <%= link_to_function image_tag("/icons/remove.png"), "removeQuestion(#{survey_question.id})", :title => t("surveys_management.surveys.edit.view.destroy_question") %>
-            <%= link_to_function image_tag("/icons/edit.png"), "editQuestion(#{survey_question.id})", :title => t("surveys_management.surveys.edit.view.edit_question") %>
+            <%= link_to_function image_tag("icons/remove.png"), "removeQuestion(#{survey_question.id})", :title => t("surveys_management.surveys.edit.view.destroy_question") %>
+            <%= link_to_function image_tag("icons/edit.png"), "editQuestion(#{survey_question.id})", :title => t("surveys_management.surveys.edit.view.edit_question") %>
           </div>
           <% if survey_question.parent.present? %>
             <p class="branched-option"><%= t("surveys_management.surveys.edit.view.branch_option") %>: <%= survey_question.branched_option.title %></p>

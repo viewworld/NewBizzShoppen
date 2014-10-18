@@ -10,7 +10,7 @@
 
 <ol class="draggable_questions_container">
   <% SurveyQuestion::QUESTION_TYPES.each do |qtype| %>
-      <li class="draggable_question_type survey_question" data-qtype="<%= qtype %>" data-id="null"><div class="bt bt_grey bt_icon"><span><p><%= image_tag("/bt_icons/#{qtype}.png") %><%= t("surveys_management.shared.question_types.type#{qtype}") %></p></span></div></li>
+      <li class="draggable_question_type survey_question" data-qtype="<%= qtype %>" data-id="null"><div class="bt bt_grey bt_icon"><span><p><%= image_tag("bt_icons/#{qtype}.png") %><%= t("surveys_management.shared.question_types.type#{qtype}") %></p></span></div></li>
   <% end %>
 </ol>
 
