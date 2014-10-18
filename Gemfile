@@ -83,6 +83,7 @@ gem 'amoeba', '2.0.0'
 group :assets do
   gem 'sass-rails', '3.1.5'
   gem 'uglifier', '~> 2.5.3'
+  gem 'coffee-rails', '~> 3.1.1'
 end
 
 gem 'jquery-rails'
