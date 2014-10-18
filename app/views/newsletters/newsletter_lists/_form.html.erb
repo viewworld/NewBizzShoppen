@@ -43,7 +43,7 @@
                 <% tag_group.tags.each do |tag| %>
                     <li class="draggable" style="" id="tag_<%= tag.id %>">
                         <%= tag.name %>
-                        <%= link_to_function image_tag("/images/icons/remove.png"), "remove_tag('#{tag.id}')" %>
+                        <%= link_to_function image_tag("/icons/remove.png"), "remove_tag('#{tag.id}')" %>
                     </li>
                 <% end %>
             </ul>

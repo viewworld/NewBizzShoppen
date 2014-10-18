@@ -4,4 +4,4 @@
 <% unless f.object.new_record? %>
     <%= f.hidden_field :_destroy, :id => "destroy_hidden_field_#{f.object.id}" %>
 <% end %>
-<%= link_to_function image_tag("/images/icons/remove.png"), "remove_source('#{f.object.id}', false)" %>
+<%= link_to_function image_tag("/icons/remove.png"), "remove_source('#{f.object.id}', false)" %>

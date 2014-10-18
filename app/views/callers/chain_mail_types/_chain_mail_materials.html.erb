@@ -5,7 +5,7 @@
           <li>
             <%= link_to chain_mail_material.filename, chain_mail_material.url, :target => "_new" %>
             <% if chain_mail_item.chain_mail_type.chain_mails.empty? %>
-              <%= link_to image_tag("/images/icons/remove.png"), callers_chain_mail_item_path(chain_mail_item, :material_id => chain_mail_material), :remote => true, :method => :delete, :confirm => t("common.confirmation") %>
+              <%= link_to image_tag("/icons/remove.png"), callers_chain_mail_item_path(chain_mail_item, :material_id => chain_mail_material), :remote => true, :method => :delete, :confirm => t("common.confirmation") %>
             <% end %>
           </li>
     <% end %>
