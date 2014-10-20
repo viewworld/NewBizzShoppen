@@ -1,5 +1,5 @@
 class ContactsAdvancedImportsController < SecuredController
-  include AdvancedImportActions
+  include ::Controllers::AdvancedImportActions
 
   set_tab "import"
 

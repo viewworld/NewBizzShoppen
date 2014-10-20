@@ -7,7 +7,7 @@ class EmailTemplatesController < SecuredController
   before_filter :authorize_for_controller!
   before_filter :authorize_for_deal_maker!
 
-  include EmailTemplatesActions
+  include ::Controllers::EmailTemplatesActions
 
   private
 

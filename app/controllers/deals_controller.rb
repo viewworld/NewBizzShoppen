@@ -3,7 +3,7 @@ class DealsController < ApplicationController
   actions :index, :show, :update
   set_tab "browse_deals"
 
-  include ::DealCertificationRequestActions
+  include ::Controllers::DealCertificationRequestActions
   before_filter :check_slug, :only => [:index]
   before_filter :set_deal, :only => [:edit, :update]
 

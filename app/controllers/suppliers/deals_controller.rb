@@ -4,7 +4,7 @@ class Suppliers::DealsController < Suppliers::BasicSupplierController
   before_filter :check_users_subscription, :only => [:new, :create]
   cache_sweeper :deal_sweeper
 
-  include ::DealActions
+  include ::Controllers::DealActions
 
   def new
     @template = LeadTemplate.find_by_id(params[:template_id])

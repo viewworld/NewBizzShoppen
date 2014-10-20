@@ -1,5 +1,5 @@
 class SubscribersAdvancedImportsController < SecuredController
-  include AdvancedImportActions
+  include ::Controllers::AdvancedImportActions
 
   set_tab "import"
   set_subtab "import_subscribers"

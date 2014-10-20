@@ -1,6 +1,6 @@
 class Agents::CertificationsController < Agents::AgentController
   set_tab "created_leads"
-  include ::LeadCertificationActions
+  include ::Controllers::LeadCertificationActions
 
   def model_name
    "leads"

@@ -2,7 +2,7 @@ class Suppliers::DealAssetsController < Suppliers::BasicSupplierController
   before_filter :set_deal
   before_filter :set_asset, :except => :create
 
-  include ::DealAssetActions
+  include ::Controllers::DealAssetActions
 
   private
 

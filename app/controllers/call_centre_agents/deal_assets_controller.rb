@@ -2,7 +2,7 @@ class CallCentreAgents::DealAssetsController < CallCentreAgents::CallCentreAgent
   before_filter :set_deal
   before_filter :set_asset, :except => :create
 
-  include ::DealAssetActions
+  include ::Controllers::DealAssetActions
 
   private
 

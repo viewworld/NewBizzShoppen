@@ -2,7 +2,7 @@ class Callers::CampaignsController < Callers::CallerController
   inherit_resources
   set_tab "campaigns"
   helper :campaigns
-  include ::CampaignActions
+  include ::Controllers::CampaignActions
 
   before_filter :set_campaign, :except => [:index, :new, :create]
   before_filter lambda { authorize_role(:call_centre, :admin) }, :except => [:index, :result_details]

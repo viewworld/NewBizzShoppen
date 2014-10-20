@@ -3,8 +3,8 @@ class Administration::DealsController < Administration::AdministrationController
   before_filter :prepare_assets, only: [:edit, :update]
   cache_sweeper :deal_sweeper
 
-  include ::DealActions
-  include ::DealCreateActions
+  include ::Controllers::DealActions
+  include ::Controllers::DealCreateActions
 
   private
   def success(message)

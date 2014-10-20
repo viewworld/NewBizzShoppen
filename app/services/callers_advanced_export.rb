@@ -1,6 +1,6 @@
 class CallersAdvancedExport < Struct.new(:params, :controller, :campaign)
   delegate :current_user, :to => :controller
-  include CampaignActions
+  include ::Controllers::CampaignActions
 
   def perform
     @campaign = campaign
