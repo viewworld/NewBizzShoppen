@@ -1488,6 +1488,7 @@ en:
           blank_state: "No servers defined"
           actions: "Actions"
           edit: "Edit"
+          delete: 'Delete'
           table:
             id: "ID"
             name: "Name"

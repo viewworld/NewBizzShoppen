@@ -7,6 +7,7 @@ class LeadCategory < Category
 
   def self.for_company_name(company_name)
     company_name = company_name.to_s.strip
-    LeadCategory.where("lower(name) = ?", company_name.downcase).first || LeadCategory.create(:name => company_name, :currency => Currency.default_currency, :buyout_enabled => false)
+    LeadCategory.where("lower(name) = ?", company_name.downcase).first ||
+      LeadCategory.create(:name => company_name, :currency => Currency.default_currency, :buyout_enabled => false)
   end
 end

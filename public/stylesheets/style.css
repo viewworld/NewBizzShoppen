@@ -2386,3 +2386,7 @@ ol.survey_questions_container.sortable li .bt.bt_grey .branched-option {
 #tagger_flash_message {
     margin-top: 0;
 }
+
+select[disabled], input[disabled] {
+  opacity: 0.5;
+}

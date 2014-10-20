@@ -94,7 +94,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def campaign_create_deals?
-    !campaign_result.nil? && campaign_result.create_deals? && contact.user.nil?
+    campaign_result.try(:create_deals?) && contact.user.nil?
   end
 
   def upgrades_to_member?

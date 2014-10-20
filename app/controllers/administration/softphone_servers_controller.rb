@@ -39,6 +39,7 @@ class Administration::SoftphoneServersController < Administration::Administratio
   end
 
   private
+
   def set_softphone_server
     @softphone_server = SoftphoneServer.find(params[:id])
   end
