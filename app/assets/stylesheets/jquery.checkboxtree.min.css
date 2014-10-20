@@ -25,12 +25,12 @@ ul.checkboxTree li.collapsed > span
 
 ul.checkboxTree li.expanded > span
 {
-    background: url(/images/icons/small_minus.png)
+    background: asset-url('icons/small_minus.png', image)
 }
 
 ul.checkboxTree li.collapsed > span
 {
-    background: url(/images/icons/small_plus.png)
+    background: asset-url('icons/small_plus.png', image)
 }
 
 ul.checkboxTree li ul

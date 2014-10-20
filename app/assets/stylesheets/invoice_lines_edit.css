@@ -10,7 +10,7 @@ fieldset.invoice_line a.remove_line {
     display: block;
     width: 30px;
     height: 34px;
-    background: url(/images/remove_bg.png) no-repeat top left;
+    background: asset-url('remove_bg.png', image) no-repeat top left;
 }
 
 fieldset.invoice_line a.remove_line img {
@@ -19,7 +19,7 @@ fieldset.invoice_line a.remove_line img {
 }
 
 .add_invoice_line_btns {
-    background: url(/images/add_bg.png) no-repeat top left;
+    background: asset-url('add_bg.png', image) no-repeat top left;
     width: 30px;
     height: 57px;
     position: absolute;
@@ -159,14 +159,14 @@ fieldset.invoice_totals li.total_label label {
 
 #link_set_payable {
     height: 40px;
-    background: url(/images/set_payable_bg.png) no-repeat top left;
+    background: asset-url('set_payable_bg.png', image) no-repeat top left;
     margin-left: 37px;
     position: relative;
     display: none;
 }
 
 #link_set_payable a {
-    background: url(/images/frm_actions.png) no-repeat top left;
+    background: asset-url('frm_actions.png', image) no-repeat top left;
     color: #fff;
     text-decoration: none;
     font-size: 12px;

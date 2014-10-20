@@ -26,7 +26,7 @@ th.medium {
 .generic thead th
 {
 	height: 39px;
-    background: url(/images/table/table.png) repeat-x 0 -39px;
+    background: asset-url('table/table.png', image) repeat-x 0 -39px;
     line-height: 14px;
     vertical-align: middle;
     text-align: left;
@@ -37,14 +37,14 @@ th.medium {
 
 .generic thead th.hl
 {
-    background: url(/images/table/table.png) no-repeat 0 0;
+    background: asset-url('table/table.png', image) no-repeat 0 0;
     width: 10px;
     padding: 0 !important;
 }
 
 .generic thead th.hr
 {
-    background: url(/images/table/table.png) no-repeat right 0;
+    background: asset-url('table/table.png', image) no-repeat right 0;
     width: 10px;
     padding: 0 !important;
 }
@@ -59,19 +59,19 @@ th.medium {
 .generic tfoot td
 {
     height: 10px;
-    background: url(/images/table/table.png) repeat-x 0 -88px;
+    background: asset-url('table/table.png', image) repeat-x 0 -88px;
     padding: 0;
 }
 
 .generic tfoot td.fl
 {
-    background: url(/images/table/table.png) no-repeat 0 -78px;
+    background: asset-url('table/table.png', image) no-repeat 0 -78px;
     width: 10px;
 }
 
 .generic tfoot td.fr
 {
-    background: url(/images/table/table.png) no-repeat right -78px;
+    background: asset-url('table/table.png', image) no-repeat right -78px;
     width: 10px;
 }
 
@@ -85,9 +85,7 @@ th.medium {
 
 .generic tbody tr td.cl
 {
-    background-image: url("/images/table/dot.png");
-    background-repeat:  repeat-y;
-    background-position: 0 0;
+    background: asset-url('table/dot.png', image) repeat-y 0 0;
     width: 10px;
     padding: 0 !important;
 }
@@ -342,7 +340,7 @@ td.tda a.bt
 
 .generic tbody tr.pagination td
 {
-    background: url(/images/table/table.png) repeat-x 0 -99px #e3e3e3;
+    background: asset-url('table/table.png', image) repeat-x 0 -99px #e3e3e3;
     border-bottom: 1px solid #d4d4d4;
     min-height: 32px;
     padding: 0 10px 3px;
@@ -364,7 +362,7 @@ td.tda a.bt
 
 .generic tbody tr.main_actions td
 {
-    background: url(/images/table/table.png) repeat-x 0 -99px #e4e4e4;
+    background: asset-url('table/table.png', image) repeat-x 0 -99px #e4e4e4;
     border-bottom: 1px solid #d4d4d4;
 }
 
@@ -462,7 +460,7 @@ div.pagination .disabled
     padding-left: 18px;
     line-height: 22px;
     font-size: 12px;
-    background: url(/images/tree_child_line.png) no-repeat 8px -8px;
+    background: asset-url('tree_child_line.png', image) no-repeat 8px -8px;
 }
 
 .categories_table tbody td > ul > li
@@ -494,7 +492,7 @@ div.pagination .disabled
     height: 30px;
     vertical-align: middle;
     padding: 4px;
-    background: url(/images/table/table.png) repeat-x 0 -99px #e4e4e4;
+    background: asset-url('table/table.png', image) repeat-x 0 -99px #e4e4e4;
     border-bottom: 1px solid #d4d4d4;
     border-top: 1px solid #d4d4d4;
 }

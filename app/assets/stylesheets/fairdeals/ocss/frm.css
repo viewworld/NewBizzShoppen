@@ -56,7 +56,7 @@
 .frm .frm_head .frm_hl
 {
     float: left;
-    background: url(/images/fairdeals/frm/frm.png) no-repeat 0 0;
+    background: asset-url('fairdeals/frm/frm.png', image) no-repeat 0 0;
 
     -moz-border-radius: 10px 0 0 0;
     -webkit-border-radius: 10px 0 0 0;
@@ -66,7 +66,7 @@
 .frm .frm_head .frm_hr
 {
     float: right;
-    background: url(/images/fairdeals/frm/frm.png) no-repeat right 0;
+    background: asset-url('fairdeals/frm/frm.png', image) no-repeat right 0;
 
     -moz-border-radius: 0 10px 0 0;
     -webkit-border-radius: 0 10px 0 0;
@@ -75,7 +75,7 @@
 
 .frm .frm_head .frm_hc
 {
-    background: url(/images/fairdeals/frm/frm.png) repeat-x 0 -38px;
+    background: asset-url('fairdeals/frm/frm.png', image) repeat-x 0 -38px;
 
     -moz-border-radius: 10px 10px 0 0;
     -webkit-border-radius: 10px 10px 0 0;
@@ -125,7 +125,7 @@
 
 .frm_dark
 {
-    background: url(/images/fairdeals/bg_dark.png) repeat 0 0;
+    background: asset-url('fairdeals/bg_dark.png', image) repeat 0 0;
     border: 1px solid #cacaca;
 
     margin-bottom: 20px;
@@ -140,7 +140,7 @@
     font-size:14px;
     padding-bottom: 6px;
     margin-bottom: 7px;
-    background: url(/images/fairdeals/frm/hl_darkfrm.png) repeat-x bottom left;
+    background: asset-url('fairdeals/frm/hl_darkfrm.png', image) repeat-x bottom left;
 }
 
 

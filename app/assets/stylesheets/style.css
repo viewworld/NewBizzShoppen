@@ -29,7 +29,7 @@
 
 body
 {
-    background: url(/images/bg_body.png) repeat 0 0 #ededed;
+    background: asset-url('bg_body.png', image) repeat 0 0 #ededed;
     font: 13px Arial, Helvetica, Verdana, Tahoma, sans-serif;
     color: #505050;
 }
@@ -37,7 +37,7 @@ body
 #head
 {
     width: 100%;
-    background: url(/images/bg_head.png) repeat-x 0 0 #200f22;
+    background: asset-url('bg_head.png', image) repeat-x 0 0 #200f22;
     position: absolute;
     top: 0;
     left: 0;
@@ -46,14 +46,14 @@ body
 
 #head #head_bg
 {
-    background: url(/images/bg_headimg.jpg) no-repeat top center;
+    background: asset-url('bg_headimg.jpg', image) no-repeat top center;
     width: 100%;
     height: 218px;
 }
 
 #global_loader
 {
-    background: url(/images/global_loader.gif) no-repeat center center #fff;
+    background: asset-url('global_loader.gif', image) no-repeat center center #fff;
     position: fixed;
     width: 32px;
     height: 32px;
@@ -192,7 +192,7 @@ h4
 
 #user_menu
 {
-    background: url(/images/bg_nav.png) repeat-x top left;
+    background: asset-url('bg_nav.png', image) repeat-x top left;
     height: 45px;
     position: relative;
     z-index: 1000;
@@ -216,7 +216,7 @@ h4
 
 #user_menu ul.nav li a
 {
-    background: url(/images/nav/bg_menu.png) no-repeat 0 0;
+    background: asset-url('nav/bg_menu.png', image) no-repeat 0 0;
     display: block;
     font-size: 13px;
     color: #fff;
@@ -226,7 +226,7 @@ h4
 
 #user_menu ul.nav li a span
 {
-    background: url(/images/nav/bg_menu.png) no-repeat right -36px;
+    background: asset-url('nav/bg_menu.png', image) no-repeat right -36px;
     display: block;
     height: 36px;
     line-height: 36px;
@@ -600,7 +600,7 @@ h4
     padding: 0 10px 0 14px;
     height: 30px;
     line-height: 30px;
-    background: url(/images/bg_user_panel_separator.png) repeat-y 0 0;
+    background: asset-url('bg_user_panel_separator.png', image) repeat-y 0 0;
 }
 
 #user_panel a.sl:hover
@@ -629,7 +629,7 @@ h4
     line-height: 28px;
     display: block;
     padding: 0 18px 0 10px;
-    background: url(/images/languages/arrow.png) no-repeat 32px center;
+    background: asset-url('languages/arrow.png', image) no-repeat 32px center;
 }
 
 .langs_dropdown li a.lang_selected img
@@ -688,7 +688,7 @@ h4
 
 #content
 {
-    background: url(/images/bg_content_head.png) repeat-x 0 0 #fff;
+    background: asset-url('bg_content_head.png', image) repeat-x 0 0 #fff;
     position: relative;
     padding: 15px 0 0;
 }
@@ -708,13 +708,13 @@ h4
 
 #content .content_left
 {
-    background: url(/images/bg_content_left.png) no-repeat 0 0;
+    background: asset-url('bg_content_left.png', image) no-repeat 0 0;
     left: 0;
 }
 
 #content .content_right
 {
-    background: url(/images/bg_content_right.png) no-repeat 0 0;
+    background: asset-url('bg_content_right.png', image) no-repeat 0 0;
     right: 0;
 }
 
@@ -723,7 +723,7 @@ h4
 
 .header_ribbon
 {
-    background: url(/images/bg_header_dot.png) repeat-x 0 18px;
+    background: asset-url('bg_header_dot.png', image) repeat-x 0 18px;
     position: relative;
     height: 43px;
     margin: 10px 0;
@@ -731,7 +731,7 @@ h4
 
 .header_ribbon > h1
 {
-    background: url(/images/bg_header_ribbon_green.png) no-repeat 0 0 transparent;
+    background: asset-url('bg_header_ribbon_green.png', image) no-repeat 0 0 transparent;
     position: absolute;
     left: -33px;
     font-size: 18px;
@@ -747,7 +747,7 @@ h4
     line-height: 38px;
     padding: 0 32px;
     display: block;
-    background: url(/images/bg_header_ribbon_green.png) no-repeat right -43px;
+    background: asset-url('bg_header_ribbon_green.png', image) no-repeat right -43px;
 }
 
 .header_ribbon > h1 > span a
@@ -873,7 +873,7 @@ h4
 {
     width: 100%;
     height: 30px;
-    background: url(/images/bg_footer.jpg) repeat-x 0 0 transparent;
+    background: asset-url('bg_footer.jpg', image) repeat-x 0 0 transparent;
     padding: 26px 0 20px;
     position: relative;
 }
@@ -889,13 +889,13 @@ h4
 
 #footer .footer_left
 {
-    background: url(/images/bg_footer_left.jpg) no-repeat 0 0 transparent;
+    background: asset-url('bg_footer_left.jpg', image) no-repeat 0 0 transparent;
     left: 0;
 }
 
 #footer .footer_right
 {
-    background: url(/images/bg_footer_right.jpg) no-repeat 0 0 transparent;
+    background: asset-url('bg_footer_right.jpg', image) no-repeat 0 0 transparent;
     right: 0;
 }
 
@@ -908,7 +908,7 @@ h4
 {
     display: inline;
     padding: 0 8px 0 15px;
-    background: url(/images/bg_footer_list.png) no-repeat left center;
+    background: asset-url('bg_footer_list.png', image) no-repeat left center;
 }
 
 #footer ul li:first-child
@@ -999,7 +999,7 @@ h4
 
 .search_box
 {
-    background: url(/images/bg_search.png) repeat-x 0 0 #f0f0f0;
+    background: asset-url('bg_search.png', image) repeat-x 0 0 #f0f0f0;
     margin-top: -15px;
     padding: 12px 10px;
     border-bottom: 1px solid #cfcfcf;
@@ -1017,13 +1017,13 @@ h4
 
 .search_box:before
 {
-    background:  url(/images/bg_search_left.png) no-repeat 0 0;
+    background:  asset-url('bg_search_left.png', image) no-repeat 0 0;
     left: 0;
 }
 
 .search_box:after
 {
-    background:  url(/images/bg_search_right.png) no-repeat 0 0;
+    background:  asset-url('bg_search_right.png', image) no-repeat 0 0;
     right: 0;
 }
 
@@ -1031,28 +1031,9 @@ h4
 {
     font-size: 16px;
     font-weight: normal;
-    background: url(/images/bg_search_hl.png) repeat-x bottom left;
+    background: asset-url('bg_search_hl.png', image) repeat-x bottom left;
     padding: 4px 5px 7px;
 }
-
-/*.search_content*/
-/*{*/
-/*padding: 10px 0 0;*/
-/*}*/
-
-/*.search_content .inputs ol li*/
-/*{*/
-/*padding-left: 10px;*/
-/*padding-right: 12px;*/
-/*}*/
-
-/*.search_content div.bt.right*/
-/*{*/
-/*position: absolute;*/
-/*top: 0px;*/
-/*top: 0px;*/
-/*right: 2px;*/
-/*}*/
 
 /* --- forms ---
 --------------------------------------------------------------------------------- */
@@ -1165,7 +1146,7 @@ input:focus, textarea:focus, select:focus
 {
     color: #0669b6;
     padding-right: 13px;
-    background: url(/images/icons/toggle.png) no-repeat;
+    background: asset-url('icons/toggle.png', image) no-repeat;
 }
 
 .subcategory_btn a.hide_subcategory
@@ -1189,7 +1170,7 @@ input:focus, textarea:focus, select:focus
 .solid_list .lead_content,
 .solid_list .news_content
 {
-    background: url(/images/solid_list_arrow.png) no-repeat center right;
+    background: asset-url('solid_list_arrow.png', image) no-repeat center right;
 }
 
 .solid_list .lead_content,
@@ -1310,7 +1291,7 @@ p.element b
 p.element_description
 {
     padding: 10px 0 5px 22px;
-    background: url(/images/table/quote.png) no-repeat 2px 12px;
+    background: asset-url('table/quote.png', image) no-repeat 2px 12px;
 }
 
 div.element_description p
@@ -1420,7 +1401,7 @@ a.bt
 {
     display: inline-block;
     vertical-align: middle;
-    background: url(/images/bt/bt.png) no-repeat 0 -240px transparent;
+    background: asset-url('bt/bt.png', image) no-repeat 0 -240px transparent;
     text-decoration: none;
     font-weight: bold;
     font-size: 11px;
@@ -1440,7 +1421,7 @@ a.bt span
     height: 26px;
     line-height: 26px;
     padding: 0 6px;
-    background: url(/images/bt/bt.png) no-repeat right -266px transparent;
+    background: asset-url('bt/bt.png', image) no-repeat right -266px transparent;
 
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -1584,7 +1565,7 @@ div.bt
 {
     display: block;
     float: left;
-    background: url(/images/bt/bt.png) no-repeat 0 0 transparent;
+    background: asset-url('bt/bt.png', image) no-repeat 0 0 transparent;
     position: relative;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -1598,7 +1579,7 @@ div.bt span
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-    background: url(/images/bt/bt.png) no-repeat right -30px transparent;
+    background: asset-url('bt/bt.png', image) no-repeat right -30px transparent;
     position: relative;
     display: block;
     float: left;
@@ -1741,12 +1722,12 @@ div.bt_green:hover span
 .hl
 {
     height: 10px;
-    background: url(/images/dot.png) repeat-x center center;
+    background: asset-url('dot.png', image) repeat-x center center;
 }
 
 .frm .hl
 {
-    background: url(/images/frm/hl.png) repeat-x center center;
+    background: asset-url('frm/hl.png', image) repeat-x center center;
 }
 
 .thumb
@@ -1866,7 +1847,7 @@ span.cke_skin_kama
 
 .materials_list.with_icon li
 {
-    background: url(/images/icons/file.png) no-repeat left center;
+    background: asset-url('icons/file.png', image) no-repeat left center;
     padding-left: 20px;
 }
 

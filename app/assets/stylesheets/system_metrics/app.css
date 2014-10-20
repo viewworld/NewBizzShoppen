@@ -68,7 +68,7 @@ div.clear {
   width: 100%;
   height: 40px;
   z-index: 2;
-  background: url("../../images/system_metrics/gradient.png") repeat-x scroll 0 -58px transparent;
+  background: asset-url('system_metrics/gradient.png', image) repeat-x scroll 0 -58px transparent;
   text-align: right;
   border-top: 2px solid #F8BC59;
 }

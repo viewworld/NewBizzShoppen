@@ -24,19 +24,19 @@
 .splash.splash_premium
 {
     font-size: 14px;
-    background: url("/images/fairdeals/icons/splash_orange.png") no-repeat 0 0;
+    background: asset-url('fairdeals/icons/splash_orange.png', image) no-repeat 0 0;
     color: #8f470b;
 }
 
 .splash.splash_group
 {
-    background: url("/images/fairdeals/icons/splash_red.png") no-repeat 0 0;
+    background: asset-url('fairdeals/icons/splash_red.png', image) no-repeat 0 0;
     color: #782300;
 }
 
 .splash.splash_fair
 {
-    background: url("/images/fairdeals/icons/splash_green.png") no-repeat 0 0;
+    background: asset-url('fairdeals/icons/splash_green.png', image) no-repeat 0 0;
     color: #316c03;
 }
 
@@ -58,7 +58,7 @@
 
 .frm_ribbon_right
 {
-    background:  url(/images/bg_ribbon_right.png) no-repeat 0 0;
+    background:  asset-url('bg_ribbon_right.png', image) no-repeat 0 0;
     width: 275px;
     height: 65px;
     padding: 10px 30px;

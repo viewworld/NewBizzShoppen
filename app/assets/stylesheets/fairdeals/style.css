@@ -9,7 +9,7 @@
 
 body
 {
-    background: url(/images/bg_body.png) repeat 0 0 #ededed;
+    background: asset-url('bg_body.png', image) repeat 0 0 #ededed;
     font: 12px Arial, Helvetica, Verdana, Tahoma, sans-serif;
     color: #3c3c3c;
 }
@@ -18,7 +18,7 @@ body
 {
     width: 100%;
     min-width: 1040px;
-    background: url(/images/bg_head.png) repeat-x 0 0 #200f22;
+    background: asset-url('bg_head.png', image) repeat-x 0 0 #200f22;
     position: absolute;
     top: 0;
     left: 0;
@@ -27,14 +27,14 @@ body
 
 #head #head_bg
 {
-    background: url(/images/bg_headimg.jpg) no-repeat top center;
+    background: asset-url('bg_headimg.jpg', image) no-repeat top center;
     width: 100%;
     height: 100px;
 }
 
 #global_loader
 {
-    background: url(/images/global_loader.gif) no-repeat center center #fff;
+    background: asset-url('global_loader.gif', image) no-repeat center center #fff;
     position: fixed;
     width: 32px;
     height: 32px;
@@ -119,7 +119,7 @@ p
 
 #user_menu
 {
-    background: url(/images/fairdeals/bg_nav.png) no-repeat top left;
+    background: asset-url('fairdeals/bg_nav.png') no-repeat top left;
     height: 56px;    
     position: relative;
     z-index: 1000;
@@ -139,7 +139,7 @@ p
 
 #user_menu ul.nav li a
 {
-    background: url(/images/nav/bg_menu.png) no-repeat 0 0;
+    background: asset-url('nav/bg_menu.png', image) no-repeat 0 0;
     display: block;
     font-size: 13px;
     color: #fff;
@@ -149,7 +149,7 @@ p
 
 #user_menu ul.nav li a span
 {
-    background: url(/images/nav/bg_menu.png) no-repeat right -36px;
+    background: asset-url('nav/bg_menu.png', image) no-repeat right -36px;
     display: block;
     height: 36px;
     line-height: 36px;
@@ -369,7 +369,7 @@ p
     padding: 0 10px 0 14px;    
     height: 30px;
     line-height: 30px;
-    background: url(/images/bg_user_panel_separator.png) repeat-y 0 0;
+    background: asset-url('bg_user_panel_separator.png', image) repeat-y 0 0;
 }
 
 #user_panel a.sl:hover
@@ -399,7 +399,7 @@ p
     line-height: 28px;
     display: block;
     padding: 0 18px 0 10px;
-    background: url(/images/languages/arrow.png) no-repeat 32px center;
+    background: asset-url('languages/arrow.png', image) no-repeat 32px center;
 }
 
 .langs_dropdown li a.lang_selected img
@@ -459,7 +459,7 @@ p
 
 #content
 {
-    background: url(/images/fairdeals/hl.png) repeat-x 0 0;
+    background: asset-url('fairdeals/hl.png', image) repeat-x 0 0;
     position: relative;
     padding: 15px 0 0;
     margin-top: 15px;
@@ -519,7 +519,7 @@ h1
 
 .header_ribbon
 {
-    background: url(/images/bg_header_dot.png) repeat-x 0 18px;
+    background: asset-url('bg_header_dot.png', image) repeat-x 0 18px;
     position: relative;
     height: 43px;
     margin: 10px 0;
@@ -527,7 +527,7 @@ h1
 
 .header_ribbon > h1
 {
-    background: url(/images/bg_header_ribbon_green.png) no-repeat 0 0 transparent;
+    background: asset-url('bg_header_ribbon_green.png', image) no-repeat 0 0 transparent;
     position: absolute;
     left: -33px;
     font-size: 18px;
@@ -543,7 +543,7 @@ h1
     line-height: 38px;
     padding: 0 32px;
     display: block;
-    background: url(/images/bg_header_ribbon_green.png) no-repeat right -43px;
+    background: asset-url('bg_header_ribbon_green.png', image) no-repeat right -43px;
 }
 
 .header_ribbon > h1 > span a
@@ -662,7 +662,7 @@ h1
 #footer
 {    
     height: 18px;
-    background: url(/images/fairdeals/bg_dark.png) repeat 0 0 transparent;
+    background: asset-url('fairdeals/bg_dark.png', image) repeat 0 0 transparent;
     padding: 10px 0;
     margin: 30px 0;
 
@@ -680,7 +680,7 @@ h1
 {
     display: inline;
     padding: 0 8px 0 15px;
-    background: url(/images/bg_footer_list.png) no-repeat left center;
+    background: asset-url('bg_footer_list.png', image) no-repeat left center;
 }
 
 #footer ul li:first-child
@@ -768,7 +768,7 @@ h1
 
 .search_box
 {
-    background: url(/images/bg_search.png) no-repeat 0 0 #f0f0f0;
+    background: asset-url('bg_search.png', image) no-repeat 0 0 #f0f0f0;
     margin-top: -15px;
     padding: 12px 10px;
     border-bottom: 1px solid #cfcfcf;
@@ -779,7 +779,7 @@ h1
 {
     font-size: 16px;
     font-weight: normal;
-    background: url(/images/bg_search_hl.png) repeat-x bottom left;
+    background: asset-url('bg_search_hl.png', image) repeat-x bottom left;
     padding: 4px 5px 7px;
 }
 
@@ -911,7 +911,7 @@ input:focus, textarea:focus, select:focus
 {
     color: #0669b6;
     padding-right: 13px;
-    background: url(/images/icons/toggle.png) no-repeat;
+    background: asset-url('icons/toggle.png', image) no-repeat;
 }
 
 .subcategory_btn a.hide_subcategory
@@ -955,7 +955,7 @@ a.bt
 {
     display: inline-block;
     vertical-align: middle;
-    background: url(/images/fairdeals/bt/bt.png) no-repeat 0 0 transparent;
+    background: asset-url('fairdeals/bt/bt.png' image) no-repeat 0 0 transparent;
     text-decoration: none;
     font-weight: bold;
     font-size: 11px;
@@ -975,7 +975,7 @@ a.bt span
     height: 30px;
     line-height: 30px;
     padding: 0 6px;
-    background: url(/images/fairdeals/bt/bt.png) no-repeat right -30px transparent;
+    background: asset-url('fairdeals/bt/bt.png', image) no-repeat right -30px transparent;
 
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -1107,7 +1107,7 @@ div.bt
 {
     display: block;
     float: left;
-    background: url(/images/bt/bt.png) no-repeat 0 0 transparent;
+    background: asset-url('bt/bt.png', image) no-repeat 0 0 transparent;
     position: relative;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -1121,7 +1121,7 @@ div.bt span
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-    background: url(/images/bt/bt.png) no-repeat right -30px transparent;
+    background: asset-url('bt/bt.png', image) no-repeat right -30px transparent;
     position: relative;
     display: block;
     float: left;
@@ -1273,12 +1273,12 @@ div.bt_green:hover span
 .hl
 {
     height: 10px;
-    background: url(/images/dot.png) repeat-x center center;
+    background: asset-url('dot.png', image) repeat-x center center;
 }
 
 .frm .hl
 {
-    background: url(/images/frm/hl.png) repeat-x center center;
+    background: asset-url('frm/hl.png', image) repeat-x center center;
 }
 
 .thumb
@@ -1365,7 +1365,7 @@ span.cke_skin_kama
 .news_content
 {
     padding: 15px 5px;
-    background: url(/images/fairdeals/hl.png) repeat-x 0 0;
+    background: asset-url('fairdeals/hl.png', image) repeat-x 0 0;
 }
 
 .news_content h4,
@@ -1423,13 +1423,13 @@ span.cke_skin_kama
 
 .primary_deals_wrapper .arrow_left
 {
-    background: url(/images/fairdeals/primary_lead/arrow_left.png);
+    background: asset-url('fairdeals/primary_lead/arrow_left.png', image);
     left: -10px;
 }
 
 .primary_deals_wrapper .arrow_right
 {
-    background: url(/images/fairdeals/primary_lead/arrow_right.png);
+    background: asset-url('fairdeals/primary_lead/arrow_right.png', image);
     right: -10px;
 }
 

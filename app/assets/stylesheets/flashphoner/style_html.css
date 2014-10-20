@@ -128,7 +128,7 @@ input::-webkit-input-placeholder {
 
 /* ---------------- Buttons ---------------- */
 .closeButton {
-	background: url(../assets/close.png);
+	background: asset-url('assets/close.png', image);
 	right: 3px;
 	opacity: 0.7;
 	top: 3px;
@@ -136,13 +136,13 @@ input::-webkit-input-placeholder {
 	height: 14px;
 }
 #cameraButton {
-	background: url(../assets/camera.png) no-repeat center;
+	background: asset-url('assets/camera.png', image) no-repeat center;
 }
 #micButton {
-	background: url(../assets/mic.png) no-repeat center;
+	background: asset-url('assets/mic.png', image) no-repeat center;
 }
 #soundButton {
-	background: url(../assets/speaker.png) no-repeat center;
+	background: asset-url('assets/speaker.png', image) no-repeat center;
 }
 .iconButton {
 	width: 24px;
@@ -180,28 +180,27 @@ input::-webkit-input-placeholder {
 	top: 4px;
 }
 .muteButton {
-    /*background: url(../assets/mic.png);*/
     position: relative;
     font-size: 65%;
     left: 5px;
     cursor: pointer;
 }
 .closeButton {
-	background: url(../assets/close.png);
+	background: asset-url('assets/close.png', image);
 	right: 3px;
 }
 .transferButton {
-	background: url(../assets/transfer.png);
+	background: asset-url('assets/transfer.png', image);
 	right: 7px;
     display: none;
 }
 .holdButton {
-	background: url(../assets/hold.png);
+	background: asset-url('assets/hold.png', image);
 	right: 27px;
 	visibility:hidden;
 }
 .holdImage {
-	background: url(../assets/hold_big.png);
+	background: asset-url('assets/hold_big.png', image);
 	right: 55px;
 	top: 57px;
 	width: 30px;
@@ -233,17 +232,17 @@ input::-webkit-input-placeholder {
 	width: 230px;
 	padding-top: 20px;
 	visibility: hidden;
-	background: url(../assets/mic_settings_background.png);
+	background: asset-url('assets/mic_settings_background.png', image);
 }
 #settingsButton {
   top: 2px;
 	left: 5px;
-	background: url(../assets/mic_settings.png);
+	background: asset-url('assets/mic_settings.png', image);
 }
 #settingsButtonInCallView {
   top: 98px;
 	left: 5px;
-	background: url(../assets/mic_settings.png);
+	background: asset-url('assets/mic_settings.png', image);
 }
 /* -------------------------------------- */
 
@@ -424,7 +423,7 @@ div with zero size.
 	font-weight: bolder;
 }
 #closeButton_video_requestUnmuteDiv{
-	background: url(../assets/close.png);
+	background: asset-url('assets/close.png', image);
 	right: 3px;
 	opacity: 0.7;
 	top: 3px;

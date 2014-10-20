@@ -29,7 +29,7 @@
 
 .countdown .dash
 {
-    background: url(/images/fairdeals/primary_lead/flip.png) no-repeat top center;
+    background: asset-url('fairdeals/primary_lead/flip.png', image) no-repeat top center;
     width: 33px;
     height: 33px;
     padding: 4px 0 0 9px;

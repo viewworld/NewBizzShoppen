@@ -5,17 +5,17 @@
 
 #user_menu
 {
-    background-image: url(/images/fairdeals/bg_nav_subpage.png);
+    background-image: asset-url('fairdeals/bg_nav_subpage.png', image);
 }
 
 #content
 {
-    background-image: url(/images/fairdeals/bg_content_head.png);
+    background-image: asset-url('fairdeals/bg_content_head.png', image);
 }
 
 #footer
 {
     width: 100%;
     height: 30px;
-    background-image: url(/images/fairdeals/bg_footer.png);
+    background-image: asset-url('fairdeals/bg_footer.png', image());
 }  

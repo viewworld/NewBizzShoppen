@@ -1,6 +1,6 @@
 body
 {
-    background: url(/images/bg_body.png) repeat 0 0 #ededed;
+    background: asset-url('bg_body.png', image) repeat 0 0 #ededed;
     font: 14px Arial, Helvetica, Verdana, Tahoma, sans-serif;
     color: #505050;
 }

@@ -328,7 +328,7 @@
 input.date.hasDatepicker
 {
     width: 70px;
-    background: url(/images/forms/date.png) no-repeat left center #fff;
+    background: asset-url('forms/date.png', image) no-repeat left center #fff;
     padding-left: 32px;
     float: left;
 }
@@ -336,7 +336,7 @@ input.date.hasDatepicker
 .inputs ol li.date.time input
 {
     width: 110px;
-    background: url(/images/forms/date.png) no-repeat left center #fff;
+    background: asset-url('forms/date.png', image) no-repeat left center #fff;
     padding-left: 32px;
 }
 
@@ -1139,7 +1139,7 @@ input.date.hasDatepicker
     -webkit-border-radius: 6px;
     border-radius: 6px;
 
-    background: url(/images/range_slider/bg_range.png) repeat-x 0 0 transparent;
+    background: asset-url('range_slider/bg_range.png', image) repeat-x 0 0 transparent;
 }
 
 .range_container .ui-slider-range
@@ -1158,7 +1158,7 @@ input.date.hasDatepicker
 
 .range_container .ui-slider .ui-slider-handle
 {
-    background: url(/images/range_slider/handler.png) no-repeat 0 0 transparent;
+    background: asset-url('range_slider/handler.png', image) no-repeat 0 0 transparent;
     border: none;
     width: 17px;
     height: 17px;
