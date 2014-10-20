@@ -84,12 +84,21 @@ class Members::TendersController < Members::MemberController
     @leads = @search.order("created_at DESC").where(:creator_id => current_user.id).order("id DESC").paginate(:show_all => params[:show_all], :page => params[:page], :per_page => Settings.default_leads_per_page)
   end
 
+  private
+
   def categories_for_current_user
-    if current_user
-      @categories = current_user.has_accessible_categories? ? LeadCategory.with_leads.within_accessible(current_user).without_locked_and_not_published : current_user.has_role?(:supplier) ? LeadCategory.with_leads.without_locked_and_not_published.with_supplier_unique(current_user) : LeadCategory.with_leads.without_locked_and_not_published.with_agent_unique(current_user).without_supplier_unique
-    else
-      @categories = LeadCategory.with_leads.without_locked_and_not_published.without_unique
+    @categories = if current_user
+                    current_user.has_accessible_categories? ?
+                      LeadCategory.with_leads.within_accessible(current_user).without_locked_and_not_published :
+                      lead_categories
+                  else
+                    LeadCategory.without_unique.with_leads.without_locked_and_not_published
     end
   end
 
+  def lead_categories
+    current_user.has_role?(:supplier) ?
+      LeadCategory.with_supplier_unique(current_user).with_leads.without_locked_and_not_published :
+      LeadCategory.with_agent_unique(current_user).without_supplier_unique.with_leads.without_locked_and_not_published
+  end
 end
