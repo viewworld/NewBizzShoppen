@@ -18,6 +18,11 @@ class Administration::PayoutsController < Administration::AdministrationControll
     params[:search][:with_creator] << false if params[:search][:with_creator].empty?
   end
 
+  def search
+    collection
+    render :index
+  end
+
   def collection
     @search = Payout::Search.new(params.merge(:current_user => current_user))
     @call_results = @search.call_results.paginate(:page => params[:page], :per_page => 50, :show_all => params[:show_all])

@@ -133,6 +133,7 @@ Nbs::Application.routes.draw do
       end
 
       collection do
+        post 'search'
         get 'agents'
         get 'campaigns'
       end
