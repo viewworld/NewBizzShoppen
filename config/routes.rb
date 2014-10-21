@@ -102,6 +102,7 @@ Nbs::Application.routes.draw do
         put 'update_dynamic_values'
       end
       collection do
+        post 'search'
         get 'agents'
         get 'campaigns'
       end

@@ -5,7 +5,7 @@
     <h2><%= t("campaign_reports.index.search_label") %></h2>
 
     <div class="search_content">
-      <%= form_tag administration_payouts_path, :method => :get, :id => "form_campaign_reports_search" do %>
+      <%= form_tag search_administration_payouts_path, :method => :post, :id => "form_campaign_reports_search" do %>
           <%= hidden_field_tag "currency_id" %>
           <%= hidden_field_tag "order_by", @search.order_by %>
           <%= hidden_field_tag "order", @search.order %>
@@ -90,7 +90,7 @@
               <ol class="pdd_10">
                 <li class="commit pdd_10 no_pdd_l">
                   <ibt c="bt_green" icon="magnify">
-                    <%= submit_tag t("campaign_reports.index.search_button"), :onclick => "set_search_url();;" %>
+                    <%= submit_tag t("campaign_reports.index.search_button") %>
                   </ibt>
                 </li>
               </ol>
