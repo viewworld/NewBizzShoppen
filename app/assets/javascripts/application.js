@@ -1,6 +1,4 @@
 //= require ckeditor/init
-//= require_tree .
-
 
 function mark_all_cbs_with_selector(t) {
     var tr = $(t).parents('table').find("tr:not(.main_actions)");
