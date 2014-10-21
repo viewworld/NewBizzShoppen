@@ -6,15 +6,6 @@
     <br/>
   </div>
 
-  <% unless @user.rpx_identifier.blank? %>
-      <div class="hl" style="padding: 15px 0"></div>
-      <div class="frm_tiny" style="margin-bottom:10px;">
-        <div class="pdd_10">
-          <%= render(:partial => "shared/accounts/rpx_message", :locals => {:user => @user}) %>
-        </div>
-      </div>
-  <% end %>
-
   <%= render :partial => "sign_in/purchase_manager_form", :locals => {:user => @user, :url => member_accounts_path, :modal_box => false} %>
     <script type="text/javascript">
     $(document).ready(function() {

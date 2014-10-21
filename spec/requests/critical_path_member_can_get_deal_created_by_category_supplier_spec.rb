@@ -254,12 +254,14 @@ describe 'Member can get deal created by category supplier' do
               'user_category_supplier[newsletter_on]' => '1'}
 
     body_include_fields fields
-    lines = { 'user_category_supplier[rpx_identifier]' => '1' }
 
     # I press Create
-    expect { post '/supplier_accounts', fields.merge(lines) }.to change(User::CategorySupplier, :count).by(1)
+    expect { post '/supplier_accounts', fields }.to change(User::CategorySupplier, :count).by(1)
     follow_with_redirect
-    has_flash 'Your account has been successfully created! You are now signed in.'
+    has_flash 'Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account.'
+
+    confirm_and_sign_in('premiumsupplier@example.com')
+    get '/'
 
     # I should be signed in as premiumsupplier@example.com
     body_has_to(:include, premiumsupplier_email)
@@ -313,7 +315,7 @@ describe 'Member can get deal created by category supplier' do
     has_flash 'Deal has been successfully created.'
 
     # I log out
-    logout '/companyname'
+    logout
 
     #
     # Member signup & deal purchase
@@ -352,11 +354,15 @@ describe 'Member can get deal created by category supplier' do
     # I press Create
 
     body_has_to(:have_button, 'Create')
-    expect { post '/member_accounts', fields.merge('user_member[rpx_identifier]' => 1) }.to change(User::Member, :count).by(1)
+    expect { post '/member_accounts', fields }.to change(User::Member, :count).by(1)
 
     # I should be signed in as memberpremium@example.com
     follow_with_redirect
-    has_flash 'Your account has been successfully created! You are now signed in.'
+    has_flash 'Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account.'
+
+    confirm_and_sign_in('memberpremium@example.com')
+    get '/'
+
     body_has_to(:include, 'memberpremium@example.com')
 
     # I click Deals tab

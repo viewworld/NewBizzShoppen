@@ -531,8 +531,6 @@ Nbs::Application.routes.draw do
 
   resource :my_profile, controller: "my_profile", only: [:update] do
     member do
-      post 'social_link'
-      put 'social_unlink'
       get 'unlink'
       put 'remove_category_supplier'
       get 'unsubscribe'

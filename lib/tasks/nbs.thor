@@ -274,25 +274,25 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :name => "Upgraded category buyer welcome",
             :uniq_id => "upgraded_contact_to_category_buyer_welcome",
             :en => {:subject => "Welcome to Fairleads.com!",
-                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.category_supplier_category_home_url}}\">{{user.category_supplier_category_home_url}}</a></p>"},
+                    :body => "<p>Login: {{user.email}}</p><p><a href=\"{{user.category_supplier_category_home_url}}\">{{user.category_supplier_category_home_url}}</a></p>"},
             :da => {:subject => "[DK] Welcome to Fairleads.com!",
-                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.category_supplier_category_home_url}}\">{{user.category_supplier_category_home_url}}</a></p>"}
+                    :body => "<p>Login: {{user.email}}</p><p><a href=\"{{user.category_supplier_category_home_url}}\">{{user.category_supplier_category_home_url}}</a></p>"}
         },
         {
             :name => "Upgraded buyer welcome",
             :uniq_id => "upgraded_contact_to_buyer_welcome",
             :en => {:subject => "Welcome to Fairleads.com!",
-                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"},
+                    :body => "<p>Login: {{user.email}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"},
             :da => {:subject => "[DK] Welcome to Fairleads.com!",
-                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"}
+                    :body => "<p>Login: {{user.email}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"}
         },
         {
             :name => "Upgraded member welcome",
             :uniq_id => "upgraded_contact_to_member_welcome",
             :en => {:subject => "Welcome to Fairdeals.dk!",
-                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"},
+                    :body => "<p>Login: {{user.email}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"},
             :da => {:subject => "[DK] Welcome to Fairdeals.dk!",
-                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"}
+                    :body => "<p>Login: {{user.email}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"}
         },
         {
             :name => "Deal certification request",

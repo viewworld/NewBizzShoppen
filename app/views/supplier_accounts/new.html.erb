@@ -7,16 +7,6 @@
 
   <div class="hl" style="padding: 15px 0"></div>
 
-  <% unless @user.rpx_identifier.blank? %>
-
-
-      <div class="frm_tiny" style="margin-bottom:10px;">
-        <div class="pdd_10">
-          <%= render(:partial => "shared/accounts/rpx_message", :locals => {:user => @user}) %>
-        </div>
-      </div>
-  <% end %>
-
   <%= semantic_form_for @user, :url => supplier_accounts_path do |form| %>
       <%= frm(:title => "#{t('shared.accounts.new_account_form.form_title')}", :class => "no_marg") do |section| %>
         <% section.block_content do %>
@@ -54,8 +44,8 @@
                 <ol class="align_inputs">
                   <%= form.input :phone, :hint => hint_for(@user, :phone) %>
                   <%= form.input :email, :hint => hint_for(@user, :email) %>
-                  <%= form.input :password, :hint => hint_for(@user, :password), :as => @user.rpx_identifier.blank? ? :password : :hidden %>
-                  <%= form.input :password_confirmation, :hint => hint_for(@user, :password_confirmation), :as => @user.rpx_identifier.blank? ? :password : :hidden %>
+                  <%= form.input :password, hint: hint_for(@user, :password), as: :password %>
+                  <%= form.input :password_confirmation, hint: hint_for(@user, :password_confirmation), as: :password %>
                   <% unless I18n.locale == :da %>
                     <%= form.input :time_zone, :wrapper_html => {:class => "select"}, :input_html => {:style => "width: 240px"} %>
                   <% else %>
@@ -63,7 +53,6 @@
                   <% end %>
                   <%= form.input :agreement_read, :as => :boolean, :hint => hint_for(@user, :agreement_read), :label => "#{t("common.agree_to")} #{link_to_main_page_article('terms_conditions', {:popup => true}, {:id => 'agreement_modal_box'})}".html_safe, :required => true %>
                   <%= form.input :newsletter_on, :as => :boolean, :hint => hint_for(@user, :newsletter_on) %>
-                  <%= form.input :rpx_identifier, :as => :hidden %>
                 </ol>
               </fieldset>
             </div>
@@ -73,13 +62,6 @@
 
         <% end %>
         <% section.block_actions do %>
-          <div style="position: absolute;left: 142px;">
-            <%= t("member_accounts.new.view.janrain_sign_up_label") %>
-            <% unless Rails.env.test? %>
-                <%= link_to_rpx image_tag("icons/social_login.png"), supplier_accounts_url %>
-                <%= javascript_include_rpx supplier_accounts_url %>
-            <% end %>
-          </div>
           <%= ibt(:class => "fltri", :icon => "plus") do %>
             <%= form.submit t("supplier_accounts.new.view.button_create_account") %>
           <% end %>

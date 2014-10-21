@@ -24,7 +24,6 @@
               <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
                   <fieldset class="inputs labels_100 inputs_200 no_pdd">
                     <ol class="align_inputs no_pdd">
-                      <%= render :partial => "shared/accounts/social_login_for_sign_in" %>
                       <%= f.input :email, :input_html => {:tabindex => 1} %>
                       <%= f.input :password, :label => raw(I18n.t("activerecord.attributes.user.password") + content_tag(:span, link_to(t("category_home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link")), :input_html => {:tabindex => 2}, :wrapper_html => {:class => "rltv"} %>
                       <%= f.input :remember_me, :as => :boolean, :required => false, :input_html => {:tabindex => 3} %>

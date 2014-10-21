@@ -6,19 +6,6 @@
 
   <div class="hl" style="padding: 15px 0"></div>
 
-  <div class="frm_tiny" style="margin-bottom:10px;">
-    <div class="pdd_10">
-      <p><%= t("agent_accounts.new.view.janrain_sign_up_label") %>
-        <% unless Rails.env.test? %>
-            <%= link_to_rpx image_tag("icons/social_login.png"), agent_accounts_url %>
-            <%= javascript_include_rpx agent_accounts_url %>
-        <% end %>
-      </p>
-      <%= render(:partial => "shared/accounts/rpx_message", :locals => {:user => @user}) unless @user.rpx_identifier.blank? %>
-    </div>
-  </div>
-
-
   <%= semantic_form_for @user, :url => agent_accounts_path do |form| %>
       <%= frm(:title => "Create new account", :class => "no_marg") do |section| %>
         <% section.block_content do %>
@@ -47,12 +34,11 @@
                 <ol class="align_inputs">
                   <%= form.input :phone, :hint => hint_for(@user, :phone) %>
                   <%= form.input :email, :hint => hint_for(@user, :email) %>
-                  <%= form.input :password, :hint => hint_for(@user, :password), :as => @user.rpx_identifier.blank? ? :password : :hidden %>
-                  <%= form.input :password_confirmation, :hint => hint_for(@user, :password_confirmation), :as => @user.rpx_identifier.blank? ? :password : :hidden %>
+                  <%= form.input :password, hint: hint_for(@user, :password), as: :password %>
+                  <%= form.input :password_confirmation, hint: hint_for(@user, :password_confirmation), as: :password %>
                   <%= form.input :time_zone, :wrapper_html => {:class => "select"}, :input_html => {:style => "width: 240px"} %>
                   <%= form.input :agreement_read, :hint => hint_for(@user, :agreement_read), :as => :boolean, :label => "#{t("common.agree_to")} #{link_to_main_page_article('terms_conditions', {:popup => true}, {:id => 'agreement_modal_box'})}".html_safe, :required => true %>
                   <%= form.input :newsletter_on, :hint => hint_for(@user, :newsletter_on), :as => :boolean %>
-                  <%= form.input :rpx_identifier, :as => :hidden %>
                 </ol>
               </fieldset>
             </div>

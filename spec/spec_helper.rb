@@ -9,6 +9,7 @@ require 'rspec/autorun'
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
+  config.include Warden::Test::Helpers
   config.include FactoryGirl::Syntax::Methods
   config.include(EmailSpec::Helpers)
   config.include(EmailSpec::Matchers)
@@ -38,5 +39,9 @@ RSpec.configure do |config|
 
   config.before(type: :controller) do
     request.env['HTTP_REFERER'] = '/'
+  end
+
+  config.after do
+    Warden.test_reset!
   end
 end

@@ -136,19 +136,23 @@ describe 'Critical Path Autobuy for category suppliers' do
               'user_category_supplier[newsletter_on]' => '1'}
 
     body_include_fields fields
-    lines = { 'user_category_supplier[rpx_identifier]' => '1' }
 
-    expect { post '/supplier_accounts', fields.merge(lines) }.to change(User::CategorySupplier, :count).by(1)
+    expect { post '/supplier_accounts', fields }.to change(User::CategorySupplier, :count).by(1)
     follow_with_redirect
-    has_flash 'Your account has been successfully created! You are now signed in.'
+    has_flash 'Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account.'
+
+    #Confirming the account and signing in
+
+    confirm_and_sign_in('premiumsupplier@example.com')
+
+    get '/supplier_home/show'
 
     # I should be signed in as premiumsupplier@example.com
     body_has_to(:include, premiumsupplier_email)
 
-    # I logout
-    logout '/companyname'
+    ## I logout
+    logout(:user)
 
-    #
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-agent-signup--lead-creation
     # 'agent signup & lead creation'
     # I go to faircalls.dk
@@ -179,16 +183,20 @@ describe 'Critical Path Autobuy for category suppliers' do
               'user_agent[newsletter_on]' => '1'}
 
     body_include_fields fields
-    lines = { 'user_agent[rpx_identifier]' => '1' }
 
     # I press Create
     # I should get email with confirmation link
     # I confirm my account with link from email
-    expect { post '/agent_accounts', fields.merge(lines) }.to change(User::Agent, :count).by(1)
+    expect { post '/agent_accounts', fields }.to change(User::Agent, :count).by(1)
     follow_with_redirect
-    has_flash 'Your account has been successfully created! You are now signed in.'
+    has_flash 'Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account.'
+
+    confirm_and_sign_in('agent@example.com')
 
     # I should be signed in as agent@example.com
+
+    get '/'
+
     body_has_to(:include, 'agent@example.com')
 
     # I click My leads tab
@@ -238,7 +246,7 @@ describe 'Critical Path Autobuy for category suppliers' do
     follow_with_redirect '/agents/leads'
 
     # I log out
-    logout '/agent_home'
+    logout(:user)
 
     #
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-lead-purchases--invoices-for-category-supplier
@@ -300,9 +308,8 @@ describe 'Critical Path Autobuy for category suppliers' do
     body_has_to(:include, 'Lead Public Header')
 
     # I log out
-    logout "/#{lead_category.cached_slug}"
+    logout(:user)
 
-    #
     # https://github.com/Selleo/NewBizzShoppen/wiki/Critical-Path---Autobuy-for-category-suppliers#wiki-invoice-creation
     # 'invoice creation'
     # I go to fairleads.com

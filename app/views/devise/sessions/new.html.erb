@@ -10,12 +10,6 @@
       <%= frm(:title => "Type your email") do |section| %>
         <% section.block_content do %>
           <div class="pdd_10">
-            <fieldset class="inputs labels_100 inputs_180 no_pdd">
-              <ol class="align_inputs no_pdd">
-                <%= render(:partial => "shared/accounts/social_login_for_sign_in") unless @failed_rpx %>
-              </ol>
-            </fieldset>
-
             <fieldset class="inputs labels_100 inputs_280">
               <ol class="align_inputs">
                 <li class="string">
@@ -39,12 +33,10 @@
                   <%= ibt do %>
                     <%= f.submit "Sign in" %>
                   <% end %>
-                  <% unless @failed_rpx %>
-                      <% if session[:site] == "fairleads" %>
-                        <p>or <%= link_to t("supplier_home.show.view.create_new_supplier_account"), new_supplier_account_path %></p>
-                      <% else %>
-                        <p>or <%= link_to t("supplier_home.show.view.create_new_membership_account"), new_member_account_path %></p>
-                      <% end %>
+                  <% if session[:site] == "fairleads" %>
+                      <p>or <%= link_to t("supplier_home.show.view.create_new_supplier_account"), new_supplier_account_path %></p>
+                  <% else %>
+                      <p>or <%= link_to t("supplier_home.show.view.create_new_membership_account"), new_member_account_path %></p>
                   <% end %>
                 </li>
               </ol>
