@@ -15,7 +15,15 @@
 
 /* iPhone 4 and high pixel ratio devices ----------- */
 
-@media only screen and(-webkit-min-device-pixel-ratio:1.5),
+@media only screen and(-webkit-min-device-pixel-ratio: 1.5)
+{
+    #head #head_bg
+    {
+        width: 1200px !important;
+    }
+
+}
+
 @media only screen and (min-device-pixel-ratio: 1.5)
 {
     #head #head_bg
@@ -313,7 +321,7 @@ h4
     top: -3px;
     left: 0;
     z-index: 9999; /*min-width: 96%;*/
-    width: 120px ! ie7;
+    width: 120px;
 
     -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .5);
     -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .5);
@@ -1085,8 +1093,8 @@ input:focus, textarea:focus, select:focus
     font-size: 14px;
     font-weight: bold;
 
-    display: inline ! ie7;
-    zoom: 1 ! ie7;
+    display: inline;
+    zoom: 1;
 }
 
 .categories_tree.vertical li.categories_node
@@ -1595,7 +1603,7 @@ div.bt span input
     overflow: visible;
     height: 30px;
     height /*\**/: 33 px\9; /* ie7/8 bug fix */
-    line-height: 30px ! ie7;
+    line-height: 30px;
 
     padding: 0 10px 0px !important;
     margin: 0 !important;

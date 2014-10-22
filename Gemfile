@@ -2,7 +2,6 @@ source 'http://rubygems.org'
 ruby '1.9.3'
 
 # basics
-gem 'bundler', '1.6.5'
 gem 'rails', '3.1.12'
 gem 'therubyracer', '>= 0.12.1', platforms: :ruby
 
@@ -80,7 +79,7 @@ gem 'strong_parameters', '~> 0.2.3'
 gem 'amoeba', '2.0.0'
 
 group :assets do
-  gem 'sass-rails', '3.1.5'
+  gem 'sass-rails', '3.1.7'
   gem 'uglifier', '~> 2.5.3'
   gem 'coffee-rails', '~> 3.1.1'
 end
