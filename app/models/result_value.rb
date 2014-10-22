@@ -13,8 +13,8 @@ class ResultValue < ActiveRecord::Base
   scope :dates, where(:field_type => ResultField::DATETIME.to_s)
 
   amoeba do
-    include_field [:result_values, :archived_email]
-    clone [:result_values, :archived_email]
+    include_field [:archived_email]
+    clone [:archived_email]
   end
 
   def save_without_callbacks!
