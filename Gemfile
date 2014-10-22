@@ -27,7 +27,6 @@ gem 'recaptcha', '0.3.5', require: 'recaptcha/rails'
 
 # s3
 gem 'aws-s3', '0.6.2'
-gem 'jammit-s3', '~> 0.6.0.2'
 
 # views
 gem 'slim', '~> 2.0.3'
