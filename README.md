@@ -23,6 +23,13 @@ or
 rvm install ree --without-tcl --without-t
 ```
 
+***Mac OS X Yosemite***
+
+```
+brew install gcc48
+rvm reinstall ree-1.8.7 --without-tcl --without-tk --with-gcc=gcc-4.8
+```
+
 **Setup your .rvmrc**
 
 `rvm use ree@nbs --create`
@@ -32,6 +39,8 @@ rvm install ree --without-tcl --without-t
 `bundle`
 
 In case of problems installing Gherkin, run `gem install gherkin -v '2.3.5' -- --with-cflags=-w` and then `bundle` again
+
+It might happen that `eventmachine` won't be installed out of the box, than run `gem install eventmachine -v '1.0.3' -- --with-cflags=-`.
 
 If you experience following error when installing `active-admin`
 
