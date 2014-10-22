@@ -247,6 +247,8 @@ GEM
     postmark-rails (0.4.2)
       actionmailer
       postmark (~> 0.9)
+    prototype-rails (3.1.0)
+      rails (~> 3.1)
     pry (0.9.12.6)
       coderay (~> 1.0)
       method_source (~> 0.8)
@@ -456,6 +458,7 @@ DEPENDENCIES
   paypal_nvp (= 0.2.0)
   pg (~> 0.17.1)
   postmark-rails (= 0.4.2)
+  prototype-rails
   pry (= 0.9.12.6)
   pry-debugger (= 0.2.3)
   pry-rails (= 0.3.2)
