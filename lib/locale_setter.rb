@@ -12,7 +12,7 @@ module Rack
     private
 
     def locales
-      @locales ||= Locale.all.map(&:code)
+      @locales ||= Locale.all.map(&:code) & I18n.available_locales.map(&:to_s)
     end
 
     def translate_locale(locale)
