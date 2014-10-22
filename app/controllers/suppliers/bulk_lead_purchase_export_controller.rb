@@ -1,3 +1,3 @@
 class Suppliers::BulkLeadPurchaseExportController < Suppliers::BasicSupplierController
-  include ::ExportActions
+  include ::Controllers::ExportActions
 end

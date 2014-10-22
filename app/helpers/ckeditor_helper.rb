@@ -7,35 +7,35 @@ module CkeditorHelper
       width: '320px',
       height: '150px',
       toolbar: 'Lite',
-      customConfig: '/javascripts/ckeditor/config.js'
+      customConfig: 'ckeditor/config.js'
     }
   end
 
   def email_signature_ckeditor_params
     {
       toolbar: 'EmailSignature',
-      customConfig: '/javascripts/ckeditor/config.js'
+      customConfig: 'ckeditor/config.js'
     }
   end
 
   def email_popup_multi_ckeditor_params
     {
       toolbar: 'EmailPopupMulti',
-      customConfig: '/javascripts/ckeditor/config.js'
+      customConfig: 'ckeditor/config.js'
     }
   end
 
   def email_popup_ckeditor_params
     {
       toolbar: 'EmailPopup',
-      customConfig: '/javascripts/ckeditor/config.js'
+      customConfig: 'ckeditor/config.js'
     }
   end
 
   def email_ckeditor_params
     {
       toolbar: 'Email',
-      customConfig: '/javascripts/ckeditor/config.js'
+      customConfig: 'ckeditor/config.js'
     }
   end
 end

@@ -1,0 +1,158 @@
+/* --- frame apperience ---
+--------------------------------------------------------------------------------- */
+
+.frm > .frm_head > .frm_hc h1,
+.frm > .frm_head > .frm_hc h2,
+.frm > .frm_head > .frm_hc h3
+{
+    font: 13px;
+    line-height: 38px;
+    padding-left: 10px;
+    color: #fff;
+    text-shadow: 1px 1px 0 #2e2e2f;
+    font-weight: normal;
+}
+
+.frm > .frm_head a
+{
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 1px solid #999;
+}
+
+.frm > .frm_head a:hover
+{
+    border-bottom-color: #fff;
+}
+
+
+/* --- frame base ---
+--------------------------------------------------------------------------------- */
+
+.frm
+{
+    margin-bottom: 20px;
+}
+
+.frm .frm_head
+{
+    position: relative;
+    height: 38px;
+}
+
+.frm .frm_head .frm_hl,
+.frm .frm_head .frm_hr
+{
+    width: 10px;
+}
+
+.frm .frm_head .frm_hl,
+.frm .frm_head .frm_hr,
+.frm .frm_head .frm_hc
+{
+    height: 38px;
+}
+
+.frm .frm_head .frm_hl
+{
+    float: left;
+    background: asset-url('fairdeals/frm/frm.png', image) no-repeat 0 0;
+
+    -moz-border-radius: 10px 0 0 0;
+    -webkit-border-radius: 10px 0 0 0;
+    border-radius: 10px 0 0 0;
+}
+
+.frm .frm_head .frm_hr
+{
+    float: right;
+    background: asset-url('fairdeals/frm/frm.png', image) no-repeat right 0;
+
+    -moz-border-radius: 0 10px 0 0;
+    -webkit-border-radius: 0 10px 0 0;
+    border-radius: 0 10px 0 0;
+}
+
+.frm .frm_head .frm_hc
+{
+    background: asset-url('fairdeals/frm/frm.png', image) repeat-x 0 -38px;
+
+    -moz-border-radius: 10px 10px 0 0;
+    -webkit-border-radius: 10px 10px 0 0;
+    border-radius: 10px 10px 0 0;
+}
+
+.frm .frm_content
+{
+    border: 1px solid #cfcfcf;
+    border-top: none;
+    background-color: #fff;
+
+    -moz-border-radius: 0 0 10px 10px;
+    -webkit-border-radius: 0 0 10px 10px;
+    border-radius: 0 0 10px 10px;
+}
+
+/* --- frame tiny version ---
+--------------------------------------------------------------------------------- */
+
+.frm_plain
+{
+    border: 1px solid #cfcfcf;
+    background-color: #fff;
+
+    margin-bottom: 20px;
+
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+
+    -moz-box-shadow: 0 0 5px #d2d2d2;
+    -webkit-box-shadow: 0 0 5px #d2d2d2;
+    box-shadow: 0 0 5px #d2d2d2;
+}
+
+.frm_plain > .frm_head > h3
+{
+    font-size: 18px;
+
+}
+
+
+/* --- frame dark ---
+--------------------------------------------------------------------------------- */
+
+
+.frm_dark
+{
+    background: asset-url('fairdeals/bg_dark.png', image) repeat 0 0;
+    border: 1px solid #cacaca;
+
+    margin-bottom: 20px;
+
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;    
+}
+
+.frm_dark h2
+{
+    font-size:14px;
+    padding-bottom: 6px;
+    margin-bottom: 7px;
+    background: asset-url('fairdeals/frm/hl_darkfrm.png', image) repeat-x bottom left;
+}
+
+
+/* --- others ---
+--------------------------------------------------------------------------------- */
+
+.frm_foot_actions
+{
+    padding: 10px 0 0;
+}
+
+.frm_foot_actions .bt
+{
+    margin-left: 5px;
+}

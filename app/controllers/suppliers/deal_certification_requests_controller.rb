@@ -2,7 +2,7 @@ class Suppliers::DealCertificationRequestsController < Suppliers::BasicSupplierC
 
   before_filter :set_deal, :only => [:edit, :update]
 
-  include ::DealCertificationRequestActions
+  include ::Controllers::DealCertificationRequestActions
 
   def index
     @deal_certification_requests = current_user.deal_certification_requests

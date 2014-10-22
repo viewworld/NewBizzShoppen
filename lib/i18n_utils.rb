@@ -74,7 +74,7 @@ class I18nUtils
       Translation.where("key LIKE :selector", {:selector => "%#{selector}%"}).each do |t|
         self.store_in_hash(([t.locale] + t.key.split('.')), h, t.value)
       end
-      f = File.open(File.join(Rails.root, "public/javascripts/translations.js"), 'w')
+      f = File.open(File.join(Rails.root, 'app/assets/translations.js'), 'w')
       f << "var I18n = I18n || {};" << "I18n.translations = " << h.to_json << ";"
       f.close
     end

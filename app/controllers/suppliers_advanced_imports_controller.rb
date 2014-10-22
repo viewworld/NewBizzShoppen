@@ -1,5 +1,5 @@
 class SuppliersAdvancedImportsController < SecuredController
-  include AdvancedImportActions
+  include ::Controllers::AdvancedImportActions
   before_filter :check_role
 
   def create

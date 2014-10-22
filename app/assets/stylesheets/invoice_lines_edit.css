@@ -1,0 +1,192 @@
+fieldset.invoice_line ol li.li_remove_line {
+    position: absolute;
+    right: -40px;
+    top: 0;
+    width: 37px;
+    margin: 0px;
+}
+
+fieldset.invoice_line a.remove_line {
+    display: block;
+    width: 30px;
+    height: 34px;
+    background: asset-url('remove_bg.png', image) no-repeat top left;
+}
+
+fieldset.invoice_line a.remove_line img {
+    margin-top: 6px;
+    margin-left: 6px;
+}
+
+.add_invoice_line_btns {
+    background: asset-url('add_bg.png', image) no-repeat top left;
+    width: 30px;
+    height: 57px;
+    position: absolute;
+    right: 13px;
+}
+
+a.add_line, .add_by_raw {
+    width: 22px;
+    height: 21px;
+    display: block;
+    position: absolute;
+
+    margin-left: 6px;
+}
+
+a.add_line {
+    margin-top: 6px;
+}
+
+.add_by_raw {
+    margin-top: 30px;
+}
+
+a.add_line img, .add_by_raw img {
+    position: relative;
+    z-index: 10;
+}
+
+fieldset.invoice_line_labels {
+    margin: 10px 20px;
+    position: relative
+}
+
+fieldset.invoice_line {
+    position: relative
+}
+
+fieldset.invoice_line li input {
+    width: 100%
+}
+
+fieldset.invoice_line li,
+fieldset.invoice_line_labels label,
+fieldset.invoice_totals li {
+    float: left;
+    clear: none;
+    margin: 0px 10px;
+    padding: 0px
+}
+
+fieldset.invoice_line_labels input {
+    position: absolute;
+    left: 12px;
+    top: 3px
+}
+
+/*netto_price, netto_value, vat_value, brutto_value*/
+fieldset.invoice_line_labels label.invoice_netto_price,
+fieldset.invoice_line_labels label.invoice_netto_value,
+fieldset.invoice_line_labels label.invoice_vat_value,
+fieldset.invoice_line_labels label.invoice_brutto_value,
+fieldset.invoice_line li.invoice_line_netto_price,
+fieldset.invoice_line li.invoice_line_netto_value,
+fieldset.invoice_line li.invoice_line_vat_value,
+fieldset.invoice_line li.invoice_line_brutto_value,
+fieldset.invoice_totals li.total_netto_value,
+fieldset.invoice_totals li.total_vat_value,
+fieldset.invoice_totals li.total_brutto_value {
+    width: 74px;
+}
+
+/*vat_rate, quantity, unit*/
+fieldset.invoice_line_labels label.invoice_vat_rate,
+fieldset.invoice_line_labels label.invoice_quantity,
+fieldset.invoice_line_labels label.invoice_unit,
+fieldset.invoice_line li.invoice_line_vat_rate,
+fieldset.invoice_line li.invoice_line_quantity,
+fieldset.invoice_line li.invoice_line_unit {
+    width: 52px;
+}
+
+/*name*/
+fieldset.invoice_line_labels label.invoice_name,
+fieldset.invoice_line li.invoice_line_name {
+    width: 330px;
+}
+
+/*payable_update*/
+fieldset.invoice_line_labels label.invoice_payable_update,
+fieldset.invoice_line li.invoice_line_payable_update {
+    width: 10px;
+}
+
+fieldset.invoice_line li.readonly input {
+    color: #777777
+}
+
+fieldset.invoice_line li .inline-hints {
+    font-style: normal;
+    font-size: 9px;
+    padding-left: 5px
+}
+
+fieldset.invoice_line li.invoice_line_payable_update input {
+    position: absolute;
+    left: -150px;
+    top: 5px;
+}
+
+@media screen and
+
+(
+-webkit-min-device-pixel-ratio:
+
+0
+)
+{
+fieldset.invoice_line li.invoice_line_payable_update input {
+    left: -150px;
+}
+
+}
+
+fieldset.invoice_totals {
+}
+
+fieldset.invoice_totals li.total_label {
+    width: 785px;
+    text-align: right;
+    font-weight: bold
+}
+
+fieldset.invoice_totals li.total_label label {
+    display: block;
+    width: 100%
+}
+
+#link_set_payable {
+    height: 40px;
+    background: asset-url('set_payable_bg.png', image) no-repeat top left;
+    margin-left: 37px;
+    position: relative;
+    display: none;
+}
+
+#link_set_payable a {
+    background: asset-url('frm_actions.png', image) no-repeat top left;
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    height: 31px;
+    padding-left: 20px;
+    padding-right: 15px;
+    display: block;
+    line-height: 29px;
+    float: left;
+    position: absolute;
+    top: 15px;
+    left: 22px;
+
+    -moz-border-radius-topright: 15px;
+    -moz-border-radius-bottomright: 15px;
+
+    -webkit-border-top-right-radius: 15px;
+    -webkit-border-bottom-right-radius: 15px;
+
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+
+}

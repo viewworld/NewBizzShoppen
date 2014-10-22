@@ -1,0 +1,53 @@
+body
+{
+    background: asset-url('bg_body.png', image) repeat 0 0 #ededed;
+    font: 14px Arial, Helvetica, Verdana, Tahoma, sans-serif;
+    color: #505050;
+}
+
+.no
+{
+    font-size: 150px;
+    text-align: center;
+    margin-top: 5%;
+    font-weight: bold;
+    color: #ccc;
+    text-shadow: 0 1px 0 #fff, 0 -1px 0 #aaa;
+}
+
+.dialog
+{
+    width: 400px;
+    padding: 20px;
+    margin: 0 auto;
+    position: relative;
+    background: #fff;
+    border: 1px solid #ccc;
+
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+
+    -moz-box-shadow: 0 1px 0 #fff;
+    -webkit-box-shadow: 0 1px 0 #fff;
+    box-shadow: 0 1px 0 #fff;
+}
+
+.dialog h1
+{
+    font-size: 26px;
+    line-height: 26px;
+    padding-bottom: 15px;
+}
+
+.dialog p
+{
+    padding-right: 15px;
+}
+
+.dialog > img
+{
+    position: absolute;
+    right: -30px;
+    bottom: -10px;
+}

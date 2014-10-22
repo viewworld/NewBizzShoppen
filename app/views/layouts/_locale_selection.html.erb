@@ -1,12 +1,12 @@
 <ul class="langs_dropdown">
   <li class="langs">
-    <%= link_to image_tag('/images/languages/flag_'+locale.to_s.downcase+'.png'), "javascript:void(0)", :class => "lang_selected" %>
+    <%= link_to image_tag('languages/flag_'+locale.to_s.downcase+'.png'), "javascript:void(0)", :class => "lang_selected" %>
     <ul id="langs_list">
       <% @locales.each do |locale| %>
           <li>
             <%= link_to locale_path(:id => locale.to_s), :id => locale.to_s.upcase do %>
                 <%= locale.symbol %>
-                <%= image_tag('/images/languages/flag_'+locale.to_s.downcase+'.png') %>
+                <%= image_tag('languages/flag_'+locale.to_s.downcase+'.png') %>
             <% end %>
           </li>
       <% end %>

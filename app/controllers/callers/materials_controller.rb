@@ -1,7 +1,7 @@
 class Callers::MaterialsController < Callers::CallerController
   inherit_resources
   set_tab "campaigns"
-  include ::MaterialActions
+  include ::Controllers::MaterialActions
   layout proc{ |c| c.request.xhr? ? "send_material" : "faircalls/application" }
 
   before_filter :set_resource

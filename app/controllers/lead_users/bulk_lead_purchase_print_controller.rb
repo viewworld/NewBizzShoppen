@@ -1,4 +1,4 @@
 class LeadUsers::BulkLeadPurchasePrintController < LeadUsers::LeadUserController
-  include ::PrintActions
+  include ::Controllers::PrintActions
 
 end

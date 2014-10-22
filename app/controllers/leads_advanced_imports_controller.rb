@@ -1,5 +1,5 @@
 class LeadsAdvancedImportsController < SecuredController
-  include AdvancedImportActions
+  include ::Controllers::AdvancedImportActions
 
   def create
     @attachment_file = params["attachment"]

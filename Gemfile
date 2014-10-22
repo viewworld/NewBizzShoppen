@@ -11,6 +11,7 @@ gem 'pg', '~> 0.17.1'
 
 # auth
 gem 'devise', '1.1.9'
+gem 'devise_rpx_connectable', '0.2.2'
 gem 'cancan', '1.6.5'
 
 # models
@@ -26,7 +27,7 @@ gem 'yajl-ruby', '1.1.0', require: 'yajl'
 gem 'recaptcha', '0.3.5', require: 'recaptcha/rails'
 
 # s3
-gem 'aws-s3', '0.6.2'
+gem 'aws-s3', '0.6.3', require: 'aws/s3'
 
 # views
 gem 'slim', '~> 2.0.3'
@@ -81,8 +82,10 @@ gem 'amoeba', '2.0.0'
 group :assets do
   gem 'sass-rails', '3.1.5'
   gem 'uglifier', '~> 2.5.3'
-  gem 'csso-rails', '~> 0.3.4'
+  gem 'coffee-rails', '~> 3.1.1'
 end
+
+gem 'jquery-rails'
 
 gem 'axlsx', '1.3.6'
 gem 'htmlentities', '4.3.1' # you can bump the version only when FL will be run on 1.9.3 or newer

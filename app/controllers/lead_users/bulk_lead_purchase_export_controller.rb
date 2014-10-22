@@ -1,3 +1,3 @@
 class LeadUsers::BulkLeadPurchaseExportController < LeadUsers::LeadUserController
-  include ::ExportActions
+  include ::Controllers::ExportActions
 end

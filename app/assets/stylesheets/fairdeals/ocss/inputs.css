@@ -1,0 +1,1170 @@
+/* --- text list (SHOW) ---
+--------------------------------------------------------------------------------- */
+
+.text_list li
+{
+    display: block;
+    clear: both;
+    margin-top: 5px;
+}
+
+.text_list li .label
+{
+    font-weight: bold;
+	line-height: 29px;
+    display: block;
+	float: left;
+	width: 155px;
+}
+
+.text_list li .txt
+{
+    display: block;
+    float: left;
+    margin: 7px 0 7px;
+}
+
+/* --- forms, inputs, etc ---
+--------------------------------------------------------------------------------- */
+
+.inputs
+{
+    padding-top: 5px;
+}
+
+.inputs legend
+{
+	font-weight: bold;
+	color: #010101;
+	margin: 0;
+	padding: 10px 0 0;
+	display: block;
+	height: 20px;
+	width: 100%;
+}
+
+.inputs ol
+{
+	padding-top: 5px;
+}
+
+.inputs ol li
+{
+    clear: both;
+    padding-top: 1px;
+}
+
+.inputs ol li.string label,
+.inputs ol li.select label,
+.inputs ol li.text label,
+.inputs ol li.password label,
+.inputs ol li.file label,
+.inputs ol li.numeric label,
+.inputs ol li.date label,
+.inputs ol li.ckeditor label
+{
+	display: block;
+	float: left;
+	line-height: 16px;
+	width: 150px;
+    padding: 8px 8px 0 0;
+    font-size: 12px;
+    text-indent: 5px;
+}
+
+.inputs ol li label abbr
+{
+    color: red;
+    padding-left: 3px;
+}
+
+.inputs ol li.commit
+{
+    padding-left: 6px;
+}
+
+.inputs ol li.commit p
+{
+    float: left;
+    padding-left: 5px;
+    line-height: 30px;
+    font-size: 12px;
+}
+
+.inputs ol li.commit p a
+{
+    padding-left: 3px;
+}
+
+.inputs li.commit div.bt
+{
+    margin-right: 5px;
+}
+
+.inputs ol li span.label_link
+{
+    position: absolute;
+    left: 0;
+    top: 25px;
+    font-size: 10px;
+    width: 100px;
+    text-indent: 0;
+    line-height: 12px;
+    padding-left: 5px;
+}
+
+.inputs ol li div.txt
+{
+    margin: 8px 0 6px;
+    overflow: hidden;
+}
+
+
+/* --- input ---
+--------------------------------------------------------------------------------- */
+
+.inputs ol li.string input,
+.inputs ol li.password input,
+.inputs ol li.numeric input
+{
+	width: 230px;
+    float: left;
+}
+
+.inputs ol li input
+{
+    margin-bottom: 4px;
+}
+
+.inputs ol li.file input
+{
+    float: left;
+    margin-top: 7px;    
+}
+
+.inputs ol li.string img.icon
+{
+    padding: 8px;
+}
+
+
+/* --- textarea ---
+--------------------------------------------------------------------------------- */
+
+.inputs ol li.text textarea
+{
+    float: left;
+    margin-bottom: 5px;
+}
+
+
+/* --- select ---
+--------------------------------------------------------------------------------- */
+
+.inputs ol li.select
+{
+    height: 33px;
+    line-height: 30px;
+}
+
+/* Firefox 3.0+ */
+.inputs ol li.select,  x:-moz-any-link, x:default
+{
+    line-height: 28px;
+}
+
+.inputs ol li.select select,  x:-moz-any-link, x:default
+{
+    padding: 5px 6px 4px;
+}
+
+
+.inputs ol li.select select
+{
+    width: auto;
+    float: left;
+}
+
+.inputs ol li.multiple
+{
+    height: auto;    
+}
+
+.inputs ol li.multiple select
+{
+    height: 80px;
+    width: 180px;
+}
+
+.inputs ol li.select.unique
+{
+    height: auto;
+}
+
+.inputs ol li.select.unique .users_search
+{
+    vertical-align:top !ie7;
+}
+
+
+/* --- social login ---
+--------------------------------------------------------------------------------- */
+
+.inputs ol li.string.social_login
+{
+    padding-bottom: 6px;
+}
+
+.frm .inputs ol li.string.social_login,
+.frm_tiny .inputs ol li.string.social_login
+{
+    border-bottom: 1px dotted #ccc;
+    margin-bottom: 12px;    
+}
+
+
+.inputs ol li.string.social_login label
+{
+    padding-top: 7px;
+}
+
+.inputs ol li.string.social_login div.txt
+{
+    margin-top: 0;
+}
+
+
+
+/* --- boolean + radio ---
+--------------------------------------------------------------------------------- */
+
+
+.inputs ol li.boolean,
+.inputs ol li.radio
+{
+	height: 23px;
+    padding-left: 10px;
+}
+
+.inputs ol li.boolean label,
+.inputs ol li.radio label
+{
+    line-height: 18px;
+}
+
+.inputs ol li.boolean input,
+.inputs ol li.radio input
+{
+	border: none;
+	margin: 2px 5px 0 0;
+	margin: 0 !ie7;
+	padding: 0;
+	float: left;
+    background: none;
+}
+
+.inputs ol li.collection
+{
+    height: auto;
+}
+
+
+/* --- ckeditor ---
+--------------------------------------------------------------------------------- */
+
+.inputs ol li.ckeditor
+{
+    padding: 5px 0 8px;    
+}
+
+.inputs ol li.ckeditor.ckeditor_label label
+{
+    float: none;
+    padding: 8px;
+}
+
+
+/* --- date ---
+--------------------------------------------------------------------------------- */
+
+.inputs ol li.date input,
+.inputs_vertical ol li.date input,
+input.date.hasDatepicker
+{
+    width: 70px;
+    background: asset-url('forms/date.png', image) no-repeat left center #fff;
+    padding-left: 32px;
+    float: left;
+}
+
+.inputs ol li.date.time input
+{
+    width: 110px;
+    background: asset-url('forms/date.png', image) no-repeat left center #fff;
+    padding-left: 32px;
+}
+
+
+
+
+
+
+
+/* --- header---
+--------------------------------------------------------------------------------- */
+
+.inputs ol li.header h3
+{
+    font-size: 14px;
+    padding: 0 0 10px 10px    
+}
+
+
+/* --- list element ---
+--------------------------------------------------------------------------------- */
+
+.inline_li ol li
+{
+    clear: none;
+    display: block;
+    float: left;
+    padding-right: 10px;
+}
+
+.inline_li ol li.boolean,
+.inline_li ol li.radio
+{
+    margin-top: 6px;
+}
+
+.inline_li ol li.commit
+{
+    margin-left: 0 !important;
+}
+
+.inline_li ol li.commit a.bt
+{
+    margin-top: 2px;
+}
+
+
+/* --- inline_errors & hints ---
+--------------------------------------------------------------------------------- */
+
+.inputs ol li p.inline-hints
+{
+    float: left;
+    line-height: 16px;
+    padding: 6px 0 0 8px;    
+    font-size: 11px;
+}
+
+.inputs ol li p.inline-errors
+{
+    float: left;
+    line-height: 16px;
+    padding: 7px 0 0 8px;
+    color: #f10000;
+    font-size: 11px;
+}
+
+.inputs ol li.error input,
+.inputs ol li.error textarea
+{
+    border-color: #ff6060;
+    -moz-box-shadow: 0 0 2px #ff6060;
+    -webkit-box-shadow: 0 0 2px #ff6060;
+    box-shadow: 0 0 2px #ff6060;
+}
+
+.inputs_hint img
+{
+    display: block;
+}
+
+
+/* --- inputs, list sizes ---
+--------------------------------------------------------------------------------- */
+
+.labels_auto ol li.string label,
+.labels_auto ol li.select label,
+.labels_auto ol li.password label,
+.labels_auto ol li.text label,
+.labels_auto ol li.numeric label,
+.labels_auto ol li.date label,
+.labels_auto ol li.file label,
+.labels_auto ol li .label,
+.labels_auto li .label
+{
+	width: auto;
+}
+
+.labels_icons ol li.string label,
+.labels_icons ol li.select label,
+.labels_icons ol li.password label,
+.labels_icons ol li.text label,
+.labels_icons ol li.numeric label,
+.labels_icons ol li.date label,
+.labels_icons ol li.file label,
+.labels_icons ol li .label,
+.labels_icons li .label
+{
+	width: 25px;
+    padding-top: 1px
+}
+
+
+.labels_50 ol li.string label,
+.labels_50 ol li.select label,
+.labels_50 ol li.password label,
+.labels_50 ol li.text label,
+.labels_50 ol li.numeric label,
+.labels_50 ol li.date label,
+.labels_50 ol li.file label,
+.labels_50 ol li .label,
+.labels_50 li .label
+{
+	width: 50px;
+}
+
+
+.labels_70 ol li.string label,
+.labels_70 ol li.select label,
+.labels_70 ol li.password label,
+.labels_70 ol li.text label,
+.labels_70 ol li.numeric label,
+.labels_70 ol li.date label,
+.labels_70 ol li.file label,
+.labels_70 ol li .label,
+.labels_70 li .label
+{
+	width: 70px;
+}
+
+.labels_80 ol li.string label,
+.labels_80 ol li.select label,
+.labels_80 ol li.password label,
+.labels_80 ol li.text label,
+.labels_80 ol li.numeric label,
+.labels_80 ol li.date label,
+.labels_80 ol li.file label,
+.labels_80 ol li .label,
+.labels_80 li .label
+{
+	width: 80px;
+}
+
+
+.labels_90 ol li.string label,
+.labels_90 ol li.select label,
+.labels_90 ol li.password label,
+.labels_90 ol li.text label,
+.labels_90 ol li.numeric label,
+.labels_90 ol li.date label,
+.labels_90 ol li.file label,
+.labels_90 ol li .label,
+.labels_90 li .label
+{
+	width: 90px;
+}
+
+.labels_100 ol li.string label,
+.labels_100 ol li.select label,
+.labels_100 ol li.password label,
+.labels_100 ol li.text label,
+.labels_100 ol li.numeric label,
+.labels_100 ol li.date label,
+.labels_100 ol li.file label,
+.labels_100 ol li .label,
+.labels_100 li .label
+{
+	width: 100px;
+}
+
+.labels_120 ol li.string label,
+.labels_120 ol li.select label,
+.labels_120 ol li.password label,
+.labels_120 ol li.text label,
+.labels_120 ol li.numeric label,
+.labels_120 ol li.date label,
+.labels_120 ol li.file label,
+.labels_120 ol li .label,
+.labels_120 li .label
+{
+	width: 120px;
+}
+
+.labels_140 ol li.string label,
+.labels_140 ol li.select label,
+.labels_140 ol li.password label,
+.labels_140 ol li.text label,
+.labels_140 ol li.numeric label,
+.labels_140 ol li.date label,
+.labels_140 ol li.file label,
+.labels_140 ol li .label,
+.labels_140 li .label
+{
+	width: 140px;
+}
+
+.labels_160 ol li.string label,
+.labels_160 ol li.select label,
+.labels_160 ol li.password label,
+.labels_160 ol li.text label,
+.labels_160 ol li.numeric label,
+.labels_160 ol li.date label,
+.labels_160 ol li.file label,
+.labels_160 ol li .label,
+.labels_160 li .label
+{
+	width: 160px;
+}
+
+.labels_180 ol li.string label,
+.labels_180 ol li.select label,
+.labels_180 ol li.password label,
+.labels_180 ol li.text label,
+.labels_180 ol li.numeric label,
+.labels_180 ol li.date label,
+.labels_180 ol li.file label,
+.labels_180 ol li .label,
+.labels_180 li .label
+{
+	width: 180px;
+}
+
+.labels_200 ol li.string label,
+.labels_200 ol li.select label,
+.labels_200 ol li.password label,
+.labels_200 ol li.text label,
+.labels_200 ol li.numeric label,
+.labels_200 ol li.date label,
+.labels_200 ol li.file label,
+.labels_200 ol li .label,
+.labels_200 li .label
+{
+	width: 200px;
+}
+
+.labels_220 ol li.string label,
+.labels_220 ol li.select label,
+.labels_220 ol li.password label,
+.labels_220 ol li.text label,
+.labels_220 ol li.numeric label,
+.labels_220 ol li.date label,
+.labels_220 ol li.file label,
+.labels_220 ol li .label,
+.labels_220 li .label
+{
+	width: 220px;
+}
+
+.labels_240 ol li.string label,
+.labels_240 ol li.select label,
+.labels_240 ol li.password label,
+.labels_240 ol li.text label,
+.labels_240 ol li.numeric label,
+.labels_240 ol li.date label,
+.labels_240 ol li.file label,
+.labels_240 ol li .label,
+.labels_240 li .label
+{
+	width: 240px;
+}
+
+.labels_260 ol li.string label,
+.labels_260 ol li.select label,
+.labels_260 ol li.password label,
+.labels_260 ol li.text label,
+.labels_260 ol li.numeric label,
+.labels_260 ol li.date label,
+.labels_260 ol li.file label,
+.labels_260 ol li .label,
+.labels_260 li .label
+{
+	width: 260px;
+}
+
+.labels_280 ol li.string label,
+.labels_280 ol li.select label,
+.labels_280 ol li.password label,
+.labels_280 ol li.text label,
+.labels_280 ol li.numeric label,
+.labels_280 ol li.date label,
+.labels_280 ol li.file label,
+.labels_280 ol li .label,
+.labels_280 li .label
+{
+	width: 280px;
+}
+
+.labels_300 ol li.string label,
+.labels_300 ol li.select label,
+.labels_300 ol li.password label,
+.labels_300 ol li.text label,
+.labels_300 ol li.numeric label,
+.labels_300 ol li.date label,
+.labels_300 ol li.file label,
+.labels_300 ol li .label,
+.labels_300 li .label
+{
+	width: 300px;
+}
+
+
+/* --- labels - align_right ---
+--------------------------------------------------------------------------------- */
+
+.labels_ta_r ol li.string label,
+.labels_ta_r ol li.select label,
+.labels_ta_r ol li.date label,
+.labels_ta_r ol li.password label,
+.labels_ta_r ol li.text label,
+.labels_ta_r ol li.numeric label,
+.labels_ta_r ol li.file label
+{
+    text-align: right;
+}
+
+
+
+/* --- sizes iputs ---
+--------------------------------------------------------------------------------- */
+
+.inputs_60 ol li.string input,
+.inputs_60 ol li.password input
+{
+	width: 60px;
+}
+.inputs_60 ol li.select select
+{
+	width: 72px;
+}
+
+
+.inputs_70 ol li.string input,
+.inputs_70 ol li.password input
+{
+	width: 70px;
+}
+.inputs_70 ol li.select select
+{
+	width: 82px;
+}
+
+
+.inputs_80 ol li.string input,
+.inputs_80 ol li.password input
+{
+	width: 80px;
+}
+.inputs_80 ol li.select select
+{
+	width: 92px;
+}
+
+
+.inputs_100 ol li.string input,
+.inputs_100 ol li.password input
+{
+	width: 100px;
+}
+.inputs_100 ol li.select select
+{
+	width: 112px;
+}
+
+
+.inputs_120 ol li.string input,
+.inputs_120 ol li.password input
+{
+	width: 120px;
+}
+.inputs_120 ol li.select select
+{
+	width: 132px;
+}
+
+.inputs_130 ol li.string input,
+.inputs_130 ol li.password input
+{
+	width: 130px;
+}
+.inputs_130 ol li.select select
+{
+	width: 142px;
+}
+
+
+.inputs_140 ol li.string input,
+.inputs_140 ol li.password input
+{
+	width: 140px;
+}
+.inputs_140 ol li.select select
+{
+	width: 152px;
+}
+
+.inputs_150 ol li.string input,
+.inputs_150 ol li.password input
+{
+	width: 150px;
+}
+.inputs_150 ol li.select select
+{
+	width: 162px;
+}
+
+
+.inputs_160 ol li.string input,
+.inputs_160 ol li.password input
+{
+	width: 160px;
+}
+.inputs_160 ol li.select select
+{
+	width: 172px;
+}
+
+
+.inputs_180 ol li.string input,
+.inputs_180 ol li.password input
+{
+	width: 180px;
+}
+.inputs_180 ol li.select select
+{
+	width: 192px;
+}
+
+
+.inputs_190 ol li.string input,
+.inputs_190 ol li.password input
+{
+	width: 190px;
+}
+.inputs_190 ol li.select select
+{
+	width: 202px;
+}
+
+
+.inputs_200 ol li.string input,
+.inputs_200 ol li.password input
+{
+	width: 200px;
+}
+.inputs_200 ol li.select select
+{
+	width: 212px;
+}
+
+
+.inputs_220 ol li.string input,
+.inputs_220 ol li.password input
+{
+	width: 220px;
+}
+.inputs_220 ol li.select select
+{
+	width: 232px;
+}
+
+
+.inputs_240 ol li.string input,
+.inputs_240 ol li.password input
+{
+	width: 240px;
+}
+.inputs_240 ol li.select select
+{
+	width: 252px;
+}
+
+
+
+.inputs_260 ol li.string input,
+.inputs_260 ol li.password input
+{
+	width: 260px;
+}
+.inputs_260 ol li.select select
+{
+	width: 272px;
+}
+
+
+.inputs_280 ol li.string input,
+.inputs_280 ol li.password input
+{
+	width: 280px;
+}
+.inputs_280 ol li.select select
+{
+	width: 292px;
+}
+
+
+.inputs_300 ol li.string input,
+.inputs_300 ol li.password input
+{
+	width: 300px;
+}
+.inputs_300 ol li.select select
+{
+	width: 312px;
+}
+
+
+.inputs_360 ol li.string input,
+.inputs_360 ol li.password input
+{
+	width: 360px;
+}
+.inputs_360 ol li.select select
+{
+	width: 372px;
+}
+
+
+
+/* --- inputs - align_inputs - boolean, radio, commit ---
+--------------------------------------------------------------------------------- */
+
+.inputs ol li.commit,
+.inputs ol.align_inputs li.boolean,
+.inputs ol.align_inputs li.radio
+{
+    margin-left: 150px;
+}
+
+.labels_80 ol li.commit,
+.labels_80 ol.align_inputs li.boolean,
+.labels_80 ol.align_inputs li.header h3
+{
+    margin-left: 80px;
+}
+
+.labels_90 ol li.commit,
+.labels_90 ol.align_inputs li.boolean,
+.labels_90 ol.align_inputs li.header h3
+{
+    margin-left: 90px;
+}
+
+.labels_100 ol li.commit,
+.labels_100 ol.align_inputs li.boolean,
+.labels_100 ol.align_inputs li.header h3
+{
+    margin-left: 100px;
+}
+
+.labels_120 ol li.commit,
+.labels_120 ol.align_inputs li.boolean,
+.labels_120 ol.align_inputs li.header h3
+{
+    margin-left: 120px;
+}
+
+.labels_140 ol li.commit,
+.labels_140 ol.align_inputs li.boolean,
+.labels_140 ol.align_inputs li.header h3
+{
+    margin-left: 140px;
+}
+
+.labels_160 ol li.commit,
+.labels_160 ol.align_inputs li.boolean,
+.labels_160 ol.align_inputs li.header h3      
+{
+    margin-left: 160px;
+}
+
+.labels_180 ol li.commit,
+.labels_180 ol.align_inputs li.boolean,
+.labels_180 ol.align_inputs li.header h3    
+{
+    margin-left: 180px;
+}
+
+.labels_200 ol li.commit,
+.labels_200 ol.align_inputs li.boolean,
+.labels_200 ol.align_inputs li.header h3    
+{
+    margin-left: 200px;
+}
+
+.labels_220 ol li.commit,
+.labels_220 ol.align_inputs li.boolean,
+.labels_220 ol.align_inputs li.header h3    
+{
+    margin-left: 220px;
+}
+
+.labels_240 ol li.commit,
+.labels_240 ol.align_inputs li.boolean,
+.labels_240 ol.align_inputs li.header h3    
+{
+    margin-left: 240px;
+}
+
+.labels_260 ol li.commit,
+.labels_260 ol.align_inputs li.boolean
+{
+    margin-left: 260px;
+}
+
+.labels_280 ol li.commit,
+.labels_280 ol.align_inputs li.boolean
+{
+    margin-left: 280px;
+}
+
+.labels_300 ol li.commit,
+.labels_300 ol.align_inputs li.boolean
+{
+    margin-left: 300px;
+}
+
+/* --- inputs - auto_width---
+--------------------------------------------------------------------------------- */
+
+.select_auto_width ol li.select select
+{
+    width: auto;
+}
+
+
+
+
+/* --- extend ---
+------------------------------------------------------------------------------------------ */
+
+.inputs_vertical ol li label abbr
+{
+    color: red;
+    padding-left: 3px;
+}
+
+
+.inputs_vertical ol li
+{
+    display: block;
+    float: left;    
+    padding: 0 3px 5px 5px;
+}
+
+
+
+/* --- commit --------------------------------------------------------------- */
+
+.inputs_vertical ol li.commit p
+{
+    float: left;
+    line-height: 30px;
+    padding-left: 5px;
+    font-size: 12px;
+}
+
+
+/* --- errors --------------------------------------------------------------- */
+
+.inputs_vertical ol li p.inline-errors
+{
+    padding: 3px 0 0 3px;
+    color: #f10000;
+    font-size: 11px;
+}
+
+.inputs_vertical ol li.error input
+{
+    border-color: #ff6060;
+    -moz-box-shadow: 0 0 2px #ff6060;
+    -webkit-box-shadow: 0 0 2px #ff6060;
+    box-shadow: 0 0 2px #ff6060;
+}
+
+/* --- labels --------------------------------------------------------------- */
+
+.inputs_vertical li.string label,
+.inputs_vertical li.password label,
+.inputs_vertical li.select label,
+.inputs_vertical li.date label,
+.inputs_vertical li.text label
+{
+    display: block;
+    padding: 10px 0 3px 5px;
+    line-height: 14px;
+}
+
+.inputs_vertical li:first-child
+{
+    padding-left: 10px;
+}
+
+.inputs_vertical.no_pdd_first li:first-child
+{
+    padding-left: 5px;
+}
+
+
+.inputs_vertical li.string input,
+.inputs_vertical li.password input
+{
+    width: 160px;
+    margin: 0;
+}
+
+.inputs_vertical li.select
+{    
+    max-width: 160px;
+}
+
+.inputs_vertical li.select select
+{
+    min-width: 100px;
+    max-width: 154px;
+    margin: 0;
+}
+
+.inputs_vertical li.select.select_max select
+{
+    width: 150px;
+}
+
+
+@media screen and (-webkit-min-device-pixel-ratio:0)
+{
+    .inputs_vertical li.select select
+    {
+        height: 28px;        
+    }
+}
+
+
+.inputs_vertical li.date input
+{
+    margin: 0;    
+}
+
+.inputs_vertical li.boolean,
+.inputs_vertical li.radio
+{
+    padding-top: 32px;
+}
+
+.inputs_vertical li.boolean label,
+.inputs_vertical li.radio label
+{
+    line-height: 14px;
+}
+
+
+.inputs_vertical li.string.range
+{
+    position: relative;
+}
+
+.inputs_vertical li.string.range input
+{
+    width: 95px;    
+}
+
+.inputs_vertical li.string.range .range_container
+{
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    bottom: -34px;
+    left: -15px;
+    width: 120px;    
+    border: 1px solid #CFCFCF;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    padding: 10px 15px;
+
+    background: #efefef;
+
+    background: -webkit-gradient(linear, left top, left bottom, from(#efefef ), to(#e4e4e4));
+    background: -moz-linear-gradient(top, #efefef , #e4e4e4);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#efefef, endColorstr=#e4e4e4);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#efefef, endColorstr=#e4e4e4)";
+
+    -webkit-box-shadow: 0px 0px 3px #ccc, 0 1px 0 #fff inset;
+
+    /* #efefef - #e4e4e4*/
+}
+
+.inputs_vertical li.commit
+{
+    margin-top: 26px;    
+}
+
+.inputs_vertical li.commit a.bt
+{
+    margin-top: 2px;
+}
+
+
+
+
+
+.inputs_vertical ol li.input_60 input
+{
+    width: 60px;
+}
+
+.inputs_vertical ol li.input_80 input
+{
+    width: 80px;
+}
+
+
+
+.range_container .ui-slider-horizontal
+{
+    border: 1px solid #b7b7b7;
+    -moz-box-shadow: 0 1px 0 #fff;
+    -webkit-box-shadow: 0 1px 0 #fff;
+    box-shadow: 0 1px 0 #fff;
+
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+
+    background: asset-url('range_slider/bg_range.png', image) repeat-x 0 0 transparent;
+}
+
+.range_container .ui-slider-range
+{
+    -moz-box-shadow: 0 -1px 0 #ff9a18, 0 1px 0 #b97012, 0 1px 0 #ffcd7e inset;
+    -webkit-box-shadow: 0 -1px 0 #ff9a18, 0 1px 0 #b97012, 0 1px 0 #ffcd7e inset;
+    box-shadow: 0 -1px 0 #ff9a18, 0 1px 0 #b97012, 0 1px 0 #ffcd7e inset;
+
+    background: #ffb23e;
+
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffb23e), to(#ff851f));
+    background: -moz-linear-gradient(top, #ffb23e, #ff851f);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffb23e, endColorstr=#ff851f);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffb23e, endColorstr=#ff851f)";
+}
+
+.range_container .ui-slider .ui-slider-handle
+{    
+    background: asset-url('range_slider/handler.png', image) no-repeat 0 0 transparent;
+    border: none;
+    width: 17px;
+    height: 17px;
+    z-index: 2000;
+    cursor: pointer;
+}
+
+
+#deal_description_counter
+{
+    padding-left: 210px;
+    margin-bottom: 10px;
+    clear: both;
+}

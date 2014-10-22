@@ -1,7 +1,7 @@
 class DealMakerMaterialsController < SecuredController
   inherit_resources
   set_tab "deal_maker_users"
-  include ::MaterialActions
+  include ::Controllers::MaterialActions
 
   before_filter :set_resource, :check_role
 

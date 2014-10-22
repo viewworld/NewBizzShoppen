@@ -42,17 +42,45 @@
   $(function(){
       WJSAPI_LoadAppletAndRegister();
   });
+
+  jQuery(document).ready(function () {
+      $('#mizu_main').on('mouseover', '#speaker', function () {
+          btnControl('speaker', 2);
+      });
+
+      $('#mizu_main').on('mouseout', '#speaker', function () {
+          btnControl('speaker', 1);
+      });
+
+      $('#mizu_main').on('click', '#speaker', function () {
+          WJSAPI_AudioDevice();
+      });
+
+//      Logout image
+
+      $('#mizu_main').on('mouseover', '#logout', function () {
+          btnControl('logout',2);
+      });
+
+      $('#mizu_main').on('mouseout', '#logout', function () {
+          btnControl('logout',1);
+      });
+
+      $('#mizu_main').on('click', '#logout', function () {
+          WJSAPI_Unregister();
+      });
+  });
 </script>
 
 <DIV id="mizu_main">
   <div id="bg_container">
     <div id="container_dial"> <!-- Main page (dialpad) -->
       <div id="header">
-        <img src="/images/mizu/speaker.png" border="0" title="Volume Controls" id="speaker" onmouseover="btnControl('speaker',2)" onmouseout="btnControl('speaker',1)" onclick="WJSAPI_AudioDevice()" />
+        <%= image_tag 'mizu/speaker.png', style: 'border: 0', title: 'Volume Controls', id: 'speaker' %>
         <div id="logo">
           <a href="" id="logo_a" target="_blank" title=""></a>
         </div>
-        <img src="/images/mizu/logout.png" border="0" title="Logout" id="logout" onmouseover="btnControl('logout',2)" onmouseout="btnControl('logout',1)" onclick="WJSAPI_Unregister()" />
+        <%= image_tag 'mizu/logout.png', style: 'border: 0', title: 'Logout', id: 'logout' %>
       </div>
       <div id="PhoneNumberDiv">
         <input type="text" id="PhoneNumber" name="PhoneNumber" value="" onfocus="testFocus(1)" onblur="testFocus(0)" /><br />
@@ -87,10 +115,10 @@
         <div id="btn_reject" onclick="WJSAPI_Reject()">Reject<span></span></div>
       </div>
       <div id="callfunctions">
-        <div title="Chat" id="btn_chat" onclick="WJSAPI_Chat()"><img src="/images/mizu/chat.png" border="0" /></div>
-        <div title="Call Transfer" id="btn_transfer" onclick="WJSAPI_CallTransfer()"><img src="/images/mizu/transfer.png" border="0" /></div>
-        <div title="Call Hold" id="btn_hold" onclick="WJSAPI_HoldOrVoicemail()"><img src="/images/mizu/hold.png" id="btn_hold_img" border="0" /></div>
-        <div title="Conference" id="btn_conference" onclick="WJSAPI_Conference()"><img src="/images/mizu/conference.png" border="0" /></div>
+        <div title="Chat" id="btn_chat" onclick="WJSAPI_Chat()"><%= image_tag '/mizu/chat.png', style: 'border: 0' %></div>
+        <div title="Call Transfer" id="btn_transfer" onclick="WJSAPI_CallTransfer()"><%= image_tag '/mizu/transfer.png', style: 'border: 0' %></div>
+        <div title="Call Hold" id="btn_hold" onclick="WJSAPI_HoldOrVoicemail()"><%= image_tag '/mizu/transfer.png', id: 'btn_hold_img', style: 'border: 0' %></div>
+        <div title="Conference" id="btn_conference" onclick="WJSAPI_Conference()"><%= image_tag '/mizu/conference.png', id: 'btn_hold_img', style: 'border: 0' %></div>
       </div>
     </div>
     <div id="container_register"> <!-- Login page -->

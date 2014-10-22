@@ -4,8 +4,8 @@ class CallCentres::DealsController < CallCentres::CallCentreController
   before_filter :check_user
   cache_sweeper :deal_sweeper
 
-  include ::DealActions
-  include ::DealCreateActions
+  include ::Controllers::DealActions
+  include ::Controllers::DealCreateActions
 
   private
 

@@ -3,7 +3,7 @@ class Callers::ChainMailMaterialsController < Callers::CallerController
   set_tab "content"
   set_subtab "chain_mail"
 
-  include ::MaterialActions
+  include ::Controllers::MaterialActions
   layout proc{ |c| c.request.xhr? ? "send_material" : "fairleads/application" }
 
   before_filter :set_resource

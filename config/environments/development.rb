@@ -38,7 +38,7 @@ Nbs::Application.configure do
   #                                      :enable_starttls_auto => true}
 
   config.assets.compress = false
-  config.assets.debug = true
+  config.assets.debug = false
 
 
   config.middleware.swap ActionDispatch::ParamsParser,

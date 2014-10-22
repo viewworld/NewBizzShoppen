@@ -2,7 +2,7 @@ class Members::CertificationsController < Members::MemberController
   before_filter :map_lead_to_tender
 
   set_tab "tenders"
-  include ::LeadCertificationActions
+  include ::Controllers::LeadCertificationActions
 
   def model_name
    "tenders"

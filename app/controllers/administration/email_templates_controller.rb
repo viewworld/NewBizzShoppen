@@ -1,5 +1,5 @@
 class Administration::EmailTemplatesController < Administration::AdministrationController
-  include EmailTemplatesActions
+  include ::Controllers::EmailTemplatesActions
 
   set_tab 'settings'
   set_subtab 'email_templates'
