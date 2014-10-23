@@ -1,17 +1,8 @@
-/* --- first we need to reset everything --- */
-@import url('ocss/reset.css');
-
-/* --- helpers--- */
-@import url('ocss/helpers.css');
-
-/* --- columns --- */
-@import url('ocss/columns.css');
-
-/* --- frm --- */
-@import url('ocss/frm.css');
-
-/* --- table --- */
-@import url('ocss/table.css');
-
-/* --- fieldset component (inputs + labels) --- */
-@import url('ocss/inputs.css');
+/*
+ *= require ocss/reset.css
+ *= require ocss/helpers.css
+ *= require ocss/columns.css
+ *= require ocss/frm.scss
+ *= require ocss/table.scss
+ *= require ocss/inputs.scss
+ */

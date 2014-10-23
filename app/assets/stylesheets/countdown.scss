@@ -10,7 +10,7 @@
 {
     position: absolute;
     left: -60px;
-    top: 10px;   
+    top: 10px;
     font-size: 12px;
     font-weight: bold;
 }
@@ -39,8 +39,6 @@
 
     vertical-align: top;
     display: inline-block;
-    display: inline !ie7;
-    zoom: 1 !ie7;    
 }
 
 .dash .digit
@@ -48,6 +46,6 @@
     color: #fff;
     font-size: 22px;
     font-weight: bold;
-    float: left;          
+    float: left;
 	position: relative;
 }

@@ -3,13 +3,13 @@
 *= require fairdeals/ocss/reset.css
 *= require fairdeals/ocss/helpers.css
 *= require fairdeals/ocss/columns.css
-*= require fairdeals/ocss/frm.css
-*= require fairdeals/ocss/table.css
-*= require fairdeals/ocss/inputs.css
-*= require fairdeals/style.css
+*= require fairdeals/ocss/frm.scss
+*= require fairdeals/ocss/table.scss
+*= require fairdeals/ocss/inputs.scss
+*= require fairdeals/style.scss
 *= require jquery-ui-1.8.5.custom.scss
 *= require colorbox.scss
 *= require countdown.scss
-*= require shared/shared.css
-*= require jquery.gritter.css
+*= require shared/shared.scss
+*= require jquery.gritter.scss
 */

@@ -374,8 +374,6 @@ td.tda a.bt
 div.pagination
 {
     text-align: center;
-    float: right !ie7;
-    margin-right: 500px !ie7;
     line-height: 32px;
 }
 
@@ -383,9 +381,6 @@ div.pagination a,
 div.pagination span,
 div.pagination em
 {
-    display: block !ie7;
-    float: left !ie7;
-
     display: inline-block;
     padding: 0 7px;
     height: 22px;

@@ -123,8 +123,6 @@
 .subscription_plan_item
 {
     display: inline-block;
-    display: inline !ie7;
-    zoom: 1 !ie7;
     vertical-align: top;
     cursor: pointer;
     position: relative;
