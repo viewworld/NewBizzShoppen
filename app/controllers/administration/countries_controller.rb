@@ -13,7 +13,7 @@ class Administration::CountriesController < Administration::AdministrationContro
   end
 
   def create
-    @country = Country.new(params[:country])
+    @country = Country.new(country_params)
 
     if @country.save
       redirect_to administration_countries_path
@@ -23,7 +23,7 @@ class Administration::CountriesController < Administration::AdministrationContro
   end
 
   def update
-    if @country.update_attributes(params[:country])
+    if @country.update_attributes(country_params)
       redirect_to administration_countries_path
     else
       render :edit
@@ -41,5 +41,9 @@ class Administration::CountriesController < Administration::AdministrationContro
   private
   def set_country
     @country = Country.find(params[:id])
+  end
+
+  def country_params
+    params[:country]
   end
 end

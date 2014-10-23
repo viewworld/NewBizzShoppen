@@ -1,0 +1,19 @@
+.region.duplicatable-nested-form class=additional_classes
+  .hl
+  .pdd_10.no_pdd_t
+    fieldset.inputs_vertical
+      ol
+        li.string.required class="#{'error' if region.object.errors[:name].present? }"
+          label
+            = t("administration.countries.form.region_name")
+            abbr title='required' *
+
+          = region.text_field :name
+          = custom_error_for_field(region, :name)
+
+        li.hidden
+          - if region.object.persisted?
+            = region.hidden_field :_destroy, value: 0
+
+        li.commit
+          = bt_link_to :remove, t("administration.countries.form.delete_region"), "javascript:void(0)", class: 'destroy-duplicate-nested-form'
