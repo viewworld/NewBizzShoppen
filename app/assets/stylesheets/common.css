@@ -7,13 +7,13 @@
 *= require ocss/table.css
 *= require ocss/inputs.css
 *= require style.css
-*= require jquery-ui-1.8.5.custom.css
-*= require colorbox.css
+*= require jquery-ui-1.8.5.custom.scss
+*= require colorbox.scss
 *= require invoice.css
-*= require invoice_lines_edit.css
+*= require invoice_lines_edit.scss
 *= require jquery.checkboxtree.min.css
 *= require jquery.autocomplete.css
-*= require ajaxful_rating.css
+*= require ajaxful_rating.scss
 *= require shared/shared.css
 *= require jquery.gritter.css
 *= require tagit.css
