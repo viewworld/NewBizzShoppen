@@ -242,6 +242,10 @@ th.medium {
   text-shadow: 0 1px 0 rgba(0,0,0,0.2);
 }
 
+.generic tbody td.tda > a span {
+  background: none;
+}
+
 .generic tbody td.tda > a:hover {
   background: linear-gradient(rgb(170, 223, 26), rgb(121, 188, 13));
 }
