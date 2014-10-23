@@ -17,7 +17,7 @@ class Administration::Invoicing::PaymentTransactionsController < Administration:
   end
 
   def create
-    @payment_transaction = ManualTransaction.new(params[:manual_transaction])
+    @payment_transaction = ManualTransaction.new(transaction_params)
 
     if @payment_transaction.save
       redirect_to administration_invoicing_payment_transactions_path
@@ -41,6 +41,6 @@ class Administration::Invoicing::PaymentTransactionsController < Administration:
   end
 
   def transaction_params
-    params[:manual_transaction]
+    params.require(:manual_transaction).permit(:amount, :paid_at, :invoice_id)
   end
 end

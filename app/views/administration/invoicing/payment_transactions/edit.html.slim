@@ -3,4 +3,4 @@
     - section.block_header do
       = t("administration.payment_transactions.edit.view.header", number: @payment_transaction.invoice.id, name: @payment_transaction.invoice.customer_name)
 
-  = render 'form', title: t('administration.payment_transactions.edit.view.edit')
+  = render 'form', title: t('administration.payment_transactions.edit.view.edit'), url: administration_invoicing_payment_transaction_path(@payment_transaction)

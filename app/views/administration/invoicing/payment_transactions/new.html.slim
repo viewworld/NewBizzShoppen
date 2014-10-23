@@ -3,4 +3,4 @@
     - section.block_header do
       = t("administration.payment_transactions.new.view.header")
 
-  = render 'form'
+  = render 'form', title: t("administration.payment_transactions.new.view.header"), url: administration_invoicing_payment_transactions_path

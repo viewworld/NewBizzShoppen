@@ -1,4 +1,4 @@
-= semantic_form_for [:administration, :invoicing, @payment_transaction] do |form|
+= semantic_form_for @payment_transaction, url: url do |form|
   = frm(title: title) do |section|
     - section.block_content do
       .pdd_10.no_pdd_t
