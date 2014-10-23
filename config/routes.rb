@@ -621,10 +621,10 @@ Nbs::Application.routes.draw do
 
   resources :survey_recipients, only: [:show, :update]
 
-  match ':slug' => 'category_home#show', as: :category_home_page
-  match ':slug/account/new' => 'category_supplier_accounts#new', as: :new_category_home_page_account
-  match ':slug/account' => 'category_supplier_accounts#create', as: :category_home_page_account
-  match ':slug/leads' => 'category_suppliers/leads#index', as: :category_home_page_leads
+  get ':slug' => 'category_home#show', as: :category_home_page
+  get ':slug/account/new' => 'category_supplier_accounts#new', as: :new_category_home_page_account
+  get ':slug/account' => 'category_supplier_accounts#create', as: :category_home_page_account
+  get ':slug/leads' => 'category_suppliers/leads#index', as: :category_home_page_leads
 
   root to: "supplier_home#show"
 

@@ -31,7 +31,7 @@ gem 'aws-s3', '0.6.3', require: 'aws/s3'
 # views
 gem 'slim', '~> 2.0.3'
 gem 'slim-rails', '~> 2.1.5'
-gem 'ckeditor', '3.7.3'
+gem 'ckeditor', '4.1.0'
 gem 'will_paginate', '3.0.7'
 gem 'formtastic', '2.3.1'
 gem 'simple_form', '2.1.1'

@@ -3,6 +3,7 @@
 //= require jquery.ui.timepicker.js
 //= require jquery-ujs/src/rails.js
 //= require application.js
+//= require ckeditor/config.js
 //= require jquery.colorbox-min.js
 //= require jquery.printElement.js
 //= require jquery.qtip.min.js
@@ -18,5 +19,4 @@
 //= require jquery.flot.time.js
 //= require jquery.flot.canvas.js
 //= require mediaelement.js
-//= require ckeditor/config.js
 //= require_self
