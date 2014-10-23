@@ -85,16 +85,14 @@ th.medium {
 
 .generic tbody tr td.cl
 {
-    background: asset-url('table/dot.png', image) repeat-y 0 0;
+    background: asset-url('table/dot.png', image) repeat-y 0 0 #F6F6F6;
     width: 10px;
     padding: 0 !important;
 }
 
 .generic tbody tr td.cr
 {
-    background-image: url("/images/table/dot.png");
-    background-repeat:  repeat-y;
-    background-position: right 0;
+    background: asset-url("table/dot.png", image) repeat-y right 0 #F6F6F6;
     width: 10px;
     padding: 0 !important;
 }
