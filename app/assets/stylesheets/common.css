@@ -18,4 +18,8 @@
 *= require jquery.gritter.css
 *= require tagit.css
 *= require mediaelement.css
+*= require utilities/_utilities.sass
+*= require modules/_box.sass
+*= require modules/_forms.sass
+*= require modules/_tables.sass
 */
