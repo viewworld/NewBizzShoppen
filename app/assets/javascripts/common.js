@@ -18,4 +18,5 @@
 //= require jquery.flot.time.js
 //= require jquery.flot.canvas.js
 //= require mediaelement.js
+//= require ckeditor/config.js
 //= require_self
