@@ -8,8 +8,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 Contributors:
     Flashphoner - initial API and implementation
 
-This code and accompanying materials also available under LGPL and 
-MPL license for Flashphoner buyers. Other license versions by negatiation. 
+This code and accompanying materials also available under LGPL and
+MPL license for Flashphoner buyers. Other license versions by negatiation.
 Write us support@flashphoner.com with any questions.
 */
 
@@ -19,10 +19,10 @@ body {
 img {
 	border: 0;
 }
-button::-moz-focus-inner,   
-input[type="reset"]::-moz-focus-inner,   
-input[type="button"]::-moz-focus-inner,   
-input[type="submit"]::-moz-focus-inner,   
+button::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner,
 input[type="file"] > input[type="button"]::-moz-focus-inner {
 	border: none;
 }
@@ -36,23 +36,23 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 }
 
 /* ---------- Positions --------- */
-#jsSWFDiv, 
-#phoneDiv, 
-#loginDiv, 
-#incomingDiv, 
-#infoDiv, 
-#connectingDiv, 
+#jsSWFDiv,
+#phoneDiv,
+#loginDiv,
+#incomingDiv,
+#infoDiv,
+#connectingDiv,
 #settingsDiv,
-#versionOfProduct, 
-#controlPanel, 
-.closeButton, 
-.transferButton, 
+#versionOfProduct,
+#controlPanel,
+.closeButton,
+.transferButton,
 .holdButton,
 .holdImage,
 .bar,
 #settingsButton,
 #settingsButtonInCallView,
-#answerButton, 
+#answerButton,
 #hangupButton,
 #callerLogin,
 #logoutButton,
@@ -72,15 +72,15 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 }
 /* ---------- Border ------------ */
 #settingsDiv, #loginDiv, #infoDiv, #connectingDiv, #transfer, #incomingDiv, #video_requestUnmuteDiv, #controlPanel, #chatDiv {
-	border-width: 2px 5px 5px\0/; /*only for ie8*/
-	border-style: solid\0/; /*only for ie8*/
-	border-color: #ddd\0/; /*only for ie8*/
+	border-width: 2px 5px 5px;
+	border-style: solid;
+	border-color: #ddd;
   border: 1px solid #aaa;
 }
 #connectingDiv, #infoDiv {
-	border-width: 5px\0/; /*only for ie8*/
+	border-width: 5px;
 }
-/* ---------- Shadow ----------*/ 
+/* ---------- Shadow ----------*/
 #settingsDiv, #transfer, #infoDiv, #loginDiv, #connectingDiv, #video_requestUnmuteDiv, #incomingDiv, #chatDiv
  {
   box-shadow: 0 0 10px rgba(0,0,0,0.35);
@@ -322,7 +322,7 @@ input::-webkit-input-placeholder {
 /* --------- Login, logout --------------------------------------------- */
 #callerLogin {
   top: 0px;
-  right: 0px; 
+  right: 0px;
   font: 12px Arial;
 	width: 74px;
 	height: 20px;
@@ -361,14 +361,14 @@ input::-webkit-input-placeholder {
 	top: -1px;
 	right: -1px;
   font-size: 12px;
-  border: 1px solid #aaa; 
+  border: 1px solid #aaa;
   padding: 0 5px 0 5px;
   margin: 0px;
   width:40px;
   height: 20px;
   line-height: 20px;
   text-shadow: 0 1px 0 #eee;
-  
+
 }
 
 #loginButton {
@@ -404,7 +404,7 @@ input::-webkit-input-placeholder {
 /*
 we use '.init' class to make div size 1x1 basically
 Because Firefox can`t operate with swf object located in
-div with zero size. 
+div with zero size.
 */
 .init {
 	width: 1px;
@@ -601,7 +601,6 @@ div with zero size.
   filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#dddddd', endColorstr='#cccccc');
   */
   line-height: 28px;
-  font-family: ;
 }
 
 .buttonLine {
@@ -612,7 +611,7 @@ div with zero size.
 .chat, .call, .hangup {
   width: 152px;
   color: #000;
-  	
+
 }
 .chat {
   box-shadow: 0px 1px 0px #fff, inset 0px 1px 0px #C2DDF2; /*#A8CFEC;/* #96C6E9;*/
@@ -621,7 +620,6 @@ div with zero size.
   /*background: -webkit-gradient(linear, left top, left bottom, from(#7CB8E3), to(#419AD9));*/
 	background: -moz-linear-gradient(top, #ddd, #ccc);
 	background: -o-linear-gradient(top, #ddd, #ccc);
-  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#dddddd', endColorstr='#cccccc');
   /*color: #1B527A;*/
   width: 76px;
 }
@@ -632,19 +630,17 @@ div with zero size.
   /*background: -webkit-gradient(linear, left top, left bottom, from(#3b3), to(#0a0));*/
 	background: -moz-linear-gradient(top, #3b3, #0a0);
 	background: -o-linear-gradient(top, #3b3, #0a0);
-	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#33bb33', endColorstr='#00aa00');
 	/*color: #004400;*/
 	border-left-color: #888;
 
 }
 .hangup {
 	box-shadow: 0px 1px 0px #fff, inset 0px 1px 0px #FF9494;/*#f66;*/
-	text-shadow: 0px 1px 0 #f33; 
+	text-shadow: 0px 1px 0 #f33;
 	background: -webkit-gradient(linear, left top, left bottom, from(#E16C6C), to(#DB4D4D));
   /*background: -webkit-gradient(linear, left top, left bottom, from(#f33), to(#c00));*/
 	background: -moz-linear-gradient(top, #f33, #c00);
 	background: -o-linear-gradient(top, #f33, #c00);
-	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ff3333', endColorstr='#cc0000');
 }
 
 .pressed {
@@ -660,7 +656,7 @@ div with zero size.
 .disabled {
 	opacity: 0.7;
 }
-    
+
 .call_button, .chat_button {
 	width: 81px;
 	background-color: #009800;
@@ -713,11 +709,11 @@ div with zero size.
 	height: 80px !important;
 	border: 1px solid #999 !important;
 	background-color: #ddd !important;
-	box-shadow: inset 0px 0px 1px #777 !important;*/
+	box-shadow: inset 0px 0px 1px #777 !important;
 }
 .ui-slider-handle {
 	left: -5px !important;
-  border-radius: 8px !important;*/
+  border-radius: 8px !important;
 	cursor: pointer !important;
 	border: 1px solid #888 !important;
 	box-shadow: inset 0px 1px 0px #fff, 0px 0px 1px #777;
@@ -738,27 +734,26 @@ div with zero size.
 .ui-slider-range {
 	border-radius: 10px !important;
 	box-shadow: inset 2px 0px 5px #222;
-	
+
   background: -webkit-gradient(linear, left top, left bottom, from(#777), to(#555)) !important;
 	background: -moz-linear-gradient(top, #777, #555) !important;
 	background: -o-linear-gradient(top, #777, #555) !important;
-	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#777777', endColorstr='#555555') !important;
 	left: -1px !important;
 	bottom: -1px !important;
   border: 1px solid #222 !important;
 }
-	
+
 /* -------------------------------------- */
 /* --------- Console ------------*/
 #console {
 	top: 35px;
-	left: 250px;	
+	left: 250px;
 	height: 300px;
   width: 700px;
 	float: left;
 	background-color: #333;
 	font: 14px Courier;
-	color: #eee; 
+	color: #eee;
 	padding: 10px;
   overflow: auto;
 	word-wrap: break-word;

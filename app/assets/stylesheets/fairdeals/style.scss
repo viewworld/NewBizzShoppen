@@ -119,7 +119,7 @@ p
 
 #user_menu
 {
-    background: asset-url('fairdeals/bg_nav.png') no-repeat top left;
+    background: asset-url('fairdeals/bg_nav.png', image) no-repeat top left;
     height: 56px;
     position: relative;
     z-index: 1000;
@@ -952,7 +952,7 @@ a.bt
 {
     display: inline-block;
     vertical-align: middle;
-    background: asset-url('fairdeals/bt/bt.png' image) no-repeat 0 0 transparent;
+    background: asset-url('fairdeals/bt/bt.png', image) no-repeat 0 0 transparent;
     text-decoration: none;
     font-weight: bold;
     font-size: 11px;

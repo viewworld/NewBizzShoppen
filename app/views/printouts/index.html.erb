@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
   <title>Fairleads</title>
-  <%= stylesheet_link_tag "ocss/reset.css", "ocss/helpers.css", "ocss/columns.css", "print", :media => "all" %>
+  <%= stylesheet_link_tag "printout" %>
   <%= javascript_include_tag :defaults %>
 </head>
 <body>
@@ -18,11 +18,10 @@
 <% end %>
 
 <%= javascript_tag do -%>
-    $(document).ready(function() {       
+    $(document).ready(function() {
         window.print();
         window.onfocus = function() { window.close(); }
     });
 <% end -%>
 </body>
 </html>
-

@@ -12,21 +12,14 @@
       window.campaign_id = <%= @campaign.id %>;
     </script>
     <% if current_user.phone_type_id == User::FLASHPHONER %>
-      <%= javascript_include_tag 'swfobject' %>
-      <%= javascript_include_tag 'flashphoner/StaticData' %>
-      <%= javascript_include_tag 'flashphoner/trackbar' %>
-      <%= javascript_include_tag 'flashphoner/Phone' %>
-      <%= javascript_include_tag 'flashphoner/flashLoader' %>
+      <%= javascript_include_tag 'user_flashphoner' %>
       <%= stylesheet_link_tag 'flashphoner/trackbar' %>
       <%= stylesheet_link_tag 'flashphoner/style_html' %>
       <%= render :partial => 'phone' %>
     <% elsif current_user.phone_type_id == User::MIZU %>
-      <%= javascript_include_tag 'mizu/webphonedeploy' %>
-      <%= javascript_include_tag 'mizu/curvycorners.src' %>
-      <%= javascript_include_tag 'mizu/common_webphone' %>
+      <%= javascript_include_tag 'user_mizu' %>
       <%= stylesheet_link_tag 'mizu/skin' %>
       <%= render :partial => 'mizu_phone' %>
-      <%= javascript_include_tag 'mizu/Layout' %>
     <% end %>
     <%= javascript_include_tag 'phone' %>
   <% end %>
@@ -236,4 +229,3 @@
       }
   </script>
 <% end %>
-

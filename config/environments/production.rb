@@ -36,7 +36,8 @@ Nbs::Application.configure do
 
   # Disable Rails's static asset server
   # In production, Apache or nginx will already do this
-  config.serve_static_assets               = true
+  config.serve_static_assets = false
+  config.assets.precompile += %w( common.css fairdeals.css fairdeals_thin.css newsletter.css campaign_materials.css countdown.scss flashphoner/trackbar.scss flashphoner/style_html.scss mizu/skin.css )
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
   config.action_controller.asset_host = "https://static-fairleads.s3.amazonaws.com"

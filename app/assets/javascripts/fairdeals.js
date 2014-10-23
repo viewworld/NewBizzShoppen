@@ -1,5 +1,5 @@
 //= require jquery-1.4.2.min.js
-//= require jquery-ui-1.8.5.custom.m
+//= require jquery-ui-1.8.5.custom.min
 //= require jquery-ujs/src/rails.js
 //= require application.js
 //= require jquery.colorbox-min.js
@@ -8,9 +8,9 @@
 //= require translations.js
 //= require custom.js
 //= require comments.js
-//= require jquery.lwtCountdown-1.0.
-//= require global_template_editor.j
-//= require global_field_validator.j
+//= require jquery.lwtCountdown-1.0
+//= require global_template_editor
+//= require global_field_validator
 //= require jquery.cycle.all.js
 //= require jquery.timers.js
 //= require jquery.qtip.min.js
