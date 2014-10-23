@@ -52,8 +52,6 @@ ul.leads li.lead p.lead_desc
 
 ul.leads li.lead .lead_template
 {
-    display: inline !ie7;
-    zoom: 1 !ie7;
     display: inline-block;
     vertical-align: top;
     width: 49.5%;
@@ -61,5 +59,5 @@ ul.leads li.lead .lead_template
 
 ul.leads li.lead .lead_template h3
 {
-    padding: 5px 0;    
+    padding: 5px 0;
 }

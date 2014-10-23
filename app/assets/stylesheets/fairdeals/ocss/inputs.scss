@@ -139,7 +139,7 @@
 .inputs ol li.file input
 {
     float: left;
-    margin-top: 7px;    
+    margin-top: 7px;
 }
 
 .inputs ol li.string img.icon
@@ -187,7 +187,7 @@
 
 .inputs ol li.multiple
 {
-    height: auto;    
+    height: auto;
 }
 
 .inputs ol li.multiple select
@@ -201,12 +201,6 @@
     height: auto;
 }
 
-.inputs ol li.select.unique .users_search
-{
-    vertical-align:top !ie7;
-}
-
-
 /* --- social login ---
 --------------------------------------------------------------------------------- */
 
@@ -219,7 +213,7 @@
 .frm_tiny .inputs ol li.string.social_login
 {
     border-bottom: 1px dotted #ccc;
-    margin-bottom: 12px;    
+    margin-bottom: 12px;
 }
 
 
@@ -257,7 +251,6 @@
 {
 	border: none;
 	margin: 2px 5px 0 0;
-	margin: 0 !ie7;
 	padding: 0;
 	float: left;
     background: none;
@@ -274,7 +267,7 @@
 
 .inputs ol li.ckeditor
 {
-    padding: 5px 0 8px;    
+    padding: 5px 0 8px;
 }
 
 .inputs ol li.ckeditor.ckeditor_label label
@@ -316,7 +309,7 @@ input.date.hasDatepicker
 .inputs ol li.header h3
 {
     font-size: 14px;
-    padding: 0 0 10px 10px    
+    padding: 0 0 10px 10px
 }
 
 
@@ -355,7 +348,7 @@ input.date.hasDatepicker
 {
     float: left;
     line-height: 16px;
-    padding: 6px 0 0 8px;    
+    padding: 6px 0 0 8px;
     font-size: 11px;
 }
 
@@ -876,35 +869,35 @@ input.date.hasDatepicker
 
 .labels_160 ol li.commit,
 .labels_160 ol.align_inputs li.boolean,
-.labels_160 ol.align_inputs li.header h3      
+.labels_160 ol.align_inputs li.header h3
 {
     margin-left: 160px;
 }
 
 .labels_180 ol li.commit,
 .labels_180 ol.align_inputs li.boolean,
-.labels_180 ol.align_inputs li.header h3    
+.labels_180 ol.align_inputs li.header h3
 {
     margin-left: 180px;
 }
 
 .labels_200 ol li.commit,
 .labels_200 ol.align_inputs li.boolean,
-.labels_200 ol.align_inputs li.header h3    
+.labels_200 ol.align_inputs li.header h3
 {
     margin-left: 200px;
 }
 
 .labels_220 ol li.commit,
 .labels_220 ol.align_inputs li.boolean,
-.labels_220 ol.align_inputs li.header h3    
+.labels_220 ol.align_inputs li.header h3
 {
     margin-left: 220px;
 }
 
 .labels_240 ol li.commit,
 .labels_240 ol.align_inputs li.boolean,
-.labels_240 ol.align_inputs li.header h3    
+.labels_240 ol.align_inputs li.header h3
 {
     margin-left: 240px;
 }
@@ -951,7 +944,7 @@ input.date.hasDatepicker
 .inputs_vertical ol li
 {
     display: block;
-    float: left;    
+    float: left;
     padding: 0 3px 5px 5px;
 }
 
@@ -1017,7 +1010,7 @@ input.date.hasDatepicker
 }
 
 .inputs_vertical li.select
-{    
+{
     max-width: 160px;
 }
 
@@ -1038,14 +1031,14 @@ input.date.hasDatepicker
 {
     .inputs_vertical li.select select
     {
-        height: 28px;        
+        height: 28px;
     }
 }
 
 
 .inputs_vertical li.date input
 {
-    margin: 0;    
+    margin: 0;
 }
 
 .inputs_vertical li.boolean,
@@ -1068,7 +1061,7 @@ input.date.hasDatepicker
 
 .inputs_vertical li.string.range input
 {
-    width: 95px;    
+    width: 95px;
 }
 
 .inputs_vertical li.string.range .range_container
@@ -1078,7 +1071,7 @@ input.date.hasDatepicker
     z-index: 1000;
     bottom: -34px;
     left: -15px;
-    width: 120px;    
+    width: 120px;
     border: 1px solid #CFCFCF;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
@@ -1099,7 +1092,7 @@ input.date.hasDatepicker
 
 .inputs_vertical li.commit
 {
-    margin-top: 26px;    
+    margin-top: 26px;
 }
 
 .inputs_vertical li.commit a.bt
@@ -1152,7 +1145,7 @@ input.date.hasDatepicker
 }
 
 .range_container .ui-slider .ui-slider-handle
-{    
+{
     background: asset-url('range_slider/handler.png', image) no-repeat 0 0 transparent;
     border: none;
     width: 17px;
