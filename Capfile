@@ -6,6 +6,7 @@ require 'capistrano/ext/multistage'
 require 'rvm/capistrano'
 require "delayed/recipes"
 require "bundler/capistrano"
+load 'deploy/assets'
 
 require 'capistrano/server_definition'
 require 'capistrano/role'
