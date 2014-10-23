@@ -72,7 +72,7 @@
               td.ta_r= as_currency(lead_purchase.not_invoiced_sum, Currency.where(id: lead_purchase.currency_id).first)
               td.tda.ta_r
                 - if lead_purchase.owner.active_subscription
-                  = link_to t("administration.upcoming_invoices.index.view.create_invoice"), administration_invoicing_invoices_path(invoice: {user_id: lead_purchase.owner_id, currency_id: lead_purchase.currency_id, seller_id: lead_purchase.owner.active_subscription.seller_id}), method: :post, class: "default_action"
+                  = link_to t("administration.upcoming_invoices.index.view.create_invoice"), administration_invoicing_invoices_path(invoice: {user_id: lead_purchase.owner_id, currency_id: lead_purchase.currency_id, seller_id: lead_purchase.owner.active_subscription.try(:seller_id)}), method: :post, class: "default_action"
                 - else
                   = 'no active subscription'
               td.cr
