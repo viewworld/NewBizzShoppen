@@ -10,10 +10,12 @@ class Administration::CountriesController < Administration::AdministrationContro
 
   def new
     @country = Country.new
+    @country.email_template_signature = EmailTemplateSignature.new
   end
 
   def create
     @country = Country.new(country_params)
+    @country.email_template_signature.name = "Email template signature for #{@country.name}"
 
     if @country.save
       redirect_to administration_countries_path
@@ -44,6 +46,6 @@ class Administration::CountriesController < Administration::AdministrationContro
   end
 
   def country_params
-    params[:country]
+    params.require(:country).permit(:name, :locale, :detailed_locale, :work_start_at, :work_end_at, email_template_signature_attributes: [:body], regions_attributes: [:name])
   end
 end

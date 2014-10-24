@@ -4,24 +4,21 @@
       = form.input :name
       = form.input :locale
       = form.input :detailed_locale
-      = form.input :work_start_at, as: :date_time_picker,
+      = form.input :work_start_at, as: :time_picker,
                       input_html: { readonly: true, value: @country.work_start_at_value}
-      = form.input :work_end_at, as: :date_time_picker,
+      = form.input :work_end_at, as: :time_picker,
                       input_html: { readonly: true, value: @country.work_end_at_value }
 
       = form.fields_for :email_template_signature, @country.email_template_signature do |builder|
         li= builder.input :body, as: :ckeditor, label: false
 
 .duplicatable-nested-form-list
-  = form.fields_for :regions do |region|
-    = render 'region_fields', region: region, additional_classes: ''
+  = form.fields_for :regions do |region_form|
+    = render 'region_fields', region_form: region_form, additional_classes: ''
 
-  = form.fields_for :regions, @country.regions.build do |region|
-    = render 'region_fields', region: region, additional_classes: 'new-record duplicatable-nested-form-sample hidden'
+  = form.fields_for :regions, @country.regions.build do |region_form|
+    = render 'region_fields', region_form: region_form, additional_classes: 'new-record duplicatable-nested-form-sample hidden'
 
 .hl
 .pdd_20
   = bt_link_to :plus, t("administration.countries.form.new_region"), "javascript:void(0)", class: 'duplicate-nested-form'
-
-javascript:
-  $('.datetimepicker').datetimepicker({ timeOnly: true });

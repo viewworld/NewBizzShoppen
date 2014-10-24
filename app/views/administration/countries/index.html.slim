@@ -1,0 +1,42 @@
+= content_for :column_mc do
+  = header do |section|
+    - section.block_header do
+      = t("administration.countries.index.view.title")
+
+    - section.block_actions do
+      ul.header_actions
+        li.last
+          = bt_link_to :plus, t("administration.countries.index.view.new_country"), new_administration_country_path
+
+  - if @countries.blank?
+    = blank_state_message t("administration.countries.index.view.no_currencies_defined")
+  - else
+    table.generic
+      thead
+        tr
+          th.hl
+          th.mini= t("administration.countries.index.view.table.id")
+          th= t("administration.countries.index.view.table.name")
+          th= t("administration.countries.index.view.table.locale")
+          th.ta_r= t("administration.countries.index.view.table.actions")
+          th.hr
+      tfoot
+        tr
+          td.fl
+          td colspan='4'
+          td.fr
+      tbody
+        - @countries.each do |country|
+          tr
+            td.cl
+            td.ta_c= country.id
+            td= country.name
+            td= "#{country.locale.to_s}#{'-'+country.detailed_locale.upcase if country.detailed_locale.present?}"
+            td.tda.ta_r
+              .td_actions
+                = bt_link_to :cog, nil, "javascript:void(0)", class: "bt_dropdown"
+                ul
+                  li= link_to t("administration.countries.index.view.edit"), edit_administration_country_path(country), class: "default_action"
+                  - if country.can_be_destroyed?
+                    li= link_to t("administration.countries.index.view.delete"), administration_country_path(country), {method: :delete, confirm: t("administration.countries.index.view.delete_confirmation_message")}
+            td.cr

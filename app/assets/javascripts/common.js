@@ -20,4 +20,5 @@
 //= require mediaelement
 //= require ckeditor/config
 //= require nested_forms
+//= require forms
 //= require_self
