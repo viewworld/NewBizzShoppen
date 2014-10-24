@@ -17,8 +17,21 @@ CKEDITOR.addQueryStringToUrl = function(url, params) {
     return url + ( ( url.indexOf("?") != -1 ) ? "&" : "?" ) + queryString.join("&");
 };
 
+CKEDITOR.on('instanceCreated', function(evt) {
+  evt.editor.config.toolbar = evt.editor.element.$.getAttribute('toolbar');
+});
+
 CKEDITOR.editorConfig = function( config )
 {
+
+  config.filebrowserBrowseUrl = '/ckeditor/attachment_files';
+  config.filebrowserFlashBrowseUrl = '/ckeditor/attachment_files';
+  config.filebrowserFlashUploadUrl = '/ckeditor/attachment_files';
+  config.filebrowserImageBrowseLinkUrl = '/ckeditor/pictures';
+  config.filebrowserImageBrowseUrl = '/ckeditor/pictures';
+  config.filebrowserImageUploadUrl = '/ckeditor/pictures';
+  config.filebrowserUploadUrl = '/ckeditor/attachment_files';
+
   config.PreserveSessionOnFileBrowser = true;
   // Define changes to default configuration here. For example:
   config.language = 'en';
