@@ -68,6 +68,9 @@ en:
   ckeditor:
     upload_new_files: "Upload new files"
     file_manager: "File Manager"
+    confirm_delete: 'Are you sure?'
+    buttons:
+      delete: 'Delete'
   number:
     format:
       separator: '.'

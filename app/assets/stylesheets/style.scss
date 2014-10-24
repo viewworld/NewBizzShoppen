@@ -2383,3 +2383,13 @@ select[disabled], input[disabled] {
 select[multiple] {
   height: auto;
 }
+
+li.cke:after {
+  clear: both;
+  content: '';
+  display: table;
+}
+
+div.cke {
+  float: left;
+}

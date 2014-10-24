@@ -17,8 +17,21 @@ CKEDITOR.addQueryStringToUrl = function(url, params) {
     return url + ( ( url.indexOf("?") != -1 ) ? "&" : "?" ) + queryString.join("&");
 };
 
+CKEDITOR.on('instanceCreated', function(evt) {
+  evt.editor.config.toolbar = evt.editor.element.$.getAttribute('toolbar');
+});
+
 CKEDITOR.editorConfig = function( config )
 {
+
+  config.filebrowserBrowseUrl = '/ckeditor/attachment_files';
+  config.filebrowserFlashBrowseUrl = '/ckeditor/attachment_files';
+  config.filebrowserFlashUploadUrl = '/ckeditor/attachment_files';
+  config.filebrowserImageBrowseLinkUrl = '/ckeditor/pictures';
+  config.filebrowserImageBrowseUrl = '/ckeditor/pictures';
+  config.filebrowserImageUploadUrl = '/ckeditor/pictures';
+  config.filebrowserUploadUrl = '/ckeditor/attachment_files';
+
   config.PreserveSessionOnFileBrowser = true;
   // Define changes to default configuration here. For example:
   config.language = 'en';
@@ -26,8 +39,8 @@ CKEDITOR.editorConfig = function( config )
 
   //config.ContextMenu = ['Generic','Anchor','Flash','Select','Textarea','Checkbox','Radio','TextField','HiddenField','ImageButton','Button','BulletedList','NumberedList','Table','Form'] ;
 
-  config.height = '400px';
-  config.width = '600px';
+  config.height = this.element.$.getAttribute('height') || '400px';
+  config.width = this.element.$.getAttribute('width') || '600px';
 
   //config.resize_enabled = false;
   //config.resize_maxHeight = 2000;
@@ -38,7 +51,7 @@ CKEDITOR.editorConfig = function( config )
   // works only with en, ru, uk languages
   config.extraPlugins = "embed,attachment,email_template_vars,deal_links,email_template_vars_multiple";
 
-  config.toolbar = 'Easy';
+  config.toolbar = config.toolbar
 
   config.toolbar_Easy =
     [

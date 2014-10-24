@@ -489,7 +489,7 @@ function check_notifications() {
 
 function exportDialog(jqEvent, jqSelectorFormExport, formatsHash) {
     jqEvent.preventDefault();
-    
+
     var formats = formatsHash || {};
     var buttonsConfig = {};
 
@@ -497,7 +497,7 @@ function exportDialog(jqEvent, jqSelectorFormExport, formatsHash) {
         return function() {
             $(this).dialog("close");
             $(jqSelectorFormExport).attr('action', formats[format]);
-            $(jqSelectorFormExport).submit();                
+            $(jqSelectorFormExport).submit();
         }
     }
 
