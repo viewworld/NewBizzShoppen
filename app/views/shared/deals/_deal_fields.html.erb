@@ -22,6 +22,13 @@
           <br/>
           <%= custom_error_for_field(f, :hidden_description) %>
         </li>
+
+        <li class="text">
+          <%= f.label :description, t("shared.deals.form.description_label") %>
+          <%= f.text_area :description, :style => "height: 140px; width: 600px" %>
+          <br/>
+          <%= custom_error_for_field(f, :description) %>
+        </li>
         <% end %>
 
         <li class="text">
