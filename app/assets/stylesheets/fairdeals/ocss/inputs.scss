@@ -55,6 +55,7 @@
 }
 
 .inputs ol li.string label,
+.inputs ol li.stringish label,
 .inputs ol li.select label,
 .inputs ol li.text label,
 .inputs ol li.password label,
@@ -124,6 +125,7 @@
 --------------------------------------------------------------------------------- */
 
 .inputs ol li.string input,
+.inputs ol li.stringish input,
 .inputs ol li.password input,
 .inputs ol li.numeric input
 {
@@ -501,6 +503,7 @@ input.date.hasDatepicker
 }
 
 .labels_160 ol li.string label,
+.labels_160 ol li.stringish label,
 .labels_160 ol li.select label,
 .labels_160 ol li.password label,
 .labels_160 ol li.text label,

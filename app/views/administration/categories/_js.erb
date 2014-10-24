@@ -1,4 +1,4 @@
-javascript:
+<script>
     function move_users_to_all(users_type) {
         $("#all_" + users_type + " option:selected").each(function() {
             $("#selected_" + users_type).
@@ -79,3 +79,4 @@ javascript:
             data: "query=" + query + "&users_type=" + users_type
         });
     }
+</script>
