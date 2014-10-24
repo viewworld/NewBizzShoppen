@@ -39,8 +39,8 @@ CKEDITOR.editorConfig = function( config )
 
   //config.ContextMenu = ['Generic','Anchor','Flash','Select','Textarea','Checkbox','Radio','TextField','HiddenField','ImageButton','Button','BulletedList','NumberedList','Table','Form'] ;
 
-  config.height = '400px';
-  config.width = '600px';
+  config.height = this.element.$.getAttribute('height') || '400px';
+  config.width = this.element.$.getAttribute('width') || '600px';
 
   //config.resize_enabled = false;
   //config.resize_maxHeight = 2000;
@@ -51,7 +51,7 @@ CKEDITOR.editorConfig = function( config )
   // works only with en, ru, uk languages
   config.extraPlugins = "embed,attachment,email_template_vars,deal_links,email_template_vars_multiple";
 
-  config.toolbar = 'Easy';
+  config.toolbar = config.toolbar
 
   config.toolbar_Easy =
     [
