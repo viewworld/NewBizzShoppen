@@ -13,8 +13,8 @@
               li.header
                 h3= t("administration.invoices.new.view.basic_information")
               = form.inputs do
-                = form.input :user_id, collection: User.all, include_blank: false
-                = form.input :seller_id, collection: Seller.all, include_blank: false
+                = form.input :user_id, collection: User.all, as: :select, include_blank: false
+                = form.input :seller_id, collection: Seller.all, as: :select, include_blank: false
                 = form.input :currency_id, as: :hidden
 
       - section.block_actions do
