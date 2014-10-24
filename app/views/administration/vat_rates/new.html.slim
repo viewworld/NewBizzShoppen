@@ -10,7 +10,7 @@
     .box-content.form-inputs
       = f.simple_fields_for :country do |country_form|
         = country_form.input :name
-        = country_form.input :locale
+        = country_form.input :locale, collection: @available_locales, label_method: :language, value_method: :code, include_blank: false
         = country_form.input :detailed_locale
 
       = f.input :rate
