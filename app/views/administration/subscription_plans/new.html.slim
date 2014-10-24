@@ -2,10 +2,10 @@
   = header(back: true) do |section|
     - section.block_header do
       = t("administration.subscription_plans.new.view.header")
-  = semantic_form_for @subscription_plan, url: administration_subscription_plans_path do |form|
+  = semantic_form_for [:administration, @subscription_plan] do |form|
     = frm do |section|
       - section.block_content do
-        = render partial: 'form', locals: {form: form}
+        = render 'form', form: form
       - section.block_actions do
         = ibt(class: "fltri", icon: "save") do
           = form.submit t("administration.subscription_plans.new.view.button_create")
