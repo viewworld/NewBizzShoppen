@@ -11,7 +11,7 @@ class Campaign < ActiveRecord::Base
   has_many :campaigns_results, :foreign_key => "campaign_id", :dependent => :destroy
   has_many :results, :through => :campaigns_results
   has_many :contacts, :dependent => :destroy
-  has_many :materials, :as => :resource, :class_name => "Material", :dependent => :destroy
+  has_many :materials, as: :assetable, class_name: 'Material', dependent: :destroy
   has_one :send_material_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'result_send_material'", :dependent => :destroy
   has_one :upgrade_contact_to_category_buyer_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_category_buyer'", :dependent => :destroy
   has_one :upgrade_contact_to_buyer_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_buyer'", :dependent => :destroy
