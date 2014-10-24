@@ -15,5 +15,5 @@
       - section.block_actions do
         = ibt(class: 'fltri', icon: 'save') do
           = form.submit t("administration.countries.edit.view.button_update_country")
-        = ibt(:class => "bt_grey fltri") do
+        = ibt(class: "bt_grey fltri") do
           = button_to_function t("administration.countries.edit.view.button_cancel"), "history.go(-1)"

@@ -5,7 +5,7 @@ class Administration::CountriesController < Administration::AdministrationContro
   before_filter :set_country, only: [:edit, :update, :destroy]
 
   def index
-    @countries = Country.all
+    @countries = Country.scoped.decorate
   end
 
   def new
@@ -42,7 +42,7 @@ class Administration::CountriesController < Administration::AdministrationContro
 
   private
   def set_country
-    @country = Country.find(params[:id])
+    @country = Country.find(params[:id]).decorate
   end
 
   def country_params

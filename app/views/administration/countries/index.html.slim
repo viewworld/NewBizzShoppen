@@ -31,7 +31,7 @@
             td.cl
             td.ta_c= country.id
             td= country.name
-            td= "#{country.locale.to_s}#{'-'+country.detailed_locale.upcase if country.detailed_locale.present?}"
+            td= country.locale_info
             td.tda.ta_r
               .td_actions
                 = bt_link_to :cog, nil, "javascript:void(0)", class: "bt_dropdown"
