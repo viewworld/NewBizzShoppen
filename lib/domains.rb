@@ -18,13 +18,10 @@ module Rack
     private
 
     def domain(env)
-      @domain ||=
-        begin
-          server_name = env['SERVER_NAME'].gsub('www.', '')
-          Domain.where(name: server_name).first ||
-            Domain.where(site: server_name.split('.').first).first ||
-            Domain.for_site_and_locale('fairleads', I18n.locale)
-        end
+      server_name = env['SERVER_NAME'].gsub('www.', '')
+      Domain.where(name: server_name).first ||
+        Domain.where(site: server_name.split('.').first).first ||
+        Domain.for_site_and_locale('fairleads', I18n.locale)
     end
   end
 end

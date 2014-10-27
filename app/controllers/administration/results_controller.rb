@@ -11,8 +11,8 @@ class Administration::ResultsController < Administration::AdministrationControll
   end
 
   def update
-    if @result.update_attributes(params[:result_params])
-      redirect_to administration_results_path
+    if @result.update_attributes(result_params)
+      redirect_to administration_results_path, notice: t("flash.actions.update.notice", resource_name: Result)
     else
       render :edit
     end
@@ -21,5 +21,9 @@ class Administration::ResultsController < Administration::AdministrationControll
   private
   def set_result
     @result = Result.find(params[:id])
+  end
+
+  def result_params
+    params.require(:result).permit(:name, :is_archived, :is_global)
   end
 end

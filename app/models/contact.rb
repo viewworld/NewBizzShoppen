@@ -86,7 +86,7 @@ class Contact < AbstractLead
     end
 
     def to_csv(*ids)
-      FasterCSV.generate(:force_quotes => true) do |csv|
+      CSV.generate(:force_quotes => true) do |csv|
         contacts = find(ids)
         csv << CSV_ATTRS.map(&:humanize)
         contacts.each { |c| csv << CSV_ATTRS.map { |attr| c.send(attr).to_s.gsub(/[\n\r\t,]/, " ") } }

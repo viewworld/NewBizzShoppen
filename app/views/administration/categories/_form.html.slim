@@ -25,10 +25,10 @@
         = f.input :buyout_enabled
         = f.input :no_prices_for_team_members
 
-        = f.input :is_customer_unique, onclick: "show_hide_users_selection('customer')"
+        = f.input :is_customer_unique, input_html: { onclick: "show_hide_users_selection('customer')" }
         = render "users_selection", users_type: "customers", form: f
 
-        = f.input :is_agent_unique, onclick: "show_hide_users_selection('agent')"
+        = f.input :is_agent_unique, input_html: { onclick: "show_hide_users_selection('agent')" }
         = render "users_selection", users_type: "agents", form: f
 
         = f.input :auto_buy

@@ -1,5 +1,5 @@
-javascript:
-  var nestedFormsCount = "#{@subscription_plan.subscription_plan_lines.size}"
+<script>
+  var nestedFormsCount = "<%= @subscription_plan.subscription_plan_lines.size %>"
 
   function add_subscription_plan_line(link, content) {
     var new_id = new Date().getTime();
@@ -33,7 +33,7 @@ javascript:
   }
 
   function switch_automatic_downgrading() {
-    if($('#subscription_plan_automatic_downgrading').attr('checked')) {
+    if($('#subscription_plan_automatic_downgrading').attr('checked'))
       $('#automatic_downgrading_subscription_selection').show();
     else
       $('#automatic_downgrading_subscription_selection').hide();
@@ -85,3 +85,4 @@ javascript:
 
     $('#total_billing').html("<strong>" + total.toString() + "</strong>");
   }
+</script>

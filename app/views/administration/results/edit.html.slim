@@ -3,7 +3,7 @@
     - section.block_header do
       = "#{t("administration.results.edit.view.title")}: #{@result.name}"
 
-  = semantic_form_for @result, url: administration_result_path, method: :post do |form|
+  = semantic_form_for [:administration, @result] do |form|
     = frm(title: "Update existing") do |section|
       - section.block_content do
         = render partial: '/callers/results/form', locals: { form: form, result: @result }

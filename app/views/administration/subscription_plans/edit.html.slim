@@ -7,10 +7,10 @@
         li.last
           = bt_link_to nil, t("administration.subscription_plans.edit.view.edit_email_template"), edit_administration_email_template_path(@subscription_plan.invoice_email_template)
 
-  = semantic_form_for @subscription_plan, url: administration_subscription_plan_path(@subscription_plan) do |form|
+  = semantic_form_for [:administration, @subscription_plan] do |form|
     = frm do |section|
       - section.block_content do
-        = render partial: 'form', locals: {form: form}
+        = render 'form', form: form
       - section.block_actions do
         = ibt(class: "fltri", icon: "save") do
           = form.submit t("administration.subscription_plans.edit.view.button_update")

@@ -1,5 +1,5 @@
 class Administration::Invoicing::CashFlowController < Administration::AdministrationController
-  before_filter :get_invoice
+  before_filter :set_invoice
 
   def new
     respond_to do |format|
@@ -16,9 +16,7 @@ class Administration::Invoicing::CashFlowController < Administration::Administra
   end
 
   private
-
-  def get_invoice
+  def set_invoice
     @invoice = Invoice.find(params[:invoice_id])
   end
-
 end

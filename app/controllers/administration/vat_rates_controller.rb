@@ -3,6 +3,7 @@ class Administration::VatRatesController < Administration::AdministrationControl
   set_subtab 'global'
 
   before_filter :set_vat_rate, only: [:edit, :update]
+  before_filter :set_available_locales, only: [:new, :edit]
 
   def new
     @vat_rate = VatRate.new(country: Country.new)
@@ -29,6 +30,10 @@ class Administration::VatRatesController < Administration::AdministrationControl
   private
   def set_vat_rate
     @vat_rate = VatRate.find(params[:id])
+  end
+
+  def set_available_locales
+    @available_locales = Locale.where(enabled: true)
   end
 
   def new_vat_rate_params

@@ -1,0 +1,15 @@
+= semantic_form_for [:administration, :invoicing, @invoice] do |form|
+  = frm do |section|
+    - section.block_content do
+      .pdd_10.no_pdd_t
+        fieldset.inputs.labels_ta_r.labels_200
+          ol.align_inputs
+            = form.input :cash_flow, input_html: { value: @invoice.cash_flow.zero? ? as_currency(@invoice.revenue_frozen, @invoice.currency) : as_currency(@invoice.cash_flow, @invoice.currency) }
+            = form.input :paid_at, as: :string, required: false,
+                input_html: { class: 'date_field', value: @invoice.paid_at.nil? ? Date.today : @invoice.paid_at }
+
+    - section.block_actions do
+      = ibt(class: "fltri", icon: "save") do
+        = form.submit t("administration.invoices.cash_flow.view.save_button")
+      = ibt(class: "bt_grey fltri") do
+        = button_to_function t("common.back_link"), "history.go(-1)"

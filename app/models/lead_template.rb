@@ -17,8 +17,7 @@ class LeadTemplate < ActiveRecord::Base
 
   accepts_nested_attributes_for :lead_template_fields, :allow_destroy => true
 
-  attr_accessor :current_user, :name, :is_mandatory, :is_active
-  BLACK_LISTED_ATTRIBUTES = [:name, :is_mandatory, :is_active].freeze
+  attr_accessor :current_user
 
   translates :name
 
@@ -34,7 +33,6 @@ class LeadTemplate < ActiveRecord::Base
 
   def mass_assignment_authorizer(role = :default)
     if self.current_user and (self.current_user.has_role?(:admin) or self.current_user == self.creator)
-      self.class.protected_attributes.reject! { |a| BLACK_LISTED_ATTRIBUTES.include?(a.to_sym)  }
       self.class.protected_attributes
     else
       super
