@@ -1,7 +1,7 @@
 = content_for :column_mc do
   = header(back: true) do |section|
     - section.block_header do
-      - raw t("administration.supplier_interests.edit.view.title", name: screen_name_with_company_name(@user))
+      = t("administration.supplier_interests.edit.view.title", name: screen_name_with_company_name(@user))
 
   = semantic_form_for @user, url: administration_supplier_interest_path do |form|
     = frm do |section|
@@ -39,7 +39,7 @@
           fieldset.inputs.labels_ta_r
             ol.align_inputs
               = form.input :notify_about_new_leads
-              
+
       - section.block_actions do
         = ibt(class: "fltri", icon: "save") do
           = form.submit t("administration.users.edit.view.button_update_user"), onclick: "select_options_to_submit('user_supplier_category_ids_');"
