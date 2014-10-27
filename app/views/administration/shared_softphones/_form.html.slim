@@ -1,17 +1,13 @@
-= semantic_form_for [:administration, :shared, @softphone] do |form|
-  = frm do |section|
-    - section.block_content do
-      .pdd_10.no_pdd_t
-        fieldset.inputs.labels_ta_r.labels_240
-          ol.align_inputs
-            = form.input :name
-            = form.input :sip_username
-            = form.input :sip_password, as: :string
-            = form.input :softphone_server
+= simple_form_for [:administration, :shared, @softphone] do |form|
+  .box-content.form-inputs
+    = form.input :name
+    = form.input :sip_username
+    = form.input :sip_password, as: :string
+    = form.input :softphone_server
 
-    - section.block_actions do
-      = ibt(class: 'fltri', icon: 'save') do
-        = form.submit t('views.button_create')
+  .box-footer
+    = ibt(class: 'fltri', icon: 'save') do
+      = form.submit t('views.button_create')
 
-      = ibt(class: 'bt_grey fltri') do
-        = button_to_function t('views.button_create'), href(administration_shared_softphones_path)
+    = ibt(class: 'bt_grey fltri') do
+      = button_to_function t('views.button_cancel'), href(administration_shared_softphones_path)
