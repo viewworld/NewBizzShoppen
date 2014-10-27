@@ -42,7 +42,7 @@ Nbs::Application.routes.draw do
     resources :languages, only: [:index, :update]
     resources :leads, only: [:index, :edit, :update]
     resources :lead_templates, except: [:index, :show]
-    resources :news, except: :new
+    resources :news
     resources :paypal_notifications, only: [:index, :show]
     resources :results
     resources :sellers

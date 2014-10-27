@@ -24,7 +24,7 @@
     - section.block_header do
       = t("administration.news.index.view.header")
     - section.block_actions do
-      = form_tag administration_news_index_path, method: :post, id: "form_new_news" do
+      = form_tag new_administration_news_path, method: :get, id: "form_new_news" do
         span#news_subclass_select
           = select_tag "subclass", options_for_select(news_scope_for_select), {}
         ul.header_actions
