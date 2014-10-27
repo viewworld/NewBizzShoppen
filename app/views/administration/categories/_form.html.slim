@@ -5,44 +5,52 @@
     h2= header
 
     - if @category.id
-      = bt_link_to nil, t("administration.categories.edit.view.edit_email_template"), edit_administration_category_email_template_path(@category), class: "fltr"
-      = bt_link_to nil, t("administration.categories.edit.view.new_template"), new_administration_lead_template_path(category_id: @category.id), class: "fltr"
+      .box-header-actions
+        = bt_link_to nil, t("administration.categories.edit.view.edit_email_template"), edit_administration_category_email_template_path(@category), class: "fltr"
+        = bt_link_to nil, t("administration.categories.edit.view.new_template"), new_administration_lead_template_path(category_id: @category.id), class: "fltr"
 
-  .box-content.form-inputs.clearfix
-    .column_left
-      = f.input :name
-      = f.input :description
-      = f.input :additional_information, as: :ckeditor, input_html: lite_ckeditor_params
-      = f.input :is_locked
+  .box-content.text-left
+    .row.form-inputs.clearfix
+      .col-4
+        = f.input :name
+        - if @category_type == LeadCategory
+          = f.association :parent, collection: categories_sorted_for_select(@category_type, :name), include_blank: t("administration.categories.form.no_parent_category")
 
-      - if @category_type == LeadCategory
-        = f.association :parent, collection: categories_sorted_for_select(@category_type, :name), include_blank: t("administration.categories.form.no_parent_category")
+          - unless @category.is_company_unique?
+            = f.input :default_price
+            = f.association :currency, collection: currencies_for_select, include_blank: true
 
-        - unless @category.is_company_unique?
-          = f.input :default_price
-          = f.association :currency, collection: currencies_for_select, include_blank: true
-
+      .col-4
+        = f.input :is_locked
         = f.input :buyout_enabled
         = f.input :no_prices_for_team_members
+        = f.input :auto_buy
 
+      .col-4
+        = f.simple_fields_for :image_attributes do |image_form|
+          = image_form.input :data, as: :file, required: false,
+                              label: t("administration.categories.edit.view.upload_image")
+
+        - if @category.image
+          .image
+            = image_tag @category.image.url(:original)
+            = f.input :remove_image, as: :boolean
+
+    .row.form-inputs
+      .col-4
+        = f.association :countries, collection: Country.all, input_html: { style: 'height: 140px' }
+
+      .col-8
         = f.input :is_customer_unique, input_html: { onclick: "show_hide_users_selection('customer')" }
         = render "users_selection", users_type: "customers", form: f
 
         = f.input :is_agent_unique, input_html: { onclick: "show_hide_users_selection('agent')" }
         = render "users_selection", users_type: "agents", form: f
 
-        = f.input :auto_buy
+    .form-inputs
+      = f.input :description
+      = f.input :additional_information, as: :ckeditor, input_html: lite_ckeditor_params
 
-    .column_right
-      = f.association :countries, collection: Country.all, input_html: { style: 'height: 140px' }
-      = f.simple_fields_for :image_attributes do |image_form|
-        = image_form.input :data, as: :file, required: false,
-                            label: t("administration.categories.edit.view.upload_image")
-
-      - if @category.image
-        .image
-          = image_tag @category.image.url(:original)
-          = f.input :remove_image, as: :boolean
 
   .box-footer
     = ibt(class: "fltri", icon: "plus") do

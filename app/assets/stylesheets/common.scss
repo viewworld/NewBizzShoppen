@@ -18,9 +18,15 @@
 *= require jquery.gritter
 *= require tagit
 *= require mediaelement
-*= require utilities/_utilities
-*= require modules/_box
-*= require modules/_forms
-*= require modules/_tables
-*= require modules/_header_ribbon
 */
+
+@import "bourbon";
+@import "neat";
+
+@import "./utilities/*";
+@import "./layout/*";
+@import "./modules/*";
+
+* {
+  box-sizing: content-box;
+}
