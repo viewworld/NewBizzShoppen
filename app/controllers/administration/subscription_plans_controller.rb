@@ -16,7 +16,7 @@ class Administration::SubscriptionPlansController < Administration::Administrati
   end
 
   def create
-    @subscription_plan = SubscriptionPlan.new(params[:subscription_plan])
+    @subscription_plan = SubscriptionPlan.new(subscription_plan_params)
 
     if @subscription_plan.save
       redirect_to administration_subscription_plans_path, notice: t('flash.actions.create.notice', resource_name: 'Subscription plan')
@@ -26,7 +26,7 @@ class Administration::SubscriptionPlansController < Administration::Administrati
   end
 
   def update
-    if @subscription_plan.update_attributes(params[:subscription_plan])
+    if @subscription_plan.update_attributes(subscription_plan_params)
       redirect_to administration_subscription_plans_path, notice: t('flash.actions.update.notice', resource_name: 'Subscription plan')
     else
       render :edit
@@ -45,5 +45,17 @@ class Administration::SubscriptionPlansController < Administration::Administrati
   private
   def set_subscription_plan
     @subscription_plan = SubscriptionPlan.find(params[:id])
+  end
+
+  def subscription_plan_params
+    params.require(:subscription_plan).permit(
+      :name, :subscription_text, :subscription_period, :billing_cycle, :lockup_period,
+      :billing_period, :free_period, :currency_id, :seller_id, :free_deals_in_free_period,
+      :is_active, :is_public, :can_be_upgraded, :can_be_downgraded, :premium_deals,
+      :free_deal_requests_in_free_period, :team_buyers, :big_buyer, :deal_maker, :newsletter_manager,
+      :chain_mails_enabled, :surveys_enabled, :pipeline_reports_enabled, :use_paypal,
+      :paypal_retries, :automatic_downgrading, :automatic_downgrade_subscription_plan_id,
+      :paypal_billing_at_start, assigned_roles: [], subscription_plan_lines_attributes: [:name, :price]
+    )
   end
 end
