@@ -1,18 +1,21 @@
 <column-mc:>
   <header><%= t("administration.featured_deals.view.index.header") %></header>
 
-  <%= form_tag administration_featured_deals_path, :method => :post do %>
+  <% Domain.for_fairdeals.each do |domain| %>
+    <%= form_tag administration_featured_deals_path(:domain => domain) do %>
       <frm title="#{t('administration.featured_deals.view.index.title')}">
         <param:content>
           <div class="pdd_10 no_pdd_t">
             <div class="column_left">
               <fieldset class="inputs labels_170 labels_ta_r inputs_360">
                 <ol class="align_inputs">
+                  <h2><%= domain.name %></h2>
                   <% FeaturedDeal::POSITIONS.each do |position| %>
-                      <li class="select">
-                        <%= label_tag (0..4).include?(position) ? t("administration.featured_deals.view.index.main_position", {:position => position+1 }) : t("administration.featured_deals.view.index.position", {:position => position-4 }) %>
-                        <%= select_tag "featured_deals[#{position}]", options_for_select(@deals_for_select, FeaturedDeal.find_by_position(position).deal_id) %>
-                      </li>
+                    <li class="select">
+                      <%= label_tag (0..4).include?(position) ? t("administration.featured_deals.view.index.main_position", {:position => position+1 }) : t("administration.featured_deals.view.index.position", {:position => position-4 }) %>
+                      <%= select_tag "featured_deals[#{position}]", options_for_select(@deals_for_select, FeaturedDeal.find_by_position_and_domain_id(position, domain).try(:deal_id)) %>
+                      <%= hidden_field :featured_deals, :domain_id, :value => domain.id %>
+                    </li>
                   <% end %>
                 </ol>
               </fieldset>
@@ -29,6 +32,6 @@
           </ibt>
         </param:actions>
       </frm>
+    <% end %>
   <% end %>
-
 </column-mc:>

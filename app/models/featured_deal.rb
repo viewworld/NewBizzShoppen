@@ -1,6 +1,7 @@
 class FeaturedDeal < ActiveRecord::Base
   POSITIONS = (0..19).to_a
   belongs_to :deal
+  belongs_to :domain
 
   validates_presence_of :position
 
@@ -25,10 +26,11 @@ class FeaturedDeal < ActiveRecord::Base
   end
 
   def self.set_all(params)
+    domain_id = params[:domain_id]
     POSITIONS.each do |number|
-      if params and params[number.to_s]
-        deal = FeaturedDeal.find_or_create_by_position(number)
-        deal.update_attribute(:deal_id, params[number.to_s])
+      if params && params[number.to_s]
+        deal = FeaturedDeal.find_or_create_by_position_and_domain_id(number, domain_id)
+        deal.update_attributes(:deal_id => params[number.to_s], :domain_id => domain_id)
       end
     end
   end
