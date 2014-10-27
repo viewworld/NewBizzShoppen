@@ -13,4 +13,4 @@
         = form.submit t("administration.articles.edit.view.button_save")
 
       = ibt(class: "fltri bt_grey") do
-        = button_to_function t("common.cancel_link"), @article.just_created ? "$('#delete_article_form').submit();" : "history.go(-1)"
+        = button_to_function t("common.cancel_link"), "history.go(-1)"
