@@ -19,7 +19,7 @@ class Administration::ArticlesController < Administration::AdministrationControl
   end
 
   def create
-    @article = Article::Cms::MainPageArticle.new(params[:article])
+    @article = Article::Cms::MainPageArticle.new(article_params)
 
     if @article.save
       redirect_to administration_articles_path
@@ -29,7 +29,7 @@ class Administration::ArticlesController < Administration::AdministrationControl
   end
 
   def update
-    if @article.update_attributes(params[:article])
+    if @article.update_attributes(article_params)
       redirect_to session[:articles_referer] || administration_articles_path
     else
       render :edit
@@ -44,6 +44,11 @@ class Administration::ArticlesController < Administration::AdministrationControl
   private
   def set_article
     @article = Article.find(params[:id])
+  end
+
+  def article_params
+    binding.pry
+    params.require(:article).permit(:title, :content, :published)
   end
 
   def authorize_user_for_namespace!
