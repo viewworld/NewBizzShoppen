@@ -47,7 +47,6 @@ class Administration::ArticlesController < Administration::AdministrationControl
   end
 
   def article_params
-    binding.pry
     params.require(:article).permit(:title, :content, :published)
   end
 
