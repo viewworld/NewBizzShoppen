@@ -1,2 +1,0 @@
-content = escape_javascript(render(:partial => 'form', :locals => {:comment => @comment}))
-page << "$('#{content}').insertAfter('#comment_#{@comment.id}');"
