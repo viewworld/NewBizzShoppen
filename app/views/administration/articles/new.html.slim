@@ -4,8 +4,4 @@
       = t('administration.articles.new.view.header')
       = image_tag_for_locale
 
-  .box
-    .box-header
-      h2= t('administration.articles.new.view.header')
-
-    = render 'form', url: administration_articles_path
+  = render 'form', url: administration_articles_path, header: t('administration.articles.new.view.header')

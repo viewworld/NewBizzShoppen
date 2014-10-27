@@ -1,12 +1,16 @@
-= simple_form_for @article, url: url do |form|
-  .box-content.form-inputs
-    = form.input :title
-    = form.input :content, as: :ckeditor, label: false
-    = form.input :published
+.box
+  = simple_form_for @article, url: url do |form|
+    .box-header
+      h2= header
 
-  .box-footer
-    = ibt(class: "fltri", icon: "save") do
-      = form.submit t("administration.articles.edit.view.button_save")
+    .box-content.form-inputs
+      = form.input :title
+      = form.input :content, as: :ckeditor, label: false
+      = form.input :published
 
-    = ibt(class: "fltri bt_grey") do
-      = button_to_function t("common.cancel_link"), @article.just_created ? "$('#delete_article_form').submit();" : "history.go(-1)"
+    .box-footer
+      = ibt(class: "fltri", icon: "save") do
+        = form.submit t("administration.articles.edit.view.button_save")
+
+      = ibt(class: "fltri bt_grey") do
+        = button_to_function t("common.cancel_link"), @article.just_created ? "$('#delete_article_form').submit();" : "history.go(-1)"

@@ -4,8 +4,4 @@
       = t('administration.articles.edit.view.header', name: @article.title)
       = image_tag_for_locale
 
-  .box
-    .box-header
-      h2= @article.title
-
-    = render 'form', url: administration_article_path(@article)
+  = render 'form', url: administration_article_path(@article), header: @article.title
