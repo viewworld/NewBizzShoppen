@@ -10,7 +10,7 @@ class Deal < AbstractLead
   has_one :logo, :class_name => "Asset::DealLogo", :as => :assetable, :conditions => "asset_type = 'Asset::DealLogo'", :dependent => :destroy
   has_one :voucher_heading_picture, :class_name => "Asset::VoucherPicture", :as => :assetable, :conditions => "asset_type = 'Asset::VoucherPicture'", :dependent => :destroy
   has_many :images, :class_name => "Asset::DealImage", :as => :assetable, :conditions => "asset_type = 'Asset::DealImage'", :dependent => :destroy
-  has_many :materials, :class_name => "Asset::DealMaterial", :as => :assetable, :conditions => "asset_type = 'Asset::DealMaterial'", :dependent => :destroy
+  has_many :materials, as: :assetable, class_name: 'Asset::DealMaterial', conditions: "asset_type = 'Asset::DealMaterial'", dependent: :destroy
   has_many :internal_documents, :class_name => "Asset::DealInternalDocument", :as => :assetable, :conditions => "asset_type = 'Asset::DealInternalDocument'", :dependent => :destroy
   has_many :leads, :class_name => "Lead", :foreign_key => "deal_id"
   has_many :unconfirmed_leads, :class_name => "UnconfirmedLead", :foreign_key => "deal_id"
