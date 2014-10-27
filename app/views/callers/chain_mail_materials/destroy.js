@@ -1,0 +1,1 @@
+$('#materials_dialog').html('<%= escape_javascript(render(:partial => 'callers/chain_mail_materials/materials', :locals => {:material => @resource.materials.build, :materials => @resource.materials})) %>');
