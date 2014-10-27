@@ -6,4 +6,4 @@
   p
     = blurb("blurb_currencies")
 
-  = render partial: 'form', locals: { url: administration_currency_path(@currency) }
+  = render 'form', header: t("administration.currencies.edit.view.header", name: @currency.name)

@@ -11,11 +11,11 @@
   - if @currencies.blank?
     = blank_state_message t('administration.currencies.index.view.no_currencies_defined')
   - else
-    table#currencies_table.generic
+    table.generic
       thead
         tr
           th.hl
-          th style='width:10px' = t('administration.currencies.index.view.table.name')
+          th.mini= t('administration.currencies.index.view.table.name')
           th= t('administration.currencies.index.view.table.symbol')
           th= t('administration.currencies.index.view.table.format')
           th= t('administration.currencies.index.view.table.exchange_rate')
@@ -40,10 +40,7 @@
             td.ta_c= translate_boolean(currency.active)
             td.ta_c= translate_boolean(currency.global_default)
             td.tda.ta_r
-              .td_actions
-                = bt_link_to :cog, nil, 'javascript:void(0)', class: 'bt_dropdown'
-                ul
-                  li= link_to t('administration.currencies.index.view.edit'), edit_administration_currency_path(currency), class: 'default_action'
+              = link_to t('administration.currencies.index.view.edit'), edit_administration_currency_path(currency), class: 'default_action'
             td.cr
       tfoot
         tr
