@@ -216,7 +216,7 @@ class CallResult < ActiveRecord::Base
       result_fields = %w(result note)
       result_custom_fields = %w(custom_field_1 custom_field_2 custom_field_3 custom_field_4)
 
-      FasterCSV.generate(:force_quotes => true) do |csv|
+      CSV.generate(:force_quotes => true) do |csv|
         csv << (contact_information + result_fields + result_custom_fields).map(&:humanize)
         CallResult.find_all_by_id(call_result_ids).each do |c|
           csv << (contact_company_information_fields + contact_contact_information_fields).map { |attr| c.contact.send(attr).to_s.gsub(/[\n\r\t,]/, " ") } + result_fields.map { |attr| c.send(attr).to_s.gsub(/[\n\r\t,]/, " ") } + c.custom_fields_for_csv(result_custom_fields.size)

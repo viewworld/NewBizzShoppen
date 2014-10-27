@@ -132,7 +132,7 @@ class LeadPurchase < LeadPurchaseBase
   class << self
 
     def to_csv(*ids)
-      FasterCSV.generate(:force_quotes => true) do |csv|
+      CSV.generate(:force_quotes => true) do |csv|
         lead_purchases = find(ids)
         templates = lead_purchases.map { |lp| lp.lead.lead_templates }.flatten.uniq
         template_fields = templates.map { |t| t.lead_template_fields }.flatten
