@@ -67,11 +67,11 @@
     </tfoot>
     <tbody>
     <% @newsletter_campaigns.each do |newsletter_campaign| %>
-        <tr class="<%= cycle("odd", "even") %>">
+        <tr>
           <td class="cl"></td>
           <td><%= newsletter_campaign.owner ? newsletter_campaign.owner.screen_name : "-" %></td>
           <td><%= newsletter_campaign.name %></td>
-          <td><%= newsletter_campaign.newsletter_lists.map(&:name) %></td>
+          <td><%= newsletter_campaign.newsletter_lists.map(&:name).join(', ') %></td>
           <td><%= t("models.newsletter_campaign.statuses.status#{newsletter_campaign.status}") %></td>
           <td class="tda ta_r">
             <div class="td_actions"><%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %><ul>
