@@ -1,14 +1,15 @@
 = content_for :search_box do
-  = render "search"
+  = render 'search'
 
 = content_for :column_mc do
   = header do |section|
     - section.block_header do
-      = t("administration.articles.index.view.header")
+      = t('administration.articles.index.view.header')
+
     - section.block_actions do
       ul.header_actions
         li.last
-          = bt_link_to :plus, t("administration.articles.index.view.new_article"), new_administration_article_path
+          = bt_link_to :plus, t('administration.articles.index.view.new_article'), new_administration_article_path
 
   - if @articles.blank?
     = blank_state_message
@@ -17,15 +18,15 @@
       thead
         tr
           th.hl
-          th.mini= link_to t("administration.articles.index.view.id"), order_for_scoped_search(:id)
-          th= t("administration.articles.index.view.type")
-          th= link_to t("administration.articles.index.view.title"), order_for_scoped_search(:title)
-          th.ta_r= t("administration.articles.index.view.actions")
+          th.mini= link_to t('administration.articles.index.view.id'), order_for_scoped_search(:id)
+          th= t('administration.articles.index.view.type')
+          th= link_to t('administration.articles.index.view.title'), order_for_scoped_search(:title)
+          th.ta_r= t('administration.articles.index.view.actions')
           th.hr
       tfoot
         tr
           td.fl
-          td colspan="4"
+          td colspan='4'
           td.fr
       tbody
         - @articles.each do |article|
@@ -36,16 +37,16 @@
             td= article.title
             td.tda.ta_r
               .td_actions
-                = bt_link_to :cog, nil, "javascript:void(0)", class: "bt_dropdown"
+                = bt_link_to :cog, nil, 'javascript:void(0)', class: 'bt_dropdown'
                 ul
-                  li= link_to t("administration.articles.index.view.edit_link"), edit_administration_article_path(article), class: "default_action"
-                  li= link_to t("administration.articles.index.view.show_link"), administration_article_path(article)
+                  li= link_to t('administration.articles.index.view.edit_link'), edit_administration_article_path(article), class: 'default_action'
+                  li= link_to t('administration.articles.index.view.show_link'), administration_article_path(article)
 
                   - if article.can_be_destroyed?
-                    li= link_to t("administration.articles.index.view.delete_link"), administration_article_path(article), method: :delete, confirm: t("administration.articles.index.view.delete_confirmation")
+                    li= link_to t('administration.articles.index.view.delete_link'), administration_article_path(article), method: :delete, confirm: t('administration.articles.index.view.delete_confirmation')
             td.cr
 
         - if will_paginate
           tr.pagination
-            td.ta_c colspan="6"
+            td.ta_c colspan='6'
               = will_paginate @hints

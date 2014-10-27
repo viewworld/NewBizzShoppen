@@ -22,4 +22,5 @@
 *= require modules/_box
 *= require modules/_forms
 *= require modules/_tables
+*= require modules/_header_ribbon
 */

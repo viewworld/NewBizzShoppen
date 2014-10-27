@@ -15,8 +15,8 @@
       = form.input :global_default, disabled: !@currency.active
 
     .box-footer
-      = ibt(class: "fltri", icon: "save") do
-        = form.submit t("views.button_update")
+      = ibt(class: 'fltri', icon: 'save') do
+        = form.submit t('views.button_update')
 
-      = ibt(class: "bt_grey fltri") do
-        = button_to_function t("views.button_cancel"), href(administration_currencies_path)
+      = ibt(class: 'bt_grey fltri') do
+        = button_to_function t('views.button_cancel'), href(administration_currencies_path)

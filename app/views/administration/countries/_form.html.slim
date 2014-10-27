@@ -18,7 +18,7 @@
 
       .hl
       .pdd_20
-        = bt_link_to :plus, t("administration.countries.form.new_region"), "javascript:void(0)", class: 'duplicate-nested-form'
+        = bt_link_to :plus, t('administration.countries.form.new_region'), 'javascript:void(0)', class: 'duplicate-nested-form'
 
       .duplicatable-nested-form-list
         = form.simple_fields_for :regions do |region_form|
@@ -30,7 +30,7 @@
 
     .box-footer
       = ibt(class: 'fltri', icon: 'save') do
-        = form.submit t("administration.countries.new.view.button_create_country")
+        = form.submit t('administration.countries.new.view.button_create_country')
 
       = ibt(class: 'bt_grey fltri') do
-        = button_to_function t("administration.countries.new.view.button_cancel"), "history.go(-1)"
+        = button_to_function t('administration.countries.new.view.button_cancel'), 'history.go(-1)'
