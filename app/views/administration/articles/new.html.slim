@@ -1,0 +1,11 @@
+= content_for :column_mc do
+  = header(back: true) do |section|
+    - section.block_header do
+      = t('administration.articles.new.view.header')
+      = image_tag_for_locale
+
+  .box
+    .box-header
+      h2= t('administration.articles.new.view.header')
+
+    = render 'form', url: administration_articles_path

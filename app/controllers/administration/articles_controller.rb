@@ -14,13 +14,17 @@ class Administration::ArticlesController < Administration::AdministrationControl
     @articles = @search.paginate(show_all: params[:show_all], page: params[:page])
   end
 
+  def new
+    @article = Article.new
+  end
+
   def create
-    @article = Article::Cms::MainPageArticle.new
+    @article = Article::Cms::MainPageArticle.new(params[:article])
 
     if @article.save
-      redirect_to edit_administration_article_path(@article)
-    else
       redirect_to administration_articles_path
+    else
+      render :new
     end
   end
 

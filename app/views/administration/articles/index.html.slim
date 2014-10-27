@@ -6,10 +6,9 @@
     - section.block_header do
       = t("administration.articles.index.view.header")
     - section.block_actions do
-      = form_tag administration_articles_path, method: :post, id: "form_new_article" do
-        ul.header_actions
-          li.last
-            = bt_link_to :plus, t("administration.articles.index.view.new_article"), "javascript:void(0)", onclick: "$('#form_new_article').submit()"
+      ul.header_actions
+        li.last
+          = bt_link_to :plus, t("administration.articles.index.view.new_article"), new_administration_article_path
 
   - if @articles.blank?
     = blank_state_message
