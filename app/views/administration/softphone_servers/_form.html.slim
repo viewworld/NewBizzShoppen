@@ -1,13 +1,10 @@
-= semantic_form_for [:administration, @softphone_server] do |form|
-  .box-content
-    .pdd_10.no_pdd_t
-      fieldset.inputs.labels_ta_r.labels_240
-        ol.align_inputs
-          = form.input :name
-          = form.input :server_host
-          = form.input :server_port
-          = form.input :sip_domain
-          = form.input :sip_port
+= simple_form_for [:administration, @softphone_server] do |form|
+  .box-content.form-inputs
+    = form.input :name
+    = form.input :server_host
+    = form.input :server_port
+    = form.input :sip_domain
+    = form.input :sip_port
 
   .box-footer
     = ibt(class: "fltri", icon: "save") do
