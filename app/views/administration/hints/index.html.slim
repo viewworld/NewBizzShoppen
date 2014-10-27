@@ -4,23 +4,23 @@
 = content_for :column_mc do
   = header do |section|
     - section.block_header do
-      = t("administration.hints.index.view.header")
-      
+      = t('administration.hints.index.view.header')
+
   - if @hints.blank?
     = blank_state_message
   - else
-    table#articles_table.generic
+    table.generic
       thead
         tr
           th.hl
-          th style=("width: 10px") = link_to t("administration.hints.index.view.id"), order_for_scoped_search(:id)
-          th= link_to t("administration.hints.index.view.title"), order_for_scoped_search(:title)
-          th.ta_r= t("administration.hints.index.view.actions")
+          th.mini= link_to t('administration.hints.index.view.id'), order_for_scoped_search(:id)
+          th= link_to t('administration.hints.index.view.title'), order_for_scoped_search(:title)
+          th.ta_r= t('administration.hints.index.view.actions')
           th.hr
       tfoot
         tr
           td.fl
-          td colspan="3"
+          td colspan='3'
           td.fr
       tbody
         - @hints.each do |hint|
@@ -30,14 +30,13 @@
             td= hint.title
             td.tda.ta_r
               .td_actions
-                = bt_link_to :cog, nil, "javascript:void(0)", class: "bt_dropdown"
+                = bt_link_to :cog, nil, 'javascript:void(0)', class: 'bt_dropdown'
                 ul
-                  li
-                    = link_to t("administration.hints.index.view.edit_link"), edit_administration_hint_path(hint), class: "default_action"
-                  li
-                    = link_to t("administration.hints.index.view.show_link"), administration_hint_path(hint)
+                  li= link_to t('administration.hints.index.view.edit_link'), edit_administration_hint_path(hint), class: 'default_action'
+                  li= link_to t('administration.hints.index.view.show_link'), administration_hint_path(hint)
             td.cr
+
         - if will_paginate
           tr.pagination
-            td.ta_c colspan="6"
+            td.ta_c colspan='6'
               = will_paginate @hints

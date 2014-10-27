@@ -42,8 +42,13 @@ class Administration::ArticlesController < Administration::AdministrationControl
   end
 
   private
+
   def set_article
     @article = Article.find(params[:id])
+  end
+
+  def set_referer
+    session[:articles_referer] = request.referer
   end
 
   def article_params
@@ -52,9 +57,5 @@ class Administration::ArticlesController < Administration::AdministrationControl
 
   def authorize_user_for_namespace!
     authorize_role(:translator)
-  end
-
-  def set_referer
-    session[:articles_referer] = request.referer
   end
 end

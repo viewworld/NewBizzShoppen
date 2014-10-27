@@ -1,14 +1,15 @@
 .search_box
-  h2= t("common.search")
+  h2= t('common.search')
   .search_content
     = form_for @search, url: administration_hints_path do |f|
       fieldset.inputs_vertical
         ol.no_pdd
           li.string
-            = f.label :with_keyword, t("administration.leads.index.search.keyword_label")
+            = f.label :with_keyword, t('administration.leads.index.search.keyword_label')
             = f.text_field :with_keyword
+          
           li.commit
-            = ibt(class: "bt_green", icon: "magnify") do
-              = submit_tag t("administration.hints.index.view.search_button")
+            = ibt(class: 'bt_green', icon: 'magnify') do
+              = submit_tag t('administration.hints.index.view.search_button')
             p
               = bt_clear_filter

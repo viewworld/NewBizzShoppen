@@ -1,11 +1,10 @@
 = content_for :column_mc do
-  = javascript_include_tag :ckeditor
   = header(back: true) do |section|
     - section.block_header do
       = t("administration.categories.edit.view.header", category_name: @category.name)
       = image_tag_for_locale
 
-  = render 'form', header: '', url: administration_category_path(@category)
+  = render 'form', header: t("administration.categories.edit.view.header", category_name: @category.name), url: administration_category_path(@category)
 
   - unless @category.lead_templates.empty?
     = header do |section|
