@@ -1,1 +1,0 @@
-page << "$('#modal_remote_deal_requests_container').html('#{escape_javascript(render(:partial => 'shared/remote_deal_requests/deal_link_row', :locals => {:deals => @deals, :selected_deal_ids => params[:requested_deal_ids], :dest_field => params[:dest_field]}))}')"

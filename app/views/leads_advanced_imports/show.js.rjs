@@ -1,2 +1,0 @@
-content = escape_javascript(render(:partial => 'leads_advanced_imports/categories_selection', :locals => {:objects => @categories}))
-page << "$('#categories_selection').html('#{content}');"

@@ -1,5 +1,5 @@
-unless @templates.empty?
+<% unless @templates.empty? %>
     page << "$.colorbox({overlayClose: false, width:570, height: 250,iframe: true, href:'/lead_templates/?lead_id=#{@lead.id}&category_id=#{@category.id}', onClosed:function(){change_category_and_submit_form();} });"
-else
-  page << "change_category_and_submit_form();"
-end
+<% else %>
+  change_category_and_submit_form();
+<% end %>
