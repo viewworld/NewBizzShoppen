@@ -91,7 +91,7 @@
                                      current_user.has_role?(:member) ? LeadCategory.with_agent_unique(current_user).without_locked.without_supplier_unique.all :
                                              current_user.has_role?(:supplier) ? current_user.with_role.parent_accessible_categories.all :
                                              LeadCategory.with_agent_unique(current_user).without_locked.all %>
-          <%= form.input :category_id,
+          <%= form.input :category_id, as: :select,
                          :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id),
                          :collection => nested_set_options(categories),
                          :required => current_user.has_role?(:member),
@@ -135,7 +135,7 @@
                   <% if @settings['prompt_for_currency'].eql?('0') %>
                       <%= form.input :currency_id, :as => :hidden %>
                   <% else %>
-                      <%= form.input :currency_id, :collection => currencies_for_select,
+                      <%= form.input :currency_id, as: :select, :collection => currencies_for_select,
                                      :include_blank => false,
                                      :hint => hint_for(@lead, :currency_id) %>
                   <% end %>
