@@ -1,24 +1,36 @@
-.pdd_10.no_pdd_t.clearfix
-  fieldset.inputs.labels_ta_r.labels_200
-    ol.align_inputs
-      = form.input :name
-      = form.input :locale
-      = form.input :detailed_locale
-      = form.input :work_start_at, as: :time_picker,
-                      input_html: { readonly: true, value: @country.work_start_at_value}
-      = form.input :work_end_at, as: :time_picker,
-                      input_html: { readonly: true, value: @country.work_end_at_value }
+.box
+  = simple_form_for [:administration, @country], html: { multipart: true } do |form|
+    .box-header
+      h2= header
 
-      = form.fields_for :email_template_signature, @country.email_template_signature do |builder|
-        li= builder.input :body, as: :ckeditor, label: false
+    .box-content
+      .form-inputs
+        = form.input :name
+        = form.input :locale
+        = form.input :detailed_locale
+        = form.input :work_start_at,
+                        input_html: { readonly: true, value: @country.work_start_at_value}
+        = form.input :work_end_at,
+                        input_html: { readonly: true, value: @country.work_end_at_value }
 
-.duplicatable-nested-form-list
-  = form.fields_for :regions do |region_form|
-    = render 'region_fields', region_form: region_form, additional_classes: ''
+        = form.simple_fields_for :email_template_signature, @country.email_template_signature do |builder|
+          = builder.input :body, as: :ckeditor, label: false
 
-  = form.fields_for :regions, @country.regions.build do |region_form|
-    = render 'region_fields', region_form: region_form, additional_classes: 'new-record duplicatable-nested-form-sample hidden'
+      .hl
+      .pdd_20
+        = bt_link_to :plus, t("administration.countries.form.new_region"), "javascript:void(0)", class: 'duplicate-nested-form'
 
-.hl
-.pdd_20
-  = bt_link_to :plus, t("administration.countries.form.new_region"), "javascript:void(0)", class: 'duplicate-nested-form'
+      .duplicatable-nested-form-list
+        = form.simple_fields_for :regions do |region_form|
+          = render 'region_fields', region_form: region_form, additional_classes: ''
+
+        = form.simple_fields_for :regions, @country.regions.build do |region_form|
+          = render 'region_fields', region_form: region_form, additional_classes: 'new-record duplicatable-nested-form-sample hidden'
+
+
+    .box-footer
+      = ibt(class: 'fltri', icon: 'save') do
+        = form.submit t("administration.countries.new.view.button_create_country")
+
+      = ibt(class: 'bt_grey fltri') do
+        = button_to_function t("administration.countries.new.view.button_cancel"), "history.go(-1)"
