@@ -1,0 +1,2 @@
+$('#materials_dialog').dialog('close');
+$('#chain_mail_item_materials_<%= @chain_mail_item.id %>').html('<%= escape_javascript(render(:partial => 'callers/chain_mail_types/chain_mail_materials', :locals => {:chain_mail_item => @chain_mail_item})) %>');

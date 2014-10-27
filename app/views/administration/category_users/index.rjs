@@ -1,5 +1,0 @@
-page << "clear_select('#{params[:users_type]}', 'all')"
-
-@users.each do |user|
-  page << "add_option_to_select('#{params[:users_type]}', 'all', '#{user.email}', '#{user.id}')"
-end

@@ -1,0 +1,1 @@
+window.location = '/callers/campaigns';

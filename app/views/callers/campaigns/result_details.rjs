@@ -1,1 +1,0 @@
-page << "$('#container_for_result_details').html('#{@call_results.blank? ? "" : escape_javascript(render(:partial => 'callers/campaigns/call_result_details_table', :locals => {:call_results => @call_results, :campaign => @campaign}))}')"

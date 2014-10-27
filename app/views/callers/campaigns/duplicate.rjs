@@ -1,2 +1,0 @@
-page << "$('.ajax_flash_msg').html('#{I18n.t("flash.campaigns.duplicate.notice")}')"
-page << "$('.ajax_flash_msg').show()"
