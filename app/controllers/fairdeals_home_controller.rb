@@ -6,16 +6,8 @@ class FairdealsHomeController < ApplicationController
 
   before_filter :fetch_common_data
 
-  private
-
-  def fetch_common_data
-    @news = Article::News::Member.published.latest.limit(3)
-  end
-
-  public
-
   def show
-    @featured_deals = FeaturedDeal.with_active_deals(Date.today).with_locale
+    @featured_deals = FeaturedDeal.with_active_deals(Date.today).with_locale.where(:domain_id => domain)
     @primary_deal = Deal.where(:id => params[:id]).first || @featured_deals.first
   end
 
@@ -30,5 +22,15 @@ class FairdealsHomeController < ApplicationController
       @deals.first(15)
     end
     respond_with @deals
+  end
+
+  private
+
+  def domain
+    @domain ||= Domain.find_by_site_and_locale(session[:site], session[:locale_code])
+  end
+
+  def fetch_common_data
+    @news = Article::News::Member.published.latest.limit(3)
   end
 end
