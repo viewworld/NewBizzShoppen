@@ -13,7 +13,7 @@ class Administration::CurrenciesController < Administration::AdministrationContr
   end
 
   def create
-    @currency = Currency.new(params[:currency])
+    @currency = Currency.new(currency_params)
 
     if @currency.save
       redirect_to administration_currencies_path
@@ -23,7 +23,7 @@ class Administration::CurrenciesController < Administration::AdministrationContr
   end
 
   def update
-    if @currency.update_attributes(params[:currency])
+    if @currency.update_attributes(currency_params)
       redirect_to administration_currencies_path
     else
       render :edit
@@ -41,5 +41,10 @@ class Administration::CurrenciesController < Administration::AdministrationContr
   private
   def set_currency
     @currency = Currency.find(params[:id])
+  end
+
+  def currency_params
+    params.require(:currency).permit(:name, :symbol, :format, :separator, :delimiter, :unit_name, :subunit_name,
+      :active, :global_default, :disabled)
   end
 end

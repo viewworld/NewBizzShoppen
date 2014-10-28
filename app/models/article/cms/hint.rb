@@ -1,7 +1,7 @@
 class ::Article::Cms::Hint < ::Article::Cms
-   validates_presence_of :key
+  validates :key, presence: true
 
   def content_sanitized
-    content.gsub(/\n/,"").gsub(/\r/,"").gsub(/[']/, '\\\\\'')
+    content.gsub(/\n|\r/,'').gsub(/[']/, '\\\\\'')
   end
 end

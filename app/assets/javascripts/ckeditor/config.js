@@ -40,9 +40,9 @@ CKEDITOR.editorConfig = function( config )
   //config.ContextMenu = ['Generic','Anchor','Flash','Select','Textarea','Checkbox','Radio','TextField','HiddenField','ImageButton','Button','BulletedList','NumberedList','Table','Form'] ;
 
   config.height = this.element.$.getAttribute('height') || '400px';
-  config.width = this.element.$.getAttribute('width') || '600px';
+  // config.width = this.element.$.getAttribute('width') || '600px';
 
-  //config.resize_enabled = false;
+  config.resize_enabled = false;
   //config.resize_maxHeight = 2000;
   //config.resize_maxWidth = 750;
 

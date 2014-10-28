@@ -4,12 +4,13 @@
       h2= header
 
     .box-content.form-inputs
-      = form.input :title, disabled: true
+      = form.input :title
       = form.input :content, as: :ckeditor, label: false
       = form.input :published
 
     .box-footer
       = ibt(class: 'fltri', icon: 'save') do
-        = form.submit t('administration.hints.edit.view.button_save')
+        = form.submit t('administration.articles.edit.view.button_save')
+
       = ibt(class: 'fltri bt_grey') do
         = button_to_function t('common.cancel_link'), 'history.go(-1)'

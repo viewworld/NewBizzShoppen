@@ -1,0 +1,7 @@
+= content_for :column_mc do
+  = header(back: true) do |section|
+    - section.block_header do
+      = t('administration.news.new.view.header')
+      = image_tag_for_locale
+
+  = render 'form', url: administration_news_index_path(subclass: params[:subclass]), header: t('administration.news.new.view.header')

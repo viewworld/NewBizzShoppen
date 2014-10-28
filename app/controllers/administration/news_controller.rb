@@ -12,18 +12,22 @@ class Administration::NewsController < Administration::AdministrationController
     @news = @search.paginate(show_all: params[:show_all], page: params[:page])
   end
 
+  def new
+    @news = Article.new
+  end
+
   def create
-    @news = "Article::News::#{params[:subclass].classify}".constantize.new
+    @news = "Article::News::#{params[:subclass].classify}".constantize.new(article_params)
 
     if @news.save
-      redirect_to edit_administration_news_path(@news)
-    else
       redirect_to administration_news_index_path
+    else
+      render :new
     end
   end
 
   def update
-    if @news.update_attributes(params[:article])
+    if @news.update_attributes(article_params)
       redirect_to administration_news_index_path
     else
       render :edit
@@ -36,7 +40,12 @@ class Administration::NewsController < Administration::AdministrationController
   end
 
   private
+
   def set_article
     @news = Article.find(params[:id])
+  end
+
+  def article_params
+    params.require(:article).permit(:title, :content, :published)
   end
 end

@@ -59,7 +59,7 @@
 </div>
 
 
-<script language="javascript">
+<script>
     $(document).ready(function() {
         jQuery.ajaxSetup({
             'beforeSend': function(xhr) {
@@ -74,7 +74,13 @@
                     if(item[1] == "ActsAsTaggableOn::Tag"){
                         tmp_id = "new" + new Date().getTime().toString();
                         tags_tag_groups[item[2].toString()] = tmp_id;
-                        remove_link = "<a href='#' onclick=\"" + "remove_tag('" + item[2].toString() + "')" + "\"><%= image_tag 'icons/remove.png', style: 'border: 0' %></a></li>";
+
+                        jQuery('<a>', {
+                          href: '#',
+                          onclick: "remove_tag('" + item[2].toString() + "')",
+                          html: '<%= image_tag "icons/remove.png", style: "border: 0" %>'
+                        });
+
                         $("<ul  class='droppable' id='tag_group_" + tmp_id + "' style='margin-left:210px;width:230px;padding:1px;margin-bottom:2px;'><li class='draggable' style='border: 1px solid grey' id='tag_" + item[2] + "'>" + item[0] + " " + remove_link + "</li></ul>").insertBefore("#newsletter_sources_tags");
                         init_sortable();
                     }
@@ -86,7 +92,15 @@
                                     text(item[0]));
                         $('#autocompleter').val('');
 
-                        $("#ul_sources_list").append("<li id='source_li_" + item[1] + "_" + item[2] + "'>" + item[0] + "<a href='#' onclick=\"" + "remove_source('" + item[1] + "_" + item[2] + "', true)" + "\"><%= image_tag 'icons/remove.png', style: 'border: 0' %></a></li>");
+                        jQuery("<li>", {
+                          id: 'source_li_' + item[1] + "_" + item[2],
+                          text: item[0]
+                        }).append(jQuery("<a>", {
+                          href: "#",
+                          onclick: "remove_source('" + item[1] + "_" + item[2] + "', true)",
+                          html: '<%= image_tag "icons/remove.png", style: "border: 0" %>'
+                        })).appendTo("#ul_sources_list");
+
                     }
                     $('#autocompleter').val('');
                 });

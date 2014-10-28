@@ -12,7 +12,7 @@ class ::User::CallCentre < ::User
   has_many :unique_categories, :through => :category_agents, :source => :category
   has_many :campaigns_ownerships, :class_name => "Campaign", :foreign_key => :creator_id
   has_many :news, :as => :resource, :class_name => "User::CallCentre", :dependent => :destroy
-  has_many :materials, :as => :resource, :class_name => "Material", :dependent => :destroy
+  has_many :materials, as: :resource, class_name: 'Material', dependent: :destroy
 
   validates_presence_of :company_name
 

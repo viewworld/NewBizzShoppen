@@ -1,5 +1,4 @@
 = content_for :column_mc do
-  = javascript_include_tag :ckeditor
   = javascript_include_tag :popup_email_template_editor
   = javascript_include_tag :email_template_signature
 
@@ -7,13 +6,4 @@
     - section.block_header do
       = t('administration.countries.edit.view.header', name: @country.name)
 
-  = semantic_form_for [:administration, @country], html: { multipart: true } do |form|
-    = frm(title: @country.name) do |section|
-      - section.block_content do
-        = render 'form', form: form
-
-      - section.block_actions do
-        = ibt(class: 'fltri', icon: 'save') do
-          = form.submit t("administration.countries.edit.view.button_update_country")
-        = ibt(class: "bt_grey fltri") do
-          = button_to_function t("administration.countries.edit.view.button_cancel"), "history.go(-1)"
+  = render 'form', header: t('administration.countries.edit.view.header', name: @country.name)

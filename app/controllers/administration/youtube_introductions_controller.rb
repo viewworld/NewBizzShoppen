@@ -12,7 +12,7 @@ class Administration::YoutubeIntroductionsController < Administration::Administr
     @youtube_introduction = YoutubeIntroduction.new(youtube_introduction_params)
 
     if @youtube_introduction.save
-      redirect_to edit_administration_setting_path
+      redirect_to edit_administration_setting_path, notice: t('flash.actions.create.notice', resource_name: 'Youtube Introduction')
     else
       render :new
     end
@@ -20,7 +20,7 @@ class Administration::YoutubeIntroductionsController < Administration::Administr
 
   def update
     if @youtube_introduction.update_attributes(youtube_introduction_params)
-      redirect_to edit_administration_setting_path
+      redirect_to edit_administration_setting_path, notice: t('flash.actions.update.notice', resource_name: 'Youtube Introduction')
     else
       render :edit
     end
@@ -28,7 +28,7 @@ class Administration::YoutubeIntroductionsController < Administration::Administr
 
   def destroy
     @youtube_introduction.destroy
-    redirect_to edit_administration_setting_path
+    redirect_to edit_administration_setting_path, notice: t('flash.actions.destroy.notice', resource_name: 'Youtube Introduction')
   end
 
   private

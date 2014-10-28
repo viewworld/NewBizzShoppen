@@ -2,14 +2,4 @@
   = header(back: true) do
     = t('administration.countries.new.view.header')
 
-  = semantic_form_for [:administration, @country], html: { multipart: true } do |form|
-    = frm do |section|
-      - section.block_content do
-        = render 'form', form: form
-
-      - section.block_actions do
-        = ibt(class: 'fltri', icon: 'save') do
-          = form.submit t("administration.countries.new.view.button_create_country")
-
-        = ibt(class: 'bt_grey fltri') do
-          = button_to_function t("administration.countries.new.view.button_cancel"), "history.go(-1)"
+  = render 'form'

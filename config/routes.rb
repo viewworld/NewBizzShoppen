@@ -20,7 +20,7 @@ Nbs::Application.routes.draw do
   namespace :administration do
     root to: "homes#show"
 
-    resources :articles, except: :new
+    resources :articles
     resources :bank_accounts, except: :index
     resources :categories, except: :show
     resources :category_email_templates, only: [:edit, :update]
@@ -42,7 +42,7 @@ Nbs::Application.routes.draw do
     resources :languages, only: [:index, :update]
     resources :leads, only: [:index, :edit, :update]
     resources :lead_templates, except: [:index, :show]
-    resources :news, except: :new
+    resources :news
     resources :paypal_notifications, only: [:index, :show]
     resources :results
     resources :sellers

@@ -1,19 +1,19 @@
 .search_box
-  h2= t("common.search")
+  h2= t('common.search')
   .search_content
     = form_for @search, url: administration_articles_path do |f|
       fieldset.inputs_vertical
         ol.no_pdd
           li.string
-            = f.label :with_keyword, t("administration.leads.index.search.keyword_label")
+            = f.label :with_keyword, t('administration.leads.index.search.keyword_label')
             = f.text_field :with_keyword
 
           li.select
-            = f.label :with_subclass, t("administration.leads.index.search.article_label")
+            = f.label :with_subclass, t('administration.leads.index.search.article_label')
             = f.select :with_subclass, article_scope_for_select.sort, include_blank: true
 
           li.commit
-            = ibt(class: "bt_green", icon: "magnify") do
-              = submit_tag t("administration.articles.index.view.search_button")
+            = ibt(class: 'bt_green', icon: 'magnify') do
+              = submit_tag t('administration.articles.index.view.search_button')
             p
               = bt_clear_filter

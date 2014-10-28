@@ -38,7 +38,7 @@
           td.fl
           td colspan="6"
           td.fr
-      tbody#invoices_list
+      tbody
         - @credit_notes.each do |credit_note|
           tr
             td.cl
@@ -50,7 +50,7 @@
             td.ta_r= as_currency(credit_note.total, credit_note.invoice.currency)
             td.cr
 
-        - if @credit_notes.total_pages > 1
+        - if will_paginate
           tr.pagination
             td.ta_c colspan="8"
               = will_paginate @credit_notes

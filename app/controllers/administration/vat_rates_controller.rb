@@ -13,7 +13,7 @@ class Administration::VatRatesController < Administration::AdministrationControl
     @vat_rate = VatRate.new(new_vat_rate_params)
 
     if @vat_rate.save
-      redirect_to edit_administration_setting_path
+      redirect_to edit_administration_setting_path, notice: t('flash.actions.create.notice', resource_name: 'Vat Rate')
     else
       render :new
     end
@@ -21,7 +21,7 @@ class Administration::VatRatesController < Administration::AdministrationControl
 
   def update
     if @vat_rate.update_attributes(vat_rate_params)
-      redirect_to edit_administration_setting_path
+      redirect_to edit_administration_setting_path, notice: t('flash.actions.update.notice', resource_name: 'Vat Rate')
     else
       render :edit
     end

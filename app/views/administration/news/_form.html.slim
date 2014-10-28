@@ -1,13 +1,19 @@
-.pdd_10.no_pdd_t
-  fieldset.inputs.labels_100.labels_ta_r
-    ol
+.box
+  = simple_form_for @news, url: url do |form|
+    .box-header
+      h2= header
+
+    .box-content.form-inputs.clearfix
       = form.input :title
       - if form.object.is_a? Article::News::CategoryHome
         = form.input :resource_type, as: :hidden, value: "Category"
         = form.input :resource, collection: nested_set_options(LeadCategory.all), label: t("administration.news.edit.view.category_label"), include_blank: false
 
+      = form.input :content, label: false, as: :ckeditor
       = form.input :published
-      = form.input :content,
-          label: false,
-          as: :ckeditor,
-          input_html: { swf_params: { assetable_type: @news.class.name, assetable_id: @news.id }}
+
+    .box-footer
+      = ibt(class: "fltri", icon: "save") do
+        = form.submit t("administration.news.edit.view.button_save")
+      = ibt(class: "bt_grey fltri") do
+        = button_to_function t("common.cancel_link"), "history.go(-1)"

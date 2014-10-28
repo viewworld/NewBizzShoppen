@@ -17,12 +17,8 @@ class Administration::HintsController < Administration::AdministrationController
     @article = Article::Cms::Hint.find(params[:id])
   end
 
-  def edit
-    @article.published = true if params[:add] == '1'
-  end
-
   def update
-    if @article.update_attributes(params[:article])
+    if @article.update_attributes(article_params)
       redirect_to session[:hints_referer] || administration_hints_path
     else
       render :edit
@@ -41,6 +37,10 @@ class Administration::HintsController < Administration::AdministrationController
 
   def set_referer
     session[:hints_referer] = request.referer
+  end
+
+  def article_params
+    params.require(:article).permit(:content, :published)
   end
 
   def authorize_user_for_namespace!

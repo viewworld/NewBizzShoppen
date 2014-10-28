@@ -78,6 +78,10 @@ gem 'stringex', '~> 2.5.2'
 gem 'strong_parameters', '~> 0.2.3'
 gem 'amoeba', '2.0.0'
 
+# assets
+gem 'bourbon', '~> 3.2.3'
+gem 'neat', '~> 1.6.0'
+
 group :assets do
   gem 'sass-rails', '3.1.7'
   gem 'uglifier', '~> 2.5.3'

@@ -10,7 +10,7 @@ module User::CommonAgent
       has_many :unique_categories, :through => :category_agents, :foreign_key => "user_id", :source => :category
       has_many :category_agents, :foreign_key => "user_id"
       has_many :unique_categories, :through => :category_agents, :source => :category
-      has_many :materials, :as => :resource, :class_name => "Material", :dependent => :destroy
+      has_many :materials, as: :assetable, class_name: 'Material', dependent: :destroy
 
       after_update :update_leads_creator_name_cache
     end
