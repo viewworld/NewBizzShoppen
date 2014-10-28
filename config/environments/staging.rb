@@ -28,7 +28,7 @@ Nbs::Application.configure do
   config.assets.compile = false
   config.assets.digest = true
 
-  config.assets.precompile += %w( common.scss fairdeals.css fairdeals_thin.css newsletter.css campaign_materials.css countdown.scss flashphoner/trackbar.scss flashphoner/style_html.scss mizu/skin.css )
+  config.assets.precompile += %w( common.scss fairdeals.css fairdeals_thin.css newsletter.css campaign_materials.css countdown.scss flashphoner/trackbar.scss flashphoner/style_html.scss mizu/skin.css common.css )
   config.assets.precompile += %w( popup_email_template_editor.js email_template_signature.js global_template_editor.js global_field_validator.js deal_comments.js deal_creation.js remote_deal_requests.js jquery.lwtCountdown-1.0.js global_template_editor.js result_dynamic_value.js fairdeals.js lead_template_functions.js jquery.autocomplete.min.js jquery.counter-1.0.min.js lead_translation_functions.js lead_template_functions.js jquery.checkboxtree.min.js jquery.ui.nestedSortable.js jquery.ui.nestedSortable.custom.js jquery.field.min.js jquery.calculation.min.js invoice_calculations.js phone.js global_field_validator.js common.js ckeditor*.js )
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
