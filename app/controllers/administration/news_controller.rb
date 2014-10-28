@@ -40,6 +40,7 @@ class Administration::NewsController < Administration::AdministrationController
   end
 
   private
+
   def set_article
     @news = Article.find(params[:id])
   end

@@ -3,7 +3,7 @@
     .box-header
       h2= header
 
-    .box-content.form-inputs
+    .box-content.form-inputs.clearfix
       = form.input :title
       - if form.object.is_a? Article::News::CategoryHome
         = form.input :resource_type, as: :hidden, value: "Category"
@@ -17,16 +17,3 @@
         = form.submit t("administration.news.edit.view.button_save")
       = ibt(class: "bt_grey fltri") do
         = button_to_function t("common.cancel_link"), "history.go(-1)"
-
-/
-/
-/ .pdd_10.no_pdd_t
-/   fieldset.inputs.labels_100.labels_ta_r
-/     ol
-/
-/ = form_for @news, as: :news, url: administration_news_path(@news), html: {method: :delete, id: "delete_news_form"} do |form|
-/ = semantic_form_for @news, as: :news, url: administration_news_path(@news), html: {method: :put} do |form|
-/   = frm(title: @news.title, class: "todo_delete") do |section|
-/     - section.block_content do
-/       = render partial: 'form', locals: {form: form}
-/     - section.block_actions do
