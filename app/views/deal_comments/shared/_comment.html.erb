@@ -3,7 +3,7 @@
   <p class="comment_info">
     <%= (user_signed_in? and current_user.has_role?(:admin)) ? link_to(comment.user.screen_name, edit_administration_user_path(comment.user)) : comment.user.screen_name %> at <%= format_date(comment.created_at, true) %>
     <% if comment.read_by_anyone?(current_user) %>
-        <%= link_to_function(t("comments.threads.show.view.read_by_number_of_users", :count => comment.readers_count(current_user)), "javascript:void()", {:id => "lead_comment_readers_#{comment.commentable_id}", :class => "inputs_hint"}) %>
+        <%= link_to_function(t("comments.threads.show.view.read_by_number_of_users", :count => comment.readers_count(current_user)), "javascript:void(0)", {:id => "lead_comment_readers_#{comment.commentable_id}", :class => "inputs_hint"}) %>
 
     <% end %>
     <% unless comment.is_blocked? %>

@@ -52,12 +52,19 @@ class Comments::ThreadsController < Comments::CommentsController
 
   def edit
     @comment = current_user.comment_threads.find(params[:id])
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   def update
     @comment = current_user.comment_threads.find(params[:id])
     @comment.update_attributes(params[:comment])
-    #flash[:notice] = I18n.t("comments.threads.update.flash.notice")
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   def destroy
