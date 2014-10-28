@@ -17,9 +17,9 @@
       <%= form.input :note, :as => :text, :input_html => {:style => "width: 400px;height:120px"} %>
 
       <% if call_result.result.upgrades_to_any_user? || call_result.campaign_create_deals? %>
-          <% if call_result.errors.on(:upgraded_user) %>
+          <% if call_result.errors.include?(:upgraded_user) %>
               <li class="string">
-                <b><%= t("call_results.new.upgraded_user_has_other_errors") %>: <%= call_result.errors.on(:upgraded_user) %></b>
+                <b><%= t("call_results.new.upgraded_user_has_other_errors") %>: <%= call_result.errors.include?(:upgraded_user) %></b>
               </li>
           <% end %>
 
@@ -121,7 +121,7 @@
           <% end %>
 
           <script type="text/javascript">
-            set_email_variables_for_popup(<%= "[#{call_result.result.email_template_variables_for_type.map{ |v| "'#{v}'" }.join(',')}]" %>);
+            set_email_variables_for_popup('<%= "[#{call_result.result.email_template_variables_for_type.map{ |v| "'#{v}'" }.join(',')}]" %>');
           </script>
           <li class="commit" style="padding-top:10px">
             <%= bt_link_to_function nil, t("call_results.new.customize_email_template"), "javascript:set_email_template_editor_init_values_function_name('fill_editor_with_#{call_result.result.email_template_name_for_type}_template_values()');$('#modal_for_email_template_edit').dialog('open');#{'reload_ck_editor();' if call_result.result.send_material?}" %>
