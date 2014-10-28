@@ -9,7 +9,7 @@ module HintsHelper
     result = []
 
     if (@hint and current_user and current_user.has_any_role?(:admin, :translator)) or (!@hint.blank? and !@hint.content.blank?)
-      result << link_to_function(image_tag("icons/hint.png"), "javascript:void()", {:id => "hint_#{html_id}", :class => "inputs_hint"}) +
+      result << link_to_function(image_tag('icons/hint.png'), 'javascript:void(0)', { id: "hint_#{html_id}", class: "inputs_hint" }) +
               content_tag(:div, (@hint.content_sanitized).html_safe, :id => "hint_#{html_id}", :class => "hidden") if @hint.published?
       if current_user and current_user.has_any_role?(:admin, :translator)
         if @hint.published?
