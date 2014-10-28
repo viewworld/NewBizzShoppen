@@ -20,8 +20,8 @@
         = ibt(class: "bt_grey fltri") do
           = button_to_function t("administration.settings.edit.view.button_cancel"), href(administration_email_templates_path)
 
-  = render partial: "shared/email_template_popup/template_vars_popup", locals: {instance_name: "email_template_body_editor", email_template: @email_template}
-  = render partial: "shared/email_template_popup/template_deal_links", locals: {instance_name: "email_template_body_editor"}
+  = render 'shared/email_template_popup/template_vars_popup', { instance_name: 'email_template_body', email_template: @email_template }
+  = render 'shared/email_template_popup/template_deal_links', { instance_name: 'email_template_body' }
 
 = content_for :js do
   javascript:
