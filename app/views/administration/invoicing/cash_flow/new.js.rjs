@@ -1,4 +1,0 @@
-page.replace_html "osx-modal-data", :partial => "/administration/invoicing/cash_flow/form"
-page.replace_html "osx-modal-title", "Update cash flow for invoice ##{@invoice.id}"
-page << 'initCalendars();'
-page << "showModal();"

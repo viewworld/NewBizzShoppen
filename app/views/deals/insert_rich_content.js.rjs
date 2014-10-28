@@ -1,7 +1,0 @@
-page << "content = ''"
-@deals.each do |deal|
-  page << "content += '#{escape_javascript(render(:partial => 'shared/deals/deal_for_email', :locals => {:featured => deal}))}';"
-end
-page << %{CKEDITOR.instances['#{params[:instance_name]}'].insertHtml("<p>&nbsp;</p><p>" + content + "</p><p>&nbsp;</p>");}
-
-page << "$('#modal_for_deal_links').dialog('close');"

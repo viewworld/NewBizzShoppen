@@ -1,1 +1,1 @@
-<%= handle_new_deal(@user, page, params) %>
+<%= handle_new_deal(@user, params) %>

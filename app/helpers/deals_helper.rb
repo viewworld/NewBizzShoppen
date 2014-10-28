@@ -7,7 +7,7 @@ module DealsHelper
     render(:partial => '/shared/deals/table', :locals => options.merge({:collection => collection}.merge(@hb.results)))
   end
 
-  def handle_new_deal(user, page, params=[])
+  def handle_new_deal(user, params=[])
     javascript = ''
     if user && params[:query_type] == 'check_email'
       deal = Deal.new_for_user(user)

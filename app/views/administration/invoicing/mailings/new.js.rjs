@@ -1,3 +1,0 @@
-page.replace_html "osx-modal-data", :partial => "/invoicing/mailings/new"
-page.replace_html "osx-modal-title", I18n.t("administration.invoices.mailing.new.view.title")
-page << "showModal();"
