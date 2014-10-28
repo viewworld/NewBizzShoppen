@@ -1,12 +1,12 @@
 <%= form_for material, :url => deal_maker_materials_path(:format => :js), :remote => true, :html => {:multipart => true} do |f| %>
-  <%= f.file_field :asset %>
+  <%= f.file_field :data %>
 <% end %>
 
 <ul class="materials_list with_icon">
   <% if materials.any? %>
     <% materials.each do |material| %>
       <li>
-        <%= link_to_function material.asset_file_name, "select_file_from_repository_dialog('#{current_user.id}', #{material.id}, '#{material.asset_file_name}')" %>
+        <%= link_to_function material.data_file_name, "select_file_from_repository_dialog('#{current_user.id}', #{material.id}, '#{material.asset_file_name}')" %>
       </li>
     <% end %>
   <% else %>

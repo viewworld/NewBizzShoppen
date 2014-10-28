@@ -139,7 +139,7 @@
                       <%= form.semantic_fields_for :voucher_heading_picture, @deal.build_voucher_heading_picture do |voucher_heading_picture_form| %>
                           <fieldset class="inputs labels_ta_r labels_200">
                             <ol>
-                              <%= voucher_heading_picture_form.input :asset, :as => :file, :label => "Upload voucher heading image" %>
+                              <%= voucher_heading_picture_form.input :data, :as => :file, :label => "Upload voucher heading image" %>
                             </ol>
                           </fieldset>
                       <% end %>

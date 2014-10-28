@@ -131,7 +131,7 @@
     }
 
     <% @materials.each do |material| %>
-    <%= "select_file_from_repository('#{current_user.id}', #{material.id}, '#{material.asset_file_name}');" %>
+    <%= "select_file_from_repository('#{current_user.id}', #{material.id}, '#{material.data_file_name}');" %>
     <% end %>
 
     show_hide_password_fields();

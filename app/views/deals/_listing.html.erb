@@ -126,7 +126,7 @@
           <% unless deal.materials.blank? %>
               <p>
                 <% deal.materials.each do |material| %>
-                    <%= link_to material.asset_file_name, material.url, :target => :blank %>&nbsp;&nbsp;&nbsp;
+                    <%= link_to material.data_file_name, material.url, :target => :blank %>&nbsp;&nbsp;&nbsp;
                 <% end %></p>
           <% end %>
 

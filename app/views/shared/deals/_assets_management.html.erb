@@ -23,7 +23,7 @@
     <%= form.semantic_fields_for :logo, @deal.build_logo do |logo_form| %>
         <fieldset class="inputs labels_ta_r labels_200">
           <ol>
-            <%= logo_form.input :asset, :as => :file, :label => t("deals.common.assets.view.upload_logo") %>
+            <%= logo_form.input :data, :as => :file, :label => t("deals.common.assets.view.upload_logo") %>
           </ol>
         </fieldset>
     <% end %>
@@ -58,7 +58,7 @@
 <%= form.semantic_fields_for :images, @deal.images.build do |images_form| %>
     <fieldset class="inputs labels_ta_r labels_200 no_pdd_t">
       <ol class="no_pdd_t">
-        <%= images_form.input :asset, :as => :file, :label => t("deals.common.assets.view.upload_image") %>
+        <%= images_form.input :data, :as => :file, :label => t("deals.common.assets.view.upload_image") %>
       </ol>
     </fieldset>
 <% end %>
@@ -76,7 +76,7 @@
               <% @materials.each do |material| %>
                   <% if material.id %>
                       <li>
-                        <strong><%= material.asset_file_name %></strong> <%= link_to t("deals.common.assets.view.download"), material.url %>
+                        <strong><%= material.data_file_name %></strong> <%= link_to t("deals.common.assets.view.download"), material.url %>
                         <%= link_to t("deals.common.assets.view.remove_material"), self.send(remove_path, @deal, material), :method => :delete, :confirm => t("common.confirmation") %>
                       </li>
                   <% else %>
@@ -93,7 +93,7 @@
 <%= form.semantic_fields_for :materials, @deal.images.build do |materials_form| %>
     <fieldset class="inputs labels_ta_r labels_200">
       <ol>
-        <%= materials_form.input :asset, :as => :file, :label => t("deals.common.assets.view.upload_material") %>
+        <%= materials_form.input :data, :as => :file, :label => t("deals.common.assets.view.upload_material") %>
       </ol>
     </fieldset>
     <br/>
@@ -110,7 +110,7 @@
               <% @internal_documents.each do |material| %>
                   <% if material.id %>
                       <li>
-                        <strong><%= material.asset_file_name %></strong> <%= link_to t("deals.common.assets.view.download"), material.url %>
+                        <strong><%= material.data_file_name %></strong> <%= link_to t("deals.common.assets.view.download"), material.url %>
                         <%= link_to t("deals.common.assets.view.remove_material"), self.send(remove_path, @deal, material), :method => :delete, :confirm => t("common.confirmation") %>
                       </li>
                   <% else %>
@@ -127,7 +127,7 @@
 <%= form.semantic_fields_for :internal_documents, @deal.images.build do |materials_form| %>
     <fieldset class="inputs labels_ta_r labels_200">
       <ol>
-        <%= materials_form.input :asset, :as => :file, :label => t("deals.common.assets.view.upload_internal_document") %>
+        <%= materials_form.input :data, :as => :file, :label => t("deals.common.assets.view.upload_internal_document") %>
       </ol>
     </fieldset>
     <br/>

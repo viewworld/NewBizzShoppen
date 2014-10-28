@@ -57,7 +57,7 @@ end
 
       <script type="text/javascript">
         <% (contact.campaign.default_materials_set + f.object.materials).uniq.each do |material| %>
-            <%= "select_file_from_repository('#{f.object.result_field.id}', #{material.id}, '#{material.asset_file_name}');" %>
+            <%= "select_file_from_repository('#{f.object.result_field.id}', #{material.id}, '#{material.data_file_name}');" %>
         <% end %>
       </script>
   <% end %>

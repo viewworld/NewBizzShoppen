@@ -1,12 +1,12 @@
 <%= form_for material, :url => callers_campaign_materials_path(@campaign, :format => :js, :result_field_id => params[:result_field_id]), :remote => true, :html => {:multipart => true} do |f| %>
-  <%= f.file_field :asset %>
+  <%= f.file_field :data %>
 <% end %>
 
 <ul class="materials_list with_icon">
   <% if materials.any? %>
     <% materials.each do |material| %>
       <li>
-        <%= link_to_function material.asset_file_name, "select_file_from_repository_dialog('#{params[:result_field_id]}', #{material.id}, '#{material.asset_file_name}')" %>
+        <%= link_to_function material.data_file_name, "select_file_from_repository_dialog('#{params[:result_field_id]}', #{material.id}, '#{material.asset_file_name}')" %>
       </li>
     <% end %>
   <% else %>
