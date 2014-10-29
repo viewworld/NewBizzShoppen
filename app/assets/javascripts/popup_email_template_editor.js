@@ -13,7 +13,7 @@
       if(window.ckeditor_initialised == 0){
       if (CKEDITOR.instances['body_editor']) {
         CKEDITOR.remove(CKEDITOR.instances['body_editor']);}
-        CKEDITOR.replace('body_editor', { height: '300px',filebrowserBrowseUrl: '/ckeditor/files',width: '1085px',filebrowserUploadUrl: '/ckeditor/create/file',language: 'en',filebrowserImageBrowseUrl: '/ckeditor/images',toolbar: 'EmailPopup',filebrowserImageUploadUrl: '/ckeditor/create/image' });
+        CKEDITOR.replace('body_editor', { height: '300px', width: '1085px',language: 'en',toolbar: 'EmailPopup'});
       window.ckeditor_initialised = 1;
       }
   }

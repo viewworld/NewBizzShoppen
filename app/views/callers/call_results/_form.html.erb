@@ -124,7 +124,7 @@
             set_email_variables_for_popup('<%= "[#{call_result.result.email_template_variables_for_type.map{ |v| "'#{v}'" }.join(',')}]" %>');
           </script>
           <li class="commit" style="padding-top:10px">
-            <%= bt_link_to_function nil, t("call_results.new.customize_email_template"), "javascript:set_email_template_editor_init_values_function_name('fill_editor_with_#{call_result.result.email_template_name_for_type}_template_values()');$('#modal_for_email_template_edit').dialog('open');#{'reload_ck_editor();' if call_result.result.send_material?}" %>
+            <%= bt_link_to_function nil, t("call_results.new.customize_email_template"), "javascript:set_email_template_editor_init_values_function_name('fill_editor_with_#{call_result.result.email_template_name_for_type}_template_values()');$('#modal_for_email_template_edit').dialog('open');" %>
           </li>
       <% end %>
     </ol>

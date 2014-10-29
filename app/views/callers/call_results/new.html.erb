@@ -1,5 +1,4 @@
 <%= content_for :column_mc do -%>
-  <%= javascript_include_tag :ckeditor %>
   <%= javascript_include_tag "popup_email_template_editor" %>
   <%= render :partial => "callers/call_results/new", :locals => {:path => [:callers, @contact, @call_result],
                                                                  :reload_path => new_callers_contact_call_result_path(@contact, :result_id => @call_result.result.id),
