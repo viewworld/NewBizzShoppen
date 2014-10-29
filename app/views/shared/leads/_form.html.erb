@@ -27,7 +27,7 @@
                            :as => :select,
                            :collection => Country.all,
                            :required => true,
-                           :input_html => {:onchange => "refresh_phone_codes(); refresh_regions_list('lead');"},
+                           :input_html => {:onchange => "refresh_regions_list('#{defined?(contact) ? 'contact' : 'lead'}'); refresh_phone_codes(); "},
                            :hint => hint_for(@lead, :country_id) %>
             <%= form.input :region_id,
                            :as => :select,
@@ -249,12 +249,13 @@
             $.ajax({
                 type: "GET",
                 url: "<%= phone_codes_path -%>",
-                data: "country_id=" + $('#lead_country_id').val()
+                data: "country_id=" + $('#lead_country_id').val(),
+                dataType: 'script'
             });
         }
 
         function set_phone_code(field, code) {
-            $('#' + field).val('+' + code)
+            $("[id$=" + field + "]").val('+' + code);
         }
 
         function check_templates_compatibility(lead_id, category_id) {

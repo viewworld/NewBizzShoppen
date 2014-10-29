@@ -100,12 +100,13 @@
             $.ajax({
                 type: "GET",
                 url: "<%= phone_codes_path -%>",
-                data: "country_id=" + $('#lead_country_id').val()
+                data: "country_id=" + $('#lead_country_id').val(),
+                dataType: 'script'
             });
         }
 
         function set_phone_code(field, code) {
-            $('#' + field).val('+' + code)
+            $("[id$=" + field + "]").val('+' + code);
         }
 
 

@@ -212,6 +212,15 @@
           "contact_contact_name", "contact_contact_title", "contact_direct_phone_number", "contact_phone_number", "contact_email_address", "contact_linkedin_url",
           "contact_facebook_url", "contact_note"];
 
+          function refresh_phone_codes() {
+              $.ajax({
+                  type: "GET",
+                  url: "<%= phone_codes_path -%>",
+                  data: { country_id: $('#contact_country_id').val() },
+                  dataType: 'script'
+              });
+          }
+
       function validate_new_contact_form() {
           company_name_is_valid = custom_form_validator_for_field("#new_contact_form", "contact_company_name", "not_empty");
           company_phone_is_valid = custom_form_validator_for_field("#new_contact_form", "contact_company_phone_number", "not_empty");
