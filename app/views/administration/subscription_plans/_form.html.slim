@@ -45,11 +45,11 @@
           = form.input :pipeline_reports_enabled, as: :boolean
           = form.input :free_deals_in_free_period
 
-        = form.input :use_paypal, as: :boolean, onclick: "switch_use_paypal_features()"
+        = form.input :use_paypal, as: :boolean, input_html: { onclick: "switch_use_paypal_features()" }
 
         span#use_paypal_features
           = form.input :paypal_retries
-          = form.input :automatic_downgrading, as: :boolean, onclick: "switch_automatic_downgrading()"
+          = form.input :automatic_downgrading, as: :boolean, input_html: { onclick: "switch_automatic_downgrading()" }
 
           span#automatic_downgrading_subscription_selection
             = form.input :automatic_downgrade_subscription_plan_id, as: :select,
@@ -72,4 +72,3 @@
   = t("administration.subscription_plans.form.lines_per_billing_cycle")
 
 .clb
-= render 'js'

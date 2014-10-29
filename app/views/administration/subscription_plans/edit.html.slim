@@ -16,3 +16,6 @@
           = form.submit t("administration.subscription_plans.edit.view.button_update")
         = ibt(class: "bt_grey fltri") do
           = button_to_function t("administration.subscription_plans.edit.view.button_cancel"), "history.go(-1)"
+
+= content_for :js
+  = render 'js'
