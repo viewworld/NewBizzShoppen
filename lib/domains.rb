@@ -1,12 +1,14 @@
 module Rack
   class Domains
+    attr_reader :domains
+
     def initialize(app)
       @app = app
-      @domains ||= {}
+      @domains = {}
     end
 
     def call(env)
-      domain = @domains[env['SERVER_NAME']] ||= site(env)
+      domain = domains[env['SERVER_NAME']] ||= site(env)
       env['rack.session'][:site] = domain
       env['rack.session'][:layout] = "layouts/#{domain}/application"
       @app.call env
