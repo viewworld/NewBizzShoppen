@@ -45,7 +45,10 @@ class Comments::ThreadsController < Comments::CommentsController
       @comment.reload
       @comment.assign_last_thread_created_at_to_root
     end
-    #flash[:notice] = I18n.t("comments.threads.create.flash.notice")
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   def new; end
@@ -72,6 +75,10 @@ class Comments::ThreadsController < Comments::CommentsController
     @thread_id = @comment.root.id
     @comment.destroy
     @thread = Comment.find_by_id(@thread_id)
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   protected

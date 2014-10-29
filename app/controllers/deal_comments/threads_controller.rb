@@ -32,17 +32,25 @@ class DealComments::ThreadsController < DealComments::DealCommentsController
   def create
     attributes = params[:comment].merge(:user_id => current_user.id)
     if params[:deal_id]
-      attributes.merge!({:commentable_type => 'AbstractLead', :commentable_id => params[:deal_id]})
+      attributes.merge!({ commentable_type: 'AbstractLead', commentable_id: params[:deal_id] })
     end
     @comment = current_user.deal_comment_threads.new(attributes)
     if @comment.save
       @comment.reload
       @comment.assign_last_thread_created_at_to_root
     end
-    #flash[:notice] = I18n.t("comments.threads.create.flash.notice")
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
-  def new; end
+  def new
+    respond_to do |format|
+      format.js
+      format.html
+    end
+  end
 
   def edit
     @comment = current_user.deal_comment_threads.find(params[:id])
@@ -66,6 +74,10 @@ class DealComments::ThreadsController < DealComments::DealCommentsController
     @thread_id = @comment.root.id
     @comment.destroy
     @thread = Comment.find_by_id(@thread_id)
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   protected
