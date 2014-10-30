@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Administration::YoutubeIntroductionsController do
+  include_context 'admin signed in'
+
   let(:youtube_introduction) { create(:youtube_introduction) }
 
   describe '#new' do
