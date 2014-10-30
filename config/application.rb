@@ -77,6 +77,7 @@ module Nbs
       I18nUtils.export_for_js!("common.js")
     end
 
+    I18n.available_locales = [:en, :dk, :cz, :da, :ru]
     I18n.enforce_available_locales = true
   end
 end
