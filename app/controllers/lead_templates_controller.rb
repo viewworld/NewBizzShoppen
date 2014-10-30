@@ -3,7 +3,10 @@ class LeadTemplatesController < SecuredController
   before_filter :set_lead_and_category
 
   def new
-
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   def create
