@@ -121,13 +121,13 @@ group :test, :development do
   #gem 'quiet_assets', '~> 1.0.3'
 
   gem 'factory_girl_rails', '~> 4.4.1'
+  gem 'ffaker', '~> 1.25.0'
 end
 
 group :test do
   gem 'database_cleaner', '1.2.0'
   gem 'capybara', '1.1.4'
   gem 'mocha', '0.13.2', require: false
-  gem 'faker', '0.3.1'
   gem 'machinist', '2.0.0.beta2'
   gem 'fakeweb', require: false
   gem 'webmock', '1.8.4', require: false

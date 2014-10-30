@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :vat_rate do
-    association :country
+    country
     rate 23.0
   end
 end
