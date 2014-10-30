@@ -3,12 +3,12 @@ class Administration::SubscriptionPlansController < Administration::Administrati
   set_subtab 'subscription_plans'
 
   before_filter :set_subscription_plan, only: [:edit, :update, :destroy]
+  before_filter :set_subscription_plans, only: [:index, :fetch_subscription_plans]
 
   cache_sweeper :subscription_plan_sweeper
 
   def index
-    @search = SubscriptionPlan.scoped_search(params[:search] || {})
-    @subscription_plans = @search.paginate(page: params[:page]).decorate
+
   end
 
   def new
@@ -42,7 +42,20 @@ class Administration::SubscriptionPlansController < Administration::Administrati
     end
   end
 
+  def fetch_subscription_plans
+    respond_to do |format|
+      format.js
+      format.html
+    end
+  end
+
   private
+
+  def set_subscription_plans
+    @search = SubscriptionPlan.scoped_search(params[:search] || {})
+    @subscription_plans = @search.paginate(page: params[:page]).decorate
+  end
+
   def set_subscription_plan
     @subscription_plan = SubscriptionPlan.find(params[:id])
   end
