@@ -3,7 +3,7 @@ class Administration::SubscriptionPlansController < Administration::Administrati
   set_subtab 'subscription_plans'
 
   before_filter :set_subscription_plan, only: [:edit, :update, :destroy]
-  before_filter :set_subscription_plans, only: [:index, :fetch_subscription_plans]
+  before_filter :set_subscription_plans, only: [:index]
 
   cache_sweeper :subscription_plan_sweeper
 
@@ -43,6 +43,8 @@ class Administration::SubscriptionPlansController < Administration::Administrati
   end
 
   def fetch_subscription_plans
+    @subscription_plans = SubscriptionPlan.for_role(params[:assigned_roles])
+
     respond_to do |format|
       format.js
       format.html
