@@ -69,11 +69,15 @@ class Cart
   end
 
   def total
-    BigDecimal.new(lead_purchases.sum('price * quantity')) + total_vat_value
+    BigDecimal.new(calculated_price.presence || 0) + total_vat_value
   end
 
   def total_netto
-    BigDecimal.new(lead_purchases.sum('price * quantity'))
+    BigDecimal.new(calculated_price.presence || 0)
+  end
+
+  def calculated_price
+    lead_purchases.to_a.sum {|lead_purchase| lead_purchase.lead.price * lead_purchase.quantity }
   end
 
   def count
