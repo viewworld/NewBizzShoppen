@@ -9,8 +9,7 @@ class Asset < ActiveRecord::Base
                            application/pdf application/vnd.ms-excel application/vnd.oasis.opendocument.text
                            application/vnd.oasis.opendocument.spreadsheet application/octet)
 
-  validates_attachment_presence :data
-  validates_attachment_size :data, less_than: 10.megabyte
+  validates_attachment :data, less_than: 10.megabytes
 
   belongs_to :assetable, polymorphic: true, foreign_key: :assetable_id
   belongs_to :user
@@ -35,10 +34,6 @@ class Asset < ActiveRecord::Base
     end
   end
 
-  def full_local_path_for_current
-    Pathname.new(File.join([::Rails.root, 'public', self.url.gsub('https://fairleads.s3.amazonaws.com/production', '')]).gsub(/(releases\/\d+)/, 'current'))
-  end
-
   def stored_local_temp_path(url, prefix=nil)
     OpenURI::Buffer.send :remove_const, 'StringMax' if OpenURI::Buffer.const_defined?('StringMax')
     OpenURI::Buffer.const_set 'StringMax', 0
@@ -61,9 +56,8 @@ class Asset < ActiveRecord::Base
     end
   end
 
-
   def self.s3_storage?
-    %w(production staging).include?(Rails.env)
+    %w(production staging development).include?(Rails.env)
   end
 
   def self.attachment_options
@@ -72,8 +66,7 @@ class Asset < ActiveRecord::Base
         storage: :s3,
         s3_protocol: 'https',
         s3_credentials: "#{Rails.root}/config/s3.yml",
-        s3_permissions: :public_read,
-        bucket: "fairleads/#{Rails.env}",
+        s3_permissions: s3_permissions,
         path: "assets/:id/:style/:basename.:extension"
       }
     else
@@ -82,5 +75,11 @@ class Asset < ActiveRecord::Base
         path: ":rails_root/public/system/assets/:id/:style/:basename.:extension"
       }
     end
+  end
+
+  private
+
+  def self.s3_permissions
+    :public_read
   end
 end

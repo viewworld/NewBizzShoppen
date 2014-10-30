@@ -26,7 +26,7 @@ gem 'yajl-ruby', '1.1.0', require: 'yajl'
 gem 'recaptcha', '0.3.5', require: 'recaptcha/rails'
 
 # s3
-gem 'aws-s3', '0.6.3', require: 'aws/s3'
+gem 'aws-sdk', '~> 1.57.0'
 
 # views
 gem 'slim', '~> 2.0.3'
@@ -46,7 +46,7 @@ gem 'aasm', '2.3.1'
 gem 'whenever', '0.9.0', require: false
 
 # uploads
-gem 'paperclip', '2.3.6'
+gem 'paperclip', '4.2.0'
 
 # api
 gem 'json_pure', '1.5.3'

@@ -1,14 +1,16 @@
-development:
+common: &default_settings
   access_key_id: AKIAJUCLH3EUZBE7SS6A
   secret_access_key: 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
+  s3_host_name: 's3-eu-west-1.amazonaws.com'
+
+development:
+  <<: *default_settings
   bucket: fairleads/development
 
 production:
-  access_key_id: AKIAJUCLH3EUZBE7SS6A
-  secret_access_key: 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
+  <<: *default_settings
   bucket: fairleads/production
 
 staging:
-  access_key_id: AKIAJUCLH3EUZBE7SS6A
-  secret_access_key: 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
+  <<: *default_settings
   bucket: fairleads/staging

@@ -6,8 +6,7 @@ class Material < Asset
     content_type: Asset::IMAGE_FILE_TYPES + Asset::DOCUMENT_FILE_TYPES
 
   belongs_to :campaign, polymorphic: true
-  has_many :result_values,
-    finder_sql: 'SELECT result_values.* FROM result_values WHERE (field_type = \'#{ResultField::MATERIAL}\' AND value = \'#{id}\')'
+  has_many :result_values, conditions: {field_type: ResultField::MATERIAL}, foreign_key: :value
 
   before_destroy do
     if result_values.any?
