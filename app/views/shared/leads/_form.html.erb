@@ -87,7 +87,7 @@
             <h3><%= current_user.has_role?(:member) ? t("shared.leads.form.member.lead_information") : t("shared.leads.form.lead_information") %></h3>
           </li>
           <% categories = current_user.has_role?(:admin) ? LeadCategory.without_locked.all :
-                             current_user.has_role?(:call_centre) ? LeadCategory.without_locked.with_call_centre_unique(current_user).all :
+                             current_user.has_role?(:call_centre) ? LeadCategory.with_call_centre_unique(current_user).without_locked.all :
                                      current_user.has_role?(:member) ? LeadCategory.with_agent_unique(current_user).without_locked.without_supplier_unique.all :
                                              current_user.has_role?(:supplier) ? current_user.with_role.parent_accessible_categories.all :
                                              LeadCategory.with_agent_unique(current_user).without_locked.all %>

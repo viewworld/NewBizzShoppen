@@ -8,9 +8,9 @@
         <% if user_signed_in? %>
             <%
                deal_categories = if current_user.supplier?
-                                     DealCategory.without_locked.with_supplier_unique(current_user).all
+                                     DealCategory.with_supplier_unique(current_user).without_locked.all
                                  elsif current_user.agent?
-                                     DealCategory.without_locked.with_agent_unique(current_user).all
+                                     DealCategory.with_agent_unique(current_user).without_locked.all
                                  elsif current_user.admin?
                                      DealCategory.without_locked.all
                                  end
@@ -21,7 +21,7 @@
         <% if user_signed_in? and current_user.has_any_role?(:agent, :call_centre, :call_centre_agent, :admin) %>
             <%
                lead_categories = if current_user.agent?
-                                     LeadCategory.without_locked.with_agent_unique(current_user).all
+                                     LeadCategory.with_agent_unique(current_user).without_locked.all
                                  elsif current_user.admin?
                                      LeadCategory.without_locked.all
                                  end

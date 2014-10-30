@@ -5,7 +5,7 @@
     <% end %>
   <% end %>
 
-  <% objects = LeadCategory.without_locked.with_agent_unique(current_user).without_supplier_unique.all %>
+  <% objects = LeadCategory.with_agent_unique(current_user).without_supplier_unique.without_locked.all %>
 
   <%= form_tag choose_suppliers_advanced_import_path, :method => :post, :multipart => true, :id => "advanced_import_form" do %>
       <%= frm(:title => "#{t('suppliers_advanced_import.show.view.title')}") do |section| %>
