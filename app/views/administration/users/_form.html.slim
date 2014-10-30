@@ -99,17 +99,19 @@
           br/
           = form.input :cm_username, as: :string, label: t("administration.users.edit.view.cm_username")
           = form.input :cm_password, as: :string, label: t("administration.users.edit.view.cm_password")
-        - if @user.persisted? and @user.agent?
-          b= t("administration.users.edit.view.softphone_type")
-          br/
-          = form.input :phone_type_id, as: :select, include_blank: false, collection: User::PHONE_TYPES_WITH_LABELS
-          b= t("administration.users.edit.view.softphone_server")
-          br/
-          = form.input :softphone_server
-          b= t("administration.users.edit.view.sip_credentials")
-          br/
-          = form.input :sip_username
-          = form.input :sip_password, as: :string
+        - if @user.persisted? && @user.agent?
+          = form.input :shared_softphone_enabled
+          = form.input :softphone_id, :as => :select, :collection => Softphone.shared, :label => t("administration.users.edit.view.shared_softphone_label"), :input_html => {:disabled => !@user.softphone_shared?}
+          = form.input :phone_type_id, :as => :select, :include_blank => false, :collection => User::PHONE_TYPES_WITH_LABELS
+          span.softphone_settings{ style=(form.object.softphone_shared? ? 'display: none;' : '') }
+            b= t("administration.users.edit.view.softphone_type")
+            = form.fields_for :softphone, (@user.softphone.nil? || @user.softphone_shared?) ? @user.build_softphone : @user.softphone do |sf|
+              = sf.input :name
+              = sf.input :sip_username
+              = sf.input :sip_password, :as => :string
+              = sf.input :softphone_server
+              = sf.input :user_id, :as => :hidden, :value => @user.id
+
     = render partial: "/shared/tags/assigned_tags", locals: { object: @user }
 
 .hl
@@ -213,3 +215,19 @@ javascript:
                     text($(this).text()));
         });
     }
+
+    $(document).ready(function () {
+      var softphoneSettings;
+      $('input[id*=shared_softphone_enabled]').change(function () {
+        softphoneSettings = $('.softphone_settings');
+        if (this.checked) {
+          softphoneSettings.hide();
+          $('.softphone_settings').find('input').attr('disabled', 'disabled');
+          $('select[id*=agent_softphone_id]').removeAttr('disabled');
+        } else {
+          softphoneSettings.show();
+          $('.softphone_settings').find('input').removeAttr('disabled');
+          $('select[id*=agent_softphone_id]').attr('disabled', 'disabled');
+        }
+      })
+    })
