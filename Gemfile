@@ -137,6 +137,8 @@ group :test do
   gem 'test-unit', '2.3.0'
   gem 'shoulda-matchers', '~> 2.0.0'
   gem 'email_spec', '~> 1.5.0'
+
+  gem 'selleo-controller_tests', '~> 0.0.4'
 end
 
 gem 'capistrano', '2.15.5'
