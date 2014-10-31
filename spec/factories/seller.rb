@@ -1,7 +1,11 @@
 FactoryGirl.define do
   factory :seller do
-    address
     bank_account
+    
+    address do
+      country = FactoryGirl.create(:vat_rate).country
+      FactoryGirl.create(:address, country: country)
+    end
 
     sequence(:company_name) { |n| "company_name_#{n}" }
     first_name { Faker::Name.first_name }
