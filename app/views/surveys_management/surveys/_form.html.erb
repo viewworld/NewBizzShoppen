@@ -4,7 +4,7 @@
       <%= form.input :name %>
       <% if current_user.chain_mails_enabled? %>
           <%= form.input :use_chain_mail_as_intro_mail %>
-          <%= form.input :link_clicked_chain_mail_type_id, :collection => SurveyChainMailType.with_active.for_user(current_user).all.map { |cm| [cm.name, cm.id] } %>
+          <%= form.input :link_clicked_chain_mail_type_id, as: :select, :collection => SurveyChainMailType.with_active.for_user(current_user).all.map { |cm| [cm.name, cm.id] } %>
       <% end %>
       <li class="string optional">
         <label for="survey_link"><%= t("surveys_management.surveys.edit.view.survey_link") %></label>
@@ -131,7 +131,7 @@
       <fieldset class="inputs labels_ta_r">
         <ol class="align_inputs">
           <%= form.input :upgrade_contacts_to_leads %>
-          <%= form.input :lead_creator_id, :collection => (current_user.admin? ? User.with_any_role([:agent, :call_centre_agent]) : current_user.subaccounts).map { |u| [u.email, u.id] } %>
+          <%= form.input :lead_creator_id, as: :select, :collection => (current_user.admin? ? User.with_any_role([:agent, :call_centre_agent]) : current_user.subaccounts).map { |u| [u.email, u.id] } %>
         </ol>
       </fieldset>
     </div>
