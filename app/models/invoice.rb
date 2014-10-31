@@ -252,7 +252,7 @@ class Invoice < ActiveRecord::Base
 
     html_template = get_template_source
     html_markup = [:original].map do |version|
-      av.render(:inline => html_template, :type => :erb, :layout => '/app/views/layouts/pdf', :locals => {:version => version, :invoice => self, :current_user => current_user})
+      av.render(:inline => html_template, :locals => {:version => version, :invoice => self, :current_user => current_user})
     end.join
 
     MARKUP_SCAFFOLD % html_markup
@@ -333,3 +333,4 @@ class Invoice < ActiveRecord::Base
     "http://#{user.domain_name}/paypal_unpaid_invoices/#{id}"
   end
 end
+
