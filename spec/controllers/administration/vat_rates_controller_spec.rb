@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Administration::VatRatesController do
+  before { create(:locale) }
   include_context 'admin signed in'
 
   let(:vat_rate) { create(:vat_rate) }

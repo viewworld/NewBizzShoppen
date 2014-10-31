@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Administration::SoftphoneServersController do
+  before { create(:locale) }
   include_context 'admin signed in'
 
   let(:softphone_server) { create(:softphone_server) }
