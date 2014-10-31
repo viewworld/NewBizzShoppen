@@ -25,7 +25,7 @@
         = form.input :api_key, input_html: { disabled: true }
 
         - if ['call_centre_agent'].include?(params[:role]) or @user.has_any_role?(:call_centre_agent)
-          = form.input :parent_id, collection: User.without_locked.with_call_centres.map{|u| [u.screen_name, u.id]}.sort, include_blank: false, label: t("administration.users.edit.view.parent_id")
+          = form.input :parent_id, as: :select, collection: User.without_locked.with_call_centres.map{|u| [u.screen_name, u.id]}.sort, include_blank: false, label: t("administration.users.edit.view.parent_id")
 
         - if ['lead_supplier', 'supplier', 'member'].include?(params[:role]) or @user.has_any_role?(:lead_supplier, :supplier, :member)
           = form.input :vat_number
