@@ -9,9 +9,15 @@
           <%= form.input :category_id, :as => :hidden %>
       <% else %>
           <% if current_user.has_role?(:call_centre) %>
-            <%= form.input :category_id, :collection => nested_set_options(LeadCategory.with_call_centre_unique(current_user).without_locked.all), :include_blank => false %>
+            <%= form.input :category_id,
+                           as: :select,
+                           collection: nested_set_options(LeadCategory.with_call_centre_unique(current_user).without_locked.all),
+                           include_blank: false %>
           <% else %>
-            <%= form.input :category_id, :collection => nested_set_options(LeadCategory.with_agent_unique(current_user).without_locked.all), :include_blank => false %>
+            <%= form.input :category_id,
+                           as: :select,
+                           collection: nested_set_options(LeadCategory.with_agent_unique(current_user).without_locked.all),
+                           include_blank: false %>
           <% end %>
       <% end %>
       <%= form.input :is_mandatory %>
