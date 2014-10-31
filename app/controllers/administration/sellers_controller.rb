@@ -38,6 +38,7 @@ class Administration::SellersController < Administration::AdministrationControll
   end
 
   private
+
   def set_seller
     @seller = Seller.find(params[:id])
   end

@@ -119,7 +119,7 @@ group :test, :development do
   #gem 'binding_of_caller', '~> 0.7.2'
   #gem 'quiet_assets', '~> 1.0.3'
 
-  gem 'factory_girl_rails', '~> 4.4.1'
+  gem 'factory_girl_rails', '~> 4.5.0'
   gem 'ffaker', '~> 1.25.0'
 end
 
