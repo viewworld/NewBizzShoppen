@@ -106,13 +106,11 @@
 <div class="pdd_10">
   <table class="categories_table">
     <tbody>
-    <% @categories.select { |c| c.parent_id.blank? }.in_groups_of(5).each do |categories| %>
+    <% @categories.select { |c| c.parent_id.blank? }.in_groups_of(5, false).each do |categories| %>
         <tr>
           <% categories.each do |category| %>
               <td style="width: 20%">
-                <% unless category.nil? %>
-                    <%= categories_structure_root(category, @categories, :leads_catalog) %>
-                <% end %>
+                <%= categories_structure_root(category, @categories, :leads_catalog) %>
               </td>
           <% end %>
         </tr>
