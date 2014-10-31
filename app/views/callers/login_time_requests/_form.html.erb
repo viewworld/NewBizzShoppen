@@ -38,7 +38,7 @@
                                                 :value => resource.whole_day_end_date_value} %>
                   </div>
               <% end %>
-              <%= f.input :campaign_id, :collection => [], :include_blank => false %>
+              <%= f.input :campaign_id, as: :select, :collection => [], :include_blank => false %>
               <% if current_user.admin? %>
                   <%= f.input :user_id, :as => :select, :collection => User.with_any_role([:agent, :call_centre_agent]).without_locked.map{|u| [u.screen_name, u.id]}.sort, :include_blank => false %>
               <% elsif current_user.call_centre? %>
