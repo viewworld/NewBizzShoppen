@@ -131,10 +131,10 @@ group :test do
   gem 'fakeweb', require: false
   gem 'webmock', '1.8.4', require: false
   gem 'launchy', '2.1'
-  gem 'rspec-rails', '2.14.1'
+  gem 'rspec-rails', '2.14.2'
   gem 'headless', '1.0.1'
   gem 'test-unit', '2.3.0'
-  gem 'shoulda-matchers', '~> 2.0.0'
+  gem 'shoulda-matchers', '~> 2.7.0'
   gem 'email_spec', '~> 1.5.0'
 
   gem 'selleo-controller_tests', '~> 0.0.4'
