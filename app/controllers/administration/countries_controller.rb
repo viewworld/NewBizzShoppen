@@ -40,7 +40,7 @@ class Administration::CountriesController < Administration::AdministrationContro
 
   def country_params
     params.require(:country).permit(:name, :locale, :detailed_locale,
-      :work_start_at, :work_end_at, email_template_signature_attributes: [:body],
-      regions_attributes: [:name])
+      :work_start_at, :work_end_at, email_template_signature_attributes: [:body, :id],
+      regions_attributes: [:name, :id, :_destroy])
   end
 end
