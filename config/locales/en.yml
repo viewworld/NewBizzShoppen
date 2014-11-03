@@ -3560,6 +3560,8 @@ en:
         no_chain_mail_selected: "No chain mail selected"
   activerecord:
     models:
+      email_template_signature:
+        default_name: "Email template signature for %{subject}"
       article:
         news:
           agent: "Agent news"

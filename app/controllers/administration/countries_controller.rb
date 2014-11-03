@@ -17,7 +17,7 @@ class Administration::CountriesController < Administration::AdministrationContro
 
   def create
     @country = Country.new(country_params)
-    @country.email_template_signature.name = "Email template signature for #{@country.name}"
+    @country.email_template_signature.name = t('activerecord.models.email_template_signature.default_name', subject: @country.name)
 
     common_save(@country, success: { redirect: administration_countries_path })
   end
