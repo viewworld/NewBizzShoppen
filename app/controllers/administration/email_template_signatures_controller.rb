@@ -1,4 +1,6 @@
 class Administration::EmailTemplateSignaturesController < Administration::AdministrationController
+  include Controllers::CommonActions
+
   set_tab 'settings'
   set_subtab 'email_template_signatures'
 
@@ -14,34 +16,32 @@ class Administration::EmailTemplateSignaturesController < Administration::Admini
   end
 
   def create
-    @email_template_signature = EmailTemplateSignature.new(params[:email_template_signature])
+    @email_template_signature = EmailTemplateSignature.new(email_template_signature_params)
 
-    if @email_template_signature.save
-      redirect_to administration_email_template_signatures_path
-    else
-      render :new
-    end
+    common_save(@email_template_signature, success: { redirect: administration_email_template_signatures_path })
   end
 
   def update
-    if @email_template_signature.update_attributes(params[:email_template_signature])
-      redirect_to administration_email_template_signatures_path
-    else
-      render :new
-    end
+    @email_template_signature.assign_attributes(email_template_signature_params)
+
+    common_save(@email_template_signature, success: { redirect: administration_email_template_signatures_path })
   end
 
   def destroy
-    @email_template_signature.destroy
-    redirect_to administration_email_template_signatures_path
+    common_destroy(@email_template_signature, success: { redirect: administration_email_template_signatures_path })
   end
 
   private
+
   def set_email_collection
     @emails = EmailTemplateSignature::FROM_EMAILS.map { |e| [e, e] }
   end
 
   def set_email_template_signature
     @email_template_signature = EmailTemplateSignature.find(params[:id])
+  end
+
+  def email_template_signature_params
+    params.require(:email_template_signature).permit(:name, :email_from, :body)
   end
 end
