@@ -1,4 +1,6 @@
 class Administration::YoutubeIntroductionsController < Administration::AdministrationController
+  include Controllers::CommonActions
+
   set_tab 'settings'
   set_subtab 'global'
 
@@ -11,27 +13,21 @@ class Administration::YoutubeIntroductionsController < Administration::Administr
   def create
     @youtube_introduction = YoutubeIntroduction.new(youtube_introduction_params)
 
-    if @youtube_introduction.save
-      redirect_to edit_administration_setting_path, notice: t('flash.actions.create.notice', resource_name: 'Youtube Introduction')
-    else
-      render :new
-    end
+    common_save(@youtube_introduction, success: { redirect: edit_administration_setting_path })
   end
 
   def update
-    if @youtube_introduction.update_attributes(youtube_introduction_params)
-      redirect_to edit_administration_setting_path, notice: t('flash.actions.update.notice', resource_name: 'Youtube Introduction')
-    else
-      render :edit
-    end
+    @youtube_introduction.assign_attributes(youtube_introduction_params)
+
+    common_save(@youtube_introduction, success: { redirect: edit_administration_setting_path })
   end
 
   def destroy
-    @youtube_introduction.destroy
-    redirect_to edit_administration_setting_path, notice: t('flash.actions.destroy.notice', resource_name: 'Youtube Introduction')
+    common_destroy(@youtube_introduction, success: { redirect: edit_administration_setting_path })
   end
 
   private
+
   def set_youtube_introduction
     @youtube_introduction = YoutubeIntroduction.find(params[:id])
   end

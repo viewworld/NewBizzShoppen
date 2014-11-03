@@ -16,6 +16,16 @@ en:
           not_yet_processed: "Not yet processed"
   cart:
     vat_line_title: "VAT %{percentage}"
+  common_actions:
+    create:
+      success: "Successfully created %{subject}"
+      failure: "Error occured while trying to create %{subject}"
+    update:
+      success: "Successfully updated %{subject}"
+      failure: "Error occured while trying to update %{subject}"
+    destroy:
+      success: "Successfully destroyed %{subject}"
+      failure: "Error occured while trying to destroy %{subject}"
   common:
     back_link: Back
     edit_link: "Edit"
