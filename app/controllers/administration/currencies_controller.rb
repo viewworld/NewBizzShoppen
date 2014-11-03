@@ -1,4 +1,6 @@
 class Administration::CurrenciesController < Administration::AdministrationController
+  include Controllers::CommonActions
+
   set_tab 'settings'
   set_subtab 'currencies'
 
@@ -15,36 +17,27 @@ class Administration::CurrenciesController < Administration::AdministrationContr
   def create
     @currency = Currency.new(currency_params)
 
-    if @currency.save
-      redirect_to administration_currencies_path
-    else
-      render :new
-    end
+    common_save(@currency, success: { redirect: administration_currencies_path })
   end
 
   def update
-    if @currency.update_attributes(currency_params)
-      redirect_to administration_currencies_path
-    else
-      render :edit
-    end
+    @currency.assign_attributes(currency_params)
+
+    common_save(@currency, success: { redirect: administration_currencies_path })
   end
 
   def destroy
-    if @currency.destroy
-      redirect_to administration_currencies_path
-    else
-      redirect_to administration_currencies_path, alert: @currency.errors[:base].join('<br/>')
-    end
+    common_destroy(@currency, success: { redirect: administration_currencies_path })
   end
 
   private
+
   def set_currency
     @currency = Currency.find(params[:id])
   end
 
   def currency_params
-    params.require(:currency).permit(:name, :symbol, :format, :separator, :delimiter, :unit_name, :subunit_name,
-      :active, :global_default, :disabled)
+    params.require(:currency).permit(:name, :symbol, :format, :separator, :delimiter,
+      :unit_name, :subunit_name, :active, :global_default, :disabled)
   end
 end
