@@ -1,4 +1,6 @@
 class Administration::BankAccountsController < Administration::AdministrationController
+  include Controllers::CommonActions
+
   set_tab 'settings'
   set_subtab 'global'
 
@@ -11,24 +13,17 @@ class Administration::BankAccountsController < Administration::AdministrationCon
   def create
     @bank_account = BankAccount.new(bank_account_params)
 
-    if @bank_account.save
-      redirect_to edit_administration_setting_path
-    else
-      render :new
-    end
+    common_save(@bank_account, success: { redirect: edit_administration_setting_path })
   end
 
   def update
-    if @bank_account.update_attributes(bank_account_params)
-      redirect_to edit_administration_setting_path
-    else
-      render :edit
-    end
+    @bank_account.assign_attributes(bank_account_params)
+
+    common_save(@bank_account, success: { redirect: edit_administration_setting_path })
   end
 
   def destroy
-    @bank_account.destroy
-    redirect_to edit_administration_setting_path
+    common_destroy(@bank_account, success: { redirect: edit_administration_setting_path })
   end
 
   private
