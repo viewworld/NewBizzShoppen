@@ -31,6 +31,7 @@ en:
     edit_link: "Edit"
     cancel_link: "Cancel"
     delete_link: "Delete"
+    save_link: "Save"
     confirmation: Are You sure?
     help_link: "Help"
     yes_label: "Yes"
