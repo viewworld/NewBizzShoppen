@@ -1,5 +1,5 @@
 module Controllers
-  module ::Controllers::EmailTemplatesActions
+  module EmailTemplatesActions
     def test_send_email
       unless params[:email].to_s.strip.blank?
         @email_template = EmailTemplate.find(params[:id])
