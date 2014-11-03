@@ -156,16 +156,10 @@
 
 .frm .frm_foot_actions .frm_fc
 {
-    height: 38px;
+    height: 46px;
     padding-top: 8px;
     background: asset-url('frm/grey.png', image) repeat-x 0 -142px;
-
-    -moz-border-radius-bottomleft: 5px;
-    -webkit-border-bottom-left-radius: 5px;
     border-bottom-left-radius: 5px;
-
-    -moz-border-radius-bottomright: 5px;
-    -webkit-border-bottom-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
 
