@@ -7,6 +7,11 @@ describe Administration::BankAccountsController do
   let(:bank_account) { create(:bank_account) }
   let(:country) { create(:country) }
 
+  describe '#show' do
+    let(:call_request) { get :show, id: bank_account.id }
+    it_behaves_like 'an action rendering view'
+  end
+
   describe '#new' do
     let(:call_request) { get :new }
     
