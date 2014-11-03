@@ -1,6 +1,16 @@
-.pdd_10.no_pdd_t
-  fieldset.inputs.labels_ta_r.labels_100
-    ol
-      = form.input :name
-      = form.input :email_from, as: :select, collection: @emails
-      = form.input :body, label: false, as: :ckeditor, input_html: { toolbar: "EmailPopup" }
+.box
+  = simple_form_for [:administration, @email_template_signature] do |f|
+    .box-header
+      h2= header
+
+    .box-content.form-inputs
+      = f.input :name
+      = f.input :email_from, collection: @emails
+      = f.input :body, label: false, as: :ckeditor, input_html: { toolbar: 'EmailPopup' }
+
+    .box-footer
+      = ibt(class: 'fltri', icon: 'save') do
+        = f.button :submit, t('common.save_link')
+        
+      = ibt(class: 'bt_grey fltri') do
+        = button_to_function t('common.cancel_link'), administration_email_template_signatures_path
