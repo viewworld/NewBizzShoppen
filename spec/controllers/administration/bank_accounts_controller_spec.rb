@@ -9,6 +9,7 @@ describe Administration::BankAccountsController do
 
   describe '#new' do
     let(:call_request) { get :new }
+    
     it_behaves_like 'an action rendering view'
   end
 
@@ -22,6 +23,7 @@ describe Administration::BankAccountsController do
 
   describe '#edit' do
     let (:call_request) { get :edit, id: bank_account.id }
+    
     it_behaves_like 'an action rendering view'
   end
 
@@ -34,6 +36,7 @@ describe Administration::BankAccountsController do
 
   describe '#destroy' do
     let(:call_request) { delete :destroy, id: bank_account.id }
+    
     it_behaves_like 'an action destroying object'
   end
 end
