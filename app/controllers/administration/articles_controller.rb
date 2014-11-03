@@ -1,4 +1,6 @@
 class Administration::ArticlesController < Administration::AdministrationController
+  include Controllers::CommonActions
+
   set_tab 'content'
   set_subtab 'articles'
 
@@ -21,24 +23,17 @@ class Administration::ArticlesController < Administration::AdministrationControl
   def create
     @article = Article::Cms::MainPageArticle.new(article_params)
 
-    if @article.save
-      redirect_to administration_articles_path
-    else
-      render :new
-    end
+    common_save(@article, success: { redirect: administration_articles_path })
   end
 
   def update
-    if @article.update_attributes(article_params)
-      redirect_to session[:articles_referer] || administration_articles_path
-    else
-      render :edit
-    end
+    @article.assign_attributes(article_params)
+
+    common_save(@article, success: { redirect: session[:articles_referer] || administration_articles_path })
   end
 
   def destroy
-    @article.destroy
-    redirect_to administration_articles_path
+    common_destroy(@article, success: { redirect: administration_articles_path })
   end
 
   private
