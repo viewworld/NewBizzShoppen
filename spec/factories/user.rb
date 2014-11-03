@@ -23,6 +23,13 @@ FactoryGirl.define do
     roles_mask 1026
   end
 
+  factory :lead_supplier, class: User::CategorySupplier, parent: :user do
+    sequence(:email) { |n| "lead_supplier_#{n}@fairpeople.com" }
+    roles_mask 304
+    countries { [country] }
+    assign_free_subscription_plan true
+  end
+
   factory :call_centre, :class => User::CallCentre, :parent => :user do
     sequence(:email) { |n| "call_centre_#{n}@fairpeople.com" }
     roles_mask 1028
