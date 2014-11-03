@@ -1,4 +1,6 @@
 class Administration::CountriesController < Administration::AdministrationController
+  include Controllers::CommonActions
+
   set_tab 'settings'
   set_subtab 'countries'
 
@@ -17,30 +19,21 @@ class Administration::CountriesController < Administration::AdministrationContro
     @country = Country.new(country_params)
     @country.email_template_signature.name = "Email template signature for #{@country.name}"
 
-    if @country.save
-      redirect_to administration_countries_path
-    else
-      render :new
-    end
+    common_save(@country, success: { redirect: administration_countries_path })
   end
 
   def update
-    if @country.update_attributes(country_params)
-      redirect_to administration_countries_path
-    else
-      render :edit
-    end
+    @country.assign_attributes(country_params)
+
+    common_save(@country, success: { redirect: administration_countries_path })
   end
 
   def destroy
-    if @country.destroy
-      redirect_to administration_countries_path
-    else
-      redirect_to administration_countries_path, alert: @country.errors[:base].join('<br/>')
-    end
+    common_destroy(@country, success: { redirect: administration_countries_path })
   end
 
   private
+
   def set_country
     @country = Country.find(params[:id]).decorate
   end
