@@ -1,4 +1,6 @@
 class Administration::VatRatesController < Administration::AdministrationController
+  include Controllers::CommonActions
+
   set_tab 'settings'
   set_subtab 'global'
 
@@ -12,22 +14,17 @@ class Administration::VatRatesController < Administration::AdministrationControl
   def create
     @vat_rate = VatRate.new(new_vat_rate_params)
 
-    if @vat_rate.save
-      redirect_to edit_administration_setting_path, notice: t('flash.actions.create.notice', resource_name: 'Vat Rate')
-    else
-      render :new
-    end
+    common_save(@vat_rate, success: { redirect: edit_administration_setting_path })
   end
 
   def update
-    if @vat_rate.update_attributes(vat_rate_params)
-      redirect_to edit_administration_setting_path, notice: t('flash.actions.update.notice', resource_name: 'Vat Rate')
-    else
-      render :edit
-    end
+    @vat_rate.assign_attributes(vat_rate_params)
+
+    common_save(@vat_rate, success: { redirect: edit_administration_setting_path })
   end
 
   private
+  
   def set_vat_rate
     @vat_rate = VatRate.find(params[:id])
   end
