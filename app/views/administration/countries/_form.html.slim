@@ -27,7 +27,6 @@
         = form.simple_fields_for :regions, @country.regions.build do |region_form|
           = render 'region_fields', region_form: region_form, additional_classes: 'new-record duplicatable-nested-form-sample hidden'
 
-
     .box-footer
       = ibt(class: 'fltri', icon: 'save') do
         = form.submit t('administration.countries.new.view.button_create_country')
