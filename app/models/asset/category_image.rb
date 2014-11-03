@@ -7,6 +7,8 @@ class Asset::CategoryImage < Asset
     content_type: Asset::IMAGE_FILE_TYPES,
     message: " - #{I18n.t('activerecord.errors.models.asset.validation_asset_images_type')}"
 
+  private
+
   def self.s3_permissions
     :private
   end
