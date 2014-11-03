@@ -6,6 +6,11 @@ describe Administration::ArticlesController do
 
   let(:article) { create(:cms_main_page_article) }
 
+  describe '#show' do
+    let(:call_request) { get :show, id: article.id }
+    it_behaves_like 'an action rendering view'
+  end
+
   describe '#new' do
     let(:call_request) { get :new }
     it_behaves_like 'an action rendering view'
