@@ -32,6 +32,11 @@ shared_context 'admin signed in' do
   before { sign_in admin }
 end
 
+shared_context 'super admin signed in' do
+  let(:super_admin) { create(:super_admin) }
+  before { sign_in super_admin }
+end
+
 def confirm_and_sign_in(email)
   user = User.where(email: email).first
   raise 'not found!' if user.blank?

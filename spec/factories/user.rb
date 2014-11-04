@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :user do
+    #note: don't use the user factory as a standalone
     password 'secret'
     password_confirmation 'secret'
     phone { Faker::PhoneNumber.phone_number }
@@ -16,6 +17,11 @@ FactoryGirl.define do
 
   factory :admin, :class => User::Admin, :parent => :user do
     sequence(:email) { |n| "admin_#{n}@fairpeople.com" }
+  end
+
+  factory :super_admin, class: User::Admin, parent: :user do
+    sequence(:email) { |n| "admin_#{n}@fairpeople.com" }
+    roles_mask 2561
   end
 
   factory :agent, :class => User::Agent, :parent => :user do

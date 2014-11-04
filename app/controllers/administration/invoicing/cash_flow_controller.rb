@@ -16,6 +16,7 @@ class Administration::Invoicing::CashFlowController < Administration::Administra
   end
 
   private
+
   def set_invoice
     @invoice = Invoice.find(params[:invoice_id])
   end
