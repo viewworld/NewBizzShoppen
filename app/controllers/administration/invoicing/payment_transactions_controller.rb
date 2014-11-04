@@ -28,7 +28,7 @@ class Administration::Invoicing::PaymentTransactionsController < Administration:
 
   def update
     if @payment_transaction.update_attributes(transaction_params)
-      redirect_to redirect_to administration_invoicing_payment_transactions_path
+      redirect_to administration_invoicing_payment_transactions_path
     else
       render :edit
     end
