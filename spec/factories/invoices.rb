@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :invoice, class: Invoice do
+  factory :invoice do
     user { create(:call_centre) }
     seller { create(:seller) }
     bank_account { create(:bank_account) }
