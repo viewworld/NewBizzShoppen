@@ -13,6 +13,10 @@ class Asset < ActiveRecord::Base
     %w(production staging development).include?(Rails.env)
   end
 
+  def self.s3_permissions
+    :public_read
+  end
+
   def self.attachment_options
     if s3_storage?
       {
@@ -76,11 +80,5 @@ class Asset < ActiveRecord::Base
     else
       asset.path
     end
-  end
-
-  private
-
-  def self.s3_permissions
-    :public_read
   end
 end

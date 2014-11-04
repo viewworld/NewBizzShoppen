@@ -18,7 +18,7 @@ class Country < ActiveRecord::Base
   check_associations_before_destroy :abstract_leads, :country_interest, :addresses, :vat_rate
 
   accepts_nested_attributes_for :regions, :allow_destroy => true
-  accepts_nested_attributes_for :logo, :reject_if => proc { |attributes| attributes['asset'].blank? }
+  accepts_nested_attributes_for :logo, reject_if: proc { |attributes| !!attributes['data'] }
   accepts_nested_attributes_for :email_template_signature
 
   scope :with_leads, select("DISTINCT(name), countries.*").joins("RIGHT JOIN leads on countries.id=leads.country_id")

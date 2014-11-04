@@ -7,11 +7,11 @@ class Deal < AbstractLead
   CSV_ATTRS = %w(header company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country region company_vat_no company_ean_number contact_name start_date end_date pnumber nnmid custom_1 custom_2 custom_3 custom_4 custom_5)
 
   has_one :deal_request_details_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'deal_request_details'", :dependent => :destroy
-  has_one :logo, class_name: 'Asset::DealLogo', as: :assetable, dependent: :destroy
-  has_one :voucher_heading_picture, class_name: 'Asset::VoucherPicture', as: :assetable, dependent: :destroy
-  has_many :images, class_name: 'Asset::DealImage', as: :assetable, dependent: :destroy
-  has_many :materials, as: :assetable, class_name: 'Asset::DealMaterial', dependent: :destroy
-  has_many :internal_documents, class_name: 'Asset::DealInternalDocument', as: :assetable, dependent: :destroy
+  has_one :logo, class_name: '::Asset::DealLogo', as: :assetable, dependent: :destroy
+  has_one :voucher_heading_picture, class_name: '::Asset::VoucherPicture', as: :assetable, dependent: :destroy
+  has_many :images, class_name: '::Asset::DealImage', as: :assetable, dependent: :destroy
+  has_many :materials, as: :assetable, class_name: '::Asset::DealMaterial', dependent: :destroy
+  has_many :internal_documents, class_name: '::Asset::DealInternalDocument', as: :assetable, dependent: :destroy
   has_many :leads, :class_name => "Lead", :foreign_key => "deal_id"
   has_many :unconfirmed_leads, :class_name => "UnconfirmedLead", :foreign_key => "deal_id"
   has_many :comment_threads, :class_name => "Comment", :foreign_key => :commentable_id, :conditions => {:commentable_type => 'AbstractLead'}
@@ -69,11 +69,11 @@ class Deal < AbstractLead
 
   attr_accessor :creation_step, :use_company_name_as_category
 
-  accepts_nested_attributes_for :logo, :reject_if => proc { |attributes| attributes['asset'].blank? }
-  accepts_nested_attributes_for :images, :reject_if => proc { |attributes| attributes['asset'].blank? }
-  accepts_nested_attributes_for :materials, :reject_if => proc { |attributes| attributes['asset'].blank? }
-  accepts_nested_attributes_for :internal_documents, :reject_if => proc { |attributes| attributes['asset'].blank? }
-  accepts_nested_attributes_for :voucher_heading_picture, :reject_if => proc { |attributes| attributes['asset'].blank? }
+  accepts_nested_attributes_for :logo, reject_if: proc { |attributes| !!attributes['data'] }
+  accepts_nested_attributes_for :images, reject_if: proc { |attributes| !!attributes['data'] }
+  accepts_nested_attributes_for :materials, reject_if: proc { |attributes| !!attributes['data'] }
+  accepts_nested_attributes_for :internal_documents, reject_if: proc { |attributes| !!attributes['data'] }
+  accepts_nested_attributes_for :voucher_heading_picture, reject_if: proc { |attributes| !!attributes['data'] }
   accepts_nested_attributes_for :voucher_numbers
 
   ajaxful_rateable :stars => 5, :allow_update => false, :cache_column => :deal_average_rating
