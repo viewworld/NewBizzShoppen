@@ -16,7 +16,7 @@ FactoryGirl.define do
       template nil
     end
 
-    factory :global_email_template, parent: :email_template do
+    trait :global do
       resource_id nil
       resource_type nil
       uniq_id 'test'

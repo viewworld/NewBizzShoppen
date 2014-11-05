@@ -4,7 +4,7 @@ describe Administration::DealsController do
   before { create(:locale) }
   include_context 'admin signed in'
   let(:deal) { create(:deal, creator: admin, email_address: admin.email) }
-  let!(:global_email_template) { create(:global_email_template, uniq_id: 'deal_request_details') }
+  let!(:global_email_template) { create(:email_template, :global, uniq_id: 'deal_request_details') }
 
   describe '#index' do
     let(:call_request) { get :index }
