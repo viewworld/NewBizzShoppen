@@ -10,14 +10,16 @@ FactoryGirl.define do
     persist true
     resource nil
     custom_reply_to false
+    country { create(:country) }
 
     ignore do
       template nil
     end
 
-    trait :global do
+    factory :global_email_template, parent: :email_template do
       resource_id nil
       resource_type nil
+      uniq_id 'test'
     end
   end
 end
