@@ -54,7 +54,7 @@ class Asset < ActiveRecord::Base
   # TODO there must be a better way..
   def url(style=nil, use_timestamp = true)
     if self.class.s3_storage?
-      data.url(style,use_timestamp).gsub('//s3', '//fairleads.s3').gsub('/fairleads/', '/')
+      data.expiring_url(3600, style).gsub('//s3', '//fairleads.s3').gsub('/fairleads/', '/')
     else
       data.url(style,use_timestamp)
     end
