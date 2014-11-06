@@ -6,6 +6,7 @@ require 'rspec/rails'
 require 'email_spec'
 require 'rspec/autorun'
 require 'selleo_controller_tests'
+require 'paperclip/matchers'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
@@ -14,6 +15,7 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include(EmailSpec::Helpers)
   config.include(EmailSpec::Matchers)
+  config.include Paperclip::Shoulda::Matchers
 
   config.include(Selleo::XhrPersistence)
   config.with_options(type: :controller) do |config|

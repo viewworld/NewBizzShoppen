@@ -3,6 +3,9 @@ require 'spec_helper'
 describe Asset::CountryLogo do
   it { expect(described_class.ancestors).to include Asset }
   it { should belong_to(:country).with_foreign_key :assetable_id }
+  it { should validate_attachment_content_type(:data).
+       allowing(*Asset::IMAGE_FILE_TYPES).
+       rejecting(*Asset::DOCUMENT_FILE_TYPES) }
 
   describe '.attachment_options' do
     before { described_class.stub(s3_storage?: true) }

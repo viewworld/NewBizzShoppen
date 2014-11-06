@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Asset do
+  it { should have_attached_file(:data) }
 
   describe '.s3_storage?' do
     before { Rails.stub(env: env) }
