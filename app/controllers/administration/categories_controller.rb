@@ -36,6 +36,7 @@ class Administration::CategoriesController < Administration::AdministrationContr
   end
 
   private
+  
   def set_category
     @category = Category.find(params[:id])
   end

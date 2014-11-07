@@ -16,6 +16,7 @@ class Administration::CategoryEmailTemplatesController < Administration::Adminis
   end
 
   private
+  
   def set_category
     @category = LeadCategory.find(params[:id])
   end

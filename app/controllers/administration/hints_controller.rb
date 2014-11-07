@@ -31,6 +31,7 @@ class Administration::HintsController < Administration::AdministrationController
   end
 
   private
+
   def set_article
     @article = Article.find(params[:id])
   end

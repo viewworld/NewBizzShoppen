@@ -27,6 +27,7 @@ class Administration::BankAccountsController < Administration::AdministrationCon
   end
 
   private
+  
   def set_bank_account
     @bank_account = BankAccount.find(params[:id])
   end

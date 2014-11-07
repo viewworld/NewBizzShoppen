@@ -14,6 +14,7 @@ class Administration::BulkUsersUpdateController < Administration::Administration
   end
 
   private
+  
   def bulk_create_invoices_for(users)
     ActiveRecord::Base.transaction do
       users.each do |user|
