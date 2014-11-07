@@ -43,7 +43,7 @@ module Controllers
       subject_class = subject.class.name
       subject_translation_key = subject_class.gsub('::','.').underscore
 
-      t("models.#{subject_translation_key}.class_name", default: subject_class.underscore.humanize)
+      t("models.#{subject_translation_key}.class_name", default: subject_class.gsub('::',' ').titleize)
     end
   end
 end
