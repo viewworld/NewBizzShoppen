@@ -1,4 +1,6 @@
 class Administration::ResultsController < Administration::AdministrationController
+  include Controllers::CommonActions
+
   set_tab 'settings'
   set_subtab 'results'
 
@@ -11,14 +13,13 @@ class Administration::ResultsController < Administration::AdministrationControll
   end
 
   def update
-    if @result.update_attributes(result_params)
-      redirect_to administration_results_path, notice: t("flash.actions.update.notice", resource_name: Result)
-    else
-      render :edit
-    end
+    @result.assign_attributes(result_params)
+
+    common_save(@result, success: { redirect: administration_results_path })
   end
 
   private
+
   def set_result
     @result = Result.find(params[:id])
   end
