@@ -1,11 +1,11 @@
 .box
-  = simple_form_for @news, url: url do |f|
+  = simple_form_for @news, url: url, as: :article do |f|
     .box-header
       h2= header
 
     .box-content.form-inputs.clearfix
       = f.input :title
-      
+
       - if f.object.is_a? Article::News::CategoryHome
         = f.input :resource_type, as: :hidden, value: 'Category'
         = f.input :resource, collection: nested_set_options(LeadCategory.all), label: t('administration.news.edit.view.category_label'), include_blank: false
