@@ -4,7 +4,7 @@
       = t('administration.languages.index.view.header')
 
   - if @languages.blank?
-    = blank_state_message( t('administration.languages.index.view.no_languages_defined') )
+    = blank_state_message t('administration.languages.index.view.no_languages_defined')
   - else
     table.generic
       thead

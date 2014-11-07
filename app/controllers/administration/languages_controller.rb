@@ -1,4 +1,6 @@
 class Administration::LanguagesController < Administration::AdministrationController
+  include Controllers::CommonActions
+
   set_tab 'settings'
   set_subtab 'languages'
 
@@ -8,12 +10,17 @@ class Administration::LanguagesController < Administration::AdministrationContro
 
   def update
     @language = Locale.find(params[:id])
+    @language.assign_attributes(language_params)
 
-    # FIXME: Add notifications
-    if @language.update_attributes(params[:language])
-      redirect_to administration_languages_path
-    else
-      redirect_to administration_languages_path
-    end
+    common_save(@language,
+      success: { redirect: administration_languages_path },
+      failure: { redirect: administration_languages_path }
+    )
+  end
+
+  private
+
+  def language_params
+    params.require(:language).permit(:enabled)
   end
 end
