@@ -1,4 +1,6 @@
 class Administration::HintsController < Administration::AdministrationController
+  include Controllers::CommonActions
+
   set_tab 'content'
   set_subtab 'hints'
 
@@ -18,11 +20,9 @@ class Administration::HintsController < Administration::AdministrationController
   end
 
   def update
-    if @article.update_attributes(article_params)
-      redirect_to session[:hints_referer] || administration_hints_path
-    else
-      render :edit
-    end
+    @article.assign_attributes(article_params)
+
+    common_save(@article, success: { redirect: session[:hints_referer] || administration_hints_path })
   end
 
   def destroy
