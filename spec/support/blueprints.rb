@@ -295,6 +295,7 @@ end
   assign_free_subscription_plan { true }
 end
 
+# TUTAJ
 ::Article::Cms::InterfaceContentText.blueprint do
   title { Faker::Lorem.words(4).to_s.capitalize }
   content { Faker::Lorem.sentences(2).to_s }
