@@ -1,19 +1,21 @@
 .box
-  = simple_form_for @news, url: url do |form|
+  = simple_form_for @news, url: url do |f|
     .box-header
       h2= header
 
     .box-content.form-inputs.clearfix
-      = form.input :title
-      - if form.object.is_a? Article::News::CategoryHome
-        = form.input :resource_type, as: :hidden, value: "Category"
-        = form.input :resource, collection: nested_set_options(LeadCategory.all), label: t("administration.news.edit.view.category_label"), include_blank: false
+      = f.input :title
+      
+      - if f.object.is_a? Article::News::CategoryHome
+        = f.input :resource_type, as: :hidden, value: 'Category'
+        = f.input :resource, collection: nested_set_options(LeadCategory.all), label: t('administration.news.edit.view.category_label'), include_blank: false
 
-      = form.input :content, label: false, as: :ckeditor
-      = form.input :published
+      = f.input :content, label: false, as: :ckeditor
+      = f.input :published
 
     .box-footer
-      = ibt(class: "fltri", icon: "save") do
-        = form.submit t("administration.news.edit.view.button_save")
-      = ibt(class: "bt_grey fltri") do
-        = button_to_function t("common.cancel_link"), "history.go(-1)"
+      = ibt(class: 'fltri', icon: 'save') do
+        = f.button :submit, t('common.save_link')
+
+      = ibt(class: 'bt_grey fltri') do
+        = link_to t('common.cancel_link'), administration_news_index_path

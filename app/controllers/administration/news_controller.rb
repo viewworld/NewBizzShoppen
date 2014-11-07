@@ -1,4 +1,6 @@
 class Administration::NewsController < Administration::AdministrationController
+  include Controllers::CommonActions
+
   set_tab 'content'
   set_subtab 'news'
 
@@ -19,24 +21,17 @@ class Administration::NewsController < Administration::AdministrationController
   def create
     @news = "Article::News::#{params[:subclass].classify}".constantize.new(article_params)
 
-    if @news.save
-      redirect_to administration_news_index_path
-    else
-      render :new
-    end
+    common_save(@news, success: { redirect: administration_news_index_path })
   end
 
   def update
-    if @news.update_attributes(article_params)
-      redirect_to administration_news_index_path
-    else
-      render :edit
-    end
+    @news.assign_attributes(article_params)
+
+    common_save(@news, success: { redirect: administration_news_index_path })
   end
 
   def destroy
-    @news.destroy
-    redirect_to administration_news_index_path
+    common_destroy(@news, success: { redirect: administration_news_index_path })
   end
 
   private

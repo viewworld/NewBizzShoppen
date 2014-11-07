@@ -34,7 +34,7 @@
   - if @news.blank?
     = blank_state_message
   - else
-    table#news_table.generic
+    table.generic
       thead
         tr
           th.hl
@@ -63,12 +63,9 @@
               .td_actions
                 = bt_link_to :cog, nil, "javascript:void(0)", class: "bt_dropdown"
                 ul
-                  li
-                    = link_to t("administration.news.index.view.edit_link"), edit_administration_news_path(news), class: "default_action"
-                  li
-                    = link_to t("administration.news.index.view.show_link"), administration_news_path(news)
-                  li
-                    = link_to t("administration.news.index.view.delete_link"), administration_news_path(news), method: :delete, confirm: t("administration.news.index.view.delete_confirmation")
+                  li= link_to t("administration.news.index.view.edit_link"), edit_administration_news_path(news), class: "default_action"
+                  li= link_to t("administration.news.index.view.show_link"), administration_news_path(news)
+                  li= link_to t("administration.news.index.view.delete_link"), administration_news_path(news), method: :delete, confirm: t("administration.news.index.view.delete_confirmation")
             td.cr
 
         - if will_paginate
