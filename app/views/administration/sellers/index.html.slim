@@ -1,31 +1,31 @@
 = content_for :column_mc do
   = header do |section|
     - section.block_header do
-      = t("administration.sellers.index.view.header")
+      = t('administration.sellers.index.view.header')
 
     - section.block_actions do
       ul.header_actions
         li.last
-          = bt_link_to :user, t("administration.sellers.index.view.add_seller"), new_administration_seller_path
+          = bt_link_to :user, t('administration.sellers.index.view.add_seller'), new_administration_seller_path
 
   - unless @sellers.any?
-    = blank_state_message msg: t("administration.sellers.index.view.no_sellers_defined")
+    = blank_state_message msg: t('administration.sellers.index.view.no_sellers_defined')
   - else
-    table#sellers.generic
+    table.generic
       thead
         tr
           th.hl
-          th= t("administration.sellers.index.view.country")
-          th= t("administration.sellers.index.view.company_name")
-          th= t("administration.sellers.index.view.first_name")
-          th= t("administration.sellers.index.view.last_name")
-          th.ta_c= t("administration.sellers.index.view.default")
+          th= t('administration.sellers.index.view.country')
+          th= t('administration.sellers.index.view.company_name')
+          th= t('administration.sellers.index.view.first_name')
+          th= t('administration.sellers.index.view.last_name')
+          th.ta_c= t('administration.sellers.index.view.default')
           th
           th.hr
       tfoot
         tr
           td.fl
-          td colspan="6"
+          td colspan='6'
           td.fr
       tbody
         - @sellers.each do |seller|
@@ -35,13 +35,13 @@
             td= seller.company_name
             td= seller.first_name
             td= seller.last_name
-            td.ta_c= check_box_tag "default_#{seller.id}", 1, seller.default?, disabled: true
+            td.ta_c= check_box_tag 'default_#{seller.id}', 1, seller.default?, disabled: true
             td.tda.ta_r
               .td_actions
-                = bt_link_to :cog, nil, "javascript:void(0)", class: "bt_dropdown"
+                = bt_link_to :cog, nil, 'javascript:void(0)', class: 'bt_dropdown'
 
                 ul
-                  li= link_to t("administration.sellers.index.view.show"), administration_seller_path(seller)
-                  li= link_to t("administration.sellers.index.view.edit"), edit_administration_seller_path(seller), class: "default_action"
-                  li= link_to t("administration.sellers.index.view.delete"), administration_seller_path(seller), method: :delete, confirmation: t("common.confirmation")
+                  li= link_to t('administration.sellers.index.view.show'), administration_seller_path(seller)
+                  li= link_to t('administration.sellers.index.view.edit'), edit_administration_seller_path(seller), class: 'default_action'
+                  li= link_to t('administration.sellers.index.view.delete'), administration_seller_path(seller), method: :delete, confirmation: t('common.confirmation')
             td.cr

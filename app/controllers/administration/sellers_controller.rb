@@ -1,4 +1,6 @@
 class Administration::SellersController < Administration::AdministrationController
+  include Controllers::CommonActions
+
   set_tab 'sellers'
 
   before_filter :set_seller, only: [:edit, :show, :update, :destroy]
@@ -14,27 +16,17 @@ class Administration::SellersController < Administration::AdministrationControll
   def create
     @seller = Seller.new(seller_params)
 
-    if @seller.save
-      redirect_to administration_sellers_path
-    else
-      render :new
-    end
+    common_save(@seller, success: { redirect: administration_sellers_path })
   end
 
   def update
-    if @seller.update_attributes(seller_params)
-      redirect_to administration_sellers_path
-    else
-      render :edit
-    end
+    @seller.assign_attributes(seller_params)
+
+    common_save(@seller, success: { redirect: administration_sellers_path })
   end
 
   def destroy
-    if @seller.destroy
-      redirect_to administration_sellers_path
-    else
-      redirect_to :back
-    end
+    common_destroy(@seller, success: { redirect: administration_sellers_path })
   end
 
   private

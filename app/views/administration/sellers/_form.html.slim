@@ -26,11 +26,11 @@
     = f.input :note, as: :ckeditor
 
   .box-footer
-    = ibt(class: "fltri", icon: "save") do
-      = f.button :submit, t("administration.sellers.edit.view.button_update")
+    = ibt(class: 'fltri', icon: 'save') do
+      = f.button :submit, t('administration.sellers.edit.view.button_update')
 
-    = ibt(class: "fltri bt_grey") do
-      = button_to_function t("common.cancel_link"), href(administration_sellers_path)
+    = ibt(class: 'fltri bt_grey') do
+      = link_to t('common.cancel_link'), administration_sellers_path
 
 javascript:
   $('.refresh-region-list').change(function() {
