@@ -6,7 +6,7 @@
       = form.input :bcc
       = form.input :cc
       = form.input :body, label: false, as: :ckeditor, input_html: { toolbar: "EmailPopup" }
-      = form.input :enable_custom_signature, as: :boolean, onclick: "show_hide_custom_signature()"
+      = form.input :enable_custom_signature, as: :boolean, input_html: { onclick: "show_hide_custom_signature()" }
 
       #custom_email_signature_div
         = form.fields_for :email_template_signature, form.object.email_template_signature || EmailTemplateSignature.new(related: form.object) do |builder|

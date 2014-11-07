@@ -1,5 +1,4 @@
 = content_for :column_mc do
-  = javascript_include_tag :ckeditor
   = javascript_include_tag "popup_email_template_editor"
   = javascript_include_tag "email_template_signature"
 
@@ -11,21 +10,20 @@
   = semantic_form_for @email_template, url: administration_category_email_template_path(@category), method: :put do |form|
     = frm(title: t('administration.email_templates.edit.view.edit')) do |section|
       - section.block_content do
-        = render partial: 'administration/email_templates/form', locals: { form: form }
+        = render 'administration/email_templates/form', form: form
 
       - section.block_actions do
         = ibt(class: "fltri", icon: "save") do
           = form.submit t("administration.email_templates.edit.view.button_update")
 
         = ibt(class: "bt_grey fltri") do
-          = button_to_function t("administration.settings.edit.view.button_cancel"), href(edit_administration_category_path(@category))
+          = link_to t("administration.settings.edit.view.button_cancel"), edit_administration_category_path(@category)
 
-  = render partial: "shared/email_template_popup/template_vars_popup", locals: {instance_name: "email_template_body_editor", email_template: @email_template}
-  = render partial: "shared/email_template_popup/template_deal_links", locals: {instance_name: "email_template_body_editor"}
+  = render "shared/email_template_popup/template_vars_popup", instance_name: "email_template_body_editor", email_template: @email_template
+  = render "shared/email_template_popup/template_deal_links", instance_name: "email_template_body_editor"
 
 = content_for :js do
   javascript:
     setup_jquery_vars_popup_dialog();
     setup_jquery_deal_links_dialog();
-    setup_ckeditor_for_field('email_template_email_template_signature_attributes_body');
     show_hide_custom_signature();
